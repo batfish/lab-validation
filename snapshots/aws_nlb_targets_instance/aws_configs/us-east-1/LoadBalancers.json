@@ -1,0 +1,82 @@
+{
+ "LoadBalancers": [
+  {
+   "AvailabilityZones": [
+    {
+     "LoadBalancerAddresses": [
+      {
+       "AllocationId": "eipalloc-0c9793774fa7f0a67",
+       "IpAddress": "54.174.198.234"
+      }
+     ],
+     "SubnetId": "subnet-03a25b235f73f0b8b",
+     "ZoneName": "us-east-1a"
+    }
+   ],
+   "CanonicalHostedZoneId": "Z26RNL4JYFTOTI",
+   "CreatedTime": "2020-05-29 16:10:45.261000+00:00",
+   "DNSName": "targets-instance-nlb-only-pub-a-01b6d1d0dcf697ce.elb.us-east-1.amazonaws.com",
+   "IpAddressType": "ipv4",
+   "LoadBalancerArn": "arn:aws:elasticloadbalancing:us-east-1:028403472736:loadbalancer/net/targets-instance-nlb-only-pub-a/01b6d1d0dcf697ce",
+   "LoadBalancerName": "targets-instance-nlb-only-pub-a",
+   "Scheme": "internet-facing",
+   "State": {
+    "Code": "active"
+   },
+   "Type": "network",
+   "VpcId": "vpc-0a001de0c2ffb4f50"
+  },
+  {
+   "AvailabilityZones": [
+    {
+     "LoadBalancerAddresses": [
+      {
+       "AllocationId": "eipalloc-049ef64e5cfec3ddf",
+       "IpAddress": "3.234.138.7"
+      }
+     ],
+     "SubnetId": "subnet-03a25b235f73f0b8b",
+     "ZoneName": "us-east-1a"
+    }
+   ],
+   "CanonicalHostedZoneId": "Z26RNL4JYFTOTI",
+   "CreatedTime": "2020-05-29 16:10:45.860000+00:00",
+   "DNSName": "targets-instance-nlb-only-pri-a-5f9fc459fbfc6805.elb.us-east-1.amazonaws.com",
+   "IpAddressType": "ipv4",
+   "LoadBalancerArn": "arn:aws:elasticloadbalancing:us-east-1:028403472736:loadbalancer/net/targets-instance-nlb-only-pri-a/5f9fc459fbfc6805",
+   "LoadBalancerName": "targets-instance-nlb-only-pri-a",
+   "Scheme": "internet-facing",
+   "State": {
+    "Code": "active"
+   },
+   "Type": "network",
+   "VpcId": "vpc-0a001de0c2ffb4f50"
+  },
+  {
+   "AvailabilityZones": [
+    {
+     "LoadBalancerAddresses": [
+      {
+       "AllocationId": "eipalloc-0a05bee8d2d6f6acb",
+       "IpAddress": "100.26.7.68"
+      }
+     ],
+     "SubnetId": "subnet-03a25b235f73f0b8b",
+     "ZoneName": "us-east-1a"
+    }
+   ],
+   "CanonicalHostedZoneId": "Z26RNL4JYFTOTI",
+   "CreatedTime": "2020-05-29 16:10:44.652000+00:00",
+   "DNSName": "targets-instance-nlb-pri-pub-a-6cb1d730b0da5d0a.elb.us-east-1.amazonaws.com",
+   "IpAddressType": "ipv4",
+   "LoadBalancerArn": "arn:aws:elasticloadbalancing:us-east-1:028403472736:loadbalancer/net/targets-instance-nlb-pri-pub-a/6cb1d730b0da5d0a",
+   "LoadBalancerName": "targets-instance-nlb-pri-pub-a",
+   "Scheme": "internet-facing",
+   "State": {
+    "Code": "active"
+   },
+   "Type": "network",
+   "VpcId": "vpc-0a001de0c2ffb4f50"
+  }
+ ]
+}

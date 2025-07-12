@@ -1,0 +1,74 @@
+For address family: IPv4 Unicast
+
+BGP routing table entry for 10.13.11.0/30, version 2
+  Paths: (1 available, best #1, table default)
+  Not advertised to any peer
+  Refresh Epoch 1
+  65003, (received & used)
+    10.34.31.1 from 10.34.31.1 (192.168.123.3)
+      Origin incomplete, localpref 100, valid, external, best
+      Extended Community: RT:65003:11 0x8800:32768:0 0x8801:1:256
+        0x8802:65280:2560 0x8803:65281:1500 0x8806:0:3232267039
+      rx pathid: 0, tx pathid: 0x0
+BGP routing table entry for 10.23.12.0/30, version 3
+  Paths: (1 available, best #1, table default)
+  Not advertised to any peer
+  Refresh Epoch 1
+  65003, (received & used)
+    10.34.31.1 from 10.34.31.1 (192.168.123.3)
+      Origin incomplete, localpref 100, valid, external, best
+      Extended Community: RT:65003:22 0x8800:32768:0 0x8801:2:256
+        0x8802:65280:2560 0x8803:65281:1500 0x8806:0:3232267040
+      rx pathid: 0, tx pathid: 0x0
+BGP routing table entry for 192.168.123.1/32, version 10
+  Paths: (1 available, best #1, table default)
+  Not advertised to any peer
+  Refresh Epoch 1
+  65003, (received & used)
+    10.34.31.1 from 10.34.31.1 (192.168.123.3)
+      Origin incomplete, localpref 100, valid, external, best
+      Extended Community: RT:65003:11 0x8800:32768:0 0x8801:1:288
+        0x8802:65281:2560 0x8803:65281:1500 0x8806:0:3232267009
+      rx pathid: 0, tx pathid: 0x0
+BGP routing table entry for 192.168.123.2/32, version 6
+  Paths: (1 available, best #1, table default)
+  Not advertised to any peer
+  Refresh Epoch 1
+  65003, (received & used)
+    10.34.31.1 from 10.34.31.1 (192.168.123.3)
+      Origin incomplete, localpref 100, valid, external, best
+      Extended Community: RT:65003:22 0x8800:32768:0 0x8801:2:288
+        0x8802:65281:2560 0x8803:65281:1500 0x8806:0:3232267010
+      rx pathid: 0, tx pathid: 0x0
+BGP routing table entry for 192.168.123.3/32, version 7
+  Paths: (1 available, best #1, table default)
+  Not advertised to any peer
+  Refresh Epoch 1
+  65003, (received & used)
+    10.34.31.1 from 10.34.31.1 (192.168.123.3)
+      Origin IGP, metric 0, localpref 100, valid, external, best
+      Extended Community: RT:65003:44
+      rx pathid: 0, tx pathid: 0x0
+BGP routing table entry for 192.168.123.4/32, version 8
+  Paths: (1 available, best #1, table default)
+  Advertised to update-groups:
+     1
+  Refresh Epoch 1
+  Local
+    0.0.0.0 from 0.0.0.0 (192.168.123.4)
+      Origin IGP, metric 0, localpref 100, weight 32768, valid, sourced, local, best
+      rx pathid: 0, tx pathid: 0x0
+
+For address family: IPv6 Unicast
+
+
+For address family: IPv4 Multicast
+
+
+For address family: L2VPN E-VPN
+
+
+For address family: MVPNv4 Unicast
+
+
+For address family: MVPNv6 Unicast

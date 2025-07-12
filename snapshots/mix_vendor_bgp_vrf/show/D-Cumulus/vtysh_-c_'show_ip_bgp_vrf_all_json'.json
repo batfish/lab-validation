@@ -1,0 +1,316 @@
+{
+    "cust10": {
+        "routerId": "1.1.5.10",
+        "routes": {
+            "1.1.5.10/32": [
+                {
+                    "aspath": "",
+                    "bestpath": true,
+                    "med": 0,
+                    "nexthops": [
+                        {
+                            "afi": "ipv4",
+                            "ip": "0.0.0.0",
+                            "used": true
+                        }
+                    ],
+                    "origin": "incomplete",
+                    "pathFrom": "external",
+                    "peerId": "(unspec)",
+                    "prefix": "1.1.5.10",
+                    "prefixLen": 32,
+                    "valid": true,
+                    "weight": 32768
+                }
+            ]
+        },
+        "tableVersion": 1,
+        "vrfId": 9,
+        "vrfName": "cust10"
+    },
+    "cust20": {
+        "routerId": "1.1.5.20",
+        "routes": {
+            "1.1.5.20/32": [
+                {
+                    "aspath": "",
+                    "bestpath": true,
+                    "med": 0,
+                    "nexthops": [
+                        {
+                            "afi": "ipv4",
+                            "ip": "0.0.0.0",
+                            "used": true
+                        }
+                    ],
+                    "origin": "incomplete",
+                    "pathFrom": "external",
+                    "peerId": "(unspec)",
+                    "prefix": "1.1.5.20",
+                    "prefixLen": 32,
+                    "valid": true,
+                    "weight": 32768
+                }
+            ]
+        },
+        "tableVersion": 1,
+        "vrfId": 10,
+        "vrfName": "cust20"
+    },
+    "default": {
+        "routerId": "192.168.123.5",
+        "routes": {
+            "10.10.10.0/24": [
+                {
+                    "aspath": "1",
+                    "bestpath": true,
+                    "med": 0,
+                    "nexthops": [
+                        {
+                            "afi": "ipv4",
+                            "ip": "10.10.40.1",
+                            "used": true
+                        }
+                    ],
+                    "origin": "IGP",
+                    "pathFrom": "external",
+                    "peerId": "10.10.40.1",
+                    "prefix": "10.10.10.0",
+                    "prefixLen": 24,
+                    "valid": true,
+                    "weight": 0
+                }
+            ],
+            "10.10.20.0/24": [
+                {
+                    "aspath": "1",
+                    "bestpath": true,
+                    "med": 0,
+                    "nexthops": [
+                        {
+                            "afi": "ipv4",
+                            "ip": "10.10.40.1",
+                            "used": true
+                        }
+                    ],
+                    "origin": "IGP",
+                    "pathFrom": "external",
+                    "peerId": "10.10.40.1",
+                    "prefix": "10.10.20.0",
+                    "prefixLen": 24,
+                    "valid": true,
+                    "weight": 0
+                }
+            ],
+            "10.10.30.0/24": [
+                {
+                    "aspath": "1",
+                    "bestpath": true,
+                    "med": 0,
+                    "nexthops": [
+                        {
+                            "afi": "ipv4",
+                            "ip": "10.10.40.1",
+                            "used": true
+                        }
+                    ],
+                    "origin": "IGP",
+                    "pathFrom": "external",
+                    "peerId": "10.10.40.1",
+                    "prefix": "10.10.30.0",
+                    "prefixLen": 24,
+                    "valid": true,
+                    "weight": 0
+                }
+            ],
+            "10.10.40.0/24": [
+                {
+                    "aspath": "1",
+                    "bestpath": true,
+                    "med": 0,
+                    "nexthops": [
+                        {
+                            "afi": "ipv4",
+                            "ip": "10.10.40.1",
+                            "used": true
+                        }
+                    ],
+                    "origin": "IGP",
+                    "pathFrom": "external",
+                    "peerId": "10.10.40.1",
+                    "prefix": "10.10.40.0",
+                    "prefixLen": 24,
+                    "valid": true,
+                    "weight": 0
+                }
+            ],
+            "10.10.50.0/24": [
+                {
+                    "aspath": "1",
+                    "bestpath": true,
+                    "med": 0,
+                    "nexthops": [
+                        {
+                            "afi": "ipv4",
+                            "ip": "10.10.40.1",
+                            "used": true
+                        }
+                    ],
+                    "origin": "IGP",
+                    "pathFrom": "external",
+                    "peerId": "10.10.40.1",
+                    "prefix": "10.10.50.0",
+                    "prefixLen": 24,
+                    "valid": true,
+                    "weight": 0
+                }
+            ],
+            "192.168.122.0/24": [
+                {
+                    "aspath": "1",
+                    "bestpath": true,
+                    "med": 0,
+                    "nexthops": [
+                        {
+                            "afi": "ipv4",
+                            "ip": "10.10.40.1",
+                            "used": true
+                        }
+                    ],
+                    "origin": "IGP",
+                    "pathFrom": "external",
+                    "peerId": "10.10.40.1",
+                    "prefix": "192.168.122.0",
+                    "prefixLen": 24,
+                    "valid": true,
+                    "weight": 0
+                }
+            ],
+            "192.168.123.1/32": [
+                {
+                    "aspath": "1",
+                    "bestpath": true,
+                    "med": 0,
+                    "nexthops": [
+                        {
+                            "afi": "ipv4",
+                            "ip": "10.10.40.1",
+                            "used": true
+                        }
+                    ],
+                    "origin": "IGP",
+                    "pathFrom": "external",
+                    "peerId": "10.10.40.1",
+                    "prefix": "192.168.123.1",
+                    "prefixLen": 32,
+                    "valid": true,
+                    "weight": 0
+                }
+            ],
+            "192.168.123.2/32": [
+                {
+                    "aspath": "1 10",
+                    "bestpath": true,
+                    "nexthops": [
+                        {
+                            "afi": "ipv4",
+                            "ip": "10.10.40.1",
+                            "used": true
+                        }
+                    ],
+                    "origin": "IGP",
+                    "pathFrom": "external",
+                    "peerId": "10.10.40.1",
+                    "prefix": "192.168.123.2",
+                    "prefixLen": 32,
+                    "valid": true,
+                    "weight": 0
+                }
+            ],
+            "192.168.123.3/32": [
+                {
+                    "aspath": "1 20",
+                    "bestpath": true,
+                    "nexthops": [
+                        {
+                            "afi": "ipv4",
+                            "ip": "10.10.40.1",
+                            "used": true
+                        }
+                    ],
+                    "origin": "IGP",
+                    "pathFrom": "external",
+                    "peerId": "10.10.40.1",
+                    "prefix": "192.168.123.3",
+                    "prefixLen": 32,
+                    "valid": true,
+                    "weight": 0
+                }
+            ],
+            "192.168.123.4/32": [
+                {
+                    "aspath": "1 30",
+                    "bestpath": true,
+                    "nexthops": [
+                        {
+                            "afi": "ipv4",
+                            "ip": "10.10.40.1",
+                            "used": true
+                        }
+                    ],
+                    "origin": "IGP",
+                    "pathFrom": "external",
+                    "peerId": "10.10.40.1",
+                    "prefix": "192.168.123.4",
+                    "prefixLen": 32,
+                    "valid": true,
+                    "weight": 0
+                }
+            ],
+            "192.168.123.5/32": [
+                {
+                    "aspath": "",
+                    "bestpath": true,
+                    "med": 0,
+                    "nexthops": [
+                        {
+                            "afi": "ipv4",
+                            "ip": "0.0.0.0",
+                            "used": true
+                        }
+                    ],
+                    "origin": "IGP",
+                    "pathFrom": "external",
+                    "peerId": "(unspec)",
+                    "prefix": "192.168.123.5",
+                    "prefixLen": 32,
+                    "valid": true,
+                    "weight": 32768
+                }
+            ],
+            "192.168.123.6/32": [
+                {
+                    "aspath": "1 50",
+                    "bestpath": true,
+                    "nexthops": [
+                        {
+                            "afi": "ipv4",
+                            "ip": "10.10.40.1",
+                            "used": true
+                        }
+                    ],
+                    "origin": "IGP",
+                    "pathFrom": "external",
+                    "peerId": "10.10.40.1",
+                    "prefix": "192.168.123.6",
+                    "prefixLen": 32,
+                    "valid": true,
+                    "weight": 0
+                }
+            ]
+        },
+        "tableVersion": 12,
+        "vrfId": 0,
+        "vrfName": "default"
+    }
+}

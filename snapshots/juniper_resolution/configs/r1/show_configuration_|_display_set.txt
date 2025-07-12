@@ -1,0 +1,49 @@
+set version 17.4R1.16
+set system host-name r1
+set system root-authentication encrypted-password "$6$dhLhRnrZ$KBaQrVe0n9MJEeQhk0nMP20Kui459zW.JS86aMOtPpn1H2PViqxul3ISa/ISU53FC1lb1ouqV7f0RdyTOoPcR."
+set system services ssh root-login allow
+set system syslog user * any emergency
+set system syslog file messages any notice
+set system syslog file messages authorization info
+set system syslog file interactive-commands interactive-commands any
+set system extensions providers juniper license-type juniper deployment-scope commercial
+set system extensions providers chef license-type juniper deployment-scope commercial
+set interfaces xe-0/0/0 unit 0 family inet address 192.168.0.0/31
+set interfaces xe-0/0/1 unit 0 family inet address 10.2.0.0/31
+set interfaces xe-0/0/4 unit 0 family inet address 172.24.0.223/24
+set interfaces em0 unit 0 family inet
+set interfaces em1 unit 0 family inet address 169.254.0.2/24
+set interfaces lo0 unit 0 family inet address 10.0.0.2/32
+set forwarding-options storm-control-profiles default all
+set routing-options static route 10.10.0.0/32 next-hop 10.2.0.1
+set routing-options static route 10.10.1.0/24 next-hop 10.2.0.1
+set routing-options static route 10.10.1.0/24 resolve
+set routing-options static route 10.10.2.0/24 next-hop 172.24.0.254
+set routing-options static route 10.10.3.0/32 next-hop 10.10.2.1
+set routing-options static route 10.10.4.0/32 next-hop 10.10.2.1
+set routing-options static route 10.10.4.0/32 resolve
+set routing-options static route 10.10.5.0/32 next-hop 10.10.1.1
+set routing-options static route 10.10.5.0/32 resolve
+set routing-options static route 10.10.6.0/32 next-hop xe-0/0/4.0
+set routing-options static route 10.10.7.0/32 next-hop 10.10.6.0
+set routing-options static route 10.10.7.0/32 resolve
+set routing-options static route 10.10.8.0/32 discard
+set routing-options static route 10.10.9.0/32 next-hop 10.10.8.0
+set routing-options static route 10.10.9.0/32 resolve
+set routing-options router-id 10.0.0.2
+set routing-options autonomous-system 65002
+set routing-options resolution rib inet.0 import respol
+set protocols bgp family inet unicast
+set protocols bgp group g type internal
+set protocols bgp group g import bgpimport
+set protocols bgp group g family inet unicast
+set protocols bgp group g neighbor 10.2.0.1
+set policy-options policy-statement bgpimport term t1 from route-filter 10.100.1.0/24 exact
+set policy-options policy-statement bgpimport term t1 then next-hop 172.24.0.254
+set policy-options policy-statement bgpimport term t1 then accept
+set policy-options policy-statement bgpimport term t2 then accept
+set policy-options policy-statement respol term t1 from route-filter 0.0.0.0/0 prefix-length-range /24-/24
+set policy-options policy-statement respol term t1 then accept
+set policy-options policy-statement respol term t2 then reject
+
+{master:0}

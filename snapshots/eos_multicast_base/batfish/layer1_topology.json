@@ -1,0 +1,64 @@
+{
+    "edges": [
+        {
+            "node1": {
+                "hostname": "rcvr",
+                "interfaceName": "E2"
+            },
+            "node2": {
+                "hostname": "rp2",
+                "interfaceName": "E1"
+            }
+        },
+        {
+            "node1": {
+                "hostname": "rp1",
+                "interfaceName": "E1"
+            },
+            "node2": {
+                "hostname": "rcvr",
+                "interfaceName": "E1"
+            }
+        },
+        {
+            "node1": {
+                "hostname": "src1",
+                "interfaceName": "Ethernet0"
+            },
+            "node2": {
+                "hostname": "rp1",
+                "interfaceName": "E2"
+            }
+        },
+        {
+            "node1": {
+                "hostname": "fake_rcvr1",
+                "interfaceName": "Gi0/1"
+            },
+            "node2": {
+                "hostname": "rcvr",
+                "interfaceName": "E3"
+            }
+        },
+        {
+            "node1": {
+                "hostname": "fake_rcvr2",
+                "interfaceName": "Gi0/1"
+            },
+            "node2": {
+                "hostname": "rcvr",
+                "interfaceName": "E4"
+            }
+        },
+        {
+            "node1": {
+                "hostname": "src2",
+                "interfaceName": "Ethernet0"
+            },
+            "node2": {
+                "hostname": "rp2",
+                "interfaceName": "E2"
+            }
+        }
+    ]
+}

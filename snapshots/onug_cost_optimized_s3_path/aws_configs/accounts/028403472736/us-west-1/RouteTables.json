@@ -1,0 +1,123 @@
+{
+ "RouteTables": [
+  {
+   "Associations": [
+    {
+     "AssociationState": {
+      "State": "associated"
+     },
+     "Main": true,
+     "RouteTableAssociationId": "rtbassoc-051c079ee6eee36cc",
+     "RouteTableId": "rtb-0778780d919a966c7"
+    }
+   ],
+   "OwnerId": "028403472736",
+   "PropagatingVgws": [],
+   "RouteTableId": "rtb-0778780d919a966c7",
+   "Routes": [
+    {
+     "DestinationCidrBlock": "192.168.123.0/24",
+     "Origin": "CreateRoute",
+     "State": "active",
+     "TransitGatewayId": "tgw-01d3586b1b14b9523"
+    },
+    {
+     "DestinationCidrBlock": "10.4.0.0/16",
+     "GatewayId": "local",
+     "Origin": "CreateRouteTable",
+     "State": "active"
+    },
+    {
+     "DestinationCidrBlock": "10.100.0.0/16",
+     "Origin": "CreateRoute",
+     "State": "active",
+     "TransitGatewayId": "tgw-01d3586b1b14b9523"
+    },
+    {
+     "DestinationCidrBlock": "10.200.0.0/16",
+     "Origin": "CreateRoute",
+     "State": "active",
+     "TransitGatewayId": "tgw-01d3586b1b14b9523"
+    }
+   ],
+   "Tags": [],
+   "VpcId": "vpc-0c4e7b95bbfab3bea"
+  },
+  {
+   "Associations": [
+    {
+     "AssociationState": {
+      "State": "associated"
+     },
+     "Main": false,
+     "RouteTableAssociationId": "rtbassoc-0409e9cc17cb65829",
+     "RouteTableId": "rtb-01f3aa7ac2d9f1acc",
+     "SubnetId": "subnet-0ab3536c5d5baa484"
+    },
+    {
+     "AssociationState": {
+      "State": "associated"
+     },
+     "Main": false,
+     "RouteTableAssociationId": "rtbassoc-0a6c88a09bc3d7392",
+     "RouteTableId": "rtb-01f3aa7ac2d9f1acc",
+     "SubnetId": "subnet-02cfa025b01a00584"
+    }
+   ],
+   "OwnerId": "028403472736",
+   "PropagatingVgws": [],
+   "RouteTableId": "rtb-01f3aa7ac2d9f1acc",
+   "Routes": [
+    {
+     "DestinationCidrBlock": "192.168.123.0/24",
+     "Origin": "CreateRoute",
+     "State": "active",
+     "TransitGatewayId": "tgw-01d3586b1b14b9523"
+    },
+    {
+     "DestinationCidrBlock": "10.3.0.0/16",
+     "Origin": "CreateRoute",
+     "State": "active",
+     "TransitGatewayId": "tgw-01d3586b1b14b9523"
+    },
+    {
+     "DestinationCidrBlock": "10.4.0.0/16",
+     "GatewayId": "local",
+     "Origin": "CreateRouteTable",
+     "State": "active"
+    },
+    {
+     "DestinationCidrBlock": "10.5.0.0/16",
+     "Origin": "CreateRoute",
+     "State": "active",
+     "VpcPeeringConnectionId": "pcx-028c8b07703377dda"
+    },
+    {
+     "DestinationCidrBlock": "10.100.0.0/16",
+     "Origin": "CreateRoute",
+     "State": "active",
+     "TransitGatewayId": "tgw-01d3586b1b14b9523"
+    },
+    {
+     "DestinationCidrBlock": "10.200.0.0/16",
+     "Origin": "CreateRoute",
+     "State": "active",
+     "TransitGatewayId": "tgw-01d3586b1b14b9523"
+    },
+    {
+     "DestinationCidrBlock": "0.0.0.0/0",
+     "GatewayId": "igw-09887e9df59e5a52e",
+     "Origin": "CreateRoute",
+     "State": "active"
+    }
+   ],
+   "Tags": [
+    {
+     "Key": "Name",
+     "Value": "rtb-igw-it-west"
+    }
+   ],
+   "VpcId": "vpc-0c4e7b95bbfab3bea"
+  }
+ ]
+}

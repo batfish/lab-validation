@@ -1,0 +1,19 @@
+
+total configured hardware interfaces: 3
+
+name                    id    speed/duplex/state        mac address
+--------------------------------------------------------------------------------
+ethernet1/1             16    10000/full/up             00:1b:17:12:34:57
+ethernet1/2             17    10000/full/up             00:1b:17:12:34:58
+ethernet1/7             22    10000/full/up             00:1b:17:12:34:5d
+
+aggregation groups: 0
+
+
+total configured logical interfaces: 3
+
+name                id    vsys zone             forwarding               tag    address
+------------------- ----- ---- ---------------- ------------------------ ------ ------------------
+ethernet1/1         16    1    trust            vr:default               0      192.168.123.2/30
+ethernet1/2         17    1    untrust          vr:default               0      192.168.123.5/30
+ethernet1/7         22    1    trust            vr:default               0      192.168.122.2/24

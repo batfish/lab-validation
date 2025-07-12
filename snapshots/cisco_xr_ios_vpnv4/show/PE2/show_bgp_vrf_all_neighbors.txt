@@ -1,0 +1,62 @@
+VRF: red
+--------
+
+BGP neighbor is 12.1.1.2, vrf red
+ Remote AS 65102, local AS 65001, external link
+ Remote router ID 12.1.1.2
+  BGP state = Established, up for 01:11:02
+  NSR State: None
+  Last read 00:00:44, Last read before reset 00:00:00
+  Hold time is 180, keepalive interval is 60 seconds
+  Configured hold time: 180, keepalive: 60, min acceptable hold time: 3
+  Last write 00:00:58, attempted 19, written 19
+  Second last write 00:01:58, attempted 19, written 19
+  Last write before reset 00:00:00, attempted 0, written 0
+  Second last write before reset 00:00:00, attempted 0, written 0
+  Last write pulse rcvd  Mar  9 00:15:01.041 last full not set pulse count 156
+  Last write pulse rcvd before reset 00:00:00
+  Socket not armed for io, armed for read, armed for write
+  Last write thread event before reset 00:00:00, second last 00:00:00
+  Last KA expiry before reset 00:00:00, second last 00:00:00
+  Last KA error before reset 00:00:00, KA not sent 00:00:00
+  Last KA start before reset 00:00:00, second last 00:00:00
+  Precedence: internet
+  Non-stop routing is enabled
+  Enforcing first AS is enabled
+  Multi-protocol capability received
+  Neighbor capabilities:
+    Route refresh: advertised (old + new) and received (old + new)
+    4-byte AS: advertised and received
+    Address family IPv4 Unicast: advertised and received
+  Received 83 messages, 0 notifications, 0 in queue
+  Sent 74 messages, 0 notifications, 0 in queue
+  Minimum time between advertisement runs is 0 secs
+  Inbound message logging enabled, 3 messages buffered
+  Outbound message logging enabled, 3 messages buffered
+
+ For Address Family: IPv4 Unicast
+  BGP neighbor version 29
+  Update group: 0.2 Filter-group: 0.3  No Refresh request being processed
+  Inbound soft reconfiguration allowed (override route-refresh)
+  Community attribute sent to this neighbor
+  Route refresh request: received 1, sent 0
+  Policy for incoming advertisements is PASS_ALL
+  Policy for outgoing advertisements is PASS_ALL
+  1 accepted prefixes, 1 are bestpaths
+  Exact no. of prefixes denied : 0.
+  Cumulative no. of prefixes denied: 1. 
+    No policy: 1, Failed RT match: 0
+    By ORF policy: 0, By policy: 0
+  Prefix advertised 2, suppressed 0, withdrawn 0
+  Maximum prefixes allowed 1048576
+  Threshold for warning message 75%, restart interval 0 min
+  An EoR was not received during read-only mode
+  Last ack version 29, Last synced ack version 0
+  Outstanding version objects: current 0, max 1, refresh 0
+  Additional-paths operation: None
+  Advertise routes with local-label via Unicast SAFI
+
+  Connections established 1; dropped 0
+  Local host: 12.1.1.1, Local port: 179, IF Handle: 0x01000030
+  Foreign host: 12.1.1.2, Foreign port: 58751
+  Last reset 00:00:00

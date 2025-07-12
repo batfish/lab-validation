@@ -1,0 +1,13 @@
+entries:
+  - hostname: d1_v12
+    test_name: test_main_rib_routes
+    skip:
+      reason: https://github.com/batfish/lab-validation/issues/18
+  - hostname: d2_v34
+    test_name: test_main_rib_routes
+    skip:
+      reason: https://github.com/batfish/lab-validation/issues/16, https://github.com/batfish/lab-validation/issues/18
+  - hostname: d55_default
+    test_name: test_bgp_rib_routes
+    skip:
+      reason: https://github.com/batfish/lab-validation/issues/21

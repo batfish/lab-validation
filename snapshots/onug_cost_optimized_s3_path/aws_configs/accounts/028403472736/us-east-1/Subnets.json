@@ -1,0 +1,88 @@
+{
+ "Subnets": [
+  {
+   "AssignIpv6AddressOnCreation": false,
+   "AvailabilityZone": "us-east-1a",
+   "AvailabilityZoneId": "use1-az2",
+   "AvailableIpAddressCount": 10,
+   "CidrBlock": "10.5.250.0/28",
+   "DefaultForAz": false,
+   "Ipv6CidrBlockAssociationSet": [],
+   "MapPublicIpOnLaunch": false,
+   "OwnerId": "028403472736",
+   "State": "available",
+   "SubnetArn": "arn:aws:ec2:us-east-1:028403472736:subnet/subnet-03c1ff02de1efd932",
+   "SubnetId": "subnet-03c1ff02de1efd932",
+   "Tags": [
+    {
+     "Key": "Name",
+     "Value": "tgw-it-east"
+    }
+   ],
+   "VpcId": "vpc-0f0d3c242ef614e28"
+  },
+  {
+   "AssignIpv6AddressOnCreation": false,
+   "AvailabilityZone": "us-east-1a",
+   "AvailabilityZoneId": "use1-az2",
+   "AvailableIpAddressCount": 250,
+   "CidrBlock": "10.5.4.0/24",
+   "DefaultForAz": false,
+   "Ipv6CidrBlockAssociationSet": [],
+   "MapPublicIpOnLaunch": false,
+   "OwnerId": "028403472736",
+   "State": "available",
+   "SubnetArn": "arn:aws:ec2:us-east-1:028403472736:subnet/subnet-016a46679591e480c",
+   "SubnetId": "subnet-016a46679591e480c",
+   "Tags": [
+    {
+     "Key": "Name",
+     "Value": "dbserver-it-east"
+    }
+   ],
+   "VpcId": "vpc-0f0d3c242ef614e28"
+  },
+  {
+   "AssignIpv6AddressOnCreation": false,
+   "AvailabilityZone": "us-east-1a",
+   "AvailabilityZoneId": "use1-az2",
+   "AvailableIpAddressCount": 250,
+   "CidrBlock": "10.5.3.0/24",
+   "DefaultForAz": false,
+   "Ipv6CidrBlockAssociationSet": [],
+   "MapPublicIpOnLaunch": false,
+   "OwnerId": "028403472736",
+   "State": "available",
+   "SubnetArn": "arn:aws:ec2:us-east-1:028403472736:subnet/subnet-0ad766863229da529",
+   "SubnetId": "subnet-0ad766863229da529",
+   "Tags": [
+    {
+     "Key": "Name",
+     "Value": "data-it-east"
+    }
+   ],
+   "VpcId": "vpc-0f0d3c242ef614e28"
+  },
+  {
+   "AssignIpv6AddressOnCreation": false,
+   "AvailabilityZone": "us-east-1a",
+   "AvailabilityZoneId": "use1-az2",
+   "AvailableIpAddressCount": 247,
+   "CidrBlock": "10.5.1.0/24",
+   "DefaultForAz": false,
+   "Ipv6CidrBlockAssociationSet": [],
+   "MapPublicIpOnLaunch": true,
+   "OwnerId": "028403472736",
+   "State": "available",
+   "SubnetArn": "arn:aws:ec2:us-east-1:028403472736:subnet/subnet-0c234372a636ccf5d",
+   "SubnetId": "subnet-0c234372a636ccf5d",
+   "Tags": [
+    {
+     "Key": "Name",
+     "Value": "jump-it-east"
+    }
+   ],
+   "VpcId": "vpc-0f0d3c242ef614e28"
+  }
+ ]
+}

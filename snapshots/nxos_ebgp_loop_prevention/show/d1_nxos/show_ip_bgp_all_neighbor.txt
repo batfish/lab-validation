@@ -1,0 +1,58 @@
+BGP neighbor is 10.12.11.2, remote AS 65002, ebgp link, Peer index 3
+  BGP version 4, remote router ID 192.168.123.2
+  BGP state = Established, up for 01:09:22
+  Peer is directly attached, interface Ethernet1/1
+  Last read 00:00:30, hold time = 180, keepalive interval is 60 seconds
+  Last written 00:00:14, keepalive timer expiry due 00:00:45
+  Received 153 messages, 1 notifications, 0 bytes in queue
+  Sent 156 messages, 0 notifications, 0(0) bytes in queue
+  Connections established 2, dropped 1
+  Last reset by peer 01:09:34, due to session cleared
+  Last reset by us never, due to No error
+
+  Neighbor capabilities:
+  Dynamic capability: advertised (mp, refresh, gr) received (mp, refresh, gr)
+  Dynamic capability (old): advertised received
+  Route refresh capability (new): advertised received
+  Route refresh capability (old): advertised received
+  4-Byte AS capability: advertised received
+  Address family IPv4 Unicast: advertised received
+  Graceful Restart capability: advertised received
+
+  Graceful Restart Parameters:
+  Address families advertised to peer:
+    IPv4 Unicast
+  Address families received from peer:
+    IPv4 Unicast
+  Forwarding state preserved by peer for:
+  Restart time advertised to peer: 120 seconds
+  Stale time for routes advertised by peer: 300 seconds
+  Restart time advertised by peer: 120 seconds
+  Extended Next Hop Encoding Capability: advertised received
+  Receive IPv6 next hop encoding Capability for AF:
+    IPv4 Unicast
+
+  Message statistics:
+                              Sent               Rcvd
+  Opens:                         2                  2
+  Notifications:                 0                  1
+  Updates:                      13                  6
+  Keepalives:                  144                139
+  Route Refresh:                 1                  3
+  Capability:                    2                  2
+  Total:                       156                153
+  Total bytes:                3335               3032
+  Bytes in queue:                0                  0
+
+  For address family: IPv4 Unicast
+  BGP table version 21, neighbor version 21
+  2 accepted prefixes (2 paths), consuming 440 bytes of memory
+  2 sent prefixes (2 paths)
+  Inbound soft reconfiguration allowed(always)
+  Last End-of-RIB received 00:33:21 after session start
+  Last End-of-RIB sent 00:34:07 after session start
+  First convergence 00:00:01 after session start with 2 routes sent
+
+  Local host: 10.12.11.1, Local port: 179
+  Foreign host: 10.12.11.2, Foreign port: 35086
+  fd = 66

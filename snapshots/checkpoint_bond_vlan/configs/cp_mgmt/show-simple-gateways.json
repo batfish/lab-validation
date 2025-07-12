@@ -1,0 +1,209 @@
+{
+    "objects": [
+        {
+            "uid": "60af0919-616b-46f1-a9c6-6e538682fe88",
+            "name": "cp_fw",
+            "type": "simple-gateway",
+            "domain": {
+                "uid": "41e821a0-3720-11e3-aa6e-0800200c9fde",
+                "name": "SMC User",
+                "domain-type": "domain"
+            },
+            "interfaces": [
+                {
+                    "name": "bond12.2",
+                    "ipv4-address": "10.12.2.2",
+                    "ipv4-network-mask": "255.255.255.0",
+                    "ipv4-mask-length": 24,
+                    "ipv6-address": "",
+                    "comments": "",
+                    "color": "black",
+                    "icon": "NetworkObjects/network",
+                    "topology": "automatic",
+                    "topology-automatic-calculation": "internal",
+                    "topology-settings": {
+                        "ip-address-behind-this-interface": "network defined by the interface ip and net mask",
+                        "interface-leads-to-dmz": false
+                    },
+                    "anti-spoofing": true,
+                    "anti-spoofing-settings": {
+                        "action": "prevent"
+                    },
+                    "security-zone": false
+                },
+                {
+                    "name": "bond56.4",
+                    "ipv4-address": "10.24.4.1",
+                    "ipv4-network-mask": "255.255.255.0",
+                    "ipv4-mask-length": 24,
+                    "ipv6-address": "",
+                    "comments": "",
+                    "color": "black",
+                    "icon": "NetworkObjects/network",
+                    "topology": "automatic",
+                    "topology-automatic-calculation": "internal",
+                    "topology-settings": {
+                        "ip-address-behind-this-interface": "network defined by the interface ip and net mask",
+                        "interface-leads-to-dmz": false
+                    },
+                    "anti-spoofing": true,
+                    "anti-spoofing-settings": {
+                        "action": "prevent"
+                    },
+                    "security-zone": false
+                },
+                {
+                    "name": "eth0",
+                    "ipv4-address": "10.150.0.40",
+                    "ipv4-network-mask": "255.255.0.0",
+                    "ipv4-mask-length": 16,
+                    "ipv6-address": "",
+                    "comments": "",
+                    "color": "black",
+                    "icon": "NetworkObjects/network",
+                    "topology": "automatic",
+                    "topology-automatic-calculation": "internal",
+                    "topology-settings": {
+                        "ip-address-behind-this-interface": "network defined by the interface ip and net mask",
+                        "interface-leads-to-dmz": false
+                    },
+                    "anti-spoofing": true,
+                    "anti-spoofing-settings": {
+                        "action": "prevent"
+                    },
+                    "security-zone": false
+                },
+                {
+                    "name": "bond78.4",
+                    "ipv4-address": "10.25.4.1",
+                    "ipv4-network-mask": "255.255.255.0",
+                    "ipv4-mask-length": 24,
+                    "ipv6-address": "",
+                    "comments": "",
+                    "color": "black",
+                    "icon": "NetworkObjects/network",
+                    "topology": "automatic",
+                    "topology-automatic-calculation": "internal",
+                    "topology-settings": {
+                        "ip-address-behind-this-interface": "network defined by the interface ip and net mask",
+                        "interface-leads-to-dmz": false
+                    },
+                    "anti-spoofing": true,
+                    "anti-spoofing-settings": {
+                        "action": "prevent"
+                    },
+                    "security-zone": false
+                },
+                {
+                    "name": "bond34.3",
+                    "ipv4-address": "10.23.3.1",
+                    "ipv4-network-mask": "255.255.255.0",
+                    "ipv4-mask-length": 24,
+                    "ipv6-address": "",
+                    "comments": "",
+                    "color": "black",
+                    "icon": "NetworkObjects/network",
+                    "topology": "automatic",
+                    "topology-automatic-calculation": "internal",
+                    "topology-settings": {
+                        "ip-address-behind-this-interface": "specific",
+                        "specific-network": "cp_fw_bond34.3",
+                        "interface-leads-to-dmz": false
+                    },
+                    "anti-spoofing": true,
+                    "anti-spoofing-settings": {
+                        "action": "prevent"
+                    },
+                    "security-zone": false
+                }
+            ],
+            "ipv4-address": "10.150.0.40",
+            "dynamic-ip": false,
+            "version": "R80.40",
+            "os-name": "Gaia",
+            "hardware": "Open server",
+            "sic-name": "CN=cp_fw,O=r80mgmt..akm5wi",
+            "sic-state": "communicating",
+            "firewall": true,
+            "firewall-settings": {
+                "auto-maximum-limit-for-concurrent-connections": false,
+                "maximum-limit-for-concurrent-connections": 25000,
+                "auto-calculate-connections-hash-table-size-and-memory-pool": true,
+                "connections-hash-size": 131072,
+                "memory-pool-size": 6,
+                "maximum-memory-pool-size": 30
+            },
+            "vpn": false,
+            "application-control": false,
+            "url-filtering": false,
+            "ips": false,
+            "content-awareness": false,
+            "anti-bot": false,
+            "anti-virus": false,
+            "threat-emulation": false,
+            "threat-extraction": false,
+            "save-logs-locally": false,
+            "send-alerts-to-server": [
+                "r80mgmt"
+            ],
+            "send-logs-to-server": [
+                "r80mgmt"
+            ],
+            "send-logs-to-backup-server": [],
+            "logs-settings": {
+                "rotate-log-by-file-size": false,
+                "rotate-log-file-size-threshold": 1000,
+                "rotate-log-on-schedule": false,
+                "alert-when-free-disk-space-below-metrics": "mbytes",
+                "alert-when-free-disk-space-below": true,
+                "alert-when-free-disk-space-below-threshold": 20,
+                "alert-when-free-disk-space-below-type": "popup alert",
+                "delete-when-free-disk-space-below-metrics": "mbytes",
+                "delete-when-free-disk-space-below": true,
+                "delete-when-free-disk-space-below-threshold": 5000,
+                "before-delete-keep-logs-from-the-last-days": false,
+                "before-delete-keep-logs-from-the-last-days-threshold": 3664,
+                "before-delete-run-script": false,
+                "before-delete-run-script-command": "",
+                "stop-logging-when-free-disk-space-below-metrics": "mbytes",
+                "stop-logging-when-free-disk-space-below": false,
+                "stop-logging-when-free-disk-space-below-threshold": 100,
+                "reject-connections-when-free-disk-space-below-threshold": false,
+                "reserve-for-packet-capture-metrics": "mbytes",
+                "reserve-for-packet-capture-threshold": 500,
+                "delete-index-files-when-index-size-above-metrics": "mbytes",
+                "delete-index-files-when-index-size-above": false,
+                "delete-index-files-when-index-size-above-threshold": 100000,
+                "delete-index-files-older-than-days": false,
+                "delete-index-files-older-than-days-threshold": 14,
+                "forward-logs-to-log-server": false,
+                "perform-log-rotate-before-log-forwarding": false,
+                "update-account-log-every": 3600,
+                "detect-new-citrix-ica-application-names": false,
+                "turn-on-qos-logging": true
+            },
+            "comments": "",
+            "color": "black",
+            "icon": "NetworkObjects/gateway",
+            "tags": [],
+            "meta-info": {
+                "lock": "unlocked",
+                "validation-state": "ok",
+                "last-modify-time": {
+                    "posix": 1627601743705,
+                    "iso-8601": "2021-07-29T19:35-0400"
+                },
+                "last-modifier": "admin",
+                "creation-time": {
+                    "posix": 1627596856872,
+                    "iso-8601": "2021-07-29T18:14-0400"
+                },
+                "creator": "admin"
+            },
+            "read-only": false
+        }
+    ],
+    "from": 1,
+    "to": 1,
+    "total": 1
+}

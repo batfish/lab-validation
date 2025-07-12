@@ -1,0 +1,208 @@
+Building configuration...
+
+Current configuration : 3766 bytes
+!
+! Last configuration change at 19:57:05 UTC Fri Nov 13 2020
+!
+version 16.4
+service timestamps debug datetime msec
+service timestamps log datetime msec
+no platform punt-keepalive disable-kernel-core
+platform console serial
+!
+hostname dc2
+!
+boot-start-marker
+boot-end-marker
+!
+!
+!
+no aaa new-model
+!
+!
+!
+!
+!
+!
+!
+!
+!
+
+
+
+ip domain name test.com
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+subscriber templating
+!
+!
+!
+multilink bundle-name authenticated
+!
+!
+!
+!
+!
+crypto pki trustpoint TP-self-signed-3627739163
+ enrollment selfsigned
+ subject-name cn=IOS-Self-Signed-Certificate-3627739163
+ revocation-check none
+ rsakeypair TP-self-signed-3627739163
+!
+!
+crypto pki certificate chain TP-self-signed-3627739163
+ certificate self-signed 01
+  30820330 30820218 A0030201 02020101 300D0609 2A864886 F70D0101 05050030
+  31312F30 2D060355 04031326 494F532D 53656C66 2D536967 6E65642D 43657274
+  69666963 6174652D 33363237 37333931 3633301E 170D3139 30373236 32313239
+  32375A17 0D323030 31303130 30303030 305A3031 312F302D 06035504 03132649
+  4F532D53 656C662D 5369676E 65642D43 65727469 66696361 74652D33 36323737
+  33393136 33308201 22300D06 092A8648 86F70D01 01010500 0382010F 00308201
+  0A028201 0100D63B 1D3C974C 36AE5A8B 80DD31A3 9687EF30 3830AE58 6EE78025
+  0D552FC1 5BCA25B7 961F31EE C47987D1 86F16DB1 96654941 1222F285 884025D4
+  779F438E F2F14238 5D454655 21B53BAD A3867E09 F03A0DEA F15398A2 D5F6E12A
+  25F11FAC FD005B6A 8D5A7DE0 8E373602 61B4AD67 6209EB5B 426F2C76 52D173A9
+  3D1848E7 BC8D3DB8 BB6EEB36 A3D34DB1 BD34DD32 663321B0 57E2F5A2 5ADA916A
+  7E09E387 87ADC1FF C4243B8D 023451C5 7676969B 115A7EAA 232CBD08 DC776E20
+  59F5E3B7 4ADCC4B0 A7BF8C47 4705C5B3 EA7A6DBD DA90499F C0FA0217 6AD39251
+  05A35917 AA4C255E A9286F61 F328A777 617AC4C8 29068AFF D6161688 53A309AC
+  08770385 BC170203 010001A3 53305130 0F060355 1D130101 FF040530 030101FF
+  301F0603 551D2304 18301680 14E1B7DD 7934F750 7BEAE6C4 1DDF3946 CBEB7A7B
+  20301D06 03551D0E 04160414 E1B7DD79 34F7507B EAE6C41D DF3946CB EB7A7B20
+  300D0609 2A864886 F70D0101 05050003 82010100 B1D1D9C2 8543F63A 222519D5
+  2CA66444 5BCFE9AA B5034D65 B3835D83 86758C1D CA5344CA 6E8E7553 0FCFB00A
+  D5FEC9E7 1B0D705A 675D6220 E80CA56B 512AFCD1 4544B47F 4791D368 481669B5
+  13A7A365 285132CB 6D181C80 4531D4B2 A2469CF8 09E7A36B 4D678B2C 82839398
+  0D8A2CFF 4DA91424 63F3C25E C93A01EC 77068275 512526B1 9D6D6ACB E5A6ACF6
+  E6AC0532 67C51C34 67BB6E8E B05E3B09 FC4D3E0D D7F6ABAF 15CB80C3 53F5ADD9
+  51045691 965415C8 7890BCD3 C8449134 E783F39E 69F2E9A5 BB45BDCE 6BB88C7B
+  9E0FD637 83DA9642 C661D25E 4B223CB3 E89E4C28 CA7C52C4 17AAC6E3 8D2CFE98
+  F2684D8C D7BDEB08 9A5FD174 37C053E6 E0904E34
+  	quit
+
+
+!
+!
+!
+!
+!
+!
+!
+license udi pid CSR1000V sn 98JDYD9B8WR
+diagnostic bootup level minimal
+!
+spanning-tree extend system-id
+!
+!
+username cisco privilege 15 password 0 cisco
+!
+redundancy
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+interface Loopback123
+ ip address 192.168.123.4 255.255.255.255
+!
+interface GigabitEthernet1
+ no ip address
+ negotiation auto
+!
+interface GigabitEthernet2
+ ip address 44.44.44.2 255.255.255.0
+ negotiation auto
+ no mop enabled
+ no mop sysid
+!
+interface GigabitEthernet3
+ no ip address
+ shutdown
+ negotiation auto
+ no mop enabled
+ no mop sysid
+!
+interface GigabitEthernet4
+ no ip address
+ shutdown
+ negotiation auto
+ no mop enabled
+ no mop sysid
+!
+!
+router eigrp 102
+ network 44.44.44.0 0.0.0.255
+ network 172.16.5.0 0.0.0.255
+ network 192.168.123.4 0.0.0.0
+!
+!
+virtual-service csr_mgmt
+!
+ip forward-protocol nd
+ip http server
+ip http authentication local
+ip http secure-server
+!
+ip ssh version 2
+!
+!
+!
+!
+!
+!
+control-plane
+!
+ !
+ !
+ !
+ !
+!
+!
+!
+!
+!
+line con 0
+ stopbits 1
+line vty 0 4
+ login local
+ transport input ssh
+line vty 5 15
+ login local
+ transport input ssh
+!
+!
+!
+!
+!
+!
+end

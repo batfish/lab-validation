@@ -1,0 +1,171 @@
+! Command: show running-config
+! device: d3-undefined-ref-out (vEOS, EOS-4.21.1.1F)
+!
+! boot system flash:/vEOS-lab.swi
+!
+transceiver qsfp default-mode 4x10G
+!
+hostname d3-undefined-ref-out
+!
+spanning-tree mode mstp
+!
+aaa authorization exec default local
+!
+no aaa root
+!
+username admin privilege 15 role network-admin secret sha512 $6$odaWRJCcm4YYFXgO$AG8OaM0.70Z4rhLbvI7AKlLXDQhF0Mh4LmVkzWmgYdYf/YHTpurTc/5rwrMaYgoJHsq11PlHchly9fVLicr1l1
+!
+interface Ethernet1
+   no switchport
+   ip address 10.13.11.2/24
+!
+interface Ethernet2
+   no switchport
+   ip address 10.13.22.2/24
+!
+interface Ethernet3
+   no switchport
+   ip address 10.13.33.2/24
+!
+interface Ethernet4
+   no switchport
+   ip address 10.13.44.2/24
+!
+interface Ethernet5
+   no switchport
+   ip address 10.13.55.2/24
+!
+interface Ethernet6
+   no switchport
+   ip address 10.13.66.2/24
+!
+interface Ethernet7
+   no switchport
+   ip address 10.13.77.2/24
+!
+interface Ethernet8
+!
+interface Ethernet9
+!
+interface Ethernet10
+!
+interface Ethernet11
+!
+interface Ethernet12
+!
+interface Ethernet13
+!
+interface Ethernet14
+!
+interface Ethernet15
+!
+interface Loopback1
+   ip address 172.16.3.1/32
+!
+interface Loopback2
+   ip address 172.16.3.2/32
+!
+interface Loopback3
+   ip address 172.16.3.3/32
+!
+interface Loopback4
+   ip address 172.16.3.4/32
+!
+interface Loopback5
+   ip address 172.16.3.5/32
+!
+interface Loopback6
+   ip address 172.16.3.6/32
+!
+interface Loopback7
+   ip address 172.16.3.7/32
+!
+interface Loopback123
+   ip address 192.168.123.3/32
+!
+interface Management1
+!
+ip route 0.0.0.0/0 10.13.11.1
+!
+ip routing
+!
+ip prefix-list normal_defined seq 10 permit 172.16.3.6/32
+ip prefix-list normal_defined_pg_defined seq 10 permit 172.16.3.7/32
+ip prefix-list normal_defined_pg_na seq 10 permit 172.16.3.1/32
+ip prefix-list normal_defined_pg_na seq 20 permit 192.168.122.0/24
+ip prefix-list normal_na_pg_defined seq 10 permit 172.16.3.2/32
+ip prefix-list normal_undefined_pg_defined seq 10 permit 172.16.3.5/32
+ip prefix-list redist-loopback seq 10 permit 172.16.3.1/32
+ip prefix-list redist-loopback seq 20 permit 172.16.3.2/32
+ip prefix-list redist-loopback seq 30 permit 172.16.3.3/32
+ip prefix-list redist-loopback seq 40 permit 172.16.3.4/32
+ip prefix-list redist-loopback seq 50 permit 172.16.3.5/32
+ip prefix-list redist-loopback seq 60 permit 172.16.3.6/32
+ip prefix-list redist-loopback seq 70 permit 172.16.3.7/32
+!
+route-map normal_defined permit 10
+   match ip address prefix-list normal_defined
+   set as-path prepend 36
+!
+route-map normal_defined_pg_defined_1 permit 10
+   match ip address prefix-list normal_defined_pg_defined
+   set as-path prepend 371
+!
+route-map normal_defined_pg_defined_2 permit 10
+   match ip address prefix-list normal_defined_pg_defined
+   set as-path prepend 372
+!
+route-map normal_defined_pg_na permit 10
+   match ip address prefix-list normal_defined_pg_na
+   set as-path prepend 31
+!
+route-map normal_na_pg_defined permit 10
+   match ip address prefix-list normal_na_pg_defined
+   set as-path prepend 32
+!
+route-map normal_undefined_pg_defined permit 10
+   match ip address prefix-list normal_undefined_pg_defined
+   set as-path prepend 35
+!
+route-map redist-loopback permit 10
+   match ip address prefix-list redist-loopback
+!
+router bgp 65003
+   neighbor normal_defined_pg_defined peer-group
+   neighbor normal_defined_pg_defined remote-as 65001
+   neighbor normal_defined_pg_defined route-map normal_defined_pg_defined_2 out
+   neighbor normal_defined_pg_defined maximum-routes 12000
+   neighbor normal_defined_pg_undefined peer-group
+   neighbor normal_defined_pg_undefined remote-as 65001
+   neighbor normal_defined_pg_undefined route-map normal_defined_pg_undefined out
+   neighbor normal_defined_pg_undefined maximum-routes 12000
+   neighbor normal_na_pg_defined peer-group
+   neighbor normal_na_pg_defined remote-as 65001
+   neighbor normal_na_pg_defined route-map normal_na_pg_defined out
+   neighbor normal_na_pg_defined maximum-routes 12000
+   neighbor normal_na_pg_undefined peer-group
+   neighbor normal_na_pg_undefined remote-as 65001
+   neighbor normal_na_pg_undefined route-map normal_na_pg_undefined out
+   neighbor normal_na_pg_undefined maximum-routes 12000
+   neighbor normal_undefined_pg_defined peer-group
+   neighbor normal_undefined_pg_defined remote-as 65001
+   neighbor normal_undefined_pg_defined route-map normal_undefined_pg_defined out
+   neighbor normal_undefined_pg_defined maximum-routes 12000
+   neighbor 10.13.11.1 remote-as 65001
+   neighbor 10.13.11.1 route-map normal_defined_pg_na out
+   neighbor 10.13.11.1 maximum-routes 12000
+   neighbor 10.13.22.1 peer-group normal_na_pg_defined
+   neighbor 10.13.33.1 remote-as 65001
+   neighbor 10.13.33.1 route-map normal_undefined_pg_na out
+   neighbor 10.13.33.1 maximum-routes 12000
+   neighbor 10.13.44.1 peer-group normal_na_pg_undefined
+   neighbor 10.13.55.1 peer-group normal_undefined_pg_defined
+   neighbor 10.13.55.1 route-map normal_undefined out
+   neighbor 10.13.66.1 peer-group normal_defined_pg_undefined
+   neighbor 10.13.66.1 route-map normal_defined out
+   neighbor 10.13.77.1 peer-group normal_defined_pg_defined
+   neighbor 10.13.77.1 route-map normal_defined_pg_defined_1 out
+   network 192.168.123.3/32
+   redistribute connected route-map redist-loopback
+!
+end

@@ -1,0 +1,228 @@
+Building configuration...
+
+Current configuration : 2705 bytes
+!
+! Last configuration change at 01:23:19 UTC Wed Jan 27 2021
+!
+version 16.4
+service timestamps debug datetime msec
+service timestamps log datetime msec
+no platform punt-keepalive disable-kernel-core
+platform console serial
+!
+hostname d2_iosxe
+!
+boot-start-marker
+boot-end-marker
+!
+!
+!
+no aaa new-model
+!
+!
+!
+!
+!
+!
+!
+!
+!
+
+
+
+ip domain name diolap.com
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+subscriber templating
+!
+!
+!
+multilink bundle-name authenticated
+!
+!
+!
+!
+!
+!
+
+
+!
+!
+!
+!
+!
+!
+!
+license udi pid CSR1000V sn 95TNTTQQ12Q
+diagnostic bootup level minimal
+!
+spanning-tree extend system-id
+!
+!
+username cisco privilege 15 password 0 cisco
+!
+redundancy
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+interface Loopback123
+ ip address 192.168.123.2 255.255.255.255
+!
+interface GigabitEthernet1
+ ip address 10.12.11.2 255.255.255.0
+ negotiation auto
+ no mop enabled
+ no mop sysid
+!
+interface GigabitEthernet2
+ ip address 10.23.21.1 255.255.255.0
+ negotiation auto
+ no mop enabled
+ no mop sysid
+!
+interface GigabitEthernet3
+ ip address 10.24.31.1 255.255.255.0
+ negotiation auto
+ no mop enabled
+ no mop sysid
+!
+interface GigabitEthernet4
+ no ip address
+ negotiation auto
+ no mop enabled
+ no mop sysid
+!
+interface GigabitEthernet5
+ no ip address
+ shutdown
+ negotiation auto
+ no mop enabled
+ no mop sysid
+!
+interface GigabitEthernet6
+ no ip address
+ shutdown
+ negotiation auto
+ no mop enabled
+ no mop sysid
+!
+interface GigabitEthernet7
+ no ip address
+ shutdown
+ negotiation auto
+ no mop enabled
+ no mop sysid
+!
+interface GigabitEthernet8
+ no ip address
+ shutdown
+ negotiation auto
+ no mop enabled
+ no mop sysid
+!
+interface GigabitEthernet9
+ no ip address
+ shutdown
+ negotiation auto
+ no mop enabled
+ no mop sysid
+!
+interface GigabitEthernet10
+ no ip address
+ shutdown
+ negotiation auto
+ no mop enabled
+ no mop sysid
+!
+router bgp 65002
+ bgp log-neighbor-changes
+ network 192.168.123.2 mask 255.255.255.255
+ neighbor 10.12.11.1 remote-as 65001
+ neighbor 10.12.11.1 soft-reconfiguration inbound
+ neighbor 10.12.11.1 route-map PP_222_IN in
+ neighbor 10.23.21.2 remote-as 65001
+ neighbor 10.23.21.2 soft-reconfiguration inbound
+ neighbor 10.24.31.2 remote-as 65001
+ neighbor 10.24.31.2 soft-reconfiguration inbound
+!
+!
+virtual-service csr_mgmt
+!
+ip forward-protocol nd
+ip http server
+ip http authentication local
+ip http secure-server
+!
+ip ssh version 2
+!
+!
+!
+ip prefix-list PP_222_IN seq 5 permit 192.168.123.1/32
+!
+!
+route-map PP_222_IN permit 10
+ match ip address prefix-list PP_222_IN
+ set as-path prepend 222
+!
+route-map PP_222_IN permit 20
+!
+!
+!
+control-plane
+!
+ !
+ !
+ !
+ !
+!
+!
+!
+!
+!
+line con 0
+ stopbits 1
+line vty 0 4
+ login local
+ transport input ssh
+line vty 5 15
+ login local
+ transport input ssh
+!
+!
+!
+!
+!
+!
+end

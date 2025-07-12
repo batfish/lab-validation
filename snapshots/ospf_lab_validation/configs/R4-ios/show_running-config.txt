@@ -1,0 +1,200 @@
+Building configuration...
+
+Current configuration : 2440 bytes
+!
+! Last configuration change at 23:11:01 UTC Fri Nov 15 2019
+!
+version 15.2
+service timestamps debug datetime msec
+service timestamps log datetime msec
+!
+hostname R4-ios
+!
+boot-start-marker
+boot-end-marker
+!
+!
+!
+aaa new-model
+!
+!
+aaa authorization exec default local
+!
+!
+!
+!
+!
+aaa session-id common
+no ip icmp rate-limit unreachable
+ip cef
+!
+!
+!
+!
+!
+!
+no ip domain lookup
+ip domain name demo.com
+no ipv6 cef
+!
+!
+multilink bundle-name authenticated
+!
+!
+!
+!
+!
+!
+!
+username demo privilege 15 secret 5 $1$bOPC$Ledl3D.5Xx8hkXUgobF0i.
+username cisco privilege 15 password 0 cisco
+!
+!
+ip tcp synwait-time 5
+ip ssh version 2
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+interface Loopback0
+ ip address 4.4.4.4 255.255.255.255
+!
+interface Loopback123
+ ip address 192.168.123.4 255.255.255.0
+!
+interface Ethernet0/0
+ no ip address
+ shutdown
+ duplex auto
+!
+interface GigabitEthernet0/0
+ no ip address
+ shutdown
+ media-type gbic
+ speed 1000
+ duplex full
+ negotiation auto
+!
+interface Ethernet1/0
+ no ip address
+ shutdown
+ duplex full
+!
+interface Ethernet1/1
+ no ip address
+ shutdown
+ duplex full
+!
+interface Ethernet1/2
+ no ip address
+ shutdown
+ duplex full
+!
+interface Ethernet1/3
+ no ip address
+ shutdown
+ duplex full
+!
+interface Ethernet1/4
+ no ip address
+ shutdown
+ duplex full
+!
+interface Ethernet1/5
+ no ip address
+ shutdown
+ duplex full
+!
+interface Ethernet1/6
+ no ip address
+ shutdown
+ duplex full
+!
+interface Ethernet1/7
+ no ip address
+ shutdown
+ duplex full
+!
+interface Ethernet2/0
+ ip address 14.2.0.2 255.255.255.0
+ ip ospf network point-to-point
+ duplex full
+!
+interface Ethernet2/1
+ no ip address
+ shutdown
+ duplex full
+!
+interface Ethernet2/2
+ no ip address
+ shutdown
+ duplex full
+!
+interface Ethernet2/3
+ no ip address
+ shutdown
+ duplex full
+!
+interface Ethernet2/4
+ no ip address
+ shutdown
+ duplex full
+!
+interface Ethernet2/5
+ no ip address
+ shutdown
+ duplex full
+!
+interface Ethernet2/6
+ no ip address
+ shutdown
+ duplex full
+!
+interface Ethernet2/7
+ no ip address
+ shutdown
+ duplex full
+!
+router ospf 4
+ router-id 4.4.4.4
+ area 14 stub
+ network 4.4.4.4 0.0.0.0 area 14
+ network 14.2.0.0 0.0.0.255 area 14
+ network 192.168.123.4 0.0.0.0 area 14
+!
+ip forward-protocol nd
+!
+!
+no ip http server
+no ip http secure-server
+!
+!
+!
+!
+!
+control-plane
+!
+!
+line con 0
+ exec-timeout 0 0
+ privilege level 15
+ logging synchronous
+ stopbits 1
+line aux 0
+ exec-timeout 0 0
+ privilege level 15
+ logging synchronous
+ stopbits 1
+line vty 0 4
+ transport input ssh
+!
+!
+end

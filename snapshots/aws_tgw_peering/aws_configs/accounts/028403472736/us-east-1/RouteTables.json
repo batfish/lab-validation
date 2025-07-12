@@ -1,0 +1,87 @@
+{
+ "RouteTables": [
+  {
+   "Associations": [
+    {
+     "AssociationState": {
+      "State": "associated"
+     },
+     "Main": true,
+     "RouteTableAssociationId": "rtbassoc-05ab0bbb52c5a348d",
+     "RouteTableId": "rtb-05fa9b5813d9f048b"
+    }
+   ],
+   "OwnerId": "028403472736",
+   "PropagatingVgws": [],
+   "RouteTableId": "rtb-05fa9b5813d9f048b",
+   "Routes": [
+    {
+     "DestinationCidrBlock": "10.1.0.0/16",
+     "GatewayId": "local",
+     "Origin": "CreateRouteTable",
+     "State": "active"
+    }
+   ],
+   "Tags": [],
+   "VpcId": "vpc-0b8be05eff6c69690"
+  },
+  {
+   "Associations": [
+    {
+     "AssociationState": {
+      "State": "associated"
+     },
+     "Main": false,
+     "RouteTableAssociationId": "rtbassoc-087b298fb9954b268",
+     "RouteTableId": "rtb-0d49a7621d86138cd",
+     "SubnetId": "subnet-0342b9ce351a737d9"
+    },
+    {
+     "AssociationState": {
+      "State": "associated"
+     },
+     "Main": false,
+     "RouteTableAssociationId": "rtbassoc-0c927c4cdd1ae353a",
+     "RouteTableId": "rtb-0d49a7621d86138cd",
+     "SubnetId": "subnet-0e3595b1972c9e9b9"
+    }
+   ],
+   "OwnerId": "028403472736",
+   "PropagatingVgws": [],
+   "RouteTableId": "rtb-0d49a7621d86138cd",
+   "Routes": [
+    {
+     "DestinationCidrBlock": "10.1.0.0/16",
+     "GatewayId": "local",
+     "Origin": "CreateRouteTable",
+     "State": "active"
+    },
+    {
+     "DestinationCidrBlock": "10.2.0.0/16",
+     "Origin": "CreateRoute",
+     "State": "active",
+     "TransitGatewayId": "tgw-0cacbf5ed9fe034e7"
+    },
+    {
+     "DestinationCidrBlock": "10.3.0.0/16",
+     "Origin": "CreateRoute",
+     "State": "active",
+     "TransitGatewayId": "tgw-0cacbf5ed9fe034e7"
+    },
+    {
+     "DestinationCidrBlock": "0.0.0.0/0",
+     "GatewayId": "igw-00aff9512e92f3fce",
+     "Origin": "CreateRoute",
+     "State": "active"
+    }
+   ],
+   "Tags": [
+    {
+     "Key": "Name",
+     "Value": "account-igw"
+    }
+   ],
+   "VpcId": "vpc-0b8be05eff6c69690"
+  }
+ ]
+}

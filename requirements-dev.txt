@@ -1,0 +1,25 @@
+# Development dependencies
+-r requirements.txt
+
+# Testing
+pytest>=6.0
+pytest-cov
+
+# Code quality
+mypy>=0.900
+pandas-stubs
+types-PyYAML
+black>=22.0
+pre-commit
+
+# Build tools
+build
+
+# Documentation
+sphinx
+sphinx-rtd-theme
+
+# Optional: Ansible integration
+ansible>=2.10.0
+paramiko>=2.7.0
+netmiko>=3.4.0

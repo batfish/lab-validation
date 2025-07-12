@@ -1,0 +1,46 @@
+{
+ "TransitGatewayPropagations": [
+  {
+   "TransitGatewayRouteTableId": "tgw-rtb-078cbb0e0bd2fc0a5",
+   "TransitGatewayRouteTablePropagations": []
+  },
+  {
+   "TransitGatewayRouteTableId": "tgw-rtb-0b3c966dd724cb02b",
+   "TransitGatewayRouteTablePropagations": [
+    {
+     "ResourceId": "vpc-0f52dfe0748da9e28",
+     "ResourceType": "vpc",
+     "State": "enabled",
+     "TransitGatewayAttachmentId": "tgw-attach-08605195ec52513db"
+    },
+    {
+     "ResourceId": "vpc-078e17ef20aeaf177",
+     "ResourceType": "vpc",
+     "State": "enabled",
+     "TransitGatewayAttachmentId": "tgw-attach-0e893493bb401c028"
+    }
+   ]
+  },
+  {
+   "TransitGatewayRouteTableId": "tgw-rtb-0cc3038ae8ad0d861",
+   "TransitGatewayRouteTablePropagations": [
+    {
+     "ResourceId": "vpc-078e17ef20aeaf177",
+     "ResourceType": "vpc",
+     "State": "enabled",
+     "TransitGatewayAttachmentId": "tgw-attach-03569c7cdd111c557"
+    },
+    {
+     "ResourceId": "vpc-0f52dfe0748da9e28",
+     "ResourceType": "vpc",
+     "State": "enabled",
+     "TransitGatewayAttachmentId": "tgw-attach-03d80b02b42819019"
+    }
+   ]
+  },
+  {
+   "TransitGatewayRouteTableId": "tgw-rtb-0edf0c8f11a493f0d",
+   "TransitGatewayRouteTablePropagations": []
+  }
+ ]
+}

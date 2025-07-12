@@ -1,0 +1,35 @@
+Codes: L - local, C - connected, S - static, R - RIP, M - mobile, B - BGP
+       D - EIGRP, EX - EIGRP external, O - OSPF, IA - OSPF inter area
+       N1 - OSPF NSSA external type 1, N2 - OSPF NSSA external type 2
+       E1 - OSPF external type 1, E2 - OSPF external type 2
+       i - IS-IS, su - IS-IS summary, L1 - IS-IS level-1, L2 - IS-IS level-2
+       ia - IS-IS inter area, * - candidate default, U - per-user static route
+       o - ODR, P - periodic downloaded static route, H - NHRP, l - LISP
+       a - application route
+       + - replicated route, % - next hop override, p - overrides from PfR
+
+Gateway of last resort is not set
+
+      10.0.0.0/8 is variably subnetted, 14 subnets, 2 masks
+C        10.12.11.0/24 is directly connected, GigabitEthernet1
+L        10.12.11.2/32 is directly connected, GigabitEthernet1
+C        10.12.22.0/24 is directly connected, GigabitEthernet2
+L        10.12.22.2/32 is directly connected, GigabitEthernet2
+C        10.12.33.0/24 is directly connected, GigabitEthernet3
+L        10.12.33.2/32 is directly connected, GigabitEthernet3
+C        10.12.44.0/24 is directly connected, GigabitEthernet4
+L        10.12.44.2/32 is directly connected, GigabitEthernet4
+C        10.12.55.0/24 is directly connected, GigabitEthernet5
+L        10.12.55.2/32 is directly connected, GigabitEthernet5
+C        10.12.66.0/24 is directly connected, GigabitEthernet6
+L        10.12.66.2/32 is directly connected, GigabitEthernet6
+C        10.12.77.0/24 is directly connected, GigabitEthernet7
+L        10.12.77.2/32 is directly connected, GigabitEthernet7
+      172.16.0.0/32 is subnetted, 4 subnets
+B        172.16.1.1 [20/0] via 10.12.11.1, 00:32:31
+B        172.16.1.2 [20/0] via 10.12.22.1, 00:17:05
+B        172.16.1.6 [20/0] via 10.12.66.1, 00:17:05
+B        172.16.1.7 [20/0] via 10.12.77.1, 00:17:05
+B     192.168.122.0/24 [20/0] via 10.12.11.1, 00:32:31
+      192.168.123.0/32 is subnetted, 1 subnets
+C        192.168.123.2 is directly connected, Loopback123

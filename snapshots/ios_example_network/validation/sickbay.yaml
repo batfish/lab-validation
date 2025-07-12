@@ -1,0 +1,10 @@
+entries:
+  - hostname: "as2border[12]|as2core[12]|as2dist[12]"
+    test_name: test_main_rib_routes
+    skip:
+      reason: https://github.com/batfish/lab-validation/issues/39
+
+  - hostname: as2border1|as2core1|as2dist1|as2border2|as2dist2
+    test_name: test_bgp_rib_routes
+    skip:
+      reason: BF has some extra routes, need to investigate more?

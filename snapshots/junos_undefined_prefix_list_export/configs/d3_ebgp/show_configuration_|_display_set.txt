@@ -1,0 +1,26 @@
+set version 17.4R1.16
+set system host-name d3_ebgp
+set system root-authentication encrypted-password "$6$kPg0Y2Id$BVGsU/HRSE3w/Ybv26GVAMX8HA3fMFLjgJDqOinH9OvlKVNq4H4mS0MaVLEWTOfP.iqySXro3pb0/vCwOSlOL1"
+set system services ssh root-login allow
+set system syslog user * any emergency
+set system syslog file messages any notice
+set system syslog file messages authorization info
+set system syslog file interactive-commands interactive-commands any
+set system extensions providers juniper license-type juniper deployment-scope commercial
+set system extensions providers chef license-type juniper deployment-scope commercial
+set interfaces xe-0/0/8 unit 0 family inet address 10.23.11.2/24
+set interfaces em0 unit 0 family inet
+set interfaces em1 unit 0 family inet address 169.254.0.2/24
+set interfaces lo0 unit 0 family inet address 192.168.123.3/32
+set forwarding-options storm-control-profiles default all
+set routing-options autonomous-system 65003
+set protocols bgp export ALLOW_192_168_123_3
+set protocols bgp group EBGP neighbor 10.23.11.1 peer-as 65002
+set protocols lldp interface all
+set protocols igmp-snooping vlan default
+set policy-options prefix-list ALLOW_192_168_123_3 192.168.123.3/32
+set policy-options policy-statement ALLOW_192_168_123_3 term 1 from prefix-list ALLOW_192_168_123_3
+set policy-options policy-statement ALLOW_192_168_123_3 term 1 then accept
+set vlans default vlan-id 1
+
+{master:0}

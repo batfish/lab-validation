@@ -1,0 +1,30 @@
+set version 17.4R1.16
+set system host-name a02
+set system root-authentication encrypted-password "$6$dhLhRnrZ$KBaQrVe0n9MJEeQhk0nMP20Kui459zW.JS86aMOtPpn1H2PViqxul3ISa/ISU53FC1lb1ouqV7f0RdyTOoPcR."
+set system services ssh root-login allow
+set system syslog user * any emergency
+set system syslog file messages any notice
+set system syslog file messages authorization info
+set system syslog file interactive-commands interactive-commands any
+set system extensions providers juniper license-type juniper deployment-scope commercial
+set system extensions providers chef license-type juniper deployment-scope commercial
+set interfaces xe-0/0/0 unit 0 family inet address 10.1.0.0/31
+set interfaces xe-0/0/1 unit 0 family inet address 10.2.0.0/31
+set interfaces xe-0/0/2 unit 0 family inet address 10.7.7.1/24
+set interfaces xe-0/0/3 unit 0 family inet address 10.8.8.1/24
+set interfaces xe-0/0/4 unit 0 family inet address 172.24.0.217/24
+set interfaces em0 unit 0 family inet
+set interfaces em1 unit 0 family inet address 169.254.0.2/24
+set interfaces lo0 unit 0 family inet address 10.9.9.9/32
+set forwarding-options storm-control-profiles default all
+set routing-options router-id 172.24.0.217
+set protocols ospf area 0.0.0.0 area-range 10.8.0.0/16 restrict
+set protocols ospf area 0.0.0.0 area-range 10.9.0.0/16 override-metric 100
+set protocols ospf area 0.0.0.0 area-range 10.7.0.0/16
+set protocols ospf area 0.0.0.0 interface xe-0/0/0.0
+set protocols ospf area 0.0.0.0 interface lo0.0 passive
+set protocols ospf area 0.0.0.0 interface xe-0/0/2.0 passive
+set protocols ospf area 0.0.0.0 interface xe-0/0/3.0 passive
+set protocols ospf area 0.0.0.2 interface xe-0/0/1.0
+
+{master:0}

@@ -1,0 +1,60 @@
+{
+    "vrfs": {
+        "default": {
+            "allRoutesProgrammedHardware": true,
+            "allRoutesProgrammedKernel": true,
+            "defaultRouteState": "notSet",
+            "routes": {
+                "10.150.0.0/16": {
+                    "directlyConnected": true,
+                    "hardwareProgrammed": true,
+                    "kernelProgrammed": true,
+                    "routeAction": "forward",
+                    "routeType": "connected",
+                    "vias": [
+                        {
+                            "interface": "Management1"
+                        }
+                    ]
+                },
+                "10.34.11.0/24": {
+                    "directlyConnected": true,
+                    "hardwareProgrammed": true,
+                    "kernelProgrammed": true,
+                    "routeAction": "forward",
+                    "routeType": "connected",
+                    "vias": [
+                        {
+                            "interface": "Ethernet1"
+                        }
+                    ]
+                },
+                "172.16.34.1/32": {
+                    "directlyConnected": true,
+                    "hardwareProgrammed": true,
+                    "kernelProgrammed": true,
+                    "routeAction": "forward",
+                    "routeType": "connected",
+                    "vias": [
+                        {
+                            "interface": "Loopback0"
+                        }
+                    ]
+                },
+                "172.16.34.2/32": {
+                    "directlyConnected": true,
+                    "hardwareProgrammed": true,
+                    "kernelProgrammed": true,
+                    "routeAction": "forward",
+                    "routeType": "connected",
+                    "vias": [
+                        {
+                            "interface": "Loopback1"
+                        }
+                    ]
+                }
+            },
+            "routingDisabled": false
+        }
+    }
+}

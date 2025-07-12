@@ -1,0 +1,410 @@
+{
+ "Subnets": [
+  {
+   "AssignIpv6AddressOnCreation": false,
+   "AvailabilityZone": "us-east-1d",
+   "AvailabilityZoneId": "use1-az1",
+   "AvailableIpAddressCount": 250,
+   "CidrBlock": "10.2.104.0/24",
+   "DefaultForAz": false,
+   "Ipv6CidrBlockAssociationSet": [],
+   "MapPublicIpOnLaunch": false,
+   "OwnerId": "028403472736",
+   "State": "available",
+   "SubnetArn": "arn:aws:ec2:us-east-1:028403472736:subnet/subnet-045337a9d4c78b263",
+   "SubnetId": "subnet-045337a9d4c78b263",
+   "Tags": [
+    {
+     "Key": "Environment",
+     "Value": "dev"
+    },
+    {
+     "Key": "Terraform",
+     "Value": "true"
+    },
+    {
+     "Key": "Name",
+     "Value": "dev-priv-az4-sub"
+    }
+   ],
+   "VpcId": "vpc-0a96945f1dbc5b2ac"
+  },
+  {
+   "AssignIpv6AddressOnCreation": false,
+   "AvailabilityZone": "us-east-1a",
+   "AvailabilityZoneId": "use1-az2",
+   "AvailableIpAddressCount": 250,
+   "CidrBlock": "10.1.100.0/24",
+   "DefaultForAz": false,
+   "Ipv6CidrBlockAssociationSet": [],
+   "MapPublicIpOnLaunch": false,
+   "OwnerId": "028403472736",
+   "State": "available",
+   "SubnetArn": "arn:aws:ec2:us-east-1:028403472736:subnet/subnet-0ee85b20db3839434",
+   "SubnetId": "subnet-0ee85b20db3839434",
+   "Tags": [
+    {
+     "Key": "Name",
+     "Value": "prod-jump-sub"
+    },
+    {
+     "Key": "Environment",
+     "Value": "prod"
+    },
+    {
+     "Key": "Terraform",
+     "Value": "true"
+    }
+   ],
+   "VpcId": "vpc-0e578e50686443ca0"
+  },
+  {
+   "AssignIpv6AddressOnCreation": false,
+   "AvailabilityZone": "us-east-1a",
+   "AvailabilityZoneId": "use1-az2",
+   "AvailableIpAddressCount": 250,
+   "CidrBlock": "10.1.101.0/24",
+   "DefaultForAz": false,
+   "Ipv6CidrBlockAssociationSet": [],
+   "MapPublicIpOnLaunch": false,
+   "OwnerId": "028403472736",
+   "State": "available",
+   "SubnetArn": "arn:aws:ec2:us-east-1:028403472736:subnet/subnet-050b09f1d9d277ecc",
+   "SubnetId": "subnet-050b09f1d9d277ecc",
+   "Tags": [
+    {
+     "Key": "Terraform",
+     "Value": "true"
+    },
+    {
+     "Key": "Environment",
+     "Value": "prod"
+    },
+    {
+     "Key": "Name",
+     "Value": "prod-priv-az1-sub"
+    }
+   ],
+   "VpcId": "vpc-0e578e50686443ca0"
+  },
+  {
+   "AssignIpv6AddressOnCreation": false,
+   "AvailabilityZone": "us-east-1c",
+   "AvailabilityZoneId": "use1-az6",
+   "AvailableIpAddressCount": 250,
+   "CidrBlock": "10.1.203.0/24",
+   "DefaultForAz": false,
+   "Ipv6CidrBlockAssociationSet": [],
+   "MapPublicIpOnLaunch": false,
+   "OwnerId": "028403472736",
+   "State": "available",
+   "SubnetArn": "arn:aws:ec2:us-east-1:028403472736:subnet/subnet-0280629ca5dbc9bf7",
+   "SubnetId": "subnet-0280629ca5dbc9bf7",
+   "Tags": [
+    {
+     "Key": "Environment",
+     "Value": "prod"
+    },
+    {
+     "Key": "Terraform",
+     "Value": "true"
+    },
+    {
+     "Key": "Name",
+     "Value": "prod-tgw-az3-sub"
+    }
+   ],
+   "VpcId": "vpc-0e578e50686443ca0"
+  },
+  {
+   "AssignIpv6AddressOnCreation": false,
+   "AvailabilityZone": "us-east-1a",
+   "AvailabilityZoneId": "use1-az2",
+   "AvailableIpAddressCount": 250,
+   "CidrBlock": "10.1.201.0/24",
+   "DefaultForAz": false,
+   "Ipv6CidrBlockAssociationSet": [],
+   "MapPublicIpOnLaunch": false,
+   "OwnerId": "028403472736",
+   "State": "available",
+   "SubnetArn": "arn:aws:ec2:us-east-1:028403472736:subnet/subnet-01cd4a0ff99cb799a",
+   "SubnetId": "subnet-01cd4a0ff99cb799a",
+   "Tags": [
+    {
+     "Key": "Terraform",
+     "Value": "true"
+    },
+    {
+     "Key": "Name",
+     "Value": "prod-tgw-az1-sub"
+    },
+    {
+     "Key": "Environment",
+     "Value": "prod"
+    }
+   ],
+   "VpcId": "vpc-0e578e50686443ca0"
+  },
+  {
+   "AssignIpv6AddressOnCreation": false,
+   "AvailabilityZone": "us-east-1a",
+   "AvailabilityZoneId": "use1-az2",
+   "AvailableIpAddressCount": 250,
+   "CidrBlock": "10.1.1.0/24",
+   "DefaultForAz": false,
+   "Ipv6CidrBlockAssociationSet": [],
+   "MapPublicIpOnLaunch": false,
+   "OwnerId": "028403472736",
+   "State": "available",
+   "SubnetArn": "arn:aws:ec2:us-east-1:028403472736:subnet/subnet-09752dac4bffe6253",
+   "SubnetId": "subnet-09752dac4bffe6253",
+   "Tags": [
+    {
+     "Key": "Terraform",
+     "Value": "true"
+    },
+    {
+     "Key": "Name",
+     "Value": "prod-pub-sub"
+    },
+    {
+     "Key": "Environment",
+     "Value": "prod"
+    }
+   ],
+   "VpcId": "vpc-0e578e50686443ca0"
+  },
+  {
+   "AssignIpv6AddressOnCreation": false,
+   "AvailabilityZone": "us-east-1b",
+   "AvailabilityZoneId": "use1-az4",
+   "AvailableIpAddressCount": 250,
+   "CidrBlock": "10.2.102.0/24",
+   "DefaultForAz": false,
+   "Ipv6CidrBlockAssociationSet": [],
+   "MapPublicIpOnLaunch": false,
+   "OwnerId": "028403472736",
+   "State": "available",
+   "SubnetArn": "arn:aws:ec2:us-east-1:028403472736:subnet/subnet-095b7d5edef8309a2",
+   "SubnetId": "subnet-095b7d5edef8309a2",
+   "Tags": [
+    {
+     "Key": "Terraform",
+     "Value": "true"
+    },
+    {
+     "Key": "Environment",
+     "Value": "dev"
+    },
+    {
+     "Key": "Name",
+     "Value": "dev-priv-az2-sub"
+    }
+   ],
+   "VpcId": "vpc-0a96945f1dbc5b2ac"
+  },
+  {
+   "AssignIpv6AddressOnCreation": false,
+   "AvailabilityZone": "us-east-1c",
+   "AvailabilityZoneId": "use1-az6",
+   "AvailableIpAddressCount": 250,
+   "CidrBlock": "10.1.103.0/24",
+   "DefaultForAz": false,
+   "Ipv6CidrBlockAssociationSet": [],
+   "MapPublicIpOnLaunch": false,
+   "OwnerId": "028403472736",
+   "State": "available",
+   "SubnetArn": "arn:aws:ec2:us-east-1:028403472736:subnet/subnet-0b256c7ab9c40a4cb",
+   "SubnetId": "subnet-0b256c7ab9c40a4cb",
+   "Tags": [
+    {
+     "Key": "Environment",
+     "Value": "prod"
+    },
+    {
+     "Key": "Name",
+     "Value": "prod-priv-az3-sub"
+    },
+    {
+     "Key": "Terraform",
+     "Value": "true"
+    }
+   ],
+   "VpcId": "vpc-0e578e50686443ca0"
+  },
+  {
+   "AssignIpv6AddressOnCreation": false,
+   "AvailabilityZone": "us-east-1b",
+   "AvailabilityZoneId": "use1-az4",
+   "AvailableIpAddressCount": 250,
+   "CidrBlock": "10.2.202.0/24",
+   "DefaultForAz": false,
+   "Ipv6CidrBlockAssociationSet": [],
+   "MapPublicIpOnLaunch": false,
+   "OwnerId": "028403472736",
+   "State": "available",
+   "SubnetArn": "arn:aws:ec2:us-east-1:028403472736:subnet/subnet-0d6ff43d8e5488043",
+   "SubnetId": "subnet-0d6ff43d8e5488043",
+   "Tags": [
+    {
+     "Key": "Terraform",
+     "Value": "true"
+    },
+    {
+     "Key": "Name",
+     "Value": "dev-tgw-az2-sub"
+    },
+    {
+     "Key": "Environment",
+     "Value": "dev"
+    }
+   ],
+   "VpcId": "vpc-0a96945f1dbc5b2ac"
+  },
+  {
+   "AssignIpv6AddressOnCreation": false,
+   "AvailabilityZone": "us-east-1a",
+   "AvailabilityZoneId": "use1-az2",
+   "AvailableIpAddressCount": 250,
+   "CidrBlock": "10.2.101.0/24",
+   "DefaultForAz": false,
+   "Ipv6CidrBlockAssociationSet": [],
+   "MapPublicIpOnLaunch": false,
+   "OwnerId": "028403472736",
+   "State": "available",
+   "SubnetArn": "arn:aws:ec2:us-east-1:028403472736:subnet/subnet-02d0c2429a21c620c",
+   "SubnetId": "subnet-02d0c2429a21c620c",
+   "Tags": [
+    {
+     "Key": "Terraform",
+     "Value": "true"
+    },
+    {
+     "Key": "Environment",
+     "Value": "dev"
+    },
+    {
+     "Key": "Name",
+     "Value": "dev-priv-az1-sub"
+    }
+   ],
+   "VpcId": "vpc-0a96945f1dbc5b2ac"
+  },
+  {
+   "AssignIpv6AddressOnCreation": false,
+   "AvailabilityZone": "us-east-1a",
+   "AvailabilityZoneId": "use1-az2",
+   "AvailableIpAddressCount": 250,
+   "CidrBlock": "10.2.1.0/24",
+   "DefaultForAz": false,
+   "Ipv6CidrBlockAssociationSet": [],
+   "MapPublicIpOnLaunch": false,
+   "OwnerId": "028403472736",
+   "State": "available",
+   "SubnetArn": "arn:aws:ec2:us-east-1:028403472736:subnet/subnet-01eaf54823e65b693",
+   "SubnetId": "subnet-01eaf54823e65b693",
+   "Tags": [
+    {
+     "Key": "Environment",
+     "Value": "dev"
+    },
+    {
+     "Key": "Name",
+     "Value": "dev-pub-sub"
+    },
+    {
+     "Key": "Terraform",
+     "Value": "true"
+    }
+   ],
+   "VpcId": "vpc-0a96945f1dbc5b2ac"
+  },
+  {
+   "AssignIpv6AddressOnCreation": false,
+   "AvailabilityZone": "us-east-1a",
+   "AvailabilityZoneId": "use1-az2",
+   "AvailableIpAddressCount": 250,
+   "CidrBlock": "10.2.201.0/24",
+   "DefaultForAz": false,
+   "Ipv6CidrBlockAssociationSet": [],
+   "MapPublicIpOnLaunch": false,
+   "OwnerId": "028403472736",
+   "State": "available",
+   "SubnetArn": "arn:aws:ec2:us-east-1:028403472736:subnet/subnet-04a1bec10b9c08e3b",
+   "SubnetId": "subnet-04a1bec10b9c08e3b",
+   "Tags": [
+    {
+     "Key": "Environment",
+     "Value": "dev"
+    },
+    {
+     "Key": "Name",
+     "Value": "dev-tgw-az1-sub"
+    },
+    {
+     "Key": "Terraform",
+     "Value": "true"
+    }
+   ],
+   "VpcId": "vpc-0a96945f1dbc5b2ac"
+  },
+  {
+   "AssignIpv6AddressOnCreation": false,
+   "AvailabilityZone": "us-east-1b",
+   "AvailabilityZoneId": "use1-az4",
+   "AvailableIpAddressCount": 250,
+   "CidrBlock": "10.1.202.0/24",
+   "DefaultForAz": false,
+   "Ipv6CidrBlockAssociationSet": [],
+   "MapPublicIpOnLaunch": false,
+   "OwnerId": "028403472736",
+   "State": "available",
+   "SubnetArn": "arn:aws:ec2:us-east-1:028403472736:subnet/subnet-08b1e7e4453d9149d",
+   "SubnetId": "subnet-08b1e7e4453d9149d",
+   "Tags": [
+    {
+     "Key": "Environment",
+     "Value": "prod"
+    },
+    {
+     "Key": "Name",
+     "Value": "prod-tgw-az2-sub"
+    },
+    {
+     "Key": "Terraform",
+     "Value": "true"
+    }
+   ],
+   "VpcId": "vpc-0e578e50686443ca0"
+  },
+  {
+   "AssignIpv6AddressOnCreation": false,
+   "AvailabilityZone": "us-east-1b",
+   "AvailabilityZoneId": "use1-az4",
+   "AvailableIpAddressCount": 250,
+   "CidrBlock": "10.1.102.0/24",
+   "DefaultForAz": false,
+   "Ipv6CidrBlockAssociationSet": [],
+   "MapPublicIpOnLaunch": false,
+   "OwnerId": "028403472736",
+   "State": "available",
+   "SubnetArn": "arn:aws:ec2:us-east-1:028403472736:subnet/subnet-0e2db2cb59e638c67",
+   "SubnetId": "subnet-0e2db2cb59e638c67",
+   "Tags": [
+    {
+     "Key": "Environment",
+     "Value": "prod"
+    },
+    {
+     "Key": "Name",
+     "Value": "prod-priv-az2-sub"
+    },
+    {
+     "Key": "Terraform",
+     "Value": "true"
+    }
+   ],
+   "VpcId": "vpc-0e578e50686443ca0"
+  }
+ ]
+}

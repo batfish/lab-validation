@@ -1,0 +1,27 @@
+{
+    "vrfs": {
+        "default": {
+            "interfaces": [
+                "Ethernet1",
+                "Ethernet2",
+                "Loopback0",
+                "Management1"
+            ],
+            "protocols": {
+                "ipv4": {
+                    "multicastState": "up",
+                    "protocolState": "up",
+                    "routingState": "up",
+                    "supported": true
+                },
+                "ipv6": {
+                    "protocolState": "up",
+                    "routingState": "down",
+                    "supported": true
+                }
+            },
+            "routeDistinguisher": "",
+            "vrfState": "up"
+        }
+    }
+}

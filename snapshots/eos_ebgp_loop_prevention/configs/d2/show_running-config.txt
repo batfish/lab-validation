@@ -1,0 +1,74 @@
+! Command: show running-config
+! device: d2 (vEOS, EOS-4.23.0.1F)
+!
+! boot system flash:/vEOS-lab.swi
+!
+transceiver qsfp default-mode 4x10G
+!
+hostname d2
+!
+spanning-tree mode mstp
+!
+no aaa root
+!
+username admin privilege 15 role network-admin secret sha512 $6$69IYrwHFES7WCG5R$QTh/VhK3cnmHxCv2iUuwnM10T28LbkJNqvE9waST1YqCi2PVGVs9pl0DepELchKFKF4YwZ20LgpxEcyYDDa0l/
+!
+interface Ethernet1
+   no switchport
+   ip address 10.12.11.2/24
+!
+interface Ethernet2
+   no switchport
+   ip address 10.23.21.1/24
+!
+interface Ethernet3
+   no switchport
+   ip address 10.24.31.1/24
+!
+interface Ethernet4
+!
+interface Ethernet5
+!
+interface Ethernet6
+!
+interface Ethernet7
+!
+interface Ethernet8
+!
+interface Ethernet9
+!
+interface Ethernet10
+   no switchport
+   ip address 192.168.122.2/24
+!
+interface Ethernet11
+!
+interface Ethernet12
+!
+interface Loopback123
+   ip address 192.168.123.2/32
+!
+interface Management1
+!
+ip routing
+!
+ip prefix-list PP_222_IN seq 5 permit 192.168.123.222/32
+!
+route-map PP_222_IN permit 10
+   match ip address prefix-list PP_222_IN
+   set as-path prepend 222
+!
+route-map PP_222_IN permit 20
+!
+router bgp 65002
+   neighbor 10.12.11.1 remote-as 65001
+   neighbor 10.12.11.1 route-map PP_222_IN in
+   neighbor 10.12.11.1 maximum-routes 12000
+   neighbor 10.23.21.2 remote-as 65001
+   neighbor 10.23.21.2 maximum-routes 12000
+   neighbor 10.24.31.2 remote-as 65001
+   neighbor 10.24.31.2 maximum-routes 12000
+   network 192.168.122.0/24
+   network 192.168.123.2/32
+!
+end

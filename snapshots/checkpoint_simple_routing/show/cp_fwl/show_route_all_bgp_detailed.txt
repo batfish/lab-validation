@@ -1,0 +1,26 @@
+Route: 192.168.123.2/32
+    Next Hop: 10.12.11.2, via eth1
+    MED: None
+    Local Preference: 100
+    Age: 1179
+    Rank: 170
+    Weight: N/A
+    AS Path: (65001),65002,IGP.(Id-3)
+    Local AS: 65001
+    Peer AS: 65002
+    Origin: IGP
+    Originator ID: 192.168.123.2
+    BGP Next Hop Attribute: 10.12.11.2
+Route: 192.168.123.3/32
+    Next Hop: 10.13.21.2, via eth2
+    MED: 0
+    Local Preference: 100
+    Age: 1159
+    Rank: 170
+    Weight: N/A
+    AS Path: (65001),IGP.(Id-4)
+    Local AS: 65001
+    Peer AS: 65001
+    Origin: IGP
+    Originator ID: 192.168.123.3
+    BGP Next Hop Attribute: 10.13.21.2

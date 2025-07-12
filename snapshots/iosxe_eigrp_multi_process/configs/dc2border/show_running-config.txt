@@ -1,0 +1,235 @@
+Building configuration...
+
+Current configuration : 4301 bytes
+!
+! Last configuration change at 19:57:05 UTC Fri Nov 13 2020
+!
+version 16.4
+service timestamps debug datetime msec
+service timestamps log datetime msec
+no platform punt-keepalive disable-kernel-core
+platform console serial
+!
+hostname dc2border
+!
+boot-start-marker
+boot-end-marker
+!
+!
+!
+no aaa new-model
+!
+!
+!
+!
+!
+!
+!
+!
+!
+
+
+
+ip domain name test.com
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+subscriber templating
+!
+!
+!
+multilink bundle-name authenticated
+!
+!
+!
+!
+!
+crypto pki trustpoint TP-self-signed-995816850
+ enrollment selfsigned
+ subject-name cn=IOS-Self-Signed-Certificate-995816850
+ revocation-check none
+ rsakeypair TP-self-signed-995816850
+!
+!
+crypto pki certificate chain TP-self-signed-995816850
+ certificate self-signed 01
+  3082032E 30820216 A0030201 02020101 300D0609 2A864886 F70D0101 05050030
+  30312E30 2C060355 04031325 494F532D 53656C66 2D536967 6E65642D 43657274
+  69666963 6174652D 39393538 31363835 30301E17 0D313930 37323531 36333734
+  365A170D 32303031 30313030 30303030 5A303031 2E302C06 03550403 1325494F
+  532D5365 6C662D53 69676E65 642D4365 72746966 69636174 652D3939 35383136
+  38353030 82012230 0D06092A 864886F7 0D010101 05000382 010F0030 82010A02
+  82010100 B09B6C04 5E7C8270 033EA586 02A125E4 4C5AFE95 769F87C7 8018429F
+  AEB4612B AD01B55A 1EFEB34C F3E45D3A 2AE2D343 88B014F4 5896329E D137BB33
+  F6E2F8D3 7EF565C6 9B7A8EA6 B6295DF3 8DD13C23 AAA02696 1A62B258 05F7AF91
+  BE6BE370 A9B67270 325AA9A7 1E9C6F73 35F606B8 E0281B9E 957F0851 4C2A7694
+  621391A9 E1F2CEA0 78408D14 B53CB063 5EC003AC CC273435 845FA4DE DE5751C9
+  757E6960 0302D9BB D49BD813 F6874AEA C5421790 9C22DFF9 2F312A04 DAAEB71A
+  CA8E1E8F EC46BF4D 3E38AD2D AAED62F0 D6785FCF 5B66C50B 395687DB 2F11AC16
+  FC0726A1 28BB3D86 2DDBAA9F 18C18E77 4B28F700 F96E13A2 A8860392 A639A290
+  6B2ECA19 02030100 01A35330 51300F06 03551D13 0101FF04 05300301 01FF301F
+  0603551D 23041830 16801493 663B86EF 8FC8E25D F6F40BAB 1F5AC355 8DD89230
+  1D060355 1D0E0416 04149366 3B86EF8F C8E25DF6 F40BAB1F 5AC3558D D892300D
+  06092A86 4886F70D 01010505 00038201 010086C1 B4B841A1 4E4848AF 7708368E
+  2BBD61B8 03A45C9F 4B84652D 9721A761 32B0B42C 040D33BA 82144531 CAEBDEFC
+  F04C45DD D7CD3B22 A74F5CF8 3B03659D 79BE4296 F28CCB4F 4832527A 777AB485
+  560AD962 41CC0847 96018B8C AA80F73F 5D35F780 B0401FCD 43029D7E 1912F928
+  D77A1EA3 4DB61C48 306B737F 5885F9CE 031DCA72 06CA1FE4 4F0C3E71 EF10381F
+  E6B4E48D 4A6079FC 32EE5D38 749694BB 29B94129 3F813816 6BCDDD4D 7771ED86
+  067BFCF6 63F055B0 E7A67D2C CAD3FA70 907AD116 CCE09F86 486BDA37 D62B820B
+  0F9A962D E6B141A8 2F7D60CC F025D96D 44F41A6B 46A282C3 D5D679ED 3D37E7DC
+  77152F50 DF77B59F DFA56F4D 95B1308F DDB7
+  	quit
+
+
+!
+!
+!
+!
+!
+!
+!
+license udi pid CSR1000V sn 9TS4IGT52US
+diagnostic bootup level minimal
+!
+spanning-tree extend system-id
+!
+!
+username cisco privilege 15 password 0 cisco
+!
+redundancy
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+interface Loopback123
+ ip address 192.168.123.3 255.255.255.255
+!
+interface GigabitEthernet1
+ no ip address
+ shutdown
+ negotiation auto
+ no mop enabled
+ no mop sysid
+!
+interface GigabitEthernet2
+ ip address 44.44.44.1 255.255.255.0
+ negotiation auto
+ no mop enabled
+ no mop sysid
+!
+interface GigabitEthernet3
+ ip address 33.33.33.2 255.255.255.0
+ negotiation auto
+ no mop enabled
+ no mop sysid
+!
+interface GigabitEthernet4
+ no ip address
+ shutdown
+ negotiation auto
+ no mop enabled
+ no mop sysid
+!
+!
+router eigrp 102
+ network 44.44.44.0 0.0.0.255
+ network 172.16.4.0 0.0.0.255
+ network 192.168.123.3 0.0.0.0
+ redistribute eigrp 103 metric 1000000 10 255 1 1500
+!
+!
+router eigrp dcborder
+ !
+ address-family ipv4 unicast autonomous-system 103
+  !
+  topology base
+   redistribute eigrp 102 metric 1000000 10 255 1 1500
+  exit-af-topology
+  network 33.33.33.0 0.0.0.255
+ exit-address-family
+ !
+ service-family ipv4 autonomous-system 103
+  !
+  topology base
+  exit-sf-topology
+ exit-service-family
+!
+!
+virtual-service csr_mgmt
+!
+ip forward-protocol nd
+ip http server
+ip http authentication local
+ip http secure-server
+!
+ip ssh version 2
+!
+!
+!
+!
+!
+!
+control-plane
+!
+ !
+ !
+ !
+ !
+!
+!
+!
+!
+!
+line con 0
+ stopbits 1
+line vty 0
+ login local
+ transport input ssh
+line vty 1
+ login local
+ length 0
+ transport input ssh
+line vty 2 4
+ login local
+ transport input ssh
+line vty 5 15
+ login local
+ transport input ssh
+!
+!
+!
+!
+!
+!
+end

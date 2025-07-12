@@ -1,0 +1,195 @@
+{
+ "NetworkAcls": [
+  {
+   "Associations": [
+    {
+     "NetworkAclAssociationId": "aclassoc-073adf6ffeaf4650f",
+     "NetworkAclId": "acl-05cd869a0571353b8",
+     "SubnetId": "subnet-0661a79d0bbe92f24"
+    }
+   ],
+   "Entries": [
+    {
+     "CidrBlock": "0.0.0.0/0",
+     "Egress": true,
+     "Protocol": "-1",
+     "RuleAction": "allow",
+     "RuleNumber": 1000
+    },
+    {
+     "CidrBlock": "0.0.0.0/0",
+     "Egress": true,
+     "Protocol": "-1",
+     "RuleAction": "deny",
+     "RuleNumber": 32767
+    },
+    {
+     "CidrBlock": "0.0.0.0/0",
+     "Egress": false,
+     "Protocol": "-1",
+     "RuleAction": "allow",
+     "RuleNumber": 1000
+    },
+    {
+     "CidrBlock": "0.0.0.0/0",
+     "Egress": false,
+     "Protocol": "-1",
+     "RuleAction": "deny",
+     "RuleNumber": 32767
+    }
+   ],
+   "IsDefault": false,
+   "NetworkAclId": "acl-05cd869a0571353b8",
+   "OwnerId": "951601349076",
+   "Tags": [
+    {
+     "Key": "Name",
+     "Value": "nacl-hr-west"
+    }
+   ],
+   "VpcId": "vpc-0227795c022ec948b"
+  },
+  {
+   "Associations": [
+    {
+     "NetworkAclAssociationId": "aclassoc-07ec8b6f9f49bac7c",
+     "NetworkAclId": "acl-09068be4db4394d5c",
+     "SubnetId": "subnet-0e1a9d8e41ee412cb"
+    }
+   ],
+   "Entries": [
+    {
+     "CidrBlock": "0.0.0.0/0",
+     "Egress": true,
+     "Protocol": "-1",
+     "RuleAction": "allow",
+     "RuleNumber": 1000
+    },
+    {
+     "CidrBlock": "0.0.0.0/0",
+     "Egress": true,
+     "Protocol": "-1",
+     "RuleAction": "deny",
+     "RuleNumber": 32767
+    },
+    {
+     "CidrBlock": "0.0.0.0/0",
+     "Egress": false,
+     "Protocol": "-1",
+     "RuleAction": "allow",
+     "RuleNumber": 1000
+    },
+    {
+     "CidrBlock": "0.0.0.0/0",
+     "Egress": false,
+     "Protocol": "-1",
+     "RuleAction": "deny",
+     "RuleNumber": 32767
+    }
+   ],
+   "IsDefault": false,
+   "NetworkAclId": "acl-09068be4db4394d5c",
+   "OwnerId": "951601349076",
+   "Tags": [
+    {
+     "Key": "Name",
+     "Value": "nacl-private-hr-west"
+    }
+   ],
+   "VpcId": "vpc-0227795c022ec948b"
+  },
+  {
+   "Associations": [
+    {
+     "NetworkAclAssociationId": "aclassoc-8db986f6",
+     "NetworkAclId": "acl-090b061ea22c1e2e6",
+     "SubnetId": "subnet-046757acc9c93cf21"
+    }
+   ],
+   "Entries": [
+    {
+     "CidrBlock": "0.0.0.0/0",
+     "Egress": true,
+     "Protocol": "-1",
+     "RuleAction": "allow",
+     "RuleNumber": 100
+    },
+    {
+     "CidrBlock": "0.0.0.0/0",
+     "Egress": true,
+     "Protocol": "-1",
+     "RuleAction": "deny",
+     "RuleNumber": 32767
+    },
+    {
+     "CidrBlock": "0.0.0.0/0",
+     "Egress": false,
+     "Protocol": "-1",
+     "RuleAction": "allow",
+     "RuleNumber": 100
+    },
+    {
+     "CidrBlock": "0.0.0.0/0",
+     "Egress": false,
+     "Protocol": "-1",
+     "RuleAction": "deny",
+     "RuleNumber": 32767
+    }
+   ],
+   "IsDefault": true,
+   "NetworkAclId": "acl-090b061ea22c1e2e6",
+   "OwnerId": "951601349076",
+   "Tags": [],
+   "VpcId": "vpc-0227795c022ec948b"
+  },
+  {
+   "Associations": [
+    {
+     "NetworkAclAssociationId": "aclassoc-0571c92f9703d8ec4",
+     "NetworkAclId": "acl-0fbe0ef99a19729f0",
+     "SubnetId": "subnet-008c46d1e58a4f38e"
+    }
+   ],
+   "Entries": [
+    {
+     "CidrBlock": "0.0.0.0/0",
+     "Egress": true,
+     "Protocol": "-1",
+     "RuleAction": "allow",
+     "RuleNumber": 1000
+    },
+    {
+     "CidrBlock": "0.0.0.0/0",
+     "Egress": true,
+     "Protocol": "-1",
+     "RuleAction": "deny",
+     "RuleNumber": 32767
+    },
+    {
+     "CidrBlock": "0.0.0.0/0",
+     "Egress": false,
+     "Protocol": "-1",
+     "RuleAction": "allow",
+     "RuleNumber": 1000
+    },
+    {
+     "CidrBlock": "0.0.0.0/0",
+     "Egress": false,
+     "Protocol": "-1",
+     "RuleAction": "deny",
+     "RuleNumber": 32767
+    }
+   ],
+   "IsDefault": false,
+   "NetworkAclId": "acl-0fbe0ef99a19729f0",
+   "OwnerId": "951601349076",
+   "Tags": [
+    {
+     "Key": "Name",
+     "Value": "nacl-tgw-hr-west"
+    }
+   ],
+   "VpcId": "vpc-0227795c022ec948b"
+  }
+ ]
+}

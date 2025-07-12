@@ -1,0 +1,58 @@
+BGP routing table information for VRF default, address family IPv4 Unicast
+BGP routing table entry for 10.1.1.0/24, version 45
+Paths: (2 available, best #1)
+Flags: (0x080002) (high32 00000000) on xmit-list, is not in urib
+
+  Advertised path-id 1
+  Path type: redist, path is valid, is best path, no labeled nexthop
+  AS-Path: NONE, path locally originated
+    0.0.0.0 (metric 0) from 0.0.0.0 (10.1.1.2)
+      Origin incomplete, MED 0, localpref 100, weight 32768
+
+  Path type: external, path is valid, not best reason: Weight, no labeled nexthop
+  AS-Path: 65001 , path sourced external to AS
+    10.1.1.1 (metric 0) from 10.1.1.1 (10.1.1.1)
+      Origin incomplete, MED 0, localpref 100, weight 0
+
+  Path-id 1 advertised to peers:
+    10.1.1.1
+BGP routing table entry for 10.1.2.0/24, version 43
+Paths: (2 available, best #1)
+Flags: (0x080002) (high32 00000000) on xmit-list, is not in urib
+
+  Advertised path-id 1
+  Path type: redist, path is valid, is best path, no labeled nexthop
+  AS-Path: NONE, path locally originated
+    0.0.0.0 (metric 0) from 0.0.0.0 (10.1.1.2)
+      Origin incomplete, MED 0, localpref 100, weight 32768
+
+  Path type: external, path is valid, not best reason: Weight, no labeled nexthop
+  AS-Path: 65001 , path sourced external to AS
+    10.1.2.1 (metric 0) from 10.1.2.1 (10.1.1.1)
+      Origin incomplete, MED 0, localpref 100, weight 0
+
+  Path-id 1 advertised to peers:
+    10.1.2.1
+BGP routing table entry for 10.1.2.1/32, version 44
+Paths: (1 available, best #1)
+Flags: (0x80080012) (high32 00000000) on xmit-list, is in urib, is backup urib route, is in HW
+
+  Advertised path-id 1
+  Path type: external, path is valid, is best path, no labeled nexthop, in rib
+  AS-Path: 65001 , path sourced external to AS
+    10.1.2.1 (metric 0) from 10.1.2.1 (10.1.1.1)
+      Origin IGP, MED not set, localpref 100, weight 0
+
+  Path-id 1 not advertised to any peer
+BGP routing table entry for 10.1.2.2/32, version 15
+Paths: (1 available, best #1)
+Flags: (0x080002) (high32 00000000) on xmit-list, is not in urib
+
+  Advertised path-id 1
+  Path type: local, path is valid, is best path, no labeled nexthop
+  AS-Path: NONE, path locally originated
+    0.0.0.0 (metric 0) from 0.0.0.0 (10.1.1.2)
+      Origin IGP, MED not set, localpref 100, weight 32768
+
+  Path-id 1 advertised to peers:
+    10.1.2.1

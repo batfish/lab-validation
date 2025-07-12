@@ -1,0 +1,103 @@
+{
+    "vrfs": {
+        "default": {
+            "allRoutesProgrammedHardware": true,
+            "allRoutesProgrammedKernel": true,
+            "defaultRouteState": "notSet",
+            "routes": {
+                "10.12.11.0/24": {
+                    "directlyConnected": true,
+                    "hardwareProgrammed": true,
+                    "kernelProgrammed": true,
+                    "routeAction": "forward",
+                    "routeLeaked": false,
+                    "routeType": "connected",
+                    "vias": [
+                        {
+                            "interface": "Ethernet1"
+                        }
+                    ]
+                },
+                "10.13.21.0/24": {
+                    "directlyConnected": true,
+                    "hardwareProgrammed": true,
+                    "kernelProgrammed": true,
+                    "routeAction": "forward",
+                    "routeLeaked": false,
+                    "routeType": "connected",
+                    "vias": [
+                        {
+                            "interface": "Ethernet2"
+                        }
+                    ]
+                },
+                "10.14.31.0/24": {
+                    "directlyConnected": true,
+                    "hardwareProgrammed": true,
+                    "kernelProgrammed": true,
+                    "routeAction": "forward",
+                    "routeLeaked": false,
+                    "routeType": "connected",
+                    "vias": [
+                        {
+                            "interface": "Ethernet3"
+                        }
+                    ]
+                },
+                "10.150.0.0/16": {
+                    "directlyConnected": true,
+                    "hardwareProgrammed": true,
+                    "kernelProgrammed": true,
+                    "routeAction": "forward",
+                    "routeLeaked": false,
+                    "routeType": "connected",
+                    "vias": [
+                        {
+                            "interface": "Management1"
+                        }
+                    ]
+                },
+                "172.16.0.1/32": {
+                    "directlyConnected": true,
+                    "hardwareProgrammed": true,
+                    "kernelProgrammed": true,
+                    "routeAction": "forward",
+                    "routeLeaked": false,
+                    "routeType": "connected",
+                    "vias": [
+                        {
+                            "interface": "Loopback1"
+                        }
+                    ]
+                },
+                "172.16.0.2/32": {
+                    "directlyConnected": true,
+                    "hardwareProgrammed": true,
+                    "kernelProgrammed": true,
+                    "routeAction": "forward",
+                    "routeLeaked": false,
+                    "routeType": "connected",
+                    "vias": [
+                        {
+                            "interface": "Loopback2"
+                        }
+                    ]
+                },
+                "172.16.0.3/32": {
+                    "directlyConnected": true,
+                    "hardwareProgrammed": true,
+                    "kernelProgrammed": true,
+                    "routeAction": "forward",
+                    "routeLeaked": false,
+                    "routeType": "connected",
+                    "vias": [
+                        {
+                            "interface": "Loopback3"
+                        }
+                    ]
+                }
+            },
+            "routingDisabled": false
+        }
+    }
+}

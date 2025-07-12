@@ -1,0 +1,36 @@
+Codes: L - local, C - connected, S - static, R - RIP, M - mobile, B - BGP
+       D - EIGRP, EX - EIGRP external, O - OSPF, IA - OSPF inter area
+       N1 - OSPF NSSA external type 1, N2 - OSPF NSSA external type 2
+       E1 - OSPF external type 1, E2 - OSPF external type 2
+       i - IS-IS, su - IS-IS summary, L1 - IS-IS level-1, L2 - IS-IS level-2
+       ia - IS-IS inter area, * - candidate default, U - per-user static route
+       o - ODR, P - periodic downloaded static route, H - NHRP, l - LISP
+       + - replicated route, % - next hop override
+
+Gateway of last resort is not set
+
+      1.0.0.0/24 is subnetted, 2 subnets
+B        1.0.1.0 [20/50] via 2.34.201.3, 00:12:21
+                 [20/50] via 2.34.101.3, 00:12:21
+B        1.0.2.0 [20/50] via 2.34.201.3, 00:12:21
+                 [20/50] via 2.34.101.3, 00:12:21
+      2.0.0.0/8 is variably subnetted, 9 subnets, 2 masks
+C        2.1.1.2/32 is directly connected, Loopback0
+C        2.34.101.0/24 is directly connected, GigabitEthernet0/0
+L        2.34.101.4/32 is directly connected, GigabitEthernet0/0
+C        2.34.201.0/24 is directly connected, GigabitEthernet1/0
+L        2.34.201.4/32 is directly connected, GigabitEthernet1/0
+C        2.128.0.0/24 is directly connected, GigabitEthernet2/0
+L        2.128.0.1/32 is directly connected, GigabitEthernet2/0
+C        2.128.1.0/24 is directly connected, GigabitEthernet3/0
+L        2.128.1.1/32 is directly connected, GigabitEthernet3/0
+      3.0.0.0/24 is subnetted, 2 subnets
+B        3.0.1.0 [20/50] via 2.34.201.3, 00:12:21
+                 [20/50] via 2.34.101.3, 00:12:21
+B        3.0.2.0 [20/50] via 2.34.201.3, 00:12:21
+                 [20/50] via 2.34.101.3, 00:12:21
+      192.168.122.0/24 is variably subnetted, 2 subnets, 2 masks
+C        192.168.122.0/24 is directly connected, GigabitEthernet4/0
+L        192.168.122.5/32 is directly connected, GigabitEthernet4/0
+      192.168.123.0/32 is subnetted, 1 subnets
+C        192.168.123.7 is directly connected, Loopback123

@@ -1,0 +1,45 @@
+{
+    "bidirectional": {
+        "groups": {}
+    },
+    "sparseMode": {
+        "groups": {
+            "239.1.1.1": {
+                "groupSources": {
+                    "10.1.10.254": {
+                        "creationTime": 1646696576.0,
+                        "oifList": [
+                            "Ethernet3"
+                        ],
+                        "registerInOifList": false,
+                        "routeFlags": "S",
+                        "rpf": {
+                            "rpfAttached": false,
+                            "rpfMetric": 20,
+                            "rpfNeighbor": "10.254.1.1",
+                            "rpfPreference": 110,
+                            "rpfPrefix": "10.1.10.0/24",
+                            "rpfRib": "U"
+                        },
+                        "rpfInterface": "Ethernet1",
+                        "sourceAddress": "10.1.10.254"
+                    }
+                }
+            },
+            "239.1.2.1": {
+                "groupSources": {
+                    "10.1.11.254": {
+                        "creationTime": 1646696576.0,
+                        "oifList": [
+                            "Ethernet4"
+                        ],
+                        "registerInOifList": false,
+                        "routeFlags": "JED",
+                        "rpfInterface": "Null0",
+                        "sourceAddress": "10.1.11.254"
+                    }
+                }
+            }
+        }
+    }
+}

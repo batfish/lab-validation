@@ -1,0 +1,36 @@
+Codes: L - local, C - connected, S - static, R - RIP, M - mobile, B - BGP
+       D - EIGRP, EX - EIGRP external, O - OSPF, IA - OSPF inter area
+       N1 - OSPF NSSA external type 1, N2 - OSPF NSSA external type 2
+       E1 - OSPF external type 1, E2 - OSPF external type 2
+       i - IS-IS, su - IS-IS summary, L1 - IS-IS level-1, L2 - IS-IS level-2
+       ia - IS-IS inter area, * - candidate default, U - per-user static route
+       o - ODR, P - periodic downloaded static route, H - NHRP, l - LISP
+       a - application route
+       + - replicated route, % - next hop override, p - overrides from PfR
+
+Gateway of last resort is 172.24.0.1 to network 0.0.0.0
+
+B*    0.0.0.0/0 [20/0] via 172.24.0.1, 06:11:50
+      10.0.0.0/8 is variably subnetted, 7 subnets, 2 masks
+B        10.2.0.0/16 [20/100] via 169.254.74.93, 06:11:49
+B        10.3.0.0/16 [20/100] via 169.254.34.173, 06:11:49
+B        10.4.0.0/16 [20/100] via 169.254.34.173, 06:11:49
+B        10.5.0.0/16 [20/100] via 169.254.74.93, 06:11:49
+C        10.10.10.10/32 is directly connected, Loopback10
+B        10.100.0.0/16 [20/100] via 172.24.0.1, 06:11:59
+B        10.200.0.0/16 [20/100] via 172.24.0.1, 06:11:59
+      169.254.0.0/16 is variably subnetted, 8 subnets, 2 masks
+C        169.254.34.172/30 is directly connected, Tunnel12
+L        169.254.34.174/32 is directly connected, Tunnel12
+C        169.254.74.92/30 is directly connected, Tunnel1
+L        169.254.74.94/32 is directly connected, Tunnel1
+C        169.254.97.32/30 is directly connected, Tunnel2
+L        169.254.97.34/32 is directly connected, Tunnel2
+C        169.254.126.208/30 is directly connected, Tunnel11
+L        169.254.126.210/32 is directly connected, Tunnel11
+      172.24.0.0/16 is variably subnetted, 2 subnets, 2 masks
+C        172.24.0.0/24 is directly connected, GigabitEthernet3
+L        172.24.0.10/32 is directly connected, GigabitEthernet3
+      192.168.123.0/24 is variably subnetted, 2 subnets, 2 masks
+B        192.168.123.0/24 [20/100] via 172.24.0.1, 06:11:59
+C        192.168.123.22/32 is directly connected, Loopback123

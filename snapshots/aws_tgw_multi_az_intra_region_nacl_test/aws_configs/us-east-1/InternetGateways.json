@@ -1,0 +1,52 @@
+{
+ "InternetGateways": [
+  {
+   "Attachments": [
+    {
+     "State": "available",
+     "VpcId": "vpc-03ccfd695642eea86"
+    }
+   ],
+   "InternetGatewayId": "igw-00f201748ba4525ed",
+   "OwnerId": "028403472736",
+   "Tags": [
+    {
+     "Key": "Environment",
+     "Value": "dev"
+    },
+    {
+     "Key": "Name",
+     "Value": "dev-igw"
+    },
+    {
+     "Key": "Terraform",
+     "Value": "true"
+    }
+   ]
+  },
+  {
+   "Attachments": [
+    {
+     "State": "available",
+     "VpcId": "vpc-0a5a5ea367be96f67"
+    }
+   ],
+   "InternetGatewayId": "igw-07214c8c9cfc5bb56",
+   "OwnerId": "028403472736",
+   "Tags": [
+    {
+     "Key": "Name",
+     "Value": "prod-igw"
+    },
+    {
+     "Key": "Terraform",
+     "Value": "true"
+    },
+    {
+     "Key": "Environment",
+     "Value": "prod"
+    }
+   ]
+  }
+ ]
+}

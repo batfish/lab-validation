@@ -1,0 +1,45 @@
+IP Route Table for VRF "default"
+'*' denotes best ucast next-hop
+'**' denotes best mcast next-hop
+'[x/y]' denotes [preference/metric]
+'%<string>' in via output denotes VRF <string>
+
+10.12.11.0/30, ubest/mbest: 1/0, attached
+    *via 10.12.11.2, Eth1/1, [0/0], 02:17:12, direct
+10.12.11.2/32, ubest/mbest: 1/0, attached
+    *via 10.12.11.2, Eth1/1, [0/0], 02:17:12, local
+10.23.21.0/24, ubest/mbest: 1/0, attached
+    *via 10.23.21.1, Eth1/2, [0/0], 02:17:12, direct
+10.23.21.1/32, ubest/mbest: 1/0, attached
+    *via 10.23.21.1, Eth1/2, [0/0], 02:17:12, local
+10.24.31.0/24, ubest/mbest: 1/0, attached
+    *via 10.24.31.1, Eth1/3, [0/0], 02:17:12, direct
+10.24.31.1/32, ubest/mbest: 1/0, attached
+    *via 10.24.31.1, Eth1/3, [0/0], 02:17:12, local
+10.25.41.0/24, ubest/mbest: 1/0, attached
+    *via 10.25.41.1, Eth1/4, [0/0], 02:17:12, direct
+10.25.41.1/32, ubest/mbest: 1/0, attached
+    *via 10.25.41.1, Eth1/4, [0/0], 02:17:12, local
+10.26.51.0/24, ubest/mbest: 1/0, attached
+    *via 10.26.51.1, Eth1/5, [0/0], 01:03:52, direct
+10.26.51.1/32, ubest/mbest: 1/0, attached
+    *via 10.26.51.1, Eth1/5, [0/0], 01:03:52, local
+192.168.122.0/24, ubest/mbest: 1/0, attached
+    *via 192.168.122.2, Eth1/10, [0/0], 01:28:35, direct
+192.168.122.2/32, ubest/mbest: 1/0, attached
+    *via 192.168.122.2, Eth1/10, [0/0], 01:28:35, local
+192.168.123.1/32, ubest/mbest: 1/0
+    *via 10.12.11.1, [20/0], 01:08:54, bgp-65002, external, tag 65001
+192.168.123.2/32, ubest/mbest: 2/0, attached
+    *via 192.168.123.2, Lo123, [0/0], 02:17:57, local
+    *via 192.168.123.2, Lo123, [0/0], 02:17:57, direct
+192.168.123.3/32, ubest/mbest: 1/0
+    *via 10.23.21.2, [20/0], 01:08:54, bgp-65002, external, tag 65001
+192.168.123.4/32, ubest/mbest: 1/0
+    *via 10.24.31.2, [20/0], 01:08:54, bgp-65002, external, tag 65001
+192.168.123.5/32, ubest/mbest: 1/0
+    *via 10.25.41.2, [20/0], 01:08:54, bgp-65002, external, tag 65001
+192.168.123.6/32, ubest/mbest: 1/0
+    *via 10.26.51.2, [20/0], 00:41:36, bgp-65002, external, tag 65001
+192.168.123.222/32, ubest/mbest: 1/0
+    *via 10.12.11.1, [20/0], 01:08:54, bgp-65002, external, tag 222

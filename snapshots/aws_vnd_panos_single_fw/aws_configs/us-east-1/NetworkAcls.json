@@ -1,0 +1,96 @@
+{
+ "NetworkAcls": [
+  {
+   "Associations": [
+    {
+     "NetworkAclAssociationId": "aclassoc-02755760fff799ec7",
+     "NetworkAclId": "acl-0d259d803870de31f",
+     "SubnetId": "subnet-0d01163fff1515249"
+    },
+    {
+     "NetworkAclAssociationId": "aclassoc-00c977e143e2fe071",
+     "NetworkAclId": "acl-0d259d803870de31f",
+     "SubnetId": "subnet-03dc3093fff4ea811"
+    }
+   ],
+   "Entries": [
+    {
+     "CidrBlock": "0.0.0.0/0",
+     "Egress": true,
+     "Protocol": "-1",
+     "RuleAction": "allow",
+     "RuleNumber": 1000
+    },
+    {
+     "CidrBlock": "0.0.0.0/0",
+     "Egress": true,
+     "Protocol": "-1",
+     "RuleAction": "deny",
+     "RuleNumber": 32767
+    },
+    {
+     "CidrBlock": "0.0.0.0/0",
+     "Egress": false,
+     "Protocol": "-1",
+     "RuleAction": "allow",
+     "RuleNumber": 1000
+    },
+    {
+     "CidrBlock": "0.0.0.0/0",
+     "Egress": false,
+     "Protocol": "-1",
+     "RuleAction": "deny",
+     "RuleNumber": 32767
+    }
+   ],
+   "IsDefault": false,
+   "NetworkAclId": "acl-0d259d803870de31f",
+   "OwnerId": "028403472736",
+   "Tags": [
+    {
+     "Key": "Name",
+     "Value": "vnd_panos_general"
+    }
+   ],
+   "VpcId": "vpc-0c197509cc4686f2b"
+  },
+  {
+   "Associations": [],
+   "Entries": [
+    {
+     "CidrBlock": "0.0.0.0/0",
+     "Egress": true,
+     "Protocol": "-1",
+     "RuleAction": "allow",
+     "RuleNumber": 100
+    },
+    {
+     "CidrBlock": "0.0.0.0/0",
+     "Egress": true,
+     "Protocol": "-1",
+     "RuleAction": "deny",
+     "RuleNumber": 32767
+    },
+    {
+     "CidrBlock": "0.0.0.0/0",
+     "Egress": false,
+     "Protocol": "-1",
+     "RuleAction": "allow",
+     "RuleNumber": 100
+    },
+    {
+     "CidrBlock": "0.0.0.0/0",
+     "Egress": false,
+     "Protocol": "-1",
+     "RuleAction": "deny",
+     "RuleNumber": 32767
+    }
+   ],
+   "IsDefault": true,
+   "NetworkAclId": "acl-0e8e608a874d99c77",
+   "OwnerId": "028403472736",
+   "Tags": [],
+   "VpcId": "vpc-0c197509cc4686f2b"
+  }
+ ]
+}

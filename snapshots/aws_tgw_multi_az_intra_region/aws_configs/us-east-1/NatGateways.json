@@ -1,0 +1,62 @@
+{
+ "NatGateways": [
+  {
+   "CreateTime": "2020-08-03 15:35:37+00:00",
+   "NatGatewayAddresses": [
+    {
+     "AllocationId": "eipalloc-0bf3834da1e5c9995",
+     "NetworkInterfaceId": "eni-03a3d08cccb4acab6",
+     "PrivateIp": "10.1.1.9",
+     "PublicIp": "54.160.34.103"
+    }
+   ],
+   "NatGatewayId": "nat-07abf8463a57b68fe",
+   "State": "available",
+   "SubnetId": "subnet-09752dac4bffe6253",
+   "Tags": [
+    {
+     "Key": "Terraform",
+     "Value": "true"
+    },
+    {
+     "Key": "Environment",
+     "Value": "prod"
+    },
+    {
+     "Key": "Name",
+     "Value": "prod-ngw"
+    }
+   ],
+   "VpcId": "vpc-0e578e50686443ca0"
+  },
+  {
+   "CreateTime": "2020-08-03 15:35:46+00:00",
+   "NatGatewayAddresses": [
+    {
+     "AllocationId": "eipalloc-0daad392f53cb2884",
+     "NetworkInterfaceId": "eni-0f84657ec20021486",
+     "PrivateIp": "10.2.1.86",
+     "PublicIp": "107.22.38.147"
+    }
+   ],
+   "NatGatewayId": "nat-04835feeb2a8277b2",
+   "State": "available",
+   "SubnetId": "subnet-01eaf54823e65b693",
+   "Tags": [
+    {
+     "Key": "Terraform",
+     "Value": "true"
+    },
+    {
+     "Key": "Environment",
+     "Value": "dev"
+    },
+    {
+     "Key": "Name",
+     "Value": "dev-ngw"
+    }
+   ],
+   "VpcId": "vpc-0a96945f1dbc5b2ac"
+  }
+ ]
+}

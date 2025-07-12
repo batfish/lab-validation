@@ -1,0 +1,61 @@
+BGP neighbor is 1.1.1.1, remote AS 65001, ibgp link, Peer index 3
+  BGP version 4, remote router ID 1.1.1.1
+  BGP state = Established, up for 01:02:00
+  Using loopback0 as update source for this peer
+  Last read 00:00:31, hold time = 180, keepalive interval is 60 seconds
+  Last written 00:00:05, keepalive timer expiry due 00:00:54
+  Received 75 messages, 0 notifications, 0 bytes in queue
+  Sent 67 messages, 0 notifications, 0(0) bytes in queue
+  Connections established 1, dropped 0
+  Last reset by us never, due to No error
+  Last reset by peer never, due to No error
+
+  Neighbor capabilities:
+  Dynamic capability: advertised (mp, refresh, gr) received (mp, refresh, gr)
+  Dynamic capability (old): advertised received
+  Route refresh capability (new): advertised received 
+  Route refresh capability (old): advertised received 
+  4-Byte AS capability: advertised received 
+  Address family L2VPN EVPN: advertised received 
+  Graceful Restart capability: advertised received
+
+  Graceful Restart Parameters:
+  Address families advertised to peer:
+    L2VPN EVPN  
+  Address families received from peer:
+    L2VPN EVPN  
+  Forwarding state preserved by peer for:
+  Restart time advertised to peer: 120 seconds
+  Stale time for routes advertised by peer: 300 seconds
+  Restart time advertised by peer: 120 seconds
+  Extended Next Hop Encoding Capability: advertised received
+  Receive IPv6 next hop encoding Capability for AF:
+    IPv4 Unicast  
+
+  Message statistics:
+                              Sent               Rcvd
+  Opens:                         1                  1  
+  Notifications:                 0                  0  
+  Updates:                       9                  8  
+  Keepalives:                   63                 64  
+  Route Refresh:                 0                  0  
+  Capability:                    2                  2  
+  Total:                        67                 75  
+  Total bytes:                2127               1937  
+  Bytes in queue:                0                  0  
+
+  For address family: L2VPN EVPN
+  BGP table version 22, neighbor version 22
+  6 accepted prefixes (6 paths), consuming 1320 bytes of memory
+  6 sent prefixes (6 paths)
+  Community attribute sent to this neighbor
+  Extended community attribute sent to this neighbor
+  Third-party Nexthop will not be computed.
+  Advertise GW IP is enabled
+  Last End-of-RIB received 00:00:01 after session start
+  Last End-of-RIB sent 00:00:01 after session start
+  First convergence 00:00:01 after session start with 2 routes sent
+
+  Local host: 2.2.2.2, Local port: 179
+  Foreign host: 1.1.1.1, Foreign port: 52243
+  fd = 74

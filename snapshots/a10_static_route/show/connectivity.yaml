@@ -1,0 +1,11 @@
+entries:
+  - src_hostname: c1
+    disposition: success
+    flow:
+      dst_ip: 10.0.0.1
+      application: tcp/80
+  - src_hostname: c1
+    disposition: failure
+    flow:
+      dst_ip: 10.0.0.1
+      application: tcp/8080

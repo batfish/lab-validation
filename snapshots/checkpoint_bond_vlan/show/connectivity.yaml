@@ -1,0 +1,25 @@
+entries:
+  - src_hostname: inside
+    disposition: success
+    flow:
+      src_ip: 10.12.2.1
+      dst_ip: 10.23.3.2
+      application: icmp
+  - src_hostname: inside
+    disposition: failure
+    flow:
+      src_ip: 10.12.2.1
+      dst_ip: 172.16.0.3
+      application: icmp
+  - src_hostname: inside
+    disposition: success
+    flow:
+      src_ip: 10.12.2.1
+      dst_ip: 10.24.4.2
+      application: icmp
+  - src_hostname: inside
+    disposition: success
+    flow:
+      src_ip: 10.12.2.1
+      dst_ip: 10.24.4.2
+      application: icmp

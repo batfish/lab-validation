@@ -1,0 +1,26 @@
+
+total configured hardware interfaces: 6
+
+name                    id    speed/duplex/state        mac address
+--------------------------------------------------------------------------------
+ethernet1/1             16    10000/full/up             00:1b:17:12:34:57
+ethernet1/2             17    10000/full/up             00:1b:17:12:34:58
+ethernet1/3             18    10000/full/up             00:1b:17:12:34:59
+ethernet1/4             19    10000/full/up             00:1b:17:12:34:5a
+ethernet1/7             22    10000/full/up             00:1b:17:12:34:5d
+loopback                3     [n/a]/[n/a]/up            ba:db:ee:fb:ad:03
+
+aggregation groups: 0
+
+
+total configured logical interfaces: 7
+
+name                id    vsys zone             forwarding               tag    address
+------------------- ----- ---- ---------------- ------------------------ ------ ------------------
+ethernet1/1         16    1    INSIDE           vr:default               0      10.12.11.2/24
+ethernet1/2         17    1    INSIDE           vr:default               0      10.23.21.1/24
+ethernet1/3         18    1    INSIDE           vr:default               0      10.24.31.1/24
+ethernet1/4         19    1    INSIDE           vr:default               0      10.25.41.1/24
+ethernet1/7         22    1    INSIDE           vr:default               0      192.168.122.2/24
+loopback            3     1                     N/A                      0      N/A
+loopback.123        256   1    INSIDE           vr:default               0      192.168.123.2/32

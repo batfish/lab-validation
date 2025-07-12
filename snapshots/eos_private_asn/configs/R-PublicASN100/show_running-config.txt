@@ -1,0 +1,91 @@
+! Command: show running-config
+! device: R-PublicASN100 (vEOS, EOS-4.21.1.1F)
+!
+! boot system flash:/vEOS-lab.swi
+!
+transceiver qsfp default-mode 4x10G
+!
+hostname R-PublicASN100
+!
+spanning-tree mode mstp
+!
+no aaa root
+!
+username admin privilege 15 role network-admin secret sha512 $6$1wxRAsur71AZDg/q$W7nxeXUiHxWancBCGB9Q9332cCNfAu8AKr6HOb8h0dHxV1elcqvlSf/GADxHbduuKETiia7vrAY2j.n4Bho7./
+!
+interface Ethernet1
+   no switchport
+   ip address 10.10.10.2/24
+!
+interface Ethernet2
+   no switchport
+   ip address 10.10.20.2/24
+!
+interface Ethernet3
+   no switchport
+   ip address 10.10.30.2/24
+!
+interface Ethernet4
+   no switchport
+   ip address 10.10.40.2/24
+!
+interface Ethernet5
+   no switchport
+   ip address 10.10.50.2/24
+!
+interface Ethernet6
+   no switchport
+   ip address 10.20.10.2/24
+!
+interface Ethernet7
+!
+interface Ethernet8
+!
+interface Ethernet9
+!
+interface Ethernet10
+   no switchport
+   ip address 10.10.11.2/24
+!
+interface Ethernet11
+!
+interface Ethernet12
+!
+interface Ethernet13
+!
+interface Ethernet14
+!
+interface Ethernet15
+   no switchport
+   ip address 192.168.122.2/24
+!
+interface Loopback123
+   ip address 192.168.123.1/32
+!
+interface Management1
+!
+ip routing
+!
+router bgp 100
+   neighbor 10.10.10.1 remote-as 65100
+   neighbor 10.10.10.1 maximum-routes 12000
+   neighbor 10.10.11.1 remote-as 111
+   neighbor 10.10.11.1 maximum-routes 12000
+   neighbor 10.10.20.1 remote-as 200
+   neighbor 10.10.20.1 maximum-routes 12000
+   neighbor 10.10.30.1 remote-as 300
+   neighbor 10.10.30.1 remove-private-as
+   neighbor 10.10.30.1 maximum-routes 12000
+   neighbor 10.10.40.1 remote-as 400
+   neighbor 10.10.40.1 remove-private-as all
+   neighbor 10.10.40.1 maximum-routes 12000
+   neighbor 10.10.50.1 remote-as 500
+   neighbor 10.10.50.1 remove-private-as all replace-as
+   neighbor 10.10.50.1 maximum-routes 12000
+   neighbor 10.20.10.1 remote-as 65100
+   neighbor 10.20.10.1 remove-private-as
+   neighbor 10.20.10.1 maximum-routes 12000
+   network 192.168.122.0/24
+   network 192.168.123.1/32
+!
+end

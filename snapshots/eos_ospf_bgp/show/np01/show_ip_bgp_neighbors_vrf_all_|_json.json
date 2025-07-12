@@ -1,0 +1,136 @@
+{
+    "vrfs": {
+        "default": {
+            "peerList": [
+                {
+                    "advertisedRestartTime": 300,
+                    "as4": 2,
+                    "asn": "65000",
+                    "autoLocalAddress": "disabled",
+                    "bgpPeerCaps": 209977348,
+                    "bgpPeerFlags": [
+                        69208064,
+                        992256,
+                        0
+                    ],
+                    "bgpPeerHiscaps": 209977348,
+                    "bgpPeerOptions": 304087040,
+                    "bgpPeerOptions2": 0,
+                    "bgpPeerOptions3": 3244080,
+                    "bgpSoftReconfigInbound": "Default",
+                    "confHoldTime": 180,
+                    "configuredKeepaliveTime": 60,
+                    "dropStats": {
+                        "inDropAsloop": 0,
+                        "inDropEnforceFirstAs": 0,
+                        "inDropNhAfV6": 0,
+                        "inDropNhInvalid": 0,
+                        "inDropNhLocal": 0,
+                        "inDropOrigId": 0,
+                        "outDropV4LocalAddr": 0,
+                        "outDropV6LocalAddr": 0,
+                        "prefixLuDroppedV4": 0,
+                        "prefixLuDroppedV6": 0
+                    },
+                    "establishedTime": 4596,
+                    "establishedTransitions": 1,
+                    "holdTime": 180,
+                    "ifName": "et1",
+                    "inMessageStats": {
+                        "keepalives": 78,
+                        "notifications": 0,
+                        "opens": 1,
+                        "queueDepth": 0,
+                        "rtRefreshes": 0,
+                        "updates": 3
+                    },
+                    "keepaliveTime": 60,
+                    "lastEvent": "RecvKeepAlive",
+                    "lastRcvd": 36,
+                    "lastSent": 36,
+                    "lastState": "OpenConfirm",
+                    "linkType": "internal",
+                    "localAsn": "65000",
+                    "localPort": 179,
+                    "localRouterId": "10.1.1.1",
+                    "maintenance": false,
+                    "maxTtlHops": null,
+                    "miscFlags": 393281,
+                    "negotiatedVersion": 4,
+                    "noComms": true,
+                    "outMessageStats": {
+                        "keepalives": 78,
+                        "notifications": 0,
+                        "opens": 1,
+                        "queueDepth": 0,
+                        "rtRefreshes": 0,
+                        "updates": 2
+                    },
+                    "peerAddress": "10.12.12.2",
+                    "peerInUpdateErrors": {
+                        "inUpdErrDisableAfiSafi": 0,
+                        "inUpdErrIgnore": 0,
+                        "inUpdErrWithdraw": 0
+                    },
+                    "peerTcpInfo": {
+                        "congestionWindow": 10,
+                        "delayedAckTimeout": 40000,
+                        "inputMaxQueueLength": 32768,
+                        "inputQueueLength": 0,
+                        "maxSegmentSize": 1448,
+                        "options": 7,
+                        "outputMaxQueueLength": 32768,
+                        "outputQueueLength": 0,
+                        "rcvRtt": 0,
+                        "rcvWindow": 28960,
+                        "rcvWindowScale": 7,
+                        "retransTimeout": 212000,
+                        "sendWindowScale": 7,
+                        "slowStartThreshold": 2147483647,
+                        "sndRtt": 11115,
+                        "sndRttVariance": 624,
+                        "state": "ESTABLISHED",
+                        "totalRetrans": 0
+                    },
+                    "prefixListInfo": {
+                        "filterType": "PrefixList"
+                    },
+                    "prefixesReceived": 0,
+                    "prefixesSent": 1,
+                    "prependOwnDisabled": false,
+                    "receivedMessages": 82,
+                    "receivedUpdates": 3,
+                    "remotePort": 36993,
+                    "restart": 300,
+                    "routeMapInfo": {
+                        "filterType": "RouteMap"
+                    },
+                    "routerId": "10.2.2.2",
+                    "sentMessages": 81,
+                    "sentUpdates": 2,
+                    "state": "Established",
+                    "ttl": 255,
+                    "updateGroupIndex": 2,
+                    "updateSource": "10.12.12.1",
+                    "updownTime": 4596,
+                    "v4BestEcmpPaths": 0,
+                    "v4BestPaths": 0,
+                    "v4SrTeBestEcmpPaths": 0,
+                    "v4SrTeBestPaths": 0,
+                    "v4SrTePrefixesReceived": 0,
+                    "v4SrTePrefixesSent": 0,
+                    "v6BestEcmpPaths": 0,
+                    "v6BestPaths": 0,
+                    "v6PrefixesReceived": 0,
+                    "v6PrefixesSent": 0,
+                    "v6SrTeBestEcmpPaths": 0,
+                    "v6SrTeBestPaths": 0,
+                    "v6SrTePrefixesReceived": 0,
+                    "v6SrTePrefixesSent": 0,
+                    "version": 4,
+                    "vrf": "default"
+                }
+            ]
+        }
+    }
+}

@@ -1,0 +1,13 @@
+entries:
+  - src_hostname: r1
+    src_location: r1[lo]
+    disposition: accepted
+    flow:
+      dst_ip: 10.2.0.1
+      application: icmp
+  - src_hostname: r2
+    src_location: r2[lo]
+    disposition: accepted
+    flow:
+      dst_ip: 10.1.0.1
+      application: icmp

@@ -1,0 +1,9 @@
+entries:
+  - hostname: d3_eigrp
+    test_name: test_main_rib_routes
+    skip:
+      reason: https://github.com/batfish/lab-validation/issues/24
+  - hostname: d5_ospf
+    test_name: test_main_rib_routes
+    skip:
+      reason: https://github.com/batfish/lab-validation/issues/25, https://github.com/batfish/lab-validation/issues/26, https://github.com/batfish/lab-validation/issues/27

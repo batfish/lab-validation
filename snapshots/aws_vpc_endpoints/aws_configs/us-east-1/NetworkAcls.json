@@ -1,0 +1,101 @@
+{
+ "NetworkAcls": [
+  {
+   "Associations": [
+    {
+     "NetworkAclAssociationId": "aclassoc-0f3fb3d2ced459080",
+     "NetworkAclId": "acl-02839f01a5e93207c",
+     "SubnetId": "subnet-09de87bd086777dad"
+    },
+    {
+     "NetworkAclAssociationId": "aclassoc-0f33e7fcc2dc8805d",
+     "NetworkAclId": "acl-02839f01a5e93207c",
+     "SubnetId": "subnet-03761b5c625efb4af"
+    },
+    {
+     "NetworkAclAssociationId": "aclassoc-079d34ea1799997e4",
+     "NetworkAclId": "acl-02839f01a5e93207c",
+     "SubnetId": "subnet-060b9a92db1c9e9ae"
+    }
+   ],
+   "Entries": [
+    {
+     "CidrBlock": "0.0.0.0/0",
+     "Egress": true,
+     "Protocol": "-1",
+     "RuleAction": "allow",
+     "RuleNumber": 1000
+    },
+    {
+     "CidrBlock": "0.0.0.0/0",
+     "Egress": true,
+     "Protocol": "-1",
+     "RuleAction": "deny",
+     "RuleNumber": 32767
+    },
+    {
+     "CidrBlock": "0.0.0.0/0",
+     "Egress": false,
+     "Protocol": "-1",
+     "RuleAction": "allow",
+     "RuleNumber": 1000
+    },
+    {
+     "CidrBlock": "0.0.0.0/0",
+     "Egress": false,
+     "Protocol": "-1",
+     "RuleAction": "deny",
+     "RuleNumber": 32767
+    }
+   ],
+   "IsDefault": false,
+   "NetworkAclId": "acl-02839f01a5e93207c",
+   "OwnerId": "028403472736",
+   "Tags": [
+    {
+     "Key": "Name",
+     "Value": "bat-general"
+    }
+   ],
+   "VpcId": "vpc-0ce3585be7ea715d8"
+  },
+  {
+   "Associations": [],
+   "Entries": [
+    {
+     "CidrBlock": "0.0.0.0/0",
+     "Egress": true,
+     "Protocol": "-1",
+     "RuleAction": "allow",
+     "RuleNumber": 100
+    },
+    {
+     "CidrBlock": "0.0.0.0/0",
+     "Egress": true,
+     "Protocol": "-1",
+     "RuleAction": "deny",
+     "RuleNumber": 32767
+    },
+    {
+     "CidrBlock": "0.0.0.0/0",
+     "Egress": false,
+     "Protocol": "-1",
+     "RuleAction": "allow",
+     "RuleNumber": 100
+    },
+    {
+     "CidrBlock": "0.0.0.0/0",
+     "Egress": false,
+     "Protocol": "-1",
+     "RuleAction": "deny",
+     "RuleNumber": 32767
+    }
+   ],
+   "IsDefault": true,
+   "NetworkAclId": "acl-07bde9cb8b41d2c33",
+   "OwnerId": "028403472736",
+   "Tags": [],
+   "VpcId": "vpc-0ce3585be7ea715d8"
+  }
+ ]
+}

@@ -1,0 +1,9 @@
+entries:
+  - hostname: "d1_central"
+    test_name: test_bgp_rib_routes
+    skip:
+      reason: https://github.com/batfish/lab-validation/issues/41
+  - hostname: "d3_ebgp"
+    test_name: test_bgp_rib_routes
+    skip:
+      reason: https://github.com/batfish/lab-validation/issues/41

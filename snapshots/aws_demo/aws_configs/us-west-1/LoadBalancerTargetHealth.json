@@ -1,0 +1,62 @@
+{
+ "LoadBalancerTargetHealth": [
+  {
+   "TargetGroupArn": "arn:aws:elasticloadbalancing:us-west-1:028403472736:targetgroup/tf-20200422012823702500000002/9188482d973036a3",
+   "TargetHealthDescriptions": [
+    {
+     "HealthCheckPort": "80",
+     "Target": {
+      "Id": "i-0abff5b095b7aaf9c",
+      "Port": 80
+     },
+     "TargetHealth": {
+      "Description": "Initial health checks in progress",
+      "Reason": "Elb.InitialHealthChecking",
+      "State": "initial"
+     }
+    },
+    {
+     "HealthCheckPort": "80",
+     "Target": {
+      "Id": "i-02a5b6f599105d91f",
+      "Port": 80
+     },
+     "TargetHealth": {
+      "Description": "Initial health checks in progress",
+      "Reason": "Elb.InitialHealthChecking",
+      "State": "initial"
+     }
+    }
+   ]
+  },
+  {
+   "TargetGroupArn": "arn:aws:elasticloadbalancing:us-west-1:028403472736:targetgroup/tf-20200422012856180000000006/54b01cc8e2c87030",
+   "TargetHealthDescriptions": [
+    {
+     "HealthCheckPort": "443",
+     "Target": {
+      "Id": "i-02a5b6f599105d91f",
+      "Port": 443
+     },
+     "TargetHealth": {
+      "Description": "Initial health checks in progress",
+      "Reason": "Elb.InitialHealthChecking",
+      "State": "initial"
+     }
+    },
+    {
+     "HealthCheckPort": "443",
+     "Target": {
+      "Id": "i-0abff5b095b7aaf9c",
+      "Port": 443
+     },
+     "TargetHealth": {
+      "Description": "Initial health checks in progress",
+      "Reason": "Elb.InitialHealthChecking",
+      "State": "initial"
+     }
+    }
+   ]
+  }
+ ]
+}

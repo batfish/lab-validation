@@ -1,0 +1,77 @@
+{
+ "LoadBalancers": [
+  {
+   "AvailabilityZones": [
+    {
+     "LoadBalancerAddresses": [],
+     "SubnetId": "subnet-0f633d6b6a9e3243f",
+     "ZoneName": "us-east-1b"
+    },
+    {
+     "LoadBalancerAddresses": [],
+     "SubnetId": "subnet-04053301e0eabf0f7",
+     "ZoneName": "us-east-1a"
+    }
+   ],
+   "CanonicalHostedZoneId": "Z26RNL4JYFTOTI",
+   "CreatedTime": "2020-07-27 19:04:05.034000+00:00",
+   "DNSName": "example-nlb-ip-2337d295e7426ac8.elb.us-east-1.amazonaws.com",
+   "IpAddressType": "ipv4",
+   "LoadBalancerArn": "arn:aws:elasticloadbalancing:us-east-1:028403472736:loadbalancer/net/example-nlb-ip/2337d295e7426ac8",
+   "LoadBalancerName": "example-nlb-ip",
+   "Scheme": "internet-facing",
+   "State": {
+    "Code": "active"
+   },
+   "Type": "network",
+   "VpcId": "vpc-0e7231b06d4761dc4"
+  },
+  {
+   "AvailabilityZones": [
+    {
+     "LoadBalancerAddresses": [],
+     "SubnetId": "subnet-0f1e94db75987f9dd",
+     "ZoneName": "us-east-1a"
+    }
+   ],
+   "CanonicalHostedZoneId": "Z26RNL4JYFTOTI",
+   "CreatedTime": "2020-07-27 18:49:38.294000+00:00",
+   "DNSName": "example-nlb-eni-private-subnet-6f8c796c122b6062.elb.us-east-1.amazonaws.com",
+   "IpAddressType": "ipv4",
+   "LoadBalancerArn": "arn:aws:elasticloadbalancing:us-east-1:028403472736:loadbalancer/net/example-nlb-eni-private-subnet/6f8c796c122b6062",
+   "LoadBalancerName": "example-nlb-eni-private-subnet",
+   "Scheme": "internet-facing",
+   "State": {
+    "Code": "active"
+   },
+   "Type": "network",
+   "VpcId": "vpc-0e7231b06d4761dc4"
+  },
+  {
+   "AvailabilityZones": [
+    {
+     "LoadBalancerAddresses": [],
+     "SubnetId": "subnet-0f633d6b6a9e3243f",
+     "ZoneName": "us-east-1b"
+    },
+    {
+     "LoadBalancerAddresses": [],
+     "SubnetId": "subnet-04053301e0eabf0f7",
+     "ZoneName": "us-east-1a"
+    }
+   ],
+   "CanonicalHostedZoneId": "Z26RNL4JYFTOTI",
+   "CreatedTime": "2020-07-27 19:05:18.910000+00:00",
+   "DNSName": "example-target-az-different-e16c3a393878651d.elb.us-east-1.amazonaws.com",
+   "IpAddressType": "ipv4",
+   "LoadBalancerArn": "arn:aws:elasticloadbalancing:us-east-1:028403472736:loadbalancer/net/example-target-az-different/e16c3a393878651d",
+   "LoadBalancerName": "example-target-az-different",
+   "Scheme": "internet-facing",
+   "State": {
+    "Code": "active"
+   },
+   "Type": "network",
+   "VpcId": "vpc-0e7231b06d4761dc4"
+  }
+ ]
+}

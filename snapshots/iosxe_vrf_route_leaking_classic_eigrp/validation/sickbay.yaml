@@ -1,0 +1,17 @@
+entries:
+  - hostname: d3_pe
+    test_name: test_main_rib_routes
+    skip:
+      reason: https://github.com/batfish/lab-validation/issues/16, https://github.com/batfish/lab-validation/issues/19, https://github.com/batfish/lab-validation/issues/20
+  - hostname: d4_shared
+    test_name: test_main_rib_routes
+    skip:
+      reason: https://github.com/batfish/lab-validation/issues/19
+  - hostname: d3_pe
+    test_name: test_bgp_rib_routes
+    skip:
+      reason: https://github.com/batfish/lab-validation/issues/19
+  - hostname: d4_shared
+    test_name: test_bgp_rib_routes
+    skip:
+      reason: https://github.com/batfish/lab-validation/issues/19

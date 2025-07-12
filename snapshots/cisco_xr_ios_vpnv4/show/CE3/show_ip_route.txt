@@ -1,0 +1,23 @@
+Codes: L - local, C - connected, S - static, R - RIP, M - mobile, B - BGP
+       D - EIGRP, EX - EIGRP external, O - OSPF, IA - OSPF inter area 
+       N1 - OSPF NSSA external type 1, N2 - OSPF NSSA external type 2
+       E1 - OSPF external type 1, E2 - OSPF external type 2
+       i - IS-IS, su - IS-IS summary, L1 - IS-IS level-1, L2 - IS-IS level-2
+       ia - IS-IS inter area, * - candidate default, U - per-user static route
+       o - ODR, P - periodic downloaded static route, H - NHRP, l - LISP
+       a - application route
+       + - replicated route, % - next hop override, p - overrides from PfR
+
+Gateway of last resort is not set
+
+      10.0.0.0/8 is variably subnetted, 2 subnets, 2 masks
+C        10.150.0.0/16 is directly connected, GigabitEthernet0/0
+L        10.150.0.202/32 is directly connected, GigabitEthernet0/0
+      11.0.0.0/8 is variably subnetted, 2 subnets, 2 masks
+B        11.0.0.0/8 [20/0] via 12.1.1.1, 00:47:03
+B        11.1.1.0/24 [20/0] via 12.1.1.1, 00:18:34
+      12.0.0.0/8 is variably subnetted, 2 subnets, 2 masks
+C        12.1.1.0/24 is directly connected, GigabitEthernet0/1
+L        12.1.1.2/32 is directly connected, GigabitEthernet0/1
+      100.0.0.0/16 is subnetted, 1 subnets
+S        100.2.0.0 is directly connected, Null0

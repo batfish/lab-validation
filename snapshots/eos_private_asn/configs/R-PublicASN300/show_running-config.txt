@@ -1,0 +1,60 @@
+! Command: show running-config
+! device: R-PublicASN300 (vEOS, EOS-4.21.1.1F)
+!
+! boot system flash:/vEOS-lab.swi
+!
+transceiver qsfp default-mode 4x10G
+!
+hostname R-PublicASN300
+!
+spanning-tree mode mstp
+!
+no aaa root
+!
+username admin privilege 15 role network-admin secret sha512 $6$x5NINdXjRnlmNeQh$cLp2juGrMOYNULaKP1/77LvgJXY5QQ0Vyb079pbZkHYTbjHOF2ZKCd29nrx6oibJoe7HayldTwuhROXSLvhxr1
+!
+interface Ethernet1
+   no switchport
+   ip address 10.10.30.1/24
+!
+interface Ethernet2
+!
+interface Ethernet3
+!
+interface Ethernet4
+!
+interface Ethernet5
+!
+interface Ethernet6
+!
+interface Ethernet7
+!
+interface Ethernet8
+!
+interface Ethernet9
+!
+interface Ethernet10
+!
+interface Ethernet11
+!
+interface Ethernet12
+!
+interface Ethernet13
+!
+interface Ethernet14
+!
+interface Ethernet15
+!
+interface Loopback123
+   ip address 192.168.123.5/32
+!
+interface Management1
+!
+ip routing
+!
+router bgp 300
+   neighbor 10.10.30.2 remote-as 100
+   neighbor 10.10.30.2 maximum-routes 12000
+   network 192.168.123.5/32
+!
+end

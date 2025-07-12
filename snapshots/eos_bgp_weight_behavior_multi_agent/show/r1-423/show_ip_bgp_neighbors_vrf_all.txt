@@ -1,0 +1,80 @@
+BGP neighbor is 10.12.11.2, remote AS 65112, internal link
+  BGP version 4, remote router ID 10.12.11.2, VRF default
+  Last read 00:00:14, last write 00:00:48
+  Hold time is 180, keepalive interval is 60 seconds
+  Configured hold time is 180, keepalive interval is 60 seconds
+  Hold timer is active, time left: 00:00:11
+  Keepalive timer is active, time left: 00:00:02
+  Connect timer is inactive
+  Idle-restart timer is inactive
+  BGP state is Established, up for 00:14:56
+  Number of transitions to established: 1
+  Last state was OpenConfirm
+  Last event was RecvUpdate
+  Neighbor Capabilities:
+    Multiprotocol IPv4 Unicast: advertised and received and negotiated
+    Four Octet ASN: advertised and received and negotiated
+    Route Refresh: advertised and received and negotiated
+    Send End-of-RIB messages: advertised and received and negotiated
+    Additional-paths recv capability:
+      IPv4 Unicast: advertised
+    Additional-paths send capability:
+      IPv4 Unicast: received
+  Restart timer is inactive
+  End of rib timer is inactive
+    IPv4 Unicast End-of-RIB received: Yes
+  Message Statistics:
+                         Sent      Rcvd
+    Opens:                  1         1
+    Notifications:          0         0
+    Updates:                3         2
+    Keepalives:            18        19
+    Route-Refresh:          0         0
+    Total messages:        22        22
+  Prefix Statistics:
+                                   Sent      Rcvd
+    IPv4 Unicast:                     1         2
+    IPv6 Unicast:                     0         0
+  Configured maximum total number of routes is 12000
+  Inbound updates dropped by reason:
+    AS path loop detection: 0
+    Enforced First AS: 0
+    Malformed MPBGP routes: 0
+    Originator ID matches local router ID: 0
+    Nexthop matches local IP address: 0
+  Inbound updates with attribute errors:
+    Resulting in removal of all paths in update (treat as withdraw): 0
+    Resulting in AFI/SAFI disable: 0
+    Resulting in attribute ignore: 0
+    Disabled AFI/SAFIs: None
+  Inbound paths dropped by reason:
+    IPv4 labeled-unicast NLRIs dropped due to excessive labels: 0
+    IPv6 labeled-unicast NLRIs dropped due to excessive labels: 0
+  Outbound paths dropped by reason:
+    IPv4 local address not available: 0
+    IPv6 local address not available: 0
+  Inbound route map is INCREASE_WEIGHT
+Local AS is 65112, local router ID 10.12.11.1
+TTL is 255
+Local TCP address is 10.12.11.1, local port is 45522
+Remote TCP address is 10.12.11.2, remote port is 179
+! Sending extended community not configured, updates will be sent without extended communities or route targets
+TCP Socket Information:
+  TCP state is ESTABLISHED
+  Recv-Q: 0/32768
+  Send-Q: 0/32768
+  Outgoing Maximum Segment Size (MSS): 1448
+  Total Number of TCP retransmissions: 0
+  Options:
+    Timestamps enabled: yes
+    Selective Acknowledgments enabled: yes
+    Window Scale enabled: yes
+    Explicit Congestion Notification (ECN) enabled: no
+  Socket Statistics:
+    Window Scale (wscale): 7,7
+    Retransmission Timeout (rto): 212.0ms
+    Round-trip Time (rtt/rtvar): 9.7ms/2.7ms
+    Delayed Ack Timeout (ato): 40.0ms
+    Congestion Window (cwnd): 10
+    TCP Throughput: 11.89 Mbps
+    Advertised Recv Window (rcv_space): 29200

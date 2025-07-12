@@ -1,0 +1,89 @@
+! Command: show running-config
+! device: R-PublicASN111 (vEOS, EOS-4.21.1.1F)
+!
+! boot system flash:/vEOS-lab.swi
+!
+transceiver qsfp default-mode 4x10G
+!
+hostname R-PublicASN111
+!
+spanning-tree mode mstp
+!
+no aaa root
+!
+username admin privilege 15 role network-admin secret sha512 $6$EwQEew7W7cU2WLOG$.TjeXnLmBpHajp8FCsd69VDaFkFThAivXc4PDoC4UEmX4dyFIuRp9AOq0/anfkDvtpk6WLKUsxLAG2Ldxe43q1
+!
+interface Ethernet1
+   no switchport
+   ip address 10.10.11.1/24
+!
+interface Ethernet2
+!
+interface Ethernet3
+!
+interface Ethernet4
+!
+interface Ethernet5
+!
+interface Ethernet6
+!
+interface Ethernet7
+!
+interface Ethernet8
+!
+interface Ethernet9
+!
+interface Ethernet10
+!
+interface Ethernet11
+!
+interface Ethernet12
+!
+interface Ethernet13
+!
+interface Ethernet14
+!
+interface Ethernet15
+!
+interface Loopback0
+   ip address 100.100.100.2/32
+!
+interface Loopback3
+   ip address 3.3.3.3/32
+!
+interface Loopback4
+   ip address 4.4.4.4/32
+!
+interface Loopback123
+   ip address 192.168.123.3/32
+!
+interface Management1
+!
+ip routing
+!
+ip prefix-list donothing seq 5 permit 100.100.100.2/32
+ip prefix-list donothing seq 15 permit 192.168.123.3/32
+ip prefix-list prependprivate seq 5 permit 3.3.3.3/32
+ip prefix-list prependpublic seq 5 permit 4.4.4.4/32
+!
+route-map test-privateASN permit 10
+   match ip address prefix-list prependprivate
+   set as-path prepend 65101
+!
+route-map test-privateASN permit 20
+   match ip address prefix-list prependpublic
+   set as-path prepend 25
+!
+route-map test-privateASN permit 30
+   match ip address prefix-list donothing
+!
+router bgp 111
+   neighbor 10.10.11.2 remote-as 100
+   neighbor 10.10.11.2 route-map test-privateASN out
+   neighbor 10.10.11.2 maximum-routes 12000
+   network 3.3.3.3/32
+   network 4.4.4.4/32
+   network 100.100.100.2/32
+   network 192.168.123.3/32
+!
+end

@@ -1,0 +1,47 @@
+{
+ "NatGateways": [
+  {
+   "CreateTime": "2020-04-21 18:06:28+00:00",
+   "DeleteTime": "2020-04-22 01:21:06+00:00",
+   "NatGatewayAddresses": [
+    {
+     "AllocationId": "eipalloc-04888a02c50462576",
+     "NetworkInterfaceId": "eni-0f446d2f6a051a052",
+     "PrivateIp": "10.1.201.30",
+     "PublicIp": "52.71.54.153"
+    }
+   ],
+   "NatGatewayId": "nat-0dd42c998eea1b189",
+   "State": "deleted",
+   "SubnetId": "subnet-0d8ae55a767202cfd",
+   "Tags": [
+    {
+     "Key": "Name",
+     "Value": "ngw-hr-east"
+    }
+   ],
+   "VpcId": "vpc-00c1d0af2ad428fbf"
+  },
+  {
+   "CreateTime": "2020-04-22 01:28:56+00:00",
+   "NatGatewayAddresses": [
+    {
+     "AllocationId": "eipalloc-06c452967044c1549",
+     "NetworkInterfaceId": "eni-00041fbe90a508c92",
+     "PrivateIp": "10.1.201.31",
+     "PublicIp": "54.227.151.200"
+    }
+   ],
+   "NatGatewayId": "nat-044f518facb617e97",
+   "State": "available",
+   "SubnetId": "subnet-0e3b67b96fa52d20d",
+   "Tags": [
+    {
+     "Key": "Name",
+     "Value": "ngw-hr-east"
+    }
+   ],
+   "VpcId": "vpc-09fbdfd905cb6796d"
+  }
+ ]
+}

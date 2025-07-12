@@ -1,0 +1,13 @@
+entries:
+  - hostname: match_end|match_start
+    test_name: test_main_rib_routes
+    skip:
+      reason: https://github.com/batfish/lab-validation/issues/41
+  - hostname: match_end|match_start
+    test_name: test_bgp_rib_routes
+    skip:
+      reason: https://github.com/batfish/lab-validation/issues/41
+  - hostname: allow_all
+    test_name: test_bgp_rib_routes
+    skip:
+      reason: https://github.com/batfish/lab-validation/issues/41

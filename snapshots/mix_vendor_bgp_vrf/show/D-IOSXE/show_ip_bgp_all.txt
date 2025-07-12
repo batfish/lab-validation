@@ -1,0 +1,59 @@
+For address family: IPv4 Unicast
+
+BGP table version is 17, local router ID is 192.168.123.1
+Status codes: s suppressed, d damped, h history, * valid, > best, i - internal,
+              r RIB-failure, S Stale, m multipath, b backup-path, f RT-Filter,
+              x best-external, a additional-path, c RIB-compressed,
+              t secondary path,
+Origin codes: i - IGP, e - EGP, ? - incomplete
+RPKI validation codes: V valid, I invalid, N Not found
+
+     Network          Next Hop            Metric LocPrf Weight Path
+ *>   10.10.10.0/24    0.0.0.0                  0         32768 i
+ *>   10.10.20.0/24    0.0.0.0                  0         32768 i
+ *>   10.10.30.0/24    0.0.0.0                  0         32768 i
+ *>   10.10.40.0/24    0.0.0.0                  0         32768 i
+ *>   10.10.50.0/24    0.0.0.0                  0         32768 i
+ *>   192.168.122.0    0.0.0.0                  0         32768 i
+ *>   192.168.123.1/32 0.0.0.0                  0         32768 i
+ *>   192.168.123.2/32 10.10.10.2               0             0 10 i
+ *>   192.168.123.3/32 10.10.20.2                             0 20 i
+ *>   192.168.123.4/32 10.10.30.2                             0 30 i
+ *>   192.168.123.5/32 10.10.40.2               0             0 40 i
+ *>   192.168.123.6/32 10.10.50.2                             0 50 i
+
+For address family: IPv6 Unicast
+
+
+For address family: VPNv4 Unicast
+
+BGP table version is 3, local router ID is 192.168.123.1
+Status codes: s suppressed, d damped, h history, * valid, > best, i - internal,
+              r RIB-failure, S Stale, m multipath, b backup-path, f RT-Filter,
+              x best-external, a additional-path, c RIB-compressed,
+              t secondary path,
+Origin codes: i - IGP, e - EGP, ? - incomplete
+RPKI validation codes: V valid, I invalid, N Not found
+
+     Network          Next Hop            Metric LocPrf Weight Path
+Route Distinguisher: 1.1.1.10:1 (default for vrf cust10) VRF Router ID 1.1.1.10
+ *>   1.1.1.10/32      0.0.0.0                  0         32768 ?
+Route Distinguisher: 1.1.1.20:1 (default for vrf cust20) VRF Router ID 1.1.1.20
+ *>   1.1.1.20/32      0.0.0.0                  0         32768 ?
+
+For address family: IPv4 Multicast
+
+
+For address family: L2VPN E-VPN
+
+
+For address family: VPNv4 Multicast
+
+
+For address family: MVPNv4 Unicast
+
+
+For address family: MVPNv6 Unicast
+
+
+For address family: VPNv4 Flowspec

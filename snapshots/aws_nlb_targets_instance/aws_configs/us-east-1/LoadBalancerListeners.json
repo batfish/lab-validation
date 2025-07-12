@@ -1,0 +1,79 @@
+{
+ "LoadBalancerListeners": [
+  {
+   "Listeners": [
+    {
+     "DefaultActions": [
+      {
+       "ForwardConfig": {
+        "TargetGroups": [
+         {
+          "TargetGroupArn": "arn:aws:elasticloadbalancing:us-east-1:028403472736:targetgroup/targets-instance-tg-only-pub-a/18b006d402094594"
+         }
+        ]
+       },
+       "Order": 1,
+       "TargetGroupArn": "arn:aws:elasticloadbalancing:us-east-1:028403472736:targetgroup/targets-instance-tg-only-pub-a/18b006d402094594",
+       "Type": "forward"
+      }
+     ],
+     "ListenerArn": "arn:aws:elasticloadbalancing:us-east-1:028403472736:listener/net/targets-instance-nlb-only-pub-a/01b6d1d0dcf697ce/361d1e4f10b8165c",
+     "LoadBalancerArn": "arn:aws:elasticloadbalancing:us-east-1:028403472736:loadbalancer/net/targets-instance-nlb-only-pub-a/01b6d1d0dcf697ce",
+     "Port": 80,
+     "Protocol": "TCP"
+    }
+   ],
+   "LoadBalancerArn": "arn:aws:elasticloadbalancing:us-east-1:028403472736:loadbalancer/net/targets-instance-nlb-only-pub-a/01b6d1d0dcf697ce"
+  },
+  {
+   "Listeners": [
+    {
+     "DefaultActions": [
+      {
+       "ForwardConfig": {
+        "TargetGroups": [
+         {
+          "TargetGroupArn": "arn:aws:elasticloadbalancing:us-east-1:028403472736:targetgroup/targets-instance-tg-only-pri-a/900169cd2ec665ad"
+         }
+        ]
+       },
+       "Order": 1,
+       "TargetGroupArn": "arn:aws:elasticloadbalancing:us-east-1:028403472736:targetgroup/targets-instance-tg-only-pri-a/900169cd2ec665ad",
+       "Type": "forward"
+      }
+     ],
+     "ListenerArn": "arn:aws:elasticloadbalancing:us-east-1:028403472736:listener/net/targets-instance-nlb-only-pri-a/5f9fc459fbfc6805/21edc46973b7897e",
+     "LoadBalancerArn": "arn:aws:elasticloadbalancing:us-east-1:028403472736:loadbalancer/net/targets-instance-nlb-only-pri-a/5f9fc459fbfc6805",
+     "Port": 80,
+     "Protocol": "TCP"
+    }
+   ],
+   "LoadBalancerArn": "arn:aws:elasticloadbalancing:us-east-1:028403472736:loadbalancer/net/targets-instance-nlb-only-pri-a/5f9fc459fbfc6805"
+  },
+  {
+   "Listeners": [
+    {
+     "DefaultActions": [
+      {
+       "ForwardConfig": {
+        "TargetGroups": [
+         {
+          "TargetGroupArn": "arn:aws:elasticloadbalancing:us-east-1:028403472736:targetgroup/targets-instance-tg-pri-pub-a/be883e4b952db4b8"
+         }
+        ]
+       },
+       "Order": 1,
+       "TargetGroupArn": "arn:aws:elasticloadbalancing:us-east-1:028403472736:targetgroup/targets-instance-tg-pri-pub-a/be883e4b952db4b8",
+       "Type": "forward"
+      }
+     ],
+     "ListenerArn": "arn:aws:elasticloadbalancing:us-east-1:028403472736:listener/net/targets-instance-nlb-pri-pub-a/6cb1d730b0da5d0a/016e5892f99aa528",
+     "LoadBalancerArn": "arn:aws:elasticloadbalancing:us-east-1:028403472736:loadbalancer/net/targets-instance-nlb-pri-pub-a/6cb1d730b0da5d0a",
+     "Port": 80,
+     "Protocol": "TCP"
+    }
+   ],
+   "LoadBalancerArn": "arn:aws:elasticloadbalancing:us-east-1:028403472736:loadbalancer/net/targets-instance-nlb-pri-pub-a/6cb1d730b0da5d0a"
+  }
+ ]
+}

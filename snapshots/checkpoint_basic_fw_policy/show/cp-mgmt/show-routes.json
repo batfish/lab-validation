@@ -1,0 +1,38 @@
+{
+    "from": 0,
+    "objects": [
+        {
+            "address": "0.0.0.0",
+            "age": "3244",
+            "cost": "0",
+            "mask-length": "0",
+            "next-hop": {
+                "gateways": [
+                    {
+                        "address": "10.150.0.1",
+                        "interface": "eth0"
+                    }
+                ]
+            },
+            "protocol": "Static"
+        },
+        {
+            "address": "10.150.0.0",
+            "mask-length": "16",
+            "next-hop": {
+                "interface": "eth0"
+            },
+            "protocol": "Connected"
+        },
+        {
+            "address": "127.0.0.0",
+            "mask-length": "8",
+            "next-hop": {
+                "interface": "lo"
+            },
+            "protocol": "Connected"
+        }
+    ],
+    "to": 3,
+    "total": 3
+}

@@ -1,0 +1,42 @@
+{
+    "vrfs": {
+        "cust10": {
+            "interfaces": [
+                "Loopback10"
+            ],
+            "protocols": {
+                "ipv4": {
+                    "protocolState": "up",
+                    "routingState": "up",
+                    "supported": true
+                },
+                "ipv6": {
+                    "protocolState": "up",
+                    "routingState": "down",
+                    "supported": true
+                }
+            },
+            "routeDistinguisher": "1.1.4.10:30",
+            "vrfState": "up"
+        },
+        "cust20": {
+            "interfaces": [
+                "Loopback20"
+            ],
+            "protocols": {
+                "ipv4": {
+                    "protocolState": "up",
+                    "routingState": "up",
+                    "supported": true
+                },
+                "ipv6": {
+                    "protocolState": "up",
+                    "routingState": "down",
+                    "supported": true
+                }
+            },
+            "routeDistinguisher": "1.1.4.20:30",
+            "vrfState": "up"
+        }
+    }
+}

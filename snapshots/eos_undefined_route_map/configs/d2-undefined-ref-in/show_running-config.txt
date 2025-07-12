@@ -1,0 +1,137 @@
+! Command: show running-config
+! device: d2-undefined-ref-in (vEOS, EOS-4.21.1.1F)
+!
+! boot system flash:/vEOS-lab.swi
+!
+transceiver qsfp default-mode 4x10G
+!
+hostname d2-undefined-ref-in
+!
+spanning-tree mode mstp
+!
+aaa authorization exec default local
+!
+no aaa root
+!
+username admin privilege 15 role network-admin secret sha512 $6$odaWRJCcm4YYFXgO$AG8OaM0.70Z4rhLbvI7AKlLXDQhF0Mh4LmVkzWmgYdYf/YHTpurTc/5rwrMaYgoJHsq11PlHchly9fVLicr1l1
+!
+interface Ethernet1
+   no switchport
+   ip address 10.12.11.2/24
+!
+interface Ethernet2
+   no switchport
+   ip address 10.12.22.2/24
+!
+interface Ethernet3
+   no switchport
+   ip address 10.12.33.2/24
+!
+interface Ethernet4
+   no switchport
+   ip address 10.12.44.2/24
+!
+interface Ethernet5
+   no switchport
+   ip address 10.12.55.2/24
+!
+interface Ethernet6
+   no switchport
+   ip address 10.12.66.2/24
+!
+interface Ethernet7
+   no switchport
+   ip address 10.12.77.2/24
+!
+interface Ethernet8
+!
+interface Ethernet9
+!
+interface Ethernet10
+!
+interface Ethernet11
+!
+interface Ethernet12
+!
+interface Ethernet13
+!
+interface Ethernet14
+!
+interface Ethernet15
+!
+interface Loopback123
+   ip address 192.168.123.2/32
+!
+interface Management1
+!
+ip routing
+!
+ip prefix-list normal_defined seq 10 permit 172.16.1.6/32
+ip prefix-list normal_defined_pg_defined seq 10 permit 172.16.1.7/32
+ip prefix-list normal_defined_pg_na seq 10 permit 172.16.1.1/32
+ip prefix-list normal_defined_pg_na seq 20 permit 192.168.122.0/24
+ip prefix-list normal_na_pg_defined seq 10 permit 172.16.1.2/32
+ip prefix-list normal_undefined_pg_defined seq 10 permit 172.16.1.5/32
+!
+route-map normal_defined permit 10
+   match ip address prefix-list normal_defined
+   set as-path prepend 26
+!
+route-map normal_defined_pg_defined_1 permit 10
+   match ip address prefix-list normal_defined_pg_defined
+   set as-path prepend 271
+!
+route-map normal_defined_pg_defined_2 permit 10
+   match ip address prefix-list normal_defined_pg_defined
+   set as-path prepend 272
+!
+route-map normal_defined_pg_na permit 10
+   match ip address prefix-list normal_defined_pg_na
+   set as-path prepend 21
+!
+route-map normal_na_pg_defined permit 10
+   match ip address prefix-list normal_na_pg_defined
+   set as-path prepend 22
+!
+route-map normal_undefined_pg_defined permit 10
+   match ip address prefix-list normal_undefined_pg_defined
+   set as-path prepend 25
+!
+router bgp 65002
+   neighbor normal_defined_pg_defined peer-group
+   neighbor normal_defined_pg_defined remote-as 65001
+   neighbor normal_defined_pg_defined route-map normal_defined_pg_defined_2 in
+   neighbor normal_defined_pg_defined maximum-routes 12000
+   neighbor normal_defined_pg_undefined peer-group
+   neighbor normal_defined_pg_undefined remote-as 65001
+   neighbor normal_defined_pg_undefined route-map normal_defined_pg_undefined in
+   neighbor normal_defined_pg_undefined maximum-routes 12000
+   neighbor normal_na_pg_defined peer-group
+   neighbor normal_na_pg_defined remote-as 65001
+   neighbor normal_na_pg_defined route-map normal_na_pg_defined in
+   neighbor normal_na_pg_defined maximum-routes 12000
+   neighbor normal_na_pg_undefined peer-group
+   neighbor normal_na_pg_undefined remote-as 65001
+   neighbor normal_na_pg_undefined route-map normal_na_pg_undefined in
+   neighbor normal_na_pg_undefined maximum-routes 12000
+   neighbor normal_undefined_pg_defined peer-group
+   neighbor normal_undefined_pg_defined remote-as 65001
+   neighbor normal_undefined_pg_defined route-map normal_undefined_pg_defined in
+   neighbor normal_undefined_pg_defined maximum-routes 12000
+   neighbor 10.12.11.1 remote-as 65001
+   neighbor 10.12.11.1 route-map normal_defined_pg_na in
+   neighbor 10.12.11.1 maximum-routes 12000
+   neighbor 10.12.22.1 peer-group normal_na_pg_defined
+   neighbor 10.12.33.1 remote-as 65001
+   neighbor 10.12.33.1 route-map normal_undefined_pg_na in
+   neighbor 10.12.33.1 maximum-routes 12000
+   neighbor 10.12.44.1 peer-group normal_na_pg_undefined
+   neighbor 10.12.55.1 peer-group normal_undefined_pg_defined
+   neighbor 10.12.55.1 route-map normal_undefined in
+   neighbor 10.12.66.1 peer-group normal_defined_pg_undefined
+   neighbor 10.12.66.1 route-map normal_defined in
+   neighbor 10.12.77.1 peer-group normal_defined_pg_defined
+   neighbor 10.12.77.1 route-map normal_defined_pg_defined_1 in
+   network 192.168.123.2/32
+!
+end

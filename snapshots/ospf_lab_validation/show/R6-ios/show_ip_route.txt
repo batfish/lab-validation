@@ -1,0 +1,40 @@
+Codes: L - local, C - connected, S - static, R - RIP, M - mobile, B - BGP
+       D - EIGRP, EX - EIGRP external, O - OSPF, IA - OSPF inter area
+       N1 - OSPF NSSA external type 1, N2 - OSPF NSSA external type 2
+       E1 - OSPF external type 1, E2 - OSPF external type 2
+       i - IS-IS, su - IS-IS summary, L1 - IS-IS level-1, L2 - IS-IS level-2
+       ia - IS-IS inter area, * - candidate default, U - per-user static route
+       o - ODR, P - periodic downloaded static route, H - NHRP, l - LISP
+       + - replicated route, % - next hop override
+
+Gateway of last resort is 16.2.7.1 to network 0.0.0.0
+
+O*N2  0.0.0.0/0 [110/1] via 16.2.7.1, 00:25:15, Ethernet2/7
+      1.0.0.0/32 is subnetted, 1 subnets
+O IA     1.1.1.1 [110/11] via 16.2.7.1, 00:25:15, Ethernet2/7
+      3.0.0.0/32 is subnetted, 1 subnets
+O IA     3.3.3.3 [110/21] via 16.2.7.1, 00:23:11, Ethernet2/7
+      4.0.0.0/32 is subnetted, 1 subnets
+O IA     4.4.4.4 [110/21] via 16.2.7.1, 00:25:15, Ethernet2/7
+      8.0.0.0/32 is subnetted, 1 subnets
+C        8.8.8.8 is directly connected, Loopback0
+      12.0.0.0/24 is subnetted, 1 subnets
+O IA     12.0.0.0 [110/11] via 16.2.7.1, 00:25:15, Ethernet2/7
+      13.0.0.0/24 is subnetted, 1 subnets
+O IA     13.1.0.0 [110/20] via 16.2.7.1, 00:25:15, Ethernet2/7
+      14.0.0.0/24 is subnetted, 1 subnets
+O IA     14.2.0.0 [110/20] via 16.2.7.1, 00:25:15, Ethernet2/7
+      15.0.0.0/24 is subnetted, 1 subnets
+O IA     15.1.1.0 [110/20] via 16.2.7.1, 00:25:15, Ethernet2/7
+      16.0.0.0/8 is variably subnetted, 2 subnets, 2 masks
+C        16.2.7.0/24 is directly connected, Ethernet2/7
+L        16.2.7.2/32 is directly connected, Ethernet2/7
+O IA  192.168.122.0/24 [110/11] via 16.2.7.1, 00:20:34, Ethernet2/7
+      192.168.123.0/24 is variably subnetted, 7 subnets, 2 masks
+C        192.168.123.0/24 is directly connected, Loopback123
+O IA     192.168.123.1/32 [110/11] via 16.2.7.1, 00:20:16, Ethernet2/7
+O IA     192.168.123.2/32 [110/12] via 16.2.7.1, 00:17:51, Ethernet2/7
+O IA     192.168.123.3/32 [110/21] via 16.2.7.1, 00:12:52, Ethernet2/7
+O IA     192.168.123.4/32 [110/21] via 16.2.7.1, 00:11:18, Ethernet2/7
+O IA     192.168.123.5/32 [110/21] via 16.2.7.1, 00:08:54, Ethernet2/7
+L        192.168.123.6/32 is directly connected, Loopback123

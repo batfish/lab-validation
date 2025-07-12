@@ -1,0 +1,52 @@
+!Current configuration: 349 bytes
+!Configuration last updated at 01:55:42 IST Wed Jul 14 2021
+!Configuration last saved at 01:55:47 IST Wed Jul 14 2021
+!64-bit Advanced Core OS (ACOS) version 5.2.0, build 155 (Aug-10-2020,14:34)
+!
+hostname lb
+!
+!
+interface management
+  ip address 10.150.0.28 255.255.0.0
+  enable
+!
+interface ethernet 1
+  enable
+  ip address 10.12.11.2 255.255.255.0
+!
+interface ethernet 2
+  enable
+  ip address 10.23.21.1 255.255.255.0
+!
+interface ethernet 3
+  enable
+!
+interface loopback 0
+  ip address 172.16.0.2 255.255.255.255
+!
+!
+ip route 0.0.0.0 /0 10.23.21.2 description external
+!
+ip route 10.1.10.0 /24 10.12.11.1 description internal
+!
+slb server SERVER1 10.1.10.11
+  port 80 tcp
+!
+slb service-group SG_TCP_80 tcp
+  member SERVER1 80
+!
+slb virtual-server VS_TCP_80 10.0.0.1
+  port 80 tcp
+    service-group SG_TCP_80
+!
+sflow setting local-collection
+!
+sflow collector ip 127.0.0.1 6343
+!
+!
+cloud-services meta-data
+  enable
+  provider openstack
+!
+end
+!Current config commit point for partition 0 is 0 & config mode is classical-mode

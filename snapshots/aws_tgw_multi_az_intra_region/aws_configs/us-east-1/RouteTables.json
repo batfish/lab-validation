@@ -1,0 +1,342 @@
+{
+ "RouteTables": [
+  {
+   "Associations": [
+    {
+     "AssociationState": {
+      "State": "associated"
+     },
+     "Main": true,
+     "RouteTableAssociationId": "rtbassoc-0bf2c35bd84a4f9ce",
+     "RouteTableId": "rtb-0970d4dc6f10064f3"
+    }
+   ],
+   "OwnerId": "028403472736",
+   "PropagatingVgws": [],
+   "RouteTableId": "rtb-0970d4dc6f10064f3",
+   "Routes": [
+    {
+     "DestinationCidrBlock": "10.1.0.0/16",
+     "GatewayId": "local",
+     "Origin": "CreateRouteTable",
+     "State": "active"
+    }
+   ],
+   "Tags": [],
+   "VpcId": "vpc-0e578e50686443ca0"
+  },
+  {
+   "Associations": [
+    {
+     "AssociationState": {
+      "State": "associated"
+     },
+     "Main": true,
+     "RouteTableAssociationId": "rtbassoc-00f9fe247e6a534fa",
+     "RouteTableId": "rtb-08028d310dcf0c875"
+    }
+   ],
+   "OwnerId": "028403472736",
+   "PropagatingVgws": [],
+   "RouteTableId": "rtb-08028d310dcf0c875",
+   "Routes": [
+    {
+     "DestinationCidrBlock": "10.2.0.0/16",
+     "GatewayId": "local",
+     "Origin": "CreateRouteTable",
+     "State": "active"
+    }
+   ],
+   "Tags": [],
+   "VpcId": "vpc-0a96945f1dbc5b2ac"
+  },
+  {
+   "Associations": [
+    {
+     "AssociationState": {
+      "State": "associated"
+     },
+     "Main": false,
+     "RouteTableAssociationId": "rtbassoc-078cb45c9346a4eaf",
+     "RouteTableId": "rtb-07d2955d1eb8879fc",
+     "SubnetId": "subnet-095b7d5edef8309a2"
+    },
+    {
+     "AssociationState": {
+      "State": "associated"
+     },
+     "Main": false,
+     "RouteTableAssociationId": "rtbassoc-03f73cec069509feb",
+     "RouteTableId": "rtb-07d2955d1eb8879fc",
+     "SubnetId": "subnet-02d0c2429a21c620c"
+    },
+    {
+     "AssociationState": {
+      "State": "associated"
+     },
+     "Main": false,
+     "RouteTableAssociationId": "rtbassoc-034a32a102ce5e2bd",
+     "RouteTableId": "rtb-07d2955d1eb8879fc",
+     "SubnetId": "subnet-045337a9d4c78b263"
+    },
+    {
+     "AssociationState": {
+      "State": "associated"
+     },
+     "Main": false,
+     "RouteTableAssociationId": "rtbassoc-0f2dd9b85803d44a5",
+     "RouteTableId": "rtb-07d2955d1eb8879fc",
+     "SubnetId": "subnet-0d6ff43d8e5488043"
+    },
+    {
+     "AssociationState": {
+      "State": "associated"
+     },
+     "Main": false,
+     "RouteTableAssociationId": "rtbassoc-0071b4aacec90a37f",
+     "RouteTableId": "rtb-07d2955d1eb8879fc",
+     "SubnetId": "subnet-04a1bec10b9c08e3b"
+    }
+   ],
+   "OwnerId": "028403472736",
+   "PropagatingVgws": [],
+   "RouteTableId": "rtb-07d2955d1eb8879fc",
+   "Routes": [
+    {
+     "DestinationCidrBlock": "10.1.0.0/16",
+     "Origin": "CreateRoute",
+     "State": "active",
+     "TransitGatewayId": "tgw-02a2e50acb03f0952"
+    },
+    {
+     "DestinationCidrBlock": "10.2.0.0/16",
+     "GatewayId": "local",
+     "Origin": "CreateRouteTable",
+     "State": "active"
+    },
+    {
+     "DestinationCidrBlock": "0.0.0.0/0",
+     "NatGatewayId": "nat-04835feeb2a8277b2",
+     "Origin": "CreateRoute",
+     "State": "active"
+    }
+   ],
+   "Tags": [
+    {
+     "Key": "Name",
+     "Value": "dev-priv-rtb"
+    },
+    {
+     "Key": "Environment",
+     "Value": "dev"
+    },
+    {
+     "Key": "Terraform",
+     "Value": "true"
+    }
+   ],
+   "VpcId": "vpc-0a96945f1dbc5b2ac"
+  },
+  {
+   "Associations": [
+    {
+     "AssociationState": {
+      "State": "associated"
+     },
+     "Main": false,
+     "RouteTableAssociationId": "rtbassoc-06d6bf78ad6136305",
+     "RouteTableId": "rtb-078bdbcab3a0ac8e7",
+     "SubnetId": "subnet-01eaf54823e65b693"
+    }
+   ],
+   "OwnerId": "028403472736",
+   "PropagatingVgws": [],
+   "RouteTableId": "rtb-078bdbcab3a0ac8e7",
+   "Routes": [
+    {
+     "DestinationCidrBlock": "10.2.0.0/16",
+     "GatewayId": "local",
+     "Origin": "CreateRouteTable",
+     "State": "active"
+    },
+    {
+     "DestinationCidrBlock": "0.0.0.0/0",
+     "GatewayId": "igw-0fa571be04afffcab",
+     "Origin": "CreateRoute",
+     "State": "active"
+    }
+   ],
+   "Tags": [
+    {
+     "Key": "Name",
+     "Value": "dev-pub-rtb"
+    },
+    {
+     "Key": "Environment",
+     "Value": "dev"
+    },
+    {
+     "Key": "Terraform",
+     "Value": "true"
+    }
+   ],
+   "VpcId": "vpc-0a96945f1dbc5b2ac"
+  },
+  {
+   "Associations": [
+    {
+     "AssociationState": {
+      "State": "associated"
+     },
+     "Main": false,
+     "RouteTableAssociationId": "rtbassoc-05445a76a0b2e22f2",
+     "RouteTableId": "rtb-036561f16639f7d55",
+     "SubnetId": "subnet-050b09f1d9d277ecc"
+    },
+    {
+     "AssociationState": {
+      "State": "associated"
+     },
+     "Main": false,
+     "RouteTableAssociationId": "rtbassoc-0adcc24bc8c0c0966",
+     "RouteTableId": "rtb-036561f16639f7d55",
+     "SubnetId": "subnet-01cd4a0ff99cb799a"
+    },
+    {
+     "AssociationState": {
+      "State": "associated"
+     },
+     "Main": false,
+     "RouteTableAssociationId": "rtbassoc-0b3f9048ac03a87ee",
+     "RouteTableId": "rtb-036561f16639f7d55",
+     "SubnetId": "subnet-08b1e7e4453d9149d"
+    },
+    {
+     "AssociationState": {
+      "State": "associated"
+     },
+     "Main": false,
+     "RouteTableAssociationId": "rtbassoc-0d92972b345e7af5a",
+     "RouteTableId": "rtb-036561f16639f7d55",
+     "SubnetId": "subnet-0b256c7ab9c40a4cb"
+    },
+    {
+     "AssociationState": {
+      "State": "associated"
+     },
+     "Main": false,
+     "RouteTableAssociationId": "rtbassoc-06b1a77245d49a866",
+     "RouteTableId": "rtb-036561f16639f7d55",
+     "SubnetId": "subnet-0e2db2cb59e638c67"
+    },
+    {
+     "AssociationState": {
+      "State": "associated"
+     },
+     "Main": false,
+     "RouteTableAssociationId": "rtbassoc-0f380cc8c1230db93",
+     "RouteTableId": "rtb-036561f16639f7d55",
+     "SubnetId": "subnet-0280629ca5dbc9bf7"
+    }
+   ],
+   "OwnerId": "028403472736",
+   "PropagatingVgws": [],
+   "RouteTableId": "rtb-036561f16639f7d55",
+   "Routes": [
+    {
+     "DestinationCidrBlock": "10.1.0.0/16",
+     "GatewayId": "local",
+     "Origin": "CreateRouteTable",
+     "State": "active"
+    },
+    {
+     "DestinationCidrBlock": "10.2.0.0/16",
+     "Origin": "CreateRoute",
+     "State": "active",
+     "TransitGatewayId": "tgw-02a2e50acb03f0952"
+    },
+    {
+     "DestinationCidrBlock": "0.0.0.0/0",
+     "NatGatewayId": "nat-07abf8463a57b68fe",
+     "Origin": "CreateRoute",
+     "State": "active"
+    }
+   ],
+   "Tags": [
+    {
+     "Key": "Environment",
+     "Value": "prod"
+    },
+    {
+     "Key": "Name",
+     "Value": "prod-priv-rtb"
+    },
+    {
+     "Key": "Terraform",
+     "Value": "true"
+    }
+   ],
+   "VpcId": "vpc-0e578e50686443ca0"
+  },
+  {
+   "Associations": [
+    {
+     "AssociationState": {
+      "State": "associated"
+     },
+     "Main": false,
+     "RouteTableAssociationId": "rtbassoc-0871f1ab8222d54ba",
+     "RouteTableId": "rtb-0af494fbc81bc85f5",
+     "SubnetId": "subnet-0ee85b20db3839434"
+    },
+    {
+     "AssociationState": {
+      "State": "associated"
+     },
+     "Main": false,
+     "RouteTableAssociationId": "rtbassoc-05cd9c228af58eb54",
+     "RouteTableId": "rtb-0af494fbc81bc85f5",
+     "SubnetId": "subnet-09752dac4bffe6253"
+    }
+   ],
+   "OwnerId": "028403472736",
+   "PropagatingVgws": [],
+   "RouteTableId": "rtb-0af494fbc81bc85f5",
+   "Routes": [
+    {
+     "DestinationCidrBlock": "10.1.0.0/16",
+     "GatewayId": "local",
+     "Origin": "CreateRouteTable",
+     "State": "active"
+    },
+    {
+     "DestinationCidrBlock": "10.2.0.0/16",
+     "Origin": "CreateRoute",
+     "State": "active",
+     "TransitGatewayId": "tgw-02a2e50acb03f0952"
+    },
+    {
+     "DestinationCidrBlock": "0.0.0.0/0",
+     "GatewayId": "igw-04a31af38fe858f64",
+     "Origin": "CreateRoute",
+     "State": "active"
+    }
+   ],
+   "Tags": [
+    {
+     "Key": "Environment",
+     "Value": "prod"
+    },
+    {
+     "Key": "Name",
+     "Value": "prod-pub-rtb"
+    },
+    {
+     "Key": "Terraform",
+     "Value": "true"
+    }
+   ],
+   "VpcId": "vpc-0e578e50686443ca0"
+  }
+ ]
+}

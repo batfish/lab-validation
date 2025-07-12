@@ -1,0 +1,92 @@
+{
+    "cust10": {
+        "vrfId": 9,
+        "vrfName": "cust10"
+    },
+    "cust20": {
+        "vrfId": 10,
+        "vrfName": "cust20"
+    },
+    "default": {
+        "10.10.40.1": {
+            "addressFamilyInfo": {
+                "IPv4 Unicast": {
+                    "acceptedPrefixCounter": 11,
+                    "commAttriSentToNbr": "extendedAndStandard",
+                    "packetQueueLength": 0,
+                    "subGroupId": 1,
+                    "updateGroupId": 1
+                }
+            },
+            "bgpConnection": "sharedNetwork",
+            "bgpInUpdateElapsedTimeMsecs": 7824000,
+            "bgpState": "Established",
+            "bgpTimerHoldTimeMsecs": 9000,
+            "bgpTimerKeepAliveIntervalMsecs": 3000,
+            "bgpTimerLastRead": 0,
+            "bgpTimerLastWrite": 1000,
+            "bgpTimerUp": 7825000,
+            "bgpTimerUpEstablishedEpoch": 1625610907,
+            "bgpTimerUpMsec": 7825000,
+            "bgpTimerUpString": "02:10:25",
+            "bgpVersion": 4,
+            "connectRetryTimer": 10,
+            "connectionsDropped": 0,
+            "connectionsEstablished": 1,
+            "hostForeign": "10.10.40.1",
+            "hostLocal": "10.10.40.2",
+            "lastReset": "never",
+            "localAs": 40,
+            "messageStats": {
+                "capabilityRecv": 0,
+                "capabilitySent": 0,
+                "depthInq": 0,
+                "depthOutq": 0,
+                "keepalivesRecv": 2549,
+                "keepalivesSent": 2609,
+                "notificationsRecv": 0,
+                "notificationsSent": 0,
+                "opensRecv": 1,
+                "opensSent": 1,
+                "routeRefreshRecv": 0,
+                "routeRefreshSent": 0,
+                "totalRecv": 2557,
+                "totalSent": 2616,
+                "updatesRecv": 7,
+                "updatesSent": 6
+            },
+            "minBtwnAdvertisementRunsTimerMsecs": 0,
+            "nbrExternalLink": true,
+            "neighborCapabilities": {
+                "4byteAs": "advertisedAndReceived",
+                "addPath": {
+                    "IPv4 Unicast": {
+                        "rxAdvertised": true
+                    }
+                },
+                "gracefulRestartCapability": "advertised",
+                "hostName": {
+                    "advDomainName": "n/a",
+                    "advHostName": "D-Cumulus"
+                },
+                "multiprotocolExtensions": {
+                    "IPv4 Unicast": {
+                        "advertisedAndReceived": true
+                    }
+                },
+                "routeRefresh": "advertisedAndReceivedOldNew"
+            },
+            "nexthop": "10.10.40.2",
+            "nexthopGlobal": "fe80::eef:e6ff:fec5:5401",
+            "nexthopLocal": "fe80::eef:e6ff:fec5:5401",
+            "portForeign": 38253,
+            "portLocal": 179,
+            "readThread": "on",
+            "remoteAs": 1,
+            "remoteRouterId": "192.168.123.1",
+            "writeThread": "on"
+        },
+        "vrfId": 0,
+        "vrfName": "default"
+    }
+}

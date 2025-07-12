@@ -1,0 +1,203 @@
+For address family: IPv4 Unicast
+BGP neighbor is 2.1.2.1,  remote AS 2, internal link
+ Member of peer-group as2 for session parameters
+  BGP version 4, remote router ID 2.1.2.1
+  BGP state = Established, up for 00:13:55
+  Last read 00:00:19, last write 00:00:55, hold time is 180, keepalive interval is 60 seconds
+  Neighbor sessions:
+    1 active, is not multisession capable (disabled)
+  Neighbor capabilities:
+    Route refresh: advertised and received(new)
+    Four-octets ASN Capability: advertised and received
+    Address family IPv4 Unicast: advertised and received
+    Enhanced Refresh Capability: advertised and received
+    Multisession Capability:
+    Stateful switchover support enabled: NO for session 1
+  Message statistics:
+    InQ depth is 0
+    OutQ depth is 0
+
+                         Sent       Rcvd
+    Opens:                  1          1
+    Notifications:          0          0
+    Updates:                7         17
+    Keepalives:            15         16
+    Route Refresh:          0          0
+    Total:                 23         34
+  Default minimum time between advertisement runs is 0 seconds
+
+  Address tracking is enabled, the RIB does have a route to 2.1.2.1
+  Connections established 1; dropped 0
+  Last reset never
+  Transport(tcp) path-mtu-discovery is enabled
+  Graceful-Restart is disabled
+Connection state is ESTAB, I/O status: 1, unread input bytes: 0
+Connection is ECN Disabled
+Mininum incoming TTL 0, Outgoing TTL 255
+Local host: 2.1.1.1, Local port: 13577
+Foreign host: 2.1.2.1, Foreign port: 179
+Connection tableid (VRF): 0
+
+Enqueued packets for retransmit: 0, input: 0  mis-ordered: 0 (0 bytes)
+
+Event Timers (current time is 0xD99A4):
+Timer          Starts    Wakeups            Next
+Retrans            20          0             0x0
+TimeWait            0          0             0x0
+AckHold            20         16             0x0
+SendWnd             0          0             0x0
+KeepAlive           0          0             0x0
+GiveUp              0          0             0x0
+PmtuAger          488        487         0xD9AFA
+DeadWait            0          0             0x0
+Linger              0          0             0x0
+
+iss: 2160303036  snduna: 2160303870  sndnxt: 2160303870     sndwnd:  15551
+irs: 1857907791  rcvnxt: 1857909574  rcvwnd:      16118  delrcvwnd:    266
+
+SRTT: 279 ms, RTTO: 446 ms, RTV: 167 ms, KRTT: 0 ms
+minRTT: 12 ms, maxRTT: 300 ms, ACK hold: 200 ms
+Status Flags: none
+Option Flags: higher precendence, nagle, path mtu capable
+
+Datagrams (max data segment is 1460 bytes):
+Rcvd: 39 (out of order: 0), with data: 22, total data bytes: 1782
+Sent: 41 (retransmit: 0 fastretransmit: 0),with data: 22, total data bytes: 833
+
+
+BGP neighbor is 2.1.2.2,  remote AS 2, internal link
+ Member of peer-group as2 for session parameters
+  BGP version 4, remote router ID 2.1.2.2
+  BGP state = Established, up for 00:13:43
+  Last read 00:00:34, last write 00:00:36, hold time is 180, keepalive interval is 60 seconds
+  Neighbor sessions:
+    1 active, is not multisession capable (disabled)
+  Neighbor capabilities:
+    Route refresh: advertised and received(new)
+    Four-octets ASN Capability: advertised and received
+    Address family IPv4 Unicast: advertised and received
+    Enhanced Refresh Capability: advertised and received
+    Multisession Capability:
+    Stateful switchover support enabled: NO for session 1
+  Message statistics:
+    InQ depth is 0
+    OutQ depth is 0
+
+                         Sent       Rcvd
+    Opens:                  1          1
+    Notifications:          0          0
+    Updates:                7          2
+    Keepalives:            15         16
+    Route Refresh:          0          0
+    Total:                 23         19
+  Default minimum time between advertisement runs is 0 seconds
+
+  Address tracking is enabled, the RIB does have a route to 2.1.2.2
+  Connections established 1; dropped 0
+  Last reset never
+  Transport(tcp) path-mtu-discovery is enabled
+  Graceful-Restart is disabled
+Connection state is ESTAB, I/O status: 1, unread input bytes: 0
+Connection is ECN Disabled
+Mininum incoming TTL 0, Outgoing TTL 255
+Local host: 2.1.1.1, Local port: 61134
+Foreign host: 2.1.2.2, Foreign port: 179
+Connection tableid (VRF): 0
+
+Enqueued packets for retransmit: 0, input: 0  mis-ordered: 0 (0 bytes)
+
+Event Timers (current time is 0xD99A8):
+Timer          Starts    Wakeups            Next
+Retrans            19          0             0x0
+TimeWait            0          0             0x0
+AckHold            16         15             0x0
+SendWnd             0          0             0x0
+KeepAlive           0          0             0x0
+GiveUp              0          0             0x0
+PmtuAger          434        433         0xD9A02
+DeadWait            0          0             0x0
+Linger              0          0             0x0
+
+iss: 2218238395  snduna: 2218239229  sndnxt: 2218239229     sndwnd:  15551
+irs: 3099706983  rcvnxt: 3099707436  rcvwnd:      15932  delrcvwnd:    452
+
+SRTT: 276 ms, RTTO: 466 ms, RTV: 190 ms, KRTT: 0 ms
+minRTT: 36 ms, maxRTT: 300 ms, ACK hold: 200 ms
+Status Flags: none
+Option Flags: higher precendence, nagle, path mtu capable
+
+Datagrams (max data segment is 1460 bytes):
+Rcvd: 36 (out of order: 0), with data: 18, total data bytes: 452
+Sent: 39 (retransmit: 0 fastretransmit: 0),with data: 22, total data bytes: 833
+
+
+BGP neighbor is 10.12.11.1,  remote AS 1, external link
+ Member of peer-group as1 for session parameters
+  BGP version 4, remote router ID 1.1.1.1
+  BGP state = Established, up for 00:14:33
+  Last read 00:00:30, last write 00:00:09, hold time is 180, keepalive interval is 60 seconds
+  Neighbor sessions:
+    1 active, is not multisession capable (disabled)
+  Neighbor capabilities:
+    Route refresh: advertised and received(new)
+    Four-octets ASN Capability: advertised and received
+    Address family IPv4 Unicast: advertised and received
+    Enhanced Refresh Capability: advertised and received
+    Multisession Capability:
+    Stateful switchover support enabled: NO for session 1
+  Message statistics:
+    InQ depth is 0
+    OutQ depth is 0
+
+                         Sent       Rcvd
+    Opens:                  1          1
+    Notifications:          0          0
+    Updates:                5          5
+    Keepalives:            15         16
+    Route Refresh:          0          0
+    Total:                 21         22
+  Default minimum time between advertisement runs is 30 seconds
+
+  Address tracking is enabled, the RIB does have a route to 10.12.11.1
+  Connections established 1; dropped 0
+  Last reset never
+  Transport(tcp) path-mtu-discovery is enabled
+  Graceful-Restart is disabled
+Connection state is ESTAB, I/O status: 1, unread input bytes: 0
+Connection is ECN Disabled
+Mininum incoming TTL 0, Outgoing TTL 1
+Local host: 10.12.11.2, Local port: 179
+Foreign host: 10.12.11.1, Foreign port: 30433
+Connection tableid (VRF): 0
+
+Enqueued packets for retransmit: 0, input: 0  mis-ordered: 0 (0 bytes)
+
+Event Timers (current time is 0xD99AC):
+Timer          Starts    Wakeups            Next
+Retrans            19          0             0x0
+TimeWait            0          0             0x0
+AckHold            19         18             0x0
+SendWnd             0          0             0x0
+KeepAlive           0          0             0x0
+GiveUp              0          0             0x0
+PmtuAger            0          0             0x0
+DeadWait            0          0             0x0
+Linger              0          0             0x0
+
+iss: 3297983300  snduna: 3297983960  sndnxt: 3297983960     sndwnd:  15725
+irs:  729475912  rcvnxt:  729476553  rcvwnd:      15744  delrcvwnd:    640
+
+SRTT: 276 ms, RTTO: 466 ms, RTV: 190 ms, KRTT: 0 ms
+minRTT: 12 ms, maxRTT: 300 ms, ACK hold: 200 ms
+Status Flags: passive open, gen tcbs
+Option Flags: nagle, path mtu capable
+
+Datagrams (max data segment is 1460 bytes):
+Rcvd: 36 (out of order: 0), with data: 19, total data bytes: 640
+Sent: 38 (retransmit: 0 fastretransmit: 0),with data: 19, total data bytes: 659
+
+
+
+For address family: IPv4 Multicast
+
+For address family: MVPNv4 Unicast

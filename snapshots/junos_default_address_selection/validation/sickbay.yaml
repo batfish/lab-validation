@@ -1,0 +1,18 @@
+entries:
+  - hostname: SW1|SW2|SW3|SW4|SW5|SW6|SW7|SW8
+    test_name: "test_interface_properties"
+    skip:
+      skip_type: dont_run
+      reason: https://github.com/batfish/lab-validation/issues/57
+
+  - hostname: SW1|SW2|SW3|SW4|SW5|SW6|SW7|SW8
+    test_name: "test_main_rib_routes"
+    skip:
+      skip_type: dont_run
+      reason: https://github.com/batfish/lab-validation/issues/57
+
+  - hostname: SW1|SW2|SW3|SW4|SW5|SW6|SW7|SW8
+    test_name: "test_bgp_rib_routes"
+    skip:
+      skip_type: dont_run
+      reason: https://github.com/batfish/lab-validation/issues/58, https://github.com/batfish/lab-validation/issues/57

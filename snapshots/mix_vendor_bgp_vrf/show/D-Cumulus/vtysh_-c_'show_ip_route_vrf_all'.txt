@@ -1,0 +1,49 @@
+Codes: K - kernel route, C - connected, S - static, R - RIP,
+       O - OSPF, I - IS-IS, B - BGP, E - EIGRP, N - NHRP,
+       T - Table, v - VNC, V - VNC-Direct, A - Babel, D - SHARP,
+       F - PBR,
+       > - selected route, * - FIB route
+
+
+VRF cust10:
+K * 0.0.0.0/0 [255/8192] unreachable (ICMP unreachable), 01:58:48
+C>* 1.1.5.10/32 is directly connected, cust10, 01:58:48
+Codes: K - kernel route, C - connected, S - static, R - RIP,
+       O - OSPF, I - IS-IS, B - BGP, E - EIGRP, N - NHRP,
+       T - Table, v - VNC, V - VNC-Direct, A - Babel, D - SHARP,
+       F - PBR,
+       > - selected route, * - FIB route
+
+
+VRF cust20:
+K * 0.0.0.0/0 [255/8192] unreachable (ICMP unreachable), 01:58:48
+C>* 1.1.5.20/32 is directly connected, cust20, 01:58:48
+Codes: K - kernel route, C - connected, S - static, R - RIP,
+       O - OSPF, I - IS-IS, B - BGP, E - EIGRP, N - NHRP,
+       T - Table, v - VNC, V - VNC-Direct, A - Babel, D - SHARP,
+       F - PBR,
+       > - selected route, * - FIB route
+
+S>* 0.0.0.0/0 [1/0] via 10.10.40.1, swp1, 01:58:46
+B>* 10.10.10.0/24 [20/0] via 10.10.40.1, swp1, 01:58:46
+B>* 10.10.20.0/24 [20/0] via 10.10.40.1, swp1, 01:58:46
+B>* 10.10.30.0/24 [20/0] via 10.10.40.1, swp1, 01:58:46
+B   10.10.40.0/24 [20/0] via 10.10.40.1 inactive, 01:58:46
+C>* 10.10.40.0/24 is directly connected, swp1, 01:58:48
+B>* 10.10.50.0/24 [20/0] via 10.10.40.1, swp1, 01:58:46
+B>* 192.168.122.0/24 [20/0] via 10.10.40.1, swp1, 01:58:46
+B>* 192.168.123.1/32 [20/0] via 10.10.40.1, swp1, 01:58:46
+B>* 192.168.123.2/32 [20/0] via 10.10.40.1, swp1, 01:58:46
+B>* 192.168.123.3/32 [20/0] via 10.10.40.1, swp1, 01:58:46
+B>* 192.168.123.4/32 [20/0] via 10.10.40.1, swp1, 01:58:46
+C>* 192.168.123.5/32 is directly connected, lo, 01:58:48
+B>* 192.168.123.6/32 [20/0] via 10.10.40.1, swp1, 01:58:46
+Codes: K - kernel route, C - connected, S - static, R - RIP,
+       O - OSPF, I - IS-IS, B - BGP, E - EIGRP, N - NHRP,
+       T - Table, v - VNC, V - VNC-Direct, A - Babel, D - SHARP,
+       F - PBR,
+       > - selected route, * - FIB route
+
+
+VRF testing:
+K * 0.0.0.0/0 [255/8192] unreachable (ICMP unreachable), 01:58:48

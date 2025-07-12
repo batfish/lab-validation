@@ -1,0 +1,58 @@
+{
+ "LoadBalancerTargetHealth": [
+  {
+   "TargetGroupArn": "arn:aws:elasticloadbalancing:us-west-1:951601349076:targetgroup/tf-20200710205832077300000001/6330af1483ee75fa",
+   "TargetHealthDescriptions": [
+    {
+     "HealthCheckPort": "80",
+     "Target": {
+      "Id": "i-03774cc5994b5410a",
+      "Port": 80
+     },
+     "TargetHealth": {
+      "State": "healthy"
+     }
+    },
+    {
+     "HealthCheckPort": "80",
+     "Target": {
+      "Id": "i-00d0f0d5f144dfce5",
+      "Port": 80
+     },
+     "TargetHealth": {
+      "State": "healthy"
+     }
+    }
+   ]
+  },
+  {
+   "TargetGroupArn": "arn:aws:elasticloadbalancing:us-west-1:951601349076:targetgroup/tf-20200710205833792000000004/8a240e4b1bf30c4c",
+   "TargetHealthDescriptions": [
+    {
+     "HealthCheckPort": "443",
+     "Target": {
+      "Id": "i-03774cc5994b5410a",
+      "Port": 443
+     },
+     "TargetHealth": {
+      "Description": "Health checks failed",
+      "Reason": "Target.FailedHealthChecks",
+      "State": "unhealthy"
+     }
+    },
+    {
+     "HealthCheckPort": "443",
+     "Target": {
+      "Id": "i-00d0f0d5f144dfce5",
+      "Port": 443
+     },
+     "TargetHealth": {
+      "Description": "Health checks failed",
+      "Reason": "Target.FailedHealthChecks",
+      "State": "unhealthy"
+     }
+    }
+   ]
+  }
+ ]
+}

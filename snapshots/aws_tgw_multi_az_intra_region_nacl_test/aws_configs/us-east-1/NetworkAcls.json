@@ -1,0 +1,519 @@
+{
+ "NetworkAcls": [
+  {
+   "Associations": [
+    {
+     "NetworkAclAssociationId": "aclassoc-0901f14e69e981a0d",
+     "NetworkAclId": "acl-0b066c983da171b33",
+     "SubnetId": "subnet-0cd699d0d60b06ae9"
+    },
+    {
+     "NetworkAclAssociationId": "aclassoc-0cf08f38c34906281",
+     "NetworkAclId": "acl-0b066c983da171b33",
+     "SubnetId": "subnet-0b3a2616e8026d8c4"
+    }
+   ],
+   "Entries": [
+    {
+     "CidrBlock": "10.2.102.13/32",
+     "Egress": true,
+     "Protocol": "-1",
+     "RuleAction": "deny",
+     "RuleNumber": 1
+    },
+    {
+     "CidrBlock": "0.0.0.0/0",
+     "Egress": true,
+     "Protocol": "-1",
+     "RuleAction": "allow",
+     "RuleNumber": 1000
+    },
+    {
+     "CidrBlock": "0.0.0.0/0",
+     "Egress": true,
+     "Protocol": "-1",
+     "RuleAction": "deny",
+     "RuleNumber": 32767
+    },
+    {
+     "CidrBlock": "0.0.0.0/0",
+     "Egress": false,
+     "Protocol": "-1",
+     "RuleAction": "allow",
+     "RuleNumber": 1000
+    },
+    {
+     "CidrBlock": "0.0.0.0/0",
+     "Egress": false,
+     "Protocol": "-1",
+     "RuleAction": "deny",
+     "RuleNumber": 32767
+    }
+   ],
+   "IsDefault": false,
+   "NetworkAclId": "acl-0b066c983da171b33",
+   "OwnerId": "028403472736",
+   "Tags": [
+    {
+     "Key": "Name",
+     "Value": "dev-tgw-nacl"
+    },
+    {
+     "Key": "Environment",
+     "Value": "dev"
+    },
+    {
+     "Key": "Terraform",
+     "Value": "true"
+    }
+   ],
+   "VpcId": "vpc-03ccfd695642eea86"
+  },
+  {
+   "Associations": [
+    {
+     "NetworkAclAssociationId": "aclassoc-0a491fc5c5a0775cf",
+     "NetworkAclId": "acl-0e3dd2d33ec198ba8",
+     "SubnetId": "subnet-0f3d5ad60228d7d61"
+    }
+   ],
+   "Entries": [
+    {
+     "CidrBlock": "0.0.0.0/0",
+     "Egress": true,
+     "Protocol": "-1",
+     "RuleAction": "allow",
+     "RuleNumber": 1000
+    },
+    {
+     "CidrBlock": "0.0.0.0/0",
+     "Egress": true,
+     "Protocol": "-1",
+     "RuleAction": "deny",
+     "RuleNumber": 32767
+    },
+    {
+     "CidrBlock": "0.0.0.0/0",
+     "Egress": false,
+     "Protocol": "-1",
+     "RuleAction": "allow",
+     "RuleNumber": 1000
+    },
+    {
+     "CidrBlock": "0.0.0.0/0",
+     "Egress": false,
+     "Protocol": "-1",
+     "RuleAction": "deny",
+     "RuleNumber": 32767
+    }
+   ],
+   "IsDefault": false,
+   "NetworkAclId": "acl-0e3dd2d33ec198ba8",
+   "OwnerId": "028403472736",
+   "Tags": [
+    {
+     "Key": "Environment",
+     "Value": "dev"
+    },
+    {
+     "Key": "Terraform",
+     "Value": "true"
+    },
+    {
+     "Key": "Name",
+     "Value": "dev-pub-nacl"
+    }
+   ],
+   "VpcId": "vpc-03ccfd695642eea86"
+  },
+  {
+   "Associations": [
+    {
+     "NetworkAclAssociationId": "aclassoc-01af75a1485647528",
+     "NetworkAclId": "acl-0249bf11ce5df6bda",
+     "SubnetId": "subnet-029962f9926bd2b8e"
+    },
+    {
+     "NetworkAclAssociationId": "aclassoc-0529b6e19fac7b654",
+     "NetworkAclId": "acl-0249bf11ce5df6bda",
+     "SubnetId": "subnet-0c98b21032c071e2c"
+    }
+   ],
+   "Entries": [
+    {
+     "CidrBlock": "0.0.0.0/0",
+     "Egress": true,
+     "Protocol": "-1",
+     "RuleAction": "allow",
+     "RuleNumber": 1000
+    },
+    {
+     "CidrBlock": "0.0.0.0/0",
+     "Egress": true,
+     "Protocol": "-1",
+     "RuleAction": "deny",
+     "RuleNumber": 32767
+    },
+    {
+     "CidrBlock": "0.0.0.0/0",
+     "Egress": false,
+     "Protocol": "-1",
+     "RuleAction": "allow",
+     "RuleNumber": 1000
+    },
+    {
+     "CidrBlock": "0.0.0.0/0",
+     "Egress": false,
+     "Protocol": "-1",
+     "RuleAction": "deny",
+     "RuleNumber": 32767
+    }
+   ],
+   "IsDefault": false,
+   "NetworkAclId": "acl-0249bf11ce5df6bda",
+   "OwnerId": "028403472736",
+   "Tags": [
+    {
+     "Key": "Terraform",
+     "Value": "true"
+    },
+    {
+     "Key": "Environment",
+     "Value": "prod"
+    },
+    {
+     "Key": "Name",
+     "Value": "prod-pub-nacl"
+    }
+   ],
+   "VpcId": "vpc-0a5a5ea367be96f67"
+  },
+  {
+   "Associations": [
+    {
+     "NetworkAclAssociationId": "aclassoc-08fe90e90b2dad757",
+     "NetworkAclId": "acl-054279d3d0ed03dd5",
+     "SubnetId": "subnet-0e7ee5fe4933e39e4"
+    },
+    {
+     "NetworkAclAssociationId": "aclassoc-016c59baadeb00554",
+     "NetworkAclId": "acl-054279d3d0ed03dd5",
+     "SubnetId": "subnet-0f6b9d0c0559a4ca6"
+    }
+   ],
+   "Entries": [
+    {
+     "CidrBlock": "0.0.0.0/0",
+     "Egress": true,
+     "Protocol": "-1",
+     "RuleAction": "allow",
+     "RuleNumber": 1000
+    },
+    {
+     "CidrBlock": "0.0.0.0/0",
+     "Egress": true,
+     "Protocol": "-1",
+     "RuleAction": "deny",
+     "RuleNumber": 32767
+    },
+    {
+     "CidrBlock": "10.1.101.14/32",
+     "Egress": false,
+     "Protocol": "-1",
+     "RuleAction": "deny",
+     "RuleNumber": 1
+    },
+    {
+     "CidrBlock": "10.1.100.100/32",
+     "Egress": false,
+     "PortRange": {
+      "From": 22,
+      "To": 22
+     },
+     "Protocol": "6",
+     "RuleAction": "allow",
+     "RuleNumber": 10
+    },
+    {
+     "CidrBlock": "0.0.0.0/0",
+     "Egress": false,
+     "PortRange": {
+      "From": 22,
+      "To": 22
+     },
+     "Protocol": "6",
+     "RuleAction": "deny",
+     "RuleNumber": 20
+    },
+    {
+     "CidrBlock": "0.0.0.0/0",
+     "Egress": false,
+     "Protocol": "-1",
+     "RuleAction": "allow",
+     "RuleNumber": 1000
+    },
+    {
+     "CidrBlock": "0.0.0.0/0",
+     "Egress": false,
+     "Protocol": "-1",
+     "RuleAction": "deny",
+     "RuleNumber": 32767
+    }
+   ],
+   "IsDefault": false,
+   "NetworkAclId": "acl-054279d3d0ed03dd5",
+   "OwnerId": "028403472736",
+   "Tags": [
+    {
+     "Key": "Name",
+     "Value": "dev-priv-nacl"
+    },
+    {
+     "Key": "Environment",
+     "Value": "dev"
+    },
+    {
+     "Key": "Terraform",
+     "Value": "true"
+    }
+   ],
+   "VpcId": "vpc-03ccfd695642eea86"
+  },
+  {
+   "Associations": [
+    {
+     "NetworkAclAssociationId": "aclassoc-06d6202463f69f451",
+     "NetworkAclId": "acl-07911ea52d1267731",
+     "SubnetId": "subnet-0ad5d7c0022535299"
+    },
+    {
+     "NetworkAclAssociationId": "aclassoc-0684957a9f84cfb52",
+     "NetworkAclId": "acl-07911ea52d1267731",
+     "SubnetId": "subnet-0649af81cf1271eaf"
+    }
+   ],
+   "Entries": [
+    {
+     "CidrBlock": "0.0.0.0/0",
+     "Egress": true,
+     "Protocol": "-1",
+     "RuleAction": "allow",
+     "RuleNumber": 1000
+    },
+    {
+     "CidrBlock": "0.0.0.0/0",
+     "Egress": true,
+     "Protocol": "-1",
+     "RuleAction": "deny",
+     "RuleNumber": 32767
+    },
+    {
+     "CidrBlock": "10.1.101.12/32",
+     "Egress": false,
+     "Protocol": "-1",
+     "RuleAction": "deny",
+     "RuleNumber": 1
+    },
+    {
+     "CidrBlock": "0.0.0.0/0",
+     "Egress": false,
+     "Protocol": "-1",
+     "RuleAction": "allow",
+     "RuleNumber": 1000
+    },
+    {
+     "CidrBlock": "0.0.0.0/0",
+     "Egress": false,
+     "Protocol": "-1",
+     "RuleAction": "deny",
+     "RuleNumber": 32767
+    }
+   ],
+   "IsDefault": false,
+   "NetworkAclId": "acl-07911ea52d1267731",
+   "OwnerId": "028403472736",
+   "Tags": [
+    {
+     "Key": "Name",
+     "Value": "prod-tgw-nacl"
+    },
+    {
+     "Key": "Terraform",
+     "Value": "true"
+    },
+    {
+     "Key": "Environment",
+     "Value": "prod"
+    }
+   ],
+   "VpcId": "vpc-0a5a5ea367be96f67"
+  },
+  {
+   "Associations": [],
+   "Entries": [
+    {
+     "CidrBlock": "0.0.0.0/0",
+     "Egress": true,
+     "Protocol": "-1",
+     "RuleAction": "allow",
+     "RuleNumber": 100
+    },
+    {
+     "CidrBlock": "0.0.0.0/0",
+     "Egress": true,
+     "Protocol": "-1",
+     "RuleAction": "deny",
+     "RuleNumber": 32767
+    },
+    {
+     "CidrBlock": "0.0.0.0/0",
+     "Egress": false,
+     "Protocol": "-1",
+     "RuleAction": "allow",
+     "RuleNumber": 100
+    },
+    {
+     "CidrBlock": "0.0.0.0/0",
+     "Egress": false,
+     "Protocol": "-1",
+     "RuleAction": "deny",
+     "RuleNumber": 32767
+    }
+   ],
+   "IsDefault": true,
+   "NetworkAclId": "acl-0e54a8982c0dc0a55",
+   "OwnerId": "028403472736",
+   "Tags": [],
+   "VpcId": "vpc-03ccfd695642eea86"
+  },
+  {
+   "Associations": [],
+   "Entries": [
+    {
+     "CidrBlock": "0.0.0.0/0",
+     "Egress": true,
+     "Protocol": "-1",
+     "RuleAction": "allow",
+     "RuleNumber": 100
+    },
+    {
+     "CidrBlock": "0.0.0.0/0",
+     "Egress": true,
+     "Protocol": "-1",
+     "RuleAction": "deny",
+     "RuleNumber": 32767
+    },
+    {
+     "CidrBlock": "0.0.0.0/0",
+     "Egress": false,
+     "Protocol": "-1",
+     "RuleAction": "allow",
+     "RuleNumber": 100
+    },
+    {
+     "CidrBlock": "0.0.0.0/0",
+     "Egress": false,
+     "Protocol": "-1",
+     "RuleAction": "deny",
+     "RuleNumber": 32767
+    }
+   ],
+   "IsDefault": true,
+   "NetworkAclId": "acl-0e84d1a8e1665284c",
+   "OwnerId": "028403472736",
+   "Tags": [],
+   "VpcId": "vpc-0a5a5ea367be96f67"
+  },
+  {
+   "Associations": [
+    {
+     "NetworkAclAssociationId": "aclassoc-0cbe6a244d03dd0f9",
+     "NetworkAclId": "acl-0d0602469d8ce33c5",
+     "SubnetId": "subnet-062b09e0003580a48"
+    },
+    {
+     "NetworkAclAssociationId": "aclassoc-0d1ee37525801416e",
+     "NetworkAclId": "acl-0d0602469d8ce33c5",
+     "SubnetId": "subnet-02ea258feac1f03a6"
+    }
+   ],
+   "Entries": [
+    {
+     "CidrBlock": "10.2.102.11/32",
+     "Egress": true,
+     "Protocol": "-1",
+     "RuleAction": "deny",
+     "RuleNumber": 1
+    },
+    {
+     "CidrBlock": "0.0.0.0/0",
+     "Egress": true,
+     "Protocol": "-1",
+     "RuleAction": "allow",
+     "RuleNumber": 1000
+    },
+    {
+     "CidrBlock": "0.0.0.0/0",
+     "Egress": true,
+     "Protocol": "-1",
+     "RuleAction": "deny",
+     "RuleNumber": 32767
+    },
+    {
+     "CidrBlock": "10.1.100.100/32",
+     "Egress": false,
+     "PortRange": {
+      "From": 22,
+      "To": 22
+     },
+     "Protocol": "6",
+     "RuleAction": "allow",
+     "RuleNumber": 10
+    },
+    {
+     "CidrBlock": "0.0.0.0/0",
+     "Egress": false,
+     "PortRange": {
+      "From": 22,
+      "To": 22
+     },
+     "Protocol": "6",
+     "RuleAction": "deny",
+     "RuleNumber": 20
+    },
+    {
+     "CidrBlock": "0.0.0.0/0",
+     "Egress": false,
+     "Protocol": "-1",
+     "RuleAction": "allow",
+     "RuleNumber": 1000
+    },
+    {
+     "CidrBlock": "0.0.0.0/0",
+     "Egress": false,
+     "Protocol": "-1",
+     "RuleAction": "deny",
+     "RuleNumber": 32767
+    }
+   ],
+   "IsDefault": false,
+   "NetworkAclId": "acl-0d0602469d8ce33c5",
+   "OwnerId": "028403472736",
+   "Tags": [
+    {
+     "Key": "Terraform",
+     "Value": "true"
+    },
+    {
+     "Key": "Environment",
+     "Value": "prod"
+    },
+    {
+     "Key": "Name",
+     "Value": "prod-priv-nacl"
+    }
+   ],
+   "VpcId": "vpc-0a5a5ea367be96f67"
+  }
+ ]
+}

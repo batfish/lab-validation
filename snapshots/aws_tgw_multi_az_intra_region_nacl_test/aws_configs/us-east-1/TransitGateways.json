@@ -1,0 +1,36 @@
+{
+ "TransitGateways": [
+  {
+   "CreationTime": "2020-09-25 15:59:10+00:00",
+   "Options": {
+    "AmazonSideAsn": 64512,
+    "AssociationDefaultRouteTableId": "tgw-rtb-03db4ffa33e04697f",
+    "AutoAcceptSharedAttachments": "disable",
+    "DefaultRouteTableAssociation": "enable",
+    "DefaultRouteTablePropagation": "enable",
+    "DnsSupport": "enable",
+    "MulticastSupport": "disable",
+    "PropagationDefaultRouteTableId": "tgw-rtb-03db4ffa33e04697f",
+    "VpnEcmpSupport": "enable"
+   },
+   "OwnerId": "028403472736",
+   "State": "available",
+   "Tags": [
+    {
+     "Key": "Terraform",
+     "Value": "true"
+    },
+    {
+     "Key": "Environment",
+     "Value": "dev"
+    },
+    {
+     "Key": "Name",
+     "Value": "tgw"
+    }
+   ],
+   "TransitGatewayArn": "arn:aws:ec2:us-east-1:028403472736:transit-gateway/tgw-0afe9ac04dd877b94",
+   "TransitGatewayId": "tgw-0afe9ac04dd877b94"
+  }
+ ]
+}

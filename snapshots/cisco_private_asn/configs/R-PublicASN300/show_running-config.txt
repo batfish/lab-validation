@@ -1,0 +1,214 @@
+Building configuration...
+
+Current configuration : 3908 bytes
+!
+! Last configuration change at 17:00:30 UTC Thu Nov 21 2019
+!
+version 16.4
+service timestamps debug datetime msec
+service timestamps log datetime msec
+no platform punt-keepalive disable-kernel-core
+platform console serial
+!
+hostname R-PublicASN300
+!
+boot-start-marker
+boot-end-marker
+!
+!
+!
+no aaa new-model
+!
+!
+!
+!
+!
+!
+!
+!
+!
+
+
+
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+subscriber templating
+!
+!
+!
+multilink bundle-name authenticated
+!
+!
+!
+!
+!
+crypto pki trustpoint TP-self-signed-32363260
+ enrollment selfsigned
+ subject-name cn=IOS-Self-Signed-Certificate-32363260
+ revocation-check none
+ rsakeypair TP-self-signed-32363260
+!
+!
+crypto pki certificate chain TP-self-signed-32363260
+ certificate self-signed 01
+  3082032C 30820214 A0030201 02020101 300D0609 2A864886 F70D0101 05050030
+  2F312D30 2B060355 04031324 494F532D 53656C66 2D536967 6E65642D 43657274
+  69666963 6174652D 33323336 33323630 301E170D 31393039 32303230 30323238
+  5A170D32 30303130 31303030 3030305A 302F312D 302B0603 55040313 24494F53
+  2D53656C 662D5369 676E6564 2D436572 74696669 63617465 2D333233 36333236
+  30308201 22300D06 092A8648 86F70D01 01010500 0382010F 00308201 0A028201
+  0100B5EE DB08F6F1 10BEDDAA 2F44E3E7 94E710C7 643FE48D 717E4C3B 98BC7604
+  C9A1B2F1 BA57209D EB1EDCD3 C0434F31 2BFA6C91 A48F4776 4AEF9F67 49E369B9
+  1A2EFF5F 12EB9482 CD304F57 3DD3E590 4F593D91 0762B154 57EF78A7 A3515B04
+  FC8677F4 E125F008 CB2F4634 E41BB24C 20819516 1C06E878 1B7DE5F8 18110D07
+  59FA2CAB 3AA2A868 358AECF4 E32F0132 2036022F 5246A7AF 517DD7A8 7D2AC2F4
+  5B63D3E0 2FEA847C CA698A55 60FD72FC 1B079279 FE497043 535E5BE4 DB69FDA2
+  71D96584 4B637755 111124D1 69C3C383 4DA1FDF7 72BE5713 0D09275B FC3CB064
+  F9BF0DFF 99C6E4CD 50C58832 506FAF9B FB0ED496 38CE9971 B8A856FC 1F6829E1
+  25250203 010001A3 53305130 0F060355 1D130101 FF040530 030101FF 301F0603
+  551D2304 18301680 146BA95E AE8B219B 7AF16D20 236F049C 58E94120 FD301D06
+  03551D0E 04160414 6BA95EAE 8B219B7A F16D2023 6F049C58 E94120FD 300D0609
+  2A864886 F70D0101 05050003 82010100 B4D57E42 82026826 7D6635C0 E549133C
+  452AFBD5 7C1D8BFE E7E7EA38 2B8D2379 B0B2F54F C850C54C ACA71170 34339ED4
+  5A7D6266 98724654 BB93C489 B45B40C6 93A93904 338B6D74 4A619348 0803FE7C
+  85C40AE9 F7DF9681 178D4935 2AF68167 227B840A 15D4C745 58A7F5D5 763FA86B
+  BD213400 2E3DD9FF 7F015089 B45C5C7D B55F0403 15CF6EC4 A818A575 1B0A3DF1
+  7F490884 C25BFF15 C643C4A2 3ECA5B31 BBD77A30 7BF837F2 8D88295E 7C1ACF03
+  7D38EF0D 46B6E08A 6AA23748 239EE489 A9198B02 0D390A5F F0811CCC CD7D0963
+  6FA6984B C5D1747C 79812D0B 3BA692DB 1C0824EF 9FB1624E CDE89DFA D9B23338
+  9B7A68E3 EB67DA22 BFFB3889 7506A875
+  	quit
+
+
+!
+!
+!
+!
+!
+!
+!
+license udi pid CSR1000V sn 9OC2BHZ9FVU
+diagnostic bootup level minimal
+!
+spanning-tree extend system-id
+!
+!
+username cisco privilege 15 password 0 cisco
+!
+redundancy
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+interface Loopback123
+ ip address 192.168.123.5 255.255.255.255
+!
+interface GigabitEthernet1
+ ip address 10.10.30.1 255.255.255.0
+ negotiation auto
+ no mop enabled
+ no mop sysid
+!
+interface GigabitEthernet2
+ ip address 10.10.22.1 255.255.255.0
+ negotiation auto
+ no mop enabled
+ no mop sysid
+!
+interface GigabitEthernet3
+ no ip address
+ negotiation auto
+ no mop enabled
+ no mop sysid
+!
+interface GigabitEthernet4
+ no ip address
+ shutdown
+ negotiation auto
+ no mop enabled
+ no mop sysid
+!
+router bgp 300
+ bgp log-neighbor-changes
+ network 192.168.123.5 mask 255.255.255.255
+ neighbor 10.10.22.2 remote-as 65100
+ neighbor 10.10.30.2 remote-as 100
+!
+!
+virtual-service csr_mgmt
+!
+ip forward-protocol nd
+ip http server
+ip http authentication local
+ip http secure-server
+!
+!
+!
+!
+!
+!
+!
+control-plane
+!
+ !
+ !
+ !
+ !
+!
+!
+!
+!
+!
+line con 0
+ stopbits 1
+line vty 0
+ login local
+ transport input ssh
+line vty 1
+ login local
+ length 0
+ transport input ssh
+line vty 2 4
+ login local
+ transport input ssh
+line vty 5 15
+ login local
+ transport input ssh
+!
+!
+!
+!
+!
+!
+end

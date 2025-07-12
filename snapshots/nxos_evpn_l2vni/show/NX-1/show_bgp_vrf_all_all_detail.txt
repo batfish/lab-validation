@@ -1,0 +1,272 @@
+BGP routing table information for VRF default, address family L2VPN EVPN
+Route Distinguisher: 1.1.1.1:32777    (L2VNI 5010)
+BGP routing table entry for [2]:[0]:[0]:[48]:[0c8e.9b19.2d01]:[0]:[0.0.0.0]/216, version 18
+Paths: (1 available, best #1)
+Flags: (0x000212) (high32 00000000) on xmit-list, is in l2rib/evpn, is not in HW
+
+  Advertised path-id 1
+  Path type: internal, path is valid, is best path, no labeled nexthop, in rib
+             Imported from 2.2.2.2:32777:[2]:[0]:[0]:[48]:[0c8e.9b19.2d01]:[0]:[0.0.0.0]/216 
+  AS-Path: NONE, path sourced internal to AS
+    2.2.2.2 (metric 0) from 2.2.2.2 (2.2.2.2)
+      Origin IGP, MED not set, localpref 100, weight 0
+      Received label 5010
+      Extcommunity: RT:65001:5010 ENCAP:8
+
+  Path-id 1 not advertised to any peer
+BGP routing table entry for [2]:[0]:[0]:[48]:[0c8e.9ba4.5401]:[0]:[0.0.0.0]/216, version 12
+Paths: (1 available, best #1)
+Flags: (0x000102) (high32 00000000) on xmit-list, is not in l2rib/evpn
+
+  Advertised path-id 1
+  Path type: local, path is valid, is best path, no labeled nexthop
+  AS-Path: NONE, path locally originated
+    1.1.1.1 (metric 0) from 0.0.0.0 (1.1.1.1)
+      Origin IGP, MED not set, localpref 100, weight 32768
+      Received label 5010
+      Extcommunity: RT:65001:5010 ENCAP:8
+
+  Path-id 1 advertised to peers:
+    2.2.2.2        
+BGP routing table entry for [2]:[0]:[0]:[48]:[0c8e.9b19.2d01]:[32]:[192.168.10.2]/248, version 21
+Paths: (1 available, best #1)
+Flags: (0x000212) (high32 00000000) on xmit-list, is in l2rib/evpn, is not in HW
+
+  Advertised path-id 1
+  Path type: internal, path is valid, is best path, no labeled nexthop, in rib
+             Imported from 2.2.2.2:32777:[2]:[0]:[0]:[48]:[0c8e.9b19.2d01]:[32]:[192.168.10.2]/248 
+  AS-Path: NONE, path sourced internal to AS
+    2.2.2.2 (metric 0) from 2.2.2.2 (2.2.2.2)
+      Origin IGP, MED not set, localpref 100, weight 0
+      Received label 5010
+      Extcommunity: RT:65001:5010 ENCAP:8
+
+  Path-id 1 not advertised to any peer
+BGP routing table entry for [2]:[0]:[0]:[48]:[0c8e.9ba4.5401]:[32]:[192.168.10.1]/248, version 10
+Paths: (1 available, best #1)
+Flags: (0x000102) (high32 00000000) on xmit-list, is not in l2rib/evpn
+
+  Advertised path-id 1
+  Path type: local, path is valid, is best path, no labeled nexthop
+  AS-Path: NONE, path locally originated
+    1.1.1.1 (metric 0) from 0.0.0.0 (1.1.1.1)
+      Origin IGP, MED not set, localpref 100, weight 32768
+      Received label 5010
+      Extcommunity: RT:65001:5010 ENCAP:8
+
+  Path-id 1 advertised to peers:
+    2.2.2.2        
+BGP routing table entry for [3]:[0]:[32]:[1.1.1.1]/88, version 2
+Paths: (1 available, best #1)
+Flags: (0x000002) (high32 00000000) on xmit-list, is not in l2rib/evpn
+
+  Advertised path-id 1
+  Path type: local, path is valid, is best path, no labeled nexthop
+  AS-Path: NONE, path locally originated
+    1.1.1.1 (metric 0) from 0.0.0.0 (1.1.1.1)
+      Origin IGP, MED not set, localpref 100, weight 32768
+      Extcommunity: RT:65001:5010 ENCAP:8
+      PMSI Tunnel Attribute:
+        flags: 0x00, Tunnel type: Ingress Replication
+        Label: 5010, Tunnel Id: 1.1.1.1
+
+  Path-id 1 advertised to peers:
+    2.2.2.2        
+BGP routing table entry for [3]:[0]:[32]:[2.2.2.2]/88, version 7
+Paths: (1 available, best #1)
+Flags: (0x000012) (high32 00000000) on xmit-list, is in l2rib/evpn, is not in HW
+
+  Advertised path-id 1
+  Path type: internal, path is valid, is best path, no labeled nexthop
+             Imported from 2.2.2.2:32777:[3]:[0]:[32]:[2.2.2.2]/88 
+  AS-Path: NONE, path sourced internal to AS
+    2.2.2.2 (metric 0) from 2.2.2.2 (2.2.2.2)
+      Origin IGP, MED not set, localpref 100, weight 0
+      Extcommunity: RT:65001:5010 ENCAP:8
+      PMSI Tunnel Attribute:
+        flags: 0x00, Tunnel type: Ingress Replication
+        Label: 5010, Tunnel Id: 2.2.2.2
+
+  Path-id 1 not advertised to any peer
+
+Route Distinguisher: 1.1.1.1:32787    (L2VNI 5020)
+BGP routing table entry for [2]:[0]:[0]:[48]:[0c8e.9b19.2d02]:[0]:[0.0.0.0]/216, version 19
+Paths: (1 available, best #1)
+Flags: (0x000212) (high32 00000000) on xmit-list, is in l2rib/evpn, is not in HW
+
+  Advertised path-id 1
+  Path type: internal, path is valid, is best path, no labeled nexthop, in rib
+             Imported from 2.2.2.2:32787:[2]:[0]:[0]:[48]:[0c8e.9b19.2d02]:[0]:[0.0.0.0]/216 
+  AS-Path: NONE, path sourced internal to AS
+    2.2.2.2 (metric 0) from 2.2.2.2 (2.2.2.2)
+      Origin IGP, MED not set, localpref 100, weight 0
+      Received label 5020
+      Extcommunity: RT:65001:5020 ENCAP:8
+
+  Path-id 1 not advertised to any peer
+BGP routing table entry for [2]:[0]:[0]:[48]:[0c8e.9ba4.5402]:[0]:[0.0.0.0]/216, version 13
+Paths: (1 available, best #1)
+Flags: (0x000102) (high32 00000000) on xmit-list, is not in l2rib/evpn
+
+  Advertised path-id 1
+  Path type: local, path is valid, is best path, no labeled nexthop
+  AS-Path: NONE, path locally originated
+    1.1.1.1 (metric 0) from 0.0.0.0 (1.1.1.1)
+      Origin IGP, MED not set, localpref 100, weight 32768
+      Received label 5020
+      Extcommunity: RT:65001:5020 ENCAP:8
+
+  Path-id 1 advertised to peers:
+    2.2.2.2        
+BGP routing table entry for [2]:[0]:[0]:[48]:[0c8e.9b19.2d02]:[32]:[192.168.20.20]/248, version 23
+Paths: (1 available, best #1)
+Flags: (0x000212) (high32 00000000) on xmit-list, is in l2rib/evpn, is not in HW
+
+  Advertised path-id 1
+  Path type: internal, path is valid, is best path, no labeled nexthop, in rib
+             Imported from 2.2.2.2:32787:[2]:[0]:[0]:[48]:[0c8e.9b19.2d02]:[32]:[192.168.20.20]/248 
+  AS-Path: NONE, path sourced internal to AS
+    2.2.2.2 (metric 0) from 2.2.2.2 (2.2.2.2)
+      Origin IGP, MED not set, localpref 100, weight 0
+      Received label 5020
+      Extcommunity: RT:65001:5020 ENCAP:8
+
+  Path-id 1 not advertised to any peer
+BGP routing table entry for [2]:[0]:[0]:[48]:[0c8e.9ba4.5402]:[32]:[192.168.20.10]/248, version 11
+Paths: (1 available, best #1)
+Flags: (0x000102) (high32 00000000) on xmit-list, is not in l2rib/evpn
+
+  Advertised path-id 1
+  Path type: local, path is valid, is best path, no labeled nexthop
+  AS-Path: NONE, path locally originated
+    1.1.1.1 (metric 0) from 0.0.0.0 (1.1.1.1)
+      Origin IGP, MED not set, localpref 100, weight 32768
+      Received label 5020
+      Extcommunity: RT:65001:5020 ENCAP:8
+
+  Path-id 1 advertised to peers:
+    2.2.2.2        
+BGP routing table entry for [3]:[0]:[32]:[1.1.1.1]/88, version 3
+Paths: (1 available, best #1)
+Flags: (0x000002) (high32 00000000) on xmit-list, is not in l2rib/evpn
+
+  Advertised path-id 1
+  Path type: local, path is valid, is best path, no labeled nexthop
+  AS-Path: NONE, path locally originated
+    1.1.1.1 (metric 0) from 0.0.0.0 (1.1.1.1)
+      Origin IGP, MED not set, localpref 100, weight 32768
+      Extcommunity: RT:65001:5020 ENCAP:8
+      PMSI Tunnel Attribute:
+        flags: 0x00, Tunnel type: Ingress Replication
+        Label: 5020, Tunnel Id: 1.1.1.1
+
+  Path-id 1 advertised to peers:
+    2.2.2.2        
+BGP routing table entry for [3]:[0]:[32]:[2.2.2.2]/88, version 8
+Paths: (1 available, best #1)
+Flags: (0x000012) (high32 00000000) on xmit-list, is in l2rib/evpn, is not in HW
+
+  Advertised path-id 1
+  Path type: internal, path is valid, is best path, no labeled nexthop
+             Imported from 2.2.2.2:32787:[3]:[0]:[32]:[2.2.2.2]/88 
+  AS-Path: NONE, path sourced internal to AS
+    2.2.2.2 (metric 0) from 2.2.2.2 (2.2.2.2)
+      Origin IGP, MED not set, localpref 100, weight 0
+      Extcommunity: RT:65001:5020 ENCAP:8
+      PMSI Tunnel Attribute:
+        flags: 0x00, Tunnel type: Ingress Replication
+        Label: 5020, Tunnel Id: 2.2.2.2
+
+  Path-id 1 not advertised to any peer
+
+Route Distinguisher: 2.2.2.2:32777
+BGP routing table entry for [2]:[0]:[0]:[48]:[0c8e.9b19.2d01]:[0]:[0.0.0.0]/216, version 16
+Paths: (1 available, best #1)
+Flags: (0x000202) (high32 00000000) on xmit-list, is not in l2rib/evpn, is not in HW
+
+  Advertised path-id 1
+  Path type: internal, path is valid, is best path, no labeled nexthop
+             Imported to 1 destination(s)
+  AS-Path: NONE, path sourced internal to AS
+    2.2.2.2 (metric 0) from 2.2.2.2 (2.2.2.2)
+      Origin IGP, MED not set, localpref 100, weight 0
+      Received label 5010
+      Extcommunity: RT:65001:5010 ENCAP:8
+
+  Path-id 1 not advertised to any peer
+BGP routing table entry for [2]:[0]:[0]:[48]:[0c8e.9b19.2d01]:[32]:[192.168.10.2]/248, version 20
+Paths: (1 available, best #1)
+Flags: (0x000202) (high32 00000000) on xmit-list, is not in l2rib/evpn, is not in HW
+
+  Advertised path-id 1
+  Path type: internal, path is valid, is best path, no labeled nexthop
+             Imported to 1 destination(s)
+  AS-Path: NONE, path sourced internal to AS
+    2.2.2.2 (metric 0) from 2.2.2.2 (2.2.2.2)
+      Origin IGP, MED not set, localpref 100, weight 0
+      Received label 5010
+      Extcommunity: RT:65001:5010 ENCAP:8
+
+  Path-id 1 not advertised to any peer
+BGP routing table entry for [3]:[0]:[32]:[2.2.2.2]/88, version 5
+Paths: (1 available, best #1)
+Flags: (0x000002) (high32 00000000) on xmit-list, is not in l2rib/evpn, is not in HW
+
+  Advertised path-id 1
+  Path type: internal, path is valid, is best path, no labeled nexthop
+             Imported to 1 destination(s)
+  AS-Path: NONE, path sourced internal to AS
+    2.2.2.2 (metric 0) from 2.2.2.2 (2.2.2.2)
+      Origin IGP, MED not set, localpref 100, weight 0
+      Extcommunity: RT:65001:5010 ENCAP:8
+      PMSI Tunnel Attribute:
+        flags: 0x00, Tunnel type: Ingress Replication
+        Label: 5010, Tunnel Id: 2.2.2.2
+
+  Path-id 1 not advertised to any peer
+
+Route Distinguisher: 2.2.2.2:32787
+BGP routing table entry for [2]:[0]:[0]:[48]:[0c8e.9b19.2d02]:[0]:[0.0.0.0]/216, version 17
+Paths: (1 available, best #1)
+Flags: (0x000202) (high32 00000000) on xmit-list, is not in l2rib/evpn, is not in HW
+
+  Advertised path-id 1
+  Path type: internal, path is valid, is best path, no labeled nexthop
+             Imported to 1 destination(s)
+  AS-Path: NONE, path sourced internal to AS
+    2.2.2.2 (metric 0) from 2.2.2.2 (2.2.2.2)
+      Origin IGP, MED not set, localpref 100, weight 0
+      Received label 5020
+      Extcommunity: RT:65001:5020 ENCAP:8
+
+  Path-id 1 not advertised to any peer
+BGP routing table entry for [2]:[0]:[0]:[48]:[0c8e.9b19.2d02]:[32]:[192.168.20.20]/248, version 22
+Paths: (1 available, best #1)
+Flags: (0x000202) (high32 00000000) on xmit-list, is not in l2rib/evpn, is not in HW
+
+  Advertised path-id 1
+  Path type: internal, path is valid, is best path, no labeled nexthop
+             Imported to 1 destination(s)
+  AS-Path: NONE, path sourced internal to AS
+    2.2.2.2 (metric 0) from 2.2.2.2 (2.2.2.2)
+      Origin IGP, MED not set, localpref 100, weight 0
+      Received label 5020
+      Extcommunity: RT:65001:5020 ENCAP:8
+
+  Path-id 1 not advertised to any peer
+BGP routing table entry for [3]:[0]:[32]:[2.2.2.2]/88, version 6
+Paths: (1 available, best #1)
+Flags: (0x000002) (high32 00000000) on xmit-list, is not in l2rib/evpn, is not in HW
+
+  Advertised path-id 1
+  Path type: internal, path is valid, is best path, no labeled nexthop
+             Imported to 1 destination(s)
+  AS-Path: NONE, path sourced internal to AS
+    2.2.2.2 (metric 0) from 2.2.2.2 (2.2.2.2)
+      Origin IGP, MED not set, localpref 100, weight 0
+      Extcommunity: RT:65001:5020 ENCAP:8
+      PMSI Tunnel Attribute:
+        flags: 0x00, Tunnel type: Ingress Replication
+        Label: 5020, Tunnel Id: 2.2.2.2
+
+  Path-id 1 not advertised to any peer

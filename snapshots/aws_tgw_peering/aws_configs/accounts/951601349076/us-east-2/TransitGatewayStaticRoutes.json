@@ -1,0 +1,22 @@
+{
+ "TransitGatewayStaticRoutes": [
+  {
+   "AdditionalRoutesAvailable": false,
+   "Routes": [
+    {
+     "DestinationCidrBlock": "10.1.0.0/16",
+     "State": "active",
+     "TransitGatewayAttachments": [
+      {
+       "ResourceId": "tgw-0cacbf5ed9fe034e7",
+       "ResourceType": "peering",
+       "TransitGatewayAttachmentId": "tgw-attach-084b68f4a40b12383"
+      }
+     ],
+     "Type": "static"
+    }
+   ],
+   "TransitGatewayRouteTableId": "tgw-rtb-000baae357fa2f403"
+  }
+ ]
+}

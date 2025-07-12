@@ -1,0 +1,175 @@
+{
+    "objects": [
+        {
+            "uid": "d542e9ea-6045-482d-b655-4a4ff46d3edb",
+            "name": "Every_Day",
+            "type": "time",
+            "domain": {
+                "uid": "a0bbbc99-adef-4ef8-bb6d-defdefdefdef",
+                "name": "Check Point Data",
+                "domain-type": "data domain"
+            },
+            "start-now": true,
+            "start": {
+                "time": "00:00",
+                "iso-8601": "1970-01-01T00:00:00",
+                "date": "01-Jan-1970",
+                "posix": 0
+            },
+            "end-never": true,
+            "end": {
+                "time": "00:00",
+                "iso-8601": "1970-01-01T00:00:00",
+                "date": "01-Jan-1970",
+                "posix": 0
+            },
+            "recurrence": {
+                "pattern": "Daily",
+                "month": "Any"
+            },
+            "groups": [],
+            "comments": "",
+            "color": "black",
+            "icon": "Objects/time",
+            "tags": [],
+            "meta-info": {
+                "lock": "unlocked",
+                "validation-state": "ok",
+                "last-modify-time": {
+                    "posix": 1579505993977,
+                    "iso-8601": "2020-01-19T19:39-1200"
+                },
+                "last-modifier": "System",
+                "creation-time": {
+                    "posix": 1579505993977,
+                    "iso-8601": "2020-01-19T19:39-1200"
+                },
+                "creator": "System"
+            },
+            "read-only": false
+        },
+        {
+            "uid": "4e4a450c-6a62-44a6-b974-aac64f8b1dd8",
+            "name": "Off_Work",
+            "type": "time",
+            "domain": {
+                "uid": "a0bbbc99-adef-4ef8-bb6d-defdefdefdef",
+                "name": "Check Point Data",
+                "domain-type": "data domain"
+            },
+            "start-now": true,
+            "start": {
+                "time": "00:00",
+                "iso-8601": "1970-01-01T00:00:00",
+                "date": "01-Jan-1970",
+                "posix": 0
+            },
+            "end-never": true,
+            "end": {
+                "time": "00:00",
+                "iso-8601": "1970-01-01T00:00:00",
+                "date": "01-Jan-1970",
+                "posix": 0
+            },
+            "recurrence": {
+                "pattern": "Daily",
+                "month": "Any"
+            },
+            "hours-ranges": [
+                {
+                    "from": "00:00",
+                    "to": "07:00",
+                    "enabled": true,
+                    "index": 1
+                },
+                {
+                    "from": "20:00",
+                    "to": "23:59",
+                    "enabled": true,
+                    "index": 2
+                },
+                {
+                    "from": "00:00",
+                    "to": "00:00",
+                    "enabled": false,
+                    "index": 3
+                }
+            ],
+            "groups": [],
+            "comments": "",
+            "color": "black",
+            "icon": "Objects/time",
+            "tags": [],
+            "meta-info": {
+                "lock": "unlocked",
+                "validation-state": "ok",
+                "last-modify-time": {
+                    "posix": 1579505993913,
+                    "iso-8601": "2020-01-19T19:39-1200"
+                },
+                "last-modifier": "System",
+                "creation-time": {
+                    "posix": 1579505993913,
+                    "iso-8601": "2020-01-19T19:39-1200"
+                },
+                "creator": "System"
+            },
+            "read-only": false
+        },
+        {
+            "uid": "032fbea8-a4d4-4134-9035-aa2a56091474",
+            "name": "Weekend",
+            "type": "time",
+            "domain": {
+                "uid": "a0bbbc99-adef-4ef8-bb6d-defdefdefdef",
+                "name": "Check Point Data",
+                "domain-type": "data domain"
+            },
+            "start-now": true,
+            "start": {
+                "time": "00:00",
+                "iso-8601": "1970-01-01T00:00:00",
+                "date": "01-Jan-1970",
+                "posix": 0
+            },
+            "end-never": true,
+            "end": {
+                "time": "00:00",
+                "iso-8601": "1970-01-01T00:00:00",
+                "date": "01-Jan-1970",
+                "posix": 0
+            },
+            "recurrence": {
+                "pattern": "Weekly",
+                "weekdays": [
+                    "Sat",
+                    "Sun"
+                ],
+                "month": "Any"
+            },
+            "groups": [],
+            "comments": "",
+            "color": "black",
+            "icon": "Objects/time",
+            "tags": [],
+            "meta-info": {
+                "lock": "unlocked",
+                "validation-state": "ok",
+                "last-modify-time": {
+                    "posix": 1579505993974,
+                    "iso-8601": "2020-01-19T19:39-1200"
+                },
+                "last-modifier": "System",
+                "creation-time": {
+                    "posix": 1579505993974,
+                    "iso-8601": "2020-01-19T19:39-1200"
+                },
+                "creator": "System"
+            },
+            "read-only": false
+        }
+    ],
+    "from": 1,
+    "to": 3,
+    "total": 3
+}

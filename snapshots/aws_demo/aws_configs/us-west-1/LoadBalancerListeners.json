@@ -1,0 +1,49 @@
+{
+ "LoadBalancerListeners": [
+  {
+   "Listeners": [
+    {
+     "DefaultActions": [
+      {
+       "ForwardConfig": {
+        "TargetGroups": [
+         {
+          "TargetGroupArn": "arn:aws:elasticloadbalancing:us-west-1:028403472736:targetgroup/tf-20200422012823702500000002/9188482d973036a3"
+         }
+        ]
+       },
+       "Order": 1,
+       "TargetGroupArn": "arn:aws:elasticloadbalancing:us-west-1:028403472736:targetgroup/tf-20200422012823702500000002/9188482d973036a3",
+       "Type": "forward"
+      }
+     ],
+     "ListenerArn": "arn:aws:elasticloadbalancing:us-west-1:028403472736:listener/net/nlb-web-hr-west/0934837d0f8fecb6/88acd927a6c14935",
+     "LoadBalancerArn": "arn:aws:elasticloadbalancing:us-west-1:028403472736:loadbalancer/net/nlb-web-hr-west/0934837d0f8fecb6",
+     "Port": 80,
+     "Protocol": "TCP"
+    },
+    {
+     "DefaultActions": [
+      {
+       "ForwardConfig": {
+        "TargetGroups": [
+         {
+          "TargetGroupArn": "arn:aws:elasticloadbalancing:us-west-1:028403472736:targetgroup/tf-20200422012856180000000006/54b01cc8e2c87030"
+         }
+        ]
+       },
+       "Order": 1,
+       "TargetGroupArn": "arn:aws:elasticloadbalancing:us-west-1:028403472736:targetgroup/tf-20200422012856180000000006/54b01cc8e2c87030",
+       "Type": "forward"
+      }
+     ],
+     "ListenerArn": "arn:aws:elasticloadbalancing:us-west-1:028403472736:listener/net/nlb-web-hr-west/0934837d0f8fecb6/894c9c9b63510707",
+     "LoadBalancerArn": "arn:aws:elasticloadbalancing:us-west-1:028403472736:loadbalancer/net/nlb-web-hr-west/0934837d0f8fecb6",
+     "Port": 443,
+     "Protocol": "TCP"
+    }
+   ],
+   "LoadBalancerArn": "arn:aws:elasticloadbalancing:us-west-1:028403472736:loadbalancer/net/nlb-web-hr-west/0934837d0f8fecb6"
+  }
+ ]
+}

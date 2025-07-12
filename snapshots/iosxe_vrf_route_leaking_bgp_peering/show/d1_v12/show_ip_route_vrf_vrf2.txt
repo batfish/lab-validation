@@ -1,0 +1,28 @@
+Routing Table: vrf2
+Codes: L - local, C - connected, S - static, R - RIP, M - mobile, B - BGP
+       D - EIGRP, EX - EIGRP external, O - OSPF, IA - OSPF inter area
+       N1 - OSPF NSSA external type 1, N2 - OSPF NSSA external type 2
+       E1 - OSPF external type 1, E2 - OSPF external type 2
+       i - IS-IS, su - IS-IS summary, L1 - IS-IS level-1, L2 - IS-IS level-2
+       ia - IS-IS inter area, * - candidate default, U - per-user static route
+       o - ODR, P - periodic downloaded static route, H - NHRP, l - LISP
+       a - application route
+       + - replicated route, % - next hop override, p - overrides from PfR
+
+Gateway of last resort is not set
+
+      10.0.0.0/8 is variably subnetted, 4 subnets, 2 masks
+C        10.12.11.0/30 is directly connected, GigabitEthernet1
+L        10.12.11.1/32 is directly connected, GigabitEthernet1
+C        10.14.21.0/30 is directly connected, GigabitEthernet2
+L        10.14.21.1/32 is directly connected, GigabitEthernet2
+      192.168.122.0/24 is variably subnetted, 2 subnets, 2 masks
+C        192.168.122.0/24 is directly connected, GigabitEthernet10
+L        192.168.122.2/32 is directly connected, GigabitEthernet10
+      192.168.123.0/32 is subnetted, 6 subnets
+B        192.168.123.1 is directly connected, 00:47:27, Loopback1231
+C        192.168.123.2 is directly connected, Loopback1232
+B        192.168.123.3 [20/0] via 10.12.11.2, 00:18:10
+B        192.168.123.33 [20/0] via 10.12.11.2, 00:18:10
+B        192.168.123.44 [20/0] via 10.14.21.2, 00:46:31
+B        192.168.123.55 [20/0] via 10.14.21.2, 00:46:31

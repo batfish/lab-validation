@@ -1,0 +1,58 @@
+! Command: show running-config
+! device: d1 (vEOS, EOS-4.23.0.1F)
+!
+! boot system flash:/vEOS-lab.swi
+!
+transceiver qsfp default-mode 4x10G
+!
+hostname d1
+!
+spanning-tree mode mstp
+!
+no aaa root
+!
+username admin privilege 15 role network-admin secret sha512 $6$Imw7mabn0D0M4EMf$jqj9tuLraSRUIiiEiFouUHpe33KnsoEK24M38bWTeUteKEyzUL9V1tUXAHwzG1TPJ8d7qFlw0qXy9WdbkR5NG1
+!
+interface Ethernet1
+   no switchport
+   ip address 10.12.11.1/24
+!
+interface Ethernet2
+!
+interface Ethernet3
+!
+interface Ethernet4
+!
+interface Ethernet5
+!
+interface Ethernet6
+!
+interface Ethernet7
+!
+interface Ethernet8
+!
+interface Ethernet9
+!
+interface Ethernet10
+!
+interface Ethernet11
+!
+interface Ethernet12
+!
+interface Loopback122
+   ip address 192.168.123.222/32
+!
+interface Loopback123
+   ip address 192.168.123.1/32
+!
+interface Management1
+!
+ip routing
+!
+router bgp 65001
+   neighbor 10.12.11.2 remote-as 65002
+   neighbor 10.12.11.2 maximum-routes 12000
+   network 192.168.123.1/32
+   network 192.168.123.222/32
+!
+end

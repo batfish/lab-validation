@@ -1,0 +1,45 @@
+{
+    "objects": [
+        {
+            "allow-access-using": [
+                "Web-UI",
+                "CLI"
+            ],
+            "homedir": "/home/admin",
+            "locked": "no",
+            "must-change-password": "",
+            "name": "admin",
+            "primary-system-group-id": 0,
+            "real-name": "",
+            "roles": [
+                "adminRole"
+            ],
+            "secondary-system-groups": [
+                {
+                    "name": "Java_users",
+                    "primary-system-group-id": "1055"
+                }
+            ],
+            "shell": "bash",
+            "uid": 0
+        },
+        {
+            "allow-access-using": [
+                "Web-UI",
+                "CLI"
+            ],
+            "homedir": "/home/monitor",
+            "locked": "no",
+            "must-change-password": "",
+            "name": "monitor",
+            "primary-system-group-id": 100,
+            "real-name": "Monitor",
+            "roles": [
+                "monitorRole"
+            ],
+            "secondary-system-groups": [],
+            "shell": "cli",
+            "uid": 102
+        }
+    ]
+}

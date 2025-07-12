@@ -1,0 +1,355 @@
+{
+    "uid": "63b7fe60-76d2-4287-bca5-21af87337b0a",
+    "name": "Network",
+    "rulebase": [
+        {
+            "uid": "cf917d8e-615c-4668-994f-66824a01b529",
+            "name": "ALLOW_10/0",
+            "type": "access-rule",
+            "domain": {
+                "uid": "41e821a0-3720-11e3-aa6e-0800200c9fde",
+                "name": "SMC User",
+                "domain-type": "domain"
+            },
+            "rule-number": 1,
+            "track": {
+                "type": "598ead32-aa42-4615-90ed-f51a5928d41d",
+                "per-session": false,
+                "per-connection": true,
+                "accounting": false,
+                "enable-firewall-session": false,
+                "alert": "none"
+            },
+            "source": [
+                "d75f7013-79e3-4daa-b77e-824c2c29555d"
+            ],
+            "source-negate": false,
+            "destination": [
+                "d75f7013-79e3-4daa-b77e-824c2c29555d"
+            ],
+            "destination-negate": false,
+            "service": [
+                "97aeb369-9aea-11d5-bd16-0090272ccb30"
+            ],
+            "service-negate": false,
+            "vpn": [
+                "97aeb369-9aea-11d5-bd16-0090272ccb30"
+            ],
+            "action": "6c488338-8eec-4103-ad21-cd461ac2c472",
+            "action-settings": {
+                "enable-identity-captive-portal": false
+            },
+            "content": [
+                "97aeb369-9aea-11d5-bd16-0090272ccb30"
+            ],
+            "content-negate": false,
+            "content-direction": "any",
+            "time": [
+                "97aeb369-9aea-11d5-bd16-0090272ccb30"
+            ],
+            "hits": {
+                "percentage": "57%",
+                "level": "medium",
+                "value": 24,
+                "first-date": {
+                    "posix": 1627598005000,
+                    "iso-8601": "2021-07-29T18:33-0400"
+                },
+                "last-date": {
+                    "posix": 1627602345000,
+                    "iso-8601": "2021-07-29T19:45-0400"
+                }
+            },
+            "custom-fields": {
+                "field-1": "",
+                "field-2": "",
+                "field-3": ""
+            },
+            "meta-info": {
+                "lock": "unlocked",
+                "validation-state": "ok",
+                "last-modify-time": {
+                    "posix": 1627602339095,
+                    "iso-8601": "2021-07-29T19:45-0400"
+                },
+                "last-modifier": "admin",
+                "creation-time": {
+                    "posix": 1627597859487,
+                    "iso-8601": "2021-07-29T18:30-0400"
+                },
+                "creator": "admin"
+            },
+            "comments": "",
+            "enabled": true,
+            "install-on": [
+                "6c488338-8eec-4103-ad21-cd461ac2c476"
+            ]
+        },
+        {
+            "uid": "76fd22f2-efa8-4c81-a617-40201d3f5c4e",
+            "name": "Cleanup rule",
+            "type": "access-rule",
+            "domain": {
+                "uid": "41e821a0-3720-11e3-aa6e-0800200c9fde",
+                "name": "SMC User",
+                "domain-type": "domain"
+            },
+            "rule-number": 2,
+            "track": {
+                "type": "598ead32-aa42-4615-90ed-f51a5928d41d",
+                "per-session": false,
+                "per-connection": true,
+                "accounting": false,
+                "enable-firewall-session": false,
+                "alert": "none"
+            },
+            "source": [
+                "97aeb369-9aea-11d5-bd16-0090272ccb30"
+            ],
+            "source-negate": false,
+            "destination": [
+                "97aeb369-9aea-11d5-bd16-0090272ccb30"
+            ],
+            "destination-negate": false,
+            "service": [
+                "97aeb369-9aea-11d5-bd16-0090272ccb30"
+            ],
+            "service-negate": false,
+            "vpn": [
+                "97aeb369-9aea-11d5-bd16-0090272ccb30"
+            ],
+            "action": "6c488338-8eec-4103-ad21-cd461ac2c473",
+            "action-settings": {},
+            "content": [
+                "97aeb369-9aea-11d5-bd16-0090272ccb30"
+            ],
+            "content-negate": false,
+            "content-direction": "any",
+            "time": [
+                "97aeb369-9aea-11d5-bd16-0090272ccb30"
+            ],
+            "hits": {
+                "percentage": "43%",
+                "level": "medium",
+                "value": 18,
+                "first-date": {
+                    "posix": 1627597537000,
+                    "iso-8601": "2021-07-29T18:25-0400"
+                },
+                "last-date": {
+                    "posix": 1627602395000,
+                    "iso-8601": "2021-07-29T19:46-0400"
+                }
+            },
+            "custom-fields": {
+                "field-1": "",
+                "field-2": "",
+                "field-3": ""
+            },
+            "meta-info": {
+                "lock": "unlocked",
+                "validation-state": "ok",
+                "last-modify-time": {
+                    "posix": 1627599951060,
+                    "iso-8601": "2021-07-29T19:05-0400"
+                },
+                "last-modifier": "admin",
+                "creation-time": {
+                    "posix": 1579531385908,
+                    "iso-8601": "2020-01-20T09:43-0500"
+                },
+                "creator": "System"
+            },
+            "comments": "",
+            "enabled": true,
+            "install-on": [
+                "6c488338-8eec-4103-ad21-cd461ac2c476"
+            ]
+        }
+    ],
+    "objects-dictionary": [
+        {
+            "uid": "d75f7013-79e3-4daa-b77e-824c2c29555d",
+            "name": "10.0.0.0/8",
+            "type": "network",
+            "domain": {
+                "uid": "41e821a0-3720-11e3-aa6e-0800200c9fde",
+                "name": "SMC User",
+                "domain-type": "domain"
+            },
+            "broadcast": "allow",
+            "subnet4": "10.0.0.0",
+            "mask-length4": 8,
+            "subnet-mask": "255.0.0.0",
+            "nat-settings": {
+                "auto-rule": false
+            },
+            "comments": "",
+            "color": "black",
+            "icon": "NetworkObjects/network",
+            "tags": [],
+            "meta-info": {
+                "lock": "unlocked",
+                "validation-state": "ok",
+                "last-modify-time": {
+                    "posix": 1627597409876,
+                    "iso-8601": "2021-07-29T18:23-0400"
+                },
+                "last-modifier": "admin",
+                "creation-time": {
+                    "posix": 1627597238219,
+                    "iso-8601": "2021-07-29T18:20-0400"
+                },
+                "creator": "admin"
+            },
+            "read-only": false
+        },
+        {
+            "uid": "6c488338-8eec-4103-ad21-cd461ac2c472",
+            "name": "Accept",
+            "type": "RulebaseAction",
+            "domain": {
+                "uid": "a0bbbc99-adef-4ef8-bb6d-defdefdefdef",
+                "name": "Check Point Data",
+                "domain-type": "data domain"
+            },
+            "color": "none",
+            "meta-info": {
+                "validation-state": "ok",
+                "last-modify-time": {
+                    "posix": 1579505996561,
+                    "iso-8601": "2020-01-20T02:39-0500"
+                },
+                "last-modifier": "System",
+                "creation-time": {
+                    "posix": 1579505996561,
+                    "iso-8601": "2020-01-20T02:39-0500"
+                },
+                "creator": "System"
+            },
+            "tags": [],
+            "icon": "Actions/actionsAccept",
+            "comments": "Accept",
+            "display-name": "Accept",
+            "customFields": null
+        },
+        {
+            "uid": "97aeb369-9aea-11d5-bd16-0090272ccb30",
+            "name": "Any",
+            "type": "CpmiAnyObject",
+            "domain": {
+                "uid": "a0bbbc99-adef-4ef8-bb6d-defdefdefdef",
+                "name": "Check Point Data",
+                "domain-type": "data domain"
+            },
+            "color": "black",
+            "primaryManagement": false,
+            "meta-info": {
+                "validation-state": "ok",
+                "last-modify-time": {
+                    "posix": 1579505981537,
+                    "iso-8601": "2020-01-20T02:39-0500"
+                },
+                "last-modifier": "System",
+                "creation-time": {
+                    "posix": 1579505981537,
+                    "iso-8601": "2020-01-20T02:39-0500"
+                },
+                "creator": "System"
+            },
+            "tags": [],
+            "icon": "General/globalsAny",
+            "comments": null,
+            "display-name": "Any",
+            "customFields": null
+        },
+        {
+            "uid": "6c488338-8eec-4103-ad21-cd461ac2c473",
+            "name": "Drop",
+            "type": "RulebaseAction",
+            "domain": {
+                "uid": "a0bbbc99-adef-4ef8-bb6d-defdefdefdef",
+                "name": "Check Point Data",
+                "domain-type": "data domain"
+            },
+            "color": "none",
+            "meta-info": {
+                "validation-state": "ok",
+                "last-modify-time": {
+                    "posix": 1579505996564,
+                    "iso-8601": "2020-01-20T02:39-0500"
+                },
+                "last-modifier": "System",
+                "creation-time": {
+                    "posix": 1579505996564,
+                    "iso-8601": "2020-01-20T02:39-0500"
+                },
+                "creator": "System"
+            },
+            "tags": [],
+            "icon": "Actions/actionsDrop",
+            "comments": "Drop",
+            "display-name": "Drop",
+            "customFields": null
+        },
+        {
+            "uid": "598ead32-aa42-4615-90ed-f51a5928d41d",
+            "name": "Log",
+            "type": "Track",
+            "domain": {
+                "uid": "a0bbbc99-adef-4ef8-bb6d-defdefdefdef",
+                "name": "Check Point Data",
+                "domain-type": "data domain"
+            },
+            "color": "none",
+            "meta-info": {
+                "validation-state": "ok",
+                "last-modify-time": {
+                    "posix": 1579505996405,
+                    "iso-8601": "2020-01-20T02:39-0500"
+                },
+                "last-modifier": "System",
+                "creation-time": {
+                    "posix": 1579505996405,
+                    "iso-8601": "2020-01-20T02:39-0500"
+                },
+                "creator": "System"
+            },
+            "tags": [],
+            "icon": "Track/tracksLog",
+            "comments": "Tracks network information and rule matches.",
+            "customFields": null
+        },
+        {
+            "uid": "6c488338-8eec-4103-ad21-cd461ac2c476",
+            "name": "Policy Targets",
+            "type": "Global",
+            "domain": {
+                "uid": "a0bbbc99-adef-4ef8-bb6d-defdefdefdef",
+                "name": "Check Point Data",
+                "domain-type": "data domain"
+            },
+            "color": "none",
+            "meta-info": {
+                "validation-state": "ok",
+                "last-modify-time": {
+                    "posix": 1579505996320,
+                    "iso-8601": "2020-01-20T02:39-0500"
+                },
+                "last-modifier": "System",
+                "creation-time": {
+                    "posix": 1579505996320,
+                    "iso-8601": "2020-01-20T02:39-0500"
+                },
+                "creator": "System"
+            },
+            "tags": [],
+            "icon": "General/globalsAny",
+            "comments": "The policy target gateways",
+            "customFields": null
+        }
+    ],
+    "from": 1,
+    "to": 2,
+    "total": 2
+}

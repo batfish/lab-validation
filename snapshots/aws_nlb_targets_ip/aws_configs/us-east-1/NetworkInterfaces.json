@@ -1,0 +1,444 @@
+{
+ "NetworkInterfaces": [
+  {
+   "Attachment": {
+    "AttachTime": "2020-05-29 22:28:52+00:00",
+    "AttachmentId": "eni-attach-00608495ee4df8fb5",
+    "DeleteOnTermination": true,
+    "DeviceIndex": 0,
+    "InstanceId": "i-0807a6e3786f0d211",
+    "InstanceOwnerId": "028403472736",
+    "Status": "attached"
+   },
+   "AvailabilityZone": "us-east-1a",
+   "Description": "",
+   "Groups": [
+    {
+     "GroupId": "sg-08c47fe4106546724",
+     "GroupName": "sg_targets_ip_pe_pub_a"
+    }
+   ],
+   "InterfaceType": "interface",
+   "Ipv6Addresses": [],
+   "MacAddress": "12:3d:37:96:1f:2b",
+   "NetworkInterfaceId": "eni-045b92574c1dbd94b",
+   "OwnerId": "028403472736",
+   "PrivateDnsName": "ip-10-2-101-130.ec2.internal",
+   "PrivateIpAddress": "10.2.101.130",
+   "PrivateIpAddresses": [
+    {
+     "Primary": true,
+     "PrivateDnsName": "ip-10-2-101-130.ec2.internal",
+     "PrivateIpAddress": "10.2.101.130"
+    }
+   ],
+   "RequesterManaged": false,
+   "SourceDestCheck": true,
+   "Status": "in-use",
+   "SubnetId": "subnet-028e436142276c4bb",
+   "TagSet": [],
+   "VpcId": "vpc-016124ea7f52d5b1d"
+  },
+  {
+   "Association": {
+    "IpOwnerId": "amazon",
+    "PublicDnsName": "ec2-54-204-94-25.compute-1.amazonaws.com",
+    "PublicIp": "54.204.94.25"
+   },
+   "Attachment": {
+    "AttachTime": "2020-05-29 22:29:13+00:00",
+    "AttachmentId": "eni-attach-057d0f61f0337200b",
+    "DeleteOnTermination": true,
+    "DeviceIndex": 0,
+    "InstanceId": "i-069b3c50b87adcd89",
+    "InstanceOwnerId": "028403472736",
+    "Status": "attached"
+   },
+   "AvailabilityZone": "us-east-1a",
+   "Description": "",
+   "Groups": [
+    {
+     "GroupId": "sg-084773290be2f9ddd",
+     "GroupName": "jump_sg_general"
+    }
+   ],
+   "InterfaceType": "interface",
+   "Ipv6Addresses": [],
+   "MacAddress": "12:5e:dc:02:14:0b",
+   "NetworkInterfaceId": "eni-05a67e6785971f6f3",
+   "OwnerId": "028403472736",
+   "PrivateDnsName": "ip-10-1-1-100.ec2.internal",
+   "PrivateIpAddress": "10.1.1.100",
+   "PrivateIpAddresses": [
+    {
+     "Association": {
+      "IpOwnerId": "amazon",
+      "PublicDnsName": "ec2-54-204-94-25.compute-1.amazonaws.com",
+      "PublicIp": "54.204.94.25"
+     },
+     "Primary": true,
+     "PrivateDnsName": "ip-10-1-1-100.ec2.internal",
+     "PrivateIpAddress": "10.1.1.100"
+    }
+   ],
+   "RequesterManaged": false,
+   "SourceDestCheck": true,
+   "Status": "in-use",
+   "SubnetId": "subnet-042d220eb822fe751",
+   "TagSet": [],
+   "VpcId": "vpc-0f068bca92fc17694"
+  },
+  {
+   "Association": {
+    "AllocationId": "eipalloc-03e3711bb0ad40df0",
+    "AssociationId": "eipassoc-0cd17cceb9191f88a",
+    "IpOwnerId": "028403472736",
+    "PublicDnsName": "ec2-54-161-209-45.compute-1.amazonaws.com",
+    "PublicIp": "54.161.209.45"
+   },
+   "Attachment": {
+    "AttachmentId": "ela-attach-d03542da",
+    "DeleteOnTermination": false,
+    "DeviceIndex": 1,
+    "InstanceOwnerId": "amazon-aws",
+    "Status": "attached"
+   },
+   "AvailabilityZone": "us-east-1a",
+   "Description": "Interface for NAT Gateway nat-06826c381f3bb3106",
+   "Groups": [],
+   "InterfaceType": "nat_gateway",
+   "Ipv6Addresses": [],
+   "MacAddress": "12:38:2b:c1:34:f9",
+   "NetworkInterfaceId": "eni-05cdc62bc2617e360",
+   "OwnerId": "028403472736",
+   "PrivateDnsName": "ip-10-2-1-243.ec2.internal",
+   "PrivateIpAddress": "10.2.1.243",
+   "PrivateIpAddresses": [
+    {
+     "Association": {
+      "AllocationId": "eipalloc-03e3711bb0ad40df0",
+      "AssociationId": "eipassoc-0cd17cceb9191f88a",
+      "IpOwnerId": "028403472736",
+      "PublicDnsName": "ec2-54-161-209-45.compute-1.amazonaws.com",
+      "PublicIp": "54.161.209.45"
+     },
+     "Primary": true,
+     "PrivateDnsName": "ip-10-2-1-243.ec2.internal",
+     "PrivateIpAddress": "10.2.1.243"
+    }
+   ],
+   "RequesterId": "583328430953",
+   "RequesterManaged": true,
+   "SourceDestCheck": false,
+   "Status": "in-use",
+   "SubnetId": "subnet-04d15cce6679834e2",
+   "TagSet": [],
+   "VpcId": "vpc-016124ea7f52d5b1d"
+  },
+  {
+   "Association": {
+    "AllocationId": "eipalloc-0fe27562f1d300c40",
+    "AssociationId": "eipassoc-00b78d847ab1322d8",
+    "IpOwnerId": "028403472736",
+    "PublicDnsName": "ec2-35-169-141-131.compute-1.amazonaws.com",
+    "PublicIp": "35.169.141.131"
+   },
+   "Attachment": {
+    "AttachmentId": "ela-attach-f83c4bf2",
+    "DeleteOnTermination": false,
+    "DeviceIndex": 1,
+    "InstanceOwnerId": "amazon-aws",
+    "Status": "attached"
+   },
+   "AvailabilityZone": "us-east-1a",
+   "Description": "ELB net/targets-ip-nlb-pd-pri-a/cfa65b2bfaf07089",
+   "Groups": [],
+   "InterfaceType": "network_load_balancer",
+   "Ipv6Addresses": [],
+   "MacAddress": "12:10:36:7d:0b:5d",
+   "NetworkInterfaceId": "eni-06b1b2e470e304784",
+   "OwnerId": "028403472736",
+   "PrivateDnsName": "ip-10-2-1-194.ec2.internal",
+   "PrivateIpAddress": "10.2.1.194",
+   "PrivateIpAddresses": [
+    {
+     "Association": {
+      "AllocationId": "eipalloc-0fe27562f1d300c40",
+      "AssociationId": "eipassoc-00b78d847ab1322d8",
+      "IpOwnerId": "028403472736",
+      "PublicDnsName": "ec2-35-169-141-131.compute-1.amazonaws.com",
+      "PublicIp": "35.169.141.131"
+     },
+     "Primary": true,
+     "PrivateDnsName": "ip-10-2-1-194.ec2.internal",
+     "PrivateIpAddress": "10.2.1.194"
+    }
+   ],
+   "RequesterId": "762112775527",
+   "RequesterManaged": true,
+   "SourceDestCheck": false,
+   "Status": "in-use",
+   "SubnetId": "subnet-04d15cce6679834e2",
+   "TagSet": [],
+   "VpcId": "vpc-016124ea7f52d5b1d"
+  },
+  {
+   "Association": {
+    "AllocationId": "eipalloc-027dcaa2f273fbef9",
+    "AssociationId": "eipassoc-0dfc1055603a4034c",
+    "IpOwnerId": "028403472736",
+    "PublicDnsName": "ec2-54-237-5-132.compute-1.amazonaws.com",
+    "PublicIp": "54.237.5.132"
+   },
+   "Attachment": {
+    "AttachmentId": "ela-attach-2ecbbf24",
+    "DeleteOnTermination": false,
+    "DeviceIndex": 1,
+    "InstanceOwnerId": "amazon-aws",
+    "Status": "attached"
+   },
+   "AvailabilityZone": "us-east-1a",
+   "Description": "ELB net/targets-ip-nlb-pd-pub-a/b14618448e83f592",
+   "Groups": [],
+   "InterfaceType": "network_load_balancer",
+   "Ipv6Addresses": [],
+   "MacAddress": "12:c7:89:80:dd:71",
+   "NetworkInterfaceId": "eni-0eeb6ee88aa4e084a",
+   "OwnerId": "028403472736",
+   "PrivateDnsName": "ip-10-2-1-174.ec2.internal",
+   "PrivateIpAddress": "10.2.1.174",
+   "PrivateIpAddresses": [
+    {
+     "Association": {
+      "AllocationId": "eipalloc-027dcaa2f273fbef9",
+      "AssociationId": "eipassoc-0dfc1055603a4034c",
+      "IpOwnerId": "028403472736",
+      "PublicDnsName": "ec2-54-237-5-132.compute-1.amazonaws.com",
+      "PublicIp": "54.237.5.132"
+     },
+     "Primary": true,
+     "PrivateDnsName": "ip-10-2-1-174.ec2.internal",
+     "PrivateIpAddress": "10.2.1.174"
+    }
+   ],
+   "RequesterId": "762112775527",
+   "RequesterManaged": true,
+   "SourceDestCheck": false,
+   "Status": "in-use",
+   "SubnetId": "subnet-04d15cce6679834e2",
+   "TagSet": [],
+   "VpcId": "vpc-016124ea7f52d5b1d"
+  },
+  {
+   "Association": {
+    "AllocationId": "eipalloc-051e5c206c0130975",
+    "AssociationId": "eipassoc-0a0e2c0ca3d6e18dd",
+    "IpOwnerId": "028403472736",
+    "PublicDnsName": "ec2-174-129-144-179.compute-1.amazonaws.com",
+    "PublicIp": "174.129.144.179"
+   },
+   "Attachment": {
+    "AttachmentId": "ela-attach-5e314654",
+    "DeleteOnTermination": false,
+    "DeviceIndex": 1,
+    "InstanceOwnerId": "amazon-aws",
+    "Status": "attached"
+   },
+   "AvailabilityZone": "us-east-1a",
+   "Description": "ELB net/targets-ip-nlb-pe-pub-a/8c9d3c0e8c58608c",
+   "Groups": [],
+   "InterfaceType": "network_load_balancer",
+   "Ipv6Addresses": [],
+   "MacAddress": "12:cf:61:9e:c4:03",
+   "NetworkInterfaceId": "eni-04cd059594f38d5aa",
+   "OwnerId": "028403472736",
+   "PrivateDnsName": "ip-10-2-1-149.ec2.internal",
+   "PrivateIpAddress": "10.2.1.149",
+   "PrivateIpAddresses": [
+    {
+     "Association": {
+      "AllocationId": "eipalloc-051e5c206c0130975",
+      "AssociationId": "eipassoc-0a0e2c0ca3d6e18dd",
+      "IpOwnerId": "028403472736",
+      "PublicDnsName": "ec2-174-129-144-179.compute-1.amazonaws.com",
+      "PublicIp": "174.129.144.179"
+     },
+     "Primary": true,
+     "PrivateDnsName": "ip-10-2-1-149.ec2.internal",
+     "PrivateIpAddress": "10.2.1.149"
+    }
+   ],
+   "RequesterId": "762112775527",
+   "RequesterManaged": true,
+   "SourceDestCheck": false,
+   "Status": "in-use",
+   "SubnetId": "subnet-04d15cce6679834e2",
+   "TagSet": [],
+   "VpcId": "vpc-016124ea7f52d5b1d"
+  },
+  {
+   "Attachment": {
+    "AttachTime": "2020-05-29 22:28:52+00:00",
+    "AttachmentId": "eni-attach-0c3908c8acbd01cd3",
+    "DeleteOnTermination": true,
+    "DeviceIndex": 0,
+    "InstanceId": "i-008e95f9840fbff35",
+    "InstanceOwnerId": "028403472736",
+    "Status": "attached"
+   },
+   "AvailabilityZone": "us-east-1a",
+   "Description": "",
+   "Groups": [
+    {
+     "GroupId": "sg-028d15222676e8ef8",
+     "GroupName": "sg_targets_ip_pe_pri_a"
+    }
+   ],
+   "InterfaceType": "interface",
+   "Ipv6Addresses": [],
+   "MacAddress": "12:d7:ca:12:9e:15",
+   "NetworkInterfaceId": "eni-02a71c97eebc2cca5",
+   "OwnerId": "028403472736",
+   "PrivateDnsName": "ip-10-2-101-120.ec2.internal",
+   "PrivateIpAddress": "10.2.101.120",
+   "PrivateIpAddresses": [
+    {
+     "Primary": true,
+     "PrivateDnsName": "ip-10-2-101-120.ec2.internal",
+     "PrivateIpAddress": "10.2.101.120"
+    }
+   ],
+   "RequesterManaged": false,
+   "SourceDestCheck": true,
+   "Status": "in-use",
+   "SubnetId": "subnet-028e436142276c4bb",
+   "TagSet": [],
+   "VpcId": "vpc-016124ea7f52d5b1d"
+  },
+  {
+   "Association": {
+    "AllocationId": "eipalloc-00228bdd66606f97d",
+    "AssociationId": "eipassoc-05bb4bc3b0713472f",
+    "IpOwnerId": "028403472736",
+    "PublicDnsName": "ec2-54-204-217-240.compute-1.amazonaws.com",
+    "PublicIp": "54.204.217.240"
+   },
+   "Attachment": {
+    "AttachmentId": "ela-attach-fe3c4bf4",
+    "DeleteOnTermination": false,
+    "DeviceIndex": 1,
+    "InstanceOwnerId": "amazon-aws",
+    "Status": "attached"
+   },
+   "AvailabilityZone": "us-east-1a",
+   "Description": "ELB net/targets-ip-nlb-pe-pri-a/b68b6bc634aaee4d",
+   "Groups": [],
+   "InterfaceType": "network_load_balancer",
+   "Ipv6Addresses": [],
+   "MacAddress": "12:a9:16:fb:2d:79",
+   "NetworkInterfaceId": "eni-06e49d179e084a20b",
+   "OwnerId": "028403472736",
+   "PrivateDnsName": "ip-10-2-1-88.ec2.internal",
+   "PrivateIpAddress": "10.2.1.88",
+   "PrivateIpAddresses": [
+    {
+     "Association": {
+      "AllocationId": "eipalloc-00228bdd66606f97d",
+      "AssociationId": "eipassoc-05bb4bc3b0713472f",
+      "IpOwnerId": "028403472736",
+      "PublicDnsName": "ec2-54-204-217-240.compute-1.amazonaws.com",
+      "PublicIp": "54.204.217.240"
+     },
+     "Primary": true,
+     "PrivateDnsName": "ip-10-2-1-88.ec2.internal",
+     "PrivateIpAddress": "10.2.1.88"
+    }
+   ],
+   "RequesterId": "762112775527",
+   "RequesterManaged": true,
+   "SourceDestCheck": false,
+   "Status": "in-use",
+   "SubnetId": "subnet-04d15cce6679834e2",
+   "TagSet": [],
+   "VpcId": "vpc-016124ea7f52d5b1d"
+  },
+  {
+   "Attachment": {
+    "AttachTime": "2020-05-29 22:29:06+00:00",
+    "AttachmentId": "eni-attach-0e035790abb13ea94",
+    "DeleteOnTermination": true,
+    "DeviceIndex": 0,
+    "InstanceId": "i-063fbd453c5cc48d9",
+    "InstanceOwnerId": "028403472736",
+    "Status": "attached"
+   },
+   "AvailabilityZone": "us-east-1a",
+   "Description": "",
+   "Groups": [
+    {
+     "GroupId": "sg-0dd72aded641a8130",
+     "GroupName": "sg_targets_ip_pd_pub_a"
+    }
+   ],
+   "InterfaceType": "interface",
+   "Ipv6Addresses": [],
+   "MacAddress": "12:c0:41:d1:78:ad",
+   "NetworkInterfaceId": "eni-045e0c16ee2229cc6",
+   "OwnerId": "028403472736",
+   "PrivateDnsName": "ip-10-2-101-110.ec2.internal",
+   "PrivateIpAddress": "10.2.101.110",
+   "PrivateIpAddresses": [
+    {
+     "Primary": true,
+     "PrivateDnsName": "ip-10-2-101-110.ec2.internal",
+     "PrivateIpAddress": "10.2.101.110"
+    }
+   ],
+   "RequesterManaged": false,
+   "SourceDestCheck": true,
+   "Status": "in-use",
+   "SubnetId": "subnet-028e436142276c4bb",
+   "TagSet": [],
+   "VpcId": "vpc-016124ea7f52d5b1d"
+  },
+  {
+   "Attachment": {
+    "AttachTime": "2020-05-29 22:28:52+00:00",
+    "AttachmentId": "eni-attach-043e278e5a03cb3c7",
+    "DeleteOnTermination": true,
+    "DeviceIndex": 0,
+    "InstanceId": "i-0452f4c114ee378c1",
+    "InstanceOwnerId": "028403472736",
+    "Status": "attached"
+   },
+   "AvailabilityZone": "us-east-1a",
+   "Description": "",
+   "Groups": [
+    {
+     "GroupId": "sg-0b61b37b346ff2038",
+     "GroupName": "sg_targets_ip_pd_pri_a"
+    }
+   ],
+   "InterfaceType": "interface",
+   "Ipv6Addresses": [],
+   "MacAddress": "12:95:ab:28:9d:c9",
+   "NetworkInterfaceId": "eni-0b7b5005e52d12829",
+   "OwnerId": "028403472736",
+   "PrivateDnsName": "ip-10-2-101-100.ec2.internal",
+   "PrivateIpAddress": "10.2.101.100",
+   "PrivateIpAddresses": [
+    {
+     "Primary": true,
+     "PrivateDnsName": "ip-10-2-101-100.ec2.internal",
+     "PrivateIpAddress": "10.2.101.100"
+    }
+   ],
+   "RequesterManaged": false,
+   "SourceDestCheck": true,
+   "Status": "in-use",
+   "SubnetId": "subnet-028e436142276c4bb",
+   "TagSet": [],
+   "VpcId": "vpc-016124ea7f52d5b1d"
+  }
+ ]
+}

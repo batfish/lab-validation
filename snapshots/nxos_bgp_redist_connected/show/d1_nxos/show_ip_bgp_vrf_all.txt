@@ -1,0 +1,13 @@
+BGP routing table information for VRF default, address family IPv4 Unicast
+BGP table version is 140, Local Router ID is 10.1.1.1
+Status: s-suppressed, x-deleted, S-stale, d-dampened, h-history, *-valid, >-best
+Path type: i-internal, e-external, c-confed, l-local, a-aggregate, r-redist, I-injected
+Origin codes: i - IGP, e - EGP, ? - incomplete, | - multipath, & - backup, 2 - best2
+
+   Network            Next Hop            Metric     LocPrf     Weight Path
+*>r10.1.1.0/24        0.0.0.0                  0        100      32768 ?
+* e                   10.1.1.2                 0                     0 65002 ?
+*>r10.1.2.0/24        0.0.0.0                  0        100      32768 ?
+* e                   10.1.2.2                 0                     0 65002 ?
+*>l10.1.2.1/32        0.0.0.0                           100      32768 i
+*>e10.1.2.2/32        10.1.2.2                                       0 65002 i

@@ -1,0 +1,38 @@
+{
+  "bgpPeers": [
+    {
+      "hostname": "bor01",
+      "peerAddress": "149.1.1.1",
+      "ispAttachment": {
+        "interface": "xe-0/0/1"
+      }
+    },
+    {
+      "hostname": "bor02",
+      "peerAddress": "149.1.2.1",
+      "ispAttachment": {
+        "interface": "xe-0/0/1"
+      }
+    }
+  ],
+  "filter": {
+    "onlyRemoteAsns": [],
+    "onlyRemoteIps": []
+  },
+   "ispNodeInfo": [
+    {
+      "asn": 577,
+      "name": "ISP-X",
+      "trafficFiltering": {
+        "mode": "none"
+      }
+    },
+    {
+      "asn": 600,
+      "name": "ISP-Y",
+      "trafficFiltering": {
+        "mode": "none"
+      }
+    }
+  ]
+}

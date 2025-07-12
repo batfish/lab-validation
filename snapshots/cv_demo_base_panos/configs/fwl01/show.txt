@@ -1,0 +1,272 @@
+set deviceconfig system type dhcp-client send-hostname yes
+set deviceconfig system type dhcp-client send-client-id no
+set deviceconfig system type dhcp-client accept-dhcp-hostname no
+set deviceconfig system type dhcp-client accept-dhcp-domain no
+set deviceconfig system update-server updates.paloaltonetworks.com
+set deviceconfig system update-schedule threats recurring weekly day-of-week wednesday
+set deviceconfig system update-schedule threats recurring weekly at 01:02
+set deviceconfig system update-schedule threats recurring weekly action download-only
+set deviceconfig system timezone US/Pacific
+set deviceconfig system service disable-telnet yes
+set deviceconfig system service disable-http yes
+set deviceconfig system hostname fwl01
+set deviceconfig setting config rematch yes
+set deviceconfig setting management hostname-type-in-syslog FQDN
+set deviceconfig setting auto-mac-detect yes
+set network interface ethernet ethernet1/1 comment "[nbr=BL01:??] FWL-INSIDE"
+set network interface ethernet ethernet1/1 layer3 ip 10.2.1.0/31
+set network interface ethernet ethernet1/1 layer3 interface-management-profile MGMT_PROFILE
+set network interface ethernet ethernet1/2 comment "[nbr=BL02:??] FWL-INSIDE"
+set network interface ethernet ethernet1/2 layer3 ip 10.2.1.2/31
+set network interface ethernet ethernet1/2 layer3 interface-management-profile MGMT_PROFILE
+set network interface ethernet ethernet1/3 comment "[nbr=BOR01:??] FWL-OUTSIDE"
+set network interface ethernet ethernet1/3 layer3 ip 10.2.1.4/31
+set network interface ethernet ethernet1/4 comment "[nbr=BOR02:??] FWL-OUTSIDE"
+set network interface ethernet ethernet1/4 layer3 ip 10.2.1.6/31
+set network interface ethernet ethernet1/7 comment mgmt
+set network interface ethernet ethernet1/7 layer3 ip 192.168.122.17/24
+set network interface ethernet ethernet1/7 layer3 interface-management-profile MGMT_PROFILE
+set network profiles monitor-profile default interval 3
+set network profiles monitor-profile default threshold 5
+set network profiles monitor-profile default action wait-recover
+set network profiles interface-management-profile MGMT_PROFILE ping yes
+set network profiles interface-management-profile MGMT_PROFILE permitted-ip 10.0.0.0/8
+set network profiles interface-management-profile MGMT_PROFILE permitted-ip 192.168.122.0/24
+set network profiles interface-management-profile MGMT_PROFILE ssh yes
+set network profiles interface-management-profile MGMT_PROFILE https yes
+set network ike crypto-profiles ike-crypto-profiles default encryption [ aes-128-cbc 3des ]
+set network ike crypto-profiles ike-crypto-profiles default hash sha1
+set network ike crypto-profiles ike-crypto-profiles default dh-group group2
+set network ike crypto-profiles ike-crypto-profiles default lifetime hours 8
+set network ike crypto-profiles ike-crypto-profiles Suite-B-GCM-128 encryption aes-128-cbc
+set network ike crypto-profiles ike-crypto-profiles Suite-B-GCM-128 hash sha256
+set network ike crypto-profiles ike-crypto-profiles Suite-B-GCM-128 dh-group group19
+set network ike crypto-profiles ike-crypto-profiles Suite-B-GCM-128 lifetime hours 8
+set network ike crypto-profiles ike-crypto-profiles Suite-B-GCM-256 encryption aes-256-cbc
+set network ike crypto-profiles ike-crypto-profiles Suite-B-GCM-256 hash sha384
+set network ike crypto-profiles ike-crypto-profiles Suite-B-GCM-256 dh-group group20
+set network ike crypto-profiles ike-crypto-profiles Suite-B-GCM-256 lifetime hours 8
+set network ike crypto-profiles ipsec-crypto-profiles default esp encryption [ aes-128-cbc 3des ]
+set network ike crypto-profiles ipsec-crypto-profiles default esp authentication sha1
+set network ike crypto-profiles ipsec-crypto-profiles default dh-group group2
+set network ike crypto-profiles ipsec-crypto-profiles default lifetime hours 1
+set network ike crypto-profiles ipsec-crypto-profiles Suite-B-GCM-128 esp encryption aes-128-gcm
+set network ike crypto-profiles ipsec-crypto-profiles Suite-B-GCM-128 esp authentication none
+set network ike crypto-profiles ipsec-crypto-profiles Suite-B-GCM-128 dh-group group19
+set network ike crypto-profiles ipsec-crypto-profiles Suite-B-GCM-128 lifetime hours 1
+set network ike crypto-profiles ipsec-crypto-profiles Suite-B-GCM-256 esp encryption aes-256-gcm
+set network ike crypto-profiles ipsec-crypto-profiles Suite-B-GCM-256 esp authentication none
+set network ike crypto-profiles ipsec-crypto-profiles Suite-B-GCM-256 dh-group group20
+set network ike crypto-profiles ipsec-crypto-profiles Suite-B-GCM-256 lifetime hours 1
+set network ike crypto-profiles global-protect-app-crypto-profiles default encryption aes-128-cbc
+set network ike crypto-profiles global-protect-app-crypto-profiles default authentication sha1
+set network qos profile default class class1 priority real-time
+set network qos profile default class class2 priority high
+set network qos profile default class class3 priority high
+set network qos profile default class class4 priority medium
+set network qos profile default class class5 priority medium
+set network qos profile default class class6 priority low
+set network qos profile default class class7 priority low
+set network qos profile default class class8 priority low
+set network virtual-router default protocol bgp enable yes
+set network virtual-router default protocol bgp dampening-profile default cutoff 1.25
+set network virtual-router default protocol bgp dampening-profile default reuse 0.5
+set network virtual-router default protocol bgp dampening-profile default max-hold-time 900
+set network virtual-router default protocol bgp dampening-profile default decay-half-life-reachable 300
+set network virtual-router default protocol bgp dampening-profile default decay-half-life-unreachable 900
+set network virtual-router default protocol bgp dampening-profile default enable yes
+set network virtual-router default protocol bgp router-id 10.1.4.1
+set network virtual-router default protocol bgp local-as 65301
+set network virtual-router default protocol bgp peer-group EBGP-BOR enable yes
+set network virtual-router default protocol bgp peer-group EBGP-BOR type ebgp
+set network virtual-router default protocol bgp peer-group EBGP-BOR peer BOR01 peer-as 65401
+set network virtual-router default protocol bgp peer-group EBGP-BOR peer BOR01 enable yes
+set network virtual-router default protocol bgp peer-group EBGP-BOR peer BOR01 address-family-identifier ipv4
+set network virtual-router default protocol bgp peer-group EBGP-BOR peer BOR01 local-address ip 10.2.1.4/31
+set network virtual-router default protocol bgp peer-group EBGP-BOR peer BOR01 local-address interface ethernet1/3
+set network virtual-router default protocol bgp peer-group EBGP-BOR peer BOR01 peer-address ip 10.2.1.5
+set network virtual-router default protocol bgp peer-group EBGP-BOR peer BOR02 peer-as 65402
+set network virtual-router default protocol bgp peer-group EBGP-BOR peer BOR02 enable yes
+set network virtual-router default protocol bgp peer-group EBGP-BOR peer BOR02 address-family-identifier ipv4
+set network virtual-router default protocol bgp peer-group EBGP-BOR peer BOR02 peer-address ip 10.2.1.7
+set network virtual-router default protocol bgp peer-group EBGP-BOR peer BOR02 local-address ip 10.2.1.6/31
+set network virtual-router default protocol bgp peer-group EBGP-BOR peer BOR02 local-address interface ethernet1/4
+set network virtual-router default protocol bgp peer-group EBGP-BL enable yes
+set network virtual-router default protocol bgp peer-group EBGP-BL type ebgp
+set network virtual-router default protocol bgp peer-group EBGP-BL peer BL01 peer-as 65201
+set network virtual-router default protocol bgp peer-group EBGP-BL peer BL01 enable yes
+set network virtual-router default protocol bgp peer-group EBGP-BL peer BL01 address-family-identifier ipv4
+set network virtual-router default protocol bgp peer-group EBGP-BL peer BL01 local-address ip 10.2.1.0/31
+set network virtual-router default protocol bgp peer-group EBGP-BL peer BL01 local-address interface ethernet1/1
+set network virtual-router default protocol bgp peer-group EBGP-BL peer BL01 peer-address ip 10.2.1.1
+set network virtual-router default protocol bgp peer-group EBGP-BL peer BL02 peer-as 65202
+set network virtual-router default protocol bgp peer-group EBGP-BL peer BL02 enable yes
+set network virtual-router default protocol bgp peer-group EBGP-BL peer BL02 address-family-identifier ipv4
+set network virtual-router default protocol bgp peer-group EBGP-BL peer BL02 local-address ip 10.2.1.2/31
+set network virtual-router default protocol bgp peer-group EBGP-BL peer BL02 local-address interface ethernet1/2
+set network virtual-router default protocol bgp peer-group EBGP-BL peer BL02 peer-address ip 10.2.1.3
+set network virtual-router default protocol bgp install-route yes
+set network virtual-router default protocol bgp reject-default-route no
+set network virtual-router default protocol bgp policy import rules IMPORT-BOR-DEFAULT-ROUTE match address-prefix 0.0.0.0/0 exact yes
+set network virtual-router default protocol bgp policy import rules IMPORT-BOR-DEFAULT-ROUTE match route-table unicast
+set network virtual-router default protocol bgp policy import rules IMPORT-BOR-DEFAULT-ROUTE enable yes
+set network virtual-router default protocol bgp policy import rules IMPORT-BOR-DEFAULT-ROUTE action allow
+set network virtual-router default protocol bgp policy import rules IMPORT-BOR-DEFAULT-ROUTE used-by EBGP-BOR
+set network virtual-router default protocol bgp policy import rules IMPORT-BL-FABRIC_SCOPE match address-prefix 10.0.0.0/8 exact no
+set network virtual-router default protocol bgp policy import rules IMPORT-BL-FABRIC_SCOPE match route-table unicast
+set network virtual-router default protocol bgp policy import rules IMPORT-BL-FABRIC_SCOPE enable yes
+set network virtual-router default protocol bgp policy import rules IMPORT-BL-FABRIC_SCOPE action allow update med 100
+set network virtual-router default protocol bgp policy import rules IMPORT-BL-FABRIC_SCOPE used-by EBGP-BL
+set network virtual-router default protocol bgp policy export rules EXPORT-BL-DEFAULT-ROUTE match address-prefix 0.0.0.0/0 exact yes
+set network virtual-router default protocol bgp policy export rules EXPORT-BL-DEFAULT-ROUTE match route-table unicast
+set network virtual-router default protocol bgp policy export rules EXPORT-BL-DEFAULT-ROUTE enable yes
+set network virtual-router default protocol bgp policy export rules EXPORT-BL-DEFAULT-ROUTE action allow
+set network virtual-router default protocol bgp policy export rules EXPORT-BL-DEFAULT-ROUTE used-by EBGP-BL
+set network virtual-router default interface [ ethernet1/1 ethernet1/2 ethernet1/3 ethernet1/4 ethernet1/7 ]
+set shared application
+set shared application-group
+set shared service
+set shared service-group
+set shared botnet configuration http dynamic-dns enabled yes
+set shared botnet configuration http dynamic-dns threshold 5
+set shared botnet configuration http malware-sites enabled yes
+set shared botnet configuration http malware-sites threshold 5
+set shared botnet configuration http recent-domains enabled yes
+set shared botnet configuration http recent-domains threshold 5
+set shared botnet configuration http ip-domains enabled yes
+set shared botnet configuration http ip-domains threshold 10
+set shared botnet configuration http executables-from-unknown-sites enabled yes
+set shared botnet configuration http executables-from-unknown-sites threshold 5
+set shared botnet configuration other-applications irc yes
+set shared botnet configuration unknown-applications unknown-tcp destinations-per-hour 10
+set shared botnet configuration unknown-applications unknown-tcp sessions-per-hour 10
+set shared botnet configuration unknown-applications unknown-tcp session-length maximum-bytes 100
+set shared botnet configuration unknown-applications unknown-tcp session-length minimum-bytes 50
+set shared botnet configuration unknown-applications unknown-udp destinations-per-hour 10
+set shared botnet configuration unknown-applications unknown-udp sessions-per-hour 10
+set shared botnet configuration unknown-applications unknown-udp session-length maximum-bytes 100
+set shared botnet configuration unknown-applications unknown-udp session-length minimum-bytes 50
+set shared botnet report topn 100
+set shared botnet report scheduled yes
+set zone INSIDE network layer3 [ ethernet1/1 ethernet1/2 ethernet1/7 ]
+set zone OUTSIDE network layer3 [ ethernet1/3 ethernet1/4 ]
+set service-group SG_BAD_TCP members [ S_TCP_23 S_TCP_113 S_TCP_135 S_TCP_389 S_TCP_1433_1434 S_TCP_3389 S_TCP_5432 ]
+set service-group SG_BAD_UDP members [ S_UDP_67_68 S_UDP_111 S_UDP_113 S_UDP_123 S_UDP_135 ]
+set service-group SG_WEB_SERVICES members [ S_HTTP S_HTTPS ]
+set service S_UDP_67_68 protocol udp port 67,68
+set service S_TCP_25 protocol tcp port 25
+set service S_UDP_53 protocol udp port 53
+set service S_UDP_123 protocol udp port 123
+set service S_TCP_23 protocol tcp port 23
+set service S_TCP_113 protocol tcp port 113
+set service S_TCP_135 protocol tcp port 135
+set service S_TCP_389 protocol tcp port 389
+set service S_TCP_1433_1434 protocol tcp port 1433,1434
+set service S_TCP_3389 protocol tcp port 3389
+set service S_TCP_5432 protocol tcp port 5432
+set service S_UDP_111 protocol udp port 111
+set service S_UDP_113 protocol udp port 113
+set service S_UDP_135 protocol udp port 135
+set service S_HTTP protocol tcp port 80
+set service S_HTTPS protocol tcp port 443
+set schedule
+set rulebase security rules IN_TO_OUT_PING from INSIDE
+set rulebase security rules IN_TO_OUT_PING to OUTSIDE
+set rulebase security rules IN_TO_OUT_PING source any
+set rulebase security rules IN_TO_OUT_PING destination any
+set rulebase security rules IN_TO_OUT_PING application ping
+set rulebase security rules IN_TO_OUT_PING service application-default
+set rulebase security rules IN_TO_OUT_PING action allow
+set rulebase security rules IN_TO_OUT_SMTP from INSIDE
+set rulebase security rules IN_TO_OUT_SMTP to OUTSIDE
+set rulebase security rules IN_TO_OUT_SMTP source any
+set rulebase security rules IN_TO_OUT_SMTP destination any
+set rulebase security rules IN_TO_OUT_SMTP application any
+set rulebase security rules IN_TO_OUT_SMTP service S_TCP_25
+set rulebase security rules IN_TO_OUT_SMTP action allow
+set rulebase security rules IN_TO_OUT_DNS from INSIDE
+set rulebase security rules IN_TO_OUT_DNS to OUTSIDE
+set rulebase security rules IN_TO_OUT_DNS source any
+set rulebase security rules IN_TO_OUT_DNS destination [ CLOUDFLARE GOOGLE_DNS ]
+set rulebase security rules IN_TO_OUT_DNS application any
+set rulebase security rules IN_TO_OUT_DNS service S_UDP_53
+set rulebase security rules IN_TO_OUT_DNS action allow
+set rulebase security rules IN_TO_OUT_BLOCK_OTHER_DNS from INSIDE
+set rulebase security rules IN_TO_OUT_BLOCK_OTHER_DNS to OUTSIDE
+set rulebase security rules IN_TO_OUT_BLOCK_OTHER_DNS source any
+set rulebase security rules IN_TO_OUT_BLOCK_OTHER_DNS destination any
+set rulebase security rules IN_TO_OUT_BLOCK_OTHER_DNS application any
+set rulebase security rules IN_TO_OUT_BLOCK_OTHER_DNS service S_UDP_53
+set rulebase security rules IN_TO_OUT_BLOCK_OTHER_DNS action deny
+set rulebase security rules IN_TO_OUT_NTP from INSIDE
+set rulebase security rules IN_TO_OUT_NTP to OUTSIDE
+set rulebase security rules IN_TO_OUT_NTP source any
+set rulebase security rules IN_TO_OUT_NTP destination any
+set rulebase security rules IN_TO_OUT_NTP application any
+set rulebase security rules IN_TO_OUT_NTP service S_UDP_123
+set rulebase security rules IN_TO_OUT_NTP action allow
+set rulebase security rules IN_TO_OUT_BLOCK_BAD_TCP from INSIDE
+set rulebase security rules IN_TO_OUT_BLOCK_BAD_TCP to OUTSIDE
+set rulebase security rules IN_TO_OUT_BLOCK_BAD_TCP source any
+set rulebase security rules IN_TO_OUT_BLOCK_BAD_TCP destination any
+set rulebase security rules IN_TO_OUT_BLOCK_BAD_TCP application any
+set rulebase security rules IN_TO_OUT_BLOCK_BAD_TCP action deny
+set rulebase security rules IN_TO_OUT_BLOCK_BAD_TCP service SG_BAD_TCP
+set rulebase security rules IN_TO_OUT_BLOCK_BAD_UDP from INSIDE
+set rulebase security rules IN_TO_OUT_BLOCK_BAD_UDP to OUTSIDE
+set rulebase security rules IN_TO_OUT_BLOCK_BAD_UDP source any
+set rulebase security rules IN_TO_OUT_BLOCK_BAD_UDP destination any
+set rulebase security rules IN_TO_OUT_BLOCK_BAD_UDP application any
+set rulebase security rules IN_TO_OUT_BLOCK_BAD_UDP action deny
+set rulebase security rules IN_TO_OUT_BLOCK_BAD_UDP service SG_BAD_UDP
+set rulebase security rules IN_TO_OUT_ALLOW_ALL from INSIDE
+set rulebase security rules IN_TO_OUT_ALLOW_ALL to OUTSIDE
+set rulebase security rules IN_TO_OUT_ALLOW_ALL source any
+set rulebase security rules IN_TO_OUT_ALLOW_ALL destination any
+set rulebase security rules IN_TO_OUT_ALLOW_ALL application any
+set rulebase security rules IN_TO_OUT_ALLOW_ALL service application-default
+set rulebase security rules IN_TO_OUT_ALLOW_ALL action allow
+set rulebase security rules OUT_TO_IN_PING from OUTSIDE
+set rulebase security rules OUT_TO_IN_PING to INSIDE
+set rulebase security rules OUT_TO_IN_PING source any
+set rulebase security rules OUT_TO_IN_PING destination PERMIT-ICMP_DST_EXCLUDE
+set rulebase security rules OUT_TO_IN_PING application ping
+set rulebase security rules OUT_TO_IN_PING service application-default
+set rulebase security rules OUT_TO_IN_PING action allow
+set rulebase security rules OUT_TO_IN_WEB from OUTSIDE
+set rulebase security rules OUT_TO_IN_WEB to INSIDE
+set rulebase security rules OUT_TO_IN_WEB source any
+set rulebase security rules OUT_TO_IN_WEB destination WEB-SERVERS
+set rulebase security rules OUT_TO_IN_WEB application any
+set rulebase security rules OUT_TO_IN_WEB service SG_WEB_SERVICES
+set rulebase security rules OUT_TO_IN_WEB action allow
+set application-group
+set application
+set address-group CLOUDFLARE static CLOUDFLARE_0
+set address-group GOOGLE_DNS static [ GOOGLE_DNS_0 GOOGLE_DNS_1 ]
+set address-group WEB-SERVERS static [ WEB-SERVERS_0 WEB-SERVERS_1 ]
+set address-group PERMIT-ICMP_DST_EXCLUDE static [ PERMIT-ICMP_DST_EXCLUDE_0 PERMIT-ICMP_DST_EXCLUDE_1 PERMIT-ICMP_DST_EXCLUDE_2 PERMIT-ICMP_DST_EXCLUDE_3 PERMIT-ICMP_DST_EXCLUDE_4 PERMIT-ICMP_DST_EXCLUDE_5 PERMIT-ICMP_DST_EXCLUDE_6 PERMIT-ICMP_DST_EXCLUDE_7 PERMIT-ICMP_DST_EXCLUDE_8 PERMIT-ICMP_DST_EXCLUDE_9 PERMIT-ICMP_DST_EXCLUDE_10 PERMIT-ICMP_DST_EXCLUDE_11 PERMIT-ICMP_DST_EXCLUDE_12 PERMIT-ICMP_DST_EXCLUDE_13 PERMIT-ICMP_DST_EXCLUDE_14 PERMIT-ICMP_DST_EXCLUDE_15 ]
+set address GBL_RFC1918-10 ip-netmask 10.0.0.0/8
+set address CLOUDFLARE_0 ip-netmask 1.1.1.1/32
+set address GOOGLE_DNS_0 ip-netmask 8.8.4.4/32
+set address GOOGLE_DNS_1 ip-netmask 8.8.8.8/32
+set address WEB-SERVERS_0 ip-netmask 10.200.1.0/24
+set address WEB-SERVERS_1 ip-netmask 10.200.2.0/24
+set address PERMIT-ICMP_DST_EXCLUDE_0 ip-netmask 0.0.0.0/5
+set address PERMIT-ICMP_DST_EXCLUDE_1 ip-netmask 8.0.0.0/7
+set address PERMIT-ICMP_DST_EXCLUDE_2 ip-netmask 10.0.0.0/10
+set address PERMIT-ICMP_DST_EXCLUDE_3 ip-netmask 10.64.0.0/11
+set address PERMIT-ICMP_DST_EXCLUDE_4 ip-netmask 10.96.0.0/14
+set address PERMIT-ICMP_DST_EXCLUDE_5 ip-netmask 10.101.0.0/16
+set address PERMIT-ICMP_DST_EXCLUDE_6 ip-netmask 10.102.0.0/15
+set address PERMIT-ICMP_DST_EXCLUDE_7 ip-netmask 10.104.0.0/13
+set address PERMIT-ICMP_DST_EXCLUDE_8 ip-netmask 10.112.0.0/12
+set address PERMIT-ICMP_DST_EXCLUDE_9 ip-netmask 10.128.0.0/9
+set address PERMIT-ICMP_DST_EXCLUDE_10 ip-netmask 11.0.0.0/8
+set address PERMIT-ICMP_DST_EXCLUDE_11 ip-netmask 12.0.0.0/6
+set address PERMIT-ICMP_DST_EXCLUDE_12 ip-netmask 16.0.0.0/4
+set address PERMIT-ICMP_DST_EXCLUDE_13 ip-netmask 32.0.0.0/3
+set address PERMIT-ICMP_DST_EXCLUDE_14 ip-netmask 64.0.0.0/2
+set address PERMIT-ICMP_DST_EXCLUDE_15 ip-netmask 128.0.0.0/1
+set mgt-config users admin phash fnRL/G5lXVMug
+set mgt-config users admin permissions role-based superuser yes

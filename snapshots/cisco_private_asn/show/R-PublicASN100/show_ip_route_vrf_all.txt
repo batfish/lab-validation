@@ -1,0 +1,67 @@
+IP Route Table for VRF "default"
+'*' denotes best ucast next-hop
+'**' denotes best mcast next-hop
+'[x/y]' denotes [preference/metric]
+'%<string>' in via output denotes VRF <string>
+
+1.1.1.1/32, ubest/mbest: 1/0
+    *via 10.10.10.1, [20/0], 00:48:30, bgp-100, external, tag 65100
+2.2.2.2/32, ubest/mbest: 1/0
+    *via 10.10.10.1, [20/0], 00:48:30, bgp-100, external, tag 65100
+3.3.3.3/32, ubest/mbest: 1/0
+    *via 10.10.11.1, [20/0], 00:48:30, bgp-100, external, tag 111
+4.4.4.4/32, ubest/mbest: 1/0
+    *via 10.10.11.1, [20/0], 00:48:30, bgp-100, external, tag 111
+10.10.10.0/24, ubest/mbest: 1/0, attached
+    *via 10.10.10.2, Eth1/1, [0/0], 00:49:03, direct
+10.10.10.2/32, ubest/mbest: 1/0, attached
+    *via 10.10.10.2, Eth1/1, [0/0], 00:49:03, local
+10.10.11.0/24, ubest/mbest: 1/0, attached
+    *via 10.10.11.2, Eth1/10, [0/0], 00:49:03, direct
+10.10.11.2/32, ubest/mbest: 1/0, attached
+    *via 10.10.11.2, Eth1/10, [0/0], 00:49:03, local
+10.10.20.0/24, ubest/mbest: 1/0, attached
+    *via 10.10.20.2, Eth1/2, [0/0], 00:49:03, direct
+10.10.20.2/32, ubest/mbest: 1/0, attached
+    *via 10.10.20.2, Eth1/2, [0/0], 00:49:03, local
+10.10.30.0/24, ubest/mbest: 1/0, attached
+    *via 10.10.30.2, Eth1/3, [0/0], 00:49:03, direct
+10.10.30.2/32, ubest/mbest: 1/0, attached
+    *via 10.10.30.2, Eth1/3, [0/0], 00:49:03, local
+10.10.40.0/24, ubest/mbest: 1/0, attached
+    *via 10.10.40.2, Eth1/4, [0/0], 00:49:03, direct
+10.10.40.2/32, ubest/mbest: 1/0, attached
+    *via 10.10.40.2, Eth1/4, [0/0], 00:49:03, local
+10.10.50.0/24, ubest/mbest: 1/0, attached
+    *via 10.10.50.2, Eth1/5, [0/0], 00:49:03, direct
+10.10.50.2/32, ubest/mbest: 1/0, attached
+    *via 10.10.50.2, Eth1/5, [0/0], 00:49:03, local
+10.20.10.0/24, ubest/mbest: 1/0, attached
+    *via 10.20.10.2, Eth1/6, [0/0], 00:49:03, direct
+10.20.10.2/32, ubest/mbest: 1/0, attached
+    *via 10.20.10.2, Eth1/6, [0/0], 00:49:03, local
+100.100.100.1/32, ubest/mbest: 1/0
+    *via 10.10.10.1, [20/0], 00:48:30, bgp-100, external, tag 65100
+100.100.100.2/32, ubest/mbest: 1/0
+    *via 10.10.11.1, [20/0], 00:48:30, bgp-100, external, tag 111
+192.168.122.0/24, ubest/mbest: 1/0, attached
+    *via 192.168.122.2, Eth1/15, [0/0], 00:49:03, direct
+192.168.122.2/32, ubest/mbest: 1/0, attached
+    *via 192.168.122.2, Eth1/15, [0/0], 00:49:03, local
+192.168.123.1/32, ubest/mbest: 2/0, attached
+    *via 192.168.123.1, Lo123, [0/0], 00:49:48, local
+    *via 192.168.123.1, Lo123, [0/0], 00:49:48, direct
+192.168.123.2/32, ubest/mbest: 1/0
+    *via 10.10.10.1, [20/0], 00:48:30, bgp-100, external, tag 65100
+192.168.123.3/32, ubest/mbest: 1/0
+    *via 10.10.11.1, [20/0], 00:48:30, bgp-100, external, tag 111
+192.168.123.4/32, ubest/mbest: 1/0
+    *via 10.10.20.1, [20/0], 00:48:30, bgp-100, external, tag 200
+192.168.123.5/32, ubest/mbest: 1/0
+    *via 10.10.30.1, [20/0], 00:47:48, bgp-100, external, tag 300
+192.168.123.6/32, ubest/mbest: 1/0
+    *via 10.10.40.1, [20/0], 00:48:30, bgp-100, external, tag 400
+192.168.123.7/32, ubest/mbest: 1/0
+    *via 10.10.50.1, [20/0], 00:48:30, bgp-100, external, tag 500
+192.168.123.8/32, ubest/mbest: 1/0
+    *via 10.20.10.1, [20/0], 00:48:30, bgp-100, external, tag 65100

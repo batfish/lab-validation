@@ -1,0 +1,175 @@
+For address family: IPv4 Unicast
+
+
+For address family: IPv6 Unicast
+
+
+For address family: VPNv4 Unicast
+
+
+Route Distinguisher: 65003:1 (default for vrf d1_ce)
+BGP routing table entry for 65003:1:10.13.11.0/30, version 2
+  Paths: (1 available, best #1, table d1_ce)
+  Not advertised to any peer
+  Refresh Epoch 1
+  Local
+    0.0.0.0 (via vrf d1_ce) from 0.0.0.0 (192.168.123.31)
+      Origin incomplete, metric 0, localpref 100, weight 32768, valid, sourced, best
+      Extended Community: RT:65003:11 Cost:pre-bestpath:128:10240
+        0x8800:32768:0 0x8801:1:256 0x8802:65280:2560 0x8803:65281:1500
+        0x8806:0:3232267039
+      rx pathid: 0, tx pathid: 0x0
+BGP routing table entry for 65003:1:192.168.123.1/32, version 20
+  Paths: (1 available, best #1, table d1_ce)
+  Not advertised to any peer
+  Refresh Epoch 1
+  Local
+    10.13.11.1 (via vrf d1_ce) from 0.0.0.0 (192.168.123.31)
+      Origin incomplete, metric 10880, localpref 100, weight 32768, valid, sourced, best
+      Extended Community: RT:65003:11 Cost:pre-bestpath:128:10880
+        0x8800:32768:0 0x8801:1:288 0x8802:65281:2560 0x8803:65281:1500
+        0x8806:0:3232267009
+      rx pathid: 0, tx pathid: 0x0
+
+Route Distinguisher: 65003:2 (default for vrf d2_ce)
+BGP routing table entry for 65003:2:2.2.2.2/32, version 4
+  Paths: (1 available, best #1, table d2_ce)
+  Not advertised to any peer
+  Refresh Epoch 1
+  Local
+    10.23.12.1 (via vrf d2_ce) from 0.0.0.0 (192.168.123.32)
+      Origin incomplete, metric 10880, localpref 100, weight 32768, valid, sourced, best
+      Extended Community: RT:2:2 Cost:pre-bestpath:128:10880 0x8800:32768:0
+        0x8801:2:288 0x8802:65281:2560 0x8803:65281:1500 0x8806:0:3232267010
+      rx pathid: 0, tx pathid: 0x0
+BGP routing table entry for 65003:2:10.23.12.0/30, version 5
+  Paths: (1 available, best #1, table d2_ce)
+  Not advertised to any peer
+  Refresh Epoch 1
+  Local
+    0.0.0.0 (via vrf d2_ce) from 0.0.0.0 (192.168.123.32)
+      Origin incomplete, metric 0, localpref 100, weight 32768, valid, sourced, best
+      Extended Community: RT:65003:22 Cost:pre-bestpath:128:10240
+        0x8800:32768:0 0x8801:2:256 0x8802:65280:2560 0x8803:65281:1500
+        0x8806:0:3232267040
+      rx pathid: 0, tx pathid: 0x0
+BGP routing table entry for 65003:2:192.168.123.2/32, version 6
+  Paths: (1 available, best #1, table d2_ce)
+  Not advertised to any peer
+  Refresh Epoch 1
+  Local
+    10.23.12.1 (via vrf d2_ce) from 0.0.0.0 (192.168.123.32)
+      Origin incomplete, metric 10880, localpref 100, weight 32768, valid, sourced, best
+      Extended Community: RT:65003:22 Cost:pre-bestpath:128:10880
+        0x8800:32768:0 0x8801:2:288 0x8802:65281:2560 0x8803:65281:1500
+        0x8806:0:3232267010
+      rx pathid: 0, tx pathid: 0x0
+BGP routing table entry for 65003:2:192.168.123.3/32, version 12
+  Paths: (1 available, best #1, table d2_ce)
+  Not advertised to any peer
+  Refresh Epoch 1
+  Local, imported path from 65003:4:192.168.123.3/32 (d4_shared)
+    0.0.0.0 (via vrf d4_shared) (via d4_shared) from 0.0.0.0 (192.168.123.32)
+      Origin IGP, metric 0, localpref 100, weight 32768, valid, external, best
+      Extended Community: RT:65003:44
+      rx pathid: 0, tx pathid: 0x0
+BGP routing table entry for 65003:2:192.168.123.4/32, version 17
+  Paths: (1 available, best #1, table d2_ce)
+  Not advertised to any peer
+  Refresh Epoch 1
+  65004, imported path from 65003:4:192.168.123.4/32 (d4_shared)
+    10.34.31.2 (via vrf d4_shared) (via d4_shared) from 10.34.31.2 (192.168.123.4)
+      Origin IGP, metric 0, localpref 100, valid, external, best
+      Extended Community: RT:65003:44
+      rx pathid: 0, tx pathid: 0x0
+
+Route Distinguisher: 65003:4 (default for vrf d4_shared)
+BGP routing table entry for 65003:4:10.13.11.0/30, version 8
+  Paths: (1 available, best #1, table d4_shared)
+  Advertised to update-groups:
+     1
+  Refresh Epoch 1
+  Local, imported path from 65003:1:10.13.11.0/30 (d1_ce)
+    0.0.0.0 (via vrf d1_ce) (via d1_ce) from 0.0.0.0 (192.168.123.3)
+      Origin incomplete, metric 0, localpref 100, weight 32768, valid, external, best
+      Extended Community: RT:65003:11 Cost:pre-bestpath:128:10240
+        0x8800:32768:0 0x8801:1:256 0x8802:65280:2560 0x8803:65281:1500
+        0x8806:0:3232267039
+      rx pathid: 0, tx pathid: 0x0
+BGP routing table entry for 65003:4:10.23.12.0/30, version 10
+  Paths: (1 available, best #1, table d4_shared)
+  Advertised to update-groups:
+     1
+  Refresh Epoch 1
+  Local, imported path from 65003:2:10.23.12.0/30 (d2_ce)
+    0.0.0.0 (via vrf d2_ce) (via d2_ce) from 0.0.0.0 (192.168.123.3)
+      Origin incomplete, metric 0, localpref 100, weight 32768, valid, external, best
+      Extended Community: RT:65003:22 Cost:pre-bestpath:128:10240
+        0x8800:32768:0 0x8801:2:256 0x8802:65280:2560 0x8803:65281:1500
+        0x8806:0:3232267040
+      rx pathid: 0, tx pathid: 0x0
+BGP routing table entry for 65003:4:192.168.123.1/32, version 21
+  Paths: (1 available, best #1, table d4_shared)
+  Advertised to update-groups:
+     1
+  Refresh Epoch 1
+  Local, imported path from 65003:1:192.168.123.1/32 (d1_ce)
+    10.13.11.1 (via vrf d1_ce) (via d1_ce) from 0.0.0.0 (192.168.123.3)
+      Origin incomplete, metric 10880, localpref 100, weight 32768, valid, external, best
+      Extended Community: RT:65003:11 Cost:pre-bestpath:128:10880
+        0x8800:32768:0 0x8801:1:288 0x8802:65281:2560 0x8803:65281:1500
+        0x8806:0:3232267009
+      rx pathid: 0, tx pathid: 0x0
+BGP routing table entry for 65003:4:192.168.123.2/32, version 11
+  Paths: (1 available, best #1, table d4_shared)
+  Advertised to update-groups:
+     1
+  Refresh Epoch 1
+  Local, imported path from 65003:2:192.168.123.2/32 (d2_ce)
+    10.23.12.1 (via vrf d2_ce) (via d2_ce) from 0.0.0.0 (192.168.123.3)
+      Origin incomplete, metric 10880, localpref 100, weight 32768, valid, external, best
+      Extended Community: RT:65003:22 Cost:pre-bestpath:128:10880
+        0x8800:32768:0 0x8801:2:288 0x8802:65281:2560 0x8803:65281:1500
+        0x8806:0:3232267010
+      rx pathid: 0, tx pathid: 0x0
+BGP routing table entry for 65003:4:192.168.123.3/32, version 7
+  Paths: (1 available, best #1, table d4_shared)
+  Advertised to update-groups:
+     1
+  Refresh Epoch 1
+  Local
+    0.0.0.0 (via vrf d4_shared) from 0.0.0.0 (192.168.123.3)
+      Origin IGP, metric 0, localpref 100, weight 32768, valid, sourced, local, best
+      Extended Community: RT:65003:44
+      rx pathid: 0, tx pathid: 0x0
+BGP routing table entry for 65003:4:192.168.123.4/32, version 14
+  Paths: (2 available, best #1, table d4_shared)
+  Not advertised to any peer
+  Refresh Epoch 1
+  65004
+    10.34.31.2 (via vrf d4_shared) from 10.34.31.2 (192.168.123.4)
+      Origin IGP, metric 0, localpref 100, valid, external, best
+      Extended Community: RT:65003:44
+      rx pathid: 0, tx pathid: 0x0
+  Refresh Epoch 1
+  65004, (received-only)
+    10.34.31.2 (via vrf d4_shared) from 10.34.31.2 (192.168.123.4)
+      Origin IGP, metric 0, localpref 100, valid, external
+      rx pathid: 0, tx pathid: 0
+
+For address family: IPv4 Multicast
+
+
+For address family: L2VPN E-VPN
+
+
+For address family: VPNv4 Multicast
+
+
+For address family: MVPNv4 Unicast
+
+
+For address family: MVPNv6 Unicast
+
+
+For address family: VPNv4 Flowspec

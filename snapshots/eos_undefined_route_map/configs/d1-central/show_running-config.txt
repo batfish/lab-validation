@@ -1,0 +1,194 @@
+! Command: show running-config
+! device: d1-central (vEOS, EOS-4.21.1.1F)
+!
+! boot system flash:/vEOS-lab.swi
+!
+transceiver qsfp default-mode 4x10G
+!
+hostname d1-central
+!
+spanning-tree mode mstp
+!
+aaa authorization exec default local
+!
+no aaa root
+!
+username admin privilege 15 role network-admin secret sha512 $6$odaWRJCcm4YYFXgO$AG8OaM0.70Z4rhLbvI7AKlLXDQhF0Mh4LmVkzWmgYdYf/YHTpurTc/5rwrMaYgoJHsq11PlHchly9fVLicr1l1
+!
+interface Ethernet1
+   no switchport
+   ip address 10.12.11.1/24
+!
+interface Ethernet2
+   no switchport
+   ip address 10.12.22.1/24
+!
+interface Ethernet3
+   no switchport
+   ip address 10.12.33.1/24
+!
+interface Ethernet4
+   no switchport
+   ip address 10.12.44.1/24
+!
+interface Ethernet5
+   no switchport
+   ip address 10.12.55.1/24
+!
+interface Ethernet6
+   no switchport
+   ip address 10.12.66.1/24
+!
+interface Ethernet7
+   no switchport
+   ip address 10.12.77.1/24
+!
+interface Ethernet8
+!
+interface Ethernet9
+!
+interface Ethernet10
+   no switchport
+   ip address 192.168.122.2/24
+!
+interface Ethernet11
+   no switchport
+   ip address 10.13.11.1/24
+!
+interface Ethernet12
+   no switchport
+   ip address 10.13.22.1/24
+!
+interface Ethernet13
+   no switchport
+   ip address 10.13.33.1/24
+!
+interface Ethernet14
+   no switchport
+   ip address 10.13.44.1/24
+!
+interface Ethernet15
+   no switchport
+   ip address 10.13.55.1/24
+!
+interface Ethernet16
+   no switchport
+   ip address 10.13.66.1/24
+!
+interface Ethernet17
+   no switchport
+   ip address 10.13.77.1/24
+!
+interface Ethernet18
+!
+interface Ethernet19
+!
+interface Loopback1
+   ip address 172.16.1.1/32
+!
+interface Loopback2
+   ip address 172.16.1.2/32
+!
+interface Loopback3
+   ip address 172.16.1.3/32
+!
+interface Loopback4
+   ip address 172.16.1.4/32
+!
+interface Loopback5
+   ip address 172.16.1.5/32
+!
+interface Loopback6
+   ip address 172.16.1.6/32
+!
+interface Loopback7
+   ip address 172.16.1.7/32
+!
+interface Loopback123
+   ip address 192.168.123.1/32
+!
+interface Management1
+!
+ip routing
+!
+ip prefix-list allow_172_16_1_1 seq 10 permit 172.16.1.1/32
+ip prefix-list allow_172_16_1_1 seq 20 permit 192.168.122.0/24
+ip prefix-list allow_172_16_1_2 seq 10 permit 172.16.1.2/32
+ip prefix-list allow_172_16_1_3 seq 10 permit 172.16.1.3/32
+ip prefix-list allow_172_16_1_4 seq 10 permit 172.16.1.4/32
+ip prefix-list allow_172_16_1_5 seq 10 permit 172.16.1.5/32
+ip prefix-list allow_172_16_1_6 seq 10 permit 172.16.1.6/32
+ip prefix-list allow_172_16_1_7 seq 10 permit 172.16.1.7/32
+ip prefix-list redist-loopback seq 10 permit 172.16.1.1/32
+ip prefix-list redist-loopback seq 20 permit 172.16.1.2/32
+ip prefix-list redist-loopback seq 30 permit 172.16.1.3/32
+ip prefix-list redist-loopback seq 40 permit 172.16.1.4/32
+ip prefix-list redist-loopback seq 50 permit 172.16.1.5/32
+ip prefix-list redist-loopback seq 60 permit 172.16.1.6/32
+ip prefix-list redist-loopback seq 70 permit 172.16.1.7/32
+!
+route-map allow_172_16_1_1 permit 10
+   match ip address prefix-list allow_172_16_1_1
+!
+route-map allow_172_16_1_2 permit 10
+   match ip address prefix-list allow_172_16_1_2
+!
+route-map allow_172_16_1_3 permit 10
+   match ip address prefix-list allow_172_16_1_3
+!
+route-map allow_172_16_1_4 permit 10
+   match ip address prefix-list allow_172_16_1_4
+!
+route-map allow_172_16_1_5 permit 10
+   match ip address prefix-list allow_172_16_1_5
+!
+route-map allow_172_16_1_6 permit 10
+   match ip address prefix-list allow_172_16_1_6
+!
+route-map allow_172_16_1_7 permit 10
+   match ip address prefix-list allow_172_16_1_7
+!
+route-map no_prefix_to_d3 deny 10
+!
+route-map redist-loopback permit 10
+   match ip address prefix-list redist-loopback
+!
+router bgp 65001
+   neighbor no_prefix_to_d3 peer-group
+   neighbor no_prefix_to_d3 remote-as 65003
+   neighbor no_prefix_to_d3 route-map no_prefix_to_d3 out
+   neighbor no_prefix_to_d3 maximum-routes 12000
+   neighbor 10.12.11.2 remote-as 65002
+   neighbor 10.12.11.2 maximum-routes 12000
+   neighbor 10.12.22.2 remote-as 65002
+   neighbor 10.12.22.2 maximum-routes 12000
+   neighbor 10.12.33.2 remote-as 65002
+   neighbor 10.12.33.2 maximum-routes 12000
+   neighbor 10.12.44.2 remote-as 65002
+   neighbor 10.12.44.2 maximum-routes 12000
+   neighbor 10.12.55.2 remote-as 65002
+   neighbor 10.12.55.2 maximum-routes 12000
+   neighbor 10.12.66.2 remote-as 65002
+   neighbor 10.12.66.2 maximum-routes 12000
+   neighbor 10.12.77.2 remote-as 65002
+   neighbor 10.12.77.2 maximum-routes 12000
+   neighbor 10.13.11.2 peer-group no_prefix_to_d3
+   neighbor 10.13.22.2 peer-group no_prefix_to_d3
+   neighbor 10.13.33.2 peer-group no_prefix_to_d3
+   neighbor 10.13.44.2 peer-group no_prefix_to_d3
+   neighbor 10.13.55.2 peer-group no_prefix_to_d3
+   neighbor 10.13.66.2 peer-group no_prefix_to_d3
+   neighbor 10.13.77.2 peer-group no_prefix_to_d3
+   network 192.168.122.0/24
+   redistribute connected route-map redist-loopback
+   !
+   address-family ipv4
+      neighbor 10.12.11.2 route-map allow_172_16_1_1 out
+      neighbor 10.12.22.2 route-map allow_172_16_1_2 out
+      neighbor 10.12.33.2 route-map allow_172_16_1_3 out
+      neighbor 10.12.44.2 route-map allow_172_16_1_4 out
+      neighbor 10.12.55.2 route-map allow_172_16_1_5 out
+      neighbor 10.12.66.2 route-map allow_172_16_1_6 out
+      neighbor 10.12.77.2 route-map allow_172_16_1_7 out
+!
+end

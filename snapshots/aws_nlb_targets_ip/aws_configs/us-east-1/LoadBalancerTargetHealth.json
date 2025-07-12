@@ -1,0 +1,72 @@
+{
+ "LoadBalancerTargetHealth": [
+  {
+   "TargetGroupArn": "arn:aws:elasticloadbalancing:us-east-1:028403472736:targetgroup/targets-ip-nlb-tg-pd-pri-a/8018bd5f171de042",
+   "TargetHealthDescriptions": [
+    {
+     "HealthCheckPort": "80",
+     "Target": {
+      "AvailabilityZone": "us-east-1a",
+      "Id": "10.2.101.100",
+      "Port": 80
+     },
+     "TargetHealth": {
+      "State": "healthy"
+     }
+    }
+   ]
+  },
+  {
+   "TargetGroupArn": "arn:aws:elasticloadbalancing:us-east-1:028403472736:targetgroup/targets-ip-nlb-tg-pd-pub-a/d2a55cef09087cc8",
+   "TargetHealthDescriptions": [
+    {
+     "HealthCheckPort": "80",
+     "Target": {
+      "AvailabilityZone": "us-east-1a",
+      "Id": "10.2.101.110",
+      "Port": 80
+     },
+     "TargetHealth": {
+      "Description": "Health checks failed",
+      "Reason": "Target.FailedHealthChecks",
+      "State": "unhealthy"
+     }
+    }
+   ]
+  },
+  {
+   "TargetGroupArn": "arn:aws:elasticloadbalancing:us-east-1:028403472736:targetgroup/targets-ip-nlb-tg-pe-pri-a/b7e3c36a1a96a2c7",
+   "TargetHealthDescriptions": [
+    {
+     "HealthCheckPort": "80",
+     "Target": {
+      "AvailabilityZone": "us-east-1a",
+      "Id": "10.2.101.120",
+      "Port": 80
+     },
+     "TargetHealth": {
+      "State": "healthy"
+     }
+    }
+   ]
+  },
+  {
+   "TargetGroupArn": "arn:aws:elasticloadbalancing:us-east-1:028403472736:targetgroup/targets-ip-nlb-tg-pe-pub-a/06178b91ff031b16",
+   "TargetHealthDescriptions": [
+    {
+     "HealthCheckPort": "80",
+     "Target": {
+      "AvailabilityZone": "us-east-1a",
+      "Id": "10.2.101.130",
+      "Port": 80
+     },
+     "TargetHealth": {
+      "Description": "Health checks failed",
+      "Reason": "Target.FailedHealthChecks",
+      "State": "unhealthy"
+     }
+    }
+   ]
+  }
+ ]
+}

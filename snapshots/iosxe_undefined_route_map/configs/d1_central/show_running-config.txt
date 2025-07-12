@@ -1,0 +1,402 @@
+Building configuration...
+
+Current configuration : 7941 bytes
+!
+! Last configuration change at 18:03:38 UTC Tue Dec 22 2020
+!
+version 16.4
+service timestamps debug datetime msec
+service timestamps log datetime msec
+no platform punt-keepalive disable-kernel-core
+platform console serial
+!
+hostname d1_central
+!
+boot-start-marker
+boot-end-marker
+!
+!
+!
+no aaa new-model
+!
+!
+!
+!
+!
+!
+!
+!
+!
+
+
+
+ip domain name diolap.com
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+subscriber templating
+!
+!
+!
+multilink bundle-name authenticated
+!
+!
+!
+!
+!
+!
+
+
+!
+!
+!
+!
+!
+!
+!
+license udi pid CSR1000V sn 9KHB3DQC60W
+diagnostic bootup level minimal
+!
+spanning-tree extend system-id
+!
+!
+username cisco privilege 15 password 0 cisco
+!
+redundancy
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+interface Loopback1
+ ip address 172.16.1.1 255.255.255.255
+!
+interface Loopback2
+ ip address 172.16.1.2 255.255.255.255
+!
+interface Loopback3
+ ip address 172.16.1.3 255.255.255.255
+!
+interface Loopback4
+ ip address 172.16.1.4 255.255.255.255
+!
+interface Loopback5
+ ip address 172.16.1.5 255.255.255.255
+!
+interface Loopback6
+ ip address 172.16.1.6 255.255.255.255
+!
+interface Loopback7
+ ip address 172.16.1.7 255.255.255.255
+!
+interface Loopback123
+ ip address 192.168.123.1 255.255.255.255
+!
+interface GigabitEthernet1
+ ip address 10.12.11.1 255.255.255.0
+ negotiation auto
+ no mop enabled
+ no mop sysid
+!
+interface GigabitEthernet2
+ ip address 10.12.22.1 255.255.255.0
+ negotiation auto
+ no mop enabled
+ no mop sysid
+!
+interface GigabitEthernet3
+ ip address 10.12.33.1 255.255.255.0
+ negotiation auto
+ no mop enabled
+ no mop sysid
+!
+interface GigabitEthernet4
+ ip address 10.12.44.1 255.255.255.0
+ negotiation auto
+ no mop enabled
+ no mop sysid
+!
+interface GigabitEthernet5
+ ip address 10.12.55.1 255.255.255.0
+ negotiation auto
+ no mop enabled
+ no mop sysid
+!
+interface GigabitEthernet6
+ ip address 10.12.66.1 255.255.255.0
+ negotiation auto
+ no mop enabled
+ no mop sysid
+!
+interface GigabitEthernet7
+ ip address 10.12.77.1 255.255.255.0
+ negotiation auto
+ no mop enabled
+ no mop sysid
+!
+interface GigabitEthernet8
+ no ip address
+ shutdown
+ negotiation auto
+ no mop enabled
+ no mop sysid
+!
+interface GigabitEthernet9
+ no ip address
+ shutdown
+ negotiation auto
+ no mop enabled
+ no mop sysid
+!
+interface GigabitEthernet10
+ ip address 192.168.122.2 255.255.255.0
+ negotiation auto
+ no mop enabled
+ no mop sysid
+!
+interface GigabitEthernet11
+ ip address 10.13.11.1 255.255.255.0
+ negotiation auto
+ no mop enabled
+ no mop sysid
+!
+interface GigabitEthernet12
+ ip address 10.13.22.1 255.255.255.0
+ negotiation auto
+ no mop enabled
+ no mop sysid
+!
+interface GigabitEthernet13
+ ip address 10.13.33.1 255.255.255.0
+ negotiation auto
+ no mop enabled
+ no mop sysid
+!
+interface GigabitEthernet14
+ ip address 10.13.44.1 255.255.255.0
+ negotiation auto
+ no mop enabled
+ no mop sysid
+!
+interface GigabitEthernet15
+ ip address 10.13.55.1 255.255.255.0
+ negotiation auto
+ no mop enabled
+ no mop sysid
+!
+interface GigabitEthernet16
+ ip address 10.13.66.1 255.255.255.0
+ negotiation auto
+ no mop enabled
+ no mop sysid
+!
+interface GigabitEthernet17
+ ip address 10.13.77.1 255.255.255.0
+ negotiation auto
+ no mop enabled
+ no mop sysid
+!
+interface GigabitEthernet18
+ no ip address
+ shutdown
+ negotiation auto
+ no mop enabled
+ no mop sysid
+!
+interface GigabitEthernet19
+ no ip address
+ shutdown
+ negotiation auto
+ no mop enabled
+ no mop sysid
+!
+interface GigabitEthernet20
+ no ip address
+ shutdown
+ negotiation auto
+ no mop enabled
+ no mop sysid
+!
+router bgp 65001
+ bgp log-neighbor-changes
+ neighbor 10.12.11.2 remote-as 65002
+ neighbor 10.12.22.2 remote-as 65002
+ neighbor 10.12.33.2 remote-as 65002
+ neighbor 10.12.44.2 remote-as 65002
+ neighbor 10.12.55.2 remote-as 65002
+ neighbor 10.12.66.2 remote-as 65002
+ neighbor 10.12.77.2 remote-as 65002
+ neighbor 10.13.11.2 remote-as 65003
+ neighbor 10.13.22.2 remote-as 65003
+ neighbor 10.13.33.2 remote-as 65003
+ neighbor 10.13.44.2 remote-as 65003
+ neighbor 10.13.55.2 remote-as 65003
+ neighbor 10.13.66.2 remote-as 65003
+ neighbor 10.13.77.2 remote-as 65003
+ !
+ address-family ipv4
+  network 192.168.122.0
+  redistribute connected route-map redist-loopback
+  neighbor 10.12.11.2 activate
+  neighbor 10.12.11.2 soft-reconfiguration inbound
+  neighbor 10.12.11.2 route-map allow_172_16_1_1 out
+  neighbor 10.12.22.2 activate
+  neighbor 10.12.22.2 soft-reconfiguration inbound
+  neighbor 10.12.22.2 route-map allow_172_16_1_2 out
+  neighbor 10.12.33.2 activate
+  neighbor 10.12.33.2 soft-reconfiguration inbound
+  neighbor 10.12.33.2 route-map allow_172_16_1_3 out
+  neighbor 10.12.44.2 activate
+  neighbor 10.12.44.2 soft-reconfiguration inbound
+  neighbor 10.12.44.2 route-map allow_172_16_1_4 out
+  neighbor 10.12.55.2 activate
+  neighbor 10.12.55.2 soft-reconfiguration inbound
+  neighbor 10.12.55.2 route-map allow_172_16_1_5 out
+  neighbor 10.12.66.2 activate
+  neighbor 10.12.66.2 soft-reconfiguration inbound
+  neighbor 10.12.66.2 route-map allow_172_16_1_6 out
+  neighbor 10.12.77.2 activate
+  neighbor 10.12.77.2 soft-reconfiguration inbound
+  neighbor 10.12.77.2 route-map allow_172_16_1_7 out
+  neighbor 10.13.11.2 activate
+  neighbor 10.13.11.2 soft-reconfiguration inbound
+  neighbor 10.13.11.2 route-map no_prefix_to_d3 out
+  neighbor 10.13.22.2 activate
+  neighbor 10.13.22.2 soft-reconfiguration inbound
+  neighbor 10.13.22.2 route-map no_prefix_to_d3 out
+  neighbor 10.13.33.2 activate
+  neighbor 10.13.33.2 soft-reconfiguration inbound
+  neighbor 10.13.33.2 route-map no_prefix_to_d3 out
+  neighbor 10.13.44.2 activate
+  neighbor 10.13.44.2 soft-reconfiguration inbound
+  neighbor 10.13.44.2 route-map no_prefix_to_d3 out
+  neighbor 10.13.55.2 activate
+  neighbor 10.13.55.2 soft-reconfiguration inbound
+  neighbor 10.13.55.2 route-map no_prefix_to_d3 out
+  neighbor 10.13.66.2 activate
+  neighbor 10.13.66.2 soft-reconfiguration inbound
+  neighbor 10.13.66.2 route-map no_prefix_to_d3 out
+  neighbor 10.13.77.2 activate
+  neighbor 10.13.77.2 soft-reconfiguration inbound
+  neighbor 10.13.77.2 route-map no_prefix_to_d3 out
+ exit-address-family
+!
+!
+virtual-service csr_mgmt
+!
+ip forward-protocol nd
+ip http server
+ip http authentication local
+ip http secure-server
+!
+ip ssh version 2
+!
+!
+!
+ip prefix-list allow_172_16_1_1 seq 10 permit 172.16.1.1/32
+ip prefix-list allow_172_16_1_1 seq 20 permit 192.168.122.0/24
+!
+ip prefix-list allow_172_16_1_2 seq 10 permit 172.16.1.2/32
+!
+ip prefix-list allow_172_16_1_3 seq 10 permit 172.16.1.3/32
+!
+ip prefix-list allow_172_16_1_4 seq 10 permit 172.16.1.4/32
+!
+ip prefix-list allow_172_16_1_5 seq 10 permit 172.16.1.5/32
+!
+ip prefix-list allow_172_16_1_6 seq 10 permit 172.16.1.6/32
+!
+ip prefix-list allow_172_16_1_7 seq 10 permit 172.16.1.7/32
+!
+ip prefix-list redist-loopback seq 10 permit 172.16.1.1/32
+ip prefix-list redist-loopback seq 20 permit 172.16.1.2/32
+ip prefix-list redist-loopback seq 30 permit 172.16.1.3/32
+ip prefix-list redist-loopback seq 40 permit 172.16.1.4/32
+ip prefix-list redist-loopback seq 50 permit 172.16.1.5/32
+ip prefix-list redist-loopback seq 60 permit 172.16.1.6/32
+ip prefix-list redist-loopback seq 70 permit 172.16.1.7/32
+!
+!
+route-map no_prefix_to_d3 deny 10
+!
+route-map redist-loopback permit 10
+ match ip address prefix-list redist-loopback
+!
+route-map allow_172_16_1_3 permit 10
+ match ip address prefix-list allow_172_16_1_3
+!
+route-map allow_172_16_1_2 permit 10
+ match ip address prefix-list allow_172_16_1_2
+!
+route-map allow_172_16_1_1 permit 10
+ match ip address prefix-list allow_172_16_1_1
+!
+route-map allow_172_16_1_7 permit 10
+ match ip address prefix-list allow_172_16_1_7
+!
+route-map allow_172_16_1_6 permit 10
+ match ip address prefix-list allow_172_16_1_6
+!
+route-map allow_172_16_1_5 permit 10
+ match ip address prefix-list allow_172_16_1_5
+!
+route-map allow_172_16_1_4 permit 10
+ match ip address prefix-list allow_172_16_1_4
+!
+!
+!
+control-plane
+!
+ !
+ !
+ !
+ !
+!
+!
+!
+!
+!
+line con 0
+ stopbits 1
+line vty 0 4
+ login local
+ transport input ssh
+line vty 5 15
+ login local
+ transport input ssh
+!
+!
+!
+!
+!
+!
+end

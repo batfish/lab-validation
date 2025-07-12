@@ -1,0 +1,86 @@
+{
+ "NetworkInterfaces": [
+  {
+   "Association": {
+    "IpOwnerId": "amazon",
+    "PublicDnsName": "ec2-3-22-74-215.us-east-2.compute.amazonaws.com",
+    "PublicIp": "3.22.74.215"
+   },
+   "Attachment": {
+    "AttachTime": "2020-05-06 17:28:36+00:00",
+    "AttachmentId": "eni-attach-00d3451f118818e16",
+    "DeleteOnTermination": true,
+    "DeviceIndex": 0,
+    "InstanceId": "i-01591c07c954f92ed",
+    "InstanceOwnerId": "951601349076",
+    "Status": "attached"
+   },
+   "AvailabilityZone": "us-east-2a",
+   "Description": "",
+   "Groups": [
+    {
+     "GroupId": "sg-0dc15be8ce8d560ce",
+     "GroupName": "different_sg"
+    }
+   ],
+   "InterfaceType": "interface",
+   "Ipv6Addresses": [],
+   "MacAddress": "02:78:af:71:c7:ea",
+   "NetworkInterfaceId": "eni-005d7a9c88eead11d",
+   "OwnerId": "951601349076",
+   "PrivateDnsName": "ip-10-2-1-100.us-east-2.compute.internal",
+   "PrivateIpAddress": "10.2.1.100",
+   "PrivateIpAddresses": [
+    {
+     "Association": {
+      "IpOwnerId": "amazon",
+      "PublicDnsName": "ec2-3-22-74-215.us-east-2.compute.amazonaws.com",
+      "PublicIp": "3.22.74.215"
+     },
+     "Primary": true,
+     "PrivateDnsName": "ip-10-2-1-100.us-east-2.compute.internal",
+     "PrivateIpAddress": "10.2.1.100"
+    }
+   ],
+   "RequesterManaged": false,
+   "SourceDestCheck": true,
+   "Status": "in-use",
+   "SubnetId": "subnet-071823802564efc56",
+   "TagSet": [],
+   "VpcId": "vpc-0edaaf6af194d12d5"
+  },
+  {
+   "Attachment": {
+    "AttachmentId": "ela-attach-edbdd3b3",
+    "DeleteOnTermination": false,
+    "DeviceIndex": 1,
+    "InstanceOwnerId": "amazon-aws",
+    "Status": "attached"
+   },
+   "AvailabilityZone": "us-east-2a",
+   "Description": "Network Interface for Transit Gateway Attachment tgw-attach-092c3c42806ef714a",
+   "Groups": [],
+   "InterfaceType": "transit_gateway",
+   "Ipv6Addresses": [],
+   "MacAddress": "02:5f:03:03:2a:7e",
+   "NetworkInterfaceId": "eni-058e7fc692aa18de3",
+   "OwnerId": "951601349076",
+   "PrivateDnsName": "ip-10-2-250-207.us-east-2.compute.internal",
+   "PrivateIpAddress": "10.2.250.207",
+   "PrivateIpAddresses": [
+    {
+     "Primary": true,
+     "PrivateDnsName": "ip-10-2-250-207.us-east-2.compute.internal",
+     "PrivateIpAddress": "10.2.250.207"
+    }
+   ],
+   "RequesterId": "522605744525",
+   "RequesterManaged": false,
+   "SourceDestCheck": false,
+   "Status": "in-use",
+   "SubnetId": "subnet-0849c2928c6537781",
+   "TagSet": [],
+   "VpcId": "vpc-0edaaf6af194d12d5"
+  }
+ ]
+}

@@ -1,0 +1,277 @@
+Building configuration...
+
+Current configuration : 3682 bytes
+!
+! Last configuration change at 19:00:10 UTC Thu Nov 5 2020
+!
+version 16.4
+service timestamps debug datetime msec
+service timestamps log datetime msec
+no platform punt-keepalive disable-kernel-core
+platform console serial
+!
+hostname iosxe1
+!
+boot-start-marker
+boot-end-marker
+!
+!
+vrf definition vrf_100
+ !
+ address-family ipv4
+ exit-address-family
+!
+!
+no aaa new-model
+!
+!
+!
+!
+!
+!
+!
+!
+!
+
+
+
+ip domain name diolap.com
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+subscriber templating
+!
+!
+!
+multilink bundle-name authenticated
+!
+!
+!
+!
+!
+!
+
+
+!
+!
+!
+!
+!
+!
+!
+license udi pid CSR1000V sn 90RSZN8DTPL
+diagnostic bootup level minimal
+!
+spanning-tree extend system-id
+!
+!
+username cisco privilege 15 password 0 cisco
+!
+redundancy
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+interface Loopback1
+ ip address 172.16.1.1 255.255.255.255
+!
+interface Loopback23
+ ip address 172.16.23.1 255.255.255.255
+!
+interface Loopback44
+ vrf forwarding vrf_100
+ ip address 172.16.44.1 255.255.255.255
+!
+interface Loopback100
+ ip address 172.16.100.1 255.255.255.255
+!
+interface Loopback123
+ ip address 192.168.123.1 255.255.255.255
+!
+interface Port-channel23
+ ip address 10.12.23.1 255.255.255.252
+ no negotiation auto
+ no mop enabled
+ no mop sysid
+!
+interface GigabitEthernet1
+ ip address 10.12.11.1 255.255.255.0
+ negotiation auto
+ no mop enabled
+ no mop sysid
+!
+interface GigabitEthernet2
+ no ip address
+ negotiation auto
+ no mop enabled
+ no mop sysid
+ channel-group 23 mode active
+!
+interface GigabitEthernet3
+ no ip address
+ negotiation auto
+ no mop enabled
+ no mop sysid
+ channel-group 23 mode active
+!
+interface GigabitEthernet4
+ vrf forwarding vrf_100
+ ip address 10.12.44.1 255.255.255.0
+ negotiation auto
+ no mop enabled
+ no mop sysid
+!
+interface GigabitEthernet5
+ no ip address
+ shutdown
+ negotiation auto
+ no mop enabled
+ no mop sysid
+!
+interface GigabitEthernet6
+ no ip address
+ shutdown
+ negotiation auto
+ no mop enabled
+ no mop sysid
+!
+interface GigabitEthernet7
+ no ip address
+ shutdown
+ negotiation auto
+ no mop enabled
+ no mop sysid
+!
+interface GigabitEthernet8
+ no ip address
+ shutdown
+ negotiation auto
+ no mop enabled
+ no mop sysid
+!
+interface GigabitEthernet9
+ no ip address
+ shutdown
+ negotiation auto
+ no mop enabled
+ no mop sysid
+!
+interface GigabitEthernet10
+ ip address 192.168.122.2 255.255.255.0
+ negotiation auto
+ no mop enabled
+ no mop sysid
+!
+!
+router eigrp 1
+ distribute-list route-map block_in_lo100 in
+ distribute-list route-map block_out_lo100 out
+ network 10.12.11.0 0.0.0.255
+ network 172.16.1.1 0.0.0.0
+ network 172.16.100.1 0.0.0.0
+ network 192.168.122.0
+ passive-interface default
+ no passive-interface GigabitEthernet1
+!
+!
+router eigrp 23
+ network 10.12.23.0 0.0.0.255
+ network 172.16.23.1 0.0.0.0
+ passive-interface default
+ no passive-interface Port-channel23
+!
+!
+router eigrp 3
+ !
+ address-family ipv4 vrf vrf_100 autonomous-system 100
+  network 10.12.44.0 0.0.0.255
+  network 172.16.44.1 0.0.0.0
+  passive-interface default
+  no passive-interface GigabitEthernet4
+ exit-address-family
+!
+!
+virtual-service csr_mgmt
+!
+ip forward-protocol nd
+ip http server
+ip http authentication local
+ip http secure-server
+!
+ip ssh version 2
+!
+!
+!
+ip prefix-list block_in_lo100 seq 5 permit 172.16.100.2/32
+!
+ip prefix-list block_out_lo100 seq 5 permit 172.16.100.1/32
+!
+!
+route-map block_out_lo100 deny 10
+ match ip address prefix-list block_out_lo100
+!
+route-map block_out_lo100 permit 20
+!
+route-map block_in_lo100 deny 10
+ match ip address prefix-list block_in_lo100
+!
+route-map block_in_lo100 permit 20
+!
+!
+!
+control-plane
+!
+ !
+ !
+ !
+ !
+!
+!
+!
+!
+!
+line con 0
+ stopbits 1
+line vty 0 4
+ login local
+ transport input ssh
+line vty 5 15
+ login local
+ transport input ssh
+!
+!
+!
+!
+!
+!
+end

@@ -1,0 +1,36 @@
+{
+ "Vpcs": [
+  {
+   "CidrBlock": "10.1.0.0/16",
+   "CidrBlockAssociationSet": [
+    {
+     "AssociationId": "vpc-cidr-assoc-0d7f20b2208c017a7",
+     "CidrBlock": "10.1.0.0/16",
+     "CidrBlockState": {
+      "State": "associated"
+     }
+    }
+   ],
+   "DhcpOptionsId": "dopt-3bb56641",
+   "InstanceTenancy": "default",
+   "IsDefault": false,
+   "OwnerId": "028403472736",
+   "State": "available",
+   "Tags": [
+    {
+     "Key": "Terraform",
+     "Value": "true"
+    },
+    {
+     "Key": "Name",
+     "Value": "example"
+    },
+    {
+     "Key": "Environment",
+     "Value": "dev"
+    }
+   ],
+   "VpcId": "vpc-0e7231b06d4761dc4"
+  }
+ ]
+}

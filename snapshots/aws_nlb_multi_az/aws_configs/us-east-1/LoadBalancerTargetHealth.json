@@ -1,0 +1,65 @@
+{
+ "LoadBalancerTargetHealth": [
+  {
+   "TargetGroupArn": "arn:aws:elasticloadbalancing:us-east-1:028403472736:targetgroup/example-nlb-eni-private-subnet/f75bae20be911ad7",
+   "TargetHealthDescriptions": [
+    {
+     "HealthCheckPort": "80",
+     "Target": {
+      "AvailabilityZone": "us-east-1a",
+      "Id": "10.1.101.114",
+      "Port": 80
+     },
+     "TargetHealth": {
+      "State": "healthy"
+     }
+    }
+   ]
+  },
+  {
+   "TargetGroupArn": "arn:aws:elasticloadbalancing:us-east-1:028403472736:targetgroup/example-nlb-ip/73594597469133c1",
+   "TargetHealthDescriptions": [
+    {
+     "HealthCheckPort": "80",
+     "Target": {
+      "AvailabilityZone": "us-east-1a",
+      "Id": "10.1.101.36",
+      "Port": 80
+     },
+     "TargetHealth": {
+      "State": "healthy"
+     }
+    },
+    {
+     "HealthCheckPort": "80",
+     "Target": {
+      "AvailabilityZone": "us-east-1b",
+      "Id": "10.1.102.191",
+      "Port": 80
+     },
+     "TargetHealth": {
+      "State": "healthy"
+     }
+    }
+   ]
+  },
+  {
+   "TargetGroupArn": "arn:aws:elasticloadbalancing:us-east-1:028403472736:targetgroup/example-target-az-different/21437b64dfa7592e",
+   "TargetHealthDescriptions": [
+    {
+     "HealthCheckPort": "80",
+     "Target": {
+      "AvailabilityZone": "us-east-1c",
+      "Id": "10.1.103.121",
+      "Port": 80
+     },
+     "TargetHealth": {
+      "Description": "Target is in an Availability Zone that is not enabled for the load balancer",
+      "Reason": "Target.NotInUse",
+      "State": "unused"
+     }
+    }
+   ]
+  }
+ ]
+}

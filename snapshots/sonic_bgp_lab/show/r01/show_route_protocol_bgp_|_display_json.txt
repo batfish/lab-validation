@@ -1,0 +1,2445 @@
+{
+    "route-information" : [
+    {
+        "attributes" : {"xmlns" : "http://xml.juniper.net/junos/17.4R1/junos-routing"}, 
+        "route-table" : [
+        {
+            "comment" : "keepalive", 
+            "table-name" : [
+            {
+                "data" : "inet.0"
+            }
+            ], 
+            "destination-count" : [
+            {
+                "data" : "29"
+            }
+            ], 
+            "total-route-count" : [
+            {
+                "data" : "41"
+            }
+            ], 
+            "active-route-count" : [
+            {
+                "data" : "29"
+            }
+            ], 
+            "holddown-route-count" : [
+            {
+                "data" : "0"
+            }
+            ], 
+            "hidden-route-count" : [
+            {
+                "data" : "0"
+            }
+            ], 
+            "rt" : [
+            {
+                "attributes" : {"junos:style" : "brief"}, 
+                "rt-destination" : [
+                {
+                    "data" : "1.1.1.1/32"
+                }
+                ], 
+                "rt-entry" : [
+                {
+                    "active-tag" : [
+                    {
+                        "data" : "*"
+                    }
+                    ], 
+                    "current-active" : [
+                    {
+                        "data" : [null]
+                    }
+                    ], 
+                    "last-active" : [
+                    {
+                        "data" : [null]
+                    }
+                    ], 
+                    "protocol-name" : [
+                    {
+                        "data" : "BGP"
+                    }
+                    ], 
+                    "preference" : [
+                    {
+                        "data" : "170"
+                    }
+                    ], 
+                    "age" : [
+                    {
+                        "data" : "03:52:33", 
+                        "attributes" : {"junos:seconds" : "13953"}
+                    }
+                    ], 
+                    "med" : [
+                    {
+                        "data" : "0"
+                    }
+                    ], 
+                    "local-preference" : [
+                    {
+                        "data" : "100"
+                    }
+                    ], 
+                    "as-path" : [
+                    {
+                        "data" : "65040 I"
+                    }
+                    ], 
+                    "validation-state" : [
+                    {
+                        "data" : "unverified"
+                    }
+                    ], 
+                    "nh" : [
+                    {
+                        "selected-next-hop" : [
+                        {
+                            "data" : [null]
+                        }
+                        ], 
+                        "to" : [
+                        {
+                            "data" : "10.1.11.2"
+                        }
+                        ], 
+                        "via" : [
+                        {
+                            "data" : "em3.0"
+                        }
+                        ]
+                    }
+                    ]
+                }
+                ]
+            }, 
+            {
+                "attributes" : {"junos:style" : "brief"}, 
+                "rt-destination" : [
+                {
+                    "data" : "2.2.2.2/32"
+                }
+                ], 
+                "rt-entry" : [
+                {
+                    "active-tag" : [
+                    {
+                        "data" : "*"
+                    }
+                    ], 
+                    "current-active" : [
+                    {
+                        "data" : [null]
+                    }
+                    ], 
+                    "last-active" : [
+                    {
+                        "data" : [null]
+                    }
+                    ], 
+                    "protocol-name" : [
+                    {
+                        "data" : "BGP"
+                    }
+                    ], 
+                    "preference" : [
+                    {
+                        "data" : "170"
+                    }
+                    ], 
+                    "age" : [
+                    {
+                        "data" : "03:52:30", 
+                        "attributes" : {"junos:seconds" : "13950"}
+                    }
+                    ], 
+                    "med" : [
+                    {
+                        "data" : "0"
+                    }
+                    ], 
+                    "local-preference" : [
+                    {
+                        "data" : "100"
+                    }
+                    ], 
+                    "as-path" : [
+                    {
+                        "data" : "65040 I"
+                    }
+                    ], 
+                    "validation-state" : [
+                    {
+                        "data" : "unverified"
+                    }
+                    ], 
+                    "nh" : [
+                    {
+                        "selected-next-hop" : [
+                        {
+                            "data" : [null]
+                        }
+                        ], 
+                        "to" : [
+                        {
+                            "data" : "10.1.12.2"
+                        }
+                        ], 
+                        "via" : [
+                        {
+                            "data" : "em5.0"
+                        }
+                        ]
+                    }
+                    ]
+                }
+                ]
+            }, 
+            {
+                "attributes" : {"junos:style" : "brief"}, 
+                "rt-destination" : [
+                {
+                    "data" : "3.3.3.3/32"
+                }
+                ], 
+                "rt-entry" : [
+                {
+                    "active-tag" : [
+                    {
+                        "data" : "*"
+                    }
+                    ], 
+                    "current-active" : [
+                    {
+                        "data" : [null]
+                    }
+                    ], 
+                    "last-active" : [
+                    {
+                        "data" : [null]
+                    }
+                    ], 
+                    "protocol-name" : [
+                    {
+                        "data" : "BGP"
+                    }
+                    ], 
+                    "preference" : [
+                    {
+                        "data" : "170"
+                    }
+                    ], 
+                    "age" : [
+                    {
+                        "data" : "03:52:33", 
+                        "attributes" : {"junos:seconds" : "13953"}
+                    }
+                    ], 
+                    "local-preference" : [
+                    {
+                        "data" : "100"
+                    }
+                    ], 
+                    "as-path" : [
+                    {
+                        "data" : "65040 65041 I"
+                    }
+                    ], 
+                    "validation-state" : [
+                    {
+                        "data" : "unverified"
+                    }
+                    ], 
+                    "nh" : [
+                    {
+                        "selected-next-hop" : [
+                        {
+                            "data" : [null]
+                        }
+                        ], 
+                        "to" : [
+                        {
+                            "data" : "10.1.11.2"
+                        }
+                        ], 
+                        "via" : [
+                        {
+                            "data" : "em3.0"
+                        }
+                        ]
+                    }
+                    ]
+                }
+                ]
+            }, 
+            {
+                "attributes" : {"junos:style" : "brief"}, 
+                "rt-destination" : [
+                {
+                    "data" : "4.4.4.4/32"
+                }
+                ], 
+                "rt-entry" : [
+                {
+                    "active-tag" : [
+                    {
+                        "data" : "*"
+                    }
+                    ], 
+                    "current-active" : [
+                    {
+                        "data" : [null]
+                    }
+                    ], 
+                    "last-active" : [
+                    {
+                        "data" : [null]
+                    }
+                    ], 
+                    "protocol-name" : [
+                    {
+                        "data" : "BGP"
+                    }
+                    ], 
+                    "preference" : [
+                    {
+                        "data" : "170"
+                    }
+                    ], 
+                    "age" : [
+                    {
+                        "data" : "01:44:19", 
+                        "attributes" : {"junos:seconds" : "6259"}
+                    }
+                    ], 
+                    "local-preference" : [
+                    {
+                        "data" : "100"
+                    }
+                    ], 
+                    "as-path" : [
+                    {
+                        "data" : "65040 65041 I"
+                    }
+                    ], 
+                    "validation-state" : [
+                    {
+                        "data" : "unverified"
+                    }
+                    ], 
+                    "nh" : [
+                    {
+                        "selected-next-hop" : [
+                        {
+                            "data" : [null]
+                        }
+                        ], 
+                        "to" : [
+                        {
+                            "data" : "10.1.12.2"
+                        }
+                        ], 
+                        "via" : [
+                        {
+                            "data" : "em5.0"
+                        }
+                        ]
+                    }
+                    ]
+                }
+                ]
+            }, 
+            {
+                "attributes" : {"junos:style" : "brief"}, 
+                "rt-destination" : [
+                {
+                    "data" : "5.5.5.5/32"
+                }
+                ], 
+                "rt-entry" : [
+                {
+                    "active-tag" : [
+                    {
+                        "data" : "*"
+                    }
+                    ], 
+                    "current-active" : [
+                    {
+                        "data" : [null]
+                    }
+                    ], 
+                    "last-active" : [
+                    {
+                        "data" : [null]
+                    }
+                    ], 
+                    "protocol-name" : [
+                    {
+                        "data" : "BGP"
+                    }
+                    ], 
+                    "preference" : [
+                    {
+                        "data" : "170"
+                    }
+                    ], 
+                    "age" : [
+                    {
+                        "data" : "01:43:55", 
+                        "attributes" : {"junos:seconds" : "6235"}
+                    }
+                    ], 
+                    "local-preference" : [
+                    {
+                        "data" : "100"
+                    }
+                    ], 
+                    "learned-from" : [
+                    {
+                        "data" : "10.1.12.2"
+                    }
+                    ], 
+                    "as-path" : [
+                    {
+                        "data" : "65040 65041 65042 I"
+                    }
+                    ], 
+                    "validation-state" : [
+                    {
+                        "data" : "unverified"
+                    }
+                    ], 
+                    "nh" : [
+                    {
+                        "selected-next-hop" : [
+                        {
+                            "data" : [null]
+                        }
+                        ], 
+                        "to" : [
+                        {
+                            "data" : "10.1.11.2"
+                        }
+                        ], 
+                        "via" : [
+                        {
+                            "data" : "em3.0"
+                        }
+                        ]
+                    }, 
+                    {
+                        "to" : [
+                        {
+                            "data" : "10.1.12.2"
+                        }
+                        ], 
+                        "via" : [
+                        {
+                            "data" : "em5.0"
+                        }
+                        ]
+                    }
+                    ]
+                }, 
+                {
+                    "active-tag" : [
+                    {
+                    }
+                    ], 
+                    "protocol-name" : [
+                    {
+                        "data" : "BGP"
+                    }
+                    ], 
+                    "preference" : [
+                    {
+                        "data" : "170"
+                    }
+                    ], 
+                    "age" : [
+                    {
+                        "data" : "01:43:55", 
+                        "attributes" : {"junos:seconds" : "6235"}
+                    }
+                    ], 
+                    "local-preference" : [
+                    {
+                        "data" : "100"
+                    }
+                    ], 
+                    "as-path" : [
+                    {
+                        "data" : "65040 65041 65042 I"
+                    }
+                    ], 
+                    "validation-state" : [
+                    {
+                        "data" : "unverified"
+                    }
+                    ], 
+                    "nh" : [
+                    {
+                        "selected-next-hop" : [
+                        {
+                            "data" : [null]
+                        }
+                        ], 
+                        "to" : [
+                        {
+                            "data" : "10.1.11.2"
+                        }
+                        ], 
+                        "via" : [
+                        {
+                            "data" : "em3.0"
+                        }
+                        ]
+                    }
+                    ]
+                }
+                ]
+            }, 
+            {
+                "attributes" : {"junos:style" : "brief"}, 
+                "rt-destination" : [
+                {
+                    "data" : "6.6.6.6/32"
+                }
+                ], 
+                "rt-entry" : [
+                {
+                    "active-tag" : [
+                    {
+                        "data" : "*"
+                    }
+                    ], 
+                    "current-active" : [
+                    {
+                        "data" : [null]
+                    }
+                    ], 
+                    "last-active" : [
+                    {
+                        "data" : [null]
+                    }
+                    ], 
+                    "protocol-name" : [
+                    {
+                        "data" : "BGP"
+                    }
+                    ], 
+                    "preference" : [
+                    {
+                        "data" : "170"
+                    }
+                    ], 
+                    "age" : [
+                    {
+                        "data" : "01:21:46", 
+                        "attributes" : {"junos:seconds" : "4906"}
+                    }
+                    ], 
+                    "local-preference" : [
+                    {
+                        "data" : "100"
+                    }
+                    ], 
+                    "as-path" : [
+                    {
+                        "data" : "65040 65041 65042 I"
+                    }
+                    ], 
+                    "validation-state" : [
+                    {
+                        "data" : "unverified"
+                    }
+                    ], 
+                    "nh" : [
+                    {
+                        "selected-next-hop" : [
+                        {
+                            "data" : [null]
+                        }
+                        ], 
+                        "to" : [
+                        {
+                            "data" : "10.1.11.2"
+                        }
+                        ], 
+                        "via" : [
+                        {
+                            "data" : "em3.0"
+                        }
+                        ]
+                    }, 
+                    {
+                        "to" : [
+                        {
+                            "data" : "10.1.12.2"
+                        }
+                        ], 
+                        "via" : [
+                        {
+                            "data" : "em5.0"
+                        }
+                        ]
+                    }
+                    ]
+                }, 
+                {
+                    "active-tag" : [
+                    {
+                    }
+                    ], 
+                    "protocol-name" : [
+                    {
+                        "data" : "BGP"
+                    }
+                    ], 
+                    "preference" : [
+                    {
+                        "data" : "170"
+                    }
+                    ], 
+                    "age" : [
+                    {
+                        "data" : "01:21:46", 
+                        "attributes" : {"junos:seconds" : "4906"}
+                    }
+                    ], 
+                    "local-preference" : [
+                    {
+                        "data" : "100"
+                    }
+                    ], 
+                    "as-path" : [
+                    {
+                        "data" : "65040 65041 65042 I"
+                    }
+                    ], 
+                    "validation-state" : [
+                    {
+                        "data" : "unverified"
+                    }
+                    ], 
+                    "nh" : [
+                    {
+                        "selected-next-hop" : [
+                        {
+                            "data" : [null]
+                        }
+                        ], 
+                        "to" : [
+                        {
+                            "data" : "10.1.12.2"
+                        }
+                        ], 
+                        "via" : [
+                        {
+                            "data" : "em5.0"
+                        }
+                        ]
+                    }
+                    ]
+                }
+                ]
+            }, 
+            {
+                "attributes" : {"junos:style" : "brief"}, 
+                "rt-destination" : [
+                {
+                    "data" : "10.1.21.0/30"
+                }
+                ], 
+                "rt-entry" : [
+                {
+                    "active-tag" : [
+                    {
+                        "data" : "*"
+                    }
+                    ], 
+                    "current-active" : [
+                    {
+                        "data" : [null]
+                    }
+                    ], 
+                    "last-active" : [
+                    {
+                        "data" : [null]
+                    }
+                    ], 
+                    "protocol-name" : [
+                    {
+                        "data" : "BGP"
+                    }
+                    ], 
+                    "preference" : [
+                    {
+                        "data" : "170"
+                    }
+                    ], 
+                    "age" : [
+                    {
+                        "data" : "03:52:33", 
+                        "attributes" : {"junos:seconds" : "13953"}
+                    }
+                    ], 
+                    "local-preference" : [
+                    {
+                        "data" : "100"
+                    }
+                    ], 
+                    "as-path" : [
+                    {
+                        "data" : "65040 65041 I"
+                    }
+                    ], 
+                    "validation-state" : [
+                    {
+                        "data" : "unverified"
+                    }
+                    ], 
+                    "nh" : [
+                    {
+                        "selected-next-hop" : [
+                        {
+                            "data" : [null]
+                        }
+                        ], 
+                        "to" : [
+                        {
+                            "data" : "10.1.11.2"
+                        }
+                        ], 
+                        "via" : [
+                        {
+                            "data" : "em3.0"
+                        }
+                        ]
+                    }
+                    ]
+                }
+                ]
+            }, 
+            {
+                "attributes" : {"junos:style" : "brief"}, 
+                "rt-destination" : [
+                {
+                    "data" : "10.1.22.0/30"
+                }
+                ], 
+                "rt-entry" : [
+                {
+                    "active-tag" : [
+                    {
+                        "data" : "*"
+                    }
+                    ], 
+                    "current-active" : [
+                    {
+                        "data" : [null]
+                    }
+                    ], 
+                    "last-active" : [
+                    {
+                        "data" : [null]
+                    }
+                    ], 
+                    "protocol-name" : [
+                    {
+                        "data" : "BGP"
+                    }
+                    ], 
+                    "preference" : [
+                    {
+                        "data" : "170"
+                    }
+                    ], 
+                    "age" : [
+                    {
+                        "data" : "01:44:19", 
+                        "attributes" : {"junos:seconds" : "6259"}
+                    }
+                    ], 
+                    "local-preference" : [
+                    {
+                        "data" : "100"
+                    }
+                    ], 
+                    "as-path" : [
+                    {
+                        "data" : "65040 65041 I"
+                    }
+                    ], 
+                    "validation-state" : [
+                    {
+                        "data" : "unverified"
+                    }
+                    ], 
+                    "nh" : [
+                    {
+                        "selected-next-hop" : [
+                        {
+                            "data" : [null]
+                        }
+                        ], 
+                        "to" : [
+                        {
+                            "data" : "10.1.12.2"
+                        }
+                        ], 
+                        "via" : [
+                        {
+                            "data" : "em5.0"
+                        }
+                        ]
+                    }
+                    ]
+                }
+                ]
+            }, 
+            {
+                "attributes" : {"junos:style" : "brief"}, 
+                "rt-destination" : [
+                {
+                    "data" : "10.1.23.0/30"
+                }
+                ], 
+                "rt-entry" : [
+                {
+                    "active-tag" : [
+                    {
+                        "data" : "*"
+                    }
+                    ], 
+                    "current-active" : [
+                    {
+                        "data" : [null]
+                    }
+                    ], 
+                    "last-active" : [
+                    {
+                        "data" : [null]
+                    }
+                    ], 
+                    "protocol-name" : [
+                    {
+                        "data" : "BGP"
+                    }
+                    ], 
+                    "preference" : [
+                    {
+                        "data" : "170"
+                    }
+                    ], 
+                    "age" : [
+                    {
+                        "data" : "03:52:33", 
+                        "attributes" : {"junos:seconds" : "13953"}
+                    }
+                    ], 
+                    "local-preference" : [
+                    {
+                        "data" : "100"
+                    }
+                    ], 
+                    "as-path" : [
+                    {
+                        "data" : "65040 65041 I"
+                    }
+                    ], 
+                    "validation-state" : [
+                    {
+                        "data" : "unverified"
+                    }
+                    ], 
+                    "nh" : [
+                    {
+                        "selected-next-hop" : [
+                        {
+                            "data" : [null]
+                        }
+                        ], 
+                        "to" : [
+                        {
+                            "data" : "10.1.11.2"
+                        }
+                        ], 
+                        "via" : [
+                        {
+                            "data" : "em3.0"
+                        }
+                        ]
+                    }
+                    ]
+                }
+                ]
+            }, 
+            {
+                "attributes" : {"junos:style" : "brief"}, 
+                "rt-destination" : [
+                {
+                    "data" : "10.1.24.0/30"
+                }
+                ], 
+                "rt-entry" : [
+                {
+                    "active-tag" : [
+                    {
+                        "data" : "*"
+                    }
+                    ], 
+                    "current-active" : [
+                    {
+                        "data" : [null]
+                    }
+                    ], 
+                    "last-active" : [
+                    {
+                        "data" : [null]
+                    }
+                    ], 
+                    "protocol-name" : [
+                    {
+                        "data" : "BGP"
+                    }
+                    ], 
+                    "preference" : [
+                    {
+                        "data" : "170"
+                    }
+                    ], 
+                    "age" : [
+                    {
+                        "data" : "01:44:19", 
+                        "attributes" : {"junos:seconds" : "6259"}
+                    }
+                    ], 
+                    "local-preference" : [
+                    {
+                        "data" : "100"
+                    }
+                    ], 
+                    "as-path" : [
+                    {
+                        "data" : "65040 65041 I"
+                    }
+                    ], 
+                    "validation-state" : [
+                    {
+                        "data" : "unverified"
+                    }
+                    ], 
+                    "nh" : [
+                    {
+                        "selected-next-hop" : [
+                        {
+                            "data" : [null]
+                        }
+                        ], 
+                        "to" : [
+                        {
+                            "data" : "10.1.12.2"
+                        }
+                        ], 
+                        "via" : [
+                        {
+                            "data" : "em5.0"
+                        }
+                        ]
+                    }
+                    ]
+                }
+                ]
+            }, 
+            {
+                "attributes" : {"junos:style" : "brief"}, 
+                "rt-destination" : [
+                {
+                    "data" : "10.10.0.0/16"
+                }
+                ], 
+                "rt-entry" : [
+                {
+                    "active-tag" : [
+                    {
+                        "data" : "*"
+                    }
+                    ], 
+                    "current-active" : [
+                    {
+                        "data" : [null]
+                    }
+                    ], 
+                    "last-active" : [
+                    {
+                        "data" : [null]
+                    }
+                    ], 
+                    "protocol-name" : [
+                    {
+                        "data" : "BGP"
+                    }
+                    ], 
+                    "preference" : [
+                    {
+                        "data" : "170"
+                    }
+                    ], 
+                    "age" : [
+                    {
+                        "data" : "01:43:52", 
+                        "attributes" : {"junos:seconds" : "6232"}
+                    }
+                    ], 
+                    "local-preference" : [
+                    {
+                        "data" : "100"
+                    }
+                    ], 
+                    "as-path" : [
+                    {
+                        "data" : "65040 65041 65042 I"
+                    }
+                    ], 
+                    "validation-state" : [
+                    {
+                        "data" : "unverified"
+                    }
+                    ], 
+                    "nh" : [
+                    {
+                        "selected-next-hop" : [
+                        {
+                            "data" : [null]
+                        }
+                        ], 
+                        "to" : [
+                        {
+                            "data" : "10.1.11.2"
+                        }
+                        ], 
+                        "via" : [
+                        {
+                            "data" : "em3.0"
+                        }
+                        ]
+                    }, 
+                    {
+                        "to" : [
+                        {
+                            "data" : "10.1.12.2"
+                        }
+                        ], 
+                        "via" : [
+                        {
+                            "data" : "em5.0"
+                        }
+                        ]
+                    }
+                    ]
+                }, 
+                {
+                    "active-tag" : [
+                    {
+                    }
+                    ], 
+                    "protocol-name" : [
+                    {
+                        "data" : "BGP"
+                    }
+                    ], 
+                    "preference" : [
+                    {
+                        "data" : "170"
+                    }
+                    ], 
+                    "age" : [
+                    {
+                        "data" : "01:43:52", 
+                        "attributes" : {"junos:seconds" : "6232"}
+                    }
+                    ], 
+                    "local-preference" : [
+                    {
+                        "data" : "100"
+                    }
+                    ], 
+                    "as-path" : [
+                    {
+                        "data" : "65040 65041 65042 I"
+                    }
+                    ], 
+                    "validation-state" : [
+                    {
+                        "data" : "unverified"
+                    }
+                    ], 
+                    "nh" : [
+                    {
+                        "selected-next-hop" : [
+                        {
+                            "data" : [null]
+                        }
+                        ], 
+                        "to" : [
+                        {
+                            "data" : "10.1.12.2"
+                        }
+                        ], 
+                        "via" : [
+                        {
+                            "data" : "em5.0"
+                        }
+                        ]
+                    }
+                    ]
+                }
+                ]
+            }, 
+            {
+                "attributes" : {"junos:style" : "brief"}, 
+                "rt-destination" : [
+                {
+                    "data" : "10.11.0.0/16"
+                }
+                ], 
+                "rt-entry" : [
+                {
+                    "active-tag" : [
+                    {
+                        "data" : "*"
+                    }
+                    ], 
+                    "current-active" : [
+                    {
+                        "data" : [null]
+                    }
+                    ], 
+                    "last-active" : [
+                    {
+                        "data" : [null]
+                    }
+                    ], 
+                    "protocol-name" : [
+                    {
+                        "data" : "BGP"
+                    }
+                    ], 
+                    "preference" : [
+                    {
+                        "data" : "170"
+                    }
+                    ], 
+                    "age" : [
+                    {
+                        "data" : "01:21:43", 
+                        "attributes" : {"junos:seconds" : "4903"}
+                    }
+                    ], 
+                    "local-preference" : [
+                    {
+                        "data" : "100"
+                    }
+                    ], 
+                    "as-path" : [
+                    {
+                        "data" : "65040 65041 65042 I"
+                    }
+                    ], 
+                    "validation-state" : [
+                    {
+                        "data" : "unverified"
+                    }
+                    ], 
+                    "nh" : [
+                    {
+                        "selected-next-hop" : [
+                        {
+                            "data" : [null]
+                        }
+                        ], 
+                        "to" : [
+                        {
+                            "data" : "10.1.11.2"
+                        }
+                        ], 
+                        "via" : [
+                        {
+                            "data" : "em3.0"
+                        }
+                        ]
+                    }, 
+                    {
+                        "to" : [
+                        {
+                            "data" : "10.1.12.2"
+                        }
+                        ], 
+                        "via" : [
+                        {
+                            "data" : "em5.0"
+                        }
+                        ]
+                    }
+                    ]
+                }, 
+                {
+                    "active-tag" : [
+                    {
+                    }
+                    ], 
+                    "protocol-name" : [
+                    {
+                        "data" : "BGP"
+                    }
+                    ], 
+                    "preference" : [
+                    {
+                        "data" : "170"
+                    }
+                    ], 
+                    "age" : [
+                    {
+                        "data" : "01:21:43", 
+                        "attributes" : {"junos:seconds" : "4903"}
+                    }
+                    ], 
+                    "local-preference" : [
+                    {
+                        "data" : "100"
+                    }
+                    ], 
+                    "as-path" : [
+                    {
+                        "data" : "65040 65041 65042 I"
+                    }
+                    ], 
+                    "validation-state" : [
+                    {
+                        "data" : "unverified"
+                    }
+                    ], 
+                    "nh" : [
+                    {
+                        "selected-next-hop" : [
+                        {
+                            "data" : [null]
+                        }
+                        ], 
+                        "to" : [
+                        {
+                            "data" : "10.1.12.2"
+                        }
+                        ], 
+                        "via" : [
+                        {
+                            "data" : "em5.0"
+                        }
+                        ]
+                    }
+                    ]
+                }
+                ]
+            }, 
+            {
+                "attributes" : {"junos:style" : "brief"}, 
+                "rt-destination" : [
+                {
+                    "data" : "10.150.0.0/16"
+                }
+                ], 
+                "rt-entry" : [
+                {
+                    "active-tag" : [
+                    {
+                    }
+                    ], 
+                    "protocol-name" : [
+                    {
+                        "data" : "BGP"
+                    }
+                    ], 
+                    "preference" : [
+                    {
+                        "data" : "170"
+                    }
+                    ], 
+                    "age" : [
+                    {
+                        "data" : "03:52:33", 
+                        "attributes" : {"junos:seconds" : "13953"}
+                    }
+                    ], 
+                    "local-preference" : [
+                    {
+                        "data" : "100"
+                    }
+                    ], 
+                    "as-path" : [
+                    {
+                        "data" : "65040 65041 I"
+                    }
+                    ], 
+                    "validation-state" : [
+                    {
+                        "data" : "unverified"
+                    }
+                    ], 
+                    "nh" : [
+                    {
+                        "selected-next-hop" : [
+                        {
+                            "data" : [null]
+                        }
+                        ], 
+                        "to" : [
+                        {
+                            "data" : "10.1.11.2"
+                        }
+                        ], 
+                        "via" : [
+                        {
+                            "data" : "em3.0"
+                        }
+                        ]
+                    }
+                    ]
+                }, 
+                {
+                    "active-tag" : [
+                    {
+                    }
+                    ], 
+                    "protocol-name" : [
+                    {
+                        "data" : "BGP"
+                    }
+                    ], 
+                    "preference" : [
+                    {
+                        "data" : "170"
+                    }
+                    ], 
+                    "age" : [
+                    {
+                        "data" : "01:44:19", 
+                        "attributes" : {"junos:seconds" : "6259"}
+                    }
+                    ], 
+                    "local-preference" : [
+                    {
+                        "data" : "100"
+                    }
+                    ], 
+                    "as-path" : [
+                    {
+                        "data" : "65040 65041 I"
+                    }
+                    ], 
+                    "validation-state" : [
+                    {
+                        "data" : "unverified"
+                    }
+                    ], 
+                    "nh" : [
+                    {
+                        "selected-next-hop" : [
+                        {
+                            "data" : [null]
+                        }
+                        ], 
+                        "to" : [
+                        {
+                            "data" : "10.1.12.2"
+                        }
+                        ], 
+                        "via" : [
+                        {
+                            "data" : "em5.0"
+                        }
+                        ]
+                    }
+                    ]
+                }
+                ]
+            }, 
+            {
+                "attributes" : {"junos:style" : "brief"}, 
+                "rt-destination" : [
+                {
+                    "data" : "100.64.0.0/10"
+                }
+                ], 
+                "rt-entry" : [
+                {
+                    "active-tag" : [
+                    {
+                        "data" : "*"
+                    }
+                    ], 
+                    "current-active" : [
+                    {
+                        "data" : [null]
+                    }
+                    ], 
+                    "last-active" : [
+                    {
+                        "data" : [null]
+                    }
+                    ], 
+                    "protocol-name" : [
+                    {
+                        "data" : "BGP"
+                    }
+                    ], 
+                    "preference" : [
+                    {
+                        "data" : "170"
+                    }
+                    ], 
+                    "age" : [
+                    {
+                        "data" : "01:43:52", 
+                        "attributes" : {"junos:seconds" : "6232"}
+                    }
+                    ], 
+                    "local-preference" : [
+                    {
+                        "data" : "100"
+                    }
+                    ], 
+                    "as-path" : [
+                    {
+                        "data" : "65040 65041 65042 I"
+                    }
+                    ], 
+                    "validation-state" : [
+                    {
+                        "data" : "unverified"
+                    }
+                    ], 
+                    "nh" : [
+                    {
+                        "selected-next-hop" : [
+                        {
+                            "data" : [null]
+                        }
+                        ], 
+                        "to" : [
+                        {
+                            "data" : "10.1.11.2"
+                        }
+                        ], 
+                        "via" : [
+                        {
+                            "data" : "em3.0"
+                        }
+                        ]
+                    }, 
+                    {
+                        "to" : [
+                        {
+                            "data" : "10.1.12.2"
+                        }
+                        ], 
+                        "via" : [
+                        {
+                            "data" : "em5.0"
+                        }
+                        ]
+                    }
+                    ]
+                }, 
+                {
+                    "active-tag" : [
+                    {
+                    }
+                    ], 
+                    "protocol-name" : [
+                    {
+                        "data" : "BGP"
+                    }
+                    ], 
+                    "preference" : [
+                    {
+                        "data" : "170"
+                    }
+                    ], 
+                    "age" : [
+                    {
+                        "data" : "01:43:52", 
+                        "attributes" : {"junos:seconds" : "6232"}
+                    }
+                    ], 
+                    "local-preference" : [
+                    {
+                        "data" : "100"
+                    }
+                    ], 
+                    "as-path" : [
+                    {
+                        "data" : "65040 65041 65042 I"
+                    }
+                    ], 
+                    "validation-state" : [
+                    {
+                        "data" : "unverified"
+                    }
+                    ], 
+                    "nh" : [
+                    {
+                        "selected-next-hop" : [
+                        {
+                            "data" : [null]
+                        }
+                        ], 
+                        "to" : [
+                        {
+                            "data" : "10.1.12.2"
+                        }
+                        ], 
+                        "via" : [
+                        {
+                            "data" : "em5.0"
+                        }
+                        ]
+                    }
+                    ]
+                }
+                ]
+            }, 
+            {
+                "attributes" : {"junos:style" : "brief"}, 
+                "rt-destination" : [
+                {
+                    "data" : "100.128.0.0/10"
+                }
+                ], 
+                "rt-entry" : [
+                {
+                    "active-tag" : [
+                    {
+                        "data" : "*"
+                    }
+                    ], 
+                    "current-active" : [
+                    {
+                        "data" : [null]
+                    }
+                    ], 
+                    "last-active" : [
+                    {
+                        "data" : [null]
+                    }
+                    ], 
+                    "protocol-name" : [
+                    {
+                        "data" : "BGP"
+                    }
+                    ], 
+                    "preference" : [
+                    {
+                        "data" : "170"
+                    }
+                    ], 
+                    "age" : [
+                    {
+                        "data" : "01:21:43", 
+                        "attributes" : {"junos:seconds" : "4903"}
+                    }
+                    ], 
+                    "local-preference" : [
+                    {
+                        "data" : "100"
+                    }
+                    ], 
+                    "as-path" : [
+                    {
+                        "data" : "65040 65041 65042 I"
+                    }
+                    ], 
+                    "validation-state" : [
+                    {
+                        "data" : "unverified"
+                    }
+                    ], 
+                    "nh" : [
+                    {
+                        "selected-next-hop" : [
+                        {
+                            "data" : [null]
+                        }
+                        ], 
+                        "to" : [
+                        {
+                            "data" : "10.1.11.2"
+                        }
+                        ], 
+                        "via" : [
+                        {
+                            "data" : "em3.0"
+                        }
+                        ]
+                    }, 
+                    {
+                        "to" : [
+                        {
+                            "data" : "10.1.12.2"
+                        }
+                        ], 
+                        "via" : [
+                        {
+                            "data" : "em5.0"
+                        }
+                        ]
+                    }
+                    ]
+                }, 
+                {
+                    "active-tag" : [
+                    {
+                    }
+                    ], 
+                    "protocol-name" : [
+                    {
+                        "data" : "BGP"
+                    }
+                    ], 
+                    "preference" : [
+                    {
+                        "data" : "170"
+                    }
+                    ], 
+                    "age" : [
+                    {
+                        "data" : "01:21:43", 
+                        "attributes" : {"junos:seconds" : "4903"}
+                    }
+                    ], 
+                    "local-preference" : [
+                    {
+                        "data" : "100"
+                    }
+                    ], 
+                    "as-path" : [
+                    {
+                        "data" : "65040 65041 65042 I"
+                    }
+                    ], 
+                    "validation-state" : [
+                    {
+                        "data" : "unverified"
+                    }
+                    ], 
+                    "nh" : [
+                    {
+                        "selected-next-hop" : [
+                        {
+                            "data" : [null]
+                        }
+                        ], 
+                        "to" : [
+                        {
+                            "data" : "10.1.12.2"
+                        }
+                        ], 
+                        "via" : [
+                        {
+                            "data" : "em5.0"
+                        }
+                        ]
+                    }
+                    ]
+                }
+                ]
+            }, 
+            {
+                "attributes" : {"junos:style" : "brief"}, 
+                "rt-destination" : [
+                {
+                    "data" : "172.16.0.0/12"
+                }
+                ], 
+                "rt-entry" : [
+                {
+                    "active-tag" : [
+                    {
+                        "data" : "*"
+                    }
+                    ], 
+                    "current-active" : [
+                    {
+                        "data" : [null]
+                    }
+                    ], 
+                    "last-active" : [
+                    {
+                        "data" : [null]
+                    }
+                    ], 
+                    "protocol-name" : [
+                    {
+                        "data" : "BGP"
+                    }
+                    ], 
+                    "preference" : [
+                    {
+                        "data" : "170"
+                    }
+                    ], 
+                    "age" : [
+                    {
+                        "data" : "01:43:52", 
+                        "attributes" : {"junos:seconds" : "6232"}
+                    }
+                    ], 
+                    "local-preference" : [
+                    {
+                        "data" : "100"
+                    }
+                    ], 
+                    "learned-from" : [
+                    {
+                        "data" : "10.1.11.2"
+                    }
+                    ], 
+                    "as-path" : [
+                    {
+                        "data" : "65040 65041 65042 I"
+                    }
+                    ], 
+                    "validation-state" : [
+                    {
+                        "data" : "unverified"
+                    }
+                    ], 
+                    "nh" : [
+                    {
+                        "to" : [
+                        {
+                            "data" : "10.1.11.2"
+                        }
+                        ], 
+                        "via" : [
+                        {
+                            "data" : "em3.0"
+                        }
+                        ]
+                    }, 
+                    {
+                        "selected-next-hop" : [
+                        {
+                            "data" : [null]
+                        }
+                        ], 
+                        "to" : [
+                        {
+                            "data" : "10.1.12.2"
+                        }
+                        ], 
+                        "via" : [
+                        {
+                            "data" : "em5.0"
+                        }
+                        ]
+                    }
+                    ]
+                }, 
+                {
+                    "active-tag" : [
+                    {
+                    }
+                    ], 
+                    "protocol-name" : [
+                    {
+                        "data" : "BGP"
+                    }
+                    ], 
+                    "preference" : [
+                    {
+                        "data" : "170"
+                    }
+                    ], 
+                    "age" : [
+                    {
+                        "data" : "01:43:52", 
+                        "attributes" : {"junos:seconds" : "6232"}
+                    }
+                    ], 
+                    "local-preference" : [
+                    {
+                        "data" : "100"
+                    }
+                    ], 
+                    "as-path" : [
+                    {
+                        "data" : "65040 65041 65042 I"
+                    }
+                    ], 
+                    "validation-state" : [
+                    {
+                        "data" : "unverified"
+                    }
+                    ], 
+                    "nh" : [
+                    {
+                        "selected-next-hop" : [
+                        {
+                            "data" : [null]
+                        }
+                        ], 
+                        "to" : [
+                        {
+                            "data" : "10.1.12.2"
+                        }
+                        ], 
+                        "via" : [
+                        {
+                            "data" : "em5.0"
+                        }
+                        ]
+                    }
+                    ]
+                }
+                ]
+            }, 
+            {
+                "attributes" : {"junos:style" : "brief"}, 
+                "rt-destination" : [
+                {
+                    "data" : "172.32.0.0/12"
+                }
+                ], 
+                "rt-entry" : [
+                {
+                    "active-tag" : [
+                    {
+                        "data" : "*"
+                    }
+                    ], 
+                    "current-active" : [
+                    {
+                        "data" : [null]
+                    }
+                    ], 
+                    "last-active" : [
+                    {
+                        "data" : [null]
+                    }
+                    ], 
+                    "protocol-name" : [
+                    {
+                        "data" : "BGP"
+                    }
+                    ], 
+                    "preference" : [
+                    {
+                        "data" : "170"
+                    }
+                    ], 
+                    "age" : [
+                    {
+                        "data" : "01:21:43", 
+                        "attributes" : {"junos:seconds" : "4903"}
+                    }
+                    ], 
+                    "local-preference" : [
+                    {
+                        "data" : "100"
+                    }
+                    ], 
+                    "learned-from" : [
+                    {
+                        "data" : "10.1.11.2"
+                    }
+                    ], 
+                    "as-path" : [
+                    {
+                        "data" : "65040 65041 65042 I"
+                    }
+                    ], 
+                    "validation-state" : [
+                    {
+                        "data" : "unverified"
+                    }
+                    ], 
+                    "nh" : [
+                    {
+                        "to" : [
+                        {
+                            "data" : "10.1.11.2"
+                        }
+                        ], 
+                        "via" : [
+                        {
+                            "data" : "em3.0"
+                        }
+                        ]
+                    }, 
+                    {
+                        "selected-next-hop" : [
+                        {
+                            "data" : [null]
+                        }
+                        ], 
+                        "to" : [
+                        {
+                            "data" : "10.1.12.2"
+                        }
+                        ], 
+                        "via" : [
+                        {
+                            "data" : "em5.0"
+                        }
+                        ]
+                    }
+                    ]
+                }, 
+                {
+                    "active-tag" : [
+                    {
+                    }
+                    ], 
+                    "protocol-name" : [
+                    {
+                        "data" : "BGP"
+                    }
+                    ], 
+                    "preference" : [
+                    {
+                        "data" : "170"
+                    }
+                    ], 
+                    "age" : [
+                    {
+                        "data" : "01:21:43", 
+                        "attributes" : {"junos:seconds" : "4903"}
+                    }
+                    ], 
+                    "local-preference" : [
+                    {
+                        "data" : "100"
+                    }
+                    ], 
+                    "as-path" : [
+                    {
+                        "data" : "65040 65041 65042 I"
+                    }
+                    ], 
+                    "validation-state" : [
+                    {
+                        "data" : "unverified"
+                    }
+                    ], 
+                    "nh" : [
+                    {
+                        "selected-next-hop" : [
+                        {
+                            "data" : [null]
+                        }
+                        ], 
+                        "to" : [
+                        {
+                            "data" : "10.1.12.2"
+                        }
+                        ], 
+                        "via" : [
+                        {
+                            "data" : "em5.0"
+                        }
+                        ]
+                    }
+                    ]
+                }
+                ]
+            }, 
+            {
+                "attributes" : {"junos:style" : "brief"}, 
+                "rt-destination" : [
+                {
+                    "data" : "192.168.1.0/30"
+                }
+                ], 
+                "rt-entry" : [
+                {
+                    "active-tag" : [
+                    {
+                        "data" : "*"
+                    }
+                    ], 
+                    "current-active" : [
+                    {
+                        "data" : [null]
+                    }
+                    ], 
+                    "last-active" : [
+                    {
+                        "data" : [null]
+                    }
+                    ], 
+                    "protocol-name" : [
+                    {
+                        "data" : "BGP"
+                    }
+                    ], 
+                    "preference" : [
+                    {
+                        "data" : "170"
+                    }
+                    ], 
+                    "age" : [
+                    {
+                        "data" : "01:44:19", 
+                        "attributes" : {"junos:seconds" : "6259"}
+                    }
+                    ], 
+                    "local-preference" : [
+                    {
+                        "data" : "100"
+                    }
+                    ], 
+                    "as-path" : [
+                    {
+                        "data" : "65040 65041 I"
+                    }
+                    ], 
+                    "validation-state" : [
+                    {
+                        "data" : "unverified"
+                    }
+                    ], 
+                    "nh" : [
+                    {
+                        "selected-next-hop" : [
+                        {
+                            "data" : [null]
+                        }
+                        ], 
+                        "to" : [
+                        {
+                            "data" : "10.1.12.2"
+                        }
+                        ], 
+                        "via" : [
+                        {
+                            "data" : "em5.0"
+                        }
+                        ]
+                    }
+                    ]
+                }
+                ]
+            }, 
+            {
+                "attributes" : {"junos:style" : "brief"}, 
+                "rt-destination" : [
+                {
+                    "data" : "192.168.2.0/30"
+                }
+                ], 
+                "rt-entry" : [
+                {
+                    "active-tag" : [
+                    {
+                        "data" : "*"
+                    }
+                    ], 
+                    "current-active" : [
+                    {
+                        "data" : [null]
+                    }
+                    ], 
+                    "last-active" : [
+                    {
+                        "data" : [null]
+                    }
+                    ], 
+                    "protocol-name" : [
+                    {
+                        "data" : "BGP"
+                    }
+                    ], 
+                    "preference" : [
+                    {
+                        "data" : "170"
+                    }
+                    ], 
+                    "age" : [
+                    {
+                        "data" : "03:52:33", 
+                        "attributes" : {"junos:seconds" : "13953"}
+                    }
+                    ], 
+                    "local-preference" : [
+                    {
+                        "data" : "100"
+                    }
+                    ], 
+                    "as-path" : [
+                    {
+                        "data" : "65040 65041 I"
+                    }
+                    ], 
+                    "validation-state" : [
+                    {
+                        "data" : "unverified"
+                    }
+                    ], 
+                    "nh" : [
+                    {
+                        "selected-next-hop" : [
+                        {
+                            "data" : [null]
+                        }
+                        ], 
+                        "to" : [
+                        {
+                            "data" : "10.1.11.2"
+                        }
+                        ], 
+                        "via" : [
+                        {
+                            "data" : "em3.0"
+                        }
+                        ]
+                    }
+                    ]
+                }
+                ]
+            }, 
+            {
+                "attributes" : {"junos:style" : "brief"}, 
+                "rt-destination" : [
+                {
+                    "data" : "192.168.10.0/24"
+                }
+                ], 
+                "rt-entry" : [
+                {
+                    "active-tag" : [
+                    {
+                        "data" : "*"
+                    }
+                    ], 
+                    "current-active" : [
+                    {
+                        "data" : [null]
+                    }
+                    ], 
+                    "last-active" : [
+                    {
+                        "data" : [null]
+                    }
+                    ], 
+                    "protocol-name" : [
+                    {
+                        "data" : "BGP"
+                    }
+                    ], 
+                    "preference" : [
+                    {
+                        "data" : "170"
+                    }
+                    ], 
+                    "age" : [
+                    {
+                        "data" : "01:43:52", 
+                        "attributes" : {"junos:seconds" : "6232"}
+                    }
+                    ], 
+                    "local-preference" : [
+                    {
+                        "data" : "100"
+                    }
+                    ], 
+                    "as-path" : [
+                    {
+                        "data" : "65040 65041 65042 I"
+                    }
+                    ], 
+                    "validation-state" : [
+                    {
+                        "data" : "unverified"
+                    }
+                    ], 
+                    "nh" : [
+                    {
+                        "selected-next-hop" : [
+                        {
+                            "data" : [null]
+                        }
+                        ], 
+                        "to" : [
+                        {
+                            "data" : "10.1.11.2"
+                        }
+                        ], 
+                        "via" : [
+                        {
+                            "data" : "em3.0"
+                        }
+                        ]
+                    }, 
+                    {
+                        "to" : [
+                        {
+                            "data" : "10.1.12.2"
+                        }
+                        ], 
+                        "via" : [
+                        {
+                            "data" : "em5.0"
+                        }
+                        ]
+                    }
+                    ]
+                }, 
+                {
+                    "active-tag" : [
+                    {
+                    }
+                    ], 
+                    "protocol-name" : [
+                    {
+                        "data" : "BGP"
+                    }
+                    ], 
+                    "preference" : [
+                    {
+                        "data" : "170"
+                    }
+                    ], 
+                    "age" : [
+                    {
+                        "data" : "01:43:52", 
+                        "attributes" : {"junos:seconds" : "6232"}
+                    }
+                    ], 
+                    "local-preference" : [
+                    {
+                        "data" : "100"
+                    }
+                    ], 
+                    "as-path" : [
+                    {
+                        "data" : "65040 65041 65042 I"
+                    }
+                    ], 
+                    "validation-state" : [
+                    {
+                        "data" : "unverified"
+                    }
+                    ], 
+                    "nh" : [
+                    {
+                        "selected-next-hop" : [
+                        {
+                            "data" : [null]
+                        }
+                        ], 
+                        "to" : [
+                        {
+                            "data" : "10.1.12.2"
+                        }
+                        ], 
+                        "via" : [
+                        {
+                            "data" : "em5.0"
+                        }
+                        ]
+                    }
+                    ]
+                }
+                ]
+            }, 
+            {
+                "attributes" : {"junos:style" : "brief"}, 
+                "rt-destination" : [
+                {
+                    "data" : "192.168.11.0/24"
+                }
+                ], 
+                "rt-entry" : [
+                {
+                    "active-tag" : [
+                    {
+                        "data" : "*"
+                    }
+                    ], 
+                    "current-active" : [
+                    {
+                        "data" : [null]
+                    }
+                    ], 
+                    "last-active" : [
+                    {
+                        "data" : [null]
+                    }
+                    ], 
+                    "protocol-name" : [
+                    {
+                        "data" : "BGP"
+                    }
+                    ], 
+                    "preference" : [
+                    {
+                        "data" : "170"
+                    }
+                    ], 
+                    "age" : [
+                    {
+                        "data" : "01:21:43", 
+                        "attributes" : {"junos:seconds" : "4903"}
+                    }
+                    ], 
+                    "local-preference" : [
+                    {
+                        "data" : "100"
+                    }
+                    ], 
+                    "as-path" : [
+                    {
+                        "data" : "65040 65041 65042 I"
+                    }
+                    ], 
+                    "validation-state" : [
+                    {
+                        "data" : "unverified"
+                    }
+                    ], 
+                    "nh" : [
+                    {
+                        "selected-next-hop" : [
+                        {
+                            "data" : [null]
+                        }
+                        ], 
+                        "to" : [
+                        {
+                            "data" : "10.1.11.2"
+                        }
+                        ], 
+                        "via" : [
+                        {
+                            "data" : "em3.0"
+                        }
+                        ]
+                    }, 
+                    {
+                        "to" : [
+                        {
+                            "data" : "10.1.12.2"
+                        }
+                        ], 
+                        "via" : [
+                        {
+                            "data" : "em5.0"
+                        }
+                        ]
+                    }
+                    ]
+                }, 
+                {
+                    "active-tag" : [
+                    {
+                    }
+                    ], 
+                    "protocol-name" : [
+                    {
+                        "data" : "BGP"
+                    }
+                    ], 
+                    "preference" : [
+                    {
+                        "data" : "170"
+                    }
+                    ], 
+                    "age" : [
+                    {
+                        "data" : "01:21:43", 
+                        "attributes" : {"junos:seconds" : "4903"}
+                    }
+                    ], 
+                    "local-preference" : [
+                    {
+                        "data" : "100"
+                    }
+                    ], 
+                    "as-path" : [
+                    {
+                        "data" : "65040 65041 65042 I"
+                    }
+                    ], 
+                    "validation-state" : [
+                    {
+                        "data" : "unverified"
+                    }
+                    ], 
+                    "nh" : [
+                    {
+                        "selected-next-hop" : [
+                        {
+                            "data" : [null]
+                        }
+                        ], 
+                        "to" : [
+                        {
+                            "data" : "10.1.12.2"
+                        }
+                        ], 
+                        "via" : [
+                        {
+                            "data" : "em5.0"
+                        }
+                        ]
+                    }
+                    ]
+                }
+                ]
+            }
+            ]
+        }, 
+        {
+            "table-name" : [
+            {
+                "data" : "inet6.0"
+            }
+            ], 
+            "destination-count" : [
+            {
+                "data" : "8"
+            }
+            ], 
+            "total-route-count" : [
+            {
+                "data" : "8"
+            }
+            ], 
+            "active-route-count" : [
+            {
+                "data" : "8"
+            }
+            ], 
+            "holddown-route-count" : [
+            {
+                "data" : "0"
+            }
+            ], 
+            "hidden-route-count" : [
+            {
+                "data" : "0"
+            }
+            ]
+        }
+        ]
+    }
+    ]
+}
+
+{master:0}

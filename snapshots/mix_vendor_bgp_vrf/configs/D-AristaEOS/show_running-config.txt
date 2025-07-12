@@ -1,0 +1,92 @@
+! Command: show running-config
+! device: D-AristaEOS (vEOS, EOS-4.21.1.1F)
+!
+! boot system flash:/vEOS-lab.swi
+!
+transceiver qsfp default-mode 4x10G
+!
+service routing protocols model multi-agent
+!
+hostname D-AristaEOS
+!
+spanning-tree mode mstp
+!
+aaa authorization exec default local
+!
+no aaa root
+!
+username admin privilege 15 role network-admin secret sha512 $6$odaWRJCcm4YYFXgO$AG8OaM0.70Z4rhLbvI7AKlLXDQhF0Mh4LmVkzWmgYdYf/YHTpurTc/5rwrMaYgoJHsq11PlHchly9fVLicr1l1
+!
+vrf definition cust10
+!
+vrf definition cust20
+!
+interface Ethernet1
+   speed 100full
+   no switchport
+   ip address 10.10.30.2/24
+!
+interface Ethernet2
+!
+interface Ethernet3
+!
+interface Ethernet4
+!
+interface Ethernet5
+!
+interface Ethernet6
+!
+interface Ethernet7
+!
+interface Ethernet8
+!
+interface Ethernet9
+!
+interface Ethernet10
+!
+interface Ethernet11
+!
+interface Ethernet12
+!
+interface Ethernet13
+!
+interface Ethernet14
+!
+interface Ethernet15
+!
+interface Loopback10
+   vrf forwarding cust10
+   ip address 1.1.4.10/32
+!
+interface Loopback20
+   vrf forwarding cust20
+   ip address 1.1.4.20/32
+!
+interface Loopback123
+   ip address 192.168.123.4/32
+!
+interface Management1
+!
+ip route 172.17.211.0/24 10.10.10.6 tag 34
+ip route 172.17.252.0/24 Ethernet1
+ip route 172.17.252.0/24 Ethernet1 2
+ip route 172.17.252.0/24 10.10.10.2 4
+!
+ip routing
+ip routing vrf cust20
+ip routing vrf cust10
+!
+router bgp 30
+   neighbor 10.10.30.1 remote-as 1
+   neighbor 10.10.30.1 maximum-routes 12000
+   network 192.168.123.4/32
+   !
+   vrf cust10
+      rd 1.1.4.10:30
+      redistribute connected
+   !
+   vrf cust20
+      rd 1.1.4.20:30
+      redistribute connected
+!
+end

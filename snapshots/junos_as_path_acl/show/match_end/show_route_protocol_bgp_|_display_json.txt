@@ -1,0 +1,232 @@
+{
+    "route-information" : [
+    {
+        "attributes" : {"xmlns" : "http://xml.juniper.net/junos/17.4R1/junos-routing"},
+        "route-table" : [
+        {
+            "comment" : "keepalive",
+            "table-name" : [
+            {
+                "data" : "inet.0"
+            }
+            ],
+            "destination-count" : [
+            {
+                "data" : "8"
+            }
+            ],
+            "total-route-count" : [
+            {
+                "data" : "8"
+            }
+            ],
+            "active-route-count" : [
+            {
+                "data" : "8"
+            }
+            ],
+            "holddown-route-count" : [
+            {
+                "data" : "0"
+            }
+            ],
+            "hidden-route-count" : [
+            {
+                "data" : "0"
+            }
+            ],
+            "rt" : [
+            {
+                "attributes" : {"junos:style" : "brief"},
+                "rt-destination" : [
+                {
+                    "data" : "172.16.1.1/32"
+                }
+                ],
+                "rt-entry" : [
+                {
+                    "active-tag" : [
+                    {
+                        "data" : "*"
+                    }
+                    ],
+                    "current-active" : [
+                    {
+                        "data" : [null]
+                    }
+                    ],
+                    "last-active" : [
+                    {
+                        "data" : [null]
+                    }
+                    ],
+                    "protocol-name" : [
+                    {
+                        "data" : "BGP"
+                    }
+                    ],
+                    "preference" : [
+                    {
+                        "data" : "170"
+                    }
+                    ],
+                    "age" : [
+                    {
+                        "data" : "22:53:42",
+                        "attributes" : {"junos:seconds" : "82422"}
+                    }
+                    ],
+                    "local-preference" : [
+                    {
+                        "data" : "100"
+                    }
+                    ],
+                    "as-path" : [
+                    {
+                        "data" : "65100 I"
+                    }
+                    ],
+                    "validation-state" : [
+                    {
+                        "data" : "unverified"
+                    }
+                    ],
+                    "nh" : [
+                    {
+                        "selected-next-hop" : [
+                        {
+                            "data" : [null]
+                        }
+                        ],
+                        "to" : [
+                        {
+                            "data" : "10.14.20.1"
+                        }
+                        ],
+                        "via" : [
+                        {
+                            "data" : "xe-0/0/0.0"
+                        }
+                        ]
+                    }
+                    ]
+                }
+                ]
+            },
+            {
+                "attributes" : {"junos:style" : "brief"},
+                "rt-destination" : [
+                {
+                    "data" : "172.16.1.2/32"
+                }
+                ],
+                "rt-entry" : [
+                {
+                    "active-tag" : [
+                    {
+                        "data" : "*"
+                    }
+                    ],
+                    "current-active" : [
+                    {
+                        "data" : [null]
+                    }
+                    ],
+                    "last-active" : [
+                    {
+                        "data" : [null]
+                    }
+                    ],
+                    "protocol-name" : [
+                    {
+                        "data" : "BGP"
+                    }
+                    ],
+                    "preference" : [
+                    {
+                        "data" : "170"
+                    }
+                    ],
+                    "age" : [
+                    {
+                        "data" : "22:53:42",
+                        "attributes" : {"junos:seconds" : "82422"}
+                    }
+                    ],
+                    "local-preference" : [
+                    {
+                        "data" : "100"
+                    }
+                    ],
+                    "as-path" : [
+                    {
+                        "data" : "65102 65100 I"
+                    }
+                    ],
+                    "validation-state" : [
+                    {
+                        "data" : "unverified"
+                    }
+                    ],
+                    "nh" : [
+                    {
+                        "selected-next-hop" : [
+                        {
+                            "data" : [null]
+                        }
+                        ],
+                        "to" : [
+                        {
+                            "data" : "10.14.20.1"
+                        }
+                        ],
+                        "via" : [
+                        {
+                            "data" : "xe-0/0/0.0"
+                        }
+                        ]
+                    }
+                    ]
+                }
+                ]
+            }
+            ]
+        },
+        {
+            "table-name" : [
+            {
+                "data" : "inet6.0"
+            }
+            ],
+            "destination-count" : [
+            {
+                "data" : "2"
+            }
+            ],
+            "total-route-count" : [
+            {
+                "data" : "2"
+            }
+            ],
+            "active-route-count" : [
+            {
+                "data" : "2"
+            }
+            ],
+            "holddown-route-count" : [
+            {
+                "data" : "0"
+            }
+            ],
+            "hidden-route-count" : [
+            {
+                "data" : "0"
+            }
+            ]
+        }
+        ]
+    }
+    ]
+}
+
+{master:0}

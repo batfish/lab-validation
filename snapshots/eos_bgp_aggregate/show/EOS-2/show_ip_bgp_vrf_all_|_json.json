@@ -1,0 +1,75 @@
+{
+    "vrfs": {
+        "default": {
+            "asn": "200",
+            "bgpRouteEntries": {
+                "10.10.0.0/16": {
+                    "address": "10.10.0.0",
+                    "bgpAdvertisedPeerGroups": {},
+                    "bgpRoutePaths": [
+                        {
+                            "asPathEntry": {
+                                "asPath": "100 ?",
+                                "asPathType": null
+                            },
+                            "localPreference": 100,
+                            "med": 0,
+                            "nextHop": "192.168.1.1",
+                            "reasonNotBestpath": null,
+                            "routeType": {
+                                "active": true,
+                                "atomicAggregator": false,
+                                "backup": false,
+                                "ecmp": false,
+                                "ecmpContributor": false,
+                                "ecmpHead": false,
+                                "luRoute": false,
+                                "queued": false,
+                                "stale": false,
+                                "suppressed": false,
+                                "ucmp": false,
+                                "valid": true
+                            },
+                            "weight": 0
+                        }
+                    ],
+                    "maskLength": 16
+                },
+                "10.12.0.0/16": {
+                    "address": "10.12.0.0",
+                    "bgpAdvertisedPeerGroups": {},
+                    "bgpRoutePaths": [
+                        {
+                            "asPathEntry": {
+                                "asPath": "100 ?",
+                                "asPathType": null
+                            },
+                            "localPreference": 100,
+                            "med": 0,
+                            "nextHop": "192.168.1.1",
+                            "reasonNotBestpath": null,
+                            "routeType": {
+                                "active": true,
+                                "atomicAggregator": false,
+                                "backup": false,
+                                "ecmp": false,
+                                "ecmpContributor": false,
+                                "ecmpHead": false,
+                                "luRoute": false,
+                                "queued": false,
+                                "stale": false,
+                                "suppressed": false,
+                                "ucmp": false,
+                                "valid": true
+                            },
+                            "weight": 0
+                        }
+                    ],
+                    "maskLength": 16
+                }
+            },
+            "routerId": "2.2.2.2",
+            "vrf": "default"
+        }
+    }
+}

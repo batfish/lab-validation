@@ -1,0 +1,40 @@
+For address family: IPv4 Unicast
+
+BGP table version is 11, local router ID is 192.168.123.22
+Status codes: s suppressed, d damped, h history, * valid, > best, i - internal,
+              r RIB-failure, S Stale, m multipath, b backup-path, f RT-Filter,
+              x best-external, a additional-path, c RIB-compressed,
+              t secondary path,
+Origin codes: i - IGP, e - EGP, ? - incomplete
+RPKI validation codes: V valid, I invalid, N Not found
+
+     Network          Next Hop            Metric LocPrf Weight Path
+      0.0.0.0          0.0.0.0                                0 i
+ *>                    172.24.0.1                             0 65301 65401 577 1 i
+ *    10.2.0.0/16      169.254.97.33          100             0 64512 i
+ *>                    169.254.74.93          100             0 64512 i
+ *    10.3.0.0/16      169.254.126.209        100             0 64512 i
+ *>                    169.254.34.173         100             0 64512 i
+ *    10.4.0.0/16      169.254.126.209        100             0 64512 i
+ *>                    169.254.34.173         100             0 64512 i
+ *    10.5.0.0/16      169.254.97.33          100             0 64512 i
+ *>                    169.254.74.93          100             0 64512 i
+ *>   10.100.0.0/16    172.24.0.1             100             0 65301 i
+ *>   10.200.0.0/16    172.24.0.1             100             0 65301 i
+ *>   192.168.123.0    172.24.0.1             100             0 65301 i
+ *>   192.168.123.22/32
+                      0.0.0.0                  0         32768 i
+
+For address family: IPv6 Unicast
+
+
+For address family: IPv4 Multicast
+
+
+For address family: L2VPN E-VPN
+
+
+For address family: MVPNv4 Unicast
+
+
+For address family: MVPNv6 Unicast

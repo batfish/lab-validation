@@ -1,0 +1,87 @@
+! Command: show running-config
+! device: sender (vEOS, EOS-4.23.0.1F)
+!
+! boot system flash:/vEOS-lab.swi
+!
+transceiver qsfp default-mode 4x10G
+!
+hostname sender
+!
+spanning-tree mode mstp
+!
+no aaa root
+!
+username admin role network-admin secret sha512 $6$UXs7qx013zpiOTJ5$b8GsoXeQY809c4t/r7L8/a6e7qJYLmM8fcnKKcb6XUAQ06qpyS7y75Hdnf2ynQQoycnaoVrk3cMS0lxY5ych81
+!
+interface Ethernet1
+   no switchport
+   ip address 10.12.11.1/24
+!
+interface Ethernet2
+   no switchport
+   ip address 10.13.21.1/24
+!
+interface Ethernet3
+   no switchport
+   ip address 10.14.31.1/24
+!
+interface Ethernet4
+!
+interface Ethernet5
+!
+interface Ethernet6
+!
+interface Ethernet7
+!
+interface Ethernet8
+!
+interface Ethernet9
+!
+interface Ethernet10
+!
+interface Ethernet11
+!
+interface Ethernet12
+!
+interface Loopback1
+   ip address 172.16.0.1/32
+!
+interface Loopback2
+   ip address 172.16.0.2/32
+!
+interface Loopback3
+   ip address 172.16.0.3/32
+!
+interface Management1
+   ip address 10.150.0.11/16
+!
+ip routing
+!
+ip prefix-list ALLOW-LO1 seq 10 permit 172.16.0.1/32
+ip prefix-list ALLOW-LO2 seq 10 permit 172.16.0.2/32
+ip prefix-list ALLOW-LO3 seq 10 permit 172.16.0.3/32
+!
+route-map ALLOW-LO1 permit 10
+   match ip address prefix-list ALLOW-LO1
+!
+route-map ALLOW-LO2 permit 10
+   match ip address prefix-list ALLOW-LO2
+!
+route-map ALLOW-LO3 permit 10
+   match ip address prefix-list ALLOW-LO3
+!
+router bgp 65001
+   neighbor 10.12.11.2 remote-as 65002
+   neighbor 10.12.11.2 route-map ALLOW-LO1 out
+   neighbor 10.12.11.2 maximum-routes 12000
+   neighbor 10.13.21.2 remote-as 65003
+   neighbor 10.13.21.2 route-map ALLOW-LO2 out
+   neighbor 10.13.21.2 maximum-routes 12000
+   neighbor 10.14.31.2 remote-as 65004
+   neighbor 10.14.31.2 route-map ALLOW-LO3 out
+   neighbor 10.14.31.2 maximum-routes 12000
+   network 172.16.0.1/32
+   network 172.16.0.2/32
+   network 172.16.0.3/32
+!
+end

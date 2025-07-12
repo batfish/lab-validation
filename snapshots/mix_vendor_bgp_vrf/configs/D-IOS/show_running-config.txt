@@ -1,0 +1,145 @@
+Building configuration...
+
+Current configuration : 1821 bytes
+!
+version 15.2
+service timestamps debug datetime msec
+service timestamps log datetime msec
+!
+hostname D-IOS
+!
+boot-start-marker
+boot-end-marker
+!
+!
+!
+aaa new-model
+!
+!
+aaa authorization exec default local
+!
+!
+!
+!
+!
+aaa session-id common
+no ip icmp rate-limit unreachable
+ip cef
+!
+ip vrf cust10
+ rd 1.1.2.10:10
+!
+ip vrf cust20
+ rd 1.1.2.20:10
+!
+!
+!
+!
+!
+!
+no ip domain lookup
+ip domain name demo.com
+no ipv6 cef
+!
+!
+multilink bundle-name authenticated
+!
+!
+!
+!
+!
+!
+!
+username demo privilege 15 secret 5 $1$bOPC$Ledl3D.5Xx8hkXUgobF0i.
+username cisco privilege 15 password 0 cisco
+!
+!
+ip tcp synwait-time 5
+ip ssh version 2
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+interface Loopback10
+ ip vrf forwarding cust10
+ ip address 1.1.2.10 255.255.255.255
+!
+interface Loopback20
+ ip vrf forwarding cust20
+ ip address 1.1.2.20 255.255.255.255
+!
+interface Loopback123
+ ip address 192.168.123.2 255.255.255.255
+!
+interface Ethernet0/0
+ no ip address
+ shutdown
+ duplex auto
+!
+interface GigabitEthernet0/0
+ no ip address
+ shutdown
+ media-type gbic
+ speed 1000
+ duplex full
+ negotiation auto
+!
+interface GigabitEthernet1/0
+ ip address 10.10.10.2 255.255.255.0
+ negotiation auto
+!
+interface GigabitEthernet2/0
+ no ip address
+ shutdown
+ negotiation auto
+!
+router bgp 10
+ bgp log-neighbor-changes
+ network 192.168.123.2 mask 255.255.255.255
+ neighbor 10.10.10.1 remote-as 1
+ !
+ address-family ipv4 vrf cust10
+  redistribute connected
+ exit-address-family
+ !
+ address-family ipv4 vrf cust20
+  redistribute connected
+ exit-address-family
+!
+ip forward-protocol nd
+!
+!
+no ip http server
+no ip http secure-server
+!
+!
+!
+!
+!
+control-plane
+!
+!
+line con 0
+ exec-timeout 0 0
+ privilege level 15
+ logging synchronous
+ stopbits 1
+line aux 0
+ exec-timeout 0 0
+ privilege level 15
+ logging synchronous
+ stopbits 1
+line vty 0 4
+ transport input ssh
+line vty 5 15
+!
+!
+end

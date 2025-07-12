@@ -1,0 +1,26 @@
+
+flags: A:active, ?:loose, C:connect, H:host, S:static, ~:internal, R:rip, O:ospf, B:bgp,
+       Oi:ospf intra-area, Oo:ospf inter-area, O1:ospf ext-type-1, O2:ospf ext-type-2, E:ecmp, M:multicast
+
+
+VIRTUAL ROUTER: default (id 1)
+  ==========
+destination                                 nexthop                                 metric flags      age   interface          next-AS
+10.12.11.0/24                               10.12.11.2                              0      A C              ethernet1/1
+10.12.11.2/32                               0.0.0.0                                 0      A H
+10.23.21.0/24                               10.23.21.1                              0      A C              ethernet1/2
+10.23.21.1/32                               0.0.0.0                                 0      A H
+10.24.31.0/24                               10.24.31.1                              0      A C              ethernet1/3
+10.24.31.1/32                               0.0.0.0                                 0      A H
+10.25.41.0/24                               10.25.41.1                              0      A C              ethernet1/4
+10.25.41.1/32                               0.0.0.0                                 0      A H
+192.168.122.0/24                            0.0.0.0                                 1        ~
+192.168.122.0/24                            192.168.122.2                           0      A C              ethernet1/7
+192.168.122.2/32                            0.0.0.0                                 0      A H
+192.168.123.1/32                            10.12.11.1                                     A B        30788 ethernet1/1        65001
+192.168.123.2/32                            0.0.0.0                                 0      A H
+192.168.123.2/32                            0.0.0.0                                 1        ~
+192.168.123.3/32                            10.23.21.2                                     A B        32197 ethernet1/2        65001
+192.168.123.4/32                            10.24.31.2                                     A B        32196 ethernet1/3        65001
+192.168.123.5/32                            10.25.41.2                                     A B        32196 ethernet1/4        65001
+total routes shown: 17

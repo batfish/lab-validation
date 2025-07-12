@@ -1,0 +1,13 @@
+entries:
+  - hostname: R-PublicASN100
+    test_name: test_bgp_rib_routes
+    skip:
+      reason: https://github.com/batfish/lab-validation/issues/2
+  - hostname: R-PublicASN300|R-PublicASN500|DuplicatePrivate
+    test_name: test_bgp_rib_routes
+    skip:
+      reason: AS paths don't match
+  - hostname: R-PrivateASN100|R-PublicASN111|R-PublicASN200|R-PublicASN400
+    test_name: test_bgp_rib_routes
+    skip:
+      reason: https://github.com/batfish/lab-validation/issues/3

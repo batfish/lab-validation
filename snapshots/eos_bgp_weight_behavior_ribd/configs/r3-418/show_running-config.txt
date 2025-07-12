@@ -1,0 +1,69 @@
+! Command: show running-config
+! device: r3-418 (vEOS, EOS-4.18.10M)
+!
+! boot system flash:vEOS-lab.swi
+!
+transceiver qsfp default-mode 4x10G
+!
+hostname r3-418
+!
+spanning-tree mode mstp
+!
+no aaa root
+!
+username admin role network-admin secret sha512 $6$uhNMp47GWSt.j.Eg$E37u8LljnqOCD0iwiqMr8aYXH/YiM2SCFOlbjA6py85z351avsO8W5tWaXEn3ZrCjgAtmw4.JZdQ0BYouTaeC/
+!
+interface Ethernet1
+   no switchport
+   ip address 10.34.11.1/24
+!
+interface Ethernet2
+!
+interface Ethernet3
+!
+interface Ethernet4
+!
+interface Ethernet5
+!
+interface Ethernet6
+!
+interface Ethernet7
+!
+interface Ethernet8
+!
+interface Ethernet9
+!
+interface Ethernet10
+!
+interface Ethernet11
+!
+interface Ethernet12
+!
+interface Loopback0
+   ip address 172.16.34.1/32
+!
+interface Loopback1
+   ip address 172.16.34.2/32
+!
+interface Management1
+   ip address 10.150.0.75/16
+!
+ip routing
+!
+ip prefix-list 172_16_34_2 seq 10 permit 172.16.34.2/32
+!
+route-map INCREASE_WEIGHT permit 10
+   match ip address prefix-list 172_16_34_2
+   set weight 32769
+!
+route-map INCREASE_WEIGHT permit 20
+!
+router bgp 65134
+   router-id 10.34.11.1
+   neighbor 10.34.11.2 remote-as 65134
+   neighbor 10.34.11.2 route-map INCREASE_WEIGHT in
+   neighbor 10.34.11.2 maximum-routes 12000
+   network 172.16.34.1/32
+   network 172.16.34.2/32
+!
+end

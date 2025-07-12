@@ -1,0 +1,109 @@
+{
+ "SecurityGroups": [
+  {
+   "Description": "default VPC security group",
+   "GroupId": "sg-0bd56aac50a515df1",
+   "GroupName": "default",
+   "IpPermissions": [
+    {
+     "IpProtocol": "-1",
+     "IpRanges": [],
+     "Ipv6Ranges": [],
+     "PrefixListIds": [],
+     "UserIdGroupPairs": [
+      {
+       "GroupId": "sg-0bd56aac50a515df1",
+       "UserId": "028403472736"
+      }
+     ]
+    }
+   ],
+   "IpPermissionsEgress": [
+    {
+     "IpProtocol": "-1",
+     "IpRanges": [
+      {
+       "CidrIp": "0.0.0.0/0"
+      }
+     ],
+     "Ipv6Ranges": [],
+     "PrefixListIds": [],
+     "UserIdGroupPairs": []
+    }
+   ],
+   "OwnerId": "028403472736",
+   "VpcId": "vpc-0b8be05eff6c69690"
+  },
+  {
+   "Description": "Managed by Terraform",
+   "GroupId": "sg-0e465d55ad6fecef3",
+   "GroupName": "account_sg",
+   "IpPermissions": [
+    {
+     "FromPort": 33434,
+     "IpProtocol": "udp",
+     "IpRanges": [
+      {
+       "CidrIp": "0.0.0.0/0",
+       "Description": "Traceroute Access"
+      }
+     ],
+     "Ipv6Ranges": [],
+     "PrefixListIds": [],
+     "ToPort": 33534,
+     "UserIdGroupPairs": []
+    },
+    {
+     "FromPort": 22,
+     "IpProtocol": "tcp",
+     "IpRanges": [
+      {
+       "CidrIp": "0.0.0.0/0",
+       "Description": "SSH Access"
+      }
+     ],
+     "Ipv6Ranges": [],
+     "PrefixListIds": [],
+     "ToPort": 22,
+     "UserIdGroupPairs": []
+    },
+    {
+     "FromPort": 8,
+     "IpProtocol": "icmp",
+     "IpRanges": [
+      {
+       "CidrIp": "0.0.0.0/0",
+       "Description": "ICMP Access"
+      }
+     ],
+     "Ipv6Ranges": [],
+     "PrefixListIds": [],
+     "ToPort": 0,
+     "UserIdGroupPairs": []
+    }
+   ],
+   "IpPermissionsEgress": [
+    {
+     "IpProtocol": "-1",
+     "IpRanges": [
+      {
+       "CidrIp": "0.0.0.0/0",
+       "Description": "Allow all"
+      }
+     ],
+     "Ipv6Ranges": [],
+     "PrefixListIds": [],
+     "UserIdGroupPairs": []
+    }
+   ],
+   "OwnerId": "028403472736",
+   "Tags": [
+    {
+     "Key": "Name",
+     "Value": "account-general"
+    }
+   ],
+   "VpcId": "vpc-0b8be05eff6c69690"
+  }
+ ]
+}

@@ -1,0 +1,28 @@
+For address family: IPv4 Unicast
+
+BGP table version is 14, local router ID is 1.2.2.2
+Status codes: s suppressed, d damped, h history, * valid, > best, i - internal,
+              r RIB-failure, S Stale, m multipath, b backup-path, f RT-Filter,
+              x best-external, a additional-path, c RIB-compressed,
+Origin codes: i - IGP, e - EGP, ? - incomplete
+RPKI validation codes: V valid, I invalid, N Not found
+
+     Network          Next Hop            Metric LocPrf Weight Path
+ * ia1.0.1.0/24       1.1.1.1                  0    100      0 i
+ *>                   1.0.2.2                  2         32768 i
+ *>  1.0.2.0/24       0.0.0.0                  0         32768 i
+ *  a2.128.0.0/16     10.13.22.3              50    350      0 3 2 i
+ *>i                  10.12.11.2              50    350      0 2 i
+ * ia3.0.1.0/24       10.12.11.2              50    350      0 2 3 i
+ *>                   10.13.22.3              50    350      0 3 i
+ * ia3.0.2.0/24       10.12.11.2              50    350      0 2 3 i
+ *>                   10.13.22.3              50    350      0 3 i
+ *>i 192.168.122.0    1.10.1.1                 0    100      0 i
+ *>i 192.168.123.1/32 1.10.1.1                 0    100      0 i
+ r>i 192.168.123.2/32 1.1.1.1                  0    100      0 i
+ *>  192.168.123.3/32 0.0.0.0                  0         32768 i
+
+For address family: IPv4 Multicast
+
+
+For address family: MVPNv4 Unicast

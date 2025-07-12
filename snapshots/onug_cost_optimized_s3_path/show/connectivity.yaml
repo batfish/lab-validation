@@ -1,0 +1,527 @@
+entries:
+# leaf01
+  - src_hostname: leaf01
+    src_location: leaf01[lo]
+    disposition: success
+    flow:
+      # spine01
+      src_ip: 192.168.123.1
+      dst_ip: 192.168.123.15
+      application: icmp
+  - src_hostname: leaf01
+    src_location: leaf01[lo]
+    disposition: success
+    flow:
+      # bl01
+      src_ip: 192.168.123.1
+      dst_ip: 192.168.123.19
+      application: icmp
+  - src_hostname: leaf01
+    src_location: leaf01[lo]
+    disposition: success
+    flow:
+      # fwl01
+      src_ip: 192.168.123.1
+      dst_ip: 192.168.123.21
+      application: icmp
+  - src_hostname: leaf01
+    src_location: leaf01[lo]
+    disposition: success
+    flow:
+      # exitgw
+      src_ip: 192.168.123.1
+      dst_ip: 192.168.123.22
+      application: icmp
+  - src_hostname: leaf01
+    src_location: leaf01[lo]
+    disposition: success
+    flow:
+      # jump1-it-east
+      src_ip: 192.168.123.1
+      dst_ip: 10.5.1.196
+      application: icmp
+  - src_hostname: leaf01
+    src_location: leaf01[lo]
+    disposition: success
+    flow:
+      # jump1-it-west
+      src_ip: 192.168.123.1
+      dst_ip: 10.4.1.177
+      application: icmp
+  - src_hostname: leaf01
+    src_location: leaf01[lo]
+    disposition: success
+    flow:
+      # web1-hr-west
+      src_ip: 192.168.123.1
+      dst_ip: 10.3.1.200
+      application: icmp
+  - src_hostname: leaf01
+    src_location: leaf01[lo]
+    disposition: success
+    flow:
+      # expense1-fin-east
+      src_ip: 192.168.123.1
+      dst_ip: 10.2.1.69
+      application: icmp
+  - src_hostname: leaf01
+    src_location: leaf01[lo]
+    disposition: failure
+    flow:
+      # jump1-it-east
+      src_ip: 10.16.1.1
+      dst_ip: 10.5.1.196
+      application: icmp
+  - src_hostname: leaf01
+    src_location: leaf01[lo]
+    disposition: failure
+    flow:
+      # jump1-it-west
+      src_ip: 10.16.1.1
+      dst_ip: 10.4.1.177
+      application: icmp
+  - src_hostname: leaf01
+    src_location: leaf01[lo]
+    disposition: failure
+    flow:
+      # web1-hr-west
+      src_ip: 10.16.1.1
+      dst_ip: 10.3.1.200
+      application: icmp
+  - src_hostname: leaf01
+    src_location: leaf01[lo]
+    disposition: success
+    flow:
+      # expense1-fin-east
+      src_ip: 10.16.1.1
+      dst_ip: 10.2.1.69
+      application: icmp
+# spine01
+  - src_hostname: spine01
+    src_location: spine01[lo]
+    disposition: success
+    flow:
+      # leaf01
+      src_ip: 192.168.123.15
+      dst_ip: 192.168.123.1
+      application: icmp
+  - src_hostname: spine01
+    src_location: spine01[lo]
+    disposition: success
+    flow:
+      # bl01
+      src_ip: 192.168.123.15
+      dst_ip: 192.168.123.19
+      application: icmp
+  - src_hostname: spine01
+    src_location: spine01[lo]
+    disposition: success
+    flow:
+      # fwl01
+      src_ip: 192.168.123.15
+      dst_ip: 192.168.123.21
+      application: icmp
+  - src_hostname: spine01
+    src_location: spine01[lo]
+    disposition: success
+    flow:
+      # exitgw
+      src_ip: 192.168.123.15
+      dst_ip: 192.168.123.22
+      application: icmp
+  - src_hostname: spine01
+    src_location: spine01[lo]
+    disposition: success
+    flow:
+      # jump1-it-east
+      src_ip: 192.168.123.15
+      dst_ip: 10.5.1.196
+      application: icmp
+  - src_hostname: spine01
+    src_location: spine01[lo]
+    disposition: success
+    flow:
+      # jump1-it-west
+      src_ip: 192.168.123.15
+      dst_ip: 10.4.1.177
+      application: icmp
+  - src_hostname: spine01
+    src_location: spine01[lo]
+    disposition: success
+    flow:
+      # web1-hr-west
+      src_ip: 192.168.123.15
+      dst_ip: 10.3.1.200
+      application: icmp
+  - src_hostname: spine01
+    src_location: spine01[lo]
+    disposition: success
+    flow:
+      # expense1-fin-east
+      src_ip: 192.168.123.15
+      dst_ip: 10.2.1.69
+      application: icmp
+  - src_hostname: spine01
+    src_location: spine01[lo]
+    disposition: failure
+    flow:
+      # jump1-it-east
+      src_ip: 10.16.2.1
+      dst_ip: 10.5.1.196
+      application: icmp
+  - src_hostname: spine01
+    src_location: spine01[lo]
+    disposition: failure
+    flow:
+      # jump1-it-west
+      src_ip: 10.16.2.1
+      dst_ip: 10.4.1.177
+      application: icmp
+  - src_hostname: spine01
+    src_location: spine01[lo]
+    disposition: failure
+    flow:
+      # web1-hr-west
+      src_ip: 10.16.2.1
+      dst_ip: 10.3.1.200
+      application: icmp
+  - src_hostname: spine01
+    src_location: spine01[lo]
+    disposition: success
+    flow:
+      # expense1-fin-east
+      src_ip: 10.16.2.1
+      dst_ip: 10.2.1.69
+      application: icmp
+# bl01
+  - src_hostname: bl01
+    src_location: bl01[lo]
+    disposition: success
+    flow:
+      # leaf01
+      src_ip: 192.168.123.19
+      dst_ip: 192.168.123.1
+      application: icmp
+  - src_hostname: bl01
+    src_location: bl01[lo]
+    disposition: success
+    flow:
+      # spine01
+      src_ip: 192.168.123.19
+      dst_ip: 192.168.123.15
+      application: icmp
+  - src_hostname: bl01
+    src_location: bl01[lo]
+    disposition: success
+    flow:
+      # fwl01
+      src_ip: 192.168.123.19
+      dst_ip: 192.168.123.21
+      application: icmp
+  - src_hostname: bl01
+    src_location: bl01[lo]
+    disposition: success
+    flow:
+      # exitgw
+      src_ip: 192.168.123.19
+      dst_ip: 192.168.123.22
+      application: icmp
+  - src_hostname: bl01
+    src_location: bl01[lo]
+    disposition: success
+    flow:
+      # jump1-it-east
+      src_ip: 192.168.123.19
+      dst_ip: 10.5.1.196
+      application: icmp
+  - src_hostname: bl01
+    src_location: bl01[lo]
+    disposition: success
+    flow:
+      # jump1-it-west
+      src_ip: 192.168.123.19
+      dst_ip: 10.4.1.177
+      application: icmp
+  - src_hostname: bl01
+    src_location: bl01[lo]
+    disposition: success
+    flow:
+      # web1-hr-west
+      src_ip: 192.168.123.19
+      dst_ip: 10.3.1.200
+      application: icmp
+  - src_hostname: bl01
+    src_location: bl01[lo]
+    disposition: success
+    flow:
+      # expense1-fin-east
+      src_ip: 192.168.123.19
+      dst_ip: 10.2.1.69
+      application: icmp
+  - src_hostname: bl01
+    src_location: bl01[lo]
+    disposition: failure
+    flow:
+      # jump1-it-east
+      src_ip: 10.16.3.1
+      dst_ip: 10.5.1.196
+      application: icmp
+  - src_hostname: bl01
+    src_location: bl01[lo]
+    disposition: failure
+    flow:
+      # jump1-it-west
+      src_ip: 10.16.3.1
+      dst_ip: 10.4.1.177
+      application: icmp
+  - src_hostname: bl01
+    src_location: bl01[lo]
+    disposition: failure
+    flow:
+      # web1-hr-west
+      src_ip: 10.16.3.1
+      dst_ip: 10.3.1.200
+      application: icmp
+  - src_hostname: bl01
+    src_location: bl01[lo]
+    disposition: success
+    flow:
+      # expense1-fin-east
+      src_ip: 10.16.3.1
+      dst_ip: 10.2.1.69
+      application: icmp
+# fwl01
+  - src_hostname: fwl01
+    src_location: fwl01[lo0.0]
+    disposition: success
+    flow:
+      # leaf01
+      src_ip: 192.168.123.21
+      dst_ip: 192.168.123.1
+      application: icmp
+  - src_hostname: fwl01
+    src_location: fwl01[lo0.0]
+    disposition: success
+    flow:
+      # spine01
+      src_ip: 192.168.123.21
+      dst_ip: 192.168.123.15
+      application: icmp
+  - src_hostname: fwl01
+    src_location: fwl01[lo0.0]
+    disposition: success
+    flow:
+      # bl01
+      src_ip: 192.168.123.21
+      dst_ip: 192.168.123.19
+      application: icmp
+  - src_hostname: fwl01
+    src_location: fwl01[lo0.0]
+    disposition: success
+    flow:
+      # exitgw
+      src_ip: 192.168.123.21
+      dst_ip: 192.168.123.22
+      application: icmp
+  - src_hostname: fwl01
+    src_location: fwl01[lo0.0]
+    disposition: success
+    flow:
+      # jump1-it-east
+      src_ip: 192.168.123.21
+      dst_ip: 10.5.1.196
+      application: icmp
+  - src_hostname: fwl01
+    src_location: fwl01[lo0.0]
+    disposition: success
+    flow:
+      # jump1-it-west
+      src_ip: 192.168.123.21
+      dst_ip: 10.4.1.177
+      application: icmp
+  - src_hostname: fwl01
+    src_location: fwl01[lo0.0]
+    disposition: success
+    flow:
+      # web1-hr-west
+      src_ip: 192.168.123.21
+      dst_ip: 10.3.1.200
+      application: icmp
+  - src_hostname: fwl01
+    src_location: fwl01[lo0.0]
+    disposition: success
+    flow:
+      # expense1-fin-east
+      src_ip: 192.168.123.21
+      dst_ip: 10.2.1.69
+      application: icmp
+  - src_hostname: fwl01
+    src_location: fwl01[lo0.0]
+    disposition: failure
+    flow:
+      # jump1-it-east
+      src_ip: 10.16.4.1
+      dst_ip: 10.5.1.196
+      application: icmp
+  - src_hostname: fwl01
+    src_location: fwl01[lo0.0]
+    disposition: failure
+    flow:
+      # jump1-it-west
+      src_ip: 10.16.4.1
+      dst_ip: 10.4.1.177
+      application: icmp
+  - src_hostname: fwl01
+    src_location: fwl01[lo0.0]
+    disposition: failure
+    flow:
+      # web1-hr-west
+      src_ip: 10.16.4.1
+      dst_ip: 10.3.1.200
+      application: icmp
+  - src_hostname: fwl01
+    src_location: fwl01[lo0.0]
+    disposition: success
+    flow:
+      # expense1-fin-east
+      src_ip: 10.16.4.1
+      dst_ip: 10.2.1.69
+      application: icmp
+# exitgw
+  - src_hostname: exitgw
+    src_location: exitgw[loopback123]
+    disposition: success
+    flow:
+      # leaf01
+      src_ip: 192.168.123.22
+      dst_ip: 192.168.123.1
+      application: icmp
+  - src_hostname: exitgw
+    src_location: exitgw[loopback123]
+    disposition: success
+    flow:
+      # spine01
+      src_ip: 192.168.123.22
+      dst_ip: 192.168.123.15
+      application: icmp
+  - src_hostname: exitgw
+    src_location: exitgw[loopback123]
+    disposition: success
+    flow:
+      # bl01
+      src_ip: 192.168.123.22
+      dst_ip: 192.168.123.19
+      application: icmp
+  - src_hostname: exitgw
+    src_location: exitgw[loopback123]
+    disposition: success
+    flow:
+      # fwl01
+      src_ip: 192.168.123.22
+      dst_ip: 192.168.123.21
+      application: icmp
+  - src_hostname: exitgw
+    src_location: exitgw[loopback123]
+    disposition: success
+    flow:
+      # jump1-it-east
+      src_ip: 192.168.123.22
+      dst_ip: 10.5.1.196
+      application: icmp
+  - src_hostname: exitgw
+    src_location: exitgw[loopback123]
+    disposition: success
+    flow:
+      # jump1-it-west
+      src_ip: 192.168.123.22
+      dst_ip: 10.4.1.177
+      application: icmp
+  - src_hostname: exitgw
+    src_location: exitgw[loopback123]
+    disposition: success
+    flow:
+      # web1-hr-west
+      src_ip: 192.168.123.22
+      dst_ip: 10.3.1.200
+      application: icmp
+  - src_hostname: exitgw
+    src_location: exitgw[loopback123]
+    disposition: success
+    flow:
+      # expense1-fin-east
+      src_ip: 192.168.123.22
+      dst_ip: 10.2.1.69
+      application: icmp
+# bor01
+  - src_hostname: bor01
+    src_location: bor01[lo0.0]
+    disposition: failure
+    flow:
+      # leaf01
+      src_ip: 10.16.5.1
+      dst_ip: 192.168.123.1
+      application: icmp
+  - src_hostname: bor01
+    src_location: bor01[lo0.0]
+    disposition: failure
+    flow:
+      # spine01
+      src_ip: 10.16.5.1
+      dst_ip: 192.168.123.15
+      application: icmp
+  - src_hostname: bor01
+    src_location: bor01[lo0.0]
+    disposition: failure
+    flow:
+      # bl01
+      src_ip: 10.16.5.1
+      dst_ip: 192.168.123.19
+      application: icmp
+  - src_hostname: bor01
+    src_location: bor01[lo0.0]
+    disposition: failure
+    flow:
+      # fwl01
+      src_ip: 10.16.5.1
+      dst_ip: 192.168.123.21
+      application: icmp
+  - src_hostname: bor01
+    src_location: bor01[lo0.0]
+    disposition: failure
+    flow:
+      # exitgw
+      src_ip: 10.16.5.1
+      dst_ip: 192.168.123.22
+      application: icmp
+  - src_hostname: bor01
+    src_location: bor01[lo0.0]
+    disposition: failure
+    flow:
+      # jump1-it-east
+      src_ip: 10.16.5.1
+      dst_ip: 10.5.1.196
+      application: icmp
+  - src_hostname: bor01
+    src_location: bor01[lo0.0]
+    disposition: failure
+    flow:
+      # jump1-it-west
+      src_ip: 10.16.5.1
+      dst_ip: 10.4.1.177
+      application: icmp
+  - src_hostname: bor01
+    src_location: bor01[lo0.0]
+    disposition: failure
+    flow:
+      # web1-hr-west
+      src_ip: 10.16.5.1
+      dst_ip: 10.3.1.200
+      application: icmp
+  - src_hostname: bor01
+    src_location: bor01[lo0.0]
+    disposition: failure
+    flow:
+      # expense1-fin-east
+      src_ip: 10.16.5.1
+      dst_ip: 10.2.1.69
+      application: icmp

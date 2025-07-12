@@ -1,0 +1,266 @@
+Building configuration...
+
+Current configuration : 4114 bytes
+!
+! Last configuration change at 19:46:45 UTC Wed Nov 11 2020
+!
+version 16.4
+service timestamps debug datetime msec
+service timestamps log datetime msec
+no platform punt-keepalive disable-kernel-core
+platform console serial
+!
+hostname D1_redist
+!
+boot-start-marker
+boot-end-marker
+!
+!
+!
+no aaa new-model
+!
+!
+!
+!
+!
+!
+!
+!
+!
+
+
+
+ip domain name diolap.com
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+subscriber templating
+!
+!
+!
+multilink bundle-name authenticated
+!
+!
+!
+!
+!
+!
+
+
+!
+!
+!
+!
+!
+!
+!
+license udi pid CSR1000V sn 9L6ZRSMTTDG
+diagnostic bootup level minimal
+!
+spanning-tree extend system-id
+!
+!
+username cisco privilege 15 password 0 cisco
+!
+redundancy
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+interface Loopback123
+ ip address 192.168.123.1 255.255.255.255
+!
+interface GigabitEthernet1
+ ip address 10.12.11.1 255.255.255.0
+ negotiation auto
+ no mop enabled
+ no mop sysid
+!
+interface GigabitEthernet2
+ ip address 10.13.21.1 255.255.255.0
+ negotiation auto
+ no mop enabled
+ no mop sysid
+!
+interface GigabitEthernet3
+ ip address 10.14.31.1 255.255.255.0
+ negotiation auto
+ no mop enabled
+ no mop sysid
+!
+interface GigabitEthernet4
+ ip address 10.15.41.1 255.255.255.0
+ negotiation auto
+ no mop enabled
+ no mop sysid
+!
+interface GigabitEthernet5
+ no ip address
+ shutdown
+ negotiation auto
+ no mop enabled
+ no mop sysid
+!
+interface GigabitEthernet6
+ no ip address
+ shutdown
+ negotiation auto
+ no mop enabled
+ no mop sysid
+!
+interface GigabitEthernet7
+ no ip address
+ shutdown
+ negotiation auto
+ no mop enabled
+ no mop sysid
+!
+interface GigabitEthernet8
+ no ip address
+ shutdown
+ negotiation auto
+ no mop enabled
+ no mop sysid
+!
+interface GigabitEthernet9
+ no ip address
+ shutdown
+ negotiation auto
+ no mop enabled
+ no mop sysid
+!
+interface GigabitEthernet10
+ ip address 192.168.122.2 255.255.255.0
+ negotiation auto
+ no mop enabled
+ no mop sysid
+!
+!
+router eigrp 1
+ network 10.13.21.0 0.0.0.255
+ redistribute connected metric 1000 100 255 1 1500 route-map redist_connected
+ redistribute static metric 900 100 255 1 1500 route-map redist_static
+ redistribute bgp 65001 metric 800 100 255 1 1500 route-map redist_bgp
+ redistribute ospf 1 metric 700 100 255 1 1500 route-map redist_ospf
+ passive-interface default
+ no passive-interface GigabitEthernet2
+ eigrp router-id 192.168.123.1
+!
+router ospf 1
+ router-id 192.168.123.1
+ redistribute connected subnets route-map redist_connected
+ redistribute static subnets route-map redist_static
+ redistribute eigrp 1 subnets route-map redist_eigrp
+ redistribute bgp 65001 subnets route-map redist_bgp
+ passive-interface default
+ no passive-interface GigabitEthernet4
+ network 10.15.41.0 0.0.0.255 area 0
+!
+router bgp 65001
+ bgp router-id 192.168.123.1
+ bgp log-neighbor-changes
+ redistribute connected route-map redist_connected
+ redistribute static route-map redist_static
+ redistribute eigrp 1 route-map redist_eigrp
+ redistribute ospf 1 route-map redist_ospf
+ neighbor 10.14.31.2 remote-as 65004
+ neighbor 10.14.31.2 soft-reconfiguration inbound
+!
+!
+virtual-service csr_mgmt
+!
+ip forward-protocol nd
+ip http server
+ip http authentication local
+ip http secure-server
+!
+ip route 192.168.123.2 255.255.255.255 10.12.11.2
+ip ssh version 2
+!
+!
+!
+ip prefix-list redist_bgp seq 5 permit 192.168.123.4/32
+!
+ip prefix-list redist_connected seq 5 permit 192.168.122.0/24
+ip prefix-list redist_connected seq 10 permit 192.168.123.1/32
+!
+ip prefix-list redist_eigrp seq 5 permit 192.168.123.3/32
+!
+ip prefix-list redist_ospf seq 5 permit 192.168.123.5/32
+!
+ip prefix-list redist_static seq 5 permit 192.168.123.2/32
+!
+!
+route-map redist_eigrp permit 10
+ match ip address prefix-list redist_eigrp
+!
+route-map redist_bgp permit 10
+ match ip address prefix-list redist_bgp
+!
+route-map redist_connected permit 10
+ match ip address prefix-list redist_connected
+!
+route-map redist_ospf permit 10
+ match ip address prefix-list redist_ospf
+!
+route-map redist_static permit 10
+ match ip address prefix-list redist_static
+!
+!
+!
+control-plane
+!
+ !
+ !
+ !
+ !
+!
+!
+!
+!
+!
+line con 0
+ stopbits 1
+line vty 0 4
+ login local
+ transport input ssh
+line vty 5 15
+ login local
+ transport input ssh
+!
+!
+!
+!
+!
+!
+end

@@ -1,0 +1,246 @@
+Building configuration...
+
+Current configuration : 4749 bytes
+!
+! Last configuration change at 17:00:37 UTC Thu Nov 21 2019
+!
+version 16.4
+service timestamps debug datetime msec
+service timestamps log datetime msec
+no platform punt-keepalive disable-kernel-core
+platform console serial
+!
+hostname R-PublicASN111
+!
+boot-start-marker
+boot-end-marker
+!
+!
+!
+no aaa new-model
+!
+!
+!
+!
+!
+!
+!
+!
+!
+
+
+
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+subscriber templating
+!
+!
+!
+multilink bundle-name authenticated
+!
+!
+!
+!
+!
+crypto pki trustpoint TP-self-signed-446211790
+ enrollment selfsigned
+ subject-name cn=IOS-Self-Signed-Certificate-446211790
+ revocation-check none
+ rsakeypair TP-self-signed-446211790
+!
+!
+crypto pki certificate chain TP-self-signed-446211790
+ certificate self-signed 01
+  3082032E 30820216 A0030201 02020101 300D0609 2A864886 F70D0101 05050030
+  30312E30 2C060355 04031325 494F532D 53656C66 2D536967 6E65642D 43657274
+  69666963 6174652D 34343632 31313739 30301E17 0D313930 39323032 33333431
+  345A170D 32303031 30313030 30303030 5A303031 2E302C06 03550403 1325494F
+  532D5365 6C662D53 69676E65 642D4365 72746966 69636174 652D3434 36323131
+  37393030 82012230 0D06092A 864886F7 0D010101 05000382 010F0030 82010A02
+  82010100 CD0E896D 685D5700 95446313 1F04CA9B 7922CDB2 0F988307 87915ED8
+  307D9326 7EC1AE95 927539DB 50A2E62E A66120ED FC63D55B B46EE0F8 52AD4A1A
+  15EAF794 A067DC0A 148D6E85 89170E84 B297AF21 F5F4D644 68803B0E 31B169CC
+  1E8F31B6 7F6A9A33 89A7A79C A9ACCEF3 5DA1B01D 74C7B109 36B57929 466F1E7E
+  4EE27C52 D01CA938 CEBCCA67 EB35E4E8 D8BBD579 A41A3910 3BE9AC80 9DABD1E6
+  88F233F8 FCA8C843 69D1C4F8 F184F1FA 2E48CE79 5D922A48 57F04F30 9721DB2E
+  FEE3F20F CC1D2566 9FBB8E76 697EEEC7 BEA4C286 55463980 5F4D3CFB FA40D695
+  38FB8FD5 C34559CC C1F1F5E6 8AE212C6 78AC692B DF87F60E FA3E1752 BE351E0C
+  FDF68C37 02030100 01A35330 51300F06 03551D13 0101FF04 05300301 01FF301F
+  0603551D 23041830 1680146E 4A8ADDAF 63BCF8A8 EEF69A51 96844ED2 A84D4A30
+  1D060355 1D0E0416 04146E4A 8ADDAF63 BCF8A8EE F69A5196 844ED2A8 4D4A300D
+  06092A86 4886F70D 01010505 00038201 01009D70 A3974A7D 158096FC FEBB943F
+  3D824615 C9B2DCF7 58013C42 DB13B094 CC0EA311 8ABDDC86 5E4E1FC0 E0E8679B
+  51014E53 F4D1AD96 EC2CA206 C609D465 7494C621 6B61A884 B9FF8C6E 0814870C
+  20A39E06 0C03B1A7 E3428493 18C9C49A 5D10501B D30AE048 B24C44AF 3118A149
+  869976F4 D625346B DF39CA38 5D011A4A B6FD5B91 D99900AF 03B139BE EF59D1D1
+  798375A8 07D9B9DE 09ED1E7F 39C09501 8E7EFAE7 EDDAC11E A2FB7F95 5801822E
+  9870EE4E 18F879EC 46407DB5 8F1F497A C8D732BC 26428EF6 704EF473 C8A4BD8B
+  6B56A214 E6E9EBA8 D065F4C2 7D9695B6 75FBC619 80685446 628A6B60 8985CEF9
+  9202F814 5D8C4549 72AA4F6B 5433CEF5 D433
+  	quit
+
+
+!
+!
+!
+!
+!
+!
+!
+license udi pid CSR1000V sn 9BAJQLV5D5G
+diagnostic bootup level minimal
+!
+spanning-tree extend system-id
+!
+!
+username cisco privilege 15 password 0 cisco
+!
+redundancy
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+interface Loopback0
+ ip address 100.100.100.2 255.255.255.255
+!
+interface Loopback3
+ ip address 3.3.3.3 255.255.255.255
+!
+interface Loopback4
+ ip address 4.4.4.4 255.255.255.255
+!
+interface Loopback123
+ ip address 192.168.123.3 255.255.255.255
+!
+interface GigabitEthernet1
+ ip address 10.10.11.1 255.255.255.0
+ negotiation auto
+ no mop enabled
+ no mop sysid
+!
+interface GigabitEthernet2
+ no ip address
+ shutdown
+ negotiation auto
+ no mop enabled
+ no mop sysid
+!
+interface GigabitEthernet3
+ no ip address
+ shutdown
+ negotiation auto
+ no mop enabled
+ no mop sysid
+!
+interface GigabitEthernet4
+ no ip address
+ shutdown
+ negotiation auto
+ no mop enabled
+ no mop sysid
+!
+router bgp 111
+ bgp log-neighbor-changes
+ network 3.3.3.3 mask 255.255.255.255
+ network 4.4.4.4 mask 255.255.255.255
+ network 100.100.100.2 mask 255.255.255.255
+ network 192.168.123.3 mask 255.255.255.255
+ neighbor 10.10.11.2 remote-as 100
+ neighbor 10.10.11.2 route-map test-privateASN out
+!
+!
+virtual-service csr_mgmt
+!
+ip forward-protocol nd
+ip http server
+ip http authentication local
+ip http secure-server
+!
+!
+!
+!
+ip prefix-list donothing seq 5 permit 100.100.100.2/32
+ip prefix-list donothing seq 10 permit 192.168.123.3/32
+!
+ip prefix-list prependprivate seq 5 permit 3.3.3.3/32
+!
+ip prefix-list prependpublic seq 5 permit 4.4.4.4/32
+!
+!
+route-map test-privateASN permit 10
+ match ip address prefix-list prependprivate
+ set as-path prepend 65101
+!
+route-map test-privateASN permit 20
+ match ip address prefix-list prependpublic
+ set as-path prepend 25
+!
+route-map test-privateASN permit 30
+ match ip address prefix-list donothing
+!
+!
+!
+control-plane
+!
+ !
+ !
+ !
+ !
+!
+!
+!
+!
+!
+line con 0
+ stopbits 1
+line vty 0
+ login local
+ transport input ssh
+line vty 1 2
+ login local
+ length 0
+ transport input ssh
+line vty 3 4
+ login local
+ transport input ssh
+line vty 5 15
+ login local
+ transport input ssh
+!
+!
+!
+!
+!
+!
+end

@@ -1,0 +1,214 @@
+{
+ "SecurityGroups": [
+  {
+   "Description": "Managed by Terraform",
+   "GroupId": "sg-01fa425651e8eabf9",
+   "GroupName": "bat_sg",
+   "IpPermissions": [
+    {
+     "FromPort": 33434,
+     "IpProtocol": "udp",
+     "IpRanges": [
+      {
+       "CidrIp": "0.0.0.0/0",
+       "Description": "Traceroute Access"
+      }
+     ],
+     "Ipv6Ranges": [],
+     "PrefixListIds": [],
+     "ToPort": 33534,
+     "UserIdGroupPairs": []
+    },
+    {
+     "FromPort": 22,
+     "IpProtocol": "tcp",
+     "IpRanges": [
+      {
+       "CidrIp": "0.0.0.0/0",
+       "Description": "SSH Access"
+      }
+     ],
+     "Ipv6Ranges": [],
+     "PrefixListIds": [],
+     "ToPort": 22,
+     "UserIdGroupPairs": []
+    },
+    {
+     "FromPort": 8,
+     "IpProtocol": "icmp",
+     "IpRanges": [
+      {
+       "CidrIp": "0.0.0.0/0",
+       "Description": "ICMP Access"
+      }
+     ],
+     "Ipv6Ranges": [],
+     "PrefixListIds": [],
+     "ToPort": 0,
+     "UserIdGroupPairs": []
+    }
+   ],
+   "IpPermissionsEgress": [
+    {
+     "IpProtocol": "-1",
+     "IpRanges": [
+      {
+       "CidrIp": "0.0.0.0/0",
+       "Description": "Allow all"
+      }
+     ],
+     "Ipv6Ranges": [],
+     "PrefixListIds": [],
+     "UserIdGroupPairs": []
+    }
+   ],
+   "OwnerId": "028403472736",
+   "Tags": [
+    {
+     "Key": "Name",
+     "Value": "bat_general"
+    }
+   ],
+   "VpcId": "vpc-0f52dfe0748da9e28"
+  },
+  {
+   "Description": "default VPC security group",
+   "GroupId": "sg-063f89d7a491b15e8",
+   "GroupName": "default",
+   "IpPermissions": [
+    {
+     "IpProtocol": "-1",
+     "IpRanges": [],
+     "Ipv6Ranges": [],
+     "PrefixListIds": [],
+     "UserIdGroupPairs": [
+      {
+       "GroupId": "sg-063f89d7a491b15e8",
+       "UserId": "028403472736"
+      }
+     ]
+    }
+   ],
+   "IpPermissionsEgress": [
+    {
+     "IpProtocol": "-1",
+     "IpRanges": [
+      {
+       "CidrIp": "0.0.0.0/0"
+      }
+     ],
+     "Ipv6Ranges": [],
+     "PrefixListIds": [],
+     "UserIdGroupPairs": []
+    }
+   ],
+   "OwnerId": "028403472736",
+   "VpcId": "vpc-078e17ef20aeaf177"
+  },
+  {
+   "Description": "default VPC security group",
+   "GroupId": "sg-0f9c0f9468e5537dd",
+   "GroupName": "default",
+   "IpPermissions": [
+    {
+     "IpProtocol": "-1",
+     "IpRanges": [],
+     "Ipv6Ranges": [],
+     "PrefixListIds": [],
+     "UserIdGroupPairs": [
+      {
+       "GroupId": "sg-0f9c0f9468e5537dd",
+       "UserId": "028403472736"
+      }
+     ]
+    }
+   ],
+   "IpPermissionsEgress": [
+    {
+     "IpProtocol": "-1",
+     "IpRanges": [
+      {
+       "CidrIp": "0.0.0.0/0"
+      }
+     ],
+     "Ipv6Ranges": [],
+     "PrefixListIds": [],
+     "UserIdGroupPairs": []
+    }
+   ],
+   "OwnerId": "028403472736",
+   "VpcId": "vpc-0f52dfe0748da9e28"
+  },
+  {
+   "Description": "Managed by Terraform",
+   "GroupId": "sg-0fb27051e443ab638",
+   "GroupName": "fish_sg",
+   "IpPermissions": [
+    {
+     "FromPort": 33434,
+     "IpProtocol": "udp",
+     "IpRanges": [
+      {
+       "CidrIp": "0.0.0.0/0",
+       "Description": "Traceroute Access"
+      }
+     ],
+     "Ipv6Ranges": [],
+     "PrefixListIds": [],
+     "ToPort": 33534,
+     "UserIdGroupPairs": []
+    },
+    {
+     "FromPort": 22,
+     "IpProtocol": "tcp",
+     "IpRanges": [
+      {
+       "CidrIp": "0.0.0.0/0",
+       "Description": "SSH Access"
+      }
+     ],
+     "Ipv6Ranges": [],
+     "PrefixListIds": [],
+     "ToPort": 22,
+     "UserIdGroupPairs": []
+    },
+    {
+     "FromPort": 8,
+     "IpProtocol": "icmp",
+     "IpRanges": [
+      {
+       "CidrIp": "0.0.0.0/0",
+       "Description": "ICMP Access"
+      }
+     ],
+     "Ipv6Ranges": [],
+     "PrefixListIds": [],
+     "ToPort": 0,
+     "UserIdGroupPairs": []
+    }
+   ],
+   "IpPermissionsEgress": [
+    {
+     "IpProtocol": "-1",
+     "IpRanges": [
+      {
+       "CidrIp": "0.0.0.0/0",
+       "Description": "Allow all"
+      }
+     ],
+     "Ipv6Ranges": [],
+     "PrefixListIds": [],
+     "UserIdGroupPairs": []
+    }
+   ],
+   "OwnerId": "028403472736",
+   "Tags": [
+    {
+     "Key": "Name",
+     "Value": "fish_general"
+    }
+   ],
+   "VpcId": "vpc-078e17ef20aeaf177"
+  }
+ ]
+}

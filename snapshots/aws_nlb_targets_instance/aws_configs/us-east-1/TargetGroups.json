@@ -1,0 +1,58 @@
+{
+ "TargetGroups": [
+  {
+   "HealthCheckEnabled": true,
+   "HealthCheckIntervalSeconds": 30,
+   "HealthCheckPort": "traffic-port",
+   "HealthCheckProtocol": "TCP",
+   "HealthCheckTimeoutSeconds": 10,
+   "HealthyThresholdCount": 3,
+   "LoadBalancerArns": [
+    "arn:aws:elasticloadbalancing:us-east-1:028403472736:loadbalancer/net/targets-instance-nlb-only-pri-a/5f9fc459fbfc6805"
+   ],
+   "Port": 80,
+   "Protocol": "TCP",
+   "TargetGroupArn": "arn:aws:elasticloadbalancing:us-east-1:028403472736:targetgroup/targets-instance-tg-only-pri-a/900169cd2ec665ad",
+   "TargetGroupName": "targets-instance-tg-only-pri-a",
+   "TargetType": "instance",
+   "UnhealthyThresholdCount": 3,
+   "VpcId": "vpc-0a001de0c2ffb4f50"
+  },
+  {
+   "HealthCheckEnabled": true,
+   "HealthCheckIntervalSeconds": 30,
+   "HealthCheckPort": "traffic-port",
+   "HealthCheckProtocol": "TCP",
+   "HealthCheckTimeoutSeconds": 10,
+   "HealthyThresholdCount": 3,
+   "LoadBalancerArns": [
+    "arn:aws:elasticloadbalancing:us-east-1:028403472736:loadbalancer/net/targets-instance-nlb-only-pub-a/01b6d1d0dcf697ce"
+   ],
+   "Port": 80,
+   "Protocol": "TCP",
+   "TargetGroupArn": "arn:aws:elasticloadbalancing:us-east-1:028403472736:targetgroup/targets-instance-tg-only-pub-a/18b006d402094594",
+   "TargetGroupName": "targets-instance-tg-only-pub-a",
+   "TargetType": "instance",
+   "UnhealthyThresholdCount": 3,
+   "VpcId": "vpc-0a001de0c2ffb4f50"
+  },
+  {
+   "HealthCheckEnabled": true,
+   "HealthCheckIntervalSeconds": 30,
+   "HealthCheckPort": "traffic-port",
+   "HealthCheckProtocol": "TCP",
+   "HealthCheckTimeoutSeconds": 10,
+   "HealthyThresholdCount": 3,
+   "LoadBalancerArns": [
+    "arn:aws:elasticloadbalancing:us-east-1:028403472736:loadbalancer/net/targets-instance-nlb-pri-pub-a/6cb1d730b0da5d0a"
+   ],
+   "Port": 80,
+   "Protocol": "TCP",
+   "TargetGroupArn": "arn:aws:elasticloadbalancing:us-east-1:028403472736:targetgroup/targets-instance-tg-pri-pub-a/be883e4b952db4b8",
+   "TargetGroupName": "targets-instance-tg-pri-pub-a",
+   "TargetType": "instance",
+   "UnhealthyThresholdCount": 3,
+   "VpcId": "vpc-0a001de0c2ffb4f50"
+  }
+ ]
+}

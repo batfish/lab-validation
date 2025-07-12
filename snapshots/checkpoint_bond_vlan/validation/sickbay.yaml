@@ -1,0 +1,12 @@
+entries:
+  - hostname: cp_fw|cp_mgmt
+    test_name: test_main_rib_routes
+    skip:
+      reason: Checkpoint not implemented
+  - hostname: cp_fw|cp_mgmt
+    test_name: test_bgp_rib_routes
+    skip:
+      reason: Checkpoint not implemented
+  - test_name: test_connectivity_matrix
+    skip:
+      reason: Checkpoint not implemented

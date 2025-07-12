@@ -1,0 +1,199 @@
+Building configuration...
+
+Current configuration : 2812 bytes
+!
+! Last configuration change at 23:02:05 UTC Fri Nov 15 2019
+!
+version 15.2
+service timestamps debug datetime msec
+service timestamps log datetime msec
+!
+hostname R1-ios
+!
+boot-start-marker
+boot-end-marker
+!
+!
+!
+aaa new-model
+!
+!
+aaa authorization exec default local
+!
+!
+!
+!
+!
+aaa session-id common
+no ip icmp rate-limit unreachable
+ip cef
+!
+!
+!
+!
+!
+!
+no ip domain lookup
+ip domain name demo.com
+no ipv6 cef
+!
+!
+multilink bundle-name authenticated
+!
+!
+!
+!
+!
+!
+!
+username demo privilege 15 secret 5 $1$bOPC$Ledl3D.5Xx8hkXUgobF0i.
+username cisco privilege 15 password 0 cisco
+!
+!
+ip tcp synwait-time 5
+ip ssh version 2
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+interface Loopback0
+ description router-id
+ ip address 1.1.1.1 255.255.255.255
+!
+interface Loopback123
+ ip address 192.168.123.1 255.255.255.255
+!
+interface Ethernet0/0
+ no ip address
+ shutdown
+ duplex auto
+!
+interface GigabitEthernet0/0
+ ip address 12.0.0.1 255.255.255.0
+ ip ospf network point-to-point
+ media-type gbic
+ speed 1000
+ duplex full
+ negotiation auto
+!
+interface Ethernet1/0
+ ip address 13.1.0.1 255.255.255.0
+ duplex full
+!
+interface Ethernet1/1
+ ip address 15.1.1.1 255.255.255.0
+ duplex full
+!
+interface Ethernet1/2
+ no ip address
+ duplex full
+!
+interface Ethernet1/3
+ no ip address
+ duplex full
+!
+interface Ethernet1/4
+ no ip address
+ duplex full
+!
+interface Ethernet1/5
+ no ip address
+ duplex full
+!
+interface Ethernet1/6
+ no ip address
+ duplex full
+!
+interface Ethernet1/7
+ no ip address
+ duplex full
+!
+interface Ethernet2/0
+ ip address 14.2.0.1 255.255.255.0
+ ip ospf network point-to-point
+ duplex full
+!
+interface Ethernet2/1
+ no ip address
+ duplex full
+!
+interface Ethernet2/2
+ no ip address
+ duplex full
+!
+interface Ethernet2/3
+ no ip address
+ duplex full
+!
+interface Ethernet2/4
+ no ip address
+ duplex full
+!
+interface Ethernet2/5
+ no ip address
+ duplex full
+!
+interface Ethernet2/6
+ no ip address
+ duplex full
+!
+interface Ethernet2/7
+ ip address 16.2.7.1 255.255.255.0
+ ip ospf network point-to-point
+ duplex full
+!
+interface GigabitEthernet3/0
+ ip address 192.168.122.2 255.255.255.0
+ negotiation auto
+!
+router ospf 1
+ router-id 1.1.1.1
+ area 14 stub
+ area 16 nssa default-information-originate
+ area 18 nssa
+ network 1.1.1.1 0.0.0.0 area 0
+ network 12.0.0.0 0.0.0.255 area 0
+ network 13.1.0.0 0.0.0.255 area 13
+ network 14.2.0.0 0.0.0.255 area 14
+ network 15.1.1.0 0.0.0.255 area 15
+ network 16.2.7.0 0.0.0.255 area 16
+ network 21.1.7.0 0.0.0.255 area 0
+ network 192.168.122.0 0.0.0.255 area 0
+ network 192.168.123.1 0.0.0.0 area 0
+!
+ip forward-protocol nd
+!
+!
+no ip http server
+no ip http secure-server
+!
+!
+!
+!
+!
+control-plane
+!
+!
+line con 0
+ exec-timeout 0 0
+ privilege level 15
+ logging synchronous
+ stopbits 1
+line aux 0
+ exec-timeout 0 0
+ privilege level 15
+ logging synchronous
+ stopbits 1
+line vty 0 4
+ transport input ssh
+!
+!
+end

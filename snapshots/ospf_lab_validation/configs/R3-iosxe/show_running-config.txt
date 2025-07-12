@@ -1,0 +1,217 @@
+Building configuration...
+
+Current configuration : 4104 bytes
+!
+! Last configuration change at 23:19:20 UTC Fri Nov 15 2019
+!
+version 16.4
+service timestamps debug datetime msec
+service timestamps log datetime msec
+no platform punt-keepalive disable-kernel-core
+platform console serial
+!
+hostname R3-iosxe
+!
+boot-start-marker
+boot-end-marker
+!
+!
+!
+no aaa new-model
+!
+!
+!
+!
+!
+!
+!
+!
+!
+
+
+
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+subscriber templating
+!
+!
+!
+multilink bundle-name authenticated
+!
+!
+!
+!
+!
+crypto pki trustpoint TP-self-signed-4186027549
+ enrollment selfsigned
+ subject-name cn=IOS-Self-Signed-Certificate-4186027549
+ revocation-check none
+ rsakeypair TP-self-signed-4186027549
+!
+!
+crypto pki certificate chain TP-self-signed-4186027549
+ certificate self-signed 01
+  30820330 30820218 A0030201 02020101 300D0609 2A864886 F70D0101 05050030
+  31312F30 2D060355 04031326 494F532D 53656C66 2D536967 6E65642D 43657274
+  69666963 6174652D 34313836 30323735 3439301E 170D3139 30393137 32323335
+  33325A17 0D323030 31303130 30303030 305A3031 312F302D 06035504 03132649
+  4F532D53 656C662D 5369676E 65642D43 65727469 66696361 74652D34 31383630
+  32373534 39308201 22300D06 092A8648 86F70D01 01010500 0382010F 00308201
+  0A028201 0100F02B F989E571 E2D9F853 9CE434F8 39653070 D6E4214E AF8D9C8C
+  E2E12CCA 4DD2A4AB 9B13CE96 CE0B24BB 576CC105 05BD62F4 3717A9AA 4A99FBD3
+  FC26BE49 A8B321F4 CDDD00A0 130FA602 6CC6D4BF B3752720 D18F6985 ABC1D743
+  61DD586B 2823AA78 28F8FFDB B4E3A8C9 2C11EAB2 A82907D1 18B04649 B584CE5C
+  F89D4B4F 77E3D729 EC548659 E960840D C5442F6C F6608FDC 23C401DC 1F13422A
+  2C345D60 CCD4F0C5 277241DD 8409C9E6 3C1900D7 50A46B38 FF9FC901 0FE7262B
+  8C954529 544CA33B 3FFC56C3 BBDA8E93 B5C5FC57 078242C9 42BC2933 05094B6F
+  FA080F69 6FA84465 203A3AC3 275DC4A2 B520D1CC F122108F 25E8167E 4B562890
+  96E76195 904F0203 010001A3 53305130 0F060355 1D130101 FF040530 030101FF
+  301F0603 551D2304 18301680 14AFF4E4 C9E381E8 4DC0A56D 517840A9 4CD7065F
+  02301D06 03551D0E 04160414 AFF4E4C9 E381E84D C0A56D51 7840A94C D7065F02
+  300D0609 2A864886 F70D0101 05050003 82010100 097C0B83 9BCE5A91 4A1E9D07
+  2711139B 8B959596 FE88B9A6 329210D1 C4C64907 C73D40B1 1E0F760B F5CD6374
+  4CF382E3 BF73FB93 015DDFE0 3F52A781 32EA1129 5158D539 A9568FE5 91934F9B
+  7C955693 061D7E48 DC165EE7 D04BED0C 4028EBCB A6607246 5DC1A838 EC213814
+  EA7F7F0C B51BEDB1 D9892264 E344D6E3 856B26CA DE5712F4 8D9E1E7C 9AF0C312
+  B80C888D 98DFB6BD 9CC7BDC6 3E74B755 76AE4909 A03EDA7A DE33DB60 0C74A54F
+  95EFABCB 899D0957 734DDF1B 8DE1AAEC 7B3D5F8E B415B7F8 71CF9656 78267742
+  BA904C56 881B9EC0 A24892EE 8D829BBA 1483F47D 769E6F4C E71A1A4A 1193A02B
+  42C34824 A60075E4 23F1B0B5 6625FA8D CCF83DBC
+  	quit
+
+
+!
+!
+!
+!
+!
+!
+!
+license udi pid CSR1000V sn 971YJZJ2UW2
+diagnostic bootup level minimal
+!
+spanning-tree extend system-id
+!
+!
+username cisco privilege 15 password 0 cisco
+!
+redundancy
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+interface Loopback0
+ ip address 3.3.3.3 255.255.255.255
+!
+interface Loopback123
+ ip address 192.168.123.3 255.255.255.0
+!
+interface GigabitEthernet1
+ ip address 13.1.0.2 255.255.255.0
+ negotiation auto
+ no mop enabled
+ no mop sysid
+!
+interface GigabitEthernet2
+ ip address 37.2.2.1 255.255.255.0
+ ip ospf network point-to-point
+ negotiation auto
+ no mop enabled
+ no mop sysid
+!
+interface GigabitEthernet3
+ no ip address
+ shutdown
+ negotiation auto
+ no mop enabled
+ no mop sysid
+!
+interface GigabitEthernet4
+ no ip address
+ shutdown
+ negotiation auto
+ no mop enabled
+ no mop sysid
+!
+router ospf 3
+ router-id 3.3.3.3
+ redistribute static subnets
+ network 3.3.3.3 0.0.0.0 area 13
+ network 13.1.0.0 0.0.0.255 area 13
+ network 192.168.123.3 0.0.0.0 area 13
+!
+!
+virtual-service csr_mgmt
+!
+ip forward-protocol nd
+ip http server
+ip http authentication local
+ip http secure-server
+!
+ip route 7.7.7.7 255.255.255.255 37.2.2.2
+ip route 10.10.7.1 255.255.255.255 37.2.2.2
+ip route 10.11.7.1 255.255.255.255 37.2.2.2
+ip route 192.168.123.7 255.255.255.255 37.2.2.2
+!
+!
+!
+!
+!
+!
+control-plane
+!
+ !
+ !
+ !
+ !
+!
+!
+!
+!
+!
+line con 0
+ stopbits 1
+line vty 0 4
+ login local
+ transport input ssh
+line vty 5 15
+ login local
+ transport input ssh
+!
+!
+!
+!
+!
+!
+end

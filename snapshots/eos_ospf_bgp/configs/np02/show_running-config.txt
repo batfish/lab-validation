@@ -1,0 +1,78 @@
+! Command: show running-config
+! device: np02 (vEOS, EOS-4.23.0.1F)
+!
+! boot system flash:/vEOS-lab.swi
+!
+transceiver qsfp default-mode 4x10G
+!
+hostname np02
+!
+spanning-tree mode mstp
+!
+no aaa root
+!
+username admin privilege 15 role admin secret sha512 $6$Ro.a/ZZaRni2M18K$qloTJXQ9DN0BJ7R1/xMokBl2pf1hLVjedtoxT1IO5AtFJhO3qDVmhrP8jLivs/qacCUkB5Fx.I7VCuz8QHq7b/
+!
+interface Ethernet1
+   description TO--->NP01
+   no switchport
+   ip address 10.12.12.2/30
+!
+interface Ethernet2
+!
+interface Ethernet3
+   description TO--->dlh15
+   no switchport
+   ip address 192.168.2.1/30
+   ip ospf network point-to-point
+!
+interface Ethernet4
+!
+interface Ethernet5
+!
+interface Ethernet6
+!
+interface Ethernet7
+!
+interface Ethernet8
+!
+interface Ethernet9
+!
+interface Ethernet10
+!
+interface Ethernet11
+!
+interface Ethernet12
+!
+interface Loopback0
+   ip address 10.2.2.2/32
+!
+interface Management1
+   description MGMT
+   ip address 10.150.0.188/16
+!
+ip route 10.203.0.0/24 Null0
+!
+ip routing
+!
+ip prefix-list AGG seq 10 permit 10.203.0.0/16
+!
+route-map BGP-TO-OPSF permit 10
+   match ip address prefix-list AGG
+!
+router bgp 65000
+   router-id 10.2.2.2
+   neighbor 10.12.12.1 remote-as 65000
+   neighbor 10.12.12.1 maximum-routes 12000
+   aggregate-address 10.203.0.0/16 summary-only
+!
+router ospf 10
+   router-id 2.2.2.2
+   passive-interface default
+   no passive-interface Ethernet3
+   redistribute bgp route-map BGP-TO-OPSF
+   network 192.168.2.0/30 area 0.0.0.0
+   max-lsa 12000
+   default-information originate
+!
+end

@@ -1,0 +1,44 @@
+
+Instance default:
+BGP table version is 12, local router ID is 192.168.123.5
+Status codes: s suppressed, d damped, h history, * valid, > best, = multipath,
+              i internal, r RIB-failure, S Stale, R Removed
+Origin codes: i - IGP, e - EGP, ? - incomplete
+
+   Network          Next Hop            Metric LocPrf Weight Path
+*> 10.10.10.0/24    10.10.40.1               0             0 1 i
+*> 10.10.20.0/24    10.10.40.1               0             0 1 i
+*> 10.10.30.0/24    10.10.40.1               0             0 1 i
+*> 10.10.40.0/24    10.10.40.1               0             0 1 i
+*> 10.10.50.0/24    10.10.40.1               0             0 1 i
+*> 192.168.122.0    10.10.40.1               0             0 1 i
+*> 192.168.123.1/32 10.10.40.1               0             0 1 i
+*> 192.168.123.2/32 10.10.40.1                             0 1 10 i
+*> 192.168.123.3/32 10.10.40.1                             0 1 20 i
+*> 192.168.123.4/32 10.10.40.1                             0 1 30 i
+*> 192.168.123.5/32 0.0.0.0                  0         32768 i
+*> 192.168.123.6/32 10.10.40.1                             0 1 50 i
+
+Displayed  12 routes and 12 total paths
+
+Instance cust10:
+BGP table version is 1, local router ID is 1.1.5.10
+Status codes: s suppressed, d damped, h history, * valid, > best, = multipath,
+              i internal, r RIB-failure, S Stale, R Removed
+Origin codes: i - IGP, e - EGP, ? - incomplete
+
+   Network          Next Hop            Metric LocPrf Weight Path
+*> 1.1.5.10/32      0.0.0.0                  0         32768 ?
+
+Displayed  1 routes and 1 total paths
+
+Instance cust20:
+BGP table version is 1, local router ID is 1.1.5.20
+Status codes: s suppressed, d damped, h history, * valid, > best, = multipath,
+              i internal, r RIB-failure, S Stale, R Removed
+Origin codes: i - IGP, e - EGP, ? - incomplete
+
+   Network          Next Hop            Metric LocPrf Weight Path
+*> 1.1.5.20/32      0.0.0.0                  0         32768 ?
+
+Displayed  1 routes and 1 total paths

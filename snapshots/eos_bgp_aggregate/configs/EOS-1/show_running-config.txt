@@ -1,0 +1,66 @@
+! Command: show running-config
+! device: EOS-1 (vEOS, EOS-4.23.0.1F)
+!
+! boot system flash:/vEOS-lab.swi
+!
+transceiver qsfp default-mode 4x10G
+!
+hostname EOS-1
+!
+spanning-tree mode mstp
+!
+no aaa root
+!
+username admin role network-admin secret sha512 $6$QFqJIfx5ToEqwGXR$oSsBLokx4lj9vdbGnhL6/h3w9g7AYcprFvkfTMVplWZNtjcf9YspH7d44zwA1N.7kZNim5ilMKFaYVUxoZwin.
+!
+interface Ethernet1
+   no switchport
+   ip address 192.168.1.1/30
+!
+interface Ethernet2
+   no switchport
+   ip address 192.168.2.1/30
+!
+interface Ethernet3
+!
+interface Ethernet4
+!
+interface Ethernet5
+!
+interface Ethernet6
+!
+interface Ethernet7
+!
+interface Ethernet8
+!
+interface Ethernet9
+!
+interface Ethernet10
+!
+interface Ethernet11
+!
+interface Ethernet12
+!
+interface Management1
+   ip address 10.150.0.140/16
+!
+ip route 10.10.1.0/24 192.168.2.2
+ip route 10.11.0.0/16 192.168.2.2
+ip route 10.11.1.0/24 192.168.2.2
+ip route 10.12.0.0/16 192.168.2.2 254
+ip route 10.12.1.0/24 192.168.2.2
+ip route 10.13.0.0/16 192.168.2.2 199
+ip route 10.13.1.0/24 192.168.2.2
+!
+ip routing
+!
+router bgp 100
+   router-id 1.1.1.1
+   neighbor 192.168.1.2 remote-as 200
+   neighbor 192.168.1.2 maximum-routes 12000
+   aggregate-address 10.10.0.0/16
+   aggregate-address 10.11.0.0/16
+   aggregate-address 10.12.0.0/16
+   aggregate-address 10.13.0.0/16
+!
+end

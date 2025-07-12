@@ -1,0 +1,15 @@
+entries:
+  - hostname: exitgw
+    test_name: test_main_rib_routes
+  - hostname: Leaf[1234]
+    test_name: test_bgp_rib_routes
+    skip:
+      reason: weight difference, maybe https://github.com/batfish/lab-validation/issues/7
+  - hostname: Spine1|Spine2
+    test_name: test_bgp_rib_routes
+    skip:
+      reason: https://github.com/batfish/lab-validation/issues/6
+  - hostname: "Leaf[1234]"
+    test_name: test_interface_properties
+    skip:
+      reason: https://github.com/batfish/lab-validation/issues/13

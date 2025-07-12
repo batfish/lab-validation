@@ -1,0 +1,60 @@
+! Command: show running-config
+! device: R-PublicASN400 (vEOS, EOS-4.21.1.1F)
+!
+! boot system flash:/vEOS-lab.swi
+!
+transceiver qsfp default-mode 4x10G
+!
+hostname R-PublicASN400
+!
+spanning-tree mode mstp
+!
+no aaa root
+!
+username admin privilege 15 role network-admin secret sha512 $6$ok7PK/6m0GeU0pMa$QFaHqS3ggyEwKE2J4TuHse1Q/r8ZM2QJflGaHTOnjgr.T8LSV6wOFiAZV9Gr8XLxEP7A2.7mbHYgZQCNeNB7m/
+!
+interface Ethernet1
+   no switchport
+   ip address 10.10.40.1/24
+!
+interface Ethernet2
+!
+interface Ethernet3
+!
+interface Ethernet4
+!
+interface Ethernet5
+!
+interface Ethernet6
+!
+interface Ethernet7
+!
+interface Ethernet8
+!
+interface Ethernet9
+!
+interface Ethernet10
+!
+interface Ethernet11
+!
+interface Ethernet12
+!
+interface Ethernet13
+!
+interface Ethernet14
+!
+interface Ethernet15
+!
+interface Loopback123
+   ip address 192.168.123.6/32
+!
+interface Management1
+!
+ip routing
+!
+router bgp 400
+   neighbor 10.10.40.2 remote-as 100
+   neighbor 10.10.40.2 maximum-routes 12000
+   network 192.168.123.6/32
+!
+end

@@ -1,0 +1,105 @@
+ZEBRA:
+route-map: RM_SET_SRC Invoked: 102
+ permit, sequence 10 Invoked 102
+  Match clauses:
+  Set clauses:
+    src 1.1.1.1
+  Call clause:
+  Action:
+    Exit routemap
+route-map: SPINE_EXPORT Invoked: 0
+ permit, sequence 10 Invoked 0
+  Description:
+    T_ADMIN_ACCEPT
+  Match clauses:
+  Set clauses:
+  Call clause:
+  Action:
+    Exit routemap
+route-map: SPINE_IMPORT Invoked: 0
+ permit, sequence 100 Invoked 0
+  Description:
+    T_ADMIN_ACCEPT
+  Match clauses:
+  Set clauses:
+  Call clause:
+  Action:
+    Exit routemap
+OSPF:
+route-map: RM_SET_SRC Invoked: 0
+ permit, sequence 10 Invoked 0
+  Match clauses:
+  Set clauses:
+  Call clause:
+  Action:
+    Exit routemap
+route-map: SPINE_EXPORT Invoked: 0
+ permit, sequence 10 Invoked 0
+  Description:
+    T_ADMIN_ACCEPT
+  Match clauses:
+  Set clauses:
+  Call clause:
+  Action:
+    Exit routemap
+route-map: SPINE_IMPORT Invoked: 0
+ permit, sequence 100 Invoked 0
+  Description:
+    T_ADMIN_ACCEPT
+  Match clauses:
+  Set clauses:
+  Call clause:
+  Action:
+    Exit routemap
+BGP:
+route-map: RM_SET_SRC Invoked: 0
+ permit, sequence 10 Invoked 0
+  Match clauses:
+  Set clauses:
+  Call clause:
+  Action:
+    Exit routemap
+route-map: SPINE_EXPORT Invoked: 190
+ permit, sequence 10 Invoked 190
+  Description:
+    T_ADMIN_ACCEPT
+  Match clauses:
+  Set clauses:
+  Call clause:
+  Action:
+    Exit routemap
+route-map: SPINE_IMPORT Invoked: 522
+ permit, sequence 100 Invoked 522
+  Description:
+    T_ADMIN_ACCEPT
+  Match clauses:
+  Set clauses:
+  Call clause:
+  Action:
+    Exit routemap
+PIM:
+route-map: RM_SET_SRC Invoked: 0
+ permit, sequence 10 Invoked 0
+  Match clauses:
+  Set clauses:
+  Call clause:
+  Action:
+    Exit routemap
+route-map: SPINE_EXPORT Invoked: 0
+ permit, sequence 10 Invoked 0
+  Description:
+    T_ADMIN_ACCEPT
+  Match clauses:
+  Set clauses:
+  Call clause:
+  Action:
+    Exit routemap
+route-map: SPINE_IMPORT Invoked: 0
+ permit, sequence 100 Invoked 0
+  Description:
+    T_ADMIN_ACCEPT
+  Match clauses:
+  Set clauses:
+  Call clause:
+  Action:
+    Exit routemap

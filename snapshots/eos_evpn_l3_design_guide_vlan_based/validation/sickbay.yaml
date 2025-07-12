@@ -1,0 +1,17 @@
+entries:
+  - hostname: ".*"
+    test_name: test_evpn_rib_routes
+    skip:
+      reason: https://github.com/batfish/lab-validation/issues/11; wrong local preferences, likely related to https://github.com/batfish/lab-validation/issues/8
+  - hostname: ".*"
+    test_name: test_bgp_rib_routes
+    skip:
+      reason: https://github.com/batfish/lab-validation/issues/11; weight difference, maybe https://github.com/batfish/lab-validation/issues/7; Missing VTEP next hop show data, https://github.com/batfish/lab-validation/issues/10
+  - hostname: "H-LEAF1A"
+    test_name: test_main_rib_routes
+    skip:
+      reason: Incorrectly inactive VLAN interfaces, https://github.com/batfish/lab-validation/issues/12
+  - hostname: "H-LEAF2[AB]|H-SVC3[AB]|H-BL1[AB]"
+    test_name: test_interface_properties
+    skip:
+      reason: https://github.com/batfish/lab-validation/issues/13

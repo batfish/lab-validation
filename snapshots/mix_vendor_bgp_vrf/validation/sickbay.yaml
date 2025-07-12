@@ -1,0 +1,13 @@
+entries:
+  - hostname: D-Cumulus
+    test_name: test_bgp_rib_routes
+  - hostname: D-Cumulus
+    test_name: test_interface_properties
+  - hostname: D-JuniperJunos
+    test_name: test_bgp_rib_routes
+    skip:
+      reason: https://github.com/batfish/lab-validation/issues/40
+  - hostname: D-AristaEOS
+    test_name: test_bgp_rib_routes
+    skip:
+      reason: https://github.com/batfish/lab-validation/issues/6

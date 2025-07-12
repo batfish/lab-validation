@@ -1,0 +1,301 @@
+Building configuration...
+
+Current configuration : 4269 bytes
+!
+! Last configuration change at 01:14:21 UTC Sat Jan 23 2021
+!
+version 16.4
+service timestamps debug datetime msec
+service timestamps log datetime msec
+no platform punt-keepalive disable-kernel-core
+platform console serial
+!
+hostname d3_pe
+!
+boot-start-marker
+boot-end-marker
+!
+!
+vrf definition d1_ce
+ rd 65003:1
+ !
+ address-family ipv4
+  import map import_shared
+  route-target export 65003:11
+  route-target import 65003:44
+ exit-address-family
+!
+vrf definition d2_ce
+ rd 65003:2
+ !
+ address-family ipv4
+  route-target export 65003:22
+  route-target import 65003:44
+ exit-address-family
+!
+vrf definition d4_shared
+ rd 65003:4
+ !
+ address-family ipv4
+  route-target export 65003:44
+  route-target import 65003:11
+  route-target import 65003:22
+ exit-address-family
+!
+!
+no aaa new-model
+!
+!
+!
+!
+!
+!
+!
+!
+!
+
+
+
+ip domain name diolap.com
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+subscriber templating
+!
+!
+!
+multilink bundle-name authenticated
+!
+!
+!
+!
+!
+!
+
+
+!
+!
+!
+!
+!
+!
+!
+license udi pid CSR1000V sn 9OVINCJIY21
+diagnostic bootup level minimal
+!
+spanning-tree extend system-id
+!
+!
+username cisco privilege 15 password 0 cisco
+!
+redundancy
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+interface Loopback123
+ vrf forwarding d4_shared
+ ip address 192.168.123.3 255.255.255.255
+!
+interface Loopback1231
+ vrf forwarding d1_ce
+ ip address 192.168.123.31 255.255.255.255
+!
+interface Loopback1232
+ vrf forwarding d2_ce
+ ip address 192.168.123.32 255.255.255.255
+!
+interface Loopback1233
+ vrf forwarding d4_shared
+ ip address 192.168.123.33 255.255.255.255
+!
+interface GigabitEthernet1
+ vrf forwarding d1_ce
+ ip address 10.13.11.2 255.255.255.252
+ negotiation auto
+ no mop enabled
+ no mop sysid
+!
+interface GigabitEthernet2
+ vrf forwarding d2_ce
+ ip address 10.23.12.2 255.255.255.252
+ negotiation auto
+ no mop enabled
+ no mop sysid
+!
+interface GigabitEthernet3
+ vrf forwarding d4_shared
+ ip address 10.34.31.1 255.255.255.252
+ negotiation auto
+ no mop enabled
+ no mop sysid
+!
+interface GigabitEthernet4
+ no ip address
+ negotiation auto
+ no mop enabled
+ no mop sysid
+!
+interface GigabitEthernet5
+ no ip address
+ shutdown
+ negotiation auto
+ no mop enabled
+ no mop sysid
+!
+interface GigabitEthernet6
+ no ip address
+ shutdown
+ negotiation auto
+ no mop enabled
+ no mop sysid
+!
+interface GigabitEthernet7
+ no ip address
+ shutdown
+ negotiation auto
+ no mop enabled
+ no mop sysid
+!
+interface GigabitEthernet8
+ no ip address
+ shutdown
+ negotiation auto
+ no mop enabled
+ no mop sysid
+!
+interface GigabitEthernet9
+ no ip address
+ shutdown
+ negotiation auto
+ no mop enabled
+ no mop sysid
+!
+interface GigabitEthernet10
+ no ip address
+ shutdown
+ negotiation auto
+ no mop enabled
+ no mop sysid
+!
+!
+router eigrp 1
+ !
+ address-family ipv4 vrf d1_ce autonomous-system 1
+  redistribute bgp 65003 metric 1000 100 255 1 1500
+  network 10.13.11.0 0.0.0.3
+  passive-interface Loopback1231
+  eigrp router-id 192.168.123.31
+ exit-address-family
+!
+!
+router eigrp 2
+ !
+ address-family ipv4 vrf d2_ce autonomous-system 2
+  redistribute bgp 65003 metric 1000 100 255 1 1500
+  network 10.23.12.0 0.0.0.3
+  passive-interface Loopback1232
+  eigrp router-id 192.168.123.32
+ exit-address-family
+!
+router bgp 65003
+ bgp router-id 192.168.123.3
+ bgp log-neighbor-changes
+ !
+ address-family ipv4 vrf d1_ce
+  bgp router-id 192.168.123.31
+  redistribute eigrp 1
+ exit-address-family
+ !
+ address-family ipv4 vrf d2_ce
+  bgp router-id 192.168.123.32
+  redistribute eigrp 2
+ exit-address-family
+ !
+ address-family ipv4 vrf d4_shared
+  bgp router-id 192.168.123.3
+  network 192.168.123.3 mask 255.255.255.255
+  neighbor d4_shared peer-group
+  neighbor d4_shared remote-as 65004
+  neighbor d4_shared send-community both
+  neighbor d4_shared soft-reconfiguration inbound
+  neighbor 10.34.31.2 peer-group d4_shared
+  neighbor 10.34.31.2 activate
+ exit-address-family
+!
+!
+virtual-service csr_mgmt
+!
+ip forward-protocol nd
+ip http server
+ip http authentication local
+ip http secure-server
+!
+ip ssh version 2
+!
+!
+!
+ip prefix-list import_shared seq 5 permit 192.168.122.0/24
+!
+!
+route-map import_shared permit 10
+ match ip address prefix-list import_shared
+!
+!
+!
+control-plane
+!
+ !
+ !
+ !
+ !
+!
+!
+!
+!
+!
+line con 0
+ stopbits 1
+line vty 0 4
+ login local
+ transport input ssh
+line vty 5 15
+ login local
+ transport input ssh
+!
+!
+!
+!
+!
+!
+end

@@ -1,0 +1,41 @@
+VRF: red
+--------
+BGP VRF red, state: Active
+BGP Route Distinguisher: 10.254.1.1:65102
+VRF ID: 0x60000003
+BGP router identifier 10.254.1.1, local AS number 65001
+Non-stop routing is enabled
+BGP table state: Active
+Table ID: 0xe0000003   RD version: 19
+BGP main routing table version 23
+BGP NSR Initial initsync version 1 (Reached)
+BGP NSR/ISSU Sync-Group versions 0/0
+
+BGP is operating in STANDALONE mode.
+
+
+Process       RcvTblVer   bRIB/RIB   LabelVer  ImportVer  SendTblVer  StandbyVer
+Speaker              23         23         23         23          23           0
+
+Neighbor        Spk    AS MsgRcvd MsgSent   TblVer  InQ OutQ  Up/Down  St/PfxRcd
+11.1.1.2          0 65102     118     104       23    0    0 00:22:58          1
+
+
+VRF: blue
+---------
+BGP VRF blue, state: Active
+BGP Route Distinguisher: 10.254.1.1:65101
+VRF ID: 0x60000002
+BGP router identifier 10.254.1.1, local AS number 65001
+Non-stop routing is enabled
+BGP table state: Active
+Table ID: 0xe0000002   RD version: 23
+BGP main routing table version 23
+BGP NSR Initial initsync version 1 (Reached)
+BGP NSR/ISSU Sync-Group versions 0/0
+
+BGP is operating in STANDALONE mode.
+
+
+Process       RcvTblVer   bRIB/RIB   LabelVer  ImportVer  SendTblVer  StandbyVer
+Speaker              23         23         23         23          23           0

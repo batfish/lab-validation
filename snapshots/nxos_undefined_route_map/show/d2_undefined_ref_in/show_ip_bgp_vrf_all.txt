@@ -1,0 +1,13 @@
+BGP routing table information for VRF default, address family IPv4 Unicast
+BGP table version is 15, Local Router ID is 192.168.123.2
+Status: s-suppressed, x-deleted, S-stale, d-dampened, h-history, *-valid, >-best
+Path type: i-internal, e-external, c-confed, l-local, a-aggregate, r-redist, I-injected
+Origin codes: i - IGP, e - EGP, ? - incomplete, | - multipath, & - backup, 2 - best2
+
+   Network            Next Hop            Metric     LocPrf     Weight Path
+*>e172.16.1.1/32      10.12.11.1               0                     0 21 65001 ?
+*>e172.16.1.2/32      10.12.22.1               0                     0 22 65001 ?
+*>e172.16.1.6/32      10.12.66.1               0                     0 26 65001 ?
+*>e172.16.1.7/32      10.12.77.1               0                     0 271 65001 ?
+*>e192.168.122.0/24   10.12.11.1                                     0 21 65001 i
+*>l192.168.123.2/32   0.0.0.0                           100      32768 i

@@ -1,0 +1,71 @@
+cumulusfrr2# show ip bgp 172.16.1.1/32
+BGP routing table entry for 172.16.1.1/32
+Paths: (1 available, best #1, table default)
+  Advertised to non peer-group peers:
+  cumulusfrr1(10.12.11.1)
+  65001 65001
+    10.12.11.1 from cumulusfrr1(10.12.11.1) (192.168.123.1)
+      Origin IGP, metric 0, valid, external, bestpath-from-AS 65001, best
+      Community: 65001:1
+      AddPath ID: RX 0, TX 3
+      Last update: Tue Nov 10 22:08:00 2020
+
+cumulusfrr2# show ip bgp 172.16.1.2/32
+BGP routing table entry for 172.16.1.2/32
+Paths: (1 available, best #1, table default)
+  Advertised to non peer-group peers:
+  cumulusfrr1(10.12.11.1)
+  65001
+    10.12.11.1 from cumulusfrr1(10.12.11.1) (192.168.123.1)
+      Origin IGP, metric 0, valid, external, bestpath-from-AS 65001, best
+      Community: 65002:2
+      AddPath ID: RX 0, TX 4
+      Last update: Tue Nov 10 22:08:00 2020
+
+cumulusfrr2# show ip bgp 172.16.1.3/32
+BGP routing table entry for 172.16.1.3/32
+Paths: (1 available, best #1, table default)
+  Advertised to non peer-group peers:
+  cumulusfrr1(10.12.11.1)
+  65001
+    10.12.11.1 from cumulusfrr1(10.12.11.1) (192.168.123.1)
+      Origin IGP, metric 0, valid, external, bestpath-from-AS 65001, best
+      Community: 65001:3 65002:3
+      AddPath ID: RX 0, TX 5
+      Last update: Tue Nov 10 22:08:00 2020
+
+cumulusfrr2# show ip bgp 172.16.1.4/32
+BGP routing table entry for 172.16.1.4/32
+Paths: (1 available, best #1, table default)
+  Advertised to non peer-group peers:
+  cumulusfrr1(10.12.11.1)
+  65001
+    10.12.11.1 from cumulusfrr1(10.12.11.1) (192.168.123.1)
+      Origin IGP, metric 0, valid, external, bestpath-from-AS 65001, best
+      Community: 65001:4 65002:4 65002:6
+      AddPath ID: RX 0, TX 6
+      Last update: Tue Nov 10 22:08:00 2020
+
+cumulusfrr2# show ip bgp 172.16.1.7/32
+BGP routing table entry for 172.16.1.7/32
+Paths: (1 available, best #1, table default)
+  Advertised to non peer-group peers:
+  cumulusfrr1(10.12.11.1)
+  65001
+    10.12.11.1 from cumulusfrr1(10.12.11.1) (192.168.123.1)
+      Origin IGP, metric 0, tag 80, valid, external, bestpath-from-AS 65001, best
+      Community: 65001:7 65002:7 65002:8
+      AddPath ID: RX 0, TX 7
+      Last update: Tue Nov 10 22:08:00 2020
+
+cumulusfrr2# do show ip bgp 192.168.122.0
+BGP routing table entry for 192.168.122.0/24
+Paths: (1 available, best #1, table default)
+  Advertised to non peer-group peers:
+  cumulusfrr1(10.12.11.1)
+  65001
+    10.12.11.1 from cumulusfrr1(10.12.11.1) (192.168.123.1)
+      Origin IGP, metric 0, valid, external, bestpath-from-AS 65001, best
+      Community: 65002:9
+      AddPath ID: RX 0, TX 8
+      Last update: Tue Nov 10 22:08:00 2020

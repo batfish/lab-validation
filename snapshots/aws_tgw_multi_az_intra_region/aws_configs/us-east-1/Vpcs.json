@@ -1,0 +1,68 @@
+{
+ "Vpcs": [
+  {
+   "CidrBlock": "10.1.0.0/16",
+   "CidrBlockAssociationSet": [
+    {
+     "AssociationId": "vpc-cidr-assoc-00c6114bfacca0907",
+     "CidrBlock": "10.1.0.0/16",
+     "CidrBlockState": {
+      "State": "associated"
+     }
+    }
+   ],
+   "DhcpOptionsId": "dopt-3bb56641",
+   "InstanceTenancy": "default",
+   "IsDefault": false,
+   "OwnerId": "028403472736",
+   "State": "available",
+   "Tags": [
+    {
+     "Key": "Environment",
+     "Value": "prod"
+    },
+    {
+     "Key": "Name",
+     "Value": "prod"
+    },
+    {
+     "Key": "Terraform",
+     "Value": "true"
+    }
+   ],
+   "VpcId": "vpc-0e578e50686443ca0"
+  },
+  {
+   "CidrBlock": "10.2.0.0/16",
+   "CidrBlockAssociationSet": [
+    {
+     "AssociationId": "vpc-cidr-assoc-0659c35dc899a57b1",
+     "CidrBlock": "10.2.0.0/16",
+     "CidrBlockState": {
+      "State": "associated"
+     }
+    }
+   ],
+   "DhcpOptionsId": "dopt-3bb56641",
+   "InstanceTenancy": "default",
+   "IsDefault": false,
+   "OwnerId": "028403472736",
+   "State": "available",
+   "Tags": [
+    {
+     "Key": "Terraform",
+     "Value": "true"
+    },
+    {
+     "Key": "Environment",
+     "Value": "dev"
+    },
+    {
+     "Key": "Name",
+     "Value": "dev"
+    }
+   ],
+   "VpcId": "vpc-0a96945f1dbc5b2ac"
+  }
+ ]
+}

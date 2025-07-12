@@ -1,0 +1,584 @@
+config {
+  mgt-config {
+    users {
+      admin {
+        phash fnRL/G5lXVMug;
+        permissions {
+          role-based {
+            superuser yes;
+          }
+        }
+        public-key c3NoLXJzYSBBQUFBQjNOemFDMXljMkVBQUFBREFRQUJBQUFCQVFEWjMveElaa2VkR1FIUEh6NElmNCtIRTRVL2hGOEhvYWdGUW82Z0R5N0U3QzZFb1RhcWNkaTZqNVdmdU0yZWRQbEJTYVZabU5ITnFaY2
+VaYjdMeTRpa29qUDFsM2RUc3RpYmUxR2pLSmgrd0hJZXNvM0p5Vzg4TkVjTHBWUVkyUjdNanlZQlFaT0dqbS96WGJCSk51b09jRVVBRVhDeWttWUFtb1NPdmFmZUhPV0VYanAzV09DdEhmUFVLRXJGNXVJRWNzMERXT0Z1emptK0F
+SREx0Qkp0N2I3UDZNM1ZoZFlkcC8ycU80ZGVITUhzV3ZEbGppanYrK0tTRUdlaGhmSXByNXZuWEpOTUFReTJCTE43dUlCYWk2ejQvd1JScmZLTWkrUERjdjRPaittVXE1UGw1aVVvbHJkdldxMWwyWW85VzBkNFdOMmd0Qk9sZDBR
+K0c3a1QgYXJpZm9nZWxAY29zbW9zCg==;
+      }
+      ari {
+        permissions {
+          role-based {
+            custom {
+              profile fulladmin;
+            }
+          }
+        }
+        phash $1$mpjepthw$HDC9jsh9FAzC3UEf0tW3/.;
+      }
+      dan {
+        permissions {
+          role-based {
+            superuser yes;
+          }
+        }
+        phash $1$yiwaoyck$dLK3d2vR6RpCukZoaRvJ9.;
+        public-key c3NoLXJzYSBBQUFBQjNOemFDMXljMkVBQUFBREFRQUJBQUFCQVFDMDFuaSs4aVNXM1lXd01ibitldytYdWNtVGxMSGYweHFSTWdNTFVNYkFwdHUyaVoxQ1BLRVpweDQ3bXdBSHI5ZlBLMXdGS0pibDFkME
+pud2VNYkJmTE9ENlZGd3lzdFE5WWtGeGd3SEJ1a1htUlA4aEhNYWo0aytjSllLU3dqL2NkeVBTWW5jSUhVb0U3RkRxVHRURkJaQ0pBTXlJbUZMS1JTY3FJRkQ4THFvRGFqL1kydVpYOFJxY3Z2eWU5R1d3Z0d0Ulhyemo1OWgwMm9
+EWEtoVU9QbTRXNGlLNC9lVmFxMzR2TnF1RS9OY0twMjl1Wi9wZDRkNEN0OXBiSXJmeE9ka3ZrcjFXdHM5ZVNHc0NnYkVTWDFjRHlnUDM5TFpWeW5NQTJEazg1SkF3N3pQQTZncmoyejhod1NXTzZRNm54TUNabDRTTWo5RElwZmRS
+UjVjbi8gZGFuK254b3NAaW50ZW50aW9uZXQuY29tCg==;
+      }
+      harsh {
+        permissions {
+          role-based {
+            superuser yes;
+          }
+        }
+        phash $1$jsbfpnee$CuTo6Cq2iEiNQAQONogMN0;
+      }
+      spencer {
+        permissions {
+          role-based {
+            superuser yes;
+          }
+        }
+        phash $1$wuqnhfsq$azTdb9UdNr1q3R32gTEOK.;
+      }
+    }
+  }
+  shared {
+    application;
+    application-group;
+    service;
+    service-group;
+    botnet {
+      configuration {
+        http {
+          dynamic-dns {
+            enabled yes;
+            threshold 5;
+          }
+          malware-sites {
+            enabled yes;
+            threshold 5;
+          }
+          recent-domains {
+            enabled yes;
+            threshold 5;
+          }
+          ip-domains {
+            enabled yes;
+            threshold 10;
+          }
+          executables-from-unknown-sites {
+            enabled yes;
+            threshold 5;
+          }
+        }
+        other-applications {
+          irc yes;
+        }
+        unknown-applications {
+          unknown-tcp {
+            destinations-per-hour 10;
+            sessions-per-hour 10;
+            session-length {
+              maximum-bytes 100;
+              minimum-bytes 50;
+            }
+          }
+          unknown-udp {
+            destinations-per-hour 10;
+            sessions-per-hour 10;
+            session-length {
+              maximum-bytes 100;
+              minimum-bytes 50;
+            }
+          }
+        }
+      }
+      report {
+        topn 100;
+        scheduled yes;
+      }
+    }
+    address;
+    authentication-profile;
+    admin-role {
+      fulladmin {
+        role {
+          device {
+            cli superuser;
+            webui {
+              dashboard enable;
+              acc enable;
+              monitor {
+                logs {
+                  traffic enable;
+                  threat enable;
+                  url enable;
+                  wildfire enable;
+                  data-filtering enable;
+                  hipmatch enable;
+                  configuration enable;
+                  system enable;
+                  alarm enable;
+                }
+                packet-capture enable;
+                app-scope enable;
+                session-browser enable;
+                botnet enable;
+                pdf-reports {
+                  manage-pdf-summary enable;
+                  pdf-summary-reports enable;
+                  user-activity-report enable;
+                  report-groups enable;
+                  email-scheduler enable;
+                }
+                custom-reports {
+                  application-statistics enable;
+                  data-filtering-log enable;
+                  threat-log enable;
+                  threat-summary enable;
+                  traffic-log enable;
+                  traffic-summary enable;
+                  url-log enable;
+                  hipmatch enable;
+                }
+                view-custom-reports enable;
+                application-reports enable;
+                threat-reports enable;
+                url-filtering-reports enable;
+                traffic-reports enable;
+              }
+              policies {
+                security-rulebase enable;
+                nat-rulebase enable;
+                qos-rulebase enable;
+                pbf-rulebase enable;
+                ssl-decryption-rulebase enable;
+                application-override-rulebase enable;
+                captive-portal-rulebase enable;
+                dos-rulebase enable;
+              }
+              objects {
+                addresses enable;
+                address-groups enable;
+                regions enable;
+                applications enable;
+                application-groups enable;
+                application-filters enable;
+                services enable;
+                service-groups enable;
+                tags enable;
+                global-protect {
+                  hip-objects enable;
+                  hip-profiles enable;
+                }
+                dynamic-block-lists enable;
+                custom-objects {
+                  data-patterns enable;
+                  spyware enable;
+                  vulnerability enable;
+                  url-category enable;
+                }
+                security-profiles {
+                  antivirus enable;
+                  anti-spyware enable;
+                  vulnerability-protection enable;
+                  url-filtering enable;
+                  file-blocking enable;
+                  data-filtering enable;
+                  dos-protection enable;
+                }
+                security-profile-groups enable;
+                log-forwarding enable;
+                decryption-profile enable;
+                schedules enable;
+              }
+              network {
+                interfaces enable;
+                zones enable;
+                vlans enable;
+                virtual-wires enable;
+                virtual-routers enable;
+                ipsec-tunnels enable;
+                dhcp enable;
+                dns-proxy enable;
+                global-protect {
+                  portals enable;
+                  gateways enable;
+                  mdm enable;
+                }
+                qos enable;
+                network-profiles {
+                  ike-gateways enable;
+                  ipsec-crypto enable;
+                  ike-crypto enable;
+                  tunnel-monitor enable;
+                  interface-mgmt enable;
+                  zone-protection enable;
+                  qos-profile enable;
+                }
+              }
+              device {
+                setup enable;
+                config-audit enable;
+                admin-roles read-only;
+                administrators read-only;
+                virtual-systems enable;
+                shared-gateways enable;
+                user-identification enable;
+                vm-info-source enable;
+                high-availability enable;
+                certificate-management {
+                  certificates enable;
+                  certificate-profile enable;
+                  ocsp-responder enable;
+                }
+                block-pages enable;
+                log-settings {
+                  system enable;
+                  config enable;
+                  hipmatch enable;
+                  cc-alarm enable;
+                  manage-log enable;
+                }
+                server-profile {
+                  snmp-trap enable;
+                  syslog enable;
+                  email enable;
+                  netflow enable;
+                  radius enable;
+                  ldap enable;
+                  kerberos enable;
+                }
+                local-user-database {
+                  users enable;
+                  user-groups enable;
+                }
+                authentication-profile enable;
+                authentication-sequence enable;
+                access-domain enable;
+                scheduled-log-export enable;
+                software enable;
+                global-protect-client enable;
+                dynamic-updates enable;
+                licenses enable;
+                support enable;
+                master-key enable;
+              }
+              privacy {
+                show-full-ip-addresses enable;
+                show-user-names-in-logs-and-reports enable;
+                view-pcap-files enable;
+              }
+              commit enable;
+              global {
+                system-alarms enable;
+              }
+            }
+            xmlapi {
+              report enable;
+              log enable;
+              config enable;
+              op enable;
+              commit enable;
+              user-id enable;
+              export enable;
+              import enable;
+            }
+          }
+        }
+      }
+    }
+    tag;
+  }
+  devices {
+    localhost.localdomain {
+      network {
+        interface {
+          ethernet {
+            ethernet1/1 {
+              layer3 {
+                ip {
+                  10.11.11.1/24;
+                }
+                units;
+              }
+            }
+            ethernet1/3 {
+              layer3 {
+                ip {
+                  10.13.13.1/24;
+                }
+                units;
+              }
+            }
+            ethernet1/5 {
+              layer3 {
+                ip {
+                  10.15.15.1/24;
+                }
+                units;
+              }
+            }
+            ethernet1/4 {
+              layer3 {
+                ipv6 {
+                  neighbor-discovery {
+                    router-advertisement {
+                      enable no;
+                    }
+                  }
+                }
+              }
+            }
+            ethernet1/6 {
+              layer3 {
+                ipv6 {
+                  neighbor-discovery {
+                    router-advertisement {
+                      enable no;
+                    }
+                  }
+                }
+                untagged-sub-interface no;
+              }
+            }
+            ethernet1/7 {
+              layer2 {
+                units;
+              }
+            }
+            ethernet1/16 {
+              layer2 {
+                units;
+              }
+            }
+          }
+          loopback;
+          vlan {
+            units;
+          }
+          tunnel {
+            units;
+          }
+        }
+        vlan;
+        virtual-wire;
+        profiles {
+          monitor-profile {
+            default {
+              interval 3;
+              threshold 5;
+              action wait-recover;
+            }
+          }
+          interface-management-profile {
+            allow_ssh {
+              ssh yes;
+              ping yes;
+            }
+            mgmt {
+              ping yes;
+            }
+          }
+        }
+        ike {
+          crypto-profiles {
+            ike-crypto-profiles {
+              default {
+                encryption [ aes128 3des];
+                hash sha1;
+                dh-group group2;
+                lifetime {
+                  hours 8;
+                }
+              }
+            }
+            ipsec-crypto-profiles {
+              default {
+                esp {
+                  encryption [ aes128 3des];
+                  authentication sha1;
+                }
+                dh-group group2;
+                lifetime {
+                  hours 1;
+                }
+              }
+            }
+          }
+        }
+        qos {
+          profile {
+            default {
+              class {
+                class1 {
+                  priority real-time;
+                }
+                class2 {
+                  priority high;
+                }
+                class3 {
+                  priority high;
+                }
+                class4 {
+                  priority medium;
+                }
+                class5 {
+                  priority medium;
+                }
+                class6 {
+                  priority low;
+                }
+                class7 {
+                  priority low;
+                }
+                class8 {
+                  priority low;
+                }
+              }
+            }
+          }
+        }
+        virtual-router {
+          vr1 {
+            interface [ ethernet1/1 ethernet1/3 ethernet1/5];
+            protocol {
+              redist-profile;
+            }
+          }
+        }
+        shared-gateway {
+          sg1 {
+            import {
+              network {
+                interface;
+              }
+            }
+            zone;
+          }
+          sg2 {
+            import {
+              network {
+                interface;
+              }
+            }
+            zone;
+          }
+        }
+      }
+      deviceconfig {
+        system {
+          ip-address 172.16.0.75;
+          netmask 255.255.255.0;
+          update-server updates.paloaltonetworks.com;
+          update-schedule {
+            threats {
+              recurring {
+                weekly {
+                  day-of-week wednesday;
+                  at 01:02;
+                  action download-only;
+                }
+              }
+            }
+          }
+          timezone US/Pacific;
+          service {
+            disable-telnet yes;
+            disable-http no;
+            disable-icmp no;
+          }
+          hostname PA-5020;
+        }
+        setting {
+          config {
+            rematch yes;
+          }
+          management {
+            hostname-type-in-syslog FQDN;
+          }
+        }
+      }
+      vsys {
+        vsys1 {
+          import {
+            network {
+              interface [ ethernet1/5 ethernet1/3 ethernet1/1 ethernet1/6 ethernet1/7 ethernet1/16 ethernet1/4 loopback];
+            }
+            visible-vsys;
+          }
+          application;
+          application-group;
+          zone {
+            z1 {
+              network {
+                layer3 ethernet1/1;
+              }
+            }
+            z2 {
+              network {
+                layer3 ethernet1/3;
+              }
+            }
+          }
+          service;
+          service-group;
+          schedule;
+          address {
+            h1 {
+              ip-netmask 10.11.11.2;
+            }
+            h3 {
+              ip-netmask 10.13.13.2;
+            }
+            h5 {
+              ip-netmask 10.15.15.2;
+            }
+            h1_pre_nat {
+              ip-netmask 10.11.11.20;
+            }
+            new_src_addr {
+              ip-netmask 10.0.0.1;
+            }
+          }
+          setting {
+            ssl-decrypt {
+              allow-forward-decrypted-content no;
+            }
+          }
+          rulebase {
+            security {
+              rules {
+                r1 {
+                  from z1;
+                  to z2;
+                  action allow;
+                  source any;
+                  destination any;
+                  service any;
+                  application any;
+                }
+              }
+            }
+          }
+          tag;
+          address-group;
+          log-settings {
+            syslog;
+          }
+        }
+      }
+    }
+  }
+}

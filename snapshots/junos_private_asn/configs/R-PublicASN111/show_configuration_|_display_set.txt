@@ -1,0 +1,39 @@
+set version 17.4R1.16
+set system host-name R-PublicASN111
+set system root-authentication encrypted-password "$6$kPg0Y2Id$BVGsU/HRSE3w/Ybv26GVAMX8HA3fMFLjgJDqOinH9OvlKVNq4H4mS0MaVLEWTOfP.iqySXro3pb0/vCwOSlOL1"
+set system services ssh root-login allow
+set system syslog user * any emergency
+set system syslog file messages any notice
+set system syslog file messages authorization info
+set system syslog file interactive-commands interactive-commands any
+set system extensions providers juniper license-type juniper deployment-scope commercial
+set system extensions providers chef license-type juniper deployment-scope commercial
+set interfaces xe-0/0/0 unit 0 family inet address 10.10.10.1/24
+set interfaces xe-0/0/0 unit 0 family inet address 10.10.11.1/24
+set interfaces em0 unit 0 family inet
+set interfaces em1 unit 0 family inet address 169.254.0.2/24
+set interfaces lo0 unit 0 family inet address 100.100.100.2/32
+set interfaces lo0 unit 0 family inet address 3.3.3.3/32
+set interfaces lo0 unit 0 family inet address 4.4.4.4/32
+set interfaces lo0 unit 0 family inet address 192.168.123.3/32
+set forwarding-options storm-control-profiles default all
+set routing-options autonomous-system 111
+set protocols bgp group external-peers neighbor 10.10.11.2 export test-privateASN
+set protocols bgp group external-peers neighbor 10.10.11.2 peer-as 65111
+set protocols lldp interface all
+set protocols igmp-snooping vlan default
+set policy-options prefix-list donothing 100.100.100.2/32
+set policy-options prefix-list donothing 192.168.123.3/32
+set policy-options prefix-list prependprivate 3.3.3.3/32
+set policy-options prefix-list prependpublic 4.4.4.4/32
+set policy-options policy-statement test-privateASN term 1 from prefix-list prependprivate
+set policy-options policy-statement test-privateASN term 1 then as-path-prepend 65101
+set policy-options policy-statement test-privateASN term 1 then accept
+set policy-options policy-statement test-privateASN term 2 from prefix-list prependpublic
+set policy-options policy-statement test-privateASN term 2 then as-path-prepend 25
+set policy-options policy-statement test-privateASN term 2 then accept
+set policy-options policy-statement test-privateASN term 3 from prefix-list donothing
+set policy-options policy-statement test-privateASN term 3 then accept
+set vlans default vlan-id 1
+
+{master:0}

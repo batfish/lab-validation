@@ -1,0 +1,42 @@
+set version 17.4R1.16
+set system host-name d2
+set system root-authentication encrypted-password "$6$kPg0Y2Id$BVGsU/HRSE3w/Ybv26GVAMX8HA3fMFLjgJDqOinH9OvlKVNq4H4mS0MaVLEWTOfP.iqySXro3pb0/vCwOSlOL1"
+set system services ssh root-login allow
+set system syslog user * any emergency
+set system syslog file messages any notice
+set system syslog file messages authorization info
+set system syslog file interactive-commands interactive-commands any
+set system extensions providers juniper license-type juniper deployment-scope commercial
+set system extensions providers chef license-type juniper deployment-scope commercial
+set interfaces xe-0/0/0 unit 0 family inet address 10.12.0.2/24
+set interfaces xe-0/0/1 unit 0 family inet address 10.23.10.1/24
+set interfaces xe-0/0/2 unit 0 family inet address 10.24.20.1/24
+set interfaces xe-0/0/3 unit 0 family inet address 10.25.30.1/24
+set interfaces xe-0/0/4 unit 0 family inet address 10.26.40.1/24
+set interfaces xe-0/0/7 unit 0 family inet address 192.168.122.2/24
+set interfaces em0 unit 0 family inet
+set interfaces em1 unit 0 family inet address 169.254.0.2/24
+set interfaces lo0 unit 0 family inet address 192.168.123.2/32
+set forwarding-options storm-control-profiles default all
+set routing-options autonomous-system 65002
+set protocols bgp export SEND_LOCAL_ROUTES
+set protocols bgp group D1 neighbor 10.12.0.1 import PP_222_IN
+set protocols bgp group D1 neighbor 10.12.0.1 peer-as 65001
+set protocols bgp group D3 neighbor 10.23.10.2 peer-as 65001
+set protocols bgp group D4 neighbor 10.24.20.2 peer-as 65001
+set protocols bgp group D5 advertise-peer-as
+set protocols bgp group D5 neighbor 10.25.30.2 peer-as 65001
+set protocols bgp group D6 advertise-peer-as
+set protocols bgp group D6 neighbor 10.26.40.2 peer-as 65001
+set protocols lldp interface all
+set protocols igmp-snooping vlan default
+set policy-options prefix-list PP_222_IN 192.168.123.222/32
+set policy-options policy-statement PP_222_IN term 1 from prefix-list PP_222_IN
+set policy-options policy-statement PP_222_IN term 1 then as-path-prepend 222
+set policy-options policy-statement PP_222_IN term 1 then accept
+set policy-options policy-statement SEND_LOCAL_ROUTES term 1 from interface lo0.0
+set policy-options policy-statement SEND_LOCAL_ROUTES term 1 from interface xe-0/0/7.0
+set policy-options policy-statement SEND_LOCAL_ROUTES term 1 then accept
+set vlans default vlan-id 1
+
+{master:0}

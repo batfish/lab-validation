@@ -1,0 +1,77 @@
+! Command: show running-config
+! device: rp1 (vEOS, EOS-4.23.0.1F)
+!
+! boot system flash:/vEOS-lab.swi
+!
+transceiver qsfp default-mode 4x10G
+!
+hostname rp1
+!
+spanning-tree mode mstp
+!
+no aaa root
+!
+username admin role network-admin secret sha512 $6$Kc/6abhz/crxnqx7$Hrs4t6QlG6HJzGM/f/tULsxe1TEGMYKDQSEwUc./gnScPUzwJz6kwVVgSBHBf94XCjXhzh1qrqTjAtGiEfVgD0
+!
+interface Ethernet1
+   description rcvr-eth1
+   no switchport
+   ip address 10.254.1.1/30
+   pim ipv4 sparse-mode
+!
+interface Ethernet2
+   description src1
+   no switchport
+   ip address 10.1.10.1/24
+!
+interface Ethernet3
+!
+interface Ethernet4
+!
+interface Ethernet5
+!
+interface Ethernet6
+!
+interface Ethernet7
+!
+interface Ethernet8
+!
+interface Ethernet9
+!
+interface Ethernet10
+!
+interface Ethernet11
+!
+interface Ethernet12
+!
+interface Loopback0
+   ip address 10.253.1.1/32
+!
+interface Management1
+   ip address 10.150.0.190/16
+!
+ip access-list standard SRC1_MCAST
+   10 permit 239.1.1.0/24
+!
+ip access-list standard SRC2_MCAST
+   10 permit 239.1.2.0/24
+!
+ip routing
+!
+router multicast
+   ipv4
+      routing
+!
+router ospf 1
+   passive-interface Ethernet2
+   network 10.1.10.0/24 area 0.0.0.0
+   network 10.253.1.0/24 area 0.0.0.0
+   network 10.254.1.0/24 area 0.0.0.0
+   max-lsa 12000
+!
+router pim sparse-mode
+   ipv4
+      rp address 10.253.1.1 access-list SRC1_MCAST
+      rp address 10.253.1.2 access-list SRC2_MCAST
+!
+end

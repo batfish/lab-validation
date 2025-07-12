@@ -1,0 +1,44 @@
+{
+    "vrfs": {
+        "default": {
+            "asn": "65000",
+            "bgpRouteEntries": {
+                "10.203.0.0/16": {
+                    "address": "10.203.0.0",
+                    "bgpAdvertisedPeerGroups": {},
+                    "bgpRoutePaths": [
+                        {
+                            "asPathEntry": {
+                                "asPath": "?",
+                                "asPathType": null
+                            },
+                            "localPreference": 100,
+                            "med": 0,
+                            "nextHop": "10.12.12.1",
+                            "reasonNotBestpath": null,
+                            "routeType": {
+                                "active": false,
+                                "atomicAggregator": false,
+                                "backup": false,
+                                "ecmp": false,
+                                "ecmpContributor": false,
+                                "ecmpHead": false,
+                                "luRoute": false,
+                                "notInstalledReason": "routeBestInactive",
+                                "queued": false,
+                                "stale": false,
+                                "suppressed": false,
+                                "ucmp": false,
+                                "valid": true
+                            },
+                            "weight": 0
+                        }
+                    ],
+                    "maskLength": 16
+                }
+            },
+            "routerId": "10.2.2.2",
+            "vrf": "default"
+        }
+    }
+}

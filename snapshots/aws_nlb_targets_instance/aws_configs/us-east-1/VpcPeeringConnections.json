@@ -1,0 +1,49 @@
+{
+ "VpcPeeringConnections": [
+  {
+   "AccepterVpcInfo": {
+    "CidrBlock": "10.2.0.0/16",
+    "CidrBlockSet": [
+     {
+      "CidrBlock": "10.2.0.0/16"
+     }
+    ],
+    "OwnerId": "028403472736",
+    "PeeringOptions": {
+     "AllowDnsResolutionFromRemoteVpc": false,
+     "AllowEgressFromLocalClassicLinkToRemoteVpc": false,
+     "AllowEgressFromLocalVpcToRemoteClassicLink": false
+    },
+    "Region": "us-east-1",
+    "VpcId": "vpc-0a001de0c2ffb4f50"
+   },
+   "RequesterVpcInfo": {
+    "CidrBlock": "10.1.0.0/16",
+    "CidrBlockSet": [
+     {
+      "CidrBlock": "10.1.0.0/16"
+     }
+    ],
+    "OwnerId": "028403472736",
+    "PeeringOptions": {
+     "AllowDnsResolutionFromRemoteVpc": false,
+     "AllowEgressFromLocalClassicLinkToRemoteVpc": false,
+     "AllowEgressFromLocalVpcToRemoteClassicLink": false
+    },
+    "Region": "us-east-1",
+    "VpcId": "vpc-0694387c4fc4ab17f"
+   },
+   "Status": {
+    "Code": "active",
+    "Message": "Active"
+   },
+   "Tags": [
+    {
+     "Key": "Name",
+     "Value": "pcx-jump-targets_instance-r"
+    }
+   ],
+   "VpcPeeringConnectionId": "pcx-059077509459a6ae3"
+  }
+ ]
+}

@@ -1,0 +1,52 @@
+{
+ "Vpcs": [
+  {
+   "CidrBlock": "10.4.0.0/16",
+   "CidrBlockAssociationSet": [
+    {
+     "AssociationId": "vpc-cidr-assoc-02158c039d8b583bf",
+     "CidrBlock": "10.4.0.0/16",
+     "CidrBlockState": {
+      "State": "associated"
+     }
+    }
+   ],
+   "DhcpOptionsId": "dopt-3bb56641",
+   "InstanceTenancy": "default",
+   "IsDefault": false,
+   "OwnerId": "028403472736",
+   "State": "available",
+   "Tags": [
+    {
+     "Key": "Name",
+     "Value": "jump"
+    }
+   ],
+   "VpcId": "vpc-093278076fdc443fa"
+  },
+  {
+   "CidrBlock": "10.1.0.0/16",
+   "CidrBlockAssociationSet": [
+    {
+     "AssociationId": "vpc-cidr-assoc-0d96096438b52c370",
+     "CidrBlock": "10.1.0.0/16",
+     "CidrBlockState": {
+      "State": "associated"
+     }
+    }
+   ],
+   "DhcpOptionsId": "dopt-3bb56641",
+   "InstanceTenancy": "default",
+   "IsDefault": false,
+   "OwnerId": "028403472736",
+   "State": "available",
+   "Tags": [
+    {
+     "Key": "Name",
+     "Value": "shared_services"
+    }
+   ],
+   "VpcId": "vpc-02008b4ca4a5ced27"
+  }
+ ]
+}

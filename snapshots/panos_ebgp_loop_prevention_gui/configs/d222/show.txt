@@ -1,0 +1,184 @@
+
+set deviceconfig system type dhcp-client send-hostname yes
+set deviceconfig system type dhcp-client send-client-id no
+set deviceconfig system type dhcp-client accept-dhcp-hostname no
+set deviceconfig system type dhcp-client accept-dhcp-domain no
+set deviceconfig system update-server updates.paloaltonetworks.com
+set deviceconfig system update-schedule threats recurring weekly day-of-week wednesday
+set deviceconfig system update-schedule threats recurring weekly at 01:02
+set deviceconfig system update-schedule threats recurring weekly action download-only
+set deviceconfig system timezone US/Pacific
+set deviceconfig system service disable-telnet yes
+set deviceconfig system service disable-http yes
+set deviceconfig system hostname D222
+set deviceconfig setting config rematch yes
+set deviceconfig setting management hostname-type-in-syslog FQDN
+set deviceconfig setting auto-mac-detect yes
+set network interface ethernet ethernet1/1 layer3 ipv6 neighbor-discovery router-advertisement enable no
+set network interface ethernet ethernet1/1 layer3 ndp-proxy enabled no
+set network interface ethernet ethernet1/1 layer3 ip 10.222.1.2/24
+set network interface ethernet ethernet1/1 layer3 lldp enable no
+set network interface ethernet ethernet1/1 layer3 interface-management-profile MGMT_PROFILE
+set network interface ethernet ethernet1/2 layer3 ipv6 neighbor-discovery router-advertisement enable no
+set network interface ethernet ethernet1/2 layer3 ndp-proxy enabled no
+set network interface ethernet ethernet1/2 layer3 ip 10.222.2.1/24
+set network interface ethernet ethernet1/2 layer3 lldp enable no
+set network interface ethernet ethernet1/2 layer3 interface-management-profile MGMT_PROFILE
+set network interface ethernet ethernet1/2 link-state auto
+set network interface loopback units loopback.123 adjust-tcp-mss enable no
+set network interface loopback units loopback.123 ip 192.168.123.10/32
+set network interface loopback units loopback.123 interface-management-profile MGMT_PROFILE
+set network profiles monitor-profile default interval 3
+set network profiles monitor-profile default threshold 5
+set network profiles monitor-profile default action wait-recover
+set network profiles interface-management-profile MGMT_PROFILE ping yes
+set network profiles interface-management-profile MGMT_PROFILE permitted-ip 0.0.0.0/0
+set network profiles interface-management-profile MGMT_PROFILE ssh yes
+set network profiles interface-management-profile MGMT_PROFILE https yes
+set network ike crypto-profiles ike-crypto-profiles default encryption [ aes-128-cbc 3des ]
+set network ike crypto-profiles ike-crypto-profiles default hash sha1
+set network ike crypto-profiles ike-crypto-profiles default dh-group group2
+set network ike crypto-profiles ike-crypto-profiles default lifetime hours 8
+set network ike crypto-profiles ike-crypto-profiles Suite-B-GCM-128 encryption aes-128-cbc
+set network ike crypto-profiles ike-crypto-profiles Suite-B-GCM-128 hash sha256
+set network ike crypto-profiles ike-crypto-profiles Suite-B-GCM-128 dh-group group19
+set network ike crypto-profiles ike-crypto-profiles Suite-B-GCM-128 lifetime hours 8
+set network ike crypto-profiles ike-crypto-profiles Suite-B-GCM-256 encryption aes-256-cbc
+set network ike crypto-profiles ike-crypto-profiles Suite-B-GCM-256 hash sha384
+set network ike crypto-profiles ike-crypto-profiles Suite-B-GCM-256 dh-group group20
+set network ike crypto-profiles ike-crypto-profiles Suite-B-GCM-256 lifetime hours 8
+set network ike crypto-profiles ipsec-crypto-profiles default esp encryption [ aes-128-cbc 3des ]
+set network ike crypto-profiles ipsec-crypto-profiles default esp authentication sha1
+set network ike crypto-profiles ipsec-crypto-profiles default dh-group group2
+set network ike crypto-profiles ipsec-crypto-profiles default lifetime hours 1
+set network ike crypto-profiles ipsec-crypto-profiles Suite-B-GCM-128 esp encryption aes-128-gcm
+set network ike crypto-profiles ipsec-crypto-profiles Suite-B-GCM-128 esp authentication none
+set network ike crypto-profiles ipsec-crypto-profiles Suite-B-GCM-128 dh-group group19
+set network ike crypto-profiles ipsec-crypto-profiles Suite-B-GCM-128 lifetime hours 1
+set network ike crypto-profiles ipsec-crypto-profiles Suite-B-GCM-256 esp encryption aes-256-gcm
+set network ike crypto-profiles ipsec-crypto-profiles Suite-B-GCM-256 esp authentication none
+set network ike crypto-profiles ipsec-crypto-profiles Suite-B-GCM-256 dh-group group20
+set network ike crypto-profiles ipsec-crypto-profiles Suite-B-GCM-256 lifetime hours 1
+set network ike crypto-profiles global-protect-app-crypto-profiles default encryption aes-128-cbc
+set network ike crypto-profiles global-protect-app-crypto-profiles default authentication sha1
+set network qos profile default class class1 priority real-time
+set network qos profile default class class2 priority high
+set network qos profile default class class3 priority high
+set network qos profile default class class4 priority medium
+set network qos profile default class class5 priority medium
+set network qos profile default class class6 priority low
+set network qos profile default class class7 priority low
+set network qos profile default class class8 priority low
+set network virtual-router default protocol bgp enable yes
+set network virtual-router default protocol bgp dampening-profile default cutoff 1.25
+set network virtual-router default protocol bgp dampening-profile default reuse 0.5
+set network virtual-router default protocol bgp dampening-profile default max-hold-time 900
+set network virtual-router default protocol bgp dampening-profile default decay-half-life-reachable 300
+set network virtual-router default protocol bgp dampening-profile default decay-half-life-unreachable 900
+set network virtual-router default protocol bgp dampening-profile default enable yes
+set network virtual-router default protocol bgp router-id 192.168.123.10
+set network virtual-router default protocol bgp local-as 65222
+set network virtual-router default protocol bgp install-route yes
+set network virtual-router default protocol bgp redist-rules 192.168.123.10/32 address-family-identifier ipv4
+set network virtual-router default protocol bgp redist-rules 192.168.123.10/32 route-table unicast
+set network virtual-router default protocol bgp redist-rules 192.168.123.10/32 enable yes
+set network virtual-router default protocol bgp redist-rules 192.168.123.10/32 set-origin incomplete
+set network virtual-router default protocol bgp peer-group EBGP_D2 peer D2 local-address ip 10.222.2.1/24
+set network virtual-router default protocol bgp peer-group EBGP_D2 peer D2 local-address interface ethernet1/2
+set network virtual-router default protocol bgp peer-group EBGP_D2 peer D2 peer-address ip 10.222.2.2
+set network virtual-router default protocol bgp peer-group EBGP_D2 peer D2 bfd profile Inherit-vr-global-setting
+set network virtual-router default protocol bgp peer-group EBGP_D2 peer D2 max-prefixes 5000
+set network virtual-router default protocol bgp peer-group EBGP_D2 peer D2 enable yes
+set network virtual-router default protocol bgp peer-group EBGP_D2 peer D2 peer-as 65002
+set network virtual-router default protocol bgp peer-group EBGP_D2 peer D2 connection-options incoming-bgp-connection remote-port 0
+set network virtual-router default protocol bgp peer-group EBGP_D2 peer D2 connection-options incoming-bgp-connection allow yes
+set network virtual-router default protocol bgp peer-group EBGP_D2 peer D2 connection-options outgoing-bgp-connection local-port 0
+set network virtual-router default protocol bgp peer-group EBGP_D2 peer D2 connection-options outgoing-bgp-connection allow yes
+set network virtual-router default protocol bgp peer-group EBGP_D2 peer D2 connection-options multihop 0
+set network virtual-router default protocol bgp peer-group EBGP_D2 peer D2 connection-options keep-alive-interval 30
+set network virtual-router default protocol bgp peer-group EBGP_D2 peer D2 connection-options open-delay-time 0
+set network virtual-router default protocol bgp peer-group EBGP_D2 peer D2 connection-options hold-time 90
+set network virtual-router default protocol bgp peer-group EBGP_D2 peer D2 connection-options idle-hold-time 15
+set network virtual-router default protocol bgp peer-group EBGP_D2 peer D2 connection-options min-route-adv-interval 30
+set network virtual-router default protocol bgp peer-group EBGP_D2 peer D2 subsequent-address-family-identifier unicast yes
+set network virtual-router default protocol bgp peer-group EBGP_D2 peer D2 subsequent-address-family-identifier multicast no
+set network virtual-router default protocol bgp peer-group EBGP_D2 peer D2 enable-mp-bgp yes
+set network virtual-router default protocol bgp peer-group EBGP_D2 peer D2 address-family-identifier ipv4
+set network virtual-router default protocol bgp peer-group EBGP_D2 peer D2 enable-sender-side-loop-detection no
+set network virtual-router default protocol bgp peer-group EBGP_D2 peer D2 reflector-client non-client
+set network virtual-router default protocol bgp peer-group EBGP_D2 peer D2 peering-type unspecified
+set network virtual-router default protocol bgp peer-group EBGP_D2 type ebgp remove-private-as no
+set network virtual-router default protocol bgp peer-group EBGP_D2 type ebgp import-nexthop original
+set network virtual-router default protocol bgp peer-group EBGP_D2 type ebgp export-nexthop resolve
+set network virtual-router default protocol bgp peer-group EBGP_D2 aggregated-confed-as-path yes
+set network virtual-router default protocol bgp peer-group EBGP_D2 soft-reset-with-stored-info yes
+set network virtual-router default protocol bgp peer-group EBGP_D2 enable yes
+set network virtual-router default protocol bgp peer-group EBGP_D1 peer D1 local-address interface ethernet1/1
+set network virtual-router default protocol bgp peer-group EBGP_D1 peer D1 local-address ip 10.222.1.2/24
+set network virtual-router default protocol bgp peer-group EBGP_D1 peer D1 peer-address ip 10.222.1.1
+set network virtual-router default protocol bgp peer-group EBGP_D1 peer D1 bfd profile Inherit-vr-global-setting
+set network virtual-router default protocol bgp peer-group EBGP_D1 peer D1 max-prefixes 5000
+set network virtual-router default protocol bgp peer-group EBGP_D1 peer D1 enable yes
+set network virtual-router default protocol bgp peer-group EBGP_D1 peer D1 enable-mp-bgp yes
+set network virtual-router default protocol bgp peer-group EBGP_D1 peer D1 address-family-identifier ipv4
+set network virtual-router default protocol bgp peer-group EBGP_D1 peer D1 enable-sender-side-loop-detection yes
+set network virtual-router default protocol bgp peer-group EBGP_D1 peer D1 reflector-client non-client
+set network virtual-router default protocol bgp peer-group EBGP_D1 peer D1 peering-type unspecified
+set network virtual-router default protocol bgp peer-group EBGP_D1 peer D1 peer-as 65001
+set network virtual-router default protocol bgp peer-group EBGP_D1 peer D1 connection-options incoming-bgp-connection remote-port 0
+set network virtual-router default protocol bgp peer-group EBGP_D1 peer D1 connection-options incoming-bgp-connection allow yes
+set network virtual-router default protocol bgp peer-group EBGP_D1 peer D1 connection-options outgoing-bgp-connection local-port 0
+set network virtual-router default protocol bgp peer-group EBGP_D1 peer D1 connection-options outgoing-bgp-connection allow yes
+set network virtual-router default protocol bgp peer-group EBGP_D1 peer D1 connection-options multihop 0
+set network virtual-router default protocol bgp peer-group EBGP_D1 peer D1 connection-options keep-alive-interval 30
+set network virtual-router default protocol bgp peer-group EBGP_D1 peer D1 connection-options open-delay-time 0
+set network virtual-router default protocol bgp peer-group EBGP_D1 peer D1 connection-options hold-time 90
+set network virtual-router default protocol bgp peer-group EBGP_D1 peer D1 connection-options idle-hold-time 15
+set network virtual-router default protocol bgp peer-group EBGP_D1 peer D1 connection-options min-route-adv-interval 30
+set network virtual-router default protocol bgp peer-group EBGP_D1 peer D1 subsequent-address-family-identifier unicast yes
+set network virtual-router default protocol bgp peer-group EBGP_D1 peer D1 subsequent-address-family-identifier multicast no
+set network virtual-router default protocol bgp peer-group EBGP_D1 type ebgp remove-private-as no
+set network virtual-router default protocol bgp peer-group EBGP_D1 type ebgp import-nexthop original
+set network virtual-router default protocol bgp peer-group EBGP_D1 type ebgp export-nexthop resolve
+set network virtual-router default protocol bgp peer-group EBGP_D1 aggregated-confed-as-path yes
+set network virtual-router default protocol bgp peer-group EBGP_D1 soft-reset-with-stored-info yes
+set network virtual-router default protocol bgp peer-group EBGP_D1 enable yes
+set network virtual-router default protocol bgp routing-options graceful-restart enable yes
+set network virtual-router default protocol bgp routing-options med always-compare-med yes
+set network virtual-router default protocol bgp routing-options aggregate aggregate-med yes
+set network virtual-router default interface [ ethernet1/1 ethernet1/2 loopback.123 ]
+set shared application
+set shared application-group
+set shared service
+set shared service-group
+set shared botnet configuration http dynamic-dns enabled yes
+set shared botnet configuration http dynamic-dns threshold 5
+set shared botnet configuration http malware-sites enabled yes
+set shared botnet configuration http malware-sites threshold 5
+set shared botnet configuration http recent-domains enabled yes
+set shared botnet configuration http recent-domains threshold 5
+set shared botnet configuration http ip-domains enabled yes
+set shared botnet configuration http ip-domains threshold 10
+set shared botnet configuration http executables-from-unknown-sites enabled yes
+set shared botnet configuration http executables-from-unknown-sites threshold 5
+set shared botnet configuration other-applications irc yes
+set shared botnet configuration unknown-applications unknown-tcp destinations-per-hour 10
+set shared botnet configuration unknown-applications unknown-tcp sessions-per-hour 10
+set shared botnet configuration unknown-applications unknown-tcp session-length maximum-bytes 100
+set shared botnet configuration unknown-applications unknown-tcp session-length minimum-bytes 50
+set shared botnet configuration unknown-applications unknown-udp destinations-per-hour 10
+set shared botnet configuration unknown-applications unknown-udp sessions-per-hour 10
+set shared botnet configuration unknown-applications unknown-udp session-length maximum-bytes 100
+set shared botnet configuration unknown-applications unknown-udp session-length minimum-bytes 50
+set shared botnet report topn 100
+set shared botnet report scheduled yes
+set zone INSIDE network layer3 [ ethernet1/1 ethernet1/2 loopback.123 ]
+set service-group
+set service
+set schedule
+set rulebase
+set import network interface [ ethernet1/1 ethernet1/2 loopback.123 ]
+set application-group
+set application
+set mgt-config users admin phash fnRL/G5lXVMug
+set mgt-config users admin permissions role-based superuser yes

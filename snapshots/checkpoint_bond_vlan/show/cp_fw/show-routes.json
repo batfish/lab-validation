@@ -1,0 +1,70 @@
+{
+    "from": 0,
+    "objects": [
+        {
+            "address": "10.12.2.0",
+            "mask-length": "24",
+            "next-hop": {
+                "interface": "bond12.2"
+            },
+            "protocol": "Connected"
+        },
+        {
+            "address": "10.23.3.0",
+            "mask-length": "24",
+            "next-hop": {
+                "interface": "bond34.3"
+            },
+            "protocol": "Connected"
+        },
+        {
+            "address": "10.24.4.0",
+            "mask-length": "24",
+            "next-hop": {
+                "interface": "bond56.4"
+            },
+            "protocol": "Connected"
+        },
+        {
+            "address": "10.25.4.0",
+            "mask-length": "24",
+            "next-hop": {
+                "interface": "bond78.4"
+            },
+            "protocol": "Connected"
+        },
+        {
+            "address": "10.150.0.0",
+            "mask-length": "16",
+            "next-hop": {
+                "interface": "eth0"
+            },
+            "protocol": "Connected"
+        },
+        {
+            "address": "127.0.0.0",
+            "mask-length": "8",
+            "next-hop": {
+                "interface": "lo"
+            },
+            "protocol": "Connected"
+        },
+        {
+            "address": "172.16.0.3",
+            "age": "7028",
+            "cost": "0",
+            "mask-length": "32",
+            "next-hop": {
+                "gateways": [
+                    {
+                        "address": "10.23.3.2",
+                        "interface": "bond34.3"
+                    }
+                ]
+            },
+            "protocol": "Static"
+        }
+    ],
+    "to": 7,
+    "total": 7
+}

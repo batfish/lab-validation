@@ -1,0 +1,54 @@
+{
+    "vrfs": {
+        "default": {
+            "allRoutesProgrammedHardware": true,
+            "allRoutesProgrammedKernel": true,
+            "defaultRouteState": "notSet",
+            "routes": {
+                "10.14.31.0/24": {
+                    "directlyConnected": true,
+                    "hardwareProgrammed": true,
+                    "kernelProgrammed": true,
+                    "routeAction": "forward",
+                    "routeLeaked": false,
+                    "routeType": "connected",
+                    "vias": [
+                        {
+                            "interface": "Ethernet1"
+                        }
+                    ]
+                },
+                "10.150.0.0/16": {
+                    "directlyConnected": true,
+                    "hardwareProgrammed": true,
+                    "kernelProgrammed": true,
+                    "routeAction": "forward",
+                    "routeLeaked": false,
+                    "routeType": "connected",
+                    "vias": [
+                        {
+                            "interface": "Management1"
+                        }
+                    ]
+                },
+                "172.16.0.3/32": {
+                    "directlyConnected": false,
+                    "hardwareProgrammed": true,
+                    "kernelProgrammed": true,
+                    "metric": 0,
+                    "preference": 200,
+                    "routeAction": "forward",
+                    "routeLeaked": false,
+                    "routeType": "eBGP",
+                    "vias": [
+                        {
+                            "interface": "Ethernet1",
+                            "nexthopAddr": "10.14.31.1"
+                        }
+                    ]
+                }
+            },
+            "routingDisabled": false
+        }
+    }
+}

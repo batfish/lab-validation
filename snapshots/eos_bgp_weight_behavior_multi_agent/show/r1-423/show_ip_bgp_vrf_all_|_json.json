@@ -1,0 +1,129 @@
+{
+    "vrfs": {
+        "default": {
+            "asn": "65112",
+            "bgpRouteEntries": {
+                "172.16.12.1/32": {
+                    "address": "172.16.12.1",
+                    "bgpRoutePaths": [
+                        {
+                            "asPathEntry": {
+                                "asPath": "i",
+                                "asPathType": "Local"
+                            },
+                            "nextHop": "",
+                            "reasonNotBestpath": "noReason",
+                            "routeType": {
+                                "active": true,
+                                "atomicAggregator": false,
+                                "backup": false,
+                                "ecmp": false,
+                                "ecmpContributor": false,
+                                "ecmpHead": false,
+                                "luRoute": false,
+                                "origin": "Igp",
+                                "queued": false,
+                                "sixPeRoute": false,
+                                "stale": false,
+                                "suppressed": false,
+                                "ucmp": false,
+                                "valid": true
+                            },
+                            "weight": 0
+                        },
+                        {
+                            "asPathEntry": {
+                                "asPath": "i",
+                                "asPathType": "Internal"
+                            },
+                            "localPreference": 100,
+                            "med": 0,
+                            "nextHop": "10.12.11.2",
+                            "reasonNotBestpath": "noReason",
+                            "routeType": {
+                                "active": false,
+                                "atomicAggregator": false,
+                                "backup": false,
+                                "ecmp": false,
+                                "ecmpContributor": false,
+                                "ecmpHead": false,
+                                "luRoute": false,
+                                "origin": "Igp",
+                                "queued": false,
+                                "sixPeRoute": false,
+                                "stale": false,
+                                "suppressed": false,
+                                "ucmp": false,
+                                "valid": true
+                            },
+                            "weight": 0
+                        }
+                    ],
+                    "maskLength": 32,
+                    "totalPaths": 2
+                },
+                "172.16.12.2/32": {
+                    "address": "172.16.12.2",
+                    "bgpRoutePaths": [
+                        {
+                            "asPathEntry": {
+                                "asPath": "i",
+                                "asPathType": "Internal"
+                            },
+                            "localPreference": 100,
+                            "med": 0,
+                            "nextHop": "10.12.11.2",
+                            "reasonNotBestpath": "noReason",
+                            "routeType": {
+                                "active": true,
+                                "atomicAggregator": false,
+                                "backup": false,
+                                "ecmp": false,
+                                "ecmpContributor": false,
+                                "ecmpHead": false,
+                                "luRoute": false,
+                                "origin": "Igp",
+                                "queued": false,
+                                "sixPeRoute": false,
+                                "stale": false,
+                                "suppressed": false,
+                                "ucmp": false,
+                                "valid": true
+                            },
+                            "weight": 32769
+                        },
+                        {
+                            "asPathEntry": {
+                                "asPath": "i",
+                                "asPathType": "Local"
+                            },
+                            "nextHop": "",
+                            "reasonNotBestpath": "noReason",
+                            "routeType": {
+                                "active": false,
+                                "atomicAggregator": false,
+                                "backup": false,
+                                "ecmp": false,
+                                "ecmpContributor": false,
+                                "ecmpHead": false,
+                                "luRoute": false,
+                                "origin": "Igp",
+                                "queued": false,
+                                "sixPeRoute": false,
+                                "stale": false,
+                                "suppressed": false,
+                                "ucmp": false,
+                                "valid": true
+                            },
+                            "weight": 0
+                        }
+                    ],
+                    "maskLength": 32,
+                    "totalPaths": 2
+                }
+            },
+            "routerId": "10.12.11.1",
+            "vrf": "default"
+        }
+    }
+}

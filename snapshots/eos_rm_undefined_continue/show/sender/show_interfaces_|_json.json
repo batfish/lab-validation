@@ -1,0 +1,900 @@
+{
+    "interfaces": {
+        "Ethernet1": {
+            "autoNegotiate": "unknown",
+            "bandwidth": 0,
+            "description": "",
+            "duplex": "duplexFull",
+            "forwardingModel": "routed",
+            "hardware": "ethernet",
+            "interfaceAddress": [
+                {
+                    "broadcastAddress": "255.255.255.255",
+                    "dhcp": false,
+                    "primaryIp": {
+                        "address": "10.12.11.1",
+                        "maskLen": 24
+                    },
+                    "secondaryIps": {},
+                    "secondaryIpsOrderedList": [],
+                    "virtualIp": {
+                        "address": "0.0.0.0",
+                        "maskLen": 0
+                    },
+                    "virtualSecondaryIps": {},
+                    "virtualSecondaryIpsOrderedList": []
+                }
+            ],
+            "interfaceCounters": {
+                "counterRefreshTime": 1622850833.528213,
+                "inBroadcastPkts": 0,
+                "inDiscards": 0,
+                "inMulticastPkts": 6,
+                "inOctets": 1669,
+                "inTotalPkts": 18,
+                "inUcastPkts": 12,
+                "inputErrorsDetail": {
+                    "alignmentErrors": 0,
+                    "fcsErrors": 0,
+                    "giantFrames": 0,
+                    "runtFrames": 0,
+                    "rxPause": 0,
+                    "symbolErrors": 0
+                },
+                "linkStatusChanges": 2,
+                "outBroadcastPkts": 1,
+                "outDiscards": 0,
+                "outMulticastPkts": 6,
+                "outOctets": 1533,
+                "outUcastPkts": 10,
+                "outputErrorsDetail": {
+                    "collisions": 0,
+                    "deferredTransmissions": 0,
+                    "lateCollisions": 0,
+                    "txPause": 0
+                },
+                "totalInErrors": 0,
+                "totalOutErrors": 0
+            },
+            "interfaceStatistics": {
+                "inBitsRate": 0.0,
+                "inPktsRate": 0.0,
+                "outBitsRate": 0.0,
+                "outPktsRate": 0.0,
+                "updateInterval": 300.0
+            },
+            "interfaceStatus": "connected",
+            "l3MtuConfigured": false,
+            "lanes": 0,
+            "lastStatusChangeTimestamp": 1622850703.6624293,
+            "lineProtocolStatus": "up",
+            "loopbackMode": "loopbackNone",
+            "mtu": 1500,
+            "name": "Ethernet1",
+            "physicalAddress": "0c:dd:e9:52:d5:fd"
+        },
+        "Ethernet10": {
+            "autoNegotiate": "unknown",
+            "bandwidth": 0,
+            "burnedInAddress": "0c:dd:e9:e8:6c:0a",
+            "description": "",
+            "duplex": "duplexFull",
+            "forwardingModel": "bridged",
+            "hardware": "ethernet",
+            "interfaceAddress": [],
+            "interfaceCounters": {
+                "counterRefreshTime": 1622850833.554134,
+                "inBroadcastPkts": 0,
+                "inDiscards": 0,
+                "inMulticastPkts": 0,
+                "inOctets": 0,
+                "inTotalPkts": 0,
+                "inUcastPkts": 0,
+                "inputErrorsDetail": {
+                    "alignmentErrors": 0,
+                    "fcsErrors": 0,
+                    "giantFrames": 0,
+                    "runtFrames": 0,
+                    "rxPause": 0,
+                    "symbolErrors": 0
+                },
+                "linkStatusChanges": 2,
+                "outBroadcastPkts": 0,
+                "outDiscards": 0,
+                "outMulticastPkts": 70,
+                "outOctets": 8500,
+                "outUcastPkts": 0,
+                "outputErrorsDetail": {
+                    "collisions": 0,
+                    "deferredTransmissions": 0,
+                    "lateCollisions": 0,
+                    "txPause": 0
+                },
+                "totalInErrors": 0,
+                "totalOutErrors": 0
+            },
+            "interfaceStatistics": {
+                "inBitsRate": 0.0,
+                "inPktsRate": 0.0,
+                "outBitsRate": 0.0,
+                "outPktsRate": 0.0,
+                "updateInterval": 300.0
+            },
+            "interfaceStatus": "connected",
+            "l3MtuConfigured": false,
+            "lanes": 0,
+            "lastStatusChangeTimestamp": 1622850703.9945214,
+            "lineProtocolStatus": "up",
+            "loopbackMode": "loopbackNone",
+            "mtu": 9214,
+            "name": "Ethernet10",
+            "physicalAddress": "0c:dd:e9:e8:6c:0a"
+        },
+        "Ethernet11": {
+            "autoNegotiate": "unknown",
+            "bandwidth": 0,
+            "burnedInAddress": "0c:dd:e9:e8:6c:0b",
+            "description": "",
+            "duplex": "duplexFull",
+            "forwardingModel": "bridged",
+            "hardware": "ethernet",
+            "interfaceAddress": [],
+            "interfaceCounters": {
+                "counterRefreshTime": 1622850833.544831,
+                "inBroadcastPkts": 0,
+                "inDiscards": 0,
+                "inMulticastPkts": 0,
+                "inOctets": 0,
+                "inTotalPkts": 0,
+                "inUcastPkts": 0,
+                "inputErrorsDetail": {
+                    "alignmentErrors": 0,
+                    "fcsErrors": 0,
+                    "giantFrames": 0,
+                    "runtFrames": 0,
+                    "rxPause": 0,
+                    "symbolErrors": 0
+                },
+                "linkStatusChanges": 2,
+                "outBroadcastPkts": 0,
+                "outDiscards": 0,
+                "outMulticastPkts": 70,
+                "outOctets": 8500,
+                "outUcastPkts": 0,
+                "outputErrorsDetail": {
+                    "collisions": 0,
+                    "deferredTransmissions": 0,
+                    "lateCollisions": 0,
+                    "txPause": 0
+                },
+                "totalInErrors": 0,
+                "totalOutErrors": 0
+            },
+            "interfaceStatistics": {
+                "inBitsRate": 0.0,
+                "inPktsRate": 0.0,
+                "outBitsRate": 0.0,
+                "outPktsRate": 0.0,
+                "updateInterval": 300.0
+            },
+            "interfaceStatus": "connected",
+            "l3MtuConfigured": false,
+            "lanes": 0,
+            "lastStatusChangeTimestamp": 1622850704.0597508,
+            "lineProtocolStatus": "up",
+            "loopbackMode": "loopbackNone",
+            "mtu": 9214,
+            "name": "Ethernet11",
+            "physicalAddress": "0c:dd:e9:e8:6c:0b"
+        },
+        "Ethernet12": {
+            "autoNegotiate": "unknown",
+            "bandwidth": 0,
+            "burnedInAddress": "0c:dd:e9:e8:6c:0c",
+            "description": "",
+            "duplex": "duplexFull",
+            "forwardingModel": "bridged",
+            "hardware": "ethernet",
+            "interfaceAddress": [],
+            "interfaceCounters": {
+                "counterRefreshTime": 1622850833.502947,
+                "inBroadcastPkts": 0,
+                "inDiscards": 0,
+                "inMulticastPkts": 0,
+                "inOctets": 0,
+                "inTotalPkts": 0,
+                "inUcastPkts": 0,
+                "inputErrorsDetail": {
+                    "alignmentErrors": 0,
+                    "fcsErrors": 0,
+                    "giantFrames": 0,
+                    "runtFrames": 0,
+                    "rxPause": 0,
+                    "symbolErrors": 0
+                },
+                "linkStatusChanges": 2,
+                "outBroadcastPkts": 0,
+                "outDiscards": 0,
+                "outMulticastPkts": 70,
+                "outOctets": 8500,
+                "outUcastPkts": 0,
+                "outputErrorsDetail": {
+                    "collisions": 0,
+                    "deferredTransmissions": 0,
+                    "lateCollisions": 0,
+                    "txPause": 0
+                },
+                "totalInErrors": 0,
+                "totalOutErrors": 0
+            },
+            "interfaceStatistics": {
+                "inBitsRate": 0.0,
+                "inPktsRate": 0.0,
+                "outBitsRate": 0.0,
+                "outPktsRate": 0.0,
+                "updateInterval": 300.0
+            },
+            "interfaceStatus": "connected",
+            "l3MtuConfigured": false,
+            "lanes": 0,
+            "lastStatusChangeTimestamp": 1622850704.1027186,
+            "lineProtocolStatus": "up",
+            "loopbackMode": "loopbackNone",
+            "mtu": 9214,
+            "name": "Ethernet12",
+            "physicalAddress": "0c:dd:e9:e8:6c:0c"
+        },
+        "Ethernet2": {
+            "autoNegotiate": "unknown",
+            "bandwidth": 0,
+            "description": "",
+            "duplex": "duplexFull",
+            "forwardingModel": "routed",
+            "hardware": "ethernet",
+            "interfaceAddress": [
+                {
+                    "broadcastAddress": "255.255.255.255",
+                    "dhcp": false,
+                    "primaryIp": {
+                        "address": "10.13.21.1",
+                        "maskLen": 24
+                    },
+                    "secondaryIps": {},
+                    "secondaryIpsOrderedList": [],
+                    "virtualIp": {
+                        "address": "0.0.0.0",
+                        "maskLen": 0
+                    },
+                    "virtualSecondaryIps": {},
+                    "virtualSecondaryIpsOrderedList": []
+                }
+            ],
+            "interfaceCounters": {
+                "counterRefreshTime": 1622850833.511387,
+                "inBroadcastPkts": 1,
+                "inDiscards": 0,
+                "inMulticastPkts": 6,
+                "inOctets": 1766,
+                "inTotalPkts": 19,
+                "inUcastPkts": 12,
+                "inputErrorsDetail": {
+                    "alignmentErrors": 0,
+                    "fcsErrors": 0,
+                    "giantFrames": 0,
+                    "runtFrames": 0,
+                    "rxPause": 0,
+                    "symbolErrors": 0
+                },
+                "linkStatusChanges": 2,
+                "outBroadcastPkts": 0,
+                "outDiscards": 0,
+                "outMulticastPkts": 5,
+                "outOctets": 1642,
+                "outUcastPkts": 14,
+                "outputErrorsDetail": {
+                    "collisions": 0,
+                    "deferredTransmissions": 0,
+                    "lateCollisions": 0,
+                    "txPause": 0
+                },
+                "totalInErrors": 0,
+                "totalOutErrors": 0
+            },
+            "interfaceStatistics": {
+                "inBitsRate": 0.0,
+                "inPktsRate": 0.0,
+                "outBitsRate": 0.0,
+                "outPktsRate": 0.0,
+                "updateInterval": 300.0
+            },
+            "interfaceStatus": "connected",
+            "l3MtuConfigured": false,
+            "lanes": 0,
+            "lastStatusChangeTimestamp": 1622850703.6104035,
+            "lineProtocolStatus": "up",
+            "loopbackMode": "loopbackNone",
+            "mtu": 1500,
+            "name": "Ethernet2",
+            "physicalAddress": "0c:dd:e9:52:d5:fd"
+        },
+        "Ethernet3": {
+            "autoNegotiate": "unknown",
+            "bandwidth": 0,
+            "description": "",
+            "duplex": "duplexFull",
+            "forwardingModel": "routed",
+            "hardware": "ethernet",
+            "interfaceAddress": [
+                {
+                    "broadcastAddress": "255.255.255.255",
+                    "dhcp": false,
+                    "primaryIp": {
+                        "address": "10.14.31.1",
+                        "maskLen": 24
+                    },
+                    "secondaryIps": {},
+                    "secondaryIpsOrderedList": [],
+                    "virtualIp": {
+                        "address": "0.0.0.0",
+                        "maskLen": 0
+                    },
+                    "virtualSecondaryIps": {},
+                    "virtualSecondaryIpsOrderedList": []
+                }
+            ],
+            "interfaceCounters": {
+                "counterRefreshTime": 1622850833.533818,
+                "inBroadcastPkts": 1,
+                "inDiscards": 0,
+                "inMulticastPkts": 6,
+                "inOctets": 1577,
+                "inTotalPkts": 17,
+                "inUcastPkts": 10,
+                "inputErrorsDetail": {
+                    "alignmentErrors": 0,
+                    "fcsErrors": 0,
+                    "giantFrames": 0,
+                    "runtFrames": 0,
+                    "rxPause": 0,
+                    "symbolErrors": 0
+                },
+                "linkStatusChanges": 2,
+                "outBroadcastPkts": 0,
+                "outDiscards": 0,
+                "outMulticastPkts": 5,
+                "outOctets": 1483,
+                "outUcastPkts": 12,
+                "outputErrorsDetail": {
+                    "collisions": 0,
+                    "deferredTransmissions": 0,
+                    "lateCollisions": 0,
+                    "txPause": 0
+                },
+                "totalInErrors": 0,
+                "totalOutErrors": 0
+            },
+            "interfaceStatistics": {
+                "inBitsRate": 0.0,
+                "inPktsRate": 0.0,
+                "outBitsRate": 0.0,
+                "outPktsRate": 0.0,
+                "updateInterval": 300.0
+            },
+            "interfaceStatus": "connected",
+            "l3MtuConfigured": false,
+            "lanes": 0,
+            "lastStatusChangeTimestamp": 1622850703.6328864,
+            "lineProtocolStatus": "up",
+            "loopbackMode": "loopbackNone",
+            "mtu": 1500,
+            "name": "Ethernet3",
+            "physicalAddress": "0c:dd:e9:52:d5:fd"
+        },
+        "Ethernet4": {
+            "autoNegotiate": "unknown",
+            "bandwidth": 0,
+            "burnedInAddress": "0c:dd:e9:e8:6c:04",
+            "description": "",
+            "duplex": "duplexFull",
+            "forwardingModel": "bridged",
+            "hardware": "ethernet",
+            "interfaceAddress": [],
+            "interfaceCounters": {
+                "counterRefreshTime": 1622850833.522388,
+                "inBroadcastPkts": 0,
+                "inDiscards": 0,
+                "inMulticastPkts": 0,
+                "inOctets": 0,
+                "inTotalPkts": 0,
+                "inUcastPkts": 0,
+                "inputErrorsDetail": {
+                    "alignmentErrors": 0,
+                    "fcsErrors": 0,
+                    "giantFrames": 0,
+                    "runtFrames": 0,
+                    "rxPause": 0,
+                    "symbolErrors": 0
+                },
+                "linkStatusChanges": 2,
+                "outBroadcastPkts": 0,
+                "outDiscards": 0,
+                "outMulticastPkts": 70,
+                "outOctets": 8495,
+                "outUcastPkts": 0,
+                "outputErrorsDetail": {
+                    "collisions": 0,
+                    "deferredTransmissions": 0,
+                    "lateCollisions": 0,
+                    "txPause": 0
+                },
+                "totalInErrors": 0,
+                "totalOutErrors": 0
+            },
+            "interfaceStatistics": {
+                "inBitsRate": 0.0,
+                "inPktsRate": 0.0,
+                "outBitsRate": 0.0,
+                "outPktsRate": 0.0,
+                "updateInterval": 300.0
+            },
+            "interfaceStatus": "connected",
+            "l3MtuConfigured": false,
+            "lanes": 0,
+            "lastStatusChangeTimestamp": 1622850703.8313992,
+            "lineProtocolStatus": "up",
+            "loopbackMode": "loopbackNone",
+            "mtu": 9214,
+            "name": "Ethernet4",
+            "physicalAddress": "0c:dd:e9:e8:6c:04"
+        },
+        "Ethernet5": {
+            "autoNegotiate": "unknown",
+            "bandwidth": 0,
+            "burnedInAddress": "0c:dd:e9:e8:6c:05",
+            "description": "",
+            "duplex": "duplexFull",
+            "forwardingModel": "bridged",
+            "hardware": "ethernet",
+            "interfaceAddress": [],
+            "interfaceCounters": {
+                "counterRefreshTime": 1622850833.539748,
+                "inBroadcastPkts": 0,
+                "inDiscards": 0,
+                "inMulticastPkts": 0,
+                "inOctets": 0,
+                "inTotalPkts": 0,
+                "inUcastPkts": 0,
+                "inputErrorsDetail": {
+                    "alignmentErrors": 0,
+                    "fcsErrors": 0,
+                    "giantFrames": 0,
+                    "runtFrames": 0,
+                    "rxPause": 0,
+                    "symbolErrors": 0
+                },
+                "linkStatusChanges": 2,
+                "outBroadcastPkts": 0,
+                "outDiscards": 0,
+                "outMulticastPkts": 70,
+                "outOctets": 8495,
+                "outUcastPkts": 0,
+                "outputErrorsDetail": {
+                    "collisions": 0,
+                    "deferredTransmissions": 0,
+                    "lateCollisions": 0,
+                    "txPause": 0
+                },
+                "totalInErrors": 0,
+                "totalOutErrors": 0
+            },
+            "interfaceStatistics": {
+                "inBitsRate": 0.0,
+                "inPktsRate": 0.0,
+                "outBitsRate": 0.0,
+                "outPktsRate": 0.0,
+                "updateInterval": 300.0
+            },
+            "interfaceStatus": "connected",
+            "l3MtuConfigured": false,
+            "lanes": 0,
+            "lastStatusChangeTimestamp": 1622850703.896118,
+            "lineProtocolStatus": "up",
+            "loopbackMode": "loopbackNone",
+            "mtu": 9214,
+            "name": "Ethernet5",
+            "physicalAddress": "0c:dd:e9:e8:6c:05"
+        },
+        "Ethernet6": {
+            "autoNegotiate": "unknown",
+            "bandwidth": 0,
+            "burnedInAddress": "0c:dd:e9:e8:6c:06",
+            "description": "",
+            "duplex": "duplexFull",
+            "forwardingModel": "bridged",
+            "hardware": "ethernet",
+            "interfaceAddress": [],
+            "interfaceCounters": {
+                "counterRefreshTime": 1622850833.549673,
+                "inBroadcastPkts": 0,
+                "inDiscards": 0,
+                "inMulticastPkts": 0,
+                "inOctets": 0,
+                "inTotalPkts": 0,
+                "inUcastPkts": 0,
+                "inputErrorsDetail": {
+                    "alignmentErrors": 0,
+                    "fcsErrors": 0,
+                    "giantFrames": 0,
+                    "runtFrames": 0,
+                    "rxPause": 0,
+                    "symbolErrors": 0
+                },
+                "linkStatusChanges": 2,
+                "outBroadcastPkts": 0,
+                "outDiscards": 0,
+                "outMulticastPkts": 70,
+                "outOctets": 8495,
+                "outUcastPkts": 0,
+                "outputErrorsDetail": {
+                    "collisions": 0,
+                    "deferredTransmissions": 0,
+                    "lateCollisions": 0,
+                    "txPause": 0
+                },
+                "totalInErrors": 0,
+                "totalOutErrors": 0
+            },
+            "interfaceStatistics": {
+                "inBitsRate": 0.0,
+                "inPktsRate": 0.0,
+                "outBitsRate": 0.0,
+                "outPktsRate": 0.0,
+                "updateInterval": 300.0
+            },
+            "interfaceStatus": "connected",
+            "l3MtuConfigured": false,
+            "lanes": 0,
+            "lastStatusChangeTimestamp": 1622850703.7004967,
+            "lineProtocolStatus": "up",
+            "loopbackMode": "loopbackNone",
+            "mtu": 9214,
+            "name": "Ethernet6",
+            "physicalAddress": "0c:dd:e9:e8:6c:06"
+        },
+        "Ethernet7": {
+            "autoNegotiate": "unknown",
+            "bandwidth": 0,
+            "burnedInAddress": "0c:dd:e9:e8:6c:07",
+            "description": "",
+            "duplex": "duplexFull",
+            "forwardingModel": "bridged",
+            "hardware": "ethernet",
+            "interfaceAddress": [],
+            "interfaceCounters": {
+                "counterRefreshTime": 1622850833.483193,
+                "inBroadcastPkts": 0,
+                "inDiscards": 0,
+                "inMulticastPkts": 0,
+                "inOctets": 0,
+                "inTotalPkts": 0,
+                "inUcastPkts": 0,
+                "inputErrorsDetail": {
+                    "alignmentErrors": 0,
+                    "fcsErrors": 0,
+                    "giantFrames": 0,
+                    "runtFrames": 0,
+                    "rxPause": 0,
+                    "symbolErrors": 0
+                },
+                "linkStatusChanges": 2,
+                "outBroadcastPkts": 0,
+                "outDiscards": 0,
+                "outMulticastPkts": 70,
+                "outOctets": 8495,
+                "outUcastPkts": 0,
+                "outputErrorsDetail": {
+                    "collisions": 0,
+                    "deferredTransmissions": 0,
+                    "lateCollisions": 0,
+                    "txPause": 0
+                },
+                "totalInErrors": 0,
+                "totalOutErrors": 0
+            },
+            "interfaceStatistics": {
+                "inBitsRate": 0.0,
+                "inPktsRate": 0.0,
+                "outBitsRate": 0.0,
+                "outPktsRate": 0.0,
+                "updateInterval": 300.0
+            },
+            "interfaceStatus": "connected",
+            "l3MtuConfigured": false,
+            "lanes": 0,
+            "lastStatusChangeTimestamp": 1622850703.7839024,
+            "lineProtocolStatus": "up",
+            "loopbackMode": "loopbackNone",
+            "mtu": 9214,
+            "name": "Ethernet7",
+            "physicalAddress": "0c:dd:e9:e8:6c:07"
+        },
+        "Ethernet8": {
+            "autoNegotiate": "unknown",
+            "bandwidth": 0,
+            "burnedInAddress": "0c:dd:e9:e8:6c:08",
+            "description": "",
+            "duplex": "duplexFull",
+            "forwardingModel": "bridged",
+            "hardware": "ethernet",
+            "interfaceAddress": [],
+            "interfaceCounters": {
+                "counterRefreshTime": 1622850833.493905,
+                "inBroadcastPkts": 0,
+                "inDiscards": 0,
+                "inMulticastPkts": 0,
+                "inOctets": 0,
+                "inTotalPkts": 0,
+                "inUcastPkts": 0,
+                "inputErrorsDetail": {
+                    "alignmentErrors": 0,
+                    "fcsErrors": 0,
+                    "giantFrames": 0,
+                    "runtFrames": 0,
+                    "rxPause": 0,
+                    "symbolErrors": 0
+                },
+                "linkStatusChanges": 2,
+                "outBroadcastPkts": 0,
+                "outDiscards": 0,
+                "outMulticastPkts": 70,
+                "outOctets": 8495,
+                "outUcastPkts": 0,
+                "outputErrorsDetail": {
+                    "collisions": 0,
+                    "deferredTransmissions": 0,
+                    "lateCollisions": 0,
+                    "txPause": 0
+                },
+                "totalInErrors": 0,
+                "totalOutErrors": 0
+            },
+            "interfaceStatistics": {
+                "inBitsRate": 0.0,
+                "inPktsRate": 0.0,
+                "outBitsRate": 0.0,
+                "outPktsRate": 0.0,
+                "updateInterval": 300.0
+            },
+            "interfaceStatus": "connected",
+            "l3MtuConfigured": false,
+            "lanes": 0,
+            "lastStatusChangeTimestamp": 1622850703.537853,
+            "lineProtocolStatus": "up",
+            "loopbackMode": "loopbackNone",
+            "mtu": 9214,
+            "name": "Ethernet8",
+            "physicalAddress": "0c:dd:e9:e8:6c:08"
+        },
+        "Ethernet9": {
+            "autoNegotiate": "unknown",
+            "bandwidth": 0,
+            "burnedInAddress": "0c:dd:e9:e8:6c:09",
+            "description": "",
+            "duplex": "duplexFull",
+            "forwardingModel": "bridged",
+            "hardware": "ethernet",
+            "interfaceAddress": [],
+            "interfaceCounters": {
+                "counterRefreshTime": 1622850833.517229,
+                "inBroadcastPkts": 0,
+                "inDiscards": 0,
+                "inMulticastPkts": 0,
+                "inOctets": 0,
+                "inTotalPkts": 0,
+                "inUcastPkts": 0,
+                "inputErrorsDetail": {
+                    "alignmentErrors": 0,
+                    "fcsErrors": 0,
+                    "giantFrames": 0,
+                    "runtFrames": 0,
+                    "rxPause": 0,
+                    "symbolErrors": 0
+                },
+                "linkStatusChanges": 2,
+                "outBroadcastPkts": 0,
+                "outDiscards": 0,
+                "outMulticastPkts": 70,
+                "outOctets": 8495,
+                "outUcastPkts": 0,
+                "outputErrorsDetail": {
+                    "collisions": 0,
+                    "deferredTransmissions": 0,
+                    "lateCollisions": 0,
+                    "txPause": 0
+                },
+                "totalInErrors": 0,
+                "totalOutErrors": 0
+            },
+            "interfaceStatistics": {
+                "inBitsRate": 0.0,
+                "inPktsRate": 0.0,
+                "outBitsRate": 0.0,
+                "outPktsRate": 0.0,
+                "updateInterval": 300.0
+            },
+            "interfaceStatus": "connected",
+            "l3MtuConfigured": false,
+            "lanes": 0,
+            "lastStatusChangeTimestamp": 1622850703.5783594,
+            "lineProtocolStatus": "up",
+            "loopbackMode": "loopbackNone",
+            "mtu": 9214,
+            "name": "Ethernet9",
+            "physicalAddress": "0c:dd:e9:e8:6c:09"
+        },
+        "Loopback1": {
+            "bandwidth": 0,
+            "description": "",
+            "forwardingModel": "routed",
+            "hardware": "loopback",
+            "interfaceAddress": [
+                {
+                    "broadcastAddress": "255.255.255.255",
+                    "dhcp": false,
+                    "primaryIp": {
+                        "address": "172.16.0.1",
+                        "maskLen": 32
+                    },
+                    "secondaryIps": {},
+                    "secondaryIpsOrderedList": [],
+                    "virtualIp": {
+                        "address": "0.0.0.0",
+                        "maskLen": 0
+                    },
+                    "virtualSecondaryIps": {},
+                    "virtualSecondaryIpsOrderedList": []
+                }
+            ],
+            "interfaceStatus": "connected",
+            "l3MtuConfigured": false,
+            "lastStatusChangeTimestamp": 1622850692.0392332,
+            "lineProtocolStatus": "up",
+            "mtu": 65535,
+            "name": "Loopback1"
+        },
+        "Loopback2": {
+            "bandwidth": 0,
+            "description": "",
+            "forwardingModel": "routed",
+            "hardware": "loopback",
+            "interfaceAddress": [
+                {
+                    "broadcastAddress": "255.255.255.255",
+                    "dhcp": false,
+                    "primaryIp": {
+                        "address": "172.16.0.2",
+                        "maskLen": 32
+                    },
+                    "secondaryIps": {},
+                    "secondaryIpsOrderedList": [],
+                    "virtualIp": {
+                        "address": "0.0.0.0",
+                        "maskLen": 0
+                    },
+                    "virtualSecondaryIps": {},
+                    "virtualSecondaryIpsOrderedList": []
+                }
+            ],
+            "interfaceStatus": "connected",
+            "l3MtuConfigured": false,
+            "lastStatusChangeTimestamp": 1622850692.0393014,
+            "lineProtocolStatus": "up",
+            "mtu": 65535,
+            "name": "Loopback2"
+        },
+        "Loopback3": {
+            "bandwidth": 0,
+            "description": "",
+            "forwardingModel": "routed",
+            "hardware": "loopback",
+            "interfaceAddress": [
+                {
+                    "broadcastAddress": "255.255.255.255",
+                    "dhcp": false,
+                    "primaryIp": {
+                        "address": "172.16.0.3",
+                        "maskLen": 32
+                    },
+                    "secondaryIps": {},
+                    "secondaryIpsOrderedList": [],
+                    "virtualIp": {
+                        "address": "0.0.0.0",
+                        "maskLen": 0
+                    },
+                    "virtualSecondaryIps": {},
+                    "virtualSecondaryIpsOrderedList": []
+                }
+            ],
+            "interfaceStatus": "connected",
+            "l3MtuConfigured": false,
+            "lastStatusChangeTimestamp": 1622850692.039348,
+            "lineProtocolStatus": "up",
+            "mtu": 65535,
+            "name": "Loopback3"
+        },
+        "Management1": {
+            "autoNegotiate": "success",
+            "bandwidth": 1000000000,
+            "burnedInAddress": "0c:dd:e9:e8:6c:00",
+            "description": "",
+            "duplex": "duplexFull",
+            "forwardingModel": "routed",
+            "hardware": "ethernet",
+            "interfaceAddress": [
+                {
+                    "broadcastAddress": "255.255.255.255",
+                    "dhcp": false,
+                    "primaryIp": {
+                        "address": "10.150.0.11",
+                        "maskLen": 16
+                    },
+                    "secondaryIps": {},
+                    "secondaryIpsOrderedList": [],
+                    "virtualIp": {
+                        "address": "0.0.0.0",
+                        "maskLen": 0
+                    },
+                    "virtualSecondaryIps": {},
+                    "virtualSecondaryIpsOrderedList": []
+                }
+            ],
+            "interfaceCounters": {
+                "counterRefreshTime": 1622850833.465642,
+                "inBroadcastPkts": 15,
+                "inDiscards": 0,
+                "inMulticastPkts": 0,
+                "inOctets": 53508,
+                "inTotalPkts": 727,
+                "inUcastPkts": 712,
+                "inputErrorsDetail": {
+                    "alignmentErrors": 0,
+                    "fcsErrors": 0,
+                    "giantFrames": 0,
+                    "runtFrames": 0,
+                    "rxPause": 0,
+                    "symbolErrors": 0
+                },
+                "linkStatusChanges": 6,
+                "outBroadcastPkts": 5,
+                "outDiscards": 0,
+                "outMulticastPkts": 8,
+                "outOctets": 111521,
+                "outUcastPkts": 665,
+                "outputErrorsDetail": {
+                    "collisions": 0,
+                    "deferredTransmissions": 0,
+                    "lateCollisions": 0,
+                    "txPause": 0
+                },
+                "totalInErrors": 0,
+                "totalOutErrors": 0
+            },
+            "interfaceStatistics": {
+                "inBitsRate": 1317.0701405884752,
+                "inPktsRate": 2.2327695245335675,
+                "outBitsRate": 2781.0179645587805,
+                "outPktsRate": 2.1013772160989483,
+                "updateInterval": 300.0
+            },
+            "interfaceStatus": "connected",
+            "l3MtuConfigured": false,
+            "lanes": 0,
+            "lastStatusChangeTimestamp": 1622850697.8448663,
+            "lineProtocolStatus": "up",
+            "loopbackMode": "loopbackNone",
+            "mtu": 1500,
+            "name": "Management1",
+            "physicalAddress": "0c:dd:e9:e8:6c:00"
+        }
+    }
+}

@@ -1,0 +1,160 @@
+BGP routing table information for VRF cust10, address family IPv4 Unicast
+BGP routing table entry for 1.1.3.10/32, version 3
+Paths: (1 available, best #1)
+Flags: (0x8000002) (high32 00000000) on xmit-list, is not in urib
+
+  Advertised path-id 1
+  Path type: redist, path is valid, is best path, no labeled nexthop
+  AS-Path: NONE, path locally originated
+    0.0.0.0 (metric 0) from 0.0.0.0 (1.1.3.10)
+      Origin incomplete, MED 0, localpref 100, weight 32768
+
+  Path-id 1 not advertised to any peer
+
+BGP routing table information for VRF cust20, address family IPv4 Unicast
+BGP routing table entry for 1.1.3.20/32, version 3
+Paths: (1 available, best #1)
+Flags: (0x8000002) (high32 00000000) on xmit-list, is not in urib
+
+  Advertised path-id 1
+  Path type: redist, path is valid, is best path, no labeled nexthop
+  AS-Path: NONE, path locally originated
+    0.0.0.0 (metric 0) from 0.0.0.0 (1.1.3.20)
+      Origin incomplete, MED 0, localpref 100, weight 32768
+
+  Path-id 1 not advertised to any peer
+
+BGP routing table information for VRF default, address family IPv4 Unicast
+BGP routing table entry for 10.10.10.0/24, version 9
+Paths: (1 available, best #1)
+Flags: (0x8008001a) (high32 00000000) on xmit-list, is in urib, is best urib route, is in HW
+
+  Advertised path-id 1
+  Path type: external, path is valid, is best path, no labeled nexthop, in rib
+  AS-Path: 1 , path sourced external to AS
+    10.10.20.1 (metric 0) from 10.10.20.1 (192.168.123.1)
+      Origin IGP, MED 0, localpref 100, weight 0
+
+  Path-id 1 not advertised to any peer
+BGP routing table entry for 10.10.20.0/24, version 3
+Paths: (1 available, best #1)
+Flags: (0x80080012) (high32 00000000) on xmit-list, is in urib, is backup urib route, is in HW
+
+  Advertised path-id 1
+  Path type: external, path is valid, is best path, no labeled nexthop, in rib
+  AS-Path: 1 , path sourced external to AS
+    10.10.20.1 (metric 0) from 10.10.20.1 (192.168.123.1)
+      Origin IGP, MED 0, localpref 100, weight 0
+
+  Path-id 1 not advertised to any peer
+BGP routing table entry for 10.10.30.0/24, version 10
+Paths: (1 available, best #1)
+Flags: (0x8008001a) (high32 00000000) on xmit-list, is in urib, is best urib route, is in HW
+
+  Advertised path-id 1
+  Path type: external, path is valid, is best path, no labeled nexthop, in rib
+  AS-Path: 1 , path sourced external to AS
+    10.10.20.1 (metric 0) from 10.10.20.1 (192.168.123.1)
+      Origin IGP, MED 0, localpref 100, weight 0
+
+  Path-id 1 not advertised to any peer
+BGP routing table entry for 10.10.40.0/24, version 11
+Paths: (1 available, best #1)
+Flags: (0x8008001a) (high32 00000000) on xmit-list, is in urib, is best urib route, is in HW
+
+  Advertised path-id 1
+  Path type: external, path is valid, is best path, no labeled nexthop, in rib
+  AS-Path: 1 , path sourced external to AS
+    10.10.20.1 (metric 0) from 10.10.20.1 (192.168.123.1)
+      Origin IGP, MED 0, localpref 100, weight 0
+
+  Path-id 1 not advertised to any peer
+BGP routing table entry for 10.10.50.0/24, version 12
+Paths: (1 available, best #1)
+Flags: (0x8008001a) (high32 00000000) on xmit-list, is in urib, is best urib route, is in HW
+
+  Advertised path-id 1
+  Path type: external, path is valid, is best path, no labeled nexthop, in rib
+  AS-Path: 1 , path sourced external to AS
+    10.10.20.1 (metric 0) from 10.10.20.1 (192.168.123.1)
+      Origin IGP, MED 0, localpref 100, weight 0
+
+  Path-id 1 not advertised to any peer
+BGP routing table entry for 192.168.122.0/24, version 13
+Paths: (1 available, best #1)
+Flags: (0x8008001a) (high32 00000000) on xmit-list, is in urib, is best urib route, is in HW
+
+  Advertised path-id 1
+  Path type: external, path is valid, is best path, no labeled nexthop, in rib
+  AS-Path: 1 , path sourced external to AS
+    10.10.20.1 (metric 0) from 10.10.20.1 (192.168.123.1)
+      Origin IGP, MED 0, localpref 100, weight 0
+
+  Path-id 1 not advertised to any peer
+BGP routing table entry for 192.168.123.1/32, version 14
+Paths: (1 available, best #1)
+Flags: (0x8008001a) (high32 00000000) on xmit-list, is in urib, is best urib route, is in HW
+
+  Advertised path-id 1
+  Path type: external, path is valid, is best path, no labeled nexthop, in rib
+  AS-Path: 1 , path sourced external to AS
+    10.10.20.1 (metric 0) from 10.10.20.1 (192.168.123.1)
+      Origin IGP, MED 0, localpref 100, weight 0
+
+  Path-id 1 not advertised to any peer
+BGP routing table entry for 192.168.123.2/32, version 6
+Paths: (1 available, best #1)
+Flags: (0x8008001a) (high32 00000000) on xmit-list, is in urib, is best urib route, is in HW
+
+  Advertised path-id 1
+  Path type: external, path is valid, is best path, no labeled nexthop, in rib
+  AS-Path: 1 10 , path sourced external to AS
+    10.10.20.1 (metric 0) from 10.10.20.1 (192.168.123.1)
+      Origin IGP, MED not set, localpref 100, weight 0
+
+  Path-id 1 not advertised to any peer
+BGP routing table entry for 192.168.123.3/32, version 16
+Paths: (1 available, best #1)
+Flags: (0x080002) (high32 00000000) on xmit-list, is not in urib
+
+  Advertised path-id 1
+  Path type: local, path is valid, is best path, no labeled nexthop
+  AS-Path: NONE, path locally originated
+    0.0.0.0 (metric 0) from 0.0.0.0 (192.168.123.3)
+      Origin IGP, MED not set, localpref 100, weight 32768
+
+  Path-id 1 advertised to peers:
+    10.10.20.1
+BGP routing table entry for 192.168.123.4/32, version 18
+Paths: (1 available, best #1)
+Flags: (0x8008001a) (high32 00000000) on xmit-list, is in urib, is best urib route, is in HW
+
+  Advertised path-id 1
+  Path type: external, path is valid, is best path, no labeled nexthop, in rib
+  AS-Path: 1 30 , path sourced external to AS
+    10.10.20.1 (metric 0) from 10.10.20.1 (192.168.123.1)
+      Origin IGP, MED not set, localpref 100, weight 0
+
+  Path-id 1 not advertised to any peer
+BGP routing table entry for 192.168.123.5/32, version 20
+Paths: (1 available, best #1)
+Flags: (0x8008001a) (high32 00000000) on xmit-list, is in urib, is best urib route, is in HW
+
+  Advertised path-id 1
+  Path type: external, path is valid, is best path, no labeled nexthop, in rib
+  AS-Path: 1 40 , path sourced external to AS
+    10.10.20.1 (metric 0) from 10.10.20.1 (192.168.123.1)
+      Origin IGP, MED not set, localpref 100, weight 0
+
+  Path-id 1 not advertised to any peer
+BGP routing table entry for 192.168.123.6/32, version 7
+Paths: (1 available, best #1)
+Flags: (0x8008001a) (high32 00000000) on xmit-list, is in urib, is best urib route, is in HW
+
+  Advertised path-id 1
+  Path type: external, path is valid, is best path, no labeled nexthop, in rib
+  AS-Path: 1 50 , path sourced external to AS
+    10.10.20.1 (metric 0) from 10.10.20.1 (192.168.123.1)
+      Origin IGP, MED not set, localpref 100, weight 0
+
+  Path-id 1 not advertised to any peer

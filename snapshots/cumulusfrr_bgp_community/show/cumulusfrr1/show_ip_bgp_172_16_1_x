@@ -1,0 +1,65 @@
+cumulusfrr1# show ip bgp 172.16.1.1/32
+BGP routing table entry for 172.16.1.1/32
+Paths: (1 available, best #1, table default)
+  Advertised to non peer-group peers:
+  cumulusfrr2(10.12.11.2)
+  Local
+    0.0.0.0 from 0.0.0.0 (192.168.123.1)
+      Origin IGP, metric 0, weight 32768, valid, sourced, local, bestpath-from-AS Local, best
+      AddPath ID: RX 0, TX 2
+      Last update: Tue Nov 10 20:58:50 2020
+
+cumulusfrr1# show ip bgp 172.16.1.2/32
+BGP routing table entry for 172.16.1.2/32
+Paths: (1 available, best #1, table default)
+  Advertised to non peer-group peers:
+  cumulusfrr2(10.12.11.2)
+  Local
+    0.0.0.0 from 0.0.0.0 (192.168.123.1)
+      Origin IGP, metric 0, weight 32768, valid, sourced, local, bestpath-from-AS Local, best
+      AddPath ID: RX 0, TX 3
+      Last update: Tue Nov 10 20:58:50 2020
+
+cumulusfrr1# show ip bgp 172.16.1.3/32
+BGP routing table entry for 172.16.1.3/32
+Paths: (1 available, best #1, table default)
+  Advertised to non peer-group peers:
+  cumulusfrr2(10.12.11.2)
+  Local
+    0.0.0.0 from 0.0.0.0 (192.168.123.1)
+      Origin IGP, metric 0, weight 32768, valid, sourced, local, bestpath-from-AS Local, best
+      AddPath ID: RX 0, TX 4
+      Last update: Tue Nov 10 20:58:49 2020
+
+cumulusfrr1# show ip bgp 172.16.1.4/32
+BGP routing table entry for 172.16.1.4/32
+Paths: (1 available, best #1, table default)
+  Advertised to non peer-group peers:
+  cumulusfrr2(10.12.11.2)
+  Local
+    0.0.0.0 from 0.0.0.0 (192.168.123.1)
+      Origin IGP, metric 0, weight 32768, valid, sourced, local, bestpath-from-AS Local, best
+      AddPath ID: RX 0, TX 5
+      Last update: Tue Nov 10 20:58:50 2020
+
+cumulusfrr1# show ip bgp 172.16.1.7/32
+BGP routing table entry for 172.16.1.7/32
+Paths: (1 available, best #1, table default)
+  Advertised to non peer-group peers:
+  cumulusfrr2(10.12.11.2)
+  Local
+    0.0.0.0 from 0.0.0.0 (192.168.123.1)
+      Origin IGP, metric 0, weight 32768, valid, sourced, local, bestpath-from-AS Local, best
+      AddPath ID: RX 0, TX 6
+      Last update: Tue Nov 10 20:58:50 2020
+
+cumulusfrr1# do show ip bgp 192.168.122.0
+BGP routing table entry for 192.168.122.0/24
+Paths: (1 available, best #1, table default)
+  Advertised to non peer-group peers:
+  cumulusfrr2(10.12.11.2)
+  Local
+    0.0.0.0 from 0.0.0.0 (192.168.123.1)
+      Origin IGP, metric 0, weight 32768, valid, sourced, local, bestpath-from-AS Local, best
+      AddPath ID: RX 0, TX 7
+      Last update: Tue Nov 10 20:58:49 2020

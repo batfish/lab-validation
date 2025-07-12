@@ -1,0 +1,215 @@
+Building configuration...
+
+Current configuration : 3878 bytes
+!
+! Last configuration change at 17:00:32 UTC Thu Nov 21 2019
+!
+version 16.4
+service timestamps debug datetime msec
+service timestamps log datetime msec
+no platform punt-keepalive disable-kernel-core
+platform console serial
+!
+hostname R-PublicASN500
+!
+boot-start-marker
+boot-end-marker
+!
+!
+!
+no aaa new-model
+!
+!
+!
+!
+!
+!
+!
+!
+!
+
+
+
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+subscriber templating
+!
+!
+!
+multilink bundle-name authenticated
+!
+!
+!
+!
+!
+crypto pki trustpoint TP-self-signed-773592539
+ enrollment selfsigned
+ subject-name cn=IOS-Self-Signed-Certificate-773592539
+ revocation-check none
+ rsakeypair TP-self-signed-773592539
+!
+!
+crypto pki certificate chain TP-self-signed-773592539
+ certificate self-signed 01
+  3082032E 30820216 A0030201 02020101 300D0609 2A864886 F70D0101 05050030
+  30312E30 2C060355 04031325 494F532D 53656C66 2D536967 6E65642D 43657274
+  69666963 6174652D 37373335 39323533 39301E17 0D313930 39323031 39333631
+  355A170D 32303031 30313030 30303030 5A303031 2E302C06 03550403 1325494F
+  532D5365 6C662D53 69676E65 642D4365 72746966 69636174 652D3737 33353932
+  35333930 82012230 0D06092A 864886F7 0D010101 05000382 010F0030 82010A02
+  82010100 C29D7585 931E78EE 631DB175 67E6F5C1 BA32E599 6AE27A0F B9EC9AA7
+  D1465EFB CFC59AD5 9D9BE9CC 328AB1D8 1D735E8F 110A2117 4EAC0D1C 7811F46D
+  57D86AA5 15FF032E 9133228C CEF52B46 7B0DA84A 4E2B036E B069D723 9649BC5C
+  6E3140F4 7D20F53E 6C59ED93 E15A2653 0743F0C6 3E503983 743B953E 01900485
+  C162FE0E 507B50AF E4CC6C0C BE019473 FC57750A 89238748 9775FED6 0381B327
+  07994082 88597798 8DA0F2EA 3E866E02 CF8FE016 E0DF55AB 42231404 30CEA16E
+  0F56E258 69D5C54A 88EB75C3 DEC1B9C3 D7A38133 CAA7573F D3616A6A 64C63147
+  9C6C7BFD C1931465 D614FA0F E93433DD 2747860D 43C240EB 062944BE 3B4DAB9C
+  B733FE51 02030100 01A35330 51300F06 03551D13 0101FF04 05300301 01FF301F
+  0603551D 23041830 16801409 E008B998 0B4B7538 0D07066B F7940AE5 3A632930
+  1D060355 1D0E0416 041409E0 08B9980B 4B75380D 07066BF7 940AE53A 6329300D
+  06092A86 4886F70D 01010505 00038201 01002262 683AA3DF 293C2AD0 B7D03F4A
+  28BB1CB6 2499B0B2 7FD7FBCE 9EDDD390 4689F22F 9F8C43B1 E0C0A3B9 92A3F05F
+  1343B281 0A3AB627 085CEB40 A6AAD293 E7D379C3 FE8EA271 F6B20E22 BA419BFC
+  56969DD9 C1939B77 7FA50237 5AB646C9 2332D9B4 BD2D529F 37FABFDC 28F63295
+  7CC8A088 7B9FE33C B09C73B1 5CD93A8B 97BD1335 F75BD061 5E52733A CAD2FA2F
+  A9B8BEAB CC3EE1DA 20C1263F 25E8421B 84DC2EEC 69F94C53 0F5F0AD2 51DC915A
+  E58B8FD8 6153F01C 3FF48FA0 D6FDB8A3 A3593596 F1891DEA 46511D27 65D80F8F
+  7E769168 C54D6A26 C0368DF5 9F0E6CC5 15235A69 56123CE7 549C5B6F CF8B3817
+  278CB654 FA2D331D 5B01AB78 7E3AD245 0FFD
+  	quit
+
+
+!
+!
+!
+!
+!
+!
+!
+license udi pid CSR1000V sn 9GREHVLQYVR
+diagnostic bootup level minimal
+!
+spanning-tree extend system-id
+!
+!
+username cisco privilege 15 password 0 cisco
+!
+redundancy
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+interface Loopback123
+ ip address 192.168.123.7 255.255.255.255
+!
+interface GigabitEthernet1
+ ip address 10.10.50.1 255.255.255.0
+ negotiation auto
+ no mop enabled
+ no mop sysid
+!
+interface GigabitEthernet2
+ no ip address
+ shutdown
+ negotiation auto
+ no mop enabled
+ no mop sysid
+!
+interface GigabitEthernet3
+ no ip address
+ shutdown
+ negotiation auto
+ no mop enabled
+ no mop sysid
+!
+interface GigabitEthernet4
+ no ip address
+ shutdown
+ negotiation auto
+ no mop enabled
+ no mop sysid
+!
+router bgp 500
+ bgp log-neighbor-changes
+ network 192.168.123.7 mask 255.255.255.255
+ neighbor 10.10.50.2 remote-as 100
+!
+!
+virtual-service csr_mgmt
+!
+ip forward-protocol nd
+ip http server
+ip http authentication local
+ip http secure-server
+!
+!
+!
+!
+!
+!
+!
+control-plane
+!
+ !
+ !
+ !
+ !
+!
+!
+!
+!
+!
+line con 0
+ stopbits 1
+line vty 0
+ login local
+ transport input ssh
+line vty 1
+ login local
+ length 0
+ transport input ssh
+line vty 2 4
+ login local
+ transport input ssh
+line vty 5 15
+ login local
+ transport input ssh
+!
+!
+!
+!
+!
+!
+end

@@ -1,0 +1,54 @@
+! Command: show running-config
+! device: d3 (vEOS, EOS-4.23.0.1F)
+!
+! boot system flash:/vEOS-lab.swi
+!
+transceiver qsfp default-mode 4x10G
+!
+hostname d3
+!
+spanning-tree mode mstp
+!
+no aaa root
+!
+username admin privilege 15 role network-admin secret sha512 $6$69IYrwHFES7WCG5R$QTh/VhK3cnmHxCv2iUuwnM10T28LbkJNqvE9waST1YqCi2PVGVs9pl0DepELchKFKF4YwZ20LgpxEcyYDDa0l/
+!
+interface Ethernet1
+   no switchport
+   ip address 10.23.21.2/24
+!
+interface Ethernet2
+!
+interface Ethernet3
+!
+interface Ethernet4
+!
+interface Ethernet5
+!
+interface Ethernet6
+!
+interface Ethernet7
+!
+interface Ethernet8
+!
+interface Ethernet9
+!
+interface Ethernet10
+!
+interface Ethernet11
+!
+interface Ethernet12
+!
+interface Loopback123
+   ip address 192.168.123.3/32
+!
+interface Management1
+!
+ip routing
+!
+router bgp 65001
+   neighbor 10.23.21.1 remote-as 65002
+   neighbor 10.23.21.1 maximum-routes 12000
+   network 192.168.123.3/32
+!
+end

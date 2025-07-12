@@ -1,0 +1,45 @@
+Codes: L - local, C - connected, S - static, R - RIP, M - mobile, B - BGP
+       D - EIGRP, EX - EIGRP external, O - OSPF, IA - OSPF inter area
+       N1 - OSPF NSSA external type 1, N2 - OSPF NSSA external type 2
+       E1 - OSPF external type 1, E2 - OSPF external type 2
+       i - IS-IS, su - IS-IS summary, L1 - IS-IS level-1, L2 - IS-IS level-2
+       ia - IS-IS inter area, * - candidate default, U - per-user static route
+       o - ODR, P - periodic downloaded static route, H - NHRP, l - LISP
+       + - replicated route, % - next hop override
+
+Gateway of last resort is not set
+
+      1.0.0.0/32 is subnetted, 1 subnets
+O        1.1.1.1 [110/2] via 12.0.0.1, 00:25:15, GigabitEthernet0/0
+      2.0.0.0/32 is subnetted, 1 subnets
+C        2.2.2.2 is directly connected, Loopback0
+      3.0.0.0/32 is subnetted, 1 subnets
+O IA     3.3.3.3 [110/12] via 12.0.0.1, 00:23:11, GigabitEthernet0/0
+      4.0.0.0/32 is subnetted, 1 subnets
+O IA     4.4.4.4 [110/12] via 12.0.0.1, 00:25:15, GigabitEthernet0/0
+      7.0.0.0/32 is subnetted, 1 subnets
+O E2     7.7.7.7 [110/20] via 12.0.0.1, 00:03:29, GigabitEthernet0/0
+      10.0.0.0/32 is subnetted, 2 subnets
+O E2     10.10.7.1 [110/20] via 12.0.0.1, 00:03:28, GigabitEthernet0/0
+O E2     10.11.7.1 [110/20] via 12.0.0.1, 00:03:23, GigabitEthernet0/0
+      12.0.0.0/8 is variably subnetted, 2 subnets, 2 masks
+C        12.0.0.0/24 is directly connected, GigabitEthernet0/0
+L        12.0.0.2/32 is directly connected, GigabitEthernet0/0
+      13.0.0.0/24 is subnetted, 1 subnets
+O IA     13.1.0.0 [110/11] via 12.0.0.1, 00:25:15, GigabitEthernet0/0
+      14.0.0.0/24 is subnetted, 1 subnets
+O IA     14.2.0.0 [110/11] via 12.0.0.1, 00:25:15, GigabitEthernet0/0
+      15.0.0.0/24 is subnetted, 1 subnets
+O IA     15.1.1.0 [110/11] via 12.0.0.1, 00:25:15, GigabitEthernet0/0
+      16.0.0.0/24 is subnetted, 1 subnets
+O IA     16.2.7.0 [110/11] via 12.0.0.1, 00:25:15, GigabitEthernet0/0
+O     192.168.122.0/24 [110/2] via 12.0.0.1, 00:20:34, GigabitEthernet0/0
+      192.168.123.0/24 is variably subnetted, 8 subnets, 2 masks
+C        192.168.123.0/24 is directly connected, Loopback123
+O        192.168.123.1/32 [110/2] via 12.0.0.1, 00:20:16, GigabitEthernet0/0
+L        192.168.123.2/32 is directly connected, Loopback123
+O IA     192.168.123.3/32 [110/12] via 12.0.0.1, 00:12:52, GigabitEthernet0/0
+O IA     192.168.123.4/32 [110/12] via 12.0.0.1, 00:11:18, GigabitEthernet0/0
+O IA     192.168.123.5/32 [110/12] via 12.0.0.1, 00:08:54, GigabitEthernet0/0
+O IA     192.168.123.6/32 [110/12] via 12.0.0.1, 00:07:21, GigabitEthernet0/0
+O E2     192.168.123.7/32 [110/20] via 12.0.0.1, 00:03:02, GigabitEthernet0/0

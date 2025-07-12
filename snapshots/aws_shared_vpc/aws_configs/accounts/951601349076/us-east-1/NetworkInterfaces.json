@@ -1,0 +1,102 @@
+{
+ "NetworkInterfaces": [
+  {
+   "Association": {
+    "IpOwnerId": "amazon",
+    "PublicDnsName": "ec2-54-157-213-2.compute-1.amazonaws.com",
+    "PublicIp": "54.157.213.2"
+   },
+   "Attachment": {
+    "AttachTime": "2020-05-15 23:33:00+00:00",
+    "AttachmentId": "eni-attach-08983402eaa66405d",
+    "DeleteOnTermination": true,
+    "DeviceIndex": 0,
+    "InstanceId": "i-0027677a3717ce1ac",
+    "InstanceOwnerId": "951601349076",
+    "Status": "attached"
+   },
+   "AvailabilityZone": "us-east-1a",
+   "Description": "",
+   "Groups": [
+    {
+     "GroupId": "sg-072d2ee142dbaf8da",
+     "GroupName": "prod_sg"
+    }
+   ],
+   "InterfaceType": "interface",
+   "Ipv6Addresses": [],
+   "MacAddress": "0a:5a:07:c0:6f:49",
+   "NetworkInterfaceId": "eni-01ce017c93e8d851d",
+   "OwnerId": "951601349076",
+   "PrivateDnsName": "ip-10-2-1-100.ec2.internal",
+   "PrivateIpAddress": "10.2.1.100",
+   "PrivateIpAddresses": [
+    {
+     "Association": {
+      "IpOwnerId": "amazon",
+      "PublicDnsName": "ec2-54-157-213-2.compute-1.amazonaws.com",
+      "PublicIp": "54.157.213.2"
+     },
+     "Primary": true,
+     "PrivateDnsName": "ip-10-2-1-100.ec2.internal",
+     "PrivateIpAddress": "10.2.1.100"
+    }
+   ],
+   "RequesterManaged": false,
+   "SourceDestCheck": true,
+   "Status": "in-use",
+   "SubnetId": "subnet-0fe40398beb530ccb",
+   "TagSet": [],
+   "VpcId": "vpc-0c2b2d87d7d1d8f5e"
+  },
+  {
+   "Association": {
+    "IpOwnerId": "amazon",
+    "PublicDnsName": "ec2-3-84-24-215.compute-1.amazonaws.com",
+    "PublicIp": "3.84.24.215"
+   },
+   "Attachment": {
+    "AttachTime": "2020-05-15 23:33:05+00:00",
+    "AttachmentId": "eni-attach-08dd405f31c2039ee",
+    "DeleteOnTermination": true,
+    "DeviceIndex": 0,
+    "InstanceId": "i-00b38bd7414ff5d4e",
+    "InstanceOwnerId": "951601349076",
+    "Status": "attached"
+   },
+   "AvailabilityZone": "us-east-1d",
+   "Description": "",
+   "Groups": [
+    {
+     "GroupId": "sg-04f53e9905c627aaa",
+     "GroupName": "shared_services_prod"
+    }
+   ],
+   "InterfaceType": "interface",
+   "Ipv6Addresses": [],
+   "MacAddress": "12:95:c3:1e:54:4b",
+   "NetworkInterfaceId": "eni-094530d2f8831c9b3",
+   "OwnerId": "951601349076",
+   "PrivateDnsName": "ip-10-1-1-101.ec2.internal",
+   "PrivateIpAddress": "10.1.1.101",
+   "PrivateIpAddresses": [
+    {
+     "Association": {
+      "IpOwnerId": "amazon",
+      "PublicDnsName": "ec2-3-84-24-215.compute-1.amazonaws.com",
+      "PublicIp": "3.84.24.215"
+     },
+     "Primary": true,
+     "PrivateDnsName": "ip-10-1-1-101.ec2.internal",
+     "PrivateIpAddress": "10.1.1.101"
+    }
+   ],
+   "RequesterManaged": false,
+   "SourceDestCheck": true,
+   "Status": "in-use",
+   "SubnetId": "subnet-056ebbbb47985c3c5",
+   "TagSet": [],
+   "VpcId": "vpc-02008b4ca4a5ced27"
+  }
+ ]
+}

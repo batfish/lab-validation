@@ -1,0 +1,47 @@
+IP Route Table for VRF "default"
+'*' denotes best ucast next-hop
+'**' denotes best mcast next-hop
+'[x/y]' denotes [preference/metric]
+'%<string>' in via output denotes VRF <string>
+
+10.12.11.0/24, ubest/mbest: 1/0, attached
+    *via 10.12.11.2, Eth1/1, [0/0], 00:06:23, direct
+10.12.11.2/32, ubest/mbest: 1/0, attached
+    *via 10.12.11.2, Eth1/1, [0/0], 00:06:23, local
+10.12.22.0/24, ubest/mbest: 1/0, attached
+    *via 10.12.22.2, Eth1/2, [0/0], 00:06:23, direct
+10.12.22.2/32, ubest/mbest: 1/0, attached
+    *via 10.12.22.2, Eth1/2, [0/0], 00:06:23, local
+10.12.33.0/24, ubest/mbest: 1/0, attached
+    *via 10.12.33.2, Eth1/3, [0/0], 00:06:22, direct
+10.12.33.2/32, ubest/mbest: 1/0, attached
+    *via 10.12.33.2, Eth1/3, [0/0], 00:06:22, local
+10.12.44.0/24, ubest/mbest: 1/0, attached
+    *via 10.12.44.2, Eth1/4, [0/0], 00:06:22, direct
+10.12.44.2/32, ubest/mbest: 1/0, attached
+    *via 10.12.44.2, Eth1/4, [0/0], 00:06:22, local
+10.12.55.0/24, ubest/mbest: 1/0, attached
+    *via 10.12.55.2, Eth1/5, [0/0], 00:06:22, direct
+10.12.55.2/32, ubest/mbest: 1/0, attached
+    *via 10.12.55.2, Eth1/5, [0/0], 00:06:22, local
+10.12.66.0/24, ubest/mbest: 1/0, attached
+    *via 10.12.66.2, Eth1/6, [0/0], 00:06:21, direct
+10.12.66.2/32, ubest/mbest: 1/0, attached
+    *via 10.12.66.2, Eth1/6, [0/0], 00:06:21, local
+10.12.77.0/24, ubest/mbest: 1/0, attached
+    *via 10.12.77.2, Eth1/7, [0/0], 00:06:21, direct
+10.12.77.2/32, ubest/mbest: 1/0, attached
+    *via 10.12.77.2, Eth1/7, [0/0], 00:06:21, local
+172.16.1.1/32, ubest/mbest: 1/0
+    *via 10.12.11.1, [20/0], 00:04:43, bgp-65002, external, tag 21
+172.16.1.2/32, ubest/mbest: 1/0
+    *via 10.12.22.1, [20/0], 00:04:42, bgp-65002, external, tag 22
+172.16.1.6/32, ubest/mbest: 1/0
+    *via 10.12.66.1, [20/0], 00:04:42, bgp-65002, external, tag 26
+172.16.1.7/32, ubest/mbest: 1/0
+    *via 10.12.77.1, [20/0], 00:04:42, bgp-65002, external, tag 271
+192.168.122.0/24, ubest/mbest: 1/0
+    *via 10.12.11.1, [20/0], 00:04:43, bgp-65002, external, tag 21
+192.168.123.2/32, ubest/mbest: 2/0, attached
+    *via 192.168.123.2, Lo123, [0/0], 00:06:21, local
+    *via 192.168.123.2, Lo123, [0/0], 00:06:21, direct

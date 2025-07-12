@@ -1,0 +1,49 @@
+{
+ "VpcPeeringConnections": [
+  {
+   "AccepterVpcInfo": {
+    "CidrBlock": "10.5.0.0/16",
+    "CidrBlockSet": [
+     {
+      "CidrBlock": "10.5.0.0/16"
+     }
+    ],
+    "OwnerId": "028403472736",
+    "PeeringOptions": {
+     "AllowDnsResolutionFromRemoteVpc": false,
+     "AllowEgressFromLocalClassicLinkToRemoteVpc": false,
+     "AllowEgressFromLocalVpcToRemoteClassicLink": false
+    },
+    "Region": "us-east-1",
+    "VpcId": "vpc-0f0d3c242ef614e28"
+   },
+   "RequesterVpcInfo": {
+    "CidrBlock": "10.4.0.0/16",
+    "CidrBlockSet": [
+     {
+      "CidrBlock": "10.4.0.0/16"
+     }
+    ],
+    "OwnerId": "028403472736",
+    "PeeringOptions": {
+     "AllowDnsResolutionFromRemoteVpc": false,
+     "AllowEgressFromLocalClassicLinkToRemoteVpc": false,
+     "AllowEgressFromLocalVpcToRemoteClassicLink": false
+    },
+    "Region": "us-west-1",
+    "VpcId": "vpc-0c4e7b95bbfab3bea"
+   },
+   "Status": {
+    "Code": "active",
+    "Message": "Active"
+   },
+   "Tags": [
+    {
+     "Key": "Name",
+     "Value": "pcx-it-west-east"
+    }
+   ],
+   "VpcPeeringConnectionId": "pcx-028c8b07703377dda"
+  }
+ ]
+}

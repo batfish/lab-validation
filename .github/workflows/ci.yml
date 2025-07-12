@@ -1,0 +1,207 @@
+name: CI
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main, develop ]
+  workflow_dispatch:
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Set up Python 3.10
+      uses: actions/setup-python@v4
+      with:
+        python-version: "3.10"
+        cache: 'pip'
+        cache-dependency-path: '.pre-commit-config.yaml'
+
+    - name: Run pre-commit hooks
+      uses: pre-commit/action@v3.0.1
+
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Set up Python 3.10
+      uses: actions/setup-python@v4
+      with:
+        python-version: "3.10"
+        cache: 'pip'
+        cache-dependency-path: 'requirements*.txt'
+
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+        pip install -r requirements-dev.txt
+        pip install -e .
+
+    - name: Run tests with coverage
+      run: |
+        pytest tests/ -v --tb=short --cov=lab_validation --cov-report=xml --cov-report=term-missing
+
+    - name: Code Coverage Summary
+      uses: irongut/CodeCoverageSummary@v1.3.0
+      with:
+        filename: coverage.xml
+        badge: true
+        fail_below_min: false
+        format: markdown
+        hide_branch_rate: false
+        hide_complexity: true
+        indicators: true
+        output: both
+        thresholds: '60 80'
+
+    - name: Add Coverage PR Comment
+      uses: marocchino/sticky-pull-request-comment@v2
+      if: github.event_name == 'pull_request'
+      with:
+        recreate: true
+        path: code-coverage-results.md
+
+    - name: Test package build
+      run: |
+        python -m build
+        pip install dist/*.whl
+        python -c "import lab_validation; print('Package imports successfully')"
+
+  # First job to discover available labs
+  discover-labs:
+    runs-on: ubuntu-latest
+    outputs:
+      labs: ${{ steps.discover.outputs.labs }}
+    steps:
+    - name: Checkout lab-validation
+      uses: actions/checkout@v4
+
+    - name: Discover available labs
+      id: discover
+      run: |
+        # Find all directories in snapshots/ and create JSON array
+        labs=$(ls -1 snapshots/ | jq -R -s -c 'split("\n")[:-1]')
+        echo "labs=$labs" >> $GITHUB_OUTPUT
+        echo "Discovered labs: $labs"
+
+  # Build Batfish JAR once and cache it
+  build-batfish:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout Batfish
+      uses: actions/checkout@v4
+      with:
+        repository: batfish/batfish
+        path: batfish
+        ref: master
+
+    - name: Set up Java 17
+      uses: actions/setup-java@v4
+      with:
+        distribution: 'temurin'
+        java-version: '17'
+
+    - name: Cache Bazel
+      uses: actions/cache@v3
+      with:
+        path: ~/.cache/bazel
+        key: ${{ runner.os }}-bazel-17-${{ hashFiles('batfish/.bazelversion', 'batfish/WORKSPACE', 'batfish/maven_install.json') }}-${{ github.run_id }}
+        restore-keys: |
+          ${{ runner.os }}-bazel-17-${{ hashFiles('batfish/.bazelversion', 'batfish/WORKSPACE', 'batfish/maven_install.json') }}-
+
+    - name: Build Batfish JAR and questions
+      working-directory: batfish
+      run: |
+        bazel build //projects/allinone:allinone_main_deploy.jar
+        cp bazel-bin/projects/allinone/allinone_main_deploy.jar allinone.jar
+        # Create questions archive following pybatfish pattern
+        tar -czf questions.tgz questions/
+
+    - name: Upload Batfish artifacts
+      uses: actions/upload-artifact@v4
+      with:
+        name: batfish-artifacts
+        path: |
+          batfish/allinone.jar
+          batfish/questions.tgz
+        retention-days: 1
+
+  # Matrix job to run each lab in parallel
+  lab-integration-test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20  # Reduced since we don't build JAR
+    needs: [discover-labs, build-batfish]
+    strategy:
+      matrix:
+        lab: ${{ fromJson(needs.discover-labs.outputs.labs) }}
+      fail-fast: false  # Don't cancel other jobs if one fails
+
+    steps:
+    - name: Checkout lab-validation
+      uses: actions/checkout@v4
+      with:
+        path: lab-validation
+
+    - name: Set up Python 3.10
+      uses: actions/setup-python@v4
+      with:
+        python-version: "3.10"
+        cache: 'pip'
+        cache-dependency-path: 'requirements*.txt'
+
+    - name: Set up Java 17
+      uses: actions/setup-java@v4
+      with:
+        distribution: 'temurin'
+        java-version: '17'
+
+    - name: Download Batfish artifacts
+      uses: actions/download-artifact@v4
+      with:
+        name: batfish-artifacts
+        path: .
+
+    - name: Install lab-validation dependencies
+      working-directory: lab-validation
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+        pip install -r requirements-dev.txt
+        pip install -e .
+
+    - name: Start Batfish service
+      run: |
+        # Extract questions archive
+        tar -xzf questions.tgz
+
+        # Start Batfish using simple allinone mode (like pybatfish CI)
+        coordinator_args=(\
+          -templatedirs=questions \
+          -periodassignworkms=5 \
+        )
+        allinone_args=(\
+          -runclient=false \
+          -coordinatorargs="$(echo -n "${coordinator_args[@]}")" \
+        )
+        java -cp allinone.jar org.batfish.allinone.Main "${allinone_args[@]}" > batfish.log 2>&1 &
+
+        # Wait for service to start
+        sleep 10
+
+    - name: Run lab integration test - ${{ matrix.lab }}
+      working-directory: lab-validation
+      run: |
+        python -m pytest lab_tests/test_labs.py -v --tb=short --labname=${{ matrix.lab }}
+
+    - name: Show Batfish logs on failure
+      if: failure()
+      run: |
+        echo "=== Batfish logs ==="
+        tail -100 batfish.log || echo "No batfish log found"

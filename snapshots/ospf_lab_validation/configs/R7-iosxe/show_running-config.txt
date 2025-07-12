@@ -1,0 +1,213 @@
+Building configuration...
+
+Current configuration : 3868 bytes
+!
+! Last configuration change at 23:16:00 UTC Fri Nov 15 2019
+!
+version 16.4
+service timestamps debug datetime msec
+service timestamps log datetime msec
+no platform punt-keepalive disable-kernel-core
+platform console serial
+!
+hostname R7-iosxe
+!
+boot-start-marker
+boot-end-marker
+!
+!
+!
+no aaa new-model
+!
+!
+!
+!
+!
+!
+!
+!
+!
+
+
+
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+subscriber templating
+!
+!
+!
+multilink bundle-name authenticated
+!
+!
+!
+!
+!
+crypto pki trustpoint TP-self-signed-1016612099
+ enrollment selfsigned
+ subject-name cn=IOS-Self-Signed-Certificate-1016612099
+ revocation-check none
+ rsakeypair TP-self-signed-1016612099
+!
+!
+crypto pki certificate chain TP-self-signed-1016612099
+ certificate self-signed 01
+  30820330 30820218 A0030201 02020101 300D0609 2A864886 F70D0101 05050030
+  31312F30 2D060355 04031326 494F532D 53656C66 2D536967 6E65642D 43657274
+  69666963 6174652D 31303136 36313230 3939301E 170D3139 30393138 31353539
+  34305A17 0D323030 31303130 30303030 305A3031 312F302D 06035504 03132649
+  4F532D53 656C662D 5369676E 65642D43 65727469 66696361 74652D31 30313636
+  31323039 39308201 22300D06 092A8648 86F70D01 01010500 0382010F 00308201
+  0A028201 0100CBEA 6BCCE092 6DA6656A 3DC4BDF7 3CC45420 73771B02 749C294D
+  9C642050 2AAC7A1C AF88F3BE EDAFA759 4472FD46 624BA10D F3DE041B 04C81000
+  75405449 751471D1 AEDC0E21 26D1D9C1 4220B0D0 298FC4D2 075225C5 3A42B6FA
+  7E7C371C 2B15B529 D03FDE16 1D880F6A 69680321 0FBB8D35 63683572 50544C8A
+  44CC6D2E D60AFA2C DECC66E8 BB01990F 381F54EE 7ECF8926 5E516F66 C3D4B07C
+  291909B9 B87C7F5F 4B8DE5EA 3FCD3AF0 0B76038A D844A4F0 0B380A5C 33931F67
+  19A2EDD4 53F0AF80 023BE1B6 9088B9CA 68094EAA CD6EC40F 50982FC2 3D98956D
+  FEC95E12 3BE2764A DAFE1F92 C74DB201 F4D8E9C9 A9FD042D 73AAE357 91AB44AA
+  559F12BC BF810203 010001A3 53305130 0F060355 1D130101 FF040530 030101FF
+  301F0603 551D2304 18301680 140C436D F9B0079A 34379FB2 13938A59 21F79906
+  55301D06 03551D0E 04160414 0C436DF9 B0079A34 379FB213 938A5921 F7990655
+  300D0609 2A864886 F70D0101 05050003 82010100 4A5986CD 0236353B B7E71E09
+  3535A225 DD93843C A4BFD76D 12AF8319 0199DA76 CD13EEAB BB50DC8F 9B46521A
+  567AFD9E 663E5721 FA9590E9 55658DD5 E663C820 E7D45EF5 2A0B7763 6284C855
+  CB9AD9E5 932CA5D2 F7BB45FB D815EE7B 07197054 0B9E89D3 CA9A1A80 B1776A3D
+  25295F83 76DA0EEC ED26811C 02380C53 5C1DD9F8 53072163 8DEA8277 269D5854
+  73E342CB C04C61D3 0D93B948 A6C4E2A6 EBC34096 1EA328F0 244F227A 92C936FE
+  50F8C258 44599213 B93A0377 CCD0E7FB 06BBC229 E48526AC 5FD1A522 982BB2A6
+  029A09C5 E192A911 88928DFD 834343EA 3ABC18D0 DDA4788D F0B785E7 257D807F
+  61AB80E4 18C5CAF5 16D32FF5 F5A2C72F EE645857
+  	quit
+
+
+!
+!
+!
+!
+!
+!
+!
+license udi pid CSR1000V sn 9AS4LJW2LDZ
+diagnostic bootup level minimal
+!
+spanning-tree extend system-id
+!
+!
+username cisco privilege 15 password 0 cisco
+!
+redundancy
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+interface Loopback0
+ ip address 7.7.7.7 255.255.255.255
+!
+interface Loopback10
+ ip address 10.10.7.1 255.255.255.255
+!
+interface Loopback11
+ ip address 10.11.7.1 255.255.255.255
+!
+interface Loopback123
+ ip address 192.168.123.7 255.255.255.0
+!
+interface GigabitEthernet1
+ no ip address
+ shutdown
+ negotiation auto
+ no mop enabled
+ no mop sysid
+!
+interface GigabitEthernet2
+ ip address 37.2.2.2 255.255.255.0
+ negotiation auto
+ no mop enabled
+ no mop sysid
+!
+interface GigabitEthernet3
+ no ip address
+ shutdown
+ negotiation auto
+ no mop enabled
+ no mop sysid
+!
+interface GigabitEthernet4
+ no ip address
+ shutdown
+ negotiation auto
+ no mop enabled
+ no mop sysid
+!
+!
+virtual-service csr_mgmt
+!
+ip forward-protocol nd
+ip http server
+ip http authentication local
+ip http secure-server
+!
+ip route 0.0.0.0 0.0.0.0 37.2.2.1
+!
+!
+!
+!
+!
+!
+control-plane
+!
+ !
+ !
+ !
+ !
+!
+!
+!
+!
+!
+line con 0
+ stopbits 1
+line vty 0 4
+ login local
+ transport input ssh
+line vty 5 15
+ login local
+ transport input ssh
+!
+!
+!
+!
+!
+!
+end

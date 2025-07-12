@@ -1,0 +1,9 @@
+entries:
+  - hostname: ".*"
+    test_name: test_interface_properties
+    skip:
+      reason: https://github.com/batfish/lab-validation/issues/43
+  - hostname: ".*"
+    test_name: test_bgp_rib_routes
+    skip:
+      reason: https://github.com/batfish/lab-validation/issues/42

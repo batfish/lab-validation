@@ -1,0 +1,81 @@
+! Command: show running-config
+! device: spine01 (vEOS, EOS-4.23.0.1F)
+!
+! boot system flash:/vEOS-lab.swi
+!
+transceiver qsfp default-mode 4x10G
+!
+hostname spine01
+dns domain test.lab
+!
+spanning-tree mode mstp
+!
+no aaa root
+!
+username admin privilege 15 role network-admin secret sha512 $6$d8DtvFSWEiVMKGq3$/LyUK9cLErF6J55CXwfolcmUUyFT8.yMvOXZo317.3AOY/7SLn/A2/FdKyTLb75x.PVWb/PzSW0LtHqdoKpOX/
+!
+interface Ethernet1
+   description bl01
+   no switchport
+   ip address 10.0.0.1/31
+!
+interface Ethernet2
+   description bl02
+   no switchport
+   ip address 10.0.0.9/31
+!
+interface Ethernet3
+   description leaf01
+   no switchport
+   ip address 10.0.0.17/31
+!
+interface Ethernet4
+   description leaf02
+   no switchport
+   ip address 10.0.0.25/31
+!
+interface Ethernet5
+!
+interface Ethernet6
+!
+interface Ethernet7
+!
+interface Ethernet8
+!
+interface Ethernet9
+!
+interface Ethernet10
+!
+interface Ethernet11
+!
+interface Ethernet12
+!
+interface Loopback0
+   ip address 10.1.2.1/32
+!
+interface Management1
+   ip address 192.168.122.13/24
+   no lldp transmit
+   no lldp receive
+!
+ip routing
+!
+peer-filter Fabric
+   10 match as-range 65001-65096 result accept
+   20 match as-range 65201-65204 result accept
+!
+router bgp 65101
+   router-id 10.1.2.1
+   bgp listen range 10.0.0.0/16 peer-group Fabric peer-filter Fabric
+   neighbor Fabric peer group
+   neighbor Fabric maximum-routes 12000
+   !
+   address-family ipv4
+      neighbor Fabric activate
+      network 10.1.2.1/32
+!
+management api http-commands
+   protocol http
+   no shutdown
+!
+end

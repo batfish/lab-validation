@@ -1,0 +1,119 @@
+show interfaces vtep | display json 
+{
+    "interface-information" : [
+    {
+        "attributes" : {"xmlns" : "http://xml.juniper.net/junos/17.4R1/junos-interface", 
+                        "junos:style" : "normal"
+                       }, 
+        "physical-interface" : [
+        {
+            "name" : [
+            {
+                "data" : "vtep"
+            }
+            ], 
+            "admin-status" : [
+            {
+                "data" : "up", 
+                "attributes" : {"junos:format" : "Enabled"}
+            }
+            ], 
+            "oper-status" : [
+            {
+                "data" : "up"
+            }
+            ], 
+            "local-index" : [
+            {
+                "data" : "641"
+            }
+            ], 
+            "snmp-index" : [
+            {
+                "data" : "509"
+            }
+            ], 
+            "if-type" : [
+            {
+                "data" : "Software-Pseudo"
+            }
+            ], 
+            "link-level-type" : [
+            {
+                "data" : "VxLAN-Tunnel-Endpoint"
+            }
+            ], 
+            "mtu" : [
+            {
+                "data" : "Unlimited"
+            }
+            ], 
+            "speed" : [
+            {
+                "data" : "Unlimited"
+            }
+            ], 
+            "if-device-flags" : [
+            {
+                "ifdf-present" : [
+                {
+                    "data" : [null]
+                }
+                ], 
+                "ifdf-running" : [
+                {
+                    "data" : [null]
+                }
+                ]
+            }
+            ], 
+            "ifd-specific-config-flags" : [
+            {
+            }
+            ], 
+            "if-config-flags" : [
+            {
+            }
+            ], 
+            "link-type" : [
+            {
+                "data" : "Full-Duplex"
+            }
+            ], 
+            "if-media-flags" : [
+            {
+                "ifmf-none" : [
+                {
+                    "data" : [null]
+                }
+                ]
+            }
+            ], 
+            "interface-flapped" : [
+            {
+                "data" : "Never", 
+                "attributes" : {"junos:seconds" : "0"}
+            }
+            ], 
+            "traffic-statistics" : [
+            {
+                "attributes" : {"junos:style" : "brief"}, 
+                "input-packets" : [
+                {
+                    "data" : "0"
+                }
+                ], 
+                "output-packets" : [
+                {
+                    "data" : "0"
+                }
+                ]
+            }
+            ]
+        }
+        ]
+    }
+    ]
+}
+
+{master:0}

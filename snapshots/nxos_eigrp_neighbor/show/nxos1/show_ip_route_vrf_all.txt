@@ -1,0 +1,45 @@
+IP Route Table for VRF "default"
+'*' denotes best ucast next-hop
+'**' denotes best mcast next-hop
+'[x/y]' denotes [preference/metric]
+'%<string>' in via output denotes VRF <string>
+
+10.12.11.0/24, ubest/mbest: 1/0, attached
+    *via 10.12.11.1, Eth1/1, [0/0], 02:03:14, direct
+10.12.11.1/32, ubest/mbest: 1/0, attached
+    *via 10.12.11.1, Eth1/1, [0/0], 02:03:14, local
+10.12.23.0/24, ubest/mbest: 1/0, attached
+    *via 10.12.23.1, Vlan23, [0/0], 02:03:56, direct
+10.12.23.1/32, ubest/mbest: 1/0, attached
+    *via 10.12.23.1, Vlan23, [0/0], 02:03:56, local
+10.12.45.0/30, ubest/mbest: 1/0, attached
+    *via 10.12.45.1, Po45.10, [0/0], 02:03:11, direct
+10.12.45.1/32, ubest/mbest: 1/0, attached
+    *via 10.12.45.1, Po45.10, [0/0], 02:03:11, local
+172.16.1.1/32, ubest/mbest: 2/0, attached
+    *via 172.16.1.1, Lo1, [0/0], 02:04:44, local
+    *via 172.16.1.1, Lo1, [0/0], 02:04:44, direct
+172.16.1.2/32, ubest/mbest: 1/0
+    *via 10.12.11.2, Eth1/1, [90/130816], 02:03:11, eigrp-1, internal
+172.16.23.1/32, ubest/mbest: 2/0, attached
+    *via 172.16.23.1, Lo23, [0/0], 02:04:44, local
+    *via 172.16.23.1, Lo23, [0/0], 02:04:44, direct
+172.16.23.2/32, ubest/mbest: 1/0
+    *via 10.12.23.2, Vlan23, [90/130816], 02:03:52, eigrp-23, internal
+172.16.45.1/32, ubest/mbest: 2/0, attached
+    *via 172.16.45.1, Lo45, [0/0], 02:04:44, local
+    *via 172.16.45.1, Lo45, [0/0], 02:04:44, direct
+172.16.45.2/32, ubest/mbest: 1/0
+    *via 10.12.45.2, Po45.10, [90/129536], 02:03:09, eigrp-45, internal
+172.16.100.1/32, ubest/mbest: 2/0, attached
+    *via 172.16.100.1, Lo100, [0/0], 01:35:49, local
+    *via 172.16.100.1, Lo100, [0/0], 01:35:49, direct
+192.168.122.0/24, ubest/mbest: 1/0, attached
+    *via 192.168.122.2, Eth1/6, [0/0], 01:23:31, direct
+192.168.122.2/32, ubest/mbest: 1/0, attached
+    *via 192.168.122.2, Eth1/6, [0/0], 01:23:31, local
+192.168.123.1/32, ubest/mbest: 2/0, attached
+    *via 192.168.123.1, Lo123, [0/0], 01:27:46, local
+    *via 192.168.123.1, Lo123, [0/0], 01:27:46, direct
+192.168.123.2/32, ubest/mbest: 1/0
+    *via 10.12.11.2, Eth1/1, [90/130816], 01:27:17, eigrp-1, internal

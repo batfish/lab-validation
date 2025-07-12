@@ -1,0 +1,19 @@
+IP Route Table for VRF "default"
+'*' denotes best ucast next-hop
+'**' denotes best mcast next-hop
+'[x/y]' denotes [preference/metric]
+'%<string>' in via output denotes VRF <string>
+
+10.24.31.0/24, ubest/mbest: 1/0, attached
+    *via 10.24.31.2, Eth1/1, [0/0], 02:17:14, direct
+10.24.31.2/32, ubest/mbest: 1/0, attached
+    *via 10.24.31.2, Eth1/1, [0/0], 02:17:14, local
+192.168.122.0/24, ubest/mbest: 1/0
+    *via 10.24.31.1, [20/0], 01:08:55, bgp-65001, external, tag 65002
+192.168.123.2/32, ubest/mbest: 1/0
+    *via 10.24.31.1, [20/0], 01:08:55, bgp-65001, external, tag 65002
+192.168.123.4/32, ubest/mbest: 2/0, attached
+    *via 192.168.123.4, Lo123, [0/0], 02:17:59, local
+    *via 192.168.123.4, Lo123, [0/0], 02:17:59, direct
+192.168.123.222/32, ubest/mbest: 1/0
+    *via 10.24.31.1, [20/0], 01:08:55, bgp-65001, external, tag 65002

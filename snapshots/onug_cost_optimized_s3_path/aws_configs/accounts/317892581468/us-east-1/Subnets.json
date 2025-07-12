@@ -1,0 +1,67 @@
+{
+ "Subnets": [
+  {
+   "AssignIpv6AddressOnCreation": false,
+   "AvailabilityZone": "us-east-1a",
+   "AvailabilityZoneId": "use1-az2",
+   "AvailableIpAddressCount": 250,
+   "CidrBlock": "10.2.101.0/24",
+   "DefaultForAz": false,
+   "Ipv6CidrBlockAssociationSet": [],
+   "MapPublicIpOnLaunch": false,
+   "OwnerId": "317892581468",
+   "State": "available",
+   "SubnetArn": "arn:aws:ec2:us-east-1:317892581468:subnet/subnet-04aa88da10c1b8db1",
+   "SubnetId": "subnet-04aa88da10c1b8db1",
+   "Tags": [
+    {
+     "Key": "Name",
+     "Value": "db-fin-east"
+    }
+   ],
+   "VpcId": "vpc-09e98f768cb46e20d"
+  },
+  {
+   "AssignIpv6AddressOnCreation": false,
+   "AvailabilityZone": "us-east-1a",
+   "AvailabilityZoneId": "use1-az2",
+   "AvailableIpAddressCount": 10,
+   "CidrBlock": "10.2.250.0/28",
+   "DefaultForAz": false,
+   "Ipv6CidrBlockAssociationSet": [],
+   "MapPublicIpOnLaunch": false,
+   "OwnerId": "317892581468",
+   "State": "available",
+   "SubnetArn": "arn:aws:ec2:us-east-1:317892581468:subnet/subnet-089ed1903e753b4b4",
+   "SubnetId": "subnet-089ed1903e753b4b4",
+   "Tags": [
+    {
+     "Key": "Name",
+     "Value": "tgw-fin-east"
+    }
+   ],
+   "VpcId": "vpc-09e98f768cb46e20d"
+  },
+  {
+   "AssignIpv6AddressOnCreation": false,
+   "AvailabilityZone": "us-east-1a",
+   "AvailabilityZoneId": "use1-az2",
+   "AvailableIpAddressCount": 248,
+   "CidrBlock": "10.2.1.0/24",
+   "DefaultForAz": false,
+   "Ipv6CidrBlockAssociationSet": [],
+   "MapPublicIpOnLaunch": true,
+   "OwnerId": "317892581468",
+   "State": "available",
+   "SubnetArn": "arn:aws:ec2:us-east-1:317892581468:subnet/subnet-08409cea756919084",
+   "SubnetId": "subnet-08409cea756919084",
+   "Tags": [
+    {
+     "Key": "Name",
+     "Value": "expenses-fin-east"
+    }
+   ],
+   "VpcId": "vpc-09e98f768cb46e20d"
+  }
+ ]
+}

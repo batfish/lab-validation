@@ -1,0 +1,60 @@
+{
+    "vrfs": {
+        "default": {
+            "peerList": [
+                {
+                    "asn": "1",
+                    "configHoldTime": 180,
+                    "configKeepaliveTime": 60,
+                    "dropStats": {
+                        "inDropAsloop": 0,
+                        "inDropMalformedMpbgp": 0,
+                        "inDropNhLocal": 1,
+                        "inDropOrigId": 0
+                    },
+                    "establishedTime": 434752,
+                    "establishedTransitions": 1,
+                    "holdTime": 180,
+                    "holdTimeLeft": 65,
+                    "inMessageStats": {
+                        "keepalives": 7973,
+                        "notifications": 0,
+                        "opens": 1,
+                        "rtRefreshes": 0,
+                        "updates": 9
+                    },
+                    "keepaliveTime": 60,
+                    "keepaliveTimeLeft": 30,
+                    "lastEvent": "HoldTime",
+                    "lastRcvd": 7,
+                    "lastSent": 17,
+                    "lastState": "OpenConfirm",
+                    "linkType": "external",
+                    "localAsn": "30",
+                    "localPort": 37590,
+                    "localRouterId": "192.168.123.4",
+                    "outMessageStats": {
+                        "keepalives": 66,
+                        "notifications": 0,
+                        "opens": 1,
+                        "rtRefreshes": 0,
+                        "updates": 1
+                    },
+                    "peerAddress": "10.10.30.1",
+                    "prefixesReceived": 11,
+                    "prefixesSent": 1,
+                    "receivedMessages": 7983,
+                    "remotePort": 179,
+                    "routerId": "192.168.123.1",
+                    "sentMessages": 68,
+                    "state": "Established",
+                    "updateSource": "10.10.30.2",
+                    "v6PrefixesReceived": 0,
+                    "v6PrefixesSent": 0,
+                    "version": 4,
+                    "vrf": "default"
+                }
+            ]
+        }
+    }
+}

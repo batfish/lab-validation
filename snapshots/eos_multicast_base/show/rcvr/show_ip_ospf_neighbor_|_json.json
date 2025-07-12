@@ -1,0 +1,78 @@
+{
+    "vrfs": {
+        "default": {
+            "instList": {
+                "1": {
+                    "ospfNeighborEntries": [
+                        {
+                            "adjacencyState": "full",
+                            "details": {
+                                "areaId": "0.0.0.0",
+                                "backupDesignatedRouter": "10.254.1.1",
+                                "bfdRequestSent": false,
+                                "bfdState": "adminDown",
+                                "designatedRouter": "10.254.1.2",
+                                "grHelperTimer": null,
+                                "grLastRestartTime": null,
+                                "grNumAttempts": 0,
+                                "inactivityDefers": 0,
+                                "numberOfStateChanges": 6,
+                                "retransmissionCount": 0,
+                                "stateTime": 1646696555.439269
+                            },
+                            "drState": "BDR",
+                            "inactivity": 1646702682.43919,
+                            "interfaceAddress": "10.254.1.1",
+                            "interfaceName": "Ethernet1",
+                            "options": {
+                                "demandCircuitsSupport": false,
+                                "doNotUseInRouteCalc": false,
+                                "externalRoutingCapability": true,
+                                "linkLocalSignaling": false,
+                                "multicastCapability": false,
+                                "multitopologyCapability": false,
+                                "nssaCapability": false,
+                                "opaqueLsaSupport": false
+                            },
+                            "priority": 1,
+                            "routerId": "10.253.1.1"
+                        },
+                        {
+                            "adjacencyState": "full",
+                            "details": {
+                                "areaId": "0.0.0.0",
+                                "backupDesignatedRouter": "10.254.1.5",
+                                "bfdRequestSent": false,
+                                "bfdState": "adminDown",
+                                "designatedRouter": "10.254.1.6",
+                                "grHelperTimer": null,
+                                "grLastRestartTime": null,
+                                "grNumAttempts": 0,
+                                "inactivityDefers": 0,
+                                "numberOfStateChanges": 6,
+                                "retransmissionCount": 0,
+                                "stateTime": 1646696555.439966
+                            },
+                            "drState": "BDR",
+                            "inactivity": 1646702675.439901,
+                            "interfaceAddress": "10.254.1.5",
+                            "interfaceName": "Ethernet2",
+                            "options": {
+                                "demandCircuitsSupport": false,
+                                "doNotUseInRouteCalc": false,
+                                "externalRoutingCapability": true,
+                                "linkLocalSignaling": false,
+                                "multicastCapability": false,
+                                "multitopologyCapability": false,
+                                "nssaCapability": false,
+                                "opaqueLsaSupport": false
+                            },
+                            "priority": 1,
+                            "routerId": "10.253.1.2"
+                        }
+                    ]
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,65 @@
+{
+ "TransitGatewayVpcAttachments": [
+  {
+   "CreationTime": "2020-08-03 15:36:33+00:00",
+   "Options": {
+    "DnsSupport": "enable",
+    "Ipv6Support": "disable"
+   },
+   "State": "available",
+   "SubnetIds": [
+    "subnet-01cd4a0ff99cb799a",
+    "subnet-08b1e7e4453d9149d",
+    "subnet-0280629ca5dbc9bf7"
+   ],
+   "Tags": [
+    {
+     "Key": "Terraform",
+     "Value": "true"
+    },
+    {
+     "Key": "Environment",
+     "Value": "dev"
+    },
+    {
+     "Key": "Name",
+     "Value": "prod"
+    }
+   ],
+   "TransitGatewayAttachmentId": "tgw-attach-039ef9600c7bc8b71",
+   "TransitGatewayId": "tgw-02a2e50acb03f0952",
+   "VpcId": "vpc-0e578e50686443ca0",
+   "VpcOwnerId": "028403472736"
+  },
+  {
+   "CreationTime": "2020-08-03 15:36:33+00:00",
+   "Options": {
+    "DnsSupport": "enable",
+    "Ipv6Support": "disable"
+   },
+   "State": "available",
+   "SubnetIds": [
+    "subnet-0d6ff43d8e5488043",
+    "subnet-04a1bec10b9c08e3b"
+   ],
+   "Tags": [
+    {
+     "Key": "Terraform",
+     "Value": "true"
+    },
+    {
+     "Key": "Environment",
+     "Value": "dev"
+    },
+    {
+     "Key": "Name",
+     "Value": "dev"
+    }
+   ],
+   "TransitGatewayAttachmentId": "tgw-attach-0c0c0a95cb9ea7e8a",
+   "TransitGatewayId": "tgw-02a2e50acb03f0952",
+   "VpcId": "vpc-0a96945f1dbc5b2ac",
+   "VpcOwnerId": "028403472736"
+  }
+ ]
+}

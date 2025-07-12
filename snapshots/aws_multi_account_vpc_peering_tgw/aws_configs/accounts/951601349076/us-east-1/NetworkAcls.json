@@ -1,0 +1,162 @@
+{
+ "NetworkAcls": [
+  {
+   "Associations": [
+    {
+     "NetworkAclAssociationId": "aclassoc-0ab8a8aa38f6aab95",
+     "NetworkAclId": "acl-037313da7291308e0",
+     "SubnetId": "subnet-0ffa87ae0b553703e"
+    }
+   ],
+   "Entries": [
+    {
+     "CidrBlock": "0.0.0.0/0",
+     "Egress": true,
+     "Protocol": "-1",
+     "RuleAction": "allow",
+     "RuleNumber": 1000
+    },
+    {
+     "CidrBlock": "0.0.0.0/0",
+     "Egress": true,
+     "Protocol": "-1",
+     "RuleAction": "deny",
+     "RuleNumber": 32767
+    },
+    {
+     "CidrBlock": "0.0.0.0/0",
+     "Egress": false,
+     "Protocol": "-1",
+     "RuleAction": "allow",
+     "RuleNumber": 1000
+    },
+    {
+     "CidrBlock": "0.0.0.0/0",
+     "Egress": false,
+     "Protocol": "-1",
+     "RuleAction": "deny",
+     "RuleNumber": 32767
+    }
+   ],
+   "IsDefault": false,
+   "NetworkAclId": "acl-037313da7291308e0",
+   "OwnerId": "951601349076",
+   "Tags": [
+    {
+     "Key": "Name",
+     "Value": "fish-tgw"
+    }
+   ],
+   "VpcId": "vpc-08287a9084472b276"
+  },
+  {
+   "Associations": [
+    {
+     "NetworkAclAssociationId": "aclassoc-0583023d18f817df7",
+     "NetworkAclId": "acl-059b97af7c9acd2a9",
+     "SubnetId": "subnet-0c2cb08833b3c9921"
+    }
+   ],
+   "Entries": [
+    {
+     "CidrBlock": "0.0.0.0/0",
+     "Egress": true,
+     "Protocol": "-1",
+     "RuleAction": "allow",
+     "RuleNumber": 1000
+    },
+    {
+     "CidrBlock": "0.0.0.0/0",
+     "Egress": true,
+     "Protocol": "-1",
+     "RuleAction": "deny",
+     "RuleNumber": 32767
+    },
+    {
+     "CidrBlock": "10.1.1.100/32",
+     "Egress": false,
+     "PortRange": {
+      "From": 22,
+      "To": 22
+     },
+     "Protocol": "6",
+     "RuleAction": "allow",
+     "RuleNumber": 10
+    },
+    {
+     "CidrBlock": "0.0.0.0/0",
+     "Egress": false,
+     "PortRange": {
+      "From": 22,
+      "To": 22
+     },
+     "Protocol": "6",
+     "RuleAction": "deny",
+     "RuleNumber": 20
+    },
+    {
+     "CidrBlock": "0.0.0.0/0",
+     "Egress": false,
+     "Protocol": "-1",
+     "RuleAction": "allow",
+     "RuleNumber": 1000
+    },
+    {
+     "CidrBlock": "0.0.0.0/0",
+     "Egress": false,
+     "Protocol": "-1",
+     "RuleAction": "deny",
+     "RuleNumber": 32767
+    }
+   ],
+   "IsDefault": false,
+   "NetworkAclId": "acl-059b97af7c9acd2a9",
+   "OwnerId": "951601349076",
+   "Tags": [
+    {
+     "Key": "Name",
+     "Value": "fish-general"
+    }
+   ],
+   "VpcId": "vpc-08287a9084472b276"
+  },
+  {
+   "Associations": [],
+   "Entries": [
+    {
+     "CidrBlock": "0.0.0.0/0",
+     "Egress": true,
+     "Protocol": "-1",
+     "RuleAction": "allow",
+     "RuleNumber": 100
+    },
+    {
+     "CidrBlock": "0.0.0.0/0",
+     "Egress": true,
+     "Protocol": "-1",
+     "RuleAction": "deny",
+     "RuleNumber": 32767
+    },
+    {
+     "CidrBlock": "0.0.0.0/0",
+     "Egress": false,
+     "Protocol": "-1",
+     "RuleAction": "allow",
+     "RuleNumber": 100
+    },
+    {
+     "CidrBlock": "0.0.0.0/0",
+     "Egress": false,
+     "Protocol": "-1",
+     "RuleAction": "deny",
+     "RuleNumber": 32767
+    }
+   ],
+   "IsDefault": true,
+   "NetworkAclId": "acl-0cea4e47e18b719c7",
+   "OwnerId": "951601349076",
+   "Tags": [],
+   "VpcId": "vpc-08287a9084472b276"
+  }
+ ]
+}

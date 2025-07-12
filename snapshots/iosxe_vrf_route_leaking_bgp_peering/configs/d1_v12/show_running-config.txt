@@ -1,0 +1,258 @@
+Building configuration...
+
+Current configuration : 3301 bytes
+!
+! Last configuration change at 21:13:01 UTC Mon Jan 18 2021
+!
+version 16.4
+service timestamps debug datetime msec
+service timestamps log datetime msec
+no platform punt-keepalive disable-kernel-core
+platform console serial
+!
+hostname d1_v12
+!
+boot-start-marker
+boot-end-marker
+!
+!
+vrf definition vrf1
+ rd 65001:1
+ !
+ address-family ipv4
+  route-target export 65001:11
+ exit-address-family
+!
+vrf definition vrf2
+ rd 65001:2
+ !
+ address-family ipv4
+  route-target export 65001:22
+  route-target import 65001:11
+ exit-address-family
+!
+!
+no aaa new-model
+!
+!
+!
+!
+!
+!
+!
+!
+!
+
+
+
+ip domain name diolap.com
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+subscriber templating
+!
+!
+!
+multilink bundle-name authenticated
+!
+!
+!
+!
+!
+!
+
+
+!
+!
+!
+!
+!
+!
+!
+license udi pid CSR1000V sn 95FRBYS93V9
+diagnostic bootup level minimal
+!
+spanning-tree extend system-id
+!
+!
+username cisco privilege 15 password 0 cisco
+!
+redundancy
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+interface Loopback1231
+ vrf forwarding vrf1
+ ip address 192.168.123.1 255.255.255.255
+!
+interface Loopback1232
+ vrf forwarding vrf2
+ ip address 192.168.123.2 255.255.255.255
+!
+interface GigabitEthernet1
+ vrf forwarding vrf2
+ ip address 10.12.11.1 255.255.255.252
+ negotiation auto
+ no mop enabled
+ no mop sysid
+!
+interface GigabitEthernet2
+ vrf forwarding vrf2
+ ip address 10.14.21.1 255.255.255.252
+ negotiation auto
+ no mop enabled
+ no mop sysid
+!
+interface GigabitEthernet3
+ no ip address
+ negotiation auto
+ no mop enabled
+ no mop sysid
+!
+interface GigabitEthernet4
+ no ip address
+ negotiation auto
+ no mop enabled
+ no mop sysid
+!
+interface GigabitEthernet5
+ no ip address
+ shutdown
+ negotiation auto
+ no mop enabled
+ no mop sysid
+!
+interface GigabitEthernet6
+ no ip address
+ shutdown
+ negotiation auto
+ no mop enabled
+ no mop sysid
+!
+interface GigabitEthernet7
+ no ip address
+ shutdown
+ negotiation auto
+ no mop enabled
+ no mop sysid
+!
+interface GigabitEthernet8
+ no ip address
+ shutdown
+ negotiation auto
+ no mop enabled
+ no mop sysid
+!
+interface GigabitEthernet9
+ no ip address
+ shutdown
+ negotiation auto
+ no mop enabled
+ no mop sysid
+!
+interface GigabitEthernet10
+ vrf forwarding vrf2
+ ip address 192.168.122.2 255.255.255.0
+ negotiation auto
+ no mop enabled
+ no mop sysid
+!
+router bgp 65001
+ bgp router-id 192.168.1.1
+ bgp log-neighbor-changes
+ !
+ address-family ipv4 vrf vrf1
+  bgp router-id 192.168.123.1
+  network 192.168.123.1 mask 255.255.255.255
+ exit-address-family
+ !
+ address-family ipv4 vrf vrf2
+  bgp router-id 192.168.123.2
+  network 192.168.122.0
+  network 192.168.123.2 mask 255.255.255.255
+  neighbor d2 peer-group
+  neighbor d2 remote-as 65002
+  neighbor d2 send-community both
+  neighbor d2 soft-reconfiguration inbound
+  neighbor d44 peer-group
+  neighbor d44 remote-as 65004
+  neighbor d44 send-community both
+  neighbor d44 soft-reconfiguration inbound
+  neighbor 10.12.11.2 peer-group d2
+  neighbor 10.12.11.2 activate
+  neighbor 10.14.21.2 peer-group d44
+  neighbor 10.14.21.2 activate
+ exit-address-family
+!
+!
+virtual-service csr_mgmt
+!
+ip forward-protocol nd
+ip http server
+ip http authentication local
+ip http secure-server
+!
+ip ssh version 2
+!
+!
+!
+!
+!
+!
+control-plane
+!
+ !
+ !
+ !
+ !
+!
+!
+!
+!
+!
+line con 0
+ stopbits 1
+line vty 0 4
+ login local
+ transport input ssh
+line vty 5 15
+ login local
+ transport input ssh
+!
+!
+!
+!
+!
+!
+end

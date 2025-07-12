@@ -1,0 +1,202 @@
+set deviceconfig system type dhcp-client send-hostname yes
+set deviceconfig system type dhcp-client send-client-id no
+set deviceconfig system type dhcp-client accept-dhcp-hostname no
+set deviceconfig system type dhcp-client accept-dhcp-domain no
+set deviceconfig system update-server updates.paloaltonetworks.com
+set deviceconfig system update-schedule threats recurring weekly day-of-week wednesday
+set deviceconfig system update-schedule threats recurring weekly at 01:02
+set deviceconfig system update-schedule threats recurring weekly action download-only
+set deviceconfig system timezone US/Pacific
+set deviceconfig system service disable-telnet yes
+set deviceconfig system service disable-http yes
+set deviceconfig system hostname PA-VM
+set deviceconfig setting config rematch yes
+set deviceconfig setting management hostname-type-in-syslog FQDN
+set deviceconfig setting management initcfg type dhcp-client send-hostname yes
+set deviceconfig setting management initcfg type dhcp-client send-client-id no
+set deviceconfig setting management initcfg type dhcp-client accept-dhcp-hostname no
+set deviceconfig setting management initcfg type dhcp-client accept-dhcp-domain no
+set deviceconfig setting management initcfg public-key c3NoLXJzYSBBQUFBQjNOemFDMXljMkVBQUFBREFRQUJBQUFDQVFDWVMxSUVQVC80ZWVxZ3EvWGdxdXRhR09NYWJ5R2hpNTFZUlpvSGg5c2ZNMjNKbVFqT2NIRkF1SGR2ZW5ybUdtWlFsZGwwdVFSdXdsN1g0T281cnhFN0V4dFpYbWxyamgxUEN1SG9vWG1ScFpnaDNPU1F1MEVLa041MkpnSkRkcmxkQlVuWHBrRll5WGZBTzJZRk4yUEZoN0hxM1pYVTNncHB3WXdwQndNYnZaLzBvOU1uVDIvOEhaRUlSbU5sYjFDdTdQdUt0elloNHNRbkxqNjkyOEd6S1lrN09nSFJmUExKa0JjVjlpdHpJYXBHeW9FdndXYmVhQ3RoV3lhbFpoYUloR0IyY0ZmZEZaaHI3aGtLUXFiTnZyNU0vNlZ6cld3Q1lmSnczTGNiemJiQ2kyY1pWUHBXcG1YZXMxS0tnZEpyYUJXRmNVUDcrYzlsSlYwSFd0Mi9MbGQxbVNvemkwL2lyYXRjWkdkQ2d2TGdlaHNuVmFaVFoxejR1MlJoaC9nVWcwQ1ErTWVQY0k1QVRQR1lEcS85NTJKWDFuS3dBSHR4VFplSDBQQlRwQUU5Rm5IZ2ZraGZDYXVHNmZqWVNrdERxUlQ5Szh5TmIzUGV3RndRL0xOSTFvZld0T2lxTW96UDVGMisxbHNBUFpHb0VBZ0pWR0JQL0JOUTd4clQ2aEZJU0RYQmUrRXhMdWR3R1lKOS9lQkRMNlNzaUxCam9ZaGpPcm83UU9sTXVCZi8yYlFYZ0VlMUQraWxoeGF4QlhWQ0FSRnJNVzBkeElISkxQWW82a3Q4SWRBRVJtejVsUFRKa1lCSzh3aHZsMTg1OHlJZTluY2syVTh4amVQN1hpTk9RVkN3UEdrZ1NGY2c0UzgrU2ZpZUV1eW5PeGZqazdOdytDcE93b28va1E9PSBwdWJsaWNLZXk=
+set network interface ethernet ethernet1/1 layer3 interface-management-profile allow_ping_dataplane_iface
+set network interface ethernet ethernet1/1 layer3 adjust-tcp-mss enable no
+set network interface ethernet ethernet1/1 layer3 dhcp-client enable yes
+set network interface ethernet ethernet1/1 layer3 dhcp-client create-default-route yes
+set network interface ethernet ethernet1/1 comment
+set network interface ethernet ethernet1/2 layer3 interface-management-profile allow_ping_dataplane_iface
+set network interface ethernet ethernet1/2 layer3 adjust-tcp-mss enable no
+set network interface ethernet ethernet1/2 layer3 dhcp-client enable yes
+set network interface ethernet ethernet1/2 layer3 dhcp-client create-default-route no
+set network interface ethernet ethernet1/2 comment
+set network profiles monitor-profile default interval 3
+set network profiles monitor-profile default threshold 5
+set network profiles monitor-profile default action wait-recover
+set network profiles interface-management-profile allow_ping_dataplane_iface ping yes
+set network profiles interface-management-profile allow_ping_dataplane_iface telnet no
+set network profiles interface-management-profile allow_ping_dataplane_iface ssh no
+set network profiles interface-management-profile allow_ping_dataplane_iface http no
+set network profiles interface-management-profile allow_ping_dataplane_iface http-ocsp no
+set network profiles interface-management-profile allow_ping_dataplane_iface https no
+set network profiles interface-management-profile allow_ping_dataplane_iface snmp no
+set network profiles interface-management-profile allow_ping_dataplane_iface response-pages no
+set network profiles interface-management-profile allow_ping_dataplane_iface userid-service no
+set network profiles interface-management-profile allow_ping_dataplane_iface userid-syslog-listener-ssl no
+set network profiles interface-management-profile allow_ping_dataplane_iface userid-syslog-listener-udp no
+set network profiles interface-management-profile allow_ping_dataplane_iface permitted-ip 0.0.0.0/0
+set network ike crypto-profiles ike-crypto-profiles default encryption [ aes-128-cbc 3des ]
+set network ike crypto-profiles ike-crypto-profiles default hash sha1
+set network ike crypto-profiles ike-crypto-profiles default dh-group group2
+set network ike crypto-profiles ike-crypto-profiles default lifetime hours 8
+set network ike crypto-profiles ike-crypto-profiles Suite-B-GCM-128 encryption aes-128-cbc
+set network ike crypto-profiles ike-crypto-profiles Suite-B-GCM-128 hash sha256
+set network ike crypto-profiles ike-crypto-profiles Suite-B-GCM-128 dh-group group19
+set network ike crypto-profiles ike-crypto-profiles Suite-B-GCM-128 lifetime hours 8
+set network ike crypto-profiles ike-crypto-profiles Suite-B-GCM-256 encryption aes-256-cbc
+set network ike crypto-profiles ike-crypto-profiles Suite-B-GCM-256 hash sha384
+set network ike crypto-profiles ike-crypto-profiles Suite-B-GCM-256 dh-group group20
+set network ike crypto-profiles ike-crypto-profiles Suite-B-GCM-256 lifetime hours 8
+set network ike crypto-profiles ipsec-crypto-profiles default esp encryption [ aes-128-cbc 3des ]
+set network ike crypto-profiles ipsec-crypto-profiles default esp authentication sha1
+set network ike crypto-profiles ipsec-crypto-profiles default dh-group group2
+set network ike crypto-profiles ipsec-crypto-profiles default lifetime hours 1
+set network ike crypto-profiles ipsec-crypto-profiles Suite-B-GCM-128 esp encryption aes-128-gcm
+set network ike crypto-profiles ipsec-crypto-profiles Suite-B-GCM-128 esp authentication none
+set network ike crypto-profiles ipsec-crypto-profiles Suite-B-GCM-128 dh-group group19
+set network ike crypto-profiles ipsec-crypto-profiles Suite-B-GCM-128 lifetime hours 1
+set network ike crypto-profiles ipsec-crypto-profiles Suite-B-GCM-256 esp encryption aes-256-gcm
+set network ike crypto-profiles ipsec-crypto-profiles Suite-B-GCM-256 esp authentication none
+set network ike crypto-profiles ipsec-crypto-profiles Suite-B-GCM-256 dh-group group20
+set network ike crypto-profiles ipsec-crypto-profiles Suite-B-GCM-256 lifetime hours 1
+set network ike crypto-profiles global-protect-app-crypto-profiles default encryption aes-128-cbc
+set network ike crypto-profiles global-protect-app-crypto-profiles default authentication sha1
+set network qos profile default class-bandwidth-type mbps class class1 priority real-time
+set network qos profile default class-bandwidth-type mbps class class2 priority high
+set network qos profile default class-bandwidth-type mbps class class3 priority high
+set network qos profile default class-bandwidth-type mbps class class4 priority medium
+set network qos profile default class-bandwidth-type mbps class class5 priority medium
+set network qos profile default class-bandwidth-type mbps class class6 priority low
+set network qos profile default class-bandwidth-type mbps class class7 priority low
+set network qos profile default class-bandwidth-type mbps class class8 priority low
+set network virtual-router default protocol bgp enable no
+set network virtual-router default protocol bgp dampening-profile default cutoff 1.25
+set network virtual-router default protocol bgp dampening-profile default reuse 0.5
+set network virtual-router default protocol bgp dampening-profile default max-hold-time 900
+set network virtual-router default protocol bgp dampening-profile default decay-half-life-reachable 300
+set network virtual-router default protocol bgp dampening-profile default decay-half-life-unreachable 900
+set network virtual-router default protocol bgp dampening-profile default enable yes
+set network virtual-router vsys1 interface [ ethernet1/1 ethernet1/2 ]
+set network virtual-router vsys1 admin-dists static 10
+set network virtual-router vsys1 admin-dists static-ipv6 10
+set network virtual-router vsys1 admin-dists ospf-int 30
+set network virtual-router vsys1 admin-dists ospf-ext 110
+set network virtual-router vsys1 admin-dists ospfv3-int 30
+set network virtual-router vsys1 admin-dists ospfv3-ext 110
+set network virtual-router vsys1 admin-dists ibgp 200
+set network virtual-router vsys1 admin-dists ebgp 20
+set network virtual-router vsys1 admin-dists rip 120
+set shared application
+set shared application-group
+set shared service
+set shared service-group
+set shared botnet configuration http dynamic-dns enabled yes
+set shared botnet configuration http dynamic-dns threshold 5
+set shared botnet configuration http malware-sites enabled yes
+set shared botnet configuration http malware-sites threshold 5
+set shared botnet configuration http recent-domains enabled yes
+set shared botnet configuration http recent-domains threshold 5
+set shared botnet configuration http ip-domains enabled yes
+set shared botnet configuration http ip-domains threshold 10
+set shared botnet configuration http executables-from-unknown-sites enabled yes
+set shared botnet configuration http executables-from-unknown-sites threshold 5
+set shared botnet configuration other-applications irc yes
+set shared botnet configuration unknown-applications unknown-tcp destinations-per-hour 10
+set shared botnet configuration unknown-applications unknown-tcp sessions-per-hour 10
+set shared botnet configuration unknown-applications unknown-tcp session-length maximum-bytes 100
+set shared botnet configuration unknown-applications unknown-tcp session-length minimum-bytes 50
+set shared botnet configuration unknown-applications unknown-udp destinations-per-hour 10
+set shared botnet configuration unknown-applications unknown-udp sessions-per-hour 10
+set shared botnet configuration unknown-applications unknown-udp session-length maximum-bytes 100
+set shared botnet configuration unknown-applications unknown-udp session-length minimum-bytes 50
+set shared botnet report topn 100
+set shared botnet report scheduled yes
+set zone untrusted network layer3 ethernet1/1
+set zone untrusted enable-user-identification no
+set zone trusted network layer3 ethernet1/2
+set zone trusted enable-user-identification no
+set service-group
+set service
+set schedule
+set rulebase nat rules Internet2Webserver description
+set rulebase nat rules Internet2Webserver nat-type ipv4
+set rulebase nat rules Internet2Webserver from untrusted
+set rulebase nat rules Internet2Webserver to untrusted
+set rulebase nat rules Internet2Webserver to-interface any
+set rulebase nat rules Internet2Webserver service service-http
+set rulebase nat rules Internet2Webserver source any
+set rulebase nat rules Internet2Webserver destination 10.1.1.10
+set rulebase nat rules Internet2Webserver destination-translation translated-address 10.1.101.100
+set rulebase nat rules Internet2Webserver disabled no
+set rulebase nat rules Private2Internet description
+set rulebase nat rules Private2Internet nat-type ipv4
+set rulebase nat rules Private2Internet from trusted
+set rulebase nat rules Private2Internet to untrusted
+set rulebase nat rules Private2Internet to-interface any
+set rulebase nat rules Private2Internet service any
+set rulebase nat rules Private2Internet source any
+set rulebase nat rules Private2Internet destination any
+set rulebase nat rules Private2Internet source-translation dynamic-ip-and-port translated-address 10.1.1.10
+set rulebase nat rules Private2Internet disabled no
+set rulebase security rules "internet2web allow" rule-type universal
+set rulebase security rules "internet2web allow" description
+set rulebase security rules "internet2web allow" from untrusted
+set rulebase security rules "internet2web allow" to trusted
+set rulebase security rules "internet2web allow" source any
+set rulebase security rules "internet2web allow" negate-source no
+set rulebase security rules "internet2web allow" source-user any
+set rulebase security rules "internet2web allow" hip-profiles any
+set rulebase security rules "internet2web allow" destination any
+set rulebase security rules "internet2web allow" negate-destination no
+set rulebase security rules "internet2web allow" application web-browsing
+set rulebase security rules "internet2web allow" service application-default
+set rulebase security rules "internet2web allow" category any
+set rulebase security rules "internet2web allow" action allow
+set rulebase security rules "internet2web allow" log-start no
+set rulebase security rules "internet2web allow" log-end yes
+set rulebase security rules "internet2web allow" disabled no
+set rulebase security rules "internet2web allow" icmp-unreachable no
+set rulebase security rules "internet2web allow" option disable-server-response-inspection no
+set rulebase security rules "internet2web allow" profile-setting profiles virus default
+set rulebase security rules "internet2web allow" profile-setting profiles spyware default
+set rulebase security rules "internet2web allow" profile-setting profiles vulnerability default
+set rulebase security rules "web2internet allow" rule-type universal
+set rulebase security rules "web2internet allow" description
+set rulebase security rules "web2internet allow" from trusted
+set rulebase security rules "web2internet allow" to untrusted
+set rulebase security rules "web2internet allow" source 10.1.101.0/24
+set rulebase security rules "web2internet allow" negate-source no
+set rulebase security rules "web2internet allow" source-user any
+set rulebase security rules "web2internet allow" hip-profiles any
+set rulebase security rules "web2internet allow" destination any
+set rulebase security rules "web2internet allow" negate-destination no
+set rulebase security rules "web2internet allow" application any
+set rulebase security rules "web2internet allow" service application-default
+set rulebase security rules "web2internet allow" category any
+set rulebase security rules "web2internet allow" action allow
+set rulebase security rules "web2internet allow" log-start no
+set rulebase security rules "web2internet allow" log-end yes
+set rulebase security rules "web2internet allow" disabled no
+set rulebase security rules "web2internet allow" icmp-unreachable no
+set rulebase security rules "web2internet allow" option disable-server-response-inspection no
+set rulebase security rules "web2internet allow" profile-setting profiles virus default
+set rulebase security rules "web2internet allow" profile-setting profiles spyware default
+set rulebase security rules "web2internet allow" profile-setting profiles vulnerability default
+set import network interface [ ethernet1/1 ethernet1/2 ]
+set application-group
+set application
+set mgt-config users admin phash $1$ecgiwmdj$26fYiMr8UMaUmS/srG45u1
+set mgt-config users admin permissions role-based superuser yes
+set mgt-config users admin public-key c3NoLXJzYSBBQUFBQjNOemFDMXljMkVBQUFBREFRQUJBQUFDQVFDWVMxSUVQVC80ZWVxZ3EvWGdxdXRhR09NYWJ5R2hpNTFZUlpvSGg5c2ZNMjNKbVFqT2NIRkF1SGR2ZW5ybUdtWlFsZGwwdVFSdXdsN1g0T281cnhFN0V4dFpYbWxyamgxUEN1SG9vWG1ScFpnaDNPU1F1MEVLa041MkpnSkRkcmxkQlVuWHBrRll5WGZBTzJZRk4yUEZoN0hxM1pYVTNncHB3WXdwQndNYnZaLzBvOU1uVDIvOEhaRUlSbU5sYjFDdTdQdUt0elloNHNRbkxqNjkyOEd6S1lrN09nSFJmUExKa0JjVjlpdHpJYXBHeW9FdndXYmVhQ3RoV3lhbFpoYUloR0IyY0ZmZEZaaHI3aGtLUXFiTnZyNU0vNlZ6cld3Q1lmSnczTGNiemJiQ2kyY1pWUHBXcG1YZXMxS0tnZEpyYUJXRmNVUDcrYzlsSlYwSFd0Mi9MbGQxbVNvemkwL2lyYXRjWkdkQ2d2TGdlaHNuVmFaVFoxejR1MlJoaC9nVWcwQ1ErTWVQY0k1QVRQR1lEcS85NTJKWDFuS3dBSHR4VFplSDBQQlRwQUU5Rm5IZ2ZraGZDYXVHNmZqWVNrdERxUlQ5Szh5TmIzUGV3RndRL0xOSTFvZld0T2lxTW96UDVGMisxbHNBUFpHb0VBZ0pWR0JQL0JOUTd4clQ2aEZJU0RYQmUrRXhMdWR3R1lKOS9lQkRMNlNzaUxCam9ZaGpPcm83UU9sTXVCZi8yYlFYZ0VlMUQraWxoeGF4QlhWQ0FSRnJNVzBkeElISkxQWW82a3Q4SWRBRVJtejVsUFRKa1lCSzh3aHZsMTg1OHlJZTluY2syVTh4amVQN1hpTk9RVkN3UEdrZ1NGY2c0UzgrU2ZpZUV1eW5PeGZqazdOdytDcE93b28va1E9PSBwdWJsaWNLZXk=
+set mgt-config users ec2-user permissions role-based superuser yes
+set mgt-config users ec2-user phash $1$uthixrpe$BNLlo9I/aOMLHw/aU9Cbk1
+set mgt-config users ec2-user public-key c3NoLXJzYSBBQUFBQjNOemFDMXljMkVBQUFBREFRQUJBQUFDQVFDWVMxSUVQVC80ZWVxZ3EvWGdxdXRhR09NYWJ5R2hpNTFZUlpvSGg5c2ZNMjNKbVFqT2NIRkF1SGR2ZW5ybUdtWlFsZGwwdVFSdXdsN1g0T281cnhFN0V4dFpYbWxyamgxUEN1SG9vWG1ScFpnaDNPU1F1MEVLa041MkpnSkRkcmxkQlVuWHBrRll5WGZBTzJZRk4yUEZoN0hxM1pYVTNncHB3WXdwQndNYnZaLzBvOU1uVDIvOEhaRUlSbU5sYjFDdTdQdUt0elloNHNRbkxqNjkyOEd6S1lrN09nSFJmUExKa0JjVjlpdHpJYXBHeW9FdndXYmVhQ3RoV3lhbFpoYUloR0IyY0ZmZEZaaHI3aGtLUXFiTnZyNU0vNlZ6cld3Q1lmSnczTGNiemJiQ2kyY1pWUHBXcG1YZXMxS0tnZEpyYUJXRmNVUDcrYzlsSlYwSFd0Mi9MbGQxbVNvemkwL2lyYXRjWkdkQ2d2TGdlaHNuVmFaVFoxejR1MlJoaC9nVWcwQ1ErTWVQY0k1QVRQR1lEcS85NTJKWDFuS3dBSHR4VFplSDBQQlRwQUU5Rm5IZ2ZraGZDYXVHNmZqWVNrdERxUlQ5Szh5TmIzUGV3RndRL0xOSTFvZld0T2lxTW96UDVGMisxbHNBUFpHb0VBZ0pWR0JQL0JOUTd4clQ2aEZJU0RYQmUrRXhMdWR3R1lKOS9lQkRMNlNzaUxCam9ZaGpPcm83UU9sTXVCZi8yYlFYZ0VlMUQraWxoeGF4QlhWQ0FSRnJNVzBkeElISkxQWW82a3Q4SWRBRVJtejVsUFRKa1lCSzh3aHZsMTg1OHlJZTluY2syVTh4amVQN1hpTk9RVkN3UEdrZ1NGY2c0UzgrU2ZpZUV1eW5PeGZqazdOdytDcE93b28va1E9PSBwdWJsaWNLZXk=
+set mgt-config password-complexity enabled yes
+set mgt-config password-complexity minimum-length 8

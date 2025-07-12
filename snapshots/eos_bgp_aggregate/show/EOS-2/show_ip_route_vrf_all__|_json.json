@@ -1,0 +1,70 @@
+{
+    "vrfs": {
+        "default": {
+            "allRoutesProgrammedHardware": true,
+            "allRoutesProgrammedKernel": true,
+            "defaultRouteState": "notSet",
+            "routes": {
+                "10.10.0.0/16": {
+                    "directlyConnected": false,
+                    "hardwareProgrammed": true,
+                    "kernelProgrammed": true,
+                    "metric": 0,
+                    "preference": 200,
+                    "routeAction": "forward",
+                    "routeLeaked": false,
+                    "routeType": "eBGP",
+                    "vias": [
+                        {
+                            "interface": "Ethernet1",
+                            "nexthopAddr": "192.168.1.1"
+                        }
+                    ]
+                },
+                "10.12.0.0/16": {
+                    "directlyConnected": false,
+                    "hardwareProgrammed": true,
+                    "kernelProgrammed": true,
+                    "metric": 0,
+                    "preference": 200,
+                    "routeAction": "forward",
+                    "routeLeaked": false,
+                    "routeType": "eBGP",
+                    "vias": [
+                        {
+                            "interface": "Ethernet1",
+                            "nexthopAddr": "192.168.1.1"
+                        }
+                    ]
+                },
+                "10.150.0.0/16": {
+                    "directlyConnected": true,
+                    "hardwareProgrammed": true,
+                    "kernelProgrammed": true,
+                    "routeAction": "forward",
+                    "routeLeaked": false,
+                    "routeType": "connected",
+                    "vias": [
+                        {
+                            "interface": "Management1"
+                        }
+                    ]
+                },
+                "192.168.1.0/30": {
+                    "directlyConnected": true,
+                    "hardwareProgrammed": true,
+                    "kernelProgrammed": true,
+                    "routeAction": "forward",
+                    "routeLeaked": false,
+                    "routeType": "connected",
+                    "vias": [
+                        {
+                            "interface": "Ethernet1"
+                        }
+                    ]
+                }
+            },
+            "routingDisabled": false
+        }
+    }
+}

@@ -1,0 +1,13 @@
+entries:
+  - hostname: ".*"
+    test_name: test_interface_properties
+    skip:
+      reason: Not Implemented
+  - hostname: ".*"
+    test_name: test_main_rib_routes
+    skip:
+      reason: https://github.com/batfish/lab-validation/issues/47
+  - hostname: ".*"
+    test_name: test_bgp_rib_routes
+    skip:
+      reason: Not Implemented

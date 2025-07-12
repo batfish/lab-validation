@@ -1,0 +1,75 @@
+{
+    "ospf-neighbor-information" : [
+    {
+        "attributes" : {"xmlns" : "http://xml.juniper.net/junos/17.4R1/junos-routing"},
+        "ospf-neighbor" : [
+        {
+            "neighbor-address" : [
+            {
+                "data" : "10.1.0.1"
+            }
+            ],
+            "interface-name" : [
+            {
+                "data" : "xe-0/0/0.0"
+            }
+            ],
+            "ospf-neighbor-state" : [
+            {
+                "data" : "Full"
+            }
+            ],
+            "neighbor-id" : [
+            {
+                "data" : "10.1.0.1"
+            }
+            ],
+            "neighbor-priority" : [
+            {
+                "data" : "1"
+            }
+            ],
+            "activity-timer" : [
+            {
+                "data" : "34"
+            }
+            ]
+        },
+        {
+            "neighbor-address" : [
+            {
+                "data" : "10.2.0.1"
+            }
+            ],
+            "interface-name" : [
+            {
+                "data" : "xe-0/0/1.0"
+            }
+            ],
+            "ospf-neighbor-state" : [
+            {
+                "data" : "Full"
+            }
+            ],
+            "neighbor-id" : [
+            {
+                "data" : "10.2.0.1"
+            }
+            ],
+            "neighbor-priority" : [
+            {
+                "data" : "1"
+            }
+            ],
+            "activity-timer" : [
+            {
+                "data" : "30"
+            }
+            ]
+        }
+        ]
+    }
+    ]
+}
+
+{master:0}

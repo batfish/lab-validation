@@ -1,0 +1,54 @@
+IP Route Table for VRF "default"
+'*' denotes best ucast next-hop
+'**' denotes best mcast next-hop
+'[x/y]' denotes [preference/metric]
+'%<string>' in via output denotes VRF <string>
+
+10.12.11.0/30, ubest/mbest: 1/0, attached
+    *via 10.12.11.1, Eth1/1, [0/0], 23:04:09, direct
+10.12.11.1/32, ubest/mbest: 1/0, attached
+    *via 10.12.11.1, Eth1/1, [0/0], 23:04:09, local
+10.13.21.0/30, ubest/mbest: 1/0, attached
+    *via 10.13.21.1, Eth1/2, [0/0], 23:04:09, direct
+10.13.21.1/32, ubest/mbest: 1/0, attached
+    *via 10.13.21.1, Eth1/2, [0/0], 23:04:09, local
+10.14.31.0/30, ubest/mbest: 1/0, attached
+    *via 10.14.31.1, Eth1/3, [0/0], 23:04:09, direct
+10.14.31.1/32, ubest/mbest: 1/0, attached
+    *via 10.14.31.1, Eth1/3, [0/0], 23:04:09, local
+10.15.41.0/30, ubest/mbest: 1/0, attached
+    *via 10.15.41.1, Eth1/4, [0/0], 23:04:09, direct
+10.15.41.1/32, ubest/mbest: 1/0, attached
+    *via 10.15.41.1, Eth1/4, [0/0], 23:04:09, local
+10.16.51.0/30, ubest/mbest: 1/0, attached
+    *via 10.16.51.1, Eth1/5, [0/0], 23:04:09, direct
+10.16.51.1/32, ubest/mbest: 1/0, attached
+    *via 10.16.51.1, Eth1/5, [0/0], 23:04:09, local
+192.168.122.0/24, ubest/mbest: 1/0, attached
+    *via 192.168.122.2, Eth1/10, [0/0], 23:04:09, direct
+192.168.122.2/32, ubest/mbest: 1/0, attached
+    *via 192.168.122.2, Eth1/10, [0/0], 23:04:09, local
+192.168.123.1/32, ubest/mbest: 2/0, attached
+    *via 192.168.123.1, Lo123, [0/0], 23:04:53, local
+    *via 192.168.123.1, Lo123, [0/0], 23:04:53, direct
+192.168.123.2/32, ubest/mbest: 1/0
+    *via 10.12.11.2, [1/0], 23:04:09, static
+192.168.123.3/32, ubest/mbest: 1/0
+    *via 10.13.21.2, Eth1/2, [90/130816], 22:07:43, eigrp-1, internal
+192.168.123.4/32, ubest/mbest: 1/0
+    *via 10.14.31.2, [20/0], 23:04:06, bgp-65001, external, tag 65004
+192.168.123.5/32, ubest/mbest: 1/0
+    *via 10.15.41.2, Eth1/4, [110/41], 23:03:55, ospf-1, intra
+192.168.123.6/32, ubest/mbest: 1/0
+    *via 10.16.51.2, [200/0], 01:51:00, bgp-65001, internal, tag 65001
+
+IP Route Table for VRF "management"
+'*' denotes best ucast next-hop
+'**' denotes best mcast next-hop
+'[x/y]' denotes [preference/metric]
+'%<string>' in via output denotes VRF <string>
+
+10.150.0.0/16, ubest/mbest: 1/0, attached
+    *via 10.150.0.21, mgmt0, [0/0], 23:04:48, direct
+10.150.0.21/32, ubest/mbest: 1/0, attached
+    *via 10.150.0.21, mgmt0, [0/0], 23:04:48, local

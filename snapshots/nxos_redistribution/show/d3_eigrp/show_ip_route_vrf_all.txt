@@ -1,0 +1,36 @@
+IP Route Table for VRF "default"
+'*' denotes best ucast next-hop
+'**' denotes best mcast next-hop
+'[x/y]' denotes [preference/metric]
+'%<string>' in via output denotes VRF <string>
+
+10.13.21.0/30, ubest/mbest: 1/0, attached
+    *via 10.13.21.2, Eth1/1, [0/0], 1d00h, direct
+10.13.21.2/32, ubest/mbest: 1/0, attached
+    *via 10.13.21.2, Eth1/1, [0/0], 1d00h, local
+192.168.122.0/24, ubest/mbest: 1/0
+    *via 10.13.21.1, Eth1/1, [170/2585856], 22:07:43, eigrp-1, external
+192.168.123.1/32, ubest/mbest: 1/0
+    *via 10.13.21.1, Eth1/1, [170/2585856], 22:07:43, eigrp-1, external
+192.168.123.2/32, ubest/mbest: 1/0
+    *via 10.13.21.1, Eth1/1, [170/2870300], 22:07:43, eigrp-1, external
+192.168.123.3/32, ubest/mbest: 2/0, attached
+    *via 192.168.123.3, Lo123, [0/0], 1d00h, local
+    *via 192.168.123.3, Lo123, [0/0], 1d00h, direct
+192.168.123.4/32, ubest/mbest: 1/0
+    *via 10.13.21.1, Eth1/1, [170/3225856], 00:03:28, eigrp-1, external, tag 65004
+192.168.123.5/32, ubest/mbest: 1/0
+    *via 10.13.21.1, Eth1/1, [170/3682998], 22:07:43, eigrp-1, external
+192.168.123.6/32, ubest/mbest: 1/0
+    *via 10.13.21.1, Eth1/1, [170/3225856], 01:51:00, eigrp-1, external, tag 65001
+
+IP Route Table for VRF "management"
+'*' denotes best ucast next-hop
+'**' denotes best mcast next-hop
+'[x/y]' denotes [preference/metric]
+'%<string>' in via output denotes VRF <string>
+
+10.150.0.0/16, ubest/mbest: 1/0, attached
+    *via 10.150.0.23, mgmt0, [0/0], 1d00h, direct
+10.150.0.23/32, ubest/mbest: 1/0, attached
+    *via 10.150.0.23, mgmt0, [0/0], 1d00h, local

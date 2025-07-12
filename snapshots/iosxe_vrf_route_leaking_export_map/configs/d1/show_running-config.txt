@@ -1,0 +1,315 @@
+Building configuration...
+
+Current configuration : 4473 bytes
+!
+! Last configuration change at 01:35:38 UTC Wed Mar 3 2021 by cisco
+!
+version 16.4
+service timestamps debug datetime msec
+service timestamps log datetime msec
+no platform punt-keepalive disable-kernel-core
+platform console serial
+!
+hostname d1
+!
+boot-start-marker
+boot-end-marker
+!
+!
+vrf definition customer1
+ rd 65000:1001
+ !
+ address-family ipv4
+  export map customer1export
+  route-target export 65000:1001
+  route-target export 65000:101
+  route-target import 65000:1001
+  route-target import 65000:100
+  route-target import 65000:2001
+ exit-address-family
+!
+vrf definition customer1colo
+ rd 65000:2001
+ !
+ address-family ipv4
+  route-target export 65000:2001
+  route-target export 65000:101
+  route-target import 65000:2001
+  route-target import 65000:1001
+  route-target import 65000:100
+ exit-address-family
+!
+vrf definition customer2
+ rd 65000:1002
+ !
+ address-family ipv4
+  route-target export 65000:1002
+  route-target export 65000:101
+  route-target import 65000:1002
+  route-target import 65000:2002
+  route-target import 65000:100
+ exit-address-family
+!
+vrf definition customer2colo
+ rd 65000:2002
+ !
+ address-family ipv4
+  route-target export 65000:2002
+  route-target export 65000:101
+  route-target import 65000:2002
+  route-target import 65000:1002
+  route-target import 65000:100
+ exit-address-family
+!
+vrf definition services
+ rd 65000:100
+ !
+ address-family ipv4
+  route-target export 65000:100
+  route-target import 65000:100
+  route-target import 65000:101
+ exit-address-family
+!
+!
+no aaa new-model
+!
+!
+!
+!
+!
+!
+!
+!
+!
+
+
+
+ip domain name diolap.com
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+subscriber templating
+!
+!
+!
+multilink bundle-name authenticated
+!
+!
+!
+!
+!
+!
+
+
+!
+!
+!
+!
+!
+!
+!
+license udi pid CSR1000V sn 908W396SVUE
+diagnostic bootup level minimal
+!
+spanning-tree extend system-id
+!
+!
+username cisco privilege 15 password 0 cisco
+!
+redundancy
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+interface Loopback100
+ vrf forwarding services
+ ip address 192.168.0.1 255.255.255.0
+!
+interface Loopback123
+ ip address 192.168.123.1 255.255.255.255
+!
+interface Loopback1001
+ vrf forwarding customer1
+ ip address 10.1.1.1 255.255.255.0
+!
+interface Loopback1002
+ vrf forwarding customer2
+ ip address 10.1.2.1 255.255.255.0
+!
+interface Loopback2001
+ vrf forwarding customer1colo
+ ip address 10.2.1.1 255.255.255.0
+!
+interface Loopback2002
+ vrf forwarding customer2colo
+ ip address 10.2.2.1 255.255.255.0
+!
+interface Loopback10012
+ vrf forwarding customer1
+ ip address 172.16.0.1 255.255.0.0
+!
+interface GigabitEthernet1
+ no ip address
+ negotiation auto
+ no mop enabled
+ no mop sysid
+!
+interface GigabitEthernet2
+ no ip address
+ negotiation auto
+ no mop enabled
+ no mop sysid
+!
+interface GigabitEthernet3
+ no ip address
+ negotiation auto
+ no mop enabled
+ no mop sysid
+!
+interface GigabitEthernet4
+ no ip address
+ negotiation auto
+ no mop enabled
+ no mop sysid
+!
+interface GigabitEthernet5
+ no ip address
+ shutdown
+ negotiation auto
+ no mop enabled
+ no mop sysid
+!
+interface GigabitEthernet6
+ no ip address
+ shutdown
+ negotiation auto
+ no mop enabled
+ no mop sysid
+!
+interface GigabitEthernet7
+ no ip address
+ shutdown
+ negotiation auto
+ no mop enabled
+ no mop sysid
+!
+interface GigabitEthernet8
+ no ip address
+ shutdown
+ negotiation auto
+ no mop enabled
+ no mop sysid
+!
+interface GigabitEthernet9
+ no ip address
+ shutdown
+ negotiation auto
+ no mop enabled
+ no mop sysid
+!
+interface GigabitEthernet10
+ ip address 192.168.122.2 255.255.255.0
+ negotiation auto
+ no mop enabled
+ no mop sysid
+!
+router bgp 65000
+ bgp log-neighbor-changes
+ !
+ address-family ipv4 vrf customer1
+  redistribute connected
+ exit-address-family
+ !
+ address-family ipv4 vrf customer1colo
+  redistribute connected
+ exit-address-family
+ !
+ address-family ipv4 vrf customer2
+  redistribute connected
+ exit-address-family
+ !
+ address-family ipv4 vrf customer2colo
+  redistribute connected
+ exit-address-family
+ !
+ address-family ipv4 vrf services
+  redistribute connected
+ exit-address-family
+!
+!
+virtual-service csr_mgmt
+!
+ip forward-protocol nd
+ip http server
+ip http authentication local
+ip http secure-server
+!
+ip ssh version 2
+!
+!
+!
+ip prefix-list customer1internal seq 5 permit 172.16.0.0/16
+!
+!
+route-map customer1export permit 100
+ match ip address prefix-list customer1internal
+ set extcommunity rt 65000:1001
+!
+!
+!
+control-plane
+!
+ !
+ !
+ !
+ !
+!
+!
+!
+!
+!
+line con 0
+ stopbits 1
+line vty 0 4
+ login local
+ transport input ssh
+line vty 5 15
+ login local
+ transport input ssh
+!
+!
+!
+!
+!
+!
+end

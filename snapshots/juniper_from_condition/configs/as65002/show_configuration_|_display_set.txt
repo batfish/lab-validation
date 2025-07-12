@@ -1,0 +1,52 @@
+set version 17.4R1.16
+set system host-name as65002
+set system root-authentication encrypted-password "$6$dhLhRnrZ$KBaQrVe0n9MJEeQhk0nMP20Kui459zW.JS86aMOtPpn1H2PViqxul3ISa/ISU53FC1lb1ouqV7f0RdyTOoPcR."
+set system services ssh root-login allow
+set system syslog user * any emergency
+set system syslog file messages any notice
+set system syslog file messages authorization info
+set system syslog file interactive-commands interactive-commands any
+set system extensions providers juniper license-type juniper deployment-scope commercial
+set system extensions providers chef license-type juniper deployment-scope commercial
+set interfaces xe-0/0/0 unit 0 family inet address 10.1.0.0/31
+set interfaces xe-0/0/1 unit 0 family inet address 10.2.0.0/31
+set interfaces xe-0/0/4 unit 0 family inet address 172.24.0.226/24
+set interfaces em0 unit 0 family inet
+set interfaces em1 unit 0 family inet address 169.254.0.2/24
+set interfaces lo0 unit 0 family inet address 10.0.0.2/32
+set forwarding-options storm-control-profiles default all
+set routing-options aggregate route 10.0.0.0/8 policy if_true
+set routing-options aggregate route 172.24.0.0/16 policy if_false
+set routing-options router-id 10.0.0.2
+set routing-options autonomous-system 65002
+set protocols bgp family inet unicast
+set protocols bgp group left type external
+set protocols bgp group left import if_true
+set protocols bgp group left export loopback_if_true
+set protocols bgp group left peer-as 65001
+set protocols bgp group left neighbor 10.1.0.1
+set protocols bgp group right type external
+set protocols bgp group right import if_false
+set protocols bgp group right export loopback_if_false
+set protocols bgp group right peer-as 65003
+set protocols bgp group right neighbor 10.2.0.1
+set policy-options policy-statement if_false term t1 from condition false
+set policy-options policy-statement if_false term t1 then accept
+set policy-options policy-statement if_false term t2 then reject
+set policy-options policy-statement if_true term t1 from condition true
+set policy-options policy-statement if_true term t1 then accept
+set policy-options policy-statement if_true term t2 then reject
+set policy-options policy-statement loopback_if_false term t1 from route-filter 10.0.0.2/32 exact
+set policy-options policy-statement loopback_if_false term t1 from condition false
+set policy-options policy-statement loopback_if_false term t1 then accept
+set policy-options policy-statement loopback_if_false term t2 then reject
+set policy-options policy-statement loopback_if_true term t1 from route-filter 10.0.0.2/32 exact
+set policy-options policy-statement loopback_if_true term t1 from condition true
+set policy-options policy-statement loopback_if_true term t1 then accept
+set policy-options policy-statement loopback_if_true term t2 then reject
+set policy-options condition false if-route-exists 200.0.0.0/32
+set policy-options condition false if-route-exists table inet.0
+set policy-options condition true if-route-exists 10.0.0.2/32
+set policy-options condition true if-route-exists table inet.0
+
+{master:0}

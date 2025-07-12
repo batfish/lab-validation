@@ -1,0 +1,76 @@
+{
+ "TargetGroups": [
+  {
+   "HealthCheckEnabled": true,
+   "HealthCheckIntervalSeconds": 30,
+   "HealthCheckPort": "traffic-port",
+   "HealthCheckProtocol": "TCP",
+   "HealthCheckTimeoutSeconds": 10,
+   "HealthyThresholdCount": 3,
+   "LoadBalancerArns": [
+    "arn:aws:elasticloadbalancing:us-east-1:028403472736:loadbalancer/net/targets-ip-nlb-pd-pri-a/cfa65b2bfaf07089"
+   ],
+   "Port": 80,
+   "Protocol": "TCP",
+   "TargetGroupArn": "arn:aws:elasticloadbalancing:us-east-1:028403472736:targetgroup/targets-ip-nlb-tg-pd-pri-a/8018bd5f171de042",
+   "TargetGroupName": "targets-ip-nlb-tg-pd-pri-a",
+   "TargetType": "ip",
+   "UnhealthyThresholdCount": 3,
+   "VpcId": "vpc-016124ea7f52d5b1d"
+  },
+  {
+   "HealthCheckEnabled": true,
+   "HealthCheckIntervalSeconds": 30,
+   "HealthCheckPort": "traffic-port",
+   "HealthCheckProtocol": "TCP",
+   "HealthCheckTimeoutSeconds": 10,
+   "HealthyThresholdCount": 3,
+   "LoadBalancerArns": [
+    "arn:aws:elasticloadbalancing:us-east-1:028403472736:loadbalancer/net/targets-ip-nlb-pd-pub-a/b14618448e83f592"
+   ],
+   "Port": 80,
+   "Protocol": "TCP",
+   "TargetGroupArn": "arn:aws:elasticloadbalancing:us-east-1:028403472736:targetgroup/targets-ip-nlb-tg-pd-pub-a/d2a55cef09087cc8",
+   "TargetGroupName": "targets-ip-nlb-tg-pd-pub-a",
+   "TargetType": "ip",
+   "UnhealthyThresholdCount": 3,
+   "VpcId": "vpc-016124ea7f52d5b1d"
+  },
+  {
+   "HealthCheckEnabled": true,
+   "HealthCheckIntervalSeconds": 30,
+   "HealthCheckPort": "traffic-port",
+   "HealthCheckProtocol": "TCP",
+   "HealthCheckTimeoutSeconds": 10,
+   "HealthyThresholdCount": 3,
+   "LoadBalancerArns": [
+    "arn:aws:elasticloadbalancing:us-east-1:028403472736:loadbalancer/net/targets-ip-nlb-pe-pri-a/b68b6bc634aaee4d"
+   ],
+   "Port": 80,
+   "Protocol": "TCP",
+   "TargetGroupArn": "arn:aws:elasticloadbalancing:us-east-1:028403472736:targetgroup/targets-ip-nlb-tg-pe-pri-a/b7e3c36a1a96a2c7",
+   "TargetGroupName": "targets-ip-nlb-tg-pe-pri-a",
+   "TargetType": "ip",
+   "UnhealthyThresholdCount": 3,
+   "VpcId": "vpc-016124ea7f52d5b1d"
+  },
+  {
+   "HealthCheckEnabled": true,
+   "HealthCheckIntervalSeconds": 30,
+   "HealthCheckPort": "traffic-port",
+   "HealthCheckProtocol": "TCP",
+   "HealthCheckTimeoutSeconds": 10,
+   "HealthyThresholdCount": 3,
+   "LoadBalancerArns": [
+    "arn:aws:elasticloadbalancing:us-east-1:028403472736:loadbalancer/net/targets-ip-nlb-pe-pub-a/8c9d3c0e8c58608c"
+   ],
+   "Port": 80,
+   "Protocol": "TCP",
+   "TargetGroupArn": "arn:aws:elasticloadbalancing:us-east-1:028403472736:targetgroup/targets-ip-nlb-tg-pe-pub-a/06178b91ff031b16",
+   "TargetGroupName": "targets-ip-nlb-tg-pe-pub-a",
+   "TargetType": "ip",
+   "UnhealthyThresholdCount": 3,
+   "VpcId": "vpc-016124ea7f52d5b1d"
+  }
+ ]
+}

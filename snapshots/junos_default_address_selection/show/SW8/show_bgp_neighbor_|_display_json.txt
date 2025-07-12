@@ -1,0 +1,116 @@
+{
+    "bgp-information" : [
+    {
+        "attributes" : {"xmlns" : "http://xml.juniper.net/junos/17.4R1/junos-routing"}, 
+        "bgp-peer" : [
+        {
+            "attributes" : {"junos:style" : "detail"}, 
+            "peer-address" : [
+            {
+                "data" : "10.1.1.1+179"
+            }
+            ], 
+            "peer-as" : [
+            {
+                "data" : "100"
+            }
+            ], 
+            "local-address" : [
+            {
+                "data" : "2.2.2.2+62220"
+            }
+            ], 
+            "local-as" : [
+            {
+                "data" : "100"
+            }
+            ], 
+            "peer-group" : [
+            {
+                "data" : "IBGP"
+            }
+            ], 
+            "peer-cfg-rti" : [
+            {
+                "data" : "master"
+            }
+            ], 
+            "peer-fwd-rti" : [
+            {
+                "data" : "master"
+            }
+            ], 
+            "peer-type" : [
+            {
+                "data" : "Internal"
+            }
+            ], 
+            "peer-state" : [
+            {
+                "data" : "Connect"
+            }
+            ], 
+            "peer-flags" : [
+            {
+            }
+            ], 
+            "last-state" : [
+            {
+                "data" : "Connect"
+            }
+            ], 
+            "last-event" : [
+            {
+                "data" : "ConnectRetry"
+            }
+            ], 
+            "last-error" : [
+            {
+                "data" : "None"
+            }
+            ], 
+            "bgp-option-information" : [
+            {
+                "attributes" : {"xmlns" : "http://xml.juniper.net/junos/17.4R1/junos-routing"}, 
+                "export-policy" : [
+                {
+                    "data" : "IBGP_POLICY"
+                }
+                ], 
+                "bgp-options" : [
+                {
+                    "data" : "Preference PeerAS Refresh"
+                }
+                ], 
+                "bgp-options2" : [
+                {
+                }
+                ], 
+                "bgp-options-extended" : [
+                {
+                }
+                ], 
+                "holdtime" : [
+                {
+                    "data" : "90"
+                }
+                ], 
+                "preference" : [
+                {
+                    "data" : "170"
+                }
+                ]
+            }
+            ], 
+            "flap-count" : [
+            {
+                "data" : "0"
+            }
+            ]
+        }
+        ]
+    }
+    ]
+}
+
+{master:0}

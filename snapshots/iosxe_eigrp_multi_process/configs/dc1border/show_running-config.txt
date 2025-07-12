@@ -1,0 +1,228 @@
+Building configuration...
+
+Current configuration : 4175 bytes
+!
+! Last configuration change at 19:57:05 UTC Fri Nov 13 2020
+!
+version 16.4
+service timestamps debug datetime msec
+service timestamps log datetime msec
+no platform punt-keepalive disable-kernel-core
+platform console serial
+!
+hostname dc1border
+!
+boot-start-marker
+boot-end-marker
+!
+!
+!
+no aaa new-model
+!
+!
+!
+!
+!
+!
+!
+!
+!
+
+
+
+ip domain name test.com
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+subscriber templating
+!
+!
+!
+multilink bundle-name authenticated
+!
+!
+!
+!
+!
+crypto pki trustpoint TP-self-signed-112359039
+ enrollment selfsigned
+ subject-name cn=IOS-Self-Signed-Certificate-112359039
+ revocation-check none
+ rsakeypair TP-self-signed-112359039
+!
+!
+crypto pki certificate chain TP-self-signed-112359039
+ certificate self-signed 01
+  3082032E 30820216 A0030201 02020101 300D0609 2A864886 F70D0101 05050030
+  30312E30 2C060355 04031325 494F532D 53656C66 2D536967 6E65642D 43657274
+  69666963 6174652D 31313233 35393033 39301E17 0D313930 37323432 33353730
+  365A170D 32303031 30313030 30303030 5A303031 2E302C06 03550403 1325494F
+  532D5365 6C662D53 69676E65 642D4365 72746966 69636174 652D3131 32333539
+  30333930 82012230 0D06092A 864886F7 0D010101 05000382 010F0030 82010A02
+  82010100 BE127921 A595ACCF 54C00694 AF8C98FD 606715E9 6B985D32 DD40FAB0
+  3BBB1541 BB5F9A4B 35CAB4C4 131DBD81 A53A7283 423695E1 4CA0BA1B A1B532B1
+  B8CD178F B6176DC3 A30F21AD D44B697F E15BD0A0 A200979D 529A4D83 B1EEFD85
+  7C2F0518 FC16475A BFB89EDE 029E9E17 77A123B0 78810AB7 FAAE6163 EC9993C2
+  6F79757B 9B93B5E5 814A9D67 54B934CF DB2D2C48 064DE90D 0DDAF8FD 422D8F07
+  CC515655 18CE322D 8ED8DC04 F573EA8F B7231CDB A50BC6B6 CBEAC1F3 3EF0DACF
+  7356BE9D 46AB92FB 9588A4B4 75EF22BD 5B8F2C04 889C3308 C02E93B6 2D128E2E
+  4E96F583 093E22F6 3EF7169B 949F40DC D86A25BC D7C1AED5 D44E77BA 13AFE53C
+  79A16E05 02030100 01A35330 51300F06 03551D13 0101FF04 05300301 01FF301F
+  0603551D 23041830 16801489 838A271E 82C3DCEA C00042BE 611DEC6B 1EBDC230
+  1D060355 1D0E0416 04148983 8A271E82 C3DCEAC0 0042BE61 1DEC6B1E BDC2300D
+  06092A86 4886F70D 01010505 00038201 01008228 5EF0DEF8 601F99DE B2A18620
+  A88D6B05 3E3C10D8 8480DE86 EFA23278 21D5A9C3 08066EF7 537EF26D B9A19C33
+  D01CA9FB F2D9A2E6 1A675A09 1485ACE1 04C09727 E72A48E8 CC8DAEBC 7B9B1EA1
+  31188BC4 1B52B0B5 60E42547 E05D78ED 4F714084 E7635CDF 8E7E7CC2 7E30ADA5
+  1492B06A 9EA12BFB 94295D06 62EC42E2 60C28A86 F4B9BE97 B9EC8320 0A7F7709
+  9CA26684 BD32A59D B86F3DDC B9E8A35A 55542B9D 21398105 10E25BB8 BA77EEE5
+  80A4DC74 2A6D1DC1 87342571 3DF8048A 8EF31421 B03C26F7 837A8686 53368BA2
+  868526C6 9E6343C0 3B89AD89 D15A4F4E F98FF1F1 CF65E0B1 18BD5D4B 86110F6D
+  0BF6510A FA48C070 7C414129 CB267D52 BC92
+  	quit
+
+
+!
+!
+!
+!
+!
+!
+!
+license udi pid CSR1000V sn 90IPRNKKU69
+diagnostic bootup level minimal
+!
+spanning-tree extend system-id
+!
+!
+username cisco privilege 15 password 0 cisco
+!
+redundancy
+!
+!
+!
+!
+!
+cdp run
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+interface Loopback123
+ ip address 192.168.123.2 255.255.255.255
+!
+interface GigabitEthernet1
+ no ip address
+ shutdown
+ negotiation auto
+ no mop enabled
+ no mop sysid
+!
+interface GigabitEthernet2
+ ip address 22.22.22.2 255.255.255.0
+ negotiation auto
+ cdp enable
+ no mop enabled
+ no mop sysid
+!
+interface GigabitEthernet3
+ ip address 33.33.33.1 255.255.255.0
+ negotiation auto
+ no mop enabled
+ no mop sysid
+!
+interface GigabitEthernet4
+ no ip address
+ negotiation auto
+!
+!
+router eigrp 102
+ network 22.22.22.0 0.0.0.255
+ network 172.16.3.0 0.0.0.255
+ network 192.168.123.2 0.0.0.0
+ redistribute eigrp 103 metric 1000000 10 255 1 1500
+!
+!
+router eigrp dcborder
+ !
+ address-family ipv4 unicast autonomous-system 103
+  !
+  topology base
+   redistribute eigrp 102 metric 1000000 10 255 1 1500
+  exit-af-topology
+  network 33.33.33.0 0.0.0.255
+ exit-address-family
+!
+!
+virtual-service csr_mgmt
+!
+ip forward-protocol nd
+ip http server
+ip http authentication local
+ip http secure-server
+!
+ip ssh version 2
+!
+!
+!
+!
+!
+!
+control-plane
+!
+ !
+ !
+ !
+ !
+!
+!
+!
+!
+!
+line con 0
+ stopbits 1
+line vty 0
+ login local
+ transport input ssh
+line vty 1
+ login local
+ length 0
+ transport input ssh
+line vty 2 4
+ login local
+ transport input ssh
+line vty 5 15
+ login local
+ transport input ssh
+!
+!
+!
+!
+!
+!
+end

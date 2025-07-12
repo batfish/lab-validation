@@ -1,0 +1,104 @@
+Building configuration...
+!! IOS XR Configuration version = 6.2.2
+!! Last configuration change at Wed Apr  7 16:22:27 2021 by cisco
+!
+hostname azure
+domain name test.com
+username cisco
+ group root-lr
+ group cisco-support
+ secret 5 $1$GKmG$57GfSEcI.8xcdv.Ei0qSo1
+!
+line default
+ transport input ssh
+!
+call-home
+ service active
+ contact smart-licensing
+ profile CiscoTAC-1
+  active
+  destination transport-method http
+ !
+!
+interface Loopback123
+ ipv4 address 192.168.123.1 255.255.255.255
+!
+interface Loopback770
+ ipv4 address 10.77.0.1 255.255.128.0
+!
+interface Loopback77128
+ ipv4 address 10.77.128.1 255.255.128.0
+!
+interface MgmtEth0/RP0/CPU0/0
+ shutdown
+!
+interface GigabitEthernet0/0/0/0
+ ipv4 address 192.168.122.2 255.255.255.0
+!
+interface GigabitEthernet0/0/0/1
+ description border01
+!
+interface GigabitEthernet0/0/0/1.35
+ description border01
+ ipv4 address 10.103.127.6 255.255.255.252
+ encapsulation dot1q 35
+!
+interface GigabitEthernet0/0/0/2
+ description border02
+!
+interface GigabitEthernet0/0/0/2.35
+ ipv4 address 10.103.127.2 255.255.255.252
+ encapsulation dot1q 35
+!
+interface GigabitEthernet0/0/0/3
+ shutdown
+!
+prefix-set AZURE_OUT
+  10.77.0.0/17,
+  10.77.128.0/17,
+  192.168.122.0/24,
+  192.168.123.1/32
+end-set
+!
+route-policy AZURE_OUT
+  if destination in AZURE_OUT then
+    pass
+  else
+    drop
+  endif
+end-policy
+!
+route-policy allow-all
+  pass
+end-policy
+!
+router static
+ address-family ipv4 unicast
+  192.168.123.3/32 10.103.127.1
+ !
+!
+router bgp 65300
+ bgp log neighbor changes detail
+ address-family ipv4 unicast
+  network 10.77.0.0/17
+  network 10.77.128.0/17
+  network 192.168.122.0/24
+  network 192.168.123.1/32
+ !
+ neighbor 10.103.127.1
+  remote-as 65200
+  address-family ipv4 unicast
+   route-policy allow-all in
+   route-policy AZURE_OUT out
+  !
+ !
+ neighbor 10.103.127.5
+  remote-as 65200
+  address-family ipv4 unicast
+   route-policy allow-all in
+   route-policy AZURE_OUT out
+  !
+ !
+!
+ssh server v2
+end

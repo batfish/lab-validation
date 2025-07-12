@@ -1,0 +1,411 @@
+set version 17.3R1.10
+set groups node0 system host-name fwl01
+set groups node0 system syslog source-address 10.254.4.1
+set groups node0 system ntp source-address 10.254.4.1
+set groups node0 interfaces fxp0 unit 0 family inet address 10.254.4.1/16
+set apply-groups node0
+set system time-zone UTC
+set system root-authentication encrypted-password "$6$cJ1xK06N$98z7EmTVN9zCCuMKp7JnUnRflDUYc8Lc6l7NAXAp70MjgsUKm.WD.kJ7IY2WNi7mYT1sEV1rRvkTSzFasUamn0"
+set system services ssh root-login allow
+set system services netconf ssh
+set system services web-management http interface fxp0.0
+set system syslog user * any emergency
+set system syslog file messages any any
+set system syslog file messages authorization info
+set system syslog file interactive-commands interactive-commands any
+set system license autoupdate url https://ae1.juniper.net/junos/key_retrieval
+set chassis cluster reth-count 4
+set chassis cluster redundancy-group 0 node 0 priority 150
+set chassis cluster redundancy-group 0 node 1 priority 100
+set chassis cluster redundancy-group 0 hold-down-interval 300
+set chassis cluster redundancy-group 1 node 0 priority 150
+set chassis cluster redundancy-group 1 node 1 priority 100
+set chassis cluster redundancy-group 1 hold-down-interval 10
+set chassis cluster redundancy-group 2 node 0 priority 150
+set chassis cluster redundancy-group 2 node 1 priority 100
+set chassis cluster redundancy-group 2 hold-down-interval 300
+set chassis cluster redundancy-group 3 node 0 priority 150
+set chassis cluster redundancy-group 3 node 1 priority 100
+set chassis cluster redundancy-group 3 hold-down-interval 10
+set security address-book global address GBL_RFC1918-10 10.0.0.0/8
+set security address-book global address GBL_RFC1918-192 192.168.0.0/16
+set security address-book global address GBL_RFC1918-172 172.16.0.0/12
+set security address-book global address WEB-SERVERS-PUBLIC1 45.1.12.0/24
+set security address-book global address WEB-SERVERS-PUBLIC2 59.1.32.0/24
+set security address-book global address WEB-SERVERS-PRIVATE1 10.100.1.0/24
+set security address-book global address WEB-SERVERS-PRIVATE2 10.100.2.0/24
+set security address-book global address DC-PUBLIC-NET1 45.1.12.0/22
+set security address-book global address DC-PUBLIC-NET2 59.1.32.0/22
+set security address-book global address DC-PUBLIC-NET3 147.75.69.27/32
+set security address-book global address DC-VPN-PRIV 172.24.0.10/32
+set security address-book global address DC-VPN-PUB 147.75.69.27/32
+set security address-book global address AWS-NETS 10.0.0.0/12
+set security address-book global address-set GBL_RFC1918 address GBL_RFC1918-10
+set security address-book global address-set GBL_RFC1918 address GBL_RFC1918-192
+set security address-book global address-set GBL_RFC1918 address GBL_RFC1918-172
+set security address-book global address-set WEB-SERVERS-PUBLIC address WEB-SERVERS-PUBLIC1
+set security address-book global address-set WEB-SERVERS-PUBLIC address WEB-SERVERS-PUBLIC2
+set security address-book global address-set WEB-SERVERS-PRIVATE address WEB-SERVERS-PRIVATE1
+set security address-book global address-set WEB-SERVERS-PRIVATE address WEB-SERVERS-PRIVATE2
+set security address-book global address-set DC-PUBLIC-NETS address DC-PUBLIC-NET1
+set security address-book global address-set DC-PUBLIC-NETS address DC-PUBLIC-NET2
+set security address-book global address-set DC-PUBLIC-NETS address DC-PUBLIC-NET3
+set security screen ids-option ATTACK-SCREEN alarm-without-drop
+set security screen ids-option ATTACK-SCREEN icmp ip-sweep threshold 4000
+set security screen ids-option ATTACK-SCREEN icmp large
+set security screen ids-option ATTACK-SCREEN icmp flood threshold 1000
+set security screen ids-option ATTACK-SCREEN icmp ping-death
+set security screen ids-option ATTACK-SCREEN ip bad-option
+set security screen ids-option ATTACK-SCREEN ip record-route-option
+set security screen ids-option ATTACK-SCREEN ip timestamp-option
+set security screen ids-option ATTACK-SCREEN ip security-option
+set security screen ids-option ATTACK-SCREEN ip stream-option
+set security screen ids-option ATTACK-SCREEN ip spoofing
+set security screen ids-option ATTACK-SCREEN ip source-route-option
+set security screen ids-option ATTACK-SCREEN ip loose-source-route-option
+set security screen ids-option ATTACK-SCREEN ip strict-source-route-option
+set security screen ids-option ATTACK-SCREEN ip unknown-protocol
+set security screen ids-option ATTACK-SCREEN ip tear-drop
+set security screen ids-option ATTACK-SCREEN tcp syn-fin
+set security screen ids-option ATTACK-SCREEN tcp tcp-no-flag
+set security screen ids-option ATTACK-SCREEN tcp port-scan threshold 3000
+set security screen ids-option ATTACK-SCREEN tcp syn-flood alarm-threshold 2000
+set security screen ids-option ATTACK-SCREEN tcp syn-flood attack-threshold 5000
+set security screen ids-option ATTACK-SCREEN tcp syn-flood source-threshold 2000
+set security screen ids-option ATTACK-SCREEN tcp syn-flood destination-threshold 5000
+set security screen ids-option ATTACK-SCREEN tcp syn-flood timeout 5
+set security screen ids-option ATTACK-SCREEN tcp land
+set security screen ids-option ATTACK-SCREEN tcp winnuke
+set security screen ids-option ATTACK-SCREEN tcp tcp-sweep threshold 3000
+set security screen ids-option ATTACK-SCREEN udp flood threshold 2000
+set security screen ids-option ATTACK-SCREEN udp udp-sweep threshold 1000
+set security screen ids-option ATTACK-SCREEN limit-session source-ip-based 20000
+set security nat source pool DC-VPN-PUBLIC address 147.75.69.27/32
+set security nat source pool SNAT-GLOBAL address 59.1.33.1/32
+set security nat source pool-utilization-alarm raise-threshold 85
+set security nat source pool-utilization-alarm clear-threshold 60
+set security nat source rule-set OUTBOUND-NAT from zone INSIDE
+set security nat source rule-set OUTBOUND-NAT to zone OUTSIDE
+set security nat source rule-set OUTBOUND-NAT rule GLOBAL match source-address-name GBL_RFC1918
+set security nat source rule-set OUTBOUND-NAT rule GLOBAL match destination-address 0.0.0.0/0
+set security nat source rule-set OUTBOUND-NAT rule GLOBAL then source-nat pool SNAT-GLOBAL
+set security nat source rule-set VPN-NAT from zone VPN
+set security nat source rule-set VPN-NAT to zone OUTSIDE
+set security nat source rule-set VPN-NAT rule VPN-SOURCE match source-address-name DC-VPN-PRIV
+set security nat source rule-set VPN-NAT rule VPN-SOURCE match destination-address 0.0.0.0/0
+set security nat source rule-set VPN-NAT rule VPN-SOURCE then source-nat pool DC-VPN-PUBLIC
+set security nat source rule-set VPN-NAT rule OTHER match source-address-name GBL_RFC1918
+set security nat source rule-set VPN-NAT rule OTHER match destination-address 0.0.0.0/0
+set security nat source rule-set VPN-NAT rule OTHER then source-nat pool SNAT-GLOBAL
+set security nat destination pool WEB-SERVERS-PRIVATE address 10.100.2.0/24
+set security nat destination pool DC-VPN-PRIVATE address 172.24.0.10/32
+set security nat destination rule-set INBOUND-NAT from zone OUTSIDE
+set security nat destination rule-set INBOUND-NAT rule WEB1 match source-address 0.0.0.0/0
+set security nat destination rule-set INBOUND-NAT rule WEB1 match destination-address-name WEB-SERVERS-PUBLIC1
+set security nat destination rule-set INBOUND-NAT rule WEB1 then destination-nat pool WEB-SERVERS-PRIVATE
+set security nat destination rule-set INBOUND-NAT rule WEB2 match source-address 0.0.0.0/0
+set security nat destination rule-set INBOUND-NAT rule WEB2 match destination-address-name WEB-SERVERS-PUBLIC2
+set security nat destination rule-set INBOUND-NAT rule WEB2 then destination-nat pool WEB-SERVERS-PRIVATE
+set security nat destination rule-set INBOUND-NAT rule VPN match source-address 0.0.0.0/0
+set security nat destination rule-set INBOUND-NAT rule VPN match destination-address-name DC-VPN-PUB
+set security nat destination rule-set INBOUND-NAT rule VPN then destination-nat pool DC-VPN-PRIVATE
+set security nat destination rule-set INBOUND-NAT rule NO-NAT match source-address 0.0.0.0/0
+set security nat destination rule-set INBOUND-NAT rule NO-NAT match destination-address 0.0.0.0/0
+set security nat destination rule-set INBOUND-NAT rule NO-NAT then destination-nat off
+set security nat proxy-arp interface ge-0/0/2.0 address 10.100.1.0/24
+set security nat proxy-arp interface ge-0/0/2.0 address 10.100.2.0/24
+set security nat proxy-arp interface ge-0/0/3.0 address 10.100.1.0/24
+set security nat proxy-arp interface ge-0/0/3.0 address 10.100.2.0/24
+set security policies from-zone INSIDE to-zone SELF policy PERMIT-SSH match source-address GBL_RFC1918-10
+set security policies from-zone INSIDE to-zone SELF policy PERMIT-SSH match source-address GBL_RFC1918-192
+set security policies from-zone INSIDE to-zone SELF policy PERMIT-SSH match destination-address any
+set security policies from-zone INSIDE to-zone SELF policy PERMIT-SSH match application junos-ssh
+set security policies from-zone INSIDE to-zone SELF policy PERMIT-SSH then permit
+set security policies from-zone INSIDE to-zone SELF policy PERMIT-ICMP match source-address GBL_RFC1918-10
+set security policies from-zone INSIDE to-zone SELF policy PERMIT-ICMP match source-address GBL_RFC1918-192
+set security policies from-zone INSIDE to-zone SELF policy PERMIT-ICMP match destination-address any
+set security policies from-zone INSIDE to-zone SELF policy PERMIT-ICMP match application junos-icmp-all
+set security policies from-zone INSIDE to-zone SELF policy PERMIT-ICMP then permit
+set security policies from-zone INSIDE to-zone SELF policy DENY-INSIDE-SELF match source-address any
+set security policies from-zone INSIDE to-zone SELF policy DENY-INSIDE-SELF match destination-address any
+set security policies from-zone INSIDE to-zone SELF policy DENY-INSIDE-SELF match application any
+set security policies from-zone INSIDE to-zone SELF policy DENY-INSIDE-SELF then deny
+set security policies from-zone INSIDE to-zone SELF policy DENY-INSIDE-SELF then log session-init
+set security policies from-zone INSIDE to-zone SELF policy DENY-INSIDE-SELF then log session-close
+set security policies from-zone INSIDE to-zone OUTSIDE policy PERMIT-ICMP match source-address any
+set security policies from-zone INSIDE to-zone OUTSIDE policy PERMIT-ICMP match destination-address any
+set security policies from-zone INSIDE to-zone OUTSIDE policy PERMIT-ICMP match application junos-icmp-all
+set security policies from-zone INSIDE to-zone OUTSIDE policy PERMIT-ICMP then permit
+set security policies from-zone INSIDE to-zone OUTSIDE policy PERMIT-ICMP then log session-init
+set security policies from-zone INSIDE to-zone OUTSIDE policy PERMIT-WEB match source-address any-ipv4
+set security policies from-zone INSIDE to-zone OUTSIDE policy PERMIT-WEB match destination-address any-ipv4
+set security policies from-zone INSIDE to-zone OUTSIDE policy PERMIT-WEB match application junos-http
+set security policies from-zone INSIDE to-zone OUTSIDE policy PERMIT-WEB match application junos-https
+set security policies from-zone INSIDE to-zone OUTSIDE policy PERMIT-WEB then permit
+set security policies from-zone INSIDE to-zone OUTSIDE policy PERMIT-WEB then log session-init
+set security policies from-zone INSIDE to-zone OUTSIDE policy PERMIT-WEB then log session-close
+set security policies from-zone INSIDE to-zone OUTSIDE policy PERMIT-SMTP match source-address any-ipv4
+set security policies from-zone INSIDE to-zone OUTSIDE policy PERMIT-SMTP match destination-address any-ipv4
+set security policies from-zone INSIDE to-zone OUTSIDE policy PERMIT-SMTP match application junos-smtp
+set security policies from-zone INSIDE to-zone OUTSIDE policy PERMIT-SMTP then permit
+set security policies from-zone INSIDE to-zone OUTSIDE policy PERMIT-SMTP then log session-init
+set security policies from-zone INSIDE to-zone OUTSIDE policy PERMIT-DNS match source-address any-ipv4
+set security policies from-zone INSIDE to-zone OUTSIDE policy PERMIT-DNS match destination-address any-ipv4
+set security policies from-zone INSIDE to-zone OUTSIDE policy PERMIT-DNS match application junos-dns-tcp
+set security policies from-zone INSIDE to-zone OUTSIDE policy PERMIT-DNS match application junos-dns-udp
+set security policies from-zone INSIDE to-zone OUTSIDE policy PERMIT-DNS then permit
+set security policies from-zone INSIDE to-zone OUTSIDE policy PERMIT-DNS then log session-init
+set security policies from-zone INSIDE to-zone OUTSIDE policy PERMIT-NTP match source-address any-ipv4
+set security policies from-zone INSIDE to-zone OUTSIDE policy PERMIT-NTP match destination-address any-ipv4
+set security policies from-zone INSIDE to-zone OUTSIDE policy PERMIT-NTP match application junos-ntp
+set security policies from-zone INSIDE to-zone OUTSIDE policy PERMIT-NTP then permit
+set security policies from-zone INSIDE to-zone OUTSIDE policy PERMIT-NTP then log session-init
+set security policies from-zone INSIDE to-zone OUTSIDE policy BLOCK-BAD match source-address any
+set security policies from-zone INSIDE to-zone OUTSIDE policy BLOCK-BAD match destination-address any
+set security policies from-zone INSIDE to-zone OUTSIDE policy BLOCK-BAD match application junos-dhcp-client
+set security policies from-zone INSIDE to-zone OUTSIDE policy BLOCK-BAD match application junos-dhcp-relay
+set security policies from-zone INSIDE to-zone OUTSIDE policy BLOCK-BAD match application junos-dhcp-server
+set security policies from-zone INSIDE to-zone OUTSIDE policy BLOCK-BAD match application junos-finger
+set security policies from-zone INSIDE to-zone OUTSIDE policy BLOCK-BAD match application junos-aol
+set security policies from-zone INSIDE to-zone OUTSIDE policy BLOCK-BAD match application junos-bootpc
+set security policies from-zone INSIDE to-zone OUTSIDE policy BLOCK-BAD match application junos-bootps
+set security policies from-zone INSIDE to-zone OUTSIDE policy BLOCK-BAD match application junos-cifs
+set security policies from-zone INSIDE to-zone OUTSIDE policy BLOCK-BAD match application junos-gnutella
+set security policies from-zone INSIDE to-zone OUTSIDE policy BLOCK-BAD match application junos-gopher
+set security policies from-zone INSIDE to-zone OUTSIDE policy BLOCK-BAD match application junos-ms-sql
+set security policies from-zone INSIDE to-zone OUTSIDE policy BLOCK-BAD match application junos-ms-rpc
+set security policies from-zone INSIDE to-zone OUTSIDE policy BLOCK-BAD match application junos-msn
+set security policies from-zone INSIDE to-zone OUTSIDE policy BLOCK-BAD match application junos-pc-anywhere
+set security policies from-zone INSIDE to-zone OUTSIDE policy BLOCK-BAD match application junos-smb
+set security policies from-zone INSIDE to-zone OUTSIDE policy BLOCK-BAD match application junos-sun-rpc
+set security policies from-zone INSIDE to-zone OUTSIDE policy BLOCK-BAD match application junos-ms-rpc-any
+set security policies from-zone INSIDE to-zone OUTSIDE policy BLOCK-BAD then deny
+set security policies from-zone INSIDE to-zone OUTSIDE policy BLOCK-BAD then log session-init
+set security policies from-zone INSIDE to-zone OUTSIDE policy BLOCK-BAD then log session-close
+set security policies from-zone INSIDE to-zone OUTSIDE policy CATCH-ALL match source-address any
+set security policies from-zone INSIDE to-zone OUTSIDE policy CATCH-ALL match destination-address any
+set security policies from-zone INSIDE to-zone OUTSIDE policy CATCH-ALL match application any
+set security policies from-zone INSIDE to-zone OUTSIDE policy CATCH-ALL then permit
+set security policies from-zone INSIDE to-zone OUTSIDE policy CATCH-ALL then log session-init
+set security policies from-zone INSIDE to-zone OUTSIDE policy CATCH-ALL then log session-close
+set security policies from-zone OUTSIDE to-zone INSIDE policy PERMIT-ICMP match source-address any
+set security policies from-zone OUTSIDE to-zone INSIDE policy PERMIT-ICMP match destination-address any
+set security policies from-zone OUTSIDE to-zone INSIDE policy PERMIT-ICMP match application junos-icmp-all
+set security policies from-zone OUTSIDE to-zone INSIDE policy PERMIT-ICMP then permit
+set security policies from-zone OUTSIDE to-zone INSIDE policy PERMIT-WEB match source-address any-ipv4
+set security policies from-zone OUTSIDE to-zone INSIDE policy PERMIT-WEB match destination-address WEB-SERVERS-PRIVATE
+set security policies from-zone OUTSIDE to-zone INSIDE policy PERMIT-WEB match application junos-http
+set security policies from-zone OUTSIDE to-zone INSIDE policy PERMIT-WEB match application junos-https
+set security policies from-zone OUTSIDE to-zone INSIDE policy PERMIT-WEB then permit
+set security policies from-zone OUTSIDE to-zone INSIDE policy PERMIT-WEB then log session-init
+set security policies from-zone OUTSIDE to-zone INSIDE policy PERMIT-WEB then log session-close
+set security policies from-zone VPN to-zone OUTSIDE policy PERMIT-IPSEC match source-address DC-VPN-PRIV
+set security policies from-zone VPN to-zone OUTSIDE policy PERMIT-IPSEC match source-address DC-VPN-PUB
+set security policies from-zone VPN to-zone OUTSIDE policy PERMIT-IPSEC match destination-address any-ipv4
+set security policies from-zone VPN to-zone OUTSIDE policy PERMIT-IPSEC match application junos-ike
+set security policies from-zone VPN to-zone OUTSIDE policy PERMIT-IPSEC match application junos-ike-nat
+set security policies from-zone VPN to-zone OUTSIDE policy PERMIT-IPSEC match application cns-esp
+set security policies from-zone VPN to-zone OUTSIDE policy PERMIT-IPSEC then permit
+set security policies from-zone VPN to-zone OUTSIDE policy PERMIT-IPSEC then log session-init
+set security policies from-zone VPN to-zone OUTSIDE policy PERMIT-ICMP match source-address DC-VPN-PRIV
+set security policies from-zone VPN to-zone OUTSIDE policy PERMIT-ICMP match source-address DC-VPN-PUB
+set security policies from-zone VPN to-zone OUTSIDE policy PERMIT-ICMP match destination-address any-ipv4
+set security policies from-zone VPN to-zone OUTSIDE policy PERMIT-ICMP match application junos-icmp-all
+set security policies from-zone VPN to-zone OUTSIDE policy PERMIT-ICMP then permit
+set security policies from-zone VPN to-zone OUTSIDE policy PERMIT-ANY match source-address AWS-NETS
+set security policies from-zone VPN to-zone OUTSIDE policy PERMIT-ANY match destination-address any-ipv4
+set security policies from-zone VPN to-zone OUTSIDE policy PERMIT-ANY match application any
+set security policies from-zone VPN to-zone OUTSIDE policy PERMIT-ANY then permit
+set security policies from-zone OUTSIDE to-zone VPN policy PERMIT-IPSEC match source-address any-ipv4
+set security policies from-zone OUTSIDE to-zone VPN policy PERMIT-IPSEC match destination-address DC-VPN-PRIV
+set security policies from-zone OUTSIDE to-zone VPN policy PERMIT-IPSEC match destination-address DC-VPN-PUB
+set security policies from-zone OUTSIDE to-zone VPN policy PERMIT-IPSEC match application junos-icmp-all
+set security policies from-zone OUTSIDE to-zone VPN policy PERMIT-IPSEC match application junos-ike
+set security policies from-zone OUTSIDE to-zone VPN policy PERMIT-IPSEC match application junos-ike-nat
+set security policies from-zone OUTSIDE to-zone VPN policy PERMIT-IPSEC match application cns-esp
+set security policies from-zone OUTSIDE to-zone VPN policy PERMIT-IPSEC then permit
+set security policies from-zone OUTSIDE to-zone VPN policy PERMIT-ICMP match source-address any-ipv4
+set security policies from-zone OUTSIDE to-zone VPN policy PERMIT-ICMP match destination-address DC-VPN-PRIV
+set security policies from-zone OUTSIDE to-zone VPN policy PERMIT-ICMP match destination-address DC-VPN-PUB
+set security policies from-zone OUTSIDE to-zone VPN policy PERMIT-ICMP match application junos-icmp-all
+set security policies from-zone OUTSIDE to-zone VPN policy PERMIT-ICMP then permit
+set security policies from-zone VPN to-zone INSIDE policy PERMIT-ANY match source-address any-ipv4
+set security policies from-zone VPN to-zone INSIDE policy PERMIT-ANY match destination-address any-ipv4
+set security policies from-zone VPN to-zone INSIDE policy PERMIT-ANY match application any
+set security policies from-zone VPN to-zone INSIDE policy PERMIT-ANY then permit
+set security policies from-zone INSIDE to-zone VPN policy PERMIT-ANY match source-address GBL_RFC1918
+set security policies from-zone INSIDE to-zone VPN policy PERMIT-ANY match destination-address GBL_RFC1918
+set security policies from-zone INSIDE to-zone VPN policy PERMIT-ANY match application any
+set security policies from-zone INSIDE to-zone VPN policy PERMIT-ANY then permit
+set security policies global policy DENY-ALL match source-address any
+set security policies global policy DENY-ALL match destination-address any
+set security policies global policy DENY-ALL match application any
+set security policies global policy DENY-ALL then deny
+set security policies global policy DENY-ALL then log session-init
+set security policies global policy DENY-ALL then log session-close
+set security zones security-zone SELF host-inbound-traffic system-services ping
+set security zones security-zone SELF host-inbound-traffic system-services ssh
+set security zones security-zone SELF host-inbound-traffic system-services snmp
+set security zones security-zone SELF interfaces lo0.0
+set security zones security-zone OUTSIDE tcp-rst
+set security zones security-zone OUTSIDE screen ATTACK-SCREEN
+set security zones security-zone OUTSIDE host-inbound-traffic system-services ping
+set security zones security-zone OUTSIDE host-inbound-traffic protocols bgp
+set security zones security-zone OUTSIDE interfaces ge-0/0/2.0
+set security zones security-zone OUTSIDE interfaces ge-0/0/3.0
+set security zones security-zone INSIDE tcp-rst
+set security zones security-zone INSIDE host-inbound-traffic system-services ping
+set security zones security-zone INSIDE host-inbound-traffic protocols ospf
+set security zones security-zone INSIDE host-inbound-traffic protocols bgp
+set security zones security-zone INSIDE interfaces ge-0/0/0.0
+set security zones security-zone INSIDE interfaces ge-0/0/1.0
+set security zones security-zone VPN tcp-rst
+set security zones security-zone VPN host-inbound-traffic system-services ping
+set security zones security-zone VPN host-inbound-traffic protocols ospf
+set security zones security-zone VPN host-inbound-traffic protocols bgp
+set security zones security-zone VPN interfaces ge-0/0/4.0
+set interfaces ge-0/0/0 description "[nbr=BL01:??]"
+set interfaces ge-0/0/0 unit 0 description "[nbr=BL01:??] FWL-INSIDE"
+set interfaces ge-0/0/0 unit 0 family inet address 10.17.1.0/31
+set interfaces ge-0/0/1 description "[nbr=BL02:??]"
+set interfaces ge-0/0/1 unit 0 description "[nbr=BL01:??] FWL-INSIDE"
+set interfaces ge-0/0/1 unit 0 family inet address 10.17.1.2/31
+set interfaces ge-0/0/2 description "[nbr=BOR01:??]"
+set interfaces ge-0/0/2 unit 0 description "[nbr=BL01:??] FWL-OUTSIDE"
+set interfaces ge-0/0/2 unit 0 family inet address 10.17.1.4/31
+set interfaces ge-0/0/3 description "[nbr=BOR02:??]"
+set interfaces ge-0/0/3 unit 0 description "[nbr=BL01:??] FWL-OUTSIDE"
+set interfaces ge-0/0/3 unit 0 family inet address 10.17.1.6/31
+set interfaces ge-0/0/4 description "[nbr=VPN01:??]"
+set interfaces ge-0/0/4 unit 0 description "[nbr=VPN01:??] FWL-VPN"
+set interfaces ge-0/0/4 unit 0 family inet address 172.24.0.1/24
+set interfaces ge-0/0/5 unit 0 family inet
+set interfaces fxp0 enable
+set interfaces fxp0 speed 100m
+set interfaces fxp0 unit 0
+set interfaces lo0 description "[type=LO]"
+set interfaces lo0 unit 0 description "[type=LO"
+set interfaces lo0 unit 0 family inet address 10.16.4.1/32
+set interfaces lo0 unit 0 family inet address 192.168.123.21/32
+set routing-options router-id 10.16.4.1
+set policy-options prefix-list DEFAULT-ROUTE 0.0.0.0/0
+set policy-options prefix-list MARTIANS 0.0.0.0/8
+set policy-options prefix-list MARTIANS 127.0.0.0/8
+set policy-options prefix-list MARTIANS 169.254.0.0/16
+set policy-options prefix-list MARTIANS 192.0.2.0/24
+set policy-options prefix-list MARTIANS 224.0.0.0/3
+set policy-options prefix-list RFC1918 10.0.0.0/8
+set policy-options prefix-list RFC1918 172.16.0.0/12
+set policy-options prefix-list RFC1918 192.168.0.0/16
+set policy-options prefix-list LOOPBACKS 10.1.0.0/16
+set policy-options prefix-list FABRIC_AGG 10.100.0.0/16
+set policy-options prefix-list FABRIC_AGG 10.200.0.0/16
+set policy-options prefix-list FABRIC_AGG 192.168.123.0/24
+set policy-options prefix-list AWS 10.0.0.0/12
+set policy-options prefix-list DC-PUBLIC 45.1.12.0/22
+set policy-options prefix-list DC-PUBLIC 59.1.32.0/22
+set policy-options prefix-list DC-VPN-PUB 147.75.69.27/32
+set policy-options prefix-list DC-VPN-PRIV 172.24.0.10/32
+set policy-options prefix-list DC-MGMT
+set policy-options policy-statement EXPORT-BL term DEFAULT-ROUTE from protocol bgp
+set policy-options policy-statement EXPORT-BL term DEFAULT-ROUTE from route-filter 0.0.0.0/0 exact
+set policy-options policy-statement EXPORT-BL term DEFAULT-ROUTE then preference 140
+set policy-options policy-statement EXPORT-BL term DEFAULT-ROUTE then accept
+set policy-options policy-statement EXPORT-BL term FW_MGMT from route-filter 192.168.123.21/32 exact
+set policy-options policy-statement EXPORT-BL term FW_MGMT then accept
+set policy-options policy-statement EXPORT-BL term EXITGW_MGMT from route-filter 192.168.123.22/32 exact
+set policy-options policy-statement EXPORT-BL term EXITGW_MGMT then accept
+set policy-options policy-statement EXPORT-BL term DENY then reject
+set policy-options policy-statement EXPORT-BOR term ADVERTISE_PUB from protocol static
+set policy-options policy-statement EXPORT-BOR term ADVERTISE_PUB from prefix-list-filter DC-PUBLIC exact
+set policy-options policy-statement EXPORT-BOR term ADVERTISE_PUB then metric 100
+set policy-options policy-statement EXPORT-BOR term ADVERTISE_PUB then accept
+set policy-options policy-statement EXPORT-BOR term ADVERTISE_VPN from prefix-list-filter DC-VPN-PUB exact
+set policy-options policy-statement EXPORT-BOR term ADVERTISE_VPN then metric 100
+set policy-options policy-statement EXPORT-BOR term ADVERTISE_VPN then accept
+set policy-options policy-statement EXPORT-VPN term FABRIC_SCOPE from prefix-list-filter FABRIC_AGG exact
+set policy-options policy-statement EXPORT-VPN term FABRIC_SCOPE then metric 100
+set policy-options policy-statement EXPORT-VPN term FABRIC_SCOPE then accept
+set policy-options policy-statement EXPORT-VPN term DEFAULT-ROUTE from protocol bgp
+set policy-options policy-statement EXPORT-VPN term DEFAULT-ROUTE from route-filter 0.0.0.0/0 exact
+set policy-options policy-statement EXPORT-VPN term DEFAULT-ROUTE then preference 140
+set policy-options policy-statement EXPORT-VPN term DEFAULT-ROUTE then accept
+set policy-options policy-statement EXPORT-VPN term DENY then reject
+set policy-options policy-statement FABRIC_AGG from protocol bgp
+set policy-options policy-statement FABRIC_AGG from prefix-list-filter FABRIC_AGG orlonger
+set policy-options policy-statement FABRIC_AGG then accept
+set policy-options policy-statement IMPORT-BL term FABRIC_SCOPE from protocol bgp
+set policy-options policy-statement IMPORT-BL term FABRIC_SCOPE from prefix-list-filter FABRIC_AGG orlonger
+set policy-options policy-statement IMPORT-BL term FABRIC_SCOPE then metric 100
+set policy-options policy-statement IMPORT-BL term FABRIC_SCOPE then accept
+set policy-options policy-statement IMPORT-BOR term DEFAULT-ROUTE from protocol bgp
+set policy-options policy-statement IMPORT-BOR term DEFAULT-ROUTE from prefix-list-filter DEFAULT-ROUTE exact
+set policy-options policy-statement IMPORT-BOR term DEFAULT-ROUTE then preference 140
+set policy-options policy-statement IMPORT-BOR term DEFAULT-ROUTE then accept
+set policy-options policy-statement IMPORT-BOR term DENY then reject
+set policy-options policy-statement IMPORT-VPN term AWS_SCOPE from protocol bgp
+set policy-options policy-statement IMPORT-VPN term AWS_SCOPE from prefix-list-filter AWS orlonger
+set policy-options policy-statement IMPORT-VPN term AWS_SCOPE then metric 100
+set policy-options policy-statement IMPORT-VPN term AWS_SCOPE then accept
+set policy-options policy-statement IMPORT-VPN term EXITGW_MGMT from protocol bgp
+set policy-options policy-statement IMPORT-VPN term EXITGW_MGMT from route-filter 192.168.123.22/32 exact
+set policy-options policy-statement IMPORT-VPN term EXITGW_MGMT then metric 100
+set policy-options policy-statement IMPORT-VPN term EXITGW_MGMT then accept
+set policy-options policy-statement IMPORT-VPN term DENY then reject
+set policy-options policy-statement NEXT-HOP-SELF term NHS then next-hop self
+set policy-options policy-statement NEXT-HOP-SELF term NHS then next policy
+set routing-instances DATA instance-type virtual-router
+set routing-instances DATA interface ge-0/0/0.0
+set routing-instances DATA interface ge-0/0/1.0
+set routing-instances DATA interface ge-0/0/2.0
+set routing-instances DATA interface ge-0/0/3.0
+set routing-instances DATA interface ge-0/0/4.0
+set routing-instances DATA interface lo0.0
+set routing-instances DATA routing-options graceful-restart
+set routing-instances DATA routing-options static route 10.100.0.0/16 discard
+set routing-instances DATA routing-options static route 10.200.0.0/16 discard
+set routing-instances DATA routing-options static route 45.1.12.0/22 discard
+set routing-instances DATA routing-options static route 59.1.32.0/22 discard
+set routing-instances DATA routing-options static route 147.75.69.27/32 discard
+set routing-instances DATA routing-options static route 59.1.33.1/32 discard
+set routing-instances DATA routing-options static route 192.168.123.0/24 discard
+set routing-instances DATA routing-options aggregate route 10.100.0.0/16
+set routing-instances DATA routing-options aggregate route 10.200.0.0/16
+set routing-instances DATA routing-options aggregate route 45.1.12.0/22
+set routing-instances DATA routing-options aggregate route 59.1.32.0/22
+set routing-instances DATA routing-options aggregate route 147.75.69.27/32
+set routing-instances DATA routing-options aggregate route 59.1.33.1/32
+set routing-instances DATA routing-options aggregate route 192.168.123.0/24
+set routing-instances DATA routing-options router-id 10.16.4.1
+set routing-instances DATA protocols bgp path-selection always-compare-med
+set routing-instances DATA protocols bgp advertise-inactive
+set routing-instances DATA protocols bgp log-updown
+set routing-instances DATA protocols bgp group EBGP-BOR type external
+set routing-instances DATA protocols bgp group EBGP-BOR description "[peer=BORs] EBGP"
+set routing-instances DATA protocols bgp group EBGP-BOR import IMPORT-BOR
+set routing-instances DATA protocols bgp group EBGP-BOR export NEXT-HOP-SELF
+set routing-instances DATA protocols bgp group EBGP-BOR export EXPORT-BOR
+set routing-instances DATA protocols bgp group EBGP-BOR local-as 65301
+set routing-instances DATA protocols bgp group EBGP-BOR neighbor 10.17.1.5 description "[peer=BOR01] EBGP"
+set routing-instances DATA protocols bgp group EBGP-BOR neighbor 10.17.1.5 peer-as 65401
+set routing-instances DATA protocols bgp group EBGP-BOR neighbor 10.17.1.7 description "[peer=BOR02] EBGP"
+set routing-instances DATA protocols bgp group EBGP-BOR neighbor 10.17.1.7 peer-as 65402
+set routing-instances DATA protocols bgp group EBGP-BL type external
+set routing-instances DATA protocols bgp group EBGP-BL description "[peer=BLs] EBGP"
+set routing-instances DATA protocols bgp group EBGP-BL import IMPORT-BL
+set routing-instances DATA protocols bgp group EBGP-BL export NEXT-HOP-SELF
+set routing-instances DATA protocols bgp group EBGP-BL export EXPORT-BL
+set routing-instances DATA protocols bgp group EBGP-BL local-as 65301
+set routing-instances DATA protocols bgp group EBGP-BL neighbor 10.17.1.1 description "[peer=BL01] EBGP"
+set routing-instances DATA protocols bgp group EBGP-BL neighbor 10.17.1.1 peer-as 65201
+set routing-instances DATA protocols bgp group EBGP-BL neighbor 10.17.1.3 description "[peer=BL02] EBGP"
+set routing-instances DATA protocols bgp group EBGP-BL neighbor 10.17.1.3 peer-as 65202
+set routing-instances DATA protocols bgp group EBGP-VPN type external
+set routing-instances DATA protocols bgp group EBGP-VPN description "[peer=VPNs] EBGP"
+set routing-instances DATA protocols bgp group EBGP-VPN import IMPORT-VPN
+set routing-instances DATA protocols bgp group EBGP-VPN export NEXT-HOP-SELF
+set routing-instances DATA protocols bgp group EBGP-VPN export EXPORT-VPN
+set routing-instances DATA protocols bgp group EBGP-VPN local-as 65301
+set routing-instances DATA protocols bgp group EBGP-VPN neighbor 172.24.0.10 description "[peer=VPN01] EBGP"
+set routing-instances DATA protocols bgp group EBGP-VPN neighbor 172.24.0.10 peer-as 65000
+set applications application cns-esp protocol esp

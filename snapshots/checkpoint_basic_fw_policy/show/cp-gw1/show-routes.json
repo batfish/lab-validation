@@ -1,0 +1,86 @@
+{
+    "from": 0,
+    "objects": [
+        {
+            "address": "0.0.0.0",
+            "age": "3259",
+            "cost": "0",
+            "mask-length": "0",
+            "next-hop": {
+                "gateways": [
+                    {
+                        "address": "10.150.0.1",
+                        "interface": "eth0"
+                    }
+                ]
+            },
+            "protocol": "Static"
+        },
+        {
+            "address": "10.12.11.0",
+            "mask-length": "24",
+            "next-hop": {
+                "interface": "eth1"
+            },
+            "protocol": "Connected"
+        },
+        {
+            "address": "10.23.21.0",
+            "mask-length": "24",
+            "next-hop": {
+                "interface": "eth2"
+            },
+            "protocol": "Connected"
+        },
+        {
+            "address": "10.150.0.0",
+            "mask-length": "16",
+            "next-hop": {
+                "interface": "eth0"
+            },
+            "protocol": "Connected"
+        },
+        {
+            "address": "127.0.0.0",
+            "mask-length": "8",
+            "next-hop": {
+                "interface": "lo"
+            },
+            "protocol": "Connected"
+        },
+        {
+            "address": "172.16.0.1",
+            "age": "3227",
+            "cost": "2",
+            "mask-length": "32",
+            "next-hop": {
+                "gateways": [
+                    {
+                        "address": "10.12.11.1",
+                        "interface": "eth1"
+                    }
+                ]
+            },
+            "protocol": "OSPF IntraArea",
+            "protocol-instance": "default"
+        },
+        {
+            "address": "172.16.0.3",
+            "age": "3227",
+            "cost": "2",
+            "mask-length": "32",
+            "next-hop": {
+                "gateways": [
+                    {
+                        "address": "10.23.21.2",
+                        "interface": "eth2"
+                    }
+                ]
+            },
+            "protocol": "OSPF IntraArea",
+            "protocol-instance": "default"
+        }
+    ],
+    "to": 7,
+    "total": 7
+}

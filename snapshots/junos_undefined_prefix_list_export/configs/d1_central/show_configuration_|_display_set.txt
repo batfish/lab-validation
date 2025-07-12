@@ -1,0 +1,38 @@
+set version 17.4R1.16
+set system host-name d1_central
+set system root-authentication encrypted-password "$6$kPg0Y2Id$BVGsU/HRSE3w/Ybv26GVAMX8HA3fMFLjgJDqOinH9OvlKVNq4H4mS0MaVLEWTOfP.iqySXro3pb0/vCwOSlOL1"
+set system services ssh root-login allow
+set system syslog user * any emergency
+set system syslog file messages any notice
+set system syslog file messages authorization info
+set system syslog file interactive-commands interactive-commands any
+set system extensions providers juniper license-type juniper deployment-scope commercial
+set system extensions providers chef license-type juniper deployment-scope commercial
+set interfaces xe-0/0/0 unit 0 family inet address 192.168.122.2/24
+set interfaces xe-0/0/1 unit 0 family inet address 10.12.1.1/24
+set interfaces xe-0/0/2 unit 0 family inet address 10.12.2.1/24
+set interfaces xe-0/0/3 unit 0 family inet address 10.12.3.1/24
+set interfaces xe-0/0/4 unit 0 family inet address 10.12.4.1/24
+set interfaces xe-0/0/5 unit 0 family inet address 10.12.5.1/24
+set interfaces xe-0/0/6 unit 0 family inet address 10.12.6.1/24
+set interfaces xe-0/0/7 unit 0 family inet address 10.12.7.1/24
+set interfaces em1 unit 0 family inet address 169.254.0.2/24
+set interfaces lo0 unit 0 family inet address 192.168.123.1/32
+set forwarding-options storm-control-profiles default all
+set routing-options autonomous-system 65001
+set protocols bgp group OUT_P_LEVEL_DEFINED neighbor 10.12.1.2 export allow_192_168_122_0_24
+set protocols bgp group OUT_P_LEVEL_DEFINED neighbor 10.12.1.2 peer-as 65002
+set protocols bgp group OUT_P_LEVEL_UNDEFINED neighbor 10.12.2.2 peer-as 65002
+set protocols bgp group OUT_PG_LEVEL_DEFINED neighbor 10.12.3.2 peer-as 65002
+set protocols bgp group OUT_PG_LEVEL_UNDEFINED neighbor 10.12.4.2 peer-as 65002
+set protocols bgp group OUT_G_LEVEL_DEFINED neighbor 10.12.5.2 peer-as 65002
+set protocols bgp group OUT_G_LEVEL_UNDEFINED neighbor 10.12.6.2 peer-as 65002
+set protocols bgp group OUT_P_PG_G_LEVEL_DEFINED neighbor 10.12.7.2 peer-as 65002
+set protocols lldp interface all
+set protocols igmp-snooping vlan default
+set policy-options prefix-list allow_192_168_122_0_24 192.168.122.0/24
+set policy-options policy-statement allow_192_168_122_0_24 term 1 from prefix-list allow_192_168_122_0_24
+set policy-options policy-statement allow_192_168_122_0_24 term 1 then accept
+set vlans default vlan-id 1
+
+{master:0}

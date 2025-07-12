@@ -1,0 +1,121 @@
+{
+    "bgp-information" : [
+    {
+        "attributes" : {"xmlns" : "http://xml.juniper.net/junos/17.4R1/junos-routing"}, 
+        "bgp-peer" : [
+        {
+            "attributes" : {"junos:style" : "detail"}, 
+            "peer-address" : [
+            {
+                "data" : "10.1.1.2"
+            }
+            ], 
+            "peer-as" : [
+            {
+                "data" : "100"
+            }
+            ], 
+            "local-address" : [
+            {
+                "data" : "10.1.1.1"
+            }
+            ], 
+            "local-as" : [
+            {
+                "data" : "100"
+            }
+            ], 
+            "peer-group" : [
+            {
+                "data" : "IBGP"
+            }
+            ], 
+            "peer-cfg-rti" : [
+            {
+                "data" : "master"
+            }
+            ], 
+            "peer-fwd-rti" : [
+            {
+                "data" : "master"
+            }
+            ], 
+            "peer-type" : [
+            {
+                "data" : "Internal"
+            }
+            ], 
+            "peer-state" : [
+            {
+                "data" : "Active"
+            }
+            ], 
+            "peer-flags" : [
+            {
+            }
+            ], 
+            "last-state" : [
+            {
+                "data" : "Active"
+            }
+            ], 
+            "last-event" : [
+            {
+                "data" : "Stop"
+            }
+            ], 
+            "last-error" : [
+            {
+                "data" : "None"
+            }
+            ], 
+            "bgp-option-information" : [
+            {
+                "attributes" : {"xmlns" : "http://xml.juniper.net/junos/17.4R1/junos-routing"}, 
+                "export-policy" : [
+                {
+                    "data" : "IBGP_POLICY"
+                }
+                ], 
+                "bgp-options" : [
+                {
+                    "data" : "Preference LocalAddress Passive PeerAS Refresh"
+                }
+                ], 
+                "bgp-options2" : [
+                {
+                }
+                ], 
+                "bgp-options-extended" : [
+                {
+                }
+                ], 
+                "local-address" : [
+                {
+                    "data" : "10.1.1.1"
+                }
+                ], 
+                "holdtime" : [
+                {
+                    "data" : "90"
+                }
+                ], 
+                "preference" : [
+                {
+                    "data" : "170"
+                }
+                ]
+            }
+            ], 
+            "flap-count" : [
+            {
+                "data" : "0"
+            }
+            ]
+        }
+        ]
+    }
+    ]
+}
+
+{master:0}

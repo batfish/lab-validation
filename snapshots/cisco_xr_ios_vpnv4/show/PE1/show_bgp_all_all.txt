@@ -1,0 +1,42 @@
+Address Family: VPNv4 Unicast
+-----------------------------
+
+BGP router identifier 10.254.1.1, local AS number 65001
+BGP generic scan interval 60 secs
+Non-stop routing is enabled
+BGP table state: Active
+Table ID: 0x0   RD version: 0
+BGP main routing table version 23
+BGP NSR Initial initsync version 1 (Reached)
+BGP NSR/ISSU Sync-Group versions 0/0
+BGP scan interval 60 secs
+
+Status codes: s suppressed, d damped, h history, * valid, > best
+              i - internal, r RIB-failure, S stale, N Nexthop-discard
+Origin codes: i - IGP, e - EGP, ? - incomplete
+   Network            Next Hop            Metric LocPrf Weight Path
+Route Distinguisher: 10.254.1.1:65101 (default for vrf blue)
+*> 11.0.0.0/8         11.1.1.2                 0         32768 ?
+*> 11.1.1.0/24        0.0.0.0                  0         32768 ?
+*>i12.1.1.0/24        10.254.1.4               0    100      0 ?
+*>i100.2.0.0/16       10.254.1.4               0    100      0 65101 ?
+Route Distinguisher: 10.254.1.1:65102 (default for vrf red)
+*> 11.1.1.0/24        0.0.0.0                  0         32768 ?
+*>i12.1.1.0/24        10.254.1.3               0    100      0 ?
+*> 100.1.0.0/16       11.1.1.2                 0             0 65102 ?
+*>i100.2.0.0/16       10.254.1.3               0    100      0 65102 ?
+Route Distinguisher: 10.254.1.3:65102
+*>i12.1.1.0/24        10.254.1.3               0    100      0 ?
+* i                   10.254.1.3               0    100      0 ?
+*>i100.2.0.0/16       10.254.1.3               0    100      0 65102 ?
+* i                   10.254.1.3               0    100      0 65102 ?
+Route Distinguisher: 10.254.1.4:65101
+*>i12.1.1.0/24        10.254.1.4               0    100      0 ?
+* i                   10.254.1.4               0    100      0 ?
+*>i100.2.0.0/16       10.254.1.4               0    100      0 65101 ?
+* i                   10.254.1.4               0    100      0 65101 ?
+
+Processed 12 prefixes, 16 paths
+
+Address Family: IPv4 Unicast
+----------------------------

@@ -1,0 +1,58 @@
+{
+ "TargetGroups": [
+  {
+   "HealthCheckEnabled": true,
+   "HealthCheckIntervalSeconds": 30,
+   "HealthCheckPort": "traffic-port",
+   "HealthCheckProtocol": "TCP",
+   "HealthCheckTimeoutSeconds": 10,
+   "HealthyThresholdCount": 3,
+   "LoadBalancerArns": [
+    "arn:aws:elasticloadbalancing:us-east-1:028403472736:loadbalancer/net/example-nlb-eni-private-subnet/6f8c796c122b6062"
+   ],
+   "Port": 80,
+   "Protocol": "TCP",
+   "TargetGroupArn": "arn:aws:elasticloadbalancing:us-east-1:028403472736:targetgroup/example-nlb-eni-private-subnet/f75bae20be911ad7",
+   "TargetGroupName": "example-nlb-eni-private-subnet",
+   "TargetType": "ip",
+   "UnhealthyThresholdCount": 3,
+   "VpcId": "vpc-0e7231b06d4761dc4"
+  },
+  {
+   "HealthCheckEnabled": true,
+   "HealthCheckIntervalSeconds": 30,
+   "HealthCheckPort": "traffic-port",
+   "HealthCheckProtocol": "TCP",
+   "HealthCheckTimeoutSeconds": 10,
+   "HealthyThresholdCount": 3,
+   "LoadBalancerArns": [
+    "arn:aws:elasticloadbalancing:us-east-1:028403472736:loadbalancer/net/example-nlb-ip/2337d295e7426ac8"
+   ],
+   "Port": 80,
+   "Protocol": "TCP",
+   "TargetGroupArn": "arn:aws:elasticloadbalancing:us-east-1:028403472736:targetgroup/example-nlb-ip/73594597469133c1",
+   "TargetGroupName": "example-nlb-ip",
+   "TargetType": "ip",
+   "UnhealthyThresholdCount": 3,
+   "VpcId": "vpc-0e7231b06d4761dc4"
+  },
+  {
+   "HealthCheckEnabled": true,
+   "HealthCheckIntervalSeconds": 30,
+   "HealthCheckPort": "traffic-port",
+   "HealthCheckProtocol": "TCP",
+   "HealthCheckTimeoutSeconds": 10,
+   "HealthyThresholdCount": 3,
+   "LoadBalancerArns": [
+    "arn:aws:elasticloadbalancing:us-east-1:028403472736:loadbalancer/net/example-target-az-different/e16c3a393878651d"
+   ],
+   "Port": 80,
+   "Protocol": "TCP",
+   "TargetGroupArn": "arn:aws:elasticloadbalancing:us-east-1:028403472736:targetgroup/example-target-az-different/21437b64dfa7592e",
+   "TargetGroupName": "example-target-az-different",
+   "TargetType": "ip",
+   "UnhealthyThresholdCount": 3,
+   "VpcId": "vpc-0e7231b06d4761dc4"
+  }
+ ]
+}

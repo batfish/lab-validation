@@ -1,0 +1,54 @@
+{
+ "Addresses": [
+  {
+   "AllocationId": "eipalloc-066d0764f7f380404",
+   "AssociationId": "eipassoc-0debd58465f8787df",
+   "Domain": "vpc",
+   "NetworkBorderGroup": "us-east-1",
+   "NetworkInterfaceId": "eni-0f905ebf59d4f7a8d",
+   "NetworkInterfaceOwnerId": "028403472736",
+   "PrivateIpAddress": "10.2.1.29",
+   "PublicIp": "3.220.57.31",
+   "PublicIpv4Pool": "amazon",
+   "Tags": [
+    {
+     "Key": "Name",
+     "Value": "dev-ngw-eip"
+    },
+    {
+     "Key": "Environment",
+     "Value": "dev"
+    },
+    {
+     "Key": "Terraform",
+     "Value": "true"
+    }
+   ]
+  },
+  {
+   "AllocationId": "eipalloc-0b0d8f6fd0b648e81",
+   "AssociationId": "eipassoc-05f187b6904420f06",
+   "Domain": "vpc",
+   "NetworkBorderGroup": "us-east-1",
+   "NetworkInterfaceId": "eni-0d7641225411e0579",
+   "NetworkInterfaceOwnerId": "028403472736",
+   "PrivateIpAddress": "10.1.1.168",
+   "PublicIp": "3.227.70.203",
+   "PublicIpv4Pool": "amazon",
+   "Tags": [
+    {
+     "Key": "Name",
+     "Value": "prod-ngw-eip"
+    },
+    {
+     "Key": "Environment",
+     "Value": "prod"
+    },
+    {
+     "Key": "Terraform",
+     "Value": "true"
+    }
+   ]
+  }
+ ]
+}

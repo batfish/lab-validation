@@ -1,0 +1,42 @@
+---------------------------- OSPF Instance default -----------------------------
+
+
+Interface eth1
+    IP Address:  10.12.11.2      Area: backbone
+    Router ID: 10.12.11.2      Network Type: BROADCAST      Cost: 1
+    Authentication Type: Null
+    Error Count: 0      Event Count: 3
+    Transmit Delay: 1      State: BDR      Priority: 1
+
+    Designated Router:
+        Router ID: 172.16.0.1
+        Interface Address: 10.12.11.1
+    Backup Designated Router:
+        Router ID: 10.12.11.2
+        Interface Address: 10.12.11.2
+    Timer Intervals Configured in seconds:
+        Hello 10          Dead 40
+        Wait 40          Retransmit 5
+    Next Hello in 6 seconds
+    Neighbor Count: 1
+    Lost 2-way with neighbors: 0 time(s)
+
+Interface eth2
+    IP Address:  10.23.21.1      Area: 1
+    Router ID: 10.12.11.2      Network Type: BROADCAST      Cost: 1
+    Authentication Type: Null
+    Error Count: 0      Event Count: 3
+    Transmit Delay: 1      State: BDR      Priority: 1
+
+    Designated Router:
+        Router ID: 172.16.0.3
+        Interface Address: 10.23.21.2
+    Backup Designated Router:
+        Router ID: 10.12.11.2
+        Interface Address: 10.23.21.1
+    Timer Intervals Configured in seconds:
+        Hello 10          Dead 40
+        Wait 40          Retransmit 5
+    Next Hello in 6 seconds
+    Neighbor Count: 1
+    Lost 2-way with neighbors: 0 time(s)

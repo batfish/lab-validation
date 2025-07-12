@@ -1,0 +1,29 @@
+entries:
+  - hostname: fwl01
+    test_name: test_interface_properties
+    skip:
+      reason: Not Implemented
+  - hostname: fwl01
+    test_name: test_bgp_rib_routes
+    skip:
+      reason: Not Implemented
+  - hostname: bor0[1-2]
+    test_name: test_main_rib_routes
+    skip:
+      reason: https://github.com/batfish/lab-validation/issues/49
+  - hostname: leaf0[12]
+    test_name: test_bgp_rib_routes
+    skip:
+      reason: https://github.com/batfish/lab-validation/issues/2
+  - hostname: bl0[12]
+    test_name: test_bgp_rib_routes
+    skip:
+      reason: weight difference, maybe https://github.com/batfish/lab-validation/issues/7
+  - hostname: bor0[1-2]
+    test_name: test_bgp_rib_routes
+    skip:
+      reason: https://github.com/batfish/lab-validation/issues/49,  https://github.com/batfish/lab-validation/issues/50
+  - hostname: spine01|spine02
+    test_name: test_bgp_rib_routes
+    skip:
+      reason: https://github.com/batfish/lab-validation/issues/6

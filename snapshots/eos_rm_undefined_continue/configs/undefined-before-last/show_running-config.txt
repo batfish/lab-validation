@@ -1,0 +1,62 @@
+! Command: show running-config
+! device: undefined-before-last (vEOS, EOS-4.23.0.1F)
+!
+! boot system flash:/vEOS-lab.swi
+!
+transceiver qsfp default-mode 4x10G
+!
+hostname undefined-before-last
+!
+spanning-tree mode mstp
+!
+no aaa root
+!
+username admin role network-admin secret sha512 $6$s7d56pqhB1IMu1sJ$B6r0fnOTpmam6pMj1c59eaJvpHkB0Bhb4vIAlMNiRQuDoXs9JgV5SM1EcGWtgix1m6ARy/iriiEnNEntqwFfM/
+!
+interface Ethernet1
+   no switchport
+   ip address 10.12.11.2/24
+!
+interface Ethernet2
+!
+interface Ethernet3
+!
+interface Ethernet4
+!
+interface Ethernet5
+!
+interface Ethernet6
+!
+interface Ethernet7
+!
+interface Ethernet8
+!
+interface Ethernet9
+!
+interface Ethernet10
+!
+interface Ethernet11
+!
+interface Ethernet12
+!
+interface Management1
+   ip address 10.150.0.12/16
+!
+ip routing
+!
+route-map CONT-UNDEFINED-BEFORE-LAST permit 10
+   continue 30
+   set as-path prepend 10
+!
+route-map CONT-UNDEFINED-BEFORE-LAST permit 20
+   set as-path prepend 20
+!
+route-map CONT-UNDEFINED-BEFORE-LAST permit 40
+   set as-path prepend 40
+!
+router bgp 65002
+   neighbor 10.12.11.1 remote-as 65001
+   neighbor 10.12.11.1 route-map CONT-UNDEFINED-BEFORE-LAST in
+   neighbor 10.12.11.1 maximum-routes 12000
+!
+end

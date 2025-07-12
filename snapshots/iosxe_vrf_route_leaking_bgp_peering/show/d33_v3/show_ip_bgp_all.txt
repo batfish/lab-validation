@@ -1,0 +1,45 @@
+For address family: IPv4 Unicast
+
+
+For address family: IPv6 Unicast
+
+
+For address family: VPNv4 Unicast
+
+BGP table version is 10, local router ID is 192.168.1.33
+Status codes: s suppressed, d damped, h history, * valid, > best, i - internal,
+              r RIB-failure, S Stale, m multipath, b backup-path, f RT-Filter,
+              x best-external, a additional-path, c RIB-compressed,
+              t secondary path,
+Origin codes: i - IGP, e - EGP, ? - incomplete
+RPKI validation codes: V valid, I invalid, N Not found
+
+     Network          Next Hop            Metric LocPrf Weight Path
+Route Distinguisher: 65003:3 (default for vrf vrf3) VRF Router ID 192.168.123.33
+ *>   192.168.122.0    10.23.21.1                             0 65002 65001 i
+ *>   192.168.123.1/32 10.23.21.1                             0 65002 65001 i
+ *>   192.168.123.2/32 10.23.21.1                             0 65002 65001 i
+ *>   192.168.123.3/32 10.23.21.1               0             0 65002 i
+ *>   192.168.123.33/32
+                      0.0.0.0                  0         32768 i
+ *>   192.168.123.44/32
+                      10.23.21.1                             0 65002 65001 65004 i
+ *>   192.168.123.55/32
+                      10.23.21.1                             0 65002 65001 65004 65005 i
+
+For address family: IPv4 Multicast
+
+
+For address family: L2VPN E-VPN
+
+
+For address family: VPNv4 Multicast
+
+
+For address family: MVPNv4 Unicast
+
+
+For address family: MVPNv6 Unicast
+
+
+For address family: VPNv4 Flowspec

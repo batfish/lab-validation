@@ -1,0 +1,26 @@
+set version 17.4R1.16
+set system host-name match_start
+set system root-authentication encrypted-password "$6$dhLhRnrZ$KBaQrVe0n9MJEeQhk0nMP20Kui459zW.JS86aMOtPpn1H2PViqxul3ISa/ISU53FC1lb1ouqV7f0RdyTOoPcR."
+set system services ssh root-login allow
+set system syslog user * any emergency
+set system syslog file messages any notice
+set system syslog file messages authorization info
+set system syslog file interactive-commands interactive-commands any
+set system extensions providers juniper license-type juniper deployment-scope commercial
+set system extensions providers chef license-type juniper deployment-scope commercial
+set interfaces xe-0/0/0 unit 0 family inet address 10.15.30.2/24
+set interfaces em0 unit 0 family inet address 10.150.0.81/16
+set interfaces em1 unit 0 family inet address 169.254.0.2/24
+set interfaces lo0 unit 0
+set forwarding-options storm-control-profiles default all
+set routing-options autonomous-system 65500
+set protocols bgp group r1 neighbor 10.15.30.1 import ALLOW_ASN
+set protocols bgp group r1 neighbor 10.15.30.1 peer-as 65100
+set protocols igmp-snooping vlan default
+set policy-options policy-statement ALLOW_ASN term 1 from as-path MATCH_START
+set policy-options policy-statement ALLOW_ASN term 1 then accept
+set policy-options policy-statement ALLOW_ASN term 2 then reject
+set policy-options as-path MATCH_START 65102.*
+set vlans default vlan-id 1
+
+{master:0}

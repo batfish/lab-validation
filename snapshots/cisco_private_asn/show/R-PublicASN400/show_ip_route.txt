@@ -1,0 +1,36 @@
+Codes: L - local, C - connected, S - static, R - RIP, M - mobile, B - BGP
+       D - EIGRP, EX - EIGRP external, O - OSPF, IA - OSPF inter area
+       N1 - OSPF NSSA external type 1, N2 - OSPF NSSA external type 2
+       E1 - OSPF external type 1, E2 - OSPF external type 2
+       i - IS-IS, su - IS-IS summary, L1 - IS-IS level-1, L2 - IS-IS level-2
+       ia - IS-IS inter area, * - candidate default, U - per-user static route
+       o - ODR, P - periodic downloaded static route, H - NHRP, l - LISP
+       a - application route
+       + - replicated route, % - next hop override, p - overrides from PfR
+
+Gateway of last resort is not set
+
+      1.0.0.0/32 is subnetted, 1 subnets
+B        1.1.1.1 [20/0] via 10.10.40.2, 00:47:45
+      2.0.0.0/32 is subnetted, 1 subnets
+B        2.2.2.2 [20/0] via 10.10.40.2, 00:47:45
+      3.0.0.0/32 is subnetted, 1 subnets
+B        3.3.3.3 [20/0] via 10.10.40.2, 00:47:45
+      4.0.0.0/32 is subnetted, 1 subnets
+B        4.4.4.4 [20/0] via 10.10.40.2, 00:47:45
+      10.0.0.0/8 is variably subnetted, 2 subnets, 2 masks
+C        10.10.40.0/24 is directly connected, GigabitEthernet1
+L        10.10.40.1/32 is directly connected, GigabitEthernet1
+      100.0.0.0/32 is subnetted, 2 subnets
+B        100.100.100.1 [20/0] via 10.10.40.2, 00:47:45
+B        100.100.100.2 [20/0] via 10.10.40.2, 00:47:45
+B     192.168.122.0/24 [20/0] via 10.10.40.2, 00:01:40
+      192.168.123.0/32 is subnetted, 8 subnets
+B        192.168.123.1 [20/0] via 10.10.40.2, 00:01:33
+B        192.168.123.2 [20/0] via 10.10.40.2, 00:47:45
+B        192.168.123.3 [20/0] via 10.10.40.2, 00:47:45
+B        192.168.123.4 [20/0] via 10.10.40.2, 00:47:45
+B        192.168.123.5 [20/0] via 10.10.40.2, 00:47:03
+C        192.168.123.6 is directly connected, Loopback123
+B        192.168.123.7 [20/0] via 10.10.40.2, 00:47:45
+B        192.168.123.8 [20/0] via 10.10.40.2, 00:47:45

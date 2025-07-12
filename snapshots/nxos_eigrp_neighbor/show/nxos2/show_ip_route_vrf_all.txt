@@ -1,0 +1,43 @@
+IP Route Table for VRF "default"
+'*' denotes best ucast next-hop
+'**' denotes best mcast next-hop
+'[x/y]' denotes [preference/metric]
+'%<string>' in via output denotes VRF <string>
+
+10.12.11.0/24, ubest/mbest: 1/0, attached
+    *via 10.12.11.2, Eth1/1, [0/0], 02:03:11, direct
+10.12.11.2/32, ubest/mbest: 1/0, attached
+    *via 10.12.11.2, Eth1/1, [0/0], 02:03:11, local
+10.12.23.0/24, ubest/mbest: 1/0, attached
+    *via 10.12.23.2, Vlan23, [0/0], 02:03:53, direct
+10.12.23.2/32, ubest/mbest: 1/0, attached
+    *via 10.12.23.2, Vlan23, [0/0], 02:03:53, local
+10.12.45.0/30, ubest/mbest: 1/0, attached
+    *via 10.12.45.2, Po45.10, [0/0], 02:03:09, direct
+10.12.45.2/32, ubest/mbest: 1/0, attached
+    *via 10.12.45.2, Po45.10, [0/0], 02:03:09, local
+172.16.1.1/32, ubest/mbest: 1/0
+    *via 10.12.11.1, Eth1/1, [90/130816], 02:03:09, eigrp-1, internal
+172.16.1.2/32, ubest/mbest: 2/0, attached
+    *via 172.16.1.2, Lo1, [0/0], 02:04:42, local
+    *via 172.16.1.2, Lo1, [0/0], 02:04:42, direct
+172.16.23.1/32, ubest/mbest: 1/0
+    *via 10.12.23.1, Vlan23, [90/130816], 02:03:50, eigrp-23, internal
+172.16.23.2/32, ubest/mbest: 2/0, attached
+    *via 172.16.23.2, Lo23, [0/0], 02:04:42, local
+    *via 172.16.23.2, Lo23, [0/0], 02:04:42, direct
+172.16.45.1/32, ubest/mbest: 1/0
+    *via 10.12.45.1, Po45.10, [90/129536], 02:03:06, eigrp-45, internal
+172.16.45.2/32, ubest/mbest: 2/0, attached
+    *via 172.16.45.2, Lo45, [0/0], 02:04:42, local
+    *via 172.16.45.2, Lo45, [0/0], 02:04:42, direct
+172.16.100.2/32, ubest/mbest: 2/0, attached
+    *via 172.16.100.2, Lo100, [0/0], 01:34:31, local
+    *via 172.16.100.2, Lo100, [0/0], 01:34:31, direct
+192.168.122.0/24, ubest/mbest: 1/0
+    *via 10.12.11.1, Eth1/1, [90/3072], 01:23:28, eigrp-1, internal
+192.168.123.1/32, ubest/mbest: 1/0
+    *via 10.12.11.1, Eth1/1, [90/130816], 01:27:15, eigrp-1, internal
+192.168.123.2/32, ubest/mbest: 2/0, attached
+    *via 192.168.123.2, Lo123, [0/0], 01:27:41, local
+    *via 192.168.123.2, Lo123, [0/0], 01:27:41, direct

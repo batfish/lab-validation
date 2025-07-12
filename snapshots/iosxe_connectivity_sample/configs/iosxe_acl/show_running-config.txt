@@ -1,0 +1,229 @@
+Building configuration...
+
+Current configuration : 2859 bytes
+!
+! Last configuration change at 22:31:24 UTC Wed Mar 31 2021
+!
+version 16.4
+service timestamps debug datetime msec
+service timestamps log datetime msec
+no platform punt-keepalive disable-kernel-core
+platform console serial
+!
+hostname iosxe_acl
+!
+boot-start-marker
+boot-end-marker
+!
+!
+!
+no aaa new-model
+!
+!
+!
+!
+!
+!
+!
+!
+!
+
+
+
+ip domain name test.com
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+subscriber templating
+!
+!
+!
+multilink bundle-name authenticated
+!
+!
+!
+!
+!
+!
+
+
+!
+!
+!
+!
+!
+!
+!
+license udi pid CSR1000V sn 938VD65N3N1
+diagnostic bootup level minimal
+!
+spanning-tree extend system-id
+!
+!
+username cisco privilege 15 password 0 cisco
+!
+redundancy
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+interface GigabitEthernet1
+ ip address 192.168.123.2 255.255.255.252
+ negotiation auto
+ no mop enabled
+ no mop sysid
+!
+interface GigabitEthernet2
+ ip address 192.168.123.5 255.255.255.252
+ ip access-group CONNECTIVITY_TEST_IN in
+ ip access-group CONNECTIVITY_TEST_OUT out
+ negotiation auto
+ no mop enabled
+ no mop sysid
+!
+interface GigabitEthernet3
+ no ip address
+ shutdown
+ negotiation auto
+ no mop enabled
+ no mop sysid
+!
+interface GigabitEthernet4
+ no ip address
+ shutdown
+ negotiation auto
+ no mop enabled
+ no mop sysid
+!
+interface GigabitEthernet5
+ no ip address
+ shutdown
+ negotiation auto
+ no mop enabled
+ no mop sysid
+!
+interface GigabitEthernet6
+ no ip address
+ shutdown
+ negotiation auto
+ no mop enabled
+ no mop sysid
+!
+interface GigabitEthernet7
+ no ip address
+ shutdown
+ negotiation auto
+ no mop enabled
+ no mop sysid
+!
+interface GigabitEthernet8
+ no ip address
+ shutdown
+ negotiation auto
+ no mop enabled
+ no mop sysid
+!
+interface GigabitEthernet9
+ no ip address
+ shutdown
+ negotiation auto
+ no mop enabled
+ no mop sysid
+!
+interface GigabitEthernet10
+ ip address 192.168.122.2 255.255.255.0
+ negotiation auto
+ no mop enabled
+ no mop sysid
+!
+!
+virtual-service csr_mgmt
+!
+ip forward-protocol nd
+ip http server
+ip http authentication local
+ip http secure-server
+!
+ip tftp source-interface GigabitEthernet10
+ip ssh version 2
+!
+ip access-list extended CONNECTIVITY_TEST_IN
+ deny   tcp host 192.168.123.6 eq 9102 host 192.168.123.1
+ deny   udp host 192.168.123.6 eq 9202 host 192.168.123.1
+ permit ip any any
+ip access-list extended CONNECTIVITY_TEST_OUT
+ deny   tcp host 192.168.123.1 host 192.168.123.6 eq 9101
+ permit tcp host 192.168.123.1 host 192.168.123.6 range 9100 9199
+ deny   udp host 192.168.123.1 host 192.168.123.6 eq 9201
+ permit udp host 192.168.123.1 host 192.168.123.6 range 9200 9299
+ permit icmp any any
+ permit tcp any any eq 22
+!
+!
+!
+!
+!
+control-plane
+!
+ !
+ !
+ !
+ !
+!
+!
+!
+!
+!
+line con 0
+ stopbits 1
+line vty 0
+ login local
+ transport input ssh
+line vty 1
+ login local
+ length 0
+ transport input ssh
+line vty 2 4
+ login local
+ transport input ssh
+line vty 5 15
+ login local
+ transport input ssh
+!
+ntp server time-pnp.cisco.com
+!
+!
+!
+!
+!
+end

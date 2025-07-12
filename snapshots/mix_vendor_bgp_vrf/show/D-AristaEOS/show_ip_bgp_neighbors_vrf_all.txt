@@ -1,0 +1,45 @@
+BGP neighbor is 10.10.30.1, remote AS 1, external link
+  BGP version 4, remote router ID 192.168.123.1, VRF default
+  Last read 00:00:24, last write 00:00:29
+  Hold time is 180, keepalive interval is 60 seconds
+  Configured hold time is 180, keepalive interval is 60 seconds
+  Hold timer is active, time left: 00:01:38
+  Keepalive timer is active, time left: 00:00:15
+  Connect timer is inactive
+  Idle-restart timer is inactive
+  BGP state is Established, up for 5d00h
+  Number of transitions to established: 1
+  Last state was OpenConfirm
+  Last event was HoldTime
+  Neighbor Capabilities:
+    Multiprotocol IPv4 Unicast: advertised and received and negotiated
+    Four Octet ASN: advertised and received and negotiated
+    Route Refresh: advertised and received and negotiated
+    Send End-of-RIB messages: advertised
+    Additional-paths recv capability:
+      IPv4 Unicast: advertised
+    Additional-paths send capability:
+  Restart timer is inactive
+  End of rib timer is inactive
+    IPv4 Unicast End-of-RIB received: No
+  Message Statistics:
+                         Sent      Rcvd
+    Opens:                  1         1
+    Notifications:          0         0
+    Updates:                1         9
+    Keepalives:            65      7972
+    Route-Refresh:          0         0
+    Total messages:        67      7982
+  Prefix Statistics:
+                         Sent      Rcvd
+    IPv4 Unicast:           1        11
+    IPv6 Unicast:           0         0
+  Configured maximum total number of routes is 12000
+  Inbound updates dropped by reason:
+    AS path loop detection: 0
+    Malformed MPBGP routes: 0
+    Originator ID matches local router ID: 0
+    Nexthop matches local IP address: 1
+Local AS is 30, local router ID 192.168.123.4
+Local TCP address is 10.10.30.2, local port is 37590
+Remote TCP address is 10.10.30.1, remote port is 179

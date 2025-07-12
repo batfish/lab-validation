@@ -1,0 +1,30 @@
+{
+ "LoadBalancers": [
+  {
+   "AvailabilityZones": [
+    {
+     "LoadBalancerAddresses": [
+      {
+       "AllocationId": "eipalloc-05784ccce2a20ce7e",
+       "IpAddress": "52.53.75.18"
+      }
+     ],
+     "SubnetId": "subnet-0f2817602d9c9b15a",
+     "ZoneName": "us-west-1a"
+    }
+   ],
+   "CanonicalHostedZoneId": "Z24FKFUX50B4VW",
+   "CreatedTime": "2020-04-22 01:30:38.507000+00:00",
+   "DNSName": "nlb-web-hr-west-0934837d0f8fecb6.elb.us-west-1.amazonaws.com",
+   "IpAddressType": "ipv4",
+   "LoadBalancerArn": "arn:aws:elasticloadbalancing:us-west-1:028403472736:loadbalancer/net/nlb-web-hr-west/0934837d0f8fecb6",
+   "LoadBalancerName": "nlb-web-hr-west",
+   "Scheme": "internet-facing",
+   "State": {
+    "Code": "active"
+   },
+   "Type": "network",
+   "VpcId": "vpc-0e13049ea0263d087"
+  }
+ ]
+}

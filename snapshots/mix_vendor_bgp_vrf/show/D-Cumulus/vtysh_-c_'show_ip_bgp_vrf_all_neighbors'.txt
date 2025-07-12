@@ -1,0 +1,53 @@
+
+Instance default:
+BGP neighbor is 10.10.40.1, remote AS 1, local AS 40, external link
+  BGP version 4, remote router ID 192.168.123.1
+  BGP state = Established, up for 02:02:40
+  Last read 00:00:02, Last write 00:00:01
+  Hold time is 9, keepalive interval is 3 seconds
+  Neighbor capabilities:
+    4 Byte AS: advertised and received
+    AddPath:
+      IPv4 Unicast: RX advertised IPv4 Unicast
+    Route refresh: advertised and received(old & new)
+    Address Family IPv4 Unicast: advertised and received
+    Hostname Capability: advertised (name: D-Cumulus,domain name: n/a) not received
+    Graceful Restart Capabilty: advertised
+  Message statistics:
+    Inq depth is 0
+    Outq depth is 0
+                         Sent       Rcvd
+    Opens:                  1          1
+    Notifications:          0          0
+    Updates:                6          7
+    Keepalives:          2454       2397
+    Route Refresh:          0          0
+    Capability:             0          0
+    Total:               2461       2405
+  Minimum time between advertisement runs is 0 seconds
+
+ For address family: IPv4 Unicast
+  Update group 1, subgroup 1
+  Packet Queue length 0
+  Community attribute sent to this neighbor(all)
+  11 accepted prefixes
+
+  Connections established 1; dropped 0
+  Last reset never
+Local host: 10.10.40.2, Local port: 179
+Foreign host: 10.10.40.1, Foreign port: 38253
+Nexthop: 10.10.40.2
+Nexthop global: fe80::eef:e6ff:fec5:5401
+Nexthop local: fe80::eef:e6ff:fec5:5401
+BGP connection: shared network
+BGP Connect Retry Timer in Seconds: 10
+Read thread: on  Write thread: on
+
+
+
+Instance cust10:
+% No BGP neighbors found
+
+
+Instance cust20:
+% No BGP neighbors found

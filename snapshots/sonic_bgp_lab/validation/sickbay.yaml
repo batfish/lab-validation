@@ -1,0 +1,26 @@
+entries:
+  - hostname: fr0[12]|ed0[12]|ra0[12]
+    test_name: "test_interface_properties"
+    skip:
+      reason: Not implementd for SONiC
+  - hostname: fr0[12]|ed0[12]|ra0[12]
+    test_name: "test_main_rib_routes"
+    skip:
+      reason: Not implementd for SONiC
+  - hostname: fr0[12]|ed0[12]|ra0[12]
+    test_name: "test_bgp_rib_routes"
+    skip:
+      reason: Not implementd for SONiC
+  - hostname: r01
+    test_name: "test_interface_properties"
+    skip:
+      reason: https://github.com/batfish/lab-validation/issues/57
+  - hostname: r01
+    test_name: "test_main_rib_routes"
+    skip:
+      reason: https://github.com/batfish/lab-validation/issues/57
+  - hostname: r01
+    test_name: "test_bgp_rib_routes"
+    skip:
+      skip_type: dont_run
+      reason: https://github.com/batfish/lab-validation/issues/58, https://github.com/batfish/lab-validation/issues/57

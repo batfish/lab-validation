@@ -1,0 +1,10 @@
+entries:
+  - hostname: np01|np02
+    test_name: test_bgp_rib_routes
+    skip:
+      reason: weight difference, https://github.com/batfish/lab-validation/issues/6
+
+  - hostname: dlh15|np01|np02
+    test_name: test_main_rib_routes
+    skip:
+      reason: https://github.com/batfish/lab-validation/issues/29

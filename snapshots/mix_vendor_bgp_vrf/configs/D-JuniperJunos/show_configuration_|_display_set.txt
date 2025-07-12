@@ -1,0 +1,32 @@
+set version 17.4R1.16
+set system host-name D-JuniperJunos
+set system root-authentication encrypted-password "$6$dhLhRnrZ$KBaQrVe0n9MJEeQhk0nMP20Kui459zW.JS86aMOtPpn1H2PViqxul3ISa/ISU53FC1lb1ouqV7f0RdyTOoPcR."
+set system services ssh root-login allow
+set system syslog user * any emergency
+set system syslog file messages any notice
+set system syslog file messages authorization info
+set system syslog file interactive-commands interactive-commands any
+set system extensions providers juniper license-type juniper deployment-scope commercial
+set system extensions providers chef license-type juniper deployment-scope commercial
+set interfaces xe-0/0/0 unit 0 family inet address 10.10.50.2/24
+set interfaces em0 unit 0 family inet
+set interfaces em1 unit 0 family inet address 169.254.0.2/24
+set interfaces lo0 unit 0 family inet address 192.168.123.6/32
+set interfaces lo0 unit 10 family inet address 1.1.6.10/32
+set interfaces lo0 unit 20 family inet address 1.1.6.20/32
+set forwarding-options storm-control-profiles default all
+set routing-options autonomous-system 50
+set protocols bgp export SEND_LOCAL_ROUTES
+set protocols bgp group external-peers neighbor 10.10.50.1 peer-as 1
+set protocols igmp-snooping vlan default
+set policy-options policy-statement SEND_LOCAL_ROUTES term 1 from interface lo0.0
+set policy-options policy-statement SEND_LOCAL_ROUTES term 1 from interface lo0.10
+set policy-options policy-statement SEND_LOCAL_ROUTES term 1 from interface lo0.20
+set policy-options policy-statement SEND_LOCAL_ROUTES term 1 then accept
+set routing-instances cust10 instance-type virtual-router
+set routing-instances cust10 interface lo0.10
+set routing-instances cust20 instance-type virtual-router
+set routing-instances cust20 interface lo0.20
+set vlans default vlan-id 1
+
+{master:0}

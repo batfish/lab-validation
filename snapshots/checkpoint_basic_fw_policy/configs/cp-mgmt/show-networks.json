@@ -1,0 +1,117 @@
+{
+    "objects": [
+        {
+            "uid": "3e23eb9f-99eb-41c8-ba3a-4244420aa946",
+            "name": "CP_default_Office_Mode_addresses_pool",
+            "type": "network",
+            "domain": {
+                "uid": "41e821a0-3720-11e3-aa6e-0800200c9fde",
+                "name": "SMC User",
+                "domain-type": "domain"
+            },
+            "broadcast": "allow",
+            "subnet4": "172.16.10.0",
+            "mask-length4": 24,
+            "subnet-mask": "255.255.255.0",
+            "nat-settings": {
+                "auto-rule": true,
+                "hide-behind": "gateway",
+                "install-on": "All",
+                "method": "hide"
+            },
+            "comments": "Used as a default for Office Mode. If deleted, it must be specified for each gateway individually (in the VPN Clients page Advanced section)",
+            "color": "black",
+            "icon": "NetworkObjects/network",
+            "tags": [],
+            "meta-info": {
+                "lock": "unlocked",
+                "validation-state": "ok",
+                "last-modify-time": {
+                    "posix": 1579506177057,
+                    "iso-8601": "2020-01-19T19:42-1200"
+                },
+                "last-modifier": "System",
+                "creation-time": {
+                    "posix": 1579506177057,
+                    "iso-8601": "2020-01-19T19:42-1200"
+                },
+                "creator": "System"
+            },
+            "read-only": false
+        },
+        {
+            "uid": "ba92383f-10ea-432c-a8c4-150c2f449038",
+            "name": "INSIDE_10.12.11.0",
+            "type": "network",
+            "domain": {
+                "uid": "41e821a0-3720-11e3-aa6e-0800200c9fde",
+                "name": "SMC User",
+                "domain-type": "domain"
+            },
+            "broadcast": "allow",
+            "subnet4": "10.12.11.0",
+            "mask-length4": 24,
+            "subnet-mask": "255.255.255.0",
+            "nat-settings": {
+                "auto-rule": false
+            },
+            "comments": "",
+            "color": "black",
+            "icon": "NetworkObjects/network",
+            "tags": [],
+            "meta-info": {
+                "lock": "unlocked",
+                "validation-state": "ok",
+                "last-modify-time": {
+                    "posix": 1623280304151,
+                    "iso-8601": "2021-06-09T11:11-1200"
+                },
+                "last-modifier": "admin",
+                "creation-time": {
+                    "posix": 1623279666672,
+                    "iso-8601": "2021-06-09T11:01-1200"
+                },
+                "creator": "admin"
+            },
+            "read-only": false
+        },
+        {
+            "uid": "caee1116-8087-4310-9208-b422d3628a7e",
+            "name": "IPv6_Link_Local_Hosts",
+            "type": "network",
+            "domain": {
+                "uid": "a0bbbc99-adef-4ef8-bb6d-defdefdefdef",
+                "name": "Check Point Data",
+                "domain-type": "data domain"
+            },
+            "broadcast": "allow",
+            "subnet6": "fe80::",
+            "mask-length6": 64,
+            "nat-settings": {
+                "auto-rule": false
+            },
+            "comments": "IPv6 link-local addresses",
+            "color": "black",
+            "icon": "NetworkObjects/network",
+            "tags": [],
+            "meta-info": {
+                "lock": "unlocked",
+                "validation-state": "ok",
+                "last-modify-time": {
+                    "posix": 1579505995107,
+                    "iso-8601": "2020-01-19T19:39-1200"
+                },
+                "last-modifier": "System",
+                "creation-time": {
+                    "posix": 1579505995107,
+                    "iso-8601": "2020-01-19T19:39-1200"
+                },
+                "creator": "System"
+            },
+            "read-only": false
+        }
+    ],
+    "from": 1,
+    "to": 3,
+    "total": 3
+}

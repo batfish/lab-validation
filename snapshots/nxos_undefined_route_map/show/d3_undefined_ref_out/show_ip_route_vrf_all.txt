@@ -1,0 +1,60 @@
+IP Route Table for VRF "default"
+'*' denotes best ucast next-hop
+'**' denotes best mcast next-hop
+'[x/y]' denotes [preference/metric]
+'%<string>' in via output denotes VRF <string>
+
+0.0.0.0/0, ubest/mbest: 1/0
+    *via 10.13.11.1, [1/0], 00:25:21, static
+10.13.11.0/24, ubest/mbest: 1/0, attached
+    *via 10.13.11.2, Eth1/11, [0/0], 00:25:24, direct
+10.13.11.2/32, ubest/mbest: 1/0, attached
+    *via 10.13.11.2, Eth1/11, [0/0], 00:25:24, local
+10.13.22.0/24, ubest/mbest: 1/0, attached
+    *via 10.13.22.2, Eth1/12, [0/0], 00:25:24, direct
+10.13.22.2/32, ubest/mbest: 1/0, attached
+    *via 10.13.22.2, Eth1/12, [0/0], 00:25:24, local
+10.13.33.0/24, ubest/mbest: 1/0, attached
+    *via 10.13.33.2, Eth1/13, [0/0], 00:25:24, direct
+10.13.33.2/32, ubest/mbest: 1/0, attached
+    *via 10.13.33.2, Eth1/13, [0/0], 00:25:24, local
+10.13.44.0/24, ubest/mbest: 1/0, attached
+    *via 10.13.44.2, Eth1/14, [0/0], 00:25:24, direct
+10.13.44.2/32, ubest/mbest: 1/0, attached
+    *via 10.13.44.2, Eth1/14, [0/0], 00:25:24, local
+10.13.55.0/24, ubest/mbest: 1/0, attached
+    *via 10.13.55.2, Eth1/15, [0/0], 00:25:24, direct
+10.13.55.2/32, ubest/mbest: 1/0, attached
+    *via 10.13.55.2, Eth1/15, [0/0], 00:25:24, local
+10.13.66.0/24, ubest/mbest: 1/0, attached
+    *via 10.13.66.2, Eth1/16, [0/0], 00:25:24, direct
+10.13.66.2/32, ubest/mbest: 1/0, attached
+    *via 10.13.66.2, Eth1/16, [0/0], 00:25:24, local
+10.13.77.0/24, ubest/mbest: 1/0, attached
+    *via 10.13.77.2, Eth1/17, [0/0], 00:25:24, direct
+10.13.77.2/32, ubest/mbest: 1/0, attached
+    *via 10.13.77.2, Eth1/17, [0/0], 00:25:24, local
+172.16.3.1/32, ubest/mbest: 2/0, attached
+    *via 172.16.3.1, Lo1, [0/0], 00:26:08, local
+    *via 172.16.3.1, Lo1, [0/0], 00:26:08, direct
+172.16.3.2/32, ubest/mbest: 2/0, attached
+    *via 172.16.3.2, Lo2, [0/0], 00:26:08, local
+    *via 172.16.3.2, Lo2, [0/0], 00:26:08, direct
+172.16.3.3/32, ubest/mbest: 2/0, attached
+    *via 172.16.3.3, Lo3, [0/0], 00:26:08, local
+    *via 172.16.3.3, Lo3, [0/0], 00:26:08, direct
+172.16.3.4/32, ubest/mbest: 2/0, attached
+    *via 172.16.3.4, Lo4, [0/0], 00:26:08, local
+    *via 172.16.3.4, Lo4, [0/0], 00:26:08, direct
+172.16.3.5/32, ubest/mbest: 2/0, attached
+    *via 172.16.3.5, Lo5, [0/0], 00:26:08, local
+    *via 172.16.3.5, Lo5, [0/0], 00:26:08, direct
+172.16.3.6/32, ubest/mbest: 2/0, attached
+    *via 172.16.3.6, Lo6, [0/0], 00:26:08, local
+    *via 172.16.3.6, Lo6, [0/0], 00:26:08, direct
+172.16.3.7/32, ubest/mbest: 2/0, attached
+    *via 172.16.3.7, Lo7, [0/0], 00:26:08, local
+    *via 172.16.3.7, Lo7, [0/0], 00:26:08, direct
+192.168.123.3/32, ubest/mbest: 2/0, attached
+    *via 192.168.123.3, Lo123, [0/0], 00:26:08, local
+    *via 192.168.123.3, Lo123, [0/0], 00:26:08, direct

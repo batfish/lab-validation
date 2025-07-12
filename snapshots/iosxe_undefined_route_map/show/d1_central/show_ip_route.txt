@@ -1,0 +1,58 @@
+Codes: L - local, C - connected, S - static, R - RIP, M - mobile, B - BGP
+       D - EIGRP, EX - EIGRP external, O - OSPF, IA - OSPF inter area
+       N1 - OSPF NSSA external type 1, N2 - OSPF NSSA external type 2
+       E1 - OSPF external type 1, E2 - OSPF external type 2
+       i - IS-IS, su - IS-IS summary, L1 - IS-IS level-1, L2 - IS-IS level-2
+       ia - IS-IS inter area, * - candidate default, U - per-user static route
+       o - ODR, P - periodic downloaded static route, H - NHRP, l - LISP
+       a - application route
+       + - replicated route, % - next hop override, p - overrides from PfR
+
+Gateway of last resort is not set
+
+      10.0.0.0/8 is variably subnetted, 28 subnets, 2 masks
+C        10.12.11.0/24 is directly connected, GigabitEthernet1
+L        10.12.11.1/32 is directly connected, GigabitEthernet1
+C        10.12.22.0/24 is directly connected, GigabitEthernet2
+L        10.12.22.1/32 is directly connected, GigabitEthernet2
+C        10.12.33.0/24 is directly connected, GigabitEthernet3
+L        10.12.33.1/32 is directly connected, GigabitEthernet3
+C        10.12.44.0/24 is directly connected, GigabitEthernet4
+L        10.12.44.1/32 is directly connected, GigabitEthernet4
+C        10.12.55.0/24 is directly connected, GigabitEthernet5
+L        10.12.55.1/32 is directly connected, GigabitEthernet5
+C        10.12.66.0/24 is directly connected, GigabitEthernet6
+L        10.12.66.1/32 is directly connected, GigabitEthernet6
+C        10.12.77.0/24 is directly connected, GigabitEthernet7
+L        10.12.77.1/32 is directly connected, GigabitEthernet7
+C        10.13.11.0/24 is directly connected, GigabitEthernet11
+L        10.13.11.1/32 is directly connected, GigabitEthernet11
+C        10.13.22.0/24 is directly connected, GigabitEthernet12
+L        10.13.22.1/32 is directly connected, GigabitEthernet12
+C        10.13.33.0/24 is directly connected, GigabitEthernet13
+L        10.13.33.1/32 is directly connected, GigabitEthernet13
+C        10.13.44.0/24 is directly connected, GigabitEthernet14
+L        10.13.44.1/32 is directly connected, GigabitEthernet14
+C        10.13.55.0/24 is directly connected, GigabitEthernet15
+L        10.13.55.1/32 is directly connected, GigabitEthernet15
+C        10.13.66.0/24 is directly connected, GigabitEthernet16
+L        10.13.66.1/32 is directly connected, GigabitEthernet16
+C        10.13.77.0/24 is directly connected, GigabitEthernet17
+L        10.13.77.1/32 is directly connected, GigabitEthernet17
+      172.16.0.0/32 is subnetted, 9 subnets
+C        172.16.1.1 is directly connected, Loopback1
+C        172.16.1.2 is directly connected, Loopback2
+C        172.16.1.3 is directly connected, Loopback3
+C        172.16.1.4 is directly connected, Loopback4
+C        172.16.1.5 is directly connected, Loopback5
+C        172.16.1.6 is directly connected, Loopback6
+C        172.16.1.7 is directly connected, Loopback7
+B        172.16.3.1 [20/0] via 10.13.11.2, 00:11:19
+B        172.16.3.2 [20/0] via 10.13.22.2, 00:11:19
+      192.168.122.0/24 is variably subnetted, 2 subnets, 2 masks
+C        192.168.122.0/24 is directly connected, GigabitEthernet10
+L        192.168.122.2/32 is directly connected, GigabitEthernet10
+      192.168.123.0/32 is subnetted, 3 subnets
+C        192.168.123.1 is directly connected, Loopback123
+B        192.168.123.2 [20/0] via 10.12.11.2, 00:32:50
+B        192.168.123.3 [20/0] via 10.13.11.2, 00:11:19

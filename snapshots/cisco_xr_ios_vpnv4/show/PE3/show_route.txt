@@ -1,0 +1,25 @@
+Codes: C - connected, S - static, R - RIP, B - BGP, (>) - Diversion path
+       D - EIGRP, EX - EIGRP external, O - OSPF, IA - OSPF inter area
+       N1 - OSPF NSSA external type 1, N2 - OSPF NSSA external type 2
+       E1 - OSPF external type 1, E2 - OSPF external type 2, E - EGP
+       i - ISIS, L1 - IS-IS level-1, L2 - IS-IS level-2
+       ia - IS-IS inter area, su - IS-IS summary null, * - candidate default
+       U - per-user static route, o - ODR, L - local, G  - DAGR, l - LISP
+       A - access/subscriber, a - Application route
+       M - mobile route, r - RPL, t - Traffic Engineering, (!) - FRR Backup path
+
+Gateway of last resort is not set
+
+O    10.1.1.0/30 [110/2] via 10.1.1.13, 02:16:10, GigabitEthernet0/0/0/1
+O    10.1.1.4/30 [110/2] via 10.1.1.17, 02:14:36, GigabitEthernet0/0/0/0
+O    10.1.1.8/30 [110/2] via 10.1.1.13, 02:16:10, GigabitEthernet0/0/0/1
+C    10.1.1.12/30 is directly connected, 02:19:01, GigabitEthernet0/0/0/1
+L    10.1.1.14/32 is directly connected, 02:19:01, GigabitEthernet0/0/0/1
+C    10.1.1.16/30 is directly connected, 02:19:01, GigabitEthernet0/0/0/0
+L    10.1.1.18/32 is directly connected, 02:19:01, GigabitEthernet0/0/0/0
+O    10.254.1.1/32 [110/3] via 10.1.1.17, 02:14:27, GigabitEthernet0/0/0/0
+                   [110/3] via 10.1.1.13, 02:14:27, GigabitEthernet0/0/0/1
+O    10.254.1.2/32 [110/2] via 10.1.1.13, 02:16:10, GigabitEthernet0/0/0/1
+O    10.254.1.3/32 [110/3] via 10.1.1.13, 02:16:10, GigabitEthernet0/0/0/1
+L    10.254.1.4/32 is directly connected, 02:17:57, Loopback0
+O    10.254.1.5/32 [110/2] via 10.1.1.17, 02:15:18, GigabitEthernet0/0/0/0

@@ -1,0 +1,218 @@
+{
+ "SecurityGroups": [
+  {
+   "Description": "Managed by Terraform",
+   "GroupId": "sg-04ed955e6e2805ed9",
+   "GroupName": "terraform-20200710205847026400000003",
+   "IpPermissions": [
+    {
+     "FromPort": 80,
+     "IpProtocol": "tcp",
+     "IpRanges": [
+      {
+       "CidrIp": "0.0.0.0/0",
+       "Description": "HTTP Access"
+      }
+     ],
+     "Ipv6Ranges": [],
+     "PrefixListIds": [],
+     "ToPort": 80,
+     "UserIdGroupPairs": []
+    },
+    {
+     "FromPort": 22,
+     "IpProtocol": "tcp",
+     "IpRanges": [
+      {
+       "CidrIp": "0.0.0.0/0",
+       "Description": "SSH Access"
+      }
+     ],
+     "Ipv6Ranges": [],
+     "PrefixListIds": [],
+     "ToPort": 22,
+     "UserIdGroupPairs": []
+    },
+    {
+     "FromPort": 8,
+     "IpProtocol": "icmp",
+     "IpRanges": [
+      {
+       "CidrIp": "192.168.0.0/16",
+       "Description": "ICMP Access"
+      },
+      {
+       "CidrIp": "172.16.0.0/20",
+       "Description": "ICMP Access"
+      },
+      {
+       "CidrIp": "10.0.0.0/8",
+       "Description": "ICMP Access"
+      }
+     ],
+     "Ipv6Ranges": [],
+     "PrefixListIds": [],
+     "ToPort": 0,
+     "UserIdGroupPairs": []
+    },
+    {
+     "FromPort": 443,
+     "IpProtocol": "tcp",
+     "IpRanges": [
+      {
+       "CidrIp": "0.0.0.0/0",
+       "Description": "HTTPS Access"
+      }
+     ],
+     "Ipv6Ranges": [],
+     "PrefixListIds": [],
+     "ToPort": 443,
+     "UserIdGroupPairs": []
+    }
+   ],
+   "IpPermissionsEgress": [
+    {
+     "IpProtocol": "-1",
+     "IpRanges": [
+      {
+       "CidrIp": "0.0.0.0/0",
+       "Description": "Allow all"
+      }
+     ],
+     "Ipv6Ranges": [],
+     "PrefixListIds": [],
+     "UserIdGroupPairs": []
+    }
+   ],
+   "OwnerId": "317892581468",
+   "Tags": [
+    {
+     "Key": "Name",
+     "Value": "sg-expenses-fin-east"
+    }
+   ],
+   "VpcId": "vpc-09e98f768cb46e20d"
+  },
+  {
+   "Description": "default VPC security group",
+   "GroupId": "sg-07274ba9eb0238720",
+   "GroupName": "default",
+   "IpPermissions": [
+    {
+     "IpProtocol": "-1",
+     "IpRanges": [],
+     "Ipv6Ranges": [],
+     "PrefixListIds": [],
+     "UserIdGroupPairs": [
+      {
+       "GroupId": "sg-07274ba9eb0238720",
+       "UserId": "317892581468"
+      }
+     ]
+    }
+   ],
+   "IpPermissionsEgress": [
+    {
+     "IpProtocol": "-1",
+     "IpRanges": [
+      {
+       "CidrIp": "0.0.0.0/0"
+      }
+     ],
+     "Ipv6Ranges": [],
+     "PrefixListIds": [],
+     "UserIdGroupPairs": []
+    }
+   ],
+   "OwnerId": "317892581468",
+   "VpcId": "vpc-09e98f768cb46e20d"
+  },
+  {
+   "Description": "Managed by Terraform",
+   "GroupId": "sg-0c6a48588883a98a9",
+   "GroupName": "terraform-20200710205839010800000001",
+   "IpPermissions": [
+    {
+     "FromPort": 22,
+     "IpProtocol": "tcp",
+     "IpRanges": [
+      {
+       "CidrIp": "0.0.0.0/0",
+       "Description": "SSH Access"
+      }
+     ],
+     "Ipv6Ranges": [],
+     "PrefixListIds": [],
+     "ToPort": 22,
+     "UserIdGroupPairs": []
+    },
+    {
+     "FromPort": 8,
+     "IpProtocol": "icmp",
+     "IpRanges": [
+      {
+       "CidrIp": "192.168.0.0/16",
+       "Description": "ICMP Access"
+      },
+      {
+       "CidrIp": "172.16.0.0/20",
+       "Description": "ICMP Access"
+      },
+      {
+       "CidrIp": "10.0.0.0/8",
+       "Description": "ICMP Access"
+      }
+     ],
+     "Ipv6Ranges": [],
+     "PrefixListIds": [],
+     "ToPort": 0,
+     "UserIdGroupPairs": []
+    },
+    {
+     "FromPort": 3306,
+     "IpProtocol": "tcp",
+     "IpRanges": [
+      {
+       "CidrIp": "10.4.1.0/24",
+       "Description": "MYSQL Access"
+      },
+      {
+       "CidrIp": "172.16.0.0/20",
+       "Description": "MYSQL Access"
+      },
+      {
+       "CidrIp": "192.168.0.0/16",
+       "Description": "MYSQL Access"
+      }
+     ],
+     "Ipv6Ranges": [],
+     "PrefixListIds": [],
+     "ToPort": 3306,
+     "UserIdGroupPairs": []
+    }
+   ],
+   "IpPermissionsEgress": [
+    {
+     "IpProtocol": "-1",
+     "IpRanges": [
+      {
+       "CidrIp": "0.0.0.0/0",
+       "Description": "Allow all"
+      }
+     ],
+     "Ipv6Ranges": [],
+     "PrefixListIds": [],
+     "UserIdGroupPairs": []
+    }
+   ],
+   "OwnerId": "317892581468",
+   "Tags": [
+    {
+     "Key": "Name",
+     "Value": "sg-db-fin-east"
+    }
+   ],
+   "VpcId": "vpc-09e98f768cb46e20d"
+  }
+ ]
+}

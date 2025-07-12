@@ -1,0 +1,74 @@
+For address family: IPv4 Unicast
+
+BGP routing table entry for 192.168.123.1/32, version 11
+  Paths: (1 available, best #1, table default)
+  Advertised to update-groups:
+     2
+  Refresh Epoch 3
+  65001, (received & used)
+    10.14.21.1 from 10.14.21.1 (192.168.123.2)
+      Origin IGP, localpref 100, valid, external, best
+      Extended Community: RT:65001:11
+      rx pathid: 0, tx pathid: 0x0
+BGP routing table entry for 192.168.123.2/32, version 10
+  Paths: (1 available, best #1, table default)
+  Advertised to update-groups:
+     2
+  Refresh Epoch 3
+  65001, (received & used)
+    10.14.21.1 from 10.14.21.1 (192.168.123.2)
+      Origin IGP, metric 0, localpref 100, valid, external, best
+      Extended Community: RT:65001:22
+      rx pathid: 0, tx pathid: 0x0
+BGP routing table entry for 192.168.123.3/32, version 18
+  Paths: (1 available, best #1, table default)
+  Advertised to update-groups:
+     2
+  Refresh Epoch 3
+  65001 65002, (received & used)
+    10.14.21.1 from 10.14.21.1 (192.168.123.2)
+      Origin IGP, localpref 100, valid, external, best
+      Extended Community: RT:65001:22
+      rx pathid: 0, tx pathid: 0x0
+BGP routing table entry for 192.168.123.33/32, version 19
+  Paths: (1 available, best #1, table default)
+  Advertised to update-groups:
+     2
+  Refresh Epoch 3
+  65001 65002 65003, (received & used)
+    10.14.21.1 from 10.14.21.1 (192.168.123.2)
+      Origin IGP, localpref 100, valid, external, best
+      Extended Community: RT:65001:22
+      rx pathid: 0, tx pathid: 0x0
+BGP routing table entry for 192.168.123.44/32, version 5
+  Paths: (1 available, best #1, table default)
+  Advertised to update-groups:
+     2          3
+  Refresh Epoch 1
+  Local
+    0.0.0.0 from 0.0.0.0 (192.168.1.44)
+      Origin IGP, metric 0, localpref 100, weight 32768, valid, sourced, local, best
+      rx pathid: 0, tx pathid: 0x0
+BGP routing table entry for 192.168.123.55/32, version 6
+  Paths: (1 available, best #1, table default)
+  Advertised to update-groups:
+     3
+  Refresh Epoch 1
+  65005, (received & used)
+    10.45.21.2 from 10.45.21.2 (192.168.1.55)
+      Origin IGP, metric 0, localpref 100, valid, external, best
+      rx pathid: 0, tx pathid: 0x0
+
+For address family: IPv6 Unicast
+
+
+For address family: IPv4 Multicast
+
+
+For address family: L2VPN E-VPN
+
+
+For address family: MVPNv4 Unicast
+
+
+For address family: MVPNv6 Unicast

@@ -1,0 +1,14 @@
+Codes: K - kernel route, C - connected, S - static, R - RIPng,
+       O - OSPFv3, I - IS-IS, B - BGP, N - NHRP, T - Table,
+       v - VNC, V - VNC-Direct, A - Babel, D - SHARP, F - PBR,
+       f - OpenFabric,
+       > - selected route, * - FIB route, q - queued route, r - rejected route, # - not installed in hardware
+
+B>*  2022:beef:10:10::/64 [20/0] via fe80::e49:ff:fe27:1e00, Ethernet0, 01:41:19
+  *                              via fe80::e49:ff:fed5:f800, Ethernet2, 01:41:19
+B>*  2022:beef:100:64::/64 [20/0] via fe80::e49:ff:fe27:1e00, Ethernet0, 01:41:19
+  *                               via fe80::e49:ff:fed5:f800, Ethernet2, 01:41:19
+B>*  2022:beef:172:16::/64 [20/0] via fe80::e49:ff:fe27:1e00, Ethernet0, 01:41:19
+  *                               via fe80::e49:ff:fed5:f800, Ethernet2, 01:41:19
+B>*  2022:beef:192:168:10::/112 [20/0] via fe80::e49:ff:fe27:1e00, Ethernet0, 01:41:19
+  *                                    via fe80::e49:ff:fed5:f800, Ethernet2, 01:41:19

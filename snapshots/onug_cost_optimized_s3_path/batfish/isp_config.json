@@ -1,0 +1,175 @@
+{
+  "bgpPeers": [
+    {
+      "hostname": "bor01",
+      "peerAddress": "149.1.1.1",
+      "ispAttachment": {
+        "interface": "xe-0/0/1"
+      }
+    },
+    {
+      "hostname": "bor02",
+      "peerAddress": "149.1.2.1",
+      "ispAttachment": {
+        "interface": "xe-0/0/1"
+      }
+    }
+  ],
+  "filter": {
+    "onlyRemoteAsns": [],
+    "onlyRemoteIps": []
+  }
+}
+
+
+
+
+
+
+{
+  "lldp": [
+    {
+      "interface": [
+        {
+          "name": "swp1",
+          "via": "LLDP",
+          "rid": "6",
+          "age": "0 day, 04:30:31",
+          "chassis": [
+            {
+              "id": [
+                {
+                  "type": "mac",
+                  "value": "0c:b4:13:7a:3d:00"
+                }
+              ],
+              "name": [
+                {
+                  "value": "leaf01"
+                }
+              ],
+              "descr": [
+                {
+                  "value": "Cumulus Linux version 3.7.2 running on QEMU Standard PC (i440FX + PIIX, 1996)"
+                }
+              ],
+              "mgmt-ip": [
+                {
+                  "value": "10.16.1.1"
+                },
+                {
+                  "value": "fe80::eb4:13ff:fe7a:3d00"
+                }
+              ],
+              "capability": [
+                {
+                  "type": "Bridge",
+                  "enabled": true
+                },
+                {
+                  "type": "Router",
+                  "enabled": true
+                }
+              ]
+            }
+          ],
+          "port": [
+            {
+              "id": [
+                {
+                  "type": "ifname",
+                  "value": "swp3"
+                }
+              ],
+              "descr": [
+                {
+                  "value": "swp3"
+                }
+              ],
+              "ttl": [
+                {
+                  "value": "120"
+                }
+              ],
+              "auto-negotiation": [
+                {
+                  "supported": false,
+                  "enabled": false,
+                  "current": [
+                    {
+                      "value": "1000BaseTFD - Four-pair Category 5 UTP, full duplex mode"
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "lldp-med": [
+            {
+              "device-type": [
+                {
+                  "value": "Network Connectivity Device"
+                }
+              ],
+              "capability": [
+                {
+                  "type": "Capabilities",
+                  "available": true
+                },
+                {
+                  "type": "Policy",
+                  "available": true
+                },
+                {
+                  "type": "Location",
+                  "available": true
+                },
+                {
+                  "type": "MDI/PSE",
+                  "available": true
+                },
+                {
+                  "type": "MDI/PD",
+                  "available": true
+                },
+                {
+                  "type": "Inventory",
+                  "available": true
+                }
+              ],
+              "inventory": [
+                {
+                  "software": [
+                    {
+                      "value": "3.7.2"
+                    }
+                  ],
+                  "firmware": [
+                    {
+                      "value": "Ubuntu-1.8.2-1ubuntu1"
+                    }
+                  ],
+                  "serial": [
+                    {
+                      "value": "Not Specified"
+                    }
+                  ],
+                  "manufacturer": [
+                    {
+                      "value": "QEMU"
+                    }
+                  ],
+                  "model": [
+                    {
+                      "value": "Standard PC (i440FX + PIIX, 1996"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

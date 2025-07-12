@@ -1,0 +1,97 @@
+entries:
+  - hostname: 8.8.8.8
+    test_name: test_connectivity
+    skip:
+      reason: https://github.com/batfish/lab-validation/issues/32, https://github.com/batfish/lab-validation/issues/33
+  - hostname: 10.2.1.69
+    test_name: test_connectivity
+    skip:
+      reason: https://github.com/batfish/lab-validation/issues/34
+  - hostname: 10.2.1.98
+    test_name: test_connectivity
+    skip:
+      reason: https://github.com/batfish/lab-validation/issues/34
+  - hostname: 10.2.101.161
+    test_name: test_connectivity
+    skip:
+      reason: https://github.com/batfish/lab-validation/issues/34
+  - hostname: 10.3.1.92
+    test_name: test_connectivity
+    skip:
+      reason: https://github.com/batfish/lab-validation/issues/32, https://github.com/batfish/lab-validation/issues/33, https://github.com/batfish/lab-validation/issues/34
+  - hostname: 10.3.1.200
+    test_name: test_connectivity
+    skip:
+      reason: https://github.com/batfish/lab-validation/issues/32, https://github.com/batfish/lab-validation/issues/33, https://github.com/batfish/lab-validation/issues/34
+  - hostname: 10.4.1.58
+    test_name: test_connectivity
+    skip:
+      reason: https://github.com/batfish/lab-validation/issues/32, https://github.com/batfish/lab-validation/issues/33, https://github.com/batfish/lab-validation/issues/34
+  - hostname: 10.4.1.177
+    test_name: test_connectivity
+    skip:
+      reason: https://github.com/batfish/lab-validation/issues/32, https://github.com/batfish/lab-validation/issues/33, https://github.com/batfish/lab-validation/issues/34
+  - hostname: 10.4.1.218
+    test_name: test_connectivity
+    skip:
+      reason: https://github.com/batfish/lab-validation/issues/32, https://github.com/batfish/lab-validation/issues/33, https://github.com/batfish/lab-validation/issues/34
+  - hostname: 10.4.3.126
+    test_name: test_connectivity
+    skip:
+      reason: https://github.com/batfish/lab-validation/issues/34
+  - hostname: 10.5.1.94
+    test_name: test_connectivity
+    skip:
+      reason: https://github.com/batfish/lab-validation/issues/32, https://github.com/batfish/lab-validation/issues/33, https://github.com/batfish/lab-validation/issues/34
+  - hostname: 10.5.1.122
+    test_name: test_connectivity
+    skip:
+      reason: https://github.com/batfish/lab-validation/issues/32, https://github.com/batfish/lab-validation/issues/33, https://github.com/batfish/lab-validation/issues/34
+  - hostname: 10.5.1.196
+    test_name: test_connectivity
+    skip:
+      reason: https://github.com/batfish/lab-validation/issues/32, https://github.com/batfish/lab-validation/issues/33, https://github.com/batfish/lab-validation/issues/34
+  - hostname: 10.5.3.119
+    test_name: test_connectivity
+    skip:
+      reason: https://github.com/batfish/lab-validation/issues/33, https://github.com/batfish/lab-validation/issues/34
+  - hostname: 10.3.101.71
+    test_name: test_connectivity
+    skip:
+      reason: https://github.com/batfish/lab-validation/issues/32, https://github.com/batfish/lab-validation/issues/33, https://github.com/batfish/lab-validation/issues/34
+  - hostname: 10.5.1.120
+    test_name: test_connectivity
+    skip:
+      reason: https://github.com/batfish/lab-validation/issues/32, https://github.com/batfish/lab-validation/issues/33, https://github.com/batfish/lab-validation/issues/34
+  - hostname: 10.5.4.131
+    test_name: test_connectivity
+    skip:
+      reason: https://github.com/batfish/lab-validation/issues/34
+  - hostname: leaf01
+    test_name: test_main_rib_routes
+  - hostname: leaf01
+    test_name: test_bgp_rib_routes
+  - hostname: leaf01
+    test_name: test_interface_properties
+  - hostname: spine01
+    test_name: test_main_rib_routes
+  - hostname: spine01
+    test_name: test_bgp_rib_routes
+  - hostname: spine01
+    test_name: test_interface_properties
+  - hostname: bl01
+    test_name: test_main_rib_routes
+  - hostname: bl01
+    test_name: test_bgp_rib_routes
+  - hostname: bl01
+    test_name: test_interface_properties
+  - hostname: fwl01
+    test_name: test_bgp_rib_routes
+  - hostname: fwl01
+    test_name: test_interface_properties
+  - hostname: bor01
+    test_name: test_bgp_rib_routes
+  - hostname: exitgw
+    test_name: test_bgp_rib_routes
+  - hostname: exitgw
+    test_name: test_main_rib_routes

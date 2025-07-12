@@ -1,0 +1,174 @@
+ZEBRA:
+route-map: REDISTRIBUTE_CONNECTED Invoked: 0
+ permit, sequence 10 Invoked 0
+  Description:
+    T_PRIVATE_V4
+  Match clauses:
+    ip address prefix-list PRIVATE_RANGES_V4
+  Set clauses:
+  Call clause:
+  Action:
+    Goto 100
+ permit, sequence 20 Invoked 0
+  Description:
+    T_PRIVATE_V6
+  Match clauses:
+    ipv6 address prefix-list PRIVATE_RANGES_V6
+  Set clauses:
+  Call clause:
+  Action:
+    Goto 100
+ deny, sequence 90 Invoked 0
+  Description:
+    T_DENY_ALL_ELSE
+  Match clauses:
+  Set clauses:
+  Call clause:
+  Action:
+    Exit routemap
+ permit, sequence 100 Invoked 0
+  Description:
+    T_ADMIN_ACCEPT
+  Match clauses:
+  Set clauses:
+  Call clause:
+  Action:
+    Exit routemap
+route-map: RM_SET_SRC Invoked: 61
+ permit, sequence 10 Invoked 61
+  Match clauses:
+  Set clauses:
+    src 6.6.6.6
+  Call clause:
+  Action:
+    Exit routemap
+OSPF:
+route-map: REDISTRIBUTE_CONNECTED Invoked: 0
+ permit, sequence 10 Invoked 0
+  Description:
+    T_PRIVATE_V4
+  Match clauses:
+    ip address prefix-list PRIVATE_RANGES_V4
+  Set clauses:
+  Call clause:
+  Action:
+    Goto 100
+ permit, sequence 20 Invoked 0
+  Description:
+    T_PRIVATE_V6
+  Match clauses:
+  Set clauses:
+  Call clause:
+  Action:
+    Goto 100
+ deny, sequence 90 Invoked 0
+  Description:
+    T_DENY_ALL_ELSE
+  Match clauses:
+  Set clauses:
+  Call clause:
+  Action:
+    Exit routemap
+ permit, sequence 100 Invoked 0
+  Description:
+    T_ADMIN_ACCEPT
+  Match clauses:
+  Set clauses:
+  Call clause:
+  Action:
+    Exit routemap
+route-map: RM_SET_SRC Invoked: 0
+ permit, sequence 10 Invoked 0
+  Match clauses:
+  Set clauses:
+  Call clause:
+  Action:
+    Exit routemap
+BGP:
+route-map: REDISTRIBUTE_CONNECTED Invoked: 14
+ permit, sequence 10 Invoked 14
+  Description:
+    T_PRIVATE_V4
+  Match clauses:
+    ip address prefix-list PRIVATE_RANGES_V4
+  Set clauses:
+    community 30199:258 64512:39500 additive
+    origin igp
+  Call clause:
+  Action:
+    Goto 100
+ permit, sequence 20 Invoked 10
+  Description:
+    T_PRIVATE_V6
+  Match clauses:
+    ipv6 address prefix-list PRIVATE_RANGES_V6
+  Set clauses:
+    community 30199:258 64512:39500 additive
+    origin igp
+  Call clause:
+  Action:
+    Goto 100
+ deny, sequence 90 Invoked 6
+  Description:
+    T_DENY_ALL_ELSE
+  Match clauses:
+  Set clauses:
+  Call clause:
+  Action:
+    Exit routemap
+ permit, sequence 100 Invoked 8
+  Description:
+    T_ADMIN_ACCEPT
+  Match clauses:
+  Set clauses:
+  Call clause:
+  Action:
+    Exit routemap
+route-map: RM_SET_SRC Invoked: 0
+ permit, sequence 10 Invoked 0
+  Match clauses:
+  Set clauses:
+  Call clause:
+  Action:
+    Exit routemap
+PIM:
+route-map: REDISTRIBUTE_CONNECTED Invoked: 0
+ permit, sequence 10 Invoked 0
+  Description:
+    T_PRIVATE_V4
+  Match clauses:
+  Set clauses:
+  Call clause:
+  Action:
+    Goto 100
+ permit, sequence 20 Invoked 0
+  Description:
+    T_PRIVATE_V6
+  Match clauses:
+  Set clauses:
+  Call clause:
+  Action:
+    Goto 100
+ deny, sequence 90 Invoked 0
+  Description:
+    T_DENY_ALL_ELSE
+  Match clauses:
+  Set clauses:
+  Call clause:
+  Action:
+    Exit routemap
+ permit, sequence 100 Invoked 0
+  Description:
+    T_ADMIN_ACCEPT
+  Match clauses:
+  Set clauses:
+  Call clause:
+  Action:
+    Exit routemap
+route-map: RM_SET_SRC Invoked: 0
+ permit, sequence 10 Invoked 0
+  Match clauses:
+  Set clauses:
+  Call clause:
+  Action:
+    Exit routemap

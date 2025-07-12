@@ -1,0 +1,26 @@
+entries:
+  - hostname: 8.8.8.8
+    test_name: test_connectivity
+    skip:
+      reason: "AWS VND panos is not implemented"
+  - hostname: 10.1.1.100
+    test_name: test_connectivity
+    skip:
+      reason: "AWS VND panos is not implemented"
+  - hostname: 10.1.101.100
+    test_name: test_connectivity
+    skip:
+      reason: "AWS VND panos is not implemented"
+  - hostname: PA-VM
+    test_name: test_interface_properties
+    skip:
+      reason: "AWS VND panos is not implemented"
+  - hostname: PA-VM
+    test_name: test_main_rib_routes
+    skip:
+      skip_type: dont_run
+      reason: "PA-VM does not have route show data"
+  - hostname: PA-VM
+    test_name: test_bgp_rib_routes
+    skip:
+      reason: "AWS VND panos is not implemented"

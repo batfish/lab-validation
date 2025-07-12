@@ -1,0 +1,262 @@
+Building configuration...
+
+Current configuration : 4208 bytes
+!
+! Last configuration change at 19:24:14 UTC Tue Dec 22 2020
+!
+version 16.4
+service timestamps debug datetime msec
+service timestamps log datetime msec
+no platform punt-keepalive disable-kernel-core
+platform console serial
+!
+hostname d3_undefined_ref_out
+!
+boot-start-marker
+boot-end-marker
+!
+!
+!
+no aaa new-model
+!
+!
+!
+!
+!
+!
+!
+!
+!
+
+
+
+ip domain name diolap.com
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+subscriber templating
+!
+!
+!
+multilink bundle-name authenticated
+!
+!
+!
+!
+!
+!
+
+
+!
+!
+!
+!
+!
+!
+!
+license udi pid CSR1000V sn 9OP1P6CLWZP
+diagnostic bootup level minimal
+!
+spanning-tree extend system-id
+!
+!
+username cisco privilege 15 password 0 cisco
+!
+redundancy
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+interface Loopback1
+ ip address 172.16.3.1 255.255.255.255
+!
+interface Loopback2
+ ip address 172.16.3.2 255.255.255.255
+!
+interface Loopback3
+ ip address 172.16.3.3 255.255.255.255
+!
+interface Loopback4
+ ip address 172.16.3.4 255.255.255.255
+!
+interface Loopback123
+ ip address 192.168.123.3 255.255.255.255
+!
+interface GigabitEthernet1
+ ip address 10.13.11.2 255.255.255.0
+ negotiation auto
+ no mop enabled
+ no mop sysid
+!
+interface GigabitEthernet2
+ ip address 10.13.22.2 255.255.255.0
+ negotiation auto
+ no mop enabled
+ no mop sysid
+!
+interface GigabitEthernet3
+ ip address 10.13.33.2 255.255.255.0
+ negotiation auto
+ no mop enabled
+ no mop sysid
+!
+interface GigabitEthernet4
+ ip address 10.13.44.2 255.255.255.0
+ negotiation auto
+ no mop enabled
+ no mop sysid
+!
+interface GigabitEthernet5
+ no ip address
+ negotiation auto
+!
+interface GigabitEthernet6
+ no ip address
+ negotiation auto
+!
+interface GigabitEthernet7
+ no ip address
+ negotiation auto
+!
+interface GigabitEthernet8
+ no ip address
+ shutdown
+ negotiation auto
+ no mop enabled
+ no mop sysid
+!
+interface GigabitEthernet9
+ no ip address
+ shutdown
+ negotiation auto
+ no mop enabled
+ no mop sysid
+!
+interface GigabitEthernet10
+ no ip address
+ shutdown
+ negotiation auto
+ no mop enabled
+ no mop sysid
+!
+router bgp 65003
+ bgp log-neighbor-changes
+ neighbor normal_na_pg_defined peer-group
+ neighbor normal_na_pg_defined remote-as 65001
+ neighbor normal_na_pg_undefined peer-group
+ neighbor normal_na_pg_undefined remote-as 65001
+ neighbor 10.13.11.1 remote-as 65001
+ neighbor 10.13.22.1 peer-group normal_na_pg_defined
+ neighbor 10.13.33.1 remote-as 65001
+ neighbor 10.13.44.1 peer-group normal_na_pg_undefined
+ !
+ address-family ipv4
+  network 192.168.123.3 mask 255.255.255.255
+  redistribute connected route-map redist-loopback
+  neighbor normal_na_pg_defined route-map normal_na_pg_defined out
+  neighbor normal_na_pg_undefined route-map normal_na_pg_undefined out
+  neighbor 10.13.11.1 activate
+  neighbor 10.13.11.1 soft-reconfiguration inbound
+  neighbor 10.13.11.1 route-map normal_defined_pg_na out
+  neighbor 10.13.22.1 activate
+  neighbor 10.13.22.1 soft-reconfiguration inbound
+  neighbor 10.13.33.1 activate
+  neighbor 10.13.33.1 soft-reconfiguration inbound
+  neighbor 10.13.33.1 route-map normal_undefined_pg_na out
+  neighbor 10.13.44.1 activate
+  neighbor 10.13.44.1 soft-reconfiguration inbound
+ exit-address-family
+!
+!
+virtual-service csr_mgmt
+!
+ip forward-protocol nd
+ip http server
+ip http authentication local
+ip http secure-server
+!
+ip route 0.0.0.0 0.0.0.0 10.13.11.1
+ip ssh version 2
+!
+!
+!
+ip prefix-list normal_defined_pg_na seq 10 permit 172.16.3.1/32
+ip prefix-list normal_defined_pg_na seq 20 permit 192.168.123.3/32
+!
+ip prefix-list normal_na_pg_defined seq 10 permit 172.16.3.2/32
+!
+ip prefix-list redist-loopback seq 10 permit 172.16.3.1/32
+ip prefix-list redist-loopback seq 20 permit 172.16.3.2/32
+ip prefix-list redist-loopback seq 30 permit 172.16.3.3/32
+ip prefix-list redist-loopback seq 40 permit 172.16.3.4/32
+!
+!
+route-map redist-loopback permit 10
+ match ip address prefix-list redist-loopback
+!
+route-map normal_defined_pg_na permit 10
+ match ip address prefix-list normal_defined_pg_na
+ set as-path prepend 31
+!
+route-map normal_na_pg_defined permit 10
+ match ip address prefix-list normal_na_pg_defined
+ set as-path prepend 32
+!
+!
+!
+control-plane
+!
+ !
+ !
+ !
+ !
+!
+!
+!
+!
+!
+line con 0
+ stopbits 1
+line vty 0 4
+ login local
+ transport input ssh
+line vty 5 15
+ login local
+ transport input ssh
+!
+!
+!
+!
+!
+!
+end

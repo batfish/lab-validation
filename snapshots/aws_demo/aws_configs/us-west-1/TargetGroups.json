@@ -1,0 +1,40 @@
+{
+ "TargetGroups": [
+  {
+   "HealthCheckEnabled": true,
+   "HealthCheckIntervalSeconds": 30,
+   "HealthCheckPort": "traffic-port",
+   "HealthCheckProtocol": "TCP",
+   "HealthCheckTimeoutSeconds": 10,
+   "HealthyThresholdCount": 3,
+   "LoadBalancerArns": [
+    "arn:aws:elasticloadbalancing:us-west-1:028403472736:loadbalancer/net/nlb-web-hr-west/0934837d0f8fecb6"
+   ],
+   "Port": 80,
+   "Protocol": "TCP",
+   "TargetGroupArn": "arn:aws:elasticloadbalancing:us-west-1:028403472736:targetgroup/tf-20200422012823702500000002/9188482d973036a3",
+   "TargetGroupName": "tf-20200422012823702500000002",
+   "TargetType": "instance",
+   "UnhealthyThresholdCount": 3,
+   "VpcId": "vpc-0e13049ea0263d087"
+  },
+  {
+   "HealthCheckEnabled": true,
+   "HealthCheckIntervalSeconds": 30,
+   "HealthCheckPort": "traffic-port",
+   "HealthCheckProtocol": "TCP",
+   "HealthCheckTimeoutSeconds": 10,
+   "HealthyThresholdCount": 3,
+   "LoadBalancerArns": [
+    "arn:aws:elasticloadbalancing:us-west-1:028403472736:loadbalancer/net/nlb-web-hr-west/0934837d0f8fecb6"
+   ],
+   "Port": 443,
+   "Protocol": "TCP",
+   "TargetGroupArn": "arn:aws:elasticloadbalancing:us-west-1:028403472736:targetgroup/tf-20200422012856180000000006/54b01cc8e2c87030",
+   "TargetGroupName": "tf-20200422012856180000000006",
+   "TargetType": "instance",
+   "UnhealthyThresholdCount": 3,
+   "VpcId": "vpc-0e13049ea0263d087"
+  }
+ ]
+}

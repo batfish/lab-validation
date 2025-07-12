@@ -1,0 +1,101 @@
+{
+    "vrfs": {
+        "default": {
+            "asn": "65001",
+            "bgpRouteEntries": {
+                "172.16.0.1/32": {
+                    "address": "172.16.0.1",
+                    "bgpAdvertisedPeerGroups": {},
+                    "bgpRoutePaths": [
+                        {
+                            "asPathEntry": {
+                                "asPath": "i",
+                                "asPathType": null
+                            },
+                            "localPreference": 0,
+                            "med": 0,
+                            "reasonNotBestpath": null,
+                            "routeType": {
+                                "active": true,
+                                "atomicAggregator": false,
+                                "backup": false,
+                                "ecmp": false,
+                                "ecmpContributor": false,
+                                "ecmpHead": false,
+                                "luRoute": false,
+                                "queued": false,
+                                "stale": false,
+                                "suppressed": false,
+                                "ucmp": false,
+                                "valid": true
+                            }
+                        }
+                    ],
+                    "maskLength": 32
+                },
+                "172.16.0.2/32": {
+                    "address": "172.16.0.2",
+                    "bgpAdvertisedPeerGroups": {},
+                    "bgpRoutePaths": [
+                        {
+                            "asPathEntry": {
+                                "asPath": "i",
+                                "asPathType": null
+                            },
+                            "localPreference": 0,
+                            "med": 0,
+                            "reasonNotBestpath": null,
+                            "routeType": {
+                                "active": true,
+                                "atomicAggregator": false,
+                                "backup": false,
+                                "ecmp": false,
+                                "ecmpContributor": false,
+                                "ecmpHead": false,
+                                "luRoute": false,
+                                "queued": false,
+                                "stale": false,
+                                "suppressed": false,
+                                "ucmp": false,
+                                "valid": true
+                            }
+                        }
+                    ],
+                    "maskLength": 32
+                },
+                "172.16.0.3/32": {
+                    "address": "172.16.0.3",
+                    "bgpAdvertisedPeerGroups": {},
+                    "bgpRoutePaths": [
+                        {
+                            "asPathEntry": {
+                                "asPath": "i",
+                                "asPathType": null
+                            },
+                            "localPreference": 0,
+                            "med": 0,
+                            "reasonNotBestpath": null,
+                            "routeType": {
+                                "active": true,
+                                "atomicAggregator": false,
+                                "backup": false,
+                                "ecmp": false,
+                                "ecmpContributor": false,
+                                "ecmpHead": false,
+                                "luRoute": false,
+                                "queued": false,
+                                "stale": false,
+                                "suppressed": false,
+                                "ucmp": false,
+                                "valid": true
+                            }
+                        }
+                    ],
+                    "maskLength": 32
+                }
+            },
+            "routerId": "172.16.0.3",
+            "vrf": "default"
+        }
+    }
+}

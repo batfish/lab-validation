@@ -1,0 +1,73 @@
+{
+    "vrfs": {
+        "default": {
+            "asn": "100",
+            "bgpRouteEntries": {
+                "10.10.0.0/16": {
+                    "address": "10.10.0.0",
+                    "bgpAdvertisedPeerGroups": {},
+                    "bgpRoutePaths": [
+                        {
+                            "asPathEntry": {
+                                "asPath": "?",
+                                "asPathType": null
+                            },
+                            "localPreference": 0,
+                            "med": 0,
+                            "reasonNotBestpath": null,
+                            "routeType": {
+                                "active": true,
+                                "atomicAggregator": false,
+                                "backup": false,
+                                "ecmp": false,
+                                "ecmpContributor": false,
+                                "ecmpHead": false,
+                                "localAgg": true,
+                                "luRoute": false,
+                                "queued": false,
+                                "stale": false,
+                                "suppressed": false,
+                                "ucmp": false,
+                                "valid": true
+                            }
+                        }
+                    ],
+                    "maskLength": 16
+                },
+                "10.12.0.0/16": {
+                    "address": "10.12.0.0",
+                    "bgpAdvertisedPeerGroups": {},
+                    "bgpRoutePaths": [
+                        {
+                            "asPathEntry": {
+                                "asPath": "?",
+                                "asPathType": null
+                            },
+                            "localPreference": 0,
+                            "med": 0,
+                            "reasonNotBestpath": null,
+                            "routeType": {
+                                "active": true,
+                                "atomicAggregator": false,
+                                "backup": false,
+                                "ecmp": false,
+                                "ecmpContributor": false,
+                                "ecmpHead": false,
+                                "localAgg": true,
+                                "luRoute": false,
+                                "queued": false,
+                                "stale": false,
+                                "suppressed": false,
+                                "ucmp": false,
+                                "valid": true
+                            }
+                        }
+                    ],
+                    "maskLength": 16
+                }
+            },
+            "routerId": "1.1.1.1",
+            "vrf": "default"
+        }
+    }
+}

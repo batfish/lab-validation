@@ -1,0 +1,89 @@
+! Command: show running-config
+! device: leaf01 (vEOS, EOS-4.23.0.1F)
+!
+! boot system flash:/vEOS-lab.swi
+!
+transceiver qsfp default-mode 4x10G
+!
+hostname leaf01
+dns domain test.lab
+!
+spanning-tree mode mstp
+!
+no aaa root
+!
+username admin privilege 15 role network-admin secret sha512 $6$LAAmrB8i9ChOI1XI$Lvo2BdQoWyMti/T9Jra.M6FljA9wL9qgHKl7Rv7zW8AoLyUrkOlEcKKAI2FtkffJHZEOBIXWrtrbOSRn9Qkdr/
+!
+vlan 101,201
+!
+interface Ethernet1
+   description spine01
+   no switchport
+   ip address 10.0.0.16/31
+!
+interface Ethernet2
+   description spine02
+   no switchport
+   ip address 10.0.0.18/31
+!
+interface Ethernet3
+!
+interface Ethernet4
+!
+interface Ethernet5
+   switchport access vlan 101
+!
+interface Ethernet6
+   switchport access vlan 201
+!
+interface Ethernet7
+!
+interface Ethernet8
+!
+interface Ethernet9
+!
+interface Ethernet10
+!
+interface Ethernet11
+!
+interface Ethernet12
+!
+interface Loopback0
+   ip address 10.1.1.1/32
+!
+interface Management1
+   ip address 192.168.122.11/24
+   no lldp transmit
+   no lldp receive
+!
+interface Vlan101
+   ip address 10.100.1.1/24
+!
+interface Vlan201
+   ip address 10.200.1.1/24
+!
+ip routing
+!
+router bgp 65001
+   router-id 10.1.1.1
+   maximum-paths 4 ecmp 4
+   neighbor Fabric peer group
+   neighbor Fabric maximum-routes 12000
+   neighbor 10.0.0.17 peer group Fabric
+   neighbor 10.0.0.17 remote-as 65101
+   neighbor 10.0.0.17 description spine01
+   neighbor 10.0.0.19 peer group Fabric
+   neighbor 10.0.0.19 remote-as 65102
+   neighbor 10.0.0.19 description spine02
+   !
+   address-family ipv4
+      neighbor Fabric activate
+      network 10.1.1.1/32
+      network 10.100.1.0/24
+      network 10.200.1.0/24
+!
+management api http-commands
+   protocol http
+   no shutdown
+!
+end

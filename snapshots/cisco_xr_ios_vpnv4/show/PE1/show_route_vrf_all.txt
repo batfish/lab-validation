@@ -1,0 +1,59 @@
+VRF: management
+
+
+Codes: C - connected, S - static, R - RIP, B - BGP, (>) - Diversion path
+       D - EIGRP, EX - EIGRP external, O - OSPF, IA - OSPF inter area
+       N1 - OSPF NSSA external type 1, N2 - OSPF NSSA external type 2
+       E1 - OSPF external type 1, E2 - OSPF external type 2, E - EGP
+       i - ISIS, L1 - IS-IS level-1, L2 - IS-IS level-2
+       ia - IS-IS inter area, su - IS-IS summary null, * - candidate default
+       U - per-user static route, o - ODR, L - local, G  - DAGR, l - LISP
+       A - access/subscriber, a - Application route
+       M - mobile route, r - RPL, t - Traffic Engineering, (!) - FRR Backup path
+
+Gateway of last resort is not set
+
+C    10.150.0.0/16 is directly connected, 06:22:08, MgmtEth0/RP0/CPU0/0
+L    10.150.0.195/32 is directly connected, 06:22:08, MgmtEth0/RP0/CPU0/0
+
+VRF: blue
+
+
+Codes: C - connected, S - static, R - RIP, B - BGP, (>) - Diversion path
+       D - EIGRP, EX - EIGRP external, O - OSPF, IA - OSPF inter area
+       N1 - OSPF NSSA external type 1, N2 - OSPF NSSA external type 2
+       E1 - OSPF external type 1, E2 - OSPF external type 2, E - EGP
+       i - ISIS, L1 - IS-IS level-1, L2 - IS-IS level-2
+       ia - IS-IS inter area, su - IS-IS summary null, * - candidate default
+       U - per-user static route, o - ODR, L - local, G  - DAGR, l - LISP
+       A - access/subscriber, a - Application route
+       M - mobile route, r - RPL, t - Traffic Engineering, (!) - FRR Backup path
+
+Gateway of last resort is not set
+
+S    11.0.0.0/8 [1/0] via 11.1.1.2, 00:56:02, GigabitEthernet0/0/0/2
+C    11.1.1.0/24 is directly connected, 01:37:54, GigabitEthernet0/0/0/2
+L    11.1.1.1/32 is directly connected, 01:37:54, GigabitEthernet0/0/0/2
+B    12.1.1.0/24 [200/0] via 10.254.1.4 (nexthop in vrf default), 00:17:35
+B    100.2.0.0/16 [200/0] via 10.254.1.4 (nexthop in vrf default), 00:48:07
+
+VRF: red
+
+
+Codes: C - connected, S - static, R - RIP, B - BGP, (>) - Diversion path
+       D - EIGRP, EX - EIGRP external, O - OSPF, IA - OSPF inter area
+       N1 - OSPF NSSA external type 1, N2 - OSPF NSSA external type 2
+       E1 - OSPF external type 1, E2 - OSPF external type 2, E - EGP
+       i - ISIS, L1 - IS-IS level-1, L2 - IS-IS level-2
+       ia - IS-IS inter area, su - IS-IS summary null, * - candidate default
+       U - per-user static route, o - ODR, L - local, G  - DAGR, l - LISP
+       A - access/subscriber, a - Application route
+       M - mobile route, r - RPL, t - Traffic Engineering, (!) - FRR Backup path
+
+Gateway of last resort is not set
+
+C    11.1.1.0/24 is directly connected, 01:37:54, GigabitEthernet0/0/0/3
+L    11.1.1.1/32 is directly connected, 01:37:54, GigabitEthernet0/0/0/3
+B    12.1.1.0/24 [200/0] via 10.254.1.3 (nexthop in vrf default), 00:18:43
+B    100.1.0.0/16 [20/0] via 11.1.1.2, 00:21:27
+B    100.2.0.0/16 [200/0] via 10.254.1.3 (nexthop in vrf default), 01:03:10

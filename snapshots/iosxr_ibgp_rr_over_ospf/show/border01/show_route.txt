@@ -1,0 +1,30 @@
+Codes: C - connected, S - static, R - RIP, B - BGP, (>) - Diversion path
+       D - EIGRP, EX - EIGRP external, O - OSPF, IA - OSPF inter area
+       N1 - OSPF NSSA external type 1, N2 - OSPF NSSA external type 2
+       E1 - OSPF external type 1, E2 - OSPF external type 2, E - EGP
+       i - ISIS, L1 - IS-IS level-1, L2 - IS-IS level-2
+       ia - IS-IS inter area, su - IS-IS summary null, * - candidate default
+       U - per-user static route, o - ODR, L - local, G  - DAGR, l - LISP
+       A - access/subscriber, a - Application route
+       M - mobile route, r - RPL, (!) - FRR Backup path
+
+Gateway of last resort is not set
+
+B    10.0.0.0/8 [200/0] via 0.0.0.0, 00:03:38, Null0
+L    10.10.10.100/32 is directly connected, 00:08:38, Loopback100
+O    10.169.6.152/32 [110/35001] via 10.188.248.18, 00:01:22, Bundle-Ether23
+L    10.188.62.3/32 is directly connected, 00:08:38, Loopback0
+O    10.188.62.4/32 [110/3] via 10.188.248.22, 00:01:22, Bundle-Ether45
+C    10.188.248.16/30 is directly connected, 00:02:33, Bundle-Ether23
+L    10.188.248.17/32 is directly connected, 00:02:33, Bundle-Ether23
+C    10.188.248.20/30 is directly connected, 00:04:53, Bundle-Ether45
+L    10.188.248.21/32 is directly connected, 00:04:53, Bundle-Ether45
+O    10.188.248.24/30 [110/35002] via 10.188.248.18, 00:01:22, Bundle-Ether23
+                      [110/35002] via 10.188.248.22, 00:01:22, Bundle-Ether45
+B    172.16.0.0/16 [200/0] via 10.188.62.4, 00:01:21
+B    172.16.16.100/32 [200/0] via 10.188.62.4, 00:01:21
+S    192.0.2.1/32 is directly connected, 00:08:45, Null0
+B    192.168.122.0/24 [200/0] via 10.169.6.152, 00:01:22
+B    192.168.123.1/32 [200/0] via 10.169.6.152, 00:01:22
+L    192.168.123.2/32 is directly connected, 00:08:38, Loopback123
+B    192.168.123.3/32 [200/0] via 10.188.62.4, 00:01:21

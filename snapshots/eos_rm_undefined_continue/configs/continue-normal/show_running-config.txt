@@ -1,0 +1,68 @@
+! Command: show running-config
+! device: continue-normal (vEOS, EOS-4.23.0.1F)
+!
+! boot system flash:/vEOS-lab.swi
+!
+transceiver qsfp default-mode 4x10G
+!
+hostname continue-normal
+!
+spanning-tree mode mstp
+!
+no aaa root
+!
+username admin role network-admin secret sha512 $6$uhNMp47GWSt.j.Eg$E37u8LljnqOCD0iwiqMr8aYXH/YiM2SCFOlbjA6py85z351avsO8W5tWaXEn3ZrCjgAtmw4.JZdQ0BYouTaeC/
+!
+interface Ethernet1
+   no switchport
+   ip address 10.14.31.2/24
+!
+interface Ethernet2
+!
+interface Ethernet3
+!
+interface Ethernet4
+!
+interface Ethernet5
+!
+interface Ethernet6
+!
+interface Ethernet7
+!
+interface Ethernet8
+!
+interface Ethernet9
+!
+interface Ethernet10
+!
+interface Ethernet11
+!
+interface Ethernet12
+!
+interface Management1
+   ip address 10.150.0.14/16
+!
+ip routing
+!
+ip prefix-list ALLOW-172-16-0-4 seq 10 permit 172.16.0.4/32
+!
+route-map CONT-NORMAL permit 10
+   continue 30
+   set as-path prepend 10
+!
+route-map CONT-NORMAL permit 20
+   set as-path prepend 20
+!
+route-map CONT-NORMAL permit 30
+   match ip address prefix-list ALLOW-172-16-0-4
+   set as-path prepend 30
+!
+route-map CONT-NORMAL permit 40
+   set as-path prepend 40
+!
+router bgp 65004
+   neighbor 10.14.31.1 remote-as 65001
+   neighbor 10.14.31.1 route-map CONT-NORMAL in
+   neighbor 10.14.31.1 maximum-routes 12000
+!
+end

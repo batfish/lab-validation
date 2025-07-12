@@ -1,0 +1,45 @@
+{
+    "vrfs": {
+        "default": {
+            "instList": {
+                "1": {
+                    "ospfNeighborEntries": [
+                        {
+                            "adjacencyState": "full",
+                            "details": {
+                                "areaId": "0.0.0.0",
+                                "backupDesignatedRouter": "10.254.1.5",
+                                "bfdRequestSent": false,
+                                "bfdState": "adminDown",
+                                "designatedRouter": "10.254.1.6",
+                                "grHelperTimer": null,
+                                "grLastRestartTime": null,
+                                "grNumAttempts": 0,
+                                "inactivityDefers": 0,
+                                "numberOfStateChanges": 7,
+                                "retransmissionCount": 1,
+                                "stateTime": 1646696555.417012
+                            },
+                            "drState": "DR",
+                            "inactivity": 1646702676.416943,
+                            "interfaceAddress": "10.254.1.6",
+                            "interfaceName": "Ethernet1",
+                            "options": {
+                                "demandCircuitsSupport": false,
+                                "doNotUseInRouteCalc": false,
+                                "externalRoutingCapability": true,
+                                "linkLocalSignaling": false,
+                                "multicastCapability": false,
+                                "multitopologyCapability": false,
+                                "nssaCapability": false,
+                                "opaqueLsaSupport": false
+                            },
+                            "priority": 1,
+                            "routerId": "10.253.1.3"
+                        }
+                    ]
+                }
+            }
+        }
+    }
+}

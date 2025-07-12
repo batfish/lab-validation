@@ -1,0 +1,45 @@
+For address family: IPv4 Unicast
+
+BGP table version is 17, local router ID is 192.168.123.2
+Status codes: s suppressed, d damped, h history, * valid, > best, i - internal,
+              r RIB-failure, S Stale, m multipath, b backup-path, f RT-Filter,
+              x best-external, a additional-path, c RIB-compressed,
+Origin codes: i - IGP, e - EGP, ? - incomplete
+RPKI validation codes: V valid, I invalid, N Not found
+
+     Network          Next Hop            Metric LocPrf Weight Path
+ r>  10.10.10.0/24    10.10.10.1               0             0 1 i
+ *>  10.10.20.0/24    10.10.10.1               0             0 1 i
+ *>  10.10.30.0/24    10.10.10.1               0             0 1 i
+ *>  10.10.40.0/24    10.10.10.1               0             0 1 i
+ *>  10.10.50.0/24    10.10.10.1               0             0 1 i
+ *>  192.168.122.0    10.10.10.1               0             0 1 i
+ *>  192.168.123.1/32 10.10.10.1               0             0 1 i
+ *>  192.168.123.2/32 0.0.0.0                  0         32768 i
+ *>  192.168.123.3/32 10.10.10.1                             0 1 20 i
+ *>  192.168.123.4/32 10.10.10.1                             0 1 30 i
+ *>  192.168.123.5/32 10.10.10.1                             0 1 40 i
+ *>  192.168.123.6/32 10.10.10.1                             0 1 50 i
+
+For address family: VPNv4 Unicast
+
+BGP table version is 3, local router ID is 192.168.123.2
+Status codes: s suppressed, d damped, h history, * valid, > best, i - internal,
+              r RIB-failure, S Stale, m multipath, b backup-path, f RT-Filter,
+              x best-external, a additional-path, c RIB-compressed,
+Origin codes: i - IGP, e - EGP, ? - incomplete
+RPKI validation codes: V valid, I invalid, N Not found
+
+     Network          Next Hop            Metric LocPrf Weight Path
+Route Distinguisher: 1.1.2.10:10 (default for vrf cust10)
+ *>  1.1.2.10/32      0.0.0.0                  0         32768 ?
+Route Distinguisher: 1.1.2.20:10 (default for vrf cust20)
+ *>  1.1.2.20/32      0.0.0.0                  0         32768 ?
+
+For address family: IPv4 Multicast
+
+
+For address family: VPNv4 Multicast
+
+
+For address family: MVPNv4 Unicast

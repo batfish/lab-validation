@@ -1,0 +1,493 @@
+{
+    "vrfs": {
+        "cust10": {
+            "asn": "30",
+            "bgpRouteEntries": {
+                "1.1.4.10/32": {
+                    "address": "1.1.4.10",
+                    "bgpRoutePaths": [
+                        {
+                            "asPathEntry": {
+                                "asPath": "i",
+                                "asPathType": "Local"
+                            },
+                            "med": 0,
+                            "nextHop": "",
+                            "reasonNotBestpath": "noReason",
+                            "routeType": {
+                                "active": true,
+                                "atomicAggregator": false,
+                                "backup": false,
+                                "ecmp": false,
+                                "ecmpContributor": false,
+                                "ecmpHead": false,
+                                "luRoute": false,
+                                "origin": "Igp",
+                                "queued": false,
+                                "sixPeRoute": false,
+                                "stale": false,
+                                "suppressed": false,
+                                "valid": true
+                            },
+                            "weight": 0
+                        }
+                    ],
+                    "contributors": [],
+                    "maskLength": 32,
+                    "totalPaths": 1
+                }
+            },
+            "routerId": "1.1.4.10",
+            "vrf": "cust10"
+        },
+        "cust20": {
+            "asn": "30",
+            "bgpRouteEntries": {
+                "1.1.4.20/32": {
+                    "address": "1.1.4.20",
+                    "bgpRoutePaths": [
+                        {
+                            "asPathEntry": {
+                                "asPath": "i",
+                                "asPathType": "Local"
+                            },
+                            "med": 0,
+                            "nextHop": "",
+                            "reasonNotBestpath": "noReason",
+                            "routeType": {
+                                "active": true,
+                                "atomicAggregator": false,
+                                "backup": false,
+                                "ecmp": false,
+                                "ecmpContributor": false,
+                                "ecmpHead": false,
+                                "luRoute": false,
+                                "origin": "Igp",
+                                "queued": false,
+                                "sixPeRoute": false,
+                                "stale": false,
+                                "suppressed": false,
+                                "valid": true
+                            },
+                            "weight": 0
+                        }
+                    ],
+                    "contributors": [],
+                    "maskLength": 32,
+                    "totalPaths": 1
+                }
+            },
+            "routerId": "1.1.4.20",
+            "vrf": "cust20"
+        },
+        "default": {
+            "asn": "30",
+            "bgpRouteEntries": {
+                "10.10.10.0/24": {
+                    "address": "10.10.10.0",
+                    "bgpRoutePaths": [
+                        {
+                            "asPathEntry": {
+                                "asPath": "1 i",
+                                "asPathType": "External"
+                            },
+                            "localPreference": 100,
+                            "med": 0,
+                            "nextHop": "10.10.30.1",
+                            "reasonNotBestpath": "noReason",
+                            "routeType": {
+                                "active": true,
+                                "atomicAggregator": false,
+                                "backup": false,
+                                "ecmp": false,
+                                "ecmpContributor": false,
+                                "ecmpHead": false,
+                                "luRoute": false,
+                                "origin": "Igp",
+                                "queued": false,
+                                "sixPeRoute": false,
+                                "stale": false,
+                                "suppressed": false,
+                                "valid": true
+                            },
+                            "weight": 0
+                        }
+                    ],
+                    "contributors": [],
+                    "maskLength": 24,
+                    "totalPaths": 1
+                },
+                "10.10.20.0/24": {
+                    "address": "10.10.20.0",
+                    "bgpRoutePaths": [
+                        {
+                            "asPathEntry": {
+                                "asPath": "1 i",
+                                "asPathType": "External"
+                            },
+                            "localPreference": 100,
+                            "med": 0,
+                            "nextHop": "10.10.30.1",
+                            "reasonNotBestpath": "noReason",
+                            "routeType": {
+                                "active": true,
+                                "atomicAggregator": false,
+                                "backup": false,
+                                "ecmp": false,
+                                "ecmpContributor": false,
+                                "ecmpHead": false,
+                                "luRoute": false,
+                                "origin": "Igp",
+                                "queued": false,
+                                "sixPeRoute": false,
+                                "stale": false,
+                                "suppressed": false,
+                                "valid": true
+                            },
+                            "weight": 0
+                        }
+                    ],
+                    "contributors": [],
+                    "maskLength": 24,
+                    "totalPaths": 1
+                },
+                "10.10.30.0/24": {
+                    "address": "10.10.30.0",
+                    "bgpRoutePaths": [
+                        {
+                            "asPathEntry": {
+                                "asPath": "1 i",
+                                "asPathType": "External"
+                            },
+                            "localPreference": 100,
+                            "med": 0,
+                            "nextHop": "10.10.30.1",
+                            "reasonNotBestpath": "noReason",
+                            "routeType": {
+                                "active": true,
+                                "atomicAggregator": false,
+                                "backup": false,
+                                "ecmp": false,
+                                "ecmpContributor": false,
+                                "ecmpHead": false,
+                                "luRoute": false,
+                                "origin": "Igp",
+                                "queued": false,
+                                "sixPeRoute": false,
+                                "stale": false,
+                                "suppressed": false,
+                                "valid": true
+                            },
+                            "weight": 0
+                        }
+                    ],
+                    "contributors": [],
+                    "maskLength": 24,
+                    "totalPaths": 1
+                },
+                "10.10.40.0/24": {
+                    "address": "10.10.40.0",
+                    "bgpRoutePaths": [
+                        {
+                            "asPathEntry": {
+                                "asPath": "1 i",
+                                "asPathType": "External"
+                            },
+                            "localPreference": 100,
+                            "med": 0,
+                            "nextHop": "10.10.30.1",
+                            "reasonNotBestpath": "noReason",
+                            "routeType": {
+                                "active": true,
+                                "atomicAggregator": false,
+                                "backup": false,
+                                "ecmp": false,
+                                "ecmpContributor": false,
+                                "ecmpHead": false,
+                                "luRoute": false,
+                                "origin": "Igp",
+                                "queued": false,
+                                "sixPeRoute": false,
+                                "stale": false,
+                                "suppressed": false,
+                                "valid": true
+                            },
+                            "weight": 0
+                        }
+                    ],
+                    "contributors": [],
+                    "maskLength": 24,
+                    "totalPaths": 1
+                },
+                "10.10.50.0/24": {
+                    "address": "10.10.50.0",
+                    "bgpRoutePaths": [
+                        {
+                            "asPathEntry": {
+                                "asPath": "1 i",
+                                "asPathType": "External"
+                            },
+                            "localPreference": 100,
+                            "med": 0,
+                            "nextHop": "10.10.30.1",
+                            "reasonNotBestpath": "noReason",
+                            "routeType": {
+                                "active": true,
+                                "atomicAggregator": false,
+                                "backup": false,
+                                "ecmp": false,
+                                "ecmpContributor": false,
+                                "ecmpHead": false,
+                                "luRoute": false,
+                                "origin": "Igp",
+                                "queued": false,
+                                "sixPeRoute": false,
+                                "stale": false,
+                                "suppressed": false,
+                                "valid": true
+                            },
+                            "weight": 0
+                        }
+                    ],
+                    "contributors": [],
+                    "maskLength": 24,
+                    "totalPaths": 1
+                },
+                "192.168.122.0/24": {
+                    "address": "192.168.122.0",
+                    "bgpRoutePaths": [
+                        {
+                            "asPathEntry": {
+                                "asPath": "1 i",
+                                "asPathType": "External"
+                            },
+                            "localPreference": 100,
+                            "med": 0,
+                            "nextHop": "10.10.30.1",
+                            "reasonNotBestpath": "noReason",
+                            "routeType": {
+                                "active": true,
+                                "atomicAggregator": false,
+                                "backup": false,
+                                "ecmp": false,
+                                "ecmpContributor": false,
+                                "ecmpHead": false,
+                                "luRoute": false,
+                                "origin": "Igp",
+                                "queued": false,
+                                "sixPeRoute": false,
+                                "stale": false,
+                                "suppressed": false,
+                                "valid": true
+                            },
+                            "weight": 0
+                        }
+                    ],
+                    "contributors": [],
+                    "maskLength": 24,
+                    "totalPaths": 1
+                },
+                "192.168.123.1/32": {
+                    "address": "192.168.123.1",
+                    "bgpRoutePaths": [
+                        {
+                            "asPathEntry": {
+                                "asPath": "1 i",
+                                "asPathType": "External"
+                            },
+                            "localPreference": 100,
+                            "med": 0,
+                            "nextHop": "10.10.30.1",
+                            "reasonNotBestpath": "noReason",
+                            "routeType": {
+                                "active": true,
+                                "atomicAggregator": false,
+                                "backup": false,
+                                "ecmp": false,
+                                "ecmpContributor": false,
+                                "ecmpHead": false,
+                                "luRoute": false,
+                                "origin": "Igp",
+                                "queued": false,
+                                "sixPeRoute": false,
+                                "stale": false,
+                                "suppressed": false,
+                                "valid": true
+                            },
+                            "weight": 0
+                        }
+                    ],
+                    "contributors": [],
+                    "maskLength": 32,
+                    "totalPaths": 1
+                },
+                "192.168.123.2/32": {
+                    "address": "192.168.123.2",
+                    "bgpRoutePaths": [
+                        {
+                            "asPathEntry": {
+                                "asPath": "1 10 i",
+                                "asPathType": "External"
+                            },
+                            "localPreference": 100,
+                            "nextHop": "10.10.30.1",
+                            "reasonNotBestpath": "noReason",
+                            "routeType": {
+                                "active": true,
+                                "atomicAggregator": false,
+                                "backup": false,
+                                "ecmp": false,
+                                "ecmpContributor": false,
+                                "ecmpHead": false,
+                                "luRoute": false,
+                                "origin": "Igp",
+                                "queued": false,
+                                "sixPeRoute": false,
+                                "stale": false,
+                                "suppressed": false,
+                                "valid": true
+                            },
+                            "weight": 0
+                        }
+                    ],
+                    "contributors": [],
+                    "maskLength": 32,
+                    "totalPaths": 1
+                },
+                "192.168.123.3/32": {
+                    "address": "192.168.123.3",
+                    "bgpRoutePaths": [
+                        {
+                            "asPathEntry": {
+                                "asPath": "1 20 i",
+                                "asPathType": "External"
+                            },
+                            "localPreference": 100,
+                            "nextHop": "10.10.30.1",
+                            "reasonNotBestpath": "noReason",
+                            "routeType": {
+                                "active": true,
+                                "atomicAggregator": false,
+                                "backup": false,
+                                "ecmp": false,
+                                "ecmpContributor": false,
+                                "ecmpHead": false,
+                                "luRoute": false,
+                                "origin": "Igp",
+                                "queued": false,
+                                "sixPeRoute": false,
+                                "stale": false,
+                                "suppressed": false,
+                                "valid": true
+                            },
+                            "weight": 0
+                        }
+                    ],
+                    "contributors": [],
+                    "maskLength": 32,
+                    "totalPaths": 1
+                },
+                "192.168.123.4/32": {
+                    "address": "192.168.123.4",
+                    "bgpRoutePaths": [
+                        {
+                            "asPathEntry": {
+                                "asPath": "i",
+                                "asPathType": "Local"
+                            },
+                            "nextHop": "",
+                            "reasonNotBestpath": "noReason",
+                            "routeType": {
+                                "active": true,
+                                "atomicAggregator": false,
+                                "backup": false,
+                                "ecmp": false,
+                                "ecmpContributor": false,
+                                "ecmpHead": false,
+                                "luRoute": false,
+                                "origin": "Igp",
+                                "queued": false,
+                                "sixPeRoute": false,
+                                "stale": false,
+                                "suppressed": false,
+                                "valid": true
+                            },
+                            "weight": 0
+                        }
+                    ],
+                    "contributors": [],
+                    "maskLength": 32,
+                    "totalPaths": 1
+                },
+                "192.168.123.5/32": {
+                    "address": "192.168.123.5",
+                    "bgpRoutePaths": [
+                        {
+                            "asPathEntry": {
+                                "asPath": "1 40 i",
+                                "asPathType": "External"
+                            },
+                            "localPreference": 100,
+                            "nextHop": "10.10.30.1",
+                            "reasonNotBestpath": "noReason",
+                            "routeType": {
+                                "active": true,
+                                "atomicAggregator": false,
+                                "backup": false,
+                                "ecmp": false,
+                                "ecmpContributor": false,
+                                "ecmpHead": false,
+                                "luRoute": false,
+                                "origin": "Igp",
+                                "queued": false,
+                                "sixPeRoute": false,
+                                "stale": false,
+                                "suppressed": false,
+                                "valid": true
+                            },
+                            "weight": 0
+                        }
+                    ],
+                    "contributors": [],
+                    "maskLength": 32,
+                    "totalPaths": 1
+                },
+                "192.168.123.6/32": {
+                    "address": "192.168.123.6",
+                    "bgpRoutePaths": [
+                        {
+                            "asPathEntry": {
+                                "asPath": "1 50 i",
+                                "asPathType": "External"
+                            },
+                            "localPreference": 100,
+                            "nextHop": "10.10.30.1",
+                            "reasonNotBestpath": "noReason",
+                            "routeType": {
+                                "active": true,
+                                "atomicAggregator": false,
+                                "backup": false,
+                                "ecmp": false,
+                                "ecmpContributor": false,
+                                "ecmpHead": false,
+                                "luRoute": false,
+                                "origin": "Igp",
+                                "queued": false,
+                                "sixPeRoute": false,
+                                "stale": false,
+                                "suppressed": false,
+                                "valid": true
+                            },
+                            "weight": 0
+                        }
+                    ],
+                    "contributors": [],
+                    "maskLength": 32,
+                    "totalPaths": 1
+                }
+            },
+            "routerId": "192.168.123.4",
+            "vrf": "default"
+        }
+    }
+}

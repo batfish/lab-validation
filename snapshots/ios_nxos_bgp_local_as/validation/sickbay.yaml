@@ -1,0 +1,13 @@
+entries:
+  - hostname: ios1
+    test_name: test_bgp_rib_routes
+    skip:
+      reason: https://github.com/batfish/lab-validation/issues/37
+  - hostname: nxos1
+    test_name: test_bgp_rib_routes
+    skip:
+      reason: https://github.com/batfish/lab-validation/issues/37
+  - hostname: nxos1
+    test_name: test_main_rib_routes
+    skip:
+      reason: https://github.com/batfish/lab-validation/issues/37 (BGP route tags are wrong because AS paths are wrong)

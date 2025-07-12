@@ -1,0 +1,424 @@
+ZEBRA:
+route-map: FABRIC_EXPORT Invoked: 0
+ permit, sequence 10 Invoked 0
+  Description:
+    T_ADMIN_ACCEPT
+  Match clauses:
+  Set clauses:
+  Call clause:
+  Action:
+    Exit routemap
+ permit, sequence 100 Invoked 0
+  Description:
+    T_ADMIN_ACCEPT
+  Match clauses:
+  Set clauses:
+  Call clause:
+  Action:
+    Exit routemap
+route-map: FABRIC_EXPORT-COSTOUT Invoked: 0
+ permit, sequence 10 Invoked 0
+  Description:
+    FABRIC_EXPORT_PREPEND
+  Match clauses:
+  Set clauses:
+  Call clause:
+  Action:
+    Goto 100
+route-map: FABRIC_IMPORT Invoked: 0
+ permit, sequence 100 Invoked 0
+  Description:
+    T_ADMIN_ACCEPT
+  Match clauses:
+  Set clauses:
+  Call clause:
+  Action:
+    Exit routemap
+route-map: FABRIC_IMPORT-COSTOUT Invoked: 0
+ permit, sequence 10 Invoked 0
+  Description:
+    FABRIC_IMPORT_PREPEND
+  Match clauses:
+  Set clauses:
+  Call clause:
+  Action:
+    Goto 100
+route-map: LEAF_EXPORT Invoked: 0
+ permit, sequence 100 Invoked 0
+  Description:
+    T_ADMIN_ACCEPT
+  Match clauses:
+  Set clauses:
+  Call clause:
+  Action:
+    Exit routemap
+route-map: LEAF_IMPORT Invoked: 0
+ permit, sequence 100 Invoked 0
+  Description:
+    T_ADMIN_ACCEPT
+  Match clauses:
+  Set clauses:
+  Call clause:
+  Action:
+    Exit routemap
+route-map: REDISTRIBUTE_CONNECTED Invoked: 0
+ permit, sequence 10 Invoked 0
+  Description:
+    T_PRIVATE_V4
+  Match clauses:
+    ip address prefix-list PRIVATE_RANGES_V4
+  Set clauses:
+  Call clause:
+  Action:
+    Goto 100
+ permit, sequence 20 Invoked 0
+  Description:
+    T_PRIVATE_V6
+  Match clauses:
+    ipv6 address prefix-list PRIVATE_RANGES_V6
+  Set clauses:
+  Call clause:
+  Action:
+    Goto 100
+ deny, sequence 90 Invoked 0
+  Description:
+    T_DENY_ALL_ELSE
+  Match clauses:
+  Set clauses:
+  Call clause:
+  Action:
+    Exit routemap
+ permit, sequence 100 Invoked 0
+  Description:
+    T_ADMIN_ACCEPT
+  Match clauses:
+  Set clauses:
+  Call clause:
+  Action:
+    Exit routemap
+route-map: RM_SET_SRC Invoked: 144
+ permit, sequence 10 Invoked 144
+  Match clauses:
+  Set clauses:
+    src 3.3.3.3
+  Call clause:
+  Action:
+    Exit routemap
+OSPF:
+route-map: FABRIC_EXPORT Invoked: 0
+ permit, sequence 10 Invoked 0
+  Description:
+    T_ADMIN_ACCEPT
+  Match clauses:
+  Set clauses:
+  Call clause:
+  Action:
+    Exit routemap
+ permit, sequence 100 Invoked 0
+  Description:
+    T_ADMIN_ACCEPT
+  Match clauses:
+  Set clauses:
+  Call clause:
+  Action:
+    Exit routemap
+route-map: FABRIC_EXPORT-COSTOUT Invoked: 0
+ permit, sequence 10 Invoked 0
+  Description:
+    FABRIC_EXPORT_PREPEND
+  Match clauses:
+  Set clauses:
+  Call clause:
+  Action:
+    Goto 100
+route-map: FABRIC_IMPORT Invoked: 0
+ permit, sequence 100 Invoked 0
+  Description:
+    T_ADMIN_ACCEPT
+  Match clauses:
+  Set clauses:
+  Call clause:
+  Action:
+    Exit routemap
+route-map: FABRIC_IMPORT-COSTOUT Invoked: 0
+ permit, sequence 10 Invoked 0
+  Description:
+    FABRIC_IMPORT_PREPEND
+  Match clauses:
+  Set clauses:
+  Call clause:
+  Action:
+    Goto 100
+route-map: LEAF_EXPORT Invoked: 0
+ permit, sequence 100 Invoked 0
+  Description:
+    T_ADMIN_ACCEPT
+  Match clauses:
+  Set clauses:
+  Call clause:
+  Action:
+    Exit routemap
+route-map: LEAF_IMPORT Invoked: 0
+ permit, sequence 100 Invoked 0
+  Description:
+    T_ADMIN_ACCEPT
+  Match clauses:
+  Set clauses:
+  Call clause:
+  Action:
+    Exit routemap
+route-map: REDISTRIBUTE_CONNECTED Invoked: 0
+ permit, sequence 10 Invoked 0
+  Description:
+    T_PRIVATE_V4
+  Match clauses:
+    ip address prefix-list PRIVATE_RANGES_V4
+  Set clauses:
+  Call clause:
+  Action:
+    Goto 100
+ permit, sequence 20 Invoked 0
+  Description:
+    T_PRIVATE_V6
+  Match clauses:
+  Set clauses:
+  Call clause:
+  Action:
+    Goto 100
+ deny, sequence 90 Invoked 0
+  Description:
+    T_DENY_ALL_ELSE
+  Match clauses:
+  Set clauses:
+  Call clause:
+  Action:
+    Exit routemap
+ permit, sequence 100 Invoked 0
+  Description:
+    T_ADMIN_ACCEPT
+  Match clauses:
+  Set clauses:
+  Call clause:
+  Action:
+    Exit routemap
+route-map: RM_SET_SRC Invoked: 0
+ permit, sequence 10 Invoked 0
+  Match clauses:
+  Set clauses:
+  Call clause:
+  Action:
+    Exit routemap
+BGP:
+route-map: FABRIC_EXPORT Invoked: 261
+ permit, sequence 10 Invoked 261
+  Description:
+    T_ADMIN_ACCEPT
+  Match clauses:
+  Set clauses:
+  Call clause:
+  Action:
+    Exit routemap
+ permit, sequence 100 Invoked 0
+  Description:
+    T_ADMIN_ACCEPT
+  Match clauses:
+  Set clauses:
+  Call clause:
+  Action:
+    Exit routemap
+route-map: FABRIC_EXPORT-COSTOUT Invoked: 0
+ permit, sequence 10 Invoked 0
+  Description:
+    FABRIC_EXPORT_PREPEND
+  Match clauses:
+  Set clauses:
+    as-path prepend 64512 64512 64512
+  Call clause:
+  Action:
+    Goto 100
+route-map: FABRIC_IMPORT Invoked: 232
+ permit, sequence 100 Invoked 232
+  Description:
+    T_ADMIN_ACCEPT
+  Match clauses:
+  Set clauses:
+  Call clause:
+  Action:
+    Exit routemap
+route-map: FABRIC_IMPORT-COSTOUT Invoked: 0
+ permit, sequence 10 Invoked 0
+  Description:
+    FABRIC_IMPORT_PREPEND
+  Match clauses:
+  Set clauses:
+    as-path prepend 64512 64512 64512
+  Call clause:
+  Action:
+    Goto 100
+route-map: LEAF_EXPORT Invoked: 377
+ permit, sequence 100 Invoked 377
+  Description:
+    T_ADMIN_ACCEPT
+  Match clauses:
+  Set clauses:
+  Call clause:
+  Action:
+    Exit routemap
+route-map: LEAF_IMPORT Invoked: 338
+ permit, sequence 100 Invoked 338
+  Description:
+    T_ADMIN_ACCEPT
+  Match clauses:
+  Set clauses:
+  Call clause:
+  Action:
+    Exit routemap
+route-map: REDISTRIBUTE_CONNECTED Invoked: 5
+ permit, sequence 10 Invoked 5
+  Description:
+    T_PRIVATE_V4
+  Match clauses:
+    ip address prefix-list PRIVATE_RANGES_V4
+  Set clauses:
+    community 30195:258 64512:39500 additive
+    origin igp
+  Call clause:
+  Action:
+    Goto 100
+ permit, sequence 20 Invoked 1
+  Description:
+    T_PRIVATE_V6
+  Match clauses:
+    ipv6 address prefix-list PRIVATE_RANGES_V6
+  Set clauses:
+    community 30195:258 64512:39500 additive
+    origin igp
+  Call clause:
+  Action:
+    Goto 100
+ deny, sequence 90 Invoked 1
+  Description:
+    T_DENY_ALL_ELSE
+  Match clauses:
+  Set clauses:
+  Call clause:
+  Action:
+    Exit routemap
+ permit, sequence 100 Invoked 4
+  Description:
+    T_ADMIN_ACCEPT
+  Match clauses:
+  Set clauses:
+  Call clause:
+  Action:
+    Exit routemap
+route-map: RM_SET_SRC Invoked: 0
+ permit, sequence 10 Invoked 0
+  Match clauses:
+  Set clauses:
+  Call clause:
+  Action:
+    Exit routemap
+PIM:
+route-map: FABRIC_EXPORT Invoked: 0
+ permit, sequence 10 Invoked 0
+  Description:
+    T_ADMIN_ACCEPT
+  Match clauses:
+  Set clauses:
+  Call clause:
+  Action:
+    Exit routemap
+ permit, sequence 100 Invoked 0
+  Description:
+    T_ADMIN_ACCEPT
+  Match clauses:
+  Set clauses:
+  Call clause:
+  Action:
+    Exit routemap
+route-map: FABRIC_EXPORT-COSTOUT Invoked: 0
+ permit, sequence 10 Invoked 0
+  Description:
+    FABRIC_EXPORT_PREPEND
+  Match clauses:
+  Set clauses:
+  Call clause:
+  Action:
+    Goto 100
+route-map: FABRIC_IMPORT Invoked: 0
+ permit, sequence 100 Invoked 0
+  Description:
+    T_ADMIN_ACCEPT
+  Match clauses:
+  Set clauses:
+  Call clause:
+  Action:
+    Exit routemap
+route-map: FABRIC_IMPORT-COSTOUT Invoked: 0
+ permit, sequence 10 Invoked 0
+  Description:
+    FABRIC_IMPORT_PREPEND
+  Match clauses:
+  Set clauses:
+  Call clause:
+  Action:
+    Goto 100
+route-map: LEAF_EXPORT Invoked: 0
+ permit, sequence 100 Invoked 0
+  Description:
+    T_ADMIN_ACCEPT
+  Match clauses:
+  Set clauses:
+  Call clause:
+  Action:
+    Exit routemap
+route-map: LEAF_IMPORT Invoked: 0
+ permit, sequence 100 Invoked 0
+  Description:
+    T_ADMIN_ACCEPT
+  Match clauses:
+  Set clauses:
+  Call clause:
+  Action:
+    Exit routemap
+route-map: REDISTRIBUTE_CONNECTED Invoked: 0
+ permit, sequence 10 Invoked 0
+  Description:
+    T_PRIVATE_V4
+  Match clauses:
+  Set clauses:
+  Call clause:
+  Action:
+    Goto 100
+ permit, sequence 20 Invoked 0
+  Description:
+    T_PRIVATE_V6
+  Match clauses:
+  Set clauses:
+  Call clause:
+  Action:
+    Goto 100
+ deny, sequence 90 Invoked 0
+  Description:
+    T_DENY_ALL_ELSE
+  Match clauses:
+  Set clauses:
+  Call clause:
+  Action:
+    Exit routemap
+ permit, sequence 100 Invoked 0
+  Description:
+    T_ADMIN_ACCEPT
+  Match clauses:
+  Set clauses:
+  Call clause:
+  Action:
+    Exit routemap
+route-map: RM_SET_SRC Invoked: 0
+ permit, sequence 10 Invoked 0
+  Match clauses:
+  Set clauses:
+  Call clause:
+  Action:
+    Exit routemap

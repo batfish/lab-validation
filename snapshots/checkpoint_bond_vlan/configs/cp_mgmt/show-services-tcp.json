@@ -1,0 +1,2165 @@
+{
+    "objects": [
+        {
+            "uid": "97aeb44f-9aea-11d5-bd16-0090272ccb30",
+            "name": "AOL",
+            "type": "service-tcp",
+            "domain": {
+                "uid": "a0bbbc99-adef-4ef8-bb6d-defdefdefdef",
+                "name": "Check Point Data",
+                "domain-type": "data domain"
+            },
+            "port": "5190",
+            "match-by-protocol-signature": false,
+            "override-default-settings": false,
+            "session-timeout": 3600,
+            "use-default-session-timeout": true,
+            "match-for-any": true,
+            "sync-connections-on-cluster": true,
+            "aggressive-aging": {
+                "enable": true,
+                "timeout": 600,
+                "use-default-timeout": true,
+                "default-timeout": 0
+            },
+            "keep-connections-open-after-policy-installation": false,
+            "comments": "AOL Instant Messenger. Also used by: ICQ & Apple iChat",
+            "color": "red",
+            "icon": "Services/TCPService",
+            "tags": [],
+            "meta-info": {
+                "lock": "unlocked",
+                "validation-state": "ok",
+                "last-modify-time": {
+                    "posix": 1579505991220,
+                    "iso-8601": "2020-01-20T02:39-0500"
+                },
+                "last-modifier": "System",
+                "creation-time": {
+                    "posix": 1579505991220,
+                    "iso-8601": "2020-01-20T02:39-0500"
+                },
+                "creator": "System"
+            },
+            "read-only": false
+        },
+        {
+            "uid": "97aeb3e9-9aea-11d5-bd16-0090272ccb30",
+            "name": "AP-Defender",
+            "type": "service-tcp",
+            "domain": {
+                "uid": "a0bbbc99-adef-4ef8-bb6d-defdefdefdef",
+                "name": "Check Point Data",
+                "domain-type": "data domain"
+            },
+            "port": "2626",
+            "match-by-protocol-signature": false,
+            "override-default-settings": false,
+            "session-timeout": 3600,
+            "use-default-session-timeout": true,
+            "match-for-any": true,
+            "sync-connections-on-cluster": true,
+            "aggressive-aging": {
+                "enable": true,
+                "timeout": 600,
+                "use-default-timeout": true,
+                "default-timeout": 0
+            },
+            "keep-connections-open-after-policy-installation": false,
+            "comments": "Defender Authentication service",
+            "color": "firebrick",
+            "icon": "Services/TCPService",
+            "tags": [],
+            "meta-info": {
+                "lock": "unlocked",
+                "validation-state": "ok",
+                "last-modify-time": {
+                    "posix": 1579505990318,
+                    "iso-8601": "2020-01-20T02:39-0500"
+                },
+                "last-modifier": "System",
+                "creation-time": {
+                    "posix": 1579505990318,
+                    "iso-8601": "2020-01-20T02:39-0500"
+                },
+                "creator": "System"
+            },
+            "read-only": false
+        },
+        {
+            "uid": "97aeb3ea-9aea-11d5-bd16-0090272ccb30",
+            "name": "AT-Defender",
+            "type": "service-tcp",
+            "domain": {
+                "uid": "a0bbbc99-adef-4ef8-bb6d-defdefdefdef",
+                "name": "Check Point Data",
+                "domain-type": "data domain"
+            },
+            "port": "2626",
+            "match-by-protocol-signature": false,
+            "override-default-settings": false,
+            "session-timeout": 3600,
+            "use-default-session-timeout": true,
+            "match-for-any": false,
+            "sync-connections-on-cluster": true,
+            "aggressive-aging": {
+                "enable": true,
+                "timeout": 600,
+                "use-default-timeout": true,
+                "default-timeout": 0
+            },
+            "keep-connections-open-after-policy-installation": false,
+            "comments": "Defender Authentication service",
+            "color": "firebrick",
+            "icon": "Services/TCPService",
+            "tags": [],
+            "meta-info": {
+                "lock": "unlocked",
+                "validation-state": "ok",
+                "last-modify-time": {
+                    "posix": 1579505990323,
+                    "iso-8601": "2020-01-20T02:39-0500"
+                },
+                "last-modifier": "System",
+                "creation-time": {
+                    "posix": 1579505990323,
+                    "iso-8601": "2020-01-20T02:39-0500"
+                },
+                "creator": "System"
+            },
+            "read-only": false
+        },
+        {
+            "uid": "96759a8d-aab8-43d9-bbfc-b459ce66ac87",
+            "name": "Backage",
+            "type": "service-tcp",
+            "domain": {
+                "uid": "a0bbbc99-adef-4ef8-bb6d-defdefdefdef",
+                "name": "Check Point Data",
+                "domain-type": "data domain"
+            },
+            "port": "411",
+            "match-by-protocol-signature": false,
+            "override-default-settings": false,
+            "session-timeout": 3600,
+            "use-default-session-timeout": true,
+            "match-for-any": false,
+            "sync-connections-on-cluster": true,
+            "aggressive-aging": {
+                "enable": true,
+                "timeout": 600,
+                "use-default-timeout": true,
+                "default-timeout": 0
+            },
+            "keep-connections-open-after-policy-installation": false,
+            "comments": "Backage trojan",
+            "color": "pink",
+            "icon": "Services/TCPService",
+            "tags": [],
+            "meta-info": {
+                "lock": "unlocked",
+                "validation-state": "ok",
+                "last-modify-time": {
+                    "posix": 1579505991747,
+                    "iso-8601": "2020-01-20T02:39-0500"
+                },
+                "last-modifier": "System",
+                "creation-time": {
+                    "posix": 1579505991747,
+                    "iso-8601": "2020-01-20T02:39-0500"
+                },
+                "creator": "System"
+            },
+            "read-only": false
+        },
+        {
+            "uid": "1fceea78-d378-44b4-8939-019b68f48518",
+            "name": "BGP",
+            "type": "service-tcp",
+            "domain": {
+                "uid": "a0bbbc99-adef-4ef8-bb6d-defdefdefdef",
+                "name": "Check Point Data",
+                "domain-type": "data domain"
+            },
+            "port": "179",
+            "match-by-protocol-signature": false,
+            "override-default-settings": false,
+            "session-timeout": 3600,
+            "use-default-session-timeout": true,
+            "match-for-any": false,
+            "sync-connections-on-cluster": true,
+            "aggressive-aging": {
+                "enable": true,
+                "timeout": 600,
+                "use-default-timeout": true,
+                "default-timeout": 0
+            },
+            "keep-connections-open-after-policy-installation": false,
+            "comments": "Border Gateway Protocol",
+            "color": "black",
+            "icon": "Services/TCPService",
+            "tags": [],
+            "meta-info": {
+                "lock": "unlocked",
+                "validation-state": "ok",
+                "last-modify-time": {
+                    "posix": 1579505992090,
+                    "iso-8601": "2020-01-20T02:39-0500"
+                },
+                "last-modifier": "System",
+                "creation-time": {
+                    "posix": 1579505992090,
+                    "iso-8601": "2020-01-20T02:39-0500"
+                },
+                "creator": "System"
+            },
+            "read-only": false
+        },
+        {
+            "uid": "86077a7d-a8da-4b5b-919c-366fe91ad1da",
+            "name": "Bionet-Setup",
+            "type": "service-tcp",
+            "domain": {
+                "uid": "a0bbbc99-adef-4ef8-bb6d-defdefdefdef",
+                "name": "Check Point Data",
+                "domain-type": "data domain"
+            },
+            "port": "5000",
+            "match-by-protocol-signature": false,
+            "override-default-settings": false,
+            "session-timeout": 3600,
+            "use-default-session-timeout": true,
+            "match-for-any": false,
+            "sync-connections-on-cluster": true,
+            "aggressive-aging": {
+                "enable": true,
+                "timeout": 600,
+                "use-default-timeout": true,
+                "default-timeout": 0
+            },
+            "keep-connections-open-after-policy-installation": false,
+            "comments": "Also used by: Blazer5 , Bubbel and Back-door trojans",
+            "color": "magenta",
+            "icon": "Services/TCPService",
+            "tags": [],
+            "meta-info": {
+                "lock": "unlocked",
+                "validation-state": "ok",
+                "last-modify-time": {
+                    "posix": 1579505991722,
+                    "iso-8601": "2020-01-20T02:39-0500"
+                },
+                "last-modifier": "System",
+                "creation-time": {
+                    "posix": 1579505991722,
+                    "iso-8601": "2020-01-20T02:39-0500"
+                },
+                "creator": "System"
+            },
+            "read-only": false
+        },
+        {
+            "uid": "11da2773-a070-4f68-a3c2-9ce5dc158683",
+            "name": "CheckPointExchangeAgent",
+            "type": "service-tcp",
+            "domain": {
+                "uid": "a0bbbc99-adef-4ef8-bb6d-defdefdefdef",
+                "name": "Check Point Data",
+                "domain-type": "data domain"
+            },
+            "port": "18301",
+            "protocol": "SMTP",
+            "match-by-protocol-signature": false,
+            "override-default-settings": false,
+            "session-timeout": 3600,
+            "use-default-session-timeout": true,
+            "match-for-any": true,
+            "sync-connections-on-cluster": true,
+            "aggressive-aging": {
+                "enable": true,
+                "timeout": 600,
+                "use-default-timeout": true,
+                "default-timeout": 0
+            },
+            "keep-connections-open-after-policy-installation": false,
+            "comments": "",
+            "color": "black",
+            "icon": "Services/TCPService",
+            "tags": [],
+            "meta-info": {
+                "lock": "unlocked",
+                "validation-state": "ok",
+                "last-modify-time": {
+                    "posix": 1579505991530,
+                    "iso-8601": "2020-01-20T02:39-0500"
+                },
+                "last-modifier": "System",
+                "creation-time": {
+                    "posix": 1579505991530,
+                    "iso-8601": "2020-01-20T02:39-0500"
+                },
+                "creator": "System"
+            },
+            "read-only": false
+        },
+        {
+            "uid": "986bad5a-94d2-4a8c-81aa-de98d3ecb5c6",
+            "name": "Citrix_ICA",
+            "type": "service-tcp",
+            "domain": {
+                "uid": "a0bbbc99-adef-4ef8-bb6d-defdefdefdef",
+                "name": "Check Point Data",
+                "domain-type": "data domain"
+            },
+            "port": "1494",
+            "protocol": "CitrixICA",
+            "match-by-protocol-signature": false,
+            "override-default-settings": false,
+            "session-timeout": 3600,
+            "use-default-session-timeout": true,
+            "match-for-any": false,
+            "sync-connections-on-cluster": true,
+            "aggressive-aging": {
+                "enable": true,
+                "timeout": 600,
+                "use-default-timeout": true,
+                "default-timeout": 0
+            },
+            "keep-connections-open-after-policy-installation": false,
+            "comments": "Citrix ICA general Service.",
+            "color": "black",
+            "icon": "Services/TCPService",
+            "tags": [],
+            "meta-info": {
+                "lock": "unlocked",
+                "validation-state": "ok",
+                "last-modify-time": {
+                    "posix": 1579505988997,
+                    "iso-8601": "2020-01-20T02:39-0500"
+                },
+                "last-modifier": "System",
+                "creation-time": {
+                    "posix": 1579505988997,
+                    "iso-8601": "2020-01-20T02:39-0500"
+                },
+                "creator": "System"
+            },
+            "read-only": false
+        },
+        {
+            "uid": "97aeb451-9aea-11d5-bd16-0090272ccb30",
+            "name": "ConnectedOnLine",
+            "type": "service-tcp",
+            "domain": {
+                "uid": "a0bbbc99-adef-4ef8-bb6d-defdefdefdef",
+                "name": "Check Point Data",
+                "domain-type": "data domain"
+            },
+            "port": "16384",
+            "match-by-protocol-signature": false,
+            "override-default-settings": false,
+            "session-timeout": 3600,
+            "use-default-session-timeout": true,
+            "match-for-any": true,
+            "sync-connections-on-cluster": true,
+            "aggressive-aging": {
+                "enable": true,
+                "timeout": 600,
+                "use-default-timeout": true,
+                "default-timeout": 0
+            },
+            "keep-connections-open-after-policy-installation": false,
+            "comments": "",
+            "color": "black",
+            "icon": "Services/TCPService",
+            "tags": [],
+            "meta-info": {
+                "lock": "unlocked",
+                "validation-state": "ok",
+                "last-modify-time": {
+                    "posix": 1579505991233,
+                    "iso-8601": "2020-01-20T02:39-0500"
+                },
+                "last-modifier": "System",
+                "creation-time": {
+                    "posix": 1579505991233,
+                    "iso-8601": "2020-01-20T02:39-0500"
+                },
+                "creator": "System"
+            },
+            "read-only": false
+        },
+        {
+            "uid": "97aeb3ad-9aea-11d5-bd16-0090272ccb30",
+            "name": "CP_Exnet_PK",
+            "type": "service-tcp",
+            "domain": {
+                "uid": "a0bbbc99-adef-4ef8-bb6d-defdefdefdef",
+                "name": "Check Point Data",
+                "domain-type": "data domain"
+            },
+            "port": "18262",
+            "match-by-protocol-signature": false,
+            "override-default-settings": false,
+            "session-timeout": 3600,
+            "use-default-session-timeout": true,
+            "match-for-any": true,
+            "sync-connections-on-cluster": true,
+            "aggressive-aging": {
+                "enable": true,
+                "timeout": 600,
+                "use-default-timeout": true,
+                "default-timeout": 0
+            },
+            "keep-connections-open-after-policy-installation": false,
+            "comments": "Check Point Extranet public key resolution",
+            "color": "firebrick",
+            "icon": "Services/TCPService",
+            "tags": [],
+            "meta-info": {
+                "lock": "unlocked",
+                "validation-state": "ok",
+                "last-modify-time": {
+                    "posix": 1579505988337,
+                    "iso-8601": "2020-01-20T02:39-0500"
+                },
+                "last-modifier": "System",
+                "creation-time": {
+                    "posix": 1579505988337,
+                    "iso-8601": "2020-01-20T02:39-0500"
+                },
+                "creator": "System"
+            },
+            "read-only": false
+        },
+        {
+            "uid": "97aeb3ae-9aea-11d5-bd16-0090272ccb30",
+            "name": "CP_Exnet_resolve",
+            "type": "service-tcp",
+            "domain": {
+                "uid": "a0bbbc99-adef-4ef8-bb6d-defdefdefdef",
+                "name": "Check Point Data",
+                "domain-type": "data domain"
+            },
+            "port": "18263",
+            "match-by-protocol-signature": false,
+            "override-default-settings": false,
+            "session-timeout": 3600,
+            "use-default-session-timeout": true,
+            "match-for-any": true,
+            "sync-connections-on-cluster": true,
+            "aggressive-aging": {
+                "enable": true,
+                "timeout": 600,
+                "use-default-timeout": true,
+                "default-timeout": 0
+            },
+            "keep-connections-open-after-policy-installation": false,
+            "comments": "Check Point Extranet remote objects resolution",
+            "color": "firebrick",
+            "icon": "Services/TCPService",
+            "tags": [],
+            "meta-info": {
+                "lock": "unlocked",
+                "validation-state": "ok",
+                "last-modify-time": {
+                    "posix": 1579505988340,
+                    "iso-8601": "2020-01-20T02:39-0500"
+                },
+                "last-modifier": "System",
+                "creation-time": {
+                    "posix": 1579505988340,
+                    "iso-8601": "2020-01-20T02:39-0500"
+                },
+                "creator": "System"
+            },
+            "read-only": false
+        },
+        {
+            "uid": "97aeb3a9-9aea-11d5-bd16-0090272ccb30",
+            "name": "CP_redundant",
+            "type": "service-tcp",
+            "domain": {
+                "uid": "a0bbbc99-adef-4ef8-bb6d-defdefdefdef",
+                "name": "Check Point Data",
+                "domain-type": "data domain"
+            },
+            "port": "18221",
+            "match-by-protocol-signature": false,
+            "override-default-settings": false,
+            "session-timeout": 3600,
+            "use-default-session-timeout": true,
+            "match-for-any": true,
+            "sync-connections-on-cluster": true,
+            "aggressive-aging": {
+                "enable": true,
+                "timeout": 600,
+                "use-default-timeout": true,
+                "default-timeout": 0
+            },
+            "keep-connections-open-after-policy-installation": false,
+            "comments": "Check Point Redundant Management Protocol",
+            "color": "firebrick",
+            "icon": "Services/TCPService",
+            "tags": [],
+            "meta-info": {
+                "lock": "unlocked",
+                "validation-state": "ok",
+                "last-modify-time": {
+                    "posix": 1579505988318,
+                    "iso-8601": "2020-01-20T02:39-0500"
+                },
+                "last-modifier": "System",
+                "creation-time": {
+                    "posix": 1579505988318,
+                    "iso-8601": "2020-01-20T02:39-0500"
+                },
+                "creator": "System"
+            },
+            "read-only": false
+        },
+        {
+            "uid": "97aeb397-9aea-11d5-bd16-0090272ccb30",
+            "name": "CP_reporting",
+            "type": "service-tcp",
+            "domain": {
+                "uid": "a0bbbc99-adef-4ef8-bb6d-defdefdefdef",
+                "name": "Check Point Data",
+                "domain-type": "data domain"
+            },
+            "port": "18205",
+            "match-by-protocol-signature": false,
+            "override-default-settings": false,
+            "session-timeout": 3600,
+            "use-default-session-timeout": true,
+            "match-for-any": true,
+            "sync-connections-on-cluster": true,
+            "aggressive-aging": {
+                "enable": true,
+                "timeout": 600,
+                "use-default-timeout": true,
+                "default-timeout": 0
+            },
+            "keep-connections-open-after-policy-installation": false,
+            "comments": "Check Point Reporting Client Protocol",
+            "color": "firebrick",
+            "icon": "Services/TCPService",
+            "tags": [],
+            "meta-info": {
+                "lock": "unlocked",
+                "validation-state": "ok",
+                "last-modify-time": {
+                    "posix": 1579505988218,
+                    "iso-8601": "2020-01-20T02:39-0500"
+                },
+                "last-modifier": "System",
+                "creation-time": {
+                    "posix": 1579505988218,
+                    "iso-8601": "2020-01-20T02:39-0500"
+                },
+                "creator": "System"
+            },
+            "read-only": false
+        },
+        {
+            "uid": "97aeb3a2-9aea-11d5-bd16-0090272ccb30",
+            "name": "CP_rtm",
+            "type": "service-tcp",
+            "domain": {
+                "uid": "a0bbbc99-adef-4ef8-bb6d-defdefdefdef",
+                "name": "Check Point Data",
+                "domain-type": "data domain"
+            },
+            "port": "18202",
+            "match-by-protocol-signature": false,
+            "override-default-settings": false,
+            "session-timeout": 3600,
+            "use-default-session-timeout": true,
+            "match-for-any": true,
+            "sync-connections-on-cluster": true,
+            "aggressive-aging": {
+                "enable": true,
+                "timeout": 600,
+                "use-default-timeout": true,
+                "default-timeout": 0
+            },
+            "keep-connections-open-after-policy-installation": false,
+            "comments": "Check Point Real Time Monitoring",
+            "color": "firebrick",
+            "icon": "Services/TCPService",
+            "tags": [],
+            "meta-info": {
+                "lock": "unlocked",
+                "validation-state": "ok",
+                "last-modify-time": {
+                    "posix": 1579505988292,
+                    "iso-8601": "2020-01-20T02:39-0500"
+                },
+                "last-modifier": "System",
+                "creation-time": {
+                    "posix": 1579505988292,
+                    "iso-8601": "2020-01-20T02:39-0500"
+                },
+                "creator": "System"
+            },
+            "read-only": false
+        },
+        {
+            "uid": "bf3b16ad-beea-4aa3-94aa-3b3bd7074690",
+            "name": "CP_seam",
+            "type": "service-tcp",
+            "domain": {
+                "uid": "a0bbbc99-adef-4ef8-bb6d-defdefdefdef",
+                "name": "Check Point Data",
+                "domain-type": "data domain"
+            },
+            "port": "18266",
+            "match-by-protocol-signature": false,
+            "override-default-settings": false,
+            "session-timeout": 3600,
+            "use-default-session-timeout": true,
+            "match-for-any": true,
+            "sync-connections-on-cluster": true,
+            "aggressive-aging": {
+                "enable": true,
+                "timeout": 600,
+                "use-default-timeout": true,
+                "default-timeout": 0
+            },
+            "keep-connections-open-after-policy-installation": false,
+            "comments": "Check Point Eventia Analyzer Server Protocol",
+            "color": "firebrick",
+            "icon": "Services/TCPService",
+            "tags": [],
+            "meta-info": {
+                "lock": "unlocked",
+                "validation-state": "ok",
+                "last-modify-time": {
+                    "posix": 1579505991995,
+                    "iso-8601": "2020-01-20T02:39-0500"
+                },
+                "last-modifier": "System",
+                "creation-time": {
+                    "posix": 1579505991995,
+                    "iso-8601": "2020-01-20T02:39-0500"
+                },
+                "creator": "System"
+            },
+            "read-only": false
+        },
+        {
+            "uid": "f5558c46-011d-4d39-859e-1aa26c70c947",
+            "name": "CP_SmartPortal",
+            "type": "service-tcp",
+            "domain": {
+                "uid": "a0bbbc99-adef-4ef8-bb6d-defdefdefdef",
+                "name": "Check Point Data",
+                "domain-type": "data domain"
+            },
+            "port": "4433",
+            "match-by-protocol-signature": false,
+            "override-default-settings": false,
+            "session-timeout": 3600,
+            "use-default-session-timeout": true,
+            "match-for-any": true,
+            "sync-connections-on-cluster": true,
+            "aggressive-aging": {
+                "enable": true,
+                "timeout": 600,
+                "use-default-timeout": true,
+                "default-timeout": 0
+            },
+            "keep-connections-open-after-policy-installation": false,
+            "comments": "Check Point Smart Portal",
+            "color": "firebrick",
+            "icon": "Services/TCPService",
+            "tags": [],
+            "meta-info": {
+                "lock": "unlocked",
+                "validation-state": "ok",
+                "last-modify-time": {
+                    "posix": 1579505991999,
+                    "iso-8601": "2020-01-20T02:39-0500"
+                },
+                "last-modifier": "System",
+                "creation-time": {
+                    "posix": 1579505991999,
+                    "iso-8601": "2020-01-20T02:39-0500"
+                },
+                "creator": "System"
+            },
+            "read-only": false
+        },
+        {
+            "uid": "b8f7c593-f9ee-4c55-b48a-6ce3be6760ac",
+            "name": "CP_SSL_Network_Extender",
+            "type": "service-tcp",
+            "domain": {
+                "uid": "a0bbbc99-adef-4ef8-bb6d-defdefdefdef",
+                "name": "Check Point Data",
+                "domain-type": "data domain"
+            },
+            "port": "444",
+            "match-by-protocol-signature": false,
+            "override-default-settings": false,
+            "session-timeout": 3600,
+            "use-default-session-timeout": true,
+            "match-for-any": false,
+            "sync-connections-on-cluster": true,
+            "aggressive-aging": {
+                "enable": true,
+                "timeout": 600,
+                "use-default-timeout": true,
+                "default-timeout": 0
+            },
+            "keep-connections-open-after-policy-installation": false,
+            "comments": "SSL Network Extender port",
+            "color": "slate blue",
+            "icon": "Services/TCPService",
+            "tags": [],
+            "meta-info": {
+                "lock": "unlocked",
+                "validation-state": "ok",
+                "last-modify-time": {
+                    "posix": 1579505987882,
+                    "iso-8601": "2020-01-20T02:39-0500"
+                },
+                "last-modifier": "System",
+                "creation-time": {
+                    "posix": 1579505987882,
+                    "iso-8601": "2020-01-20T02:39-0500"
+                },
+                "creator": "System"
+            },
+            "read-only": false
+        },
+        {
+            "uid": "97aeb3ab-9aea-11d5-bd16-0090272ccb30",
+            "name": "CPD",
+            "type": "service-tcp",
+            "domain": {
+                "uid": "a0bbbc99-adef-4ef8-bb6d-defdefdefdef",
+                "name": "Check Point Data",
+                "domain-type": "data domain"
+            },
+            "port": "18191",
+            "match-by-protocol-signature": false,
+            "override-default-settings": false,
+            "session-timeout": 3600,
+            "use-default-session-timeout": true,
+            "match-for-any": true,
+            "sync-connections-on-cluster": true,
+            "aggressive-aging": {
+                "enable": true,
+                "timeout": 600,
+                "use-default-timeout": true,
+                "default-timeout": 0
+            },
+            "keep-connections-open-after-policy-installation": false,
+            "comments": "Check Point Daemon Protocol",
+            "color": "firebrick",
+            "icon": "Services/TCPService",
+            "tags": [],
+            "meta-info": {
+                "lock": "unlocked",
+                "validation-state": "ok",
+                "last-modify-time": {
+                    "posix": 1579505988327,
+                    "iso-8601": "2020-01-20T02:39-0500"
+                },
+                "last-modifier": "System",
+                "creation-time": {
+                    "posix": 1579505988327,
+                    "iso-8601": "2020-01-20T02:39-0500"
+                },
+                "creator": "System"
+            },
+            "read-only": false
+        },
+        {
+            "uid": "97aeb3ac-9aea-11d5-bd16-0090272ccb30",
+            "name": "CPD_amon",
+            "type": "service-tcp",
+            "domain": {
+                "uid": "a0bbbc99-adef-4ef8-bb6d-defdefdefdef",
+                "name": "Check Point Data",
+                "domain-type": "data domain"
+            },
+            "port": "18192",
+            "match-by-protocol-signature": false,
+            "override-default-settings": false,
+            "session-timeout": 3600,
+            "use-default-session-timeout": true,
+            "match-for-any": true,
+            "sync-connections-on-cluster": true,
+            "aggressive-aging": {
+                "enable": true,
+                "timeout": 600,
+                "use-default-timeout": true,
+                "default-timeout": 0
+            },
+            "keep-connections-open-after-policy-installation": false,
+            "comments": "Check Point Internal Application Monitoring",
+            "color": "firebrick",
+            "icon": "Services/TCPService",
+            "tags": [],
+            "meta-info": {
+                "lock": "unlocked",
+                "validation-state": "ok",
+                "last-modify-time": {
+                    "posix": 1579505988334,
+                    "iso-8601": "2020-01-20T02:39-0500"
+                },
+                "last-modifier": "System",
+                "creation-time": {
+                    "posix": 1579505988334,
+                    "iso-8601": "2020-01-20T02:39-0500"
+                },
+                "creator": "System"
+            },
+            "read-only": false
+        },
+        {
+            "uid": "3a55ff42-0dc0-4a53-9ba3-72c230ca85e6",
+            "name": "CPM",
+            "type": "service-tcp",
+            "domain": {
+                "uid": "a0bbbc99-adef-4ef8-bb6d-defdefdefdef",
+                "name": "Check Point Data",
+                "domain-type": "data domain"
+            },
+            "port": "19009",
+            "match-by-protocol-signature": false,
+            "override-default-settings": false,
+            "session-timeout": 3600,
+            "use-default-session-timeout": true,
+            "match-for-any": true,
+            "sync-connections-on-cluster": true,
+            "aggressive-aging": {
+                "enable": true,
+                "timeout": 600,
+                "use-default-timeout": true,
+                "default-timeout": 0
+            },
+            "keep-connections-open-after-policy-installation": false,
+            "comments": "Check Point Management Server",
+            "color": "firebrick",
+            "icon": "Services/TCPService",
+            "tags": [],
+            "meta-info": {
+                "lock": "unlocked",
+                "validation-state": "ok",
+                "last-modify-time": {
+                    "posix": 1579505988324,
+                    "iso-8601": "2020-01-20T02:39-0500"
+                },
+                "last-modifier": "System",
+                "creation-time": {
+                    "posix": 1579505988324,
+                    "iso-8601": "2020-01-20T02:39-0500"
+                },
+                "creator": "System"
+            },
+            "read-only": false
+        },
+        {
+            "uid": "97aeb3aa-9aea-11d5-bd16-0090272ccb30",
+            "name": "CPMI",
+            "type": "service-tcp",
+            "domain": {
+                "uid": "a0bbbc99-adef-4ef8-bb6d-defdefdefdef",
+                "name": "Check Point Data",
+                "domain-type": "data domain"
+            },
+            "port": "18190",
+            "match-by-protocol-signature": false,
+            "override-default-settings": false,
+            "session-timeout": 3600,
+            "use-default-session-timeout": true,
+            "match-for-any": true,
+            "sync-connections-on-cluster": true,
+            "aggressive-aging": {
+                "enable": true,
+                "timeout": 600,
+                "use-default-timeout": true,
+                "default-timeout": 0
+            },
+            "keep-connections-open-after-policy-installation": false,
+            "comments": "Check Point Management Interface",
+            "color": "firebrick",
+            "icon": "Services/TCPService",
+            "tags": [],
+            "meta-info": {
+                "lock": "unlocked",
+                "validation-state": "ok",
+                "last-modify-time": {
+                    "posix": 1579505988321,
+                    "iso-8601": "2020-01-20T02:39-0500"
+                },
+                "last-modifier": "System",
+                "creation-time": {
+                    "posix": 1579505988321,
+                    "iso-8601": "2020-01-20T02:39-0500"
+                },
+                "creator": "System"
+            },
+            "read-only": false
+        },
+        {
+            "uid": "88aaa643-bf12-4d40-a02d-e98a8159358a",
+            "name": "CrackDown",
+            "type": "service-tcp",
+            "domain": {
+                "uid": "a0bbbc99-adef-4ef8-bb6d-defdefdefdef",
+                "name": "Check Point Data",
+                "domain-type": "data domain"
+            },
+            "port": "4444",
+            "match-by-protocol-signature": false,
+            "override-default-settings": false,
+            "session-timeout": 3600,
+            "use-default-session-timeout": true,
+            "match-for-any": false,
+            "sync-connections-on-cluster": true,
+            "aggressive-aging": {
+                "enable": true,
+                "timeout": 600,
+                "use-default-timeout": true,
+                "default-timeout": 0
+            },
+            "keep-connections-open-after-policy-installation": false,
+            "comments": "CrackDown trojan",
+            "color": "pink",
+            "icon": "Services/TCPService",
+            "tags": [],
+            "meta-info": {
+                "lock": "unlocked",
+                "validation-state": "ok",
+                "last-modify-time": {
+                    "posix": 1579505991666,
+                    "iso-8601": "2020-01-20T02:39-0500"
+                },
+                "last-modifier": "System",
+                "creation-time": {
+                    "posix": 1579505991666,
+                    "iso-8601": "2020-01-20T02:39-0500"
+                },
+                "creator": "System"
+            },
+            "read-only": false
+        },
+        {
+            "uid": "97aeb44d-9aea-11d5-bd16-0090272ccb30",
+            "name": "CreativePartnerClnt",
+            "type": "service-tcp",
+            "domain": {
+                "uid": "a0bbbc99-adef-4ef8-bb6d-defdefdefdef",
+                "name": "Check Point Data",
+                "domain-type": "data domain"
+            },
+            "port": "455",
+            "match-by-protocol-signature": false,
+            "override-default-settings": false,
+            "session-timeout": 3600,
+            "use-default-session-timeout": true,
+            "match-for-any": true,
+            "sync-connections-on-cluster": true,
+            "aggressive-aging": {
+                "enable": true,
+                "timeout": 600,
+                "use-default-timeout": true,
+                "default-timeout": 0
+            },
+            "keep-connections-open-after-policy-installation": false,
+            "comments": "The Client listening port",
+            "color": "red",
+            "icon": "Services/TCPService",
+            "tags": [],
+            "meta-info": {
+                "lock": "unlocked",
+                "validation-state": "ok",
+                "last-modify-time": {
+                    "posix": 1579505991216,
+                    "iso-8601": "2020-01-20T02:39-0500"
+                },
+                "last-modifier": "System",
+                "creation-time": {
+                    "posix": 1579505991216,
+                    "iso-8601": "2020-01-20T02:39-0500"
+                },
+                "creator": "System"
+            },
+            "read-only": false
+        },
+        {
+            "uid": "97aeb44c-9aea-11d5-bd16-0090272ccb30",
+            "name": "CreativePartnerSrvr",
+            "type": "service-tcp",
+            "domain": {
+                "uid": "a0bbbc99-adef-4ef8-bb6d-defdefdefdef",
+                "name": "Check Point Data",
+                "domain-type": "data domain"
+            },
+            "port": "453",
+            "match-by-protocol-signature": false,
+            "override-default-settings": false,
+            "session-timeout": 3600,
+            "use-default-session-timeout": true,
+            "match-for-any": true,
+            "sync-connections-on-cluster": true,
+            "aggressive-aging": {
+                "enable": true,
+                "timeout": 600,
+                "use-default-timeout": true,
+                "default-timeout": 0
+            },
+            "keep-connections-open-after-policy-installation": false,
+            "comments": "The Server listening port",
+            "color": "red",
+            "icon": "Services/TCPService",
+            "tags": [],
+            "meta-info": {
+                "lock": "unlocked",
+                "validation-state": "ok",
+                "last-modify-time": {
+                    "posix": 1579505991213,
+                    "iso-8601": "2020-01-20T02:39-0500"
+                },
+                "last-modifier": "System",
+                "creation-time": {
+                    "posix": 1579505991213,
+                    "iso-8601": "2020-01-20T02:39-0500"
+                },
+                "creator": "System"
+            },
+            "read-only": false
+        },
+        {
+            "uid": "c13e3031-02d6-4341-a307-3daf10735078",
+            "name": "DaCryptic",
+            "type": "service-tcp",
+            "domain": {
+                "uid": "a0bbbc99-adef-4ef8-bb6d-defdefdefdef",
+                "name": "Check Point Data",
+                "domain-type": "data domain"
+            },
+            "port": "1074",
+            "match-by-protocol-signature": false,
+            "override-default-settings": false,
+            "session-timeout": 3600,
+            "use-default-session-timeout": true,
+            "match-for-any": true,
+            "sync-connections-on-cluster": true,
+            "aggressive-aging": {
+                "enable": true,
+                "timeout": 600,
+                "use-default-timeout": true,
+                "default-timeout": 0
+            },
+            "keep-connections-open-after-policy-installation": false,
+            "comments": "DaCryptic trojan",
+            "color": "magenta",
+            "icon": "Services/TCPService",
+            "tags": [],
+            "meta-info": {
+                "lock": "unlocked",
+                "validation-state": "ok",
+                "last-modify-time": {
+                    "posix": 1579505991727,
+                    "iso-8601": "2020-01-20T02:39-0500"
+                },
+                "last-modifier": "System",
+                "creation-time": {
+                    "posix": 1579505991727,
+                    "iso-8601": "2020-01-20T02:39-0500"
+                },
+                "creator": "System"
+            },
+            "read-only": false
+        },
+        {
+            "uid": "f8a15dfe-8c58-407a-ba18-d92ad5b33966",
+            "name": "DameWare",
+            "type": "service-tcp",
+            "domain": {
+                "uid": "a0bbbc99-adef-4ef8-bb6d-defdefdefdef",
+                "name": "Check Point Data",
+                "domain-type": "data domain"
+            },
+            "port": "6129",
+            "match-by-protocol-signature": false,
+            "override-default-settings": false,
+            "session-timeout": 3600,
+            "use-default-session-timeout": true,
+            "match-for-any": true,
+            "sync-connections-on-cluster": true,
+            "aggressive-aging": {
+                "enable": true,
+                "timeout": 600,
+                "use-default-timeout": true,
+                "default-timeout": 0
+            },
+            "keep-connections-open-after-policy-installation": false,
+            "comments": "DameWare Mini Remote Control Protocol",
+            "color": "orchid",
+            "icon": "Services/TCPService",
+            "tags": [],
+            "meta-info": {
+                "lock": "unlocked",
+                "validation-state": "ok",
+                "last-modify-time": {
+                    "posix": 1579505991775,
+                    "iso-8601": "2020-01-20T02:39-0500"
+                },
+                "last-modifier": "System",
+                "creation-time": {
+                    "posix": 1579505991775,
+                    "iso-8601": "2020-01-20T02:39-0500"
+                },
+                "creator": "System"
+            },
+            "read-only": false
+        },
+        {
+            "uid": "97aeb401-9aea-11d5-bd16-0090272ccb30",
+            "name": "daytime-tcp",
+            "type": "service-tcp",
+            "domain": {
+                "uid": "a0bbbc99-adef-4ef8-bb6d-defdefdefdef",
+                "name": "Check Point Data",
+                "domain-type": "data domain"
+            },
+            "port": "13",
+            "match-by-protocol-signature": false,
+            "override-default-settings": false,
+            "session-timeout": 3600,
+            "use-default-session-timeout": true,
+            "match-for-any": true,
+            "sync-connections-on-cluster": true,
+            "aggressive-aging": {
+                "enable": true,
+                "timeout": 600,
+                "use-default-timeout": true,
+                "default-timeout": 0
+            },
+            "keep-connections-open-after-policy-installation": false,
+            "comments": "Daytime Server Protocol (TCP)",
+            "color": "black",
+            "icon": "Services/TCPService",
+            "tags": [],
+            "meta-info": {
+                "lock": "unlocked",
+                "validation-state": "ok",
+                "last-modify-time": {
+                    "posix": 1579505990669,
+                    "iso-8601": "2020-01-20T02:39-0500"
+                },
+                "last-modifier": "System",
+                "creation-time": {
+                    "posix": 1579505990669,
+                    "iso-8601": "2020-01-20T02:39-0500"
+                },
+                "creator": "System"
+            },
+            "read-only": false
+        },
+        {
+            "uid": "8055b0de-dace-4d18-91f4-f39915b7aba8",
+            "name": "DerSphere",
+            "type": "service-tcp",
+            "domain": {
+                "uid": "a0bbbc99-adef-4ef8-bb6d-defdefdefdef",
+                "name": "Check Point Data",
+                "domain-type": "data domain"
+            },
+            "port": "1000",
+            "match-by-protocol-signature": false,
+            "override-default-settings": false,
+            "session-timeout": 3600,
+            "use-default-session-timeout": true,
+            "match-for-any": true,
+            "sync-connections-on-cluster": true,
+            "aggressive-aging": {
+                "enable": true,
+                "timeout": 600,
+                "use-default-timeout": true,
+                "default-timeout": 0
+            },
+            "keep-connections-open-after-policy-installation": false,
+            "comments": "Also used by: Direct Connection,Connecter,Insane Network trojans",
+            "color": "magenta",
+            "icon": "Services/TCPService",
+            "tags": [],
+            "meta-info": {
+                "lock": "unlocked",
+                "validation-state": "ok",
+                "last-modify-time": {
+                    "posix": 1579505991562,
+                    "iso-8601": "2020-01-20T02:39-0500"
+                },
+                "last-modifier": "System",
+                "creation-time": {
+                    "posix": 1579505991562,
+                    "iso-8601": "2020-01-20T02:39-0500"
+                },
+                "creator": "System"
+            },
+            "read-only": false
+        },
+        {
+            "uid": "8d971c42-17de-49a0-a646-a8e0057aebbd",
+            "name": "DerSphere_II",
+            "type": "service-tcp",
+            "domain": {
+                "uid": "a0bbbc99-adef-4ef8-bb6d-defdefdefdef",
+                "name": "Check Point Data",
+                "domain-type": "data domain"
+            },
+            "port": "2000",
+            "match-by-protocol-signature": false,
+            "override-default-settings": false,
+            "session-timeout": 3600,
+            "use-default-session-timeout": true,
+            "match-for-any": false,
+            "sync-connections-on-cluster": true,
+            "aggressive-aging": {
+                "enable": true,
+                "timeout": 600,
+                "use-default-timeout": true,
+                "default-timeout": 0
+            },
+            "keep-connections-open-after-policy-installation": false,
+            "comments": "Also used by:Insane Network,Last 2000,Remote Explorer 2000,Senna Spy Trojan Generator trojans",
+            "color": "pink",
+            "icon": "Services/TCPService",
+            "tags": [],
+            "meta-info": {
+                "lock": "unlocked",
+                "validation-state": "ok",
+                "last-modify-time": {
+                    "posix": 1579505991743,
+                    "iso-8601": "2020-01-20T02:39-0500"
+                },
+                "last-modifier": "System",
+                "creation-time": {
+                    "posix": 1579505991743,
+                    "iso-8601": "2020-01-20T02:39-0500"
+                },
+                "creator": "System"
+            },
+            "read-only": false
+        },
+        {
+            "uid": "d02080c1-b225-4da0-987b-28b3a551b8c9",
+            "name": "Direct_Connect_TCP",
+            "type": "service-tcp",
+            "domain": {
+                "uid": "a0bbbc99-adef-4ef8-bb6d-defdefdefdef",
+                "name": "Check Point Data",
+                "domain-type": "data domain"
+            },
+            "port": "411-412",
+            "match-by-protocol-signature": false,
+            "override-default-settings": false,
+            "session-timeout": 3600,
+            "use-default-session-timeout": true,
+            "match-for-any": true,
+            "sync-connections-on-cluster": true,
+            "aggressive-aging": {
+                "enable": true,
+                "timeout": 600,
+                "use-default-timeout": true,
+                "default-timeout": 0
+            },
+            "keep-connections-open-after-policy-installation": false,
+            "comments": "Direct Connect P2P application. Used also by other clients",
+            "color": "black",
+            "icon": "Services/TCPService",
+            "tags": [],
+            "meta-info": {
+                "lock": "unlocked",
+                "validation-state": "ok",
+                "last-modify-time": {
+                    "posix": 1579505991438,
+                    "iso-8601": "2020-01-20T02:39-0500"
+                },
+                "last-modifier": "System",
+                "creation-time": {
+                    "posix": 1579505991438,
+                    "iso-8601": "2020-01-20T02:39-0500"
+                },
+                "creator": "System"
+            },
+            "read-only": false
+        },
+        {
+            "uid": "97aeb3fd-9aea-11d5-bd16-0090272ccb30",
+            "name": "discard-tcp",
+            "type": "service-tcp",
+            "domain": {
+                "uid": "a0bbbc99-adef-4ef8-bb6d-defdefdefdef",
+                "name": "Check Point Data",
+                "domain-type": "data domain"
+            },
+            "port": "9",
+            "match-by-protocol-signature": false,
+            "override-default-settings": false,
+            "session-timeout": 3600,
+            "use-default-session-timeout": true,
+            "match-for-any": true,
+            "sync-connections-on-cluster": true,
+            "aggressive-aging": {
+                "enable": true,
+                "timeout": 600,
+                "use-default-timeout": true,
+                "default-timeout": 0
+            },
+            "keep-connections-open-after-policy-installation": false,
+            "comments": "Discard Server Protocol (TCP)",
+            "color": "black",
+            "icon": "Services/TCPService",
+            "tags": [],
+            "meta-info": {
+                "lock": "unlocked",
+                "validation-state": "ok",
+                "last-modify-time": {
+                    "posix": 1579505990657,
+                    "iso-8601": "2020-01-20T02:39-0500"
+                },
+                "last-modifier": "System",
+                "creation-time": {
+                    "posix": 1579505990657,
+                    "iso-8601": "2020-01-20T02:39-0500"
+                },
+                "creator": "System"
+            },
+            "read-only": false
+        },
+        {
+            "uid": "d5358ec6-3aec-4c05-b3a0-4c76bb89842b",
+            "name": "DNP3",
+            "type": "service-tcp",
+            "domain": {
+                "uid": "a0bbbc99-adef-4ef8-bb6d-defdefdefdef",
+                "name": "Check Point Data",
+                "domain-type": "data domain"
+            },
+            "port": "20000",
+            "match-by-protocol-signature": false,
+            "override-default-settings": false,
+            "session-timeout": 3600,
+            "use-default-session-timeout": true,
+            "match-for-any": true,
+            "sync-connections-on-cluster": true,
+            "aggressive-aging": {
+                "enable": true,
+                "timeout": 600,
+                "use-default-timeout": true,
+                "default-timeout": 0
+            },
+            "keep-connections-open-after-policy-installation": false,
+            "comments": "DNP3 is a set of communications protocols used between components in process automation systems. Its main use is in utilities such as electric and water companies",
+            "color": "sienna",
+            "icon": "Services/TCPService",
+            "tags": [],
+            "meta-info": {
+                "lock": "unlocked",
+                "validation-state": "ok",
+                "last-modify-time": {
+                    "posix": 1579505992057,
+                    "iso-8601": "2020-01-20T02:39-0500"
+                },
+                "last-modifier": "System",
+                "creation-time": {
+                    "posix": 1579505992057,
+                    "iso-8601": "2020-01-20T02:39-0500"
+                },
+                "creator": "System"
+            },
+            "read-only": false
+        },
+        {
+            "uid": "97aeb3f9-9aea-11d5-bd16-0090272ccb30",
+            "name": "domain-tcp",
+            "type": "service-tcp",
+            "domain": {
+                "uid": "a0bbbc99-adef-4ef8-bb6d-defdefdefdef",
+                "name": "Check Point Data",
+                "domain-type": "data domain"
+            },
+            "port": "53",
+            "protocol": "DNS_TCP",
+            "match-by-protocol-signature": false,
+            "override-default-settings": false,
+            "session-timeout": 3600,
+            "use-default-session-timeout": true,
+            "match-for-any": true,
+            "sync-connections-on-cluster": true,
+            "aggressive-aging": {
+                "enable": true,
+                "timeout": 600,
+                "use-default-timeout": true,
+                "default-timeout": 0
+            },
+            "keep-connections-open-after-policy-installation": false,
+            "comments": "Domain Name System Download",
+            "color": "black",
+            "icon": "Services/TCPService",
+            "tags": [],
+            "meta-info": {
+                "lock": "unlocked",
+                "validation-state": "ok",
+                "last-modify-time": {
+                    "posix": 1579505990593,
+                    "iso-8601": "2020-01-20T02:39-0500"
+                },
+                "last-modifier": "System",
+                "creation-time": {
+                    "posix": 1579505990593,
+                    "iso-8601": "2020-01-20T02:39-0500"
+                },
+                "creator": "System"
+            },
+            "read-only": false
+        },
+        {
+            "uid": "97aeb3f7-9aea-11d5-bd16-0090272ccb30",
+            "name": "echo-tcp",
+            "type": "service-tcp",
+            "domain": {
+                "uid": "a0bbbc99-adef-4ef8-bb6d-defdefdefdef",
+                "name": "Check Point Data",
+                "domain-type": "data domain"
+            },
+            "port": "7",
+            "match-by-protocol-signature": false,
+            "override-default-settings": false,
+            "session-timeout": 3600,
+            "use-default-session-timeout": true,
+            "match-for-any": true,
+            "sync-connections-on-cluster": true,
+            "aggressive-aging": {
+                "enable": true,
+                "timeout": 600,
+                "use-default-timeout": true,
+                "default-timeout": 0
+            },
+            "keep-connections-open-after-policy-installation": false,
+            "comments": "Echo Protocol (TCP)",
+            "color": "black",
+            "icon": "Services/TCPService",
+            "tags": [],
+            "meta-info": {
+                "lock": "unlocked",
+                "validation-state": "ok",
+                "last-modify-time": {
+                    "posix": 1579505990581,
+                    "iso-8601": "2020-01-20T02:39-0500"
+                },
+                "last-modifier": "System",
+                "creation-time": {
+                    "posix": 1579505990581,
+                    "iso-8601": "2020-01-20T02:39-0500"
+                },
+                "creator": "System"
+            },
+            "read-only": false
+        },
+        {
+            "uid": "188fd31d-b7ce-411e-93d5-fcc2d01705ae",
+            "name": "EDGE",
+            "type": "service-tcp",
+            "domain": {
+                "uid": "a0bbbc99-adef-4ef8-bb6d-defdefdefdef",
+                "name": "Check Point Data",
+                "domain-type": "data domain"
+            },
+            "port": "981",
+            "match-by-protocol-signature": false,
+            "override-default-settings": false,
+            "session-timeout": 3600,
+            "use-default-session-timeout": true,
+            "match-for-any": false,
+            "sync-connections-on-cluster": true,
+            "aggressive-aging": {
+                "enable": true,
+                "timeout": 600,
+                "use-default-timeout": true,
+                "default-timeout": 0
+            },
+            "keep-connections-open-after-policy-installation": false,
+            "comments": "VPN-1 UTM Edge Portal",
+            "color": "black",
+            "icon": "Services/TCPService",
+            "tags": [],
+            "meta-info": {
+                "lock": "unlocked",
+                "validation-state": "ok",
+                "last-modify-time": {
+                    "posix": 1579505991229,
+                    "iso-8601": "2020-01-20T02:39-0500"
+                },
+                "last-modifier": "System",
+                "creation-time": {
+                    "posix": 1579505991229,
+                    "iso-8601": "2020-01-20T02:39-0500"
+                },
+                "creator": "System"
+            },
+            "read-only": false
+        },
+        {
+            "uid": "760d9035-1c76-4c5c-b929-ba1dc6685d6f",
+            "name": "eDonkey_4661",
+            "type": "service-tcp",
+            "domain": {
+                "uid": "a0bbbc99-adef-4ef8-bb6d-defdefdefdef",
+                "name": "Check Point Data",
+                "domain-type": "data domain"
+            },
+            "port": "4661",
+            "match-by-protocol-signature": false,
+            "override-default-settings": false,
+            "session-timeout": 3600,
+            "use-default-session-timeout": true,
+            "match-for-any": true,
+            "sync-connections-on-cluster": true,
+            "aggressive-aging": {
+                "enable": true,
+                "timeout": 600,
+                "use-default-timeout": true,
+                "default-timeout": 0
+            },
+            "keep-connections-open-after-policy-installation": false,
+            "comments": "eDonkey protocol. Used also by other clients.",
+            "color": "black",
+            "icon": "Services/TCPService",
+            "tags": [],
+            "meta-info": {
+                "lock": "unlocked",
+                "validation-state": "ok",
+                "last-modify-time": {
+                    "posix": 1579505991445,
+                    "iso-8601": "2020-01-20T02:39-0500"
+                },
+                "last-modifier": "System",
+                "creation-time": {
+                    "posix": 1579505991445,
+                    "iso-8601": "2020-01-20T02:39-0500"
+                },
+                "creator": "System"
+            },
+            "read-only": false
+        },
+        {
+            "uid": "7115e261-185c-4487-aa18-84f8c275d186",
+            "name": "eDonkey_4662",
+            "type": "service-tcp",
+            "domain": {
+                "uid": "a0bbbc99-adef-4ef8-bb6d-defdefdefdef",
+                "name": "Check Point Data",
+                "domain-type": "data domain"
+            },
+            "port": "4662",
+            "match-by-protocol-signature": false,
+            "override-default-settings": false,
+            "session-timeout": 3600,
+            "use-default-session-timeout": true,
+            "match-for-any": true,
+            "sync-connections-on-cluster": true,
+            "aggressive-aging": {
+                "enable": true,
+                "timeout": 600,
+                "use-default-timeout": true,
+                "default-timeout": 0
+            },
+            "keep-connections-open-after-policy-installation": false,
+            "comments": "eDonkey protocol. Used also by other clients.",
+            "color": "black",
+            "icon": "Services/TCPService",
+            "tags": [],
+            "meta-info": {
+                "lock": "unlocked",
+                "validation-state": "ok",
+                "last-modify-time": {
+                    "posix": 1579505991449,
+                    "iso-8601": "2020-01-20T02:39-0500"
+                },
+                "last-modifier": "System",
+                "creation-time": {
+                    "posix": 1579505991449,
+                    "iso-8601": "2020-01-20T02:39-0500"
+                },
+                "creator": "System"
+            },
+            "read-only": false
+        },
+        {
+            "uid": "97aeb435-9aea-11d5-bd16-0090272ccb30",
+            "name": "Entrust-Admin",
+            "type": "service-tcp",
+            "domain": {
+                "uid": "a0bbbc99-adef-4ef8-bb6d-defdefdefdef",
+                "name": "Check Point Data",
+                "domain-type": "data domain"
+            },
+            "port": "710",
+            "match-by-protocol-signature": false,
+            "override-default-settings": false,
+            "session-timeout": 3600,
+            "use-default-session-timeout": true,
+            "match-for-any": true,
+            "sync-connections-on-cluster": true,
+            "aggressive-aging": {
+                "enable": true,
+                "timeout": 600,
+                "use-default-timeout": true,
+                "default-timeout": 0
+            },
+            "keep-connections-open-after-policy-installation": false,
+            "comments": "Entrust CA Administration Service",
+            "color": "firebrick",
+            "icon": "Services/TCPService",
+            "tags": [],
+            "meta-info": {
+                "lock": "unlocked",
+                "validation-state": "ok",
+                "last-modify-time": {
+                    "posix": 1579505991076,
+                    "iso-8601": "2020-01-20T02:39-0500"
+                },
+                "last-modifier": "System",
+                "creation-time": {
+                    "posix": 1579505991076,
+                    "iso-8601": "2020-01-20T02:39-0500"
+                },
+                "creator": "System"
+            },
+            "read-only": false
+        },
+        {
+            "uid": "97aeb436-9aea-11d5-bd16-0090272ccb30",
+            "name": "Entrust-KeyMgmt",
+            "type": "service-tcp",
+            "domain": {
+                "uid": "a0bbbc99-adef-4ef8-bb6d-defdefdefdef",
+                "name": "Check Point Data",
+                "domain-type": "data domain"
+            },
+            "port": "709",
+            "match-by-protocol-signature": false,
+            "override-default-settings": false,
+            "session-timeout": 3600,
+            "use-default-session-timeout": true,
+            "match-for-any": true,
+            "sync-connections-on-cluster": true,
+            "aggressive-aging": {
+                "enable": true,
+                "timeout": 600,
+                "use-default-timeout": true,
+                "default-timeout": 0
+            },
+            "keep-connections-open-after-policy-installation": false,
+            "comments": "Entrust CA Key Management Service",
+            "color": "firebrick",
+            "icon": "Services/TCPService",
+            "tags": [],
+            "meta-info": {
+                "lock": "unlocked",
+                "validation-state": "ok",
+                "last-modify-time": {
+                    "posix": 1579505991081,
+                    "iso-8601": "2020-01-20T02:39-0500"
+                },
+                "last-modifier": "System",
+                "creation-time": {
+                    "posix": 1579505991081,
+                    "iso-8601": "2020-01-20T02:39-0500"
+                },
+                "creator": "System"
+            },
+            "read-only": false
+        },
+        {
+            "uid": "97aeb3bf-9aea-11d5-bd16-0090272ccb30",
+            "name": "exec",
+            "type": "service-tcp",
+            "domain": {
+                "uid": "a0bbbc99-adef-4ef8-bb6d-defdefdefdef",
+                "name": "Check Point Data",
+                "domain-type": "data domain"
+            },
+            "port": "512",
+            "protocol": "RSHELL",
+            "match-by-protocol-signature": false,
+            "override-default-settings": false,
+            "session-timeout": 3600,
+            "use-default-session-timeout": true,
+            "match-for-any": true,
+            "sync-connections-on-cluster": true,
+            "aggressive-aging": {
+                "enable": true,
+                "timeout": 600,
+                "use-default-timeout": true,
+                "default-timeout": 0
+            },
+            "keep-connections-open-after-policy-installation": false,
+            "comments": "Remote execution (rexec)",
+            "color": "red",
+            "icon": "Services/TCPService",
+            "tags": [],
+            "meta-info": {
+                "lock": "unlocked",
+                "validation-state": "ok",
+                "last-modify-time": {
+                    "posix": 1579505988702,
+                    "iso-8601": "2020-01-20T02:39-0500"
+                },
+                "last-modifier": "System",
+                "creation-time": {
+                    "posix": 1579505988702,
+                    "iso-8601": "2020-01-20T02:39-0500"
+                },
+                "creator": "System"
+            },
+            "read-only": false
+        },
+        {
+            "uid": "6bdfff7a-b47c-4da8-bf46-a6e987c7fe58",
+            "name": "FIBMGR",
+            "type": "service-tcp",
+            "domain": {
+                "uid": "a0bbbc99-adef-4ef8-bb6d-defdefdefdef",
+                "name": "Check Point Data",
+                "domain-type": "data domain"
+            },
+            "port": "2010",
+            "match-by-protocol-signature": false,
+            "override-default-settings": false,
+            "session-timeout": 3600,
+            "use-default-session-timeout": true,
+            "match-for-any": true,
+            "sync-connections-on-cluster": true,
+            "aggressive-aging": {
+                "enable": true,
+                "timeout": 600,
+                "use-default-timeout": true,
+                "default-timeout": 0
+            },
+            "keep-connections-open-after-policy-installation": false,
+            "comments": "Forwarding Information Base Manager - Dynamic Routing Cluster config",
+            "color": "black",
+            "icon": "Services/TCPService",
+            "tags": [],
+            "meta-info": {
+                "lock": "unlocked",
+                "validation-state": "ok",
+                "last-modify-time": {
+                    "posix": 1579505988087,
+                    "iso-8601": "2020-01-20T02:39-0500"
+                },
+                "last-modifier": "System",
+                "creation-time": {
+                    "posix": 1579505988087,
+                    "iso-8601": "2020-01-20T02:39-0500"
+                },
+                "creator": "System"
+            },
+            "read-only": false
+        },
+        {
+            "uid": "97aeb3e2-9aea-11d5-bd16-0090272ccb30",
+            "name": "finger",
+            "type": "service-tcp",
+            "domain": {
+                "uid": "a0bbbc99-adef-4ef8-bb6d-defdefdefdef",
+                "name": "Check Point Data",
+                "domain-type": "data domain"
+            },
+            "port": "79",
+            "match-by-protocol-signature": false,
+            "override-default-settings": false,
+            "session-timeout": 3600,
+            "use-default-session-timeout": true,
+            "match-for-any": true,
+            "sync-connections-on-cluster": true,
+            "aggressive-aging": {
+                "enable": true,
+                "timeout": 600,
+                "use-default-timeout": true,
+                "default-timeout": 0
+            },
+            "keep-connections-open-after-policy-installation": false,
+            "comments": "UNIX, Finger Protocol",
+            "color": "blue",
+            "icon": "Services/TCPService",
+            "tags": [],
+            "meta-info": {
+                "lock": "unlocked",
+                "validation-state": "ok",
+                "last-modify-time": {
+                    "posix": 1579505990281,
+                    "iso-8601": "2020-01-20T02:39-0500"
+                },
+                "last-modifier": "System",
+                "creation-time": {
+                    "posix": 1579505990281,
+                    "iso-8601": "2020-01-20T02:39-0500"
+                },
+                "creator": "System"
+            },
+            "read-only": false
+        },
+        {
+            "uid": "08da33ff-bc5f-402a-9865-bee8fee69422",
+            "name": "Freak2k",
+            "type": "service-tcp",
+            "domain": {
+                "uid": "a0bbbc99-adef-4ef8-bb6d-defdefdefdef",
+                "name": "Check Point Data",
+                "domain-type": "data domain"
+            },
+            "port": "7001",
+            "match-by-protocol-signature": false,
+            "override-default-settings": false,
+            "session-timeout": 3600,
+            "use-default-session-timeout": true,
+            "match-for-any": true,
+            "sync-connections-on-cluster": true,
+            "aggressive-aging": {
+                "enable": true,
+                "timeout": 600,
+                "use-default-timeout": true,
+                "default-timeout": 0
+            },
+            "keep-connections-open-after-policy-installation": false,
+            "comments": "Also used by: Freak88,NetSnooper Gold trojans",
+            "color": "magenta",
+            "icon": "Services/TCPService",
+            "tags": [],
+            "meta-info": {
+                "lock": "unlocked",
+                "validation-state": "ok",
+                "last-modify-time": {
+                    "posix": 1579505991567,
+                    "iso-8601": "2020-01-20T02:39-0500"
+                },
+                "last-modifier": "System",
+                "creation-time": {
+                    "posix": 1579505991567,
+                    "iso-8601": "2020-01-20T02:39-0500"
+                },
+                "creator": "System"
+            },
+            "read-only": false
+        },
+        {
+            "uid": "97aeb3d0-9aea-11d5-bd16-0090272ccb30",
+            "name": "ftp",
+            "type": "service-tcp",
+            "domain": {
+                "uid": "a0bbbc99-adef-4ef8-bb6d-defdefdefdef",
+                "name": "Check Point Data",
+                "domain-type": "data domain"
+            },
+            "port": "21",
+            "protocol": "FTP",
+            "match-by-protocol-signature": false,
+            "override-default-settings": false,
+            "session-timeout": 3600,
+            "use-default-session-timeout": true,
+            "match-for-any": true,
+            "sync-connections-on-cluster": true,
+            "aggressive-aging": {
+                "enable": true,
+                "timeout": 600,
+                "use-default-timeout": true,
+                "default-timeout": 0
+            },
+            "keep-connections-open-after-policy-installation": false,
+            "comments": "File Transfer Protocol",
+            "color": "forest green",
+            "icon": "Services/TCPService",
+            "tags": [],
+            "meta-info": {
+                "lock": "unlocked",
+                "validation-state": "ok",
+                "last-modify-time": {
+                    "posix": 1579505990149,
+                    "iso-8601": "2020-01-20T02:39-0500"
+                },
+                "last-modifier": "System",
+                "creation-time": {
+                    "posix": 1579505990149,
+                    "iso-8601": "2020-01-20T02:39-0500"
+                },
+                "creator": "System"
+            },
+            "read-only": false
+        },
+        {
+            "uid": "16a6aaa2-8449-11d6-a9c5-3e5a6fdb3434",
+            "name": "ftp-bidir",
+            "type": "service-tcp",
+            "domain": {
+                "uid": "a0bbbc99-adef-4ef8-bb6d-defdefdefdef",
+                "name": "Check Point Data",
+                "domain-type": "data domain"
+            },
+            "port": "21",
+            "protocol": "FTP-BIDIR",
+            "match-by-protocol-signature": false,
+            "override-default-settings": false,
+            "session-timeout": 3600,
+            "use-default-session-timeout": true,
+            "match-for-any": false,
+            "sync-connections-on-cluster": true,
+            "aggressive-aging": {
+                "enable": true,
+                "timeout": 600,
+                "use-default-timeout": true,
+                "default-timeout": 0
+            },
+            "keep-connections-open-after-policy-installation": false,
+            "comments": "File Transfer Protocol with bi-directional data transfer",
+            "color": "forest green",
+            "icon": "Services/TCPService",
+            "tags": [],
+            "meta-info": {
+                "lock": "unlocked",
+                "validation-state": "ok",
+                "last-modify-time": {
+                    "posix": 1579505990134,
+                    "iso-8601": "2020-01-20T02:39-0500"
+                },
+                "last-modifier": "System",
+                "creation-time": {
+                    "posix": 1579505990134,
+                    "iso-8601": "2020-01-20T02:39-0500"
+                },
+                "creator": "System"
+            },
+            "read-only": false
+        },
+        {
+            "uid": "97aeb3d2-9aea-11d5-bd16-0090272ccb30",
+            "name": "ftp-pasv",
+            "type": "service-tcp",
+            "domain": {
+                "uid": "a0bbbc99-adef-4ef8-bb6d-defdefdefdef",
+                "name": "Check Point Data",
+                "domain-type": "data domain"
+            },
+            "port": "21",
+            "protocol": "FTP-PASV",
+            "match-by-protocol-signature": false,
+            "override-default-settings": false,
+            "session-timeout": 3600,
+            "use-default-session-timeout": true,
+            "match-for-any": false,
+            "sync-connections-on-cluster": true,
+            "aggressive-aging": {
+                "enable": true,
+                "timeout": 600,
+                "use-default-timeout": true,
+                "default-timeout": 0
+            },
+            "keep-connections-open-after-policy-installation": false,
+            "comments": "File Transfer Protocol - PASV mode only",
+            "color": "forest green",
+            "icon": "Services/TCPService",
+            "tags": [],
+            "meta-info": {
+                "lock": "unlocked",
+                "validation-state": "ok",
+                "last-modify-time": {
+                    "posix": 1579505990120,
+                    "iso-8601": "2020-01-20T02:39-0500"
+                },
+                "last-modifier": "System",
+                "creation-time": {
+                    "posix": 1579505990120,
+                    "iso-8601": "2020-01-20T02:39-0500"
+                },
+                "creator": "System"
+            },
+            "read-only": false
+        },
+        {
+            "uid": "97aeb3d1-9aea-11d5-bd16-0090272ccb30",
+            "name": "ftp-port",
+            "type": "service-tcp",
+            "domain": {
+                "uid": "a0bbbc99-adef-4ef8-bb6d-defdefdefdef",
+                "name": "Check Point Data",
+                "domain-type": "data domain"
+            },
+            "port": "21",
+            "protocol": "FTP-PORT",
+            "match-by-protocol-signature": false,
+            "override-default-settings": false,
+            "session-timeout": 3600,
+            "use-default-session-timeout": true,
+            "match-for-any": false,
+            "sync-connections-on-cluster": true,
+            "aggressive-aging": {
+                "enable": true,
+                "timeout": 600,
+                "use-default-timeout": true,
+                "default-timeout": 0
+            },
+            "keep-connections-open-after-policy-installation": false,
+            "comments": "File Transfer Protocol - PORT mode only",
+            "color": "forest green",
+            "icon": "Services/TCPService",
+            "tags": [],
+            "meta-info": {
+                "lock": "unlocked",
+                "validation-state": "ok",
+                "last-modify-time": {
+                    "posix": 1579505990109,
+                    "iso-8601": "2020-01-20T02:39-0500"
+                },
+                "last-modifier": "System",
+                "creation-time": {
+                    "posix": 1579505990109,
+                    "iso-8601": "2020-01-20T02:39-0500"
+                },
+                "creator": "System"
+            },
+            "read-only": false
+        },
+        {
+            "uid": "97aeb388-9aea-11d5-bd16-0090272ccb30",
+            "name": "FW1",
+            "type": "service-tcp",
+            "domain": {
+                "uid": "a0bbbc99-adef-4ef8-bb6d-defdefdefdef",
+                "name": "Check Point Data",
+                "domain-type": "data domain"
+            },
+            "port": "256",
+            "match-by-protocol-signature": false,
+            "override-default-settings": false,
+            "session-timeout": 3600,
+            "use-default-session-timeout": true,
+            "match-for-any": true,
+            "sync-connections-on-cluster": true,
+            "aggressive-aging": {
+                "enable": true,
+                "timeout": 600,
+                "use-default-timeout": true,
+                "default-timeout": 0
+            },
+            "keep-connections-open-after-policy-installation": false,
+            "comments": "Check Point Security Gateway Service",
+            "color": "firebrick",
+            "icon": "Services/TCPService",
+            "tags": [],
+            "meta-info": {
+                "lock": "unlocked",
+                "validation-state": "ok",
+                "last-modify-time": {
+                    "posix": 1579505988068,
+                    "iso-8601": "2020-01-20T02:39-0500"
+                },
+                "last-modifier": "System",
+                "creation-time": {
+                    "posix": 1579505988068,
+                    "iso-8601": "2020-01-20T02:39-0500"
+                },
+                "creator": "System"
+            },
+            "read-only": false
+        },
+        {
+            "uid": "97aeb394-9aea-11d5-bd16-0090272ccb30",
+            "name": "FW1_amon",
+            "type": "service-tcp",
+            "domain": {
+                "uid": "a0bbbc99-adef-4ef8-bb6d-defdefdefdef",
+                "name": "Check Point Data",
+                "domain-type": "data domain"
+            },
+            "port": "18193",
+            "match-by-protocol-signature": false,
+            "override-default-settings": false,
+            "session-timeout": 3600,
+            "use-default-session-timeout": true,
+            "match-for-any": true,
+            "sync-connections-on-cluster": true,
+            "aggressive-aging": {
+                "enable": true,
+                "timeout": 600,
+                "use-default-timeout": true,
+                "default-timeout": 0
+            },
+            "keep-connections-open-after-policy-installation": false,
+            "comments": "Check Point OPSEC Application Monitoring",
+            "color": "firebrick",
+            "icon": "Services/TCPService",
+            "tags": [],
+            "meta-info": {
+                "lock": "unlocked",
+                "validation-state": "ok",
+                "last-modify-time": {
+                    "posix": 1579505988207,
+                    "iso-8601": "2020-01-20T02:39-0500"
+                },
+                "last-modifier": "System",
+                "creation-time": {
+                    "posix": 1579505988207,
+                    "iso-8601": "2020-01-20T02:39-0500"
+                },
+                "creator": "System"
+            },
+            "read-only": false
+        },
+        {
+            "uid": "97aeb38c-9aea-11d5-bd16-0090272ccb30",
+            "name": "FW1_clntauth_http",
+            "type": "service-tcp",
+            "domain": {
+                "uid": "a0bbbc99-adef-4ef8-bb6d-defdefdefdef",
+                "name": "Check Point Data",
+                "domain-type": "data domain"
+            },
+            "port": "900",
+            "match-by-protocol-signature": false,
+            "override-default-settings": false,
+            "session-timeout": 3600,
+            "use-default-session-timeout": true,
+            "match-for-any": true,
+            "sync-connections-on-cluster": true,
+            "aggressive-aging": {
+                "enable": true,
+                "timeout": 600,
+                "use-default-timeout": true,
+                "default-timeout": 0
+            },
+            "keep-connections-open-after-policy-installation": false,
+            "comments": "Check Point Security Gateway Client Authentication (HTTP)",
+            "color": "firebrick",
+            "icon": "Services/TCPService",
+            "tags": [],
+            "meta-info": {
+                "lock": "unlocked",
+                "validation-state": "ok",
+                "last-modify-time": {
+                    "posix": 1579505988105,
+                    "iso-8601": "2020-01-20T02:39-0500"
+                },
+                "last-modifier": "System",
+                "creation-time": {
+                    "posix": 1579505988105,
+                    "iso-8601": "2020-01-20T02:39-0500"
+                },
+                "creator": "System"
+            },
+            "read-only": false
+        }
+    ],
+    "from": 1,
+    "to": 50,
+    "total": 217
+}

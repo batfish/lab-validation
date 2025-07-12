@@ -1,0 +1,53 @@
+For address family: IPv4 Unicast
+
+
+For address family: IPv6 Unicast
+
+
+For address family: VPNv4 Unicast
+
+BGP table version is 17, local router ID is 192.168.123.3
+Status codes: s suppressed, d damped, h history, * valid, > best, i - internal,
+              r RIB-failure, S Stale, m multipath, b backup-path, f RT-Filter,
+              x best-external, a additional-path, c RIB-compressed,
+              t secondary path,
+Origin codes: i - IGP, e - EGP, ? - incomplete
+RPKI validation codes: V valid, I invalid, N Not found
+
+     Network          Next Hop            Metric LocPrf Weight Path
+Route Distinguisher: 65003:1 (default for vrf d1_ce) VRF Router ID 192.168.123.31
+ *>   10.13.11.0/30    0.0.0.0                  0         32768 ?
+ *>   192.168.122.0    10.34.31.2               0             0 65004 i
+ *>   192.168.123.1/32 10.13.11.1           10880         32768 ?
+Route Distinguisher: 65003:2 (default for vrf d2_ce) VRF Router ID 192.168.123.32
+ *>   2.2.2.2/32       10.23.12.1           10880         32768 ?
+ *>   10.23.12.0/30    0.0.0.0                  0         32768 ?
+ *>   192.168.122.0    10.34.31.2               0             0 65004 i
+ *>   192.168.123.2/32 10.23.12.1           10880         32768 ?
+ *>   192.168.123.3/32 0.0.0.0                  0         32768 i
+ *>   192.168.123.4/32 10.34.31.2               0             0 65004 i
+Route Distinguisher: 65003:4 (default for vrf d4_shared) VRF Router ID 192.168.123.3
+ *>   10.13.11.0/30    0.0.0.0                  0         32768 ?
+ *>   10.23.12.0/30    0.0.0.0                  0         32768 ?
+ *>   192.168.122.0    10.34.31.2               0             0 65004 i
+ *>   192.168.123.1/32 10.13.11.1           10880         32768 ?
+ *>   192.168.123.2/32 10.23.12.1           10880         32768 ?
+ *>   192.168.123.3/32 0.0.0.0                  0         32768 i
+ *>   192.168.123.4/32 10.34.31.2               0             0 65004 i
+
+For address family: IPv4 Multicast
+
+
+For address family: L2VPN E-VPN
+
+
+For address family: VPNv4 Multicast
+
+
+For address family: MVPNv4 Unicast
+
+
+For address family: MVPNv6 Unicast
+
+
+For address family: VPNv4 Flowspec
