@@ -89,6 +89,14 @@ entries:
     test_name: test_bgp_rib_routes
   - hostname: fwl01
     test_name: test_interface_properties
+  - hostname: fwl01
+    test_name: test_configuration_format
+    skip:
+      reason: https://github.com/batfish/lab-validation/issues/64
+  - hostname: fwl01
+    test_name: test_main_rib_routes
+    skip:
+      reason: https://github.com/batfish/lab-validation/issues/64
   - hostname: bor01
     test_name: test_bgp_rib_routes
   - hostname: exitgw
