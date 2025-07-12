@@ -26,8 +26,7 @@ from lab_tests.lab_getters import (
     get_host_nos,
     snapshot_path,
 )
-from src.lab_validation.models.runtime_data import SnapshotRuntimeData
-from src.lab_validation.validators import (
+from lab_validation.validators import (
     A10AcosValidator,
     AristaValidator,
     CheckpointGaiaValidator,
@@ -41,10 +40,8 @@ from src.lab_validation.validators import (
     SonicValidator,
     Vendor,
 )
-from src.lab_validation.validators.vendor_validator import (
-    ValidationError,
-    VendorValidator,
-)
+from lab_validation.validators.batfish_models.runtime_data import SnapshotRuntimeData
+from lab_validation.validators.vendor_validator import ValidationError, VendorValidator
 
 CONNECTIVITY_FILENAME = "connectivity.yaml"
 NETWORK_NAME_PREFIX = "lab_validation"

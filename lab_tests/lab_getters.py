@@ -4,7 +4,7 @@ from typing import Optional, Sequence, Tuple
 
 import yaml
 
-from src.lab_validation.validators import Vendor
+from lab_validation.validators import Vendor
 
 from .sickbay import Sickbay
 

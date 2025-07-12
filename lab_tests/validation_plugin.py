@@ -3,8 +3,8 @@ from typing import List, Optional, Sequence, Tuple
 
 import pytest
 
-from src.lab_validation.validators import Vendor
-from src.lab_validation.validators.vendor_validator import ValidationError
+from lab_validation.validators import Vendor
+from lab_validation.validators.vendor_validator import ValidationError
 
 from .lab_getters import SNAPSHOT_PATH, get_host_nos, get_sickbay
 from .sickbay import Sickbay, SickbayEntry, SkipType

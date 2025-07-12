@@ -3,8 +3,14 @@ from typing import List
 import pandas as pd
 from pybatfish.datamodel.answer import TableAnswer
 
-from src.lab_validation.models.interface_properties import InterfaceProperties
-from src.lab_validation.models.routes import BgpRibRoute, EvpnRibRoute, MainRibRoute
+from lab_validation.validators.batfish_models.interface_properties import (
+    InterfaceProperties,
+)
+from lab_validation.validators.batfish_models.routes import (
+    BgpRibRoute,
+    EvpnRibRoute,
+    MainRibRoute,
+)
 
 
 def get_batfish_interfaces(
