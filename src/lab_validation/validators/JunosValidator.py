@@ -412,9 +412,22 @@ def _compute_protocol_cost(
     return math.inf
 
 
+def _is_mgmt_iface(junos_name: str | None) -> bool:
+    """Return true iff Batfish treats this interface as a management interface."""
+    if junos_name is None:
+        return False
+    return junos_name.startswith("em0")
+
+
 def _compute_nexthop_cost(
     expected_route: JunosMainRibRoute, next_hop: NextHop
 ) -> float:
+    if _is_mgmt_iface(expected_route.next_hop_int) and isinstance(
+        next_hop, NextHopDiscard
+    ):
+        # Batfish creates null discard routes for down management interfaces.
+        return 0.0
+
     if expected_route.nh_type in {"Discard", "Reject"} and isinstance(
         next_hop, NextHopDiscard
     ):
@@ -450,10 +463,10 @@ def filter_route(real_route: JunosMainRibRoute) -> bool:
     if real_route.network.startswith("224.0.0") and real_route.nh_type == "MultiRecv":
         return True
     # em0.0 is junos dedicated mgmt interface
-    elif real_route.next_hop_int is not None and real_route.next_hop_int.startswith(
-        "em0.0"
-    ):
-        return True
+    elif _is_mgmt_iface(real_route.next_hop_int):
+        # Junos creates local /32 for down interfaces,
+        # and so does Batfish.
+        return not real_route.network.endswith("/32")
     # batfish creates only active routes
     elif not real_route.active:
         return True
