@@ -1,9 +1,9 @@
 set version 17.3R1.10
-set groups node0 system host-name fwl01
 set groups node0 system syslog source-address 10.254.4.1
 set groups node0 system ntp source-address 10.254.4.1
 set groups node0 interfaces fxp0 unit 0 family inet address 10.254.4.1/16
 set apply-groups node0
+set system host-name fwl01
 set system time-zone UTC
 set system root-authentication encrypted-password "$6$cJ1xK06N$98z7EmTVN9zCCuMKp7JnUnRflDUYc8Lc6l7NAXAp70MjgsUKm.WD.kJ7IY2WNi7mYT1sEV1rRvkTSzFasUamn0"
 set system services ssh root-login allow
