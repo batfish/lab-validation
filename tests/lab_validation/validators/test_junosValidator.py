@@ -1120,7 +1120,23 @@ def test_filter_route() -> None:
         )
     )
 
+    # /31 to em0.0 is dropped since Batfish deactivates the interface
     assert filter_route(
+        JunosMainRibRoute(
+            network="10.150.0.100/31",
+            protocol="local",
+            next_hop_ip=None,
+            next_hop_int="em0.0",
+            admin=0,
+            metric=0,
+            vrf="default",
+            nh_type="local",
+            active=True,
+        )
+    )
+
+    # /32 to em0.0 is kept to compare it to local discard route: https://github.com/batfish/batfish/pull/8658
+    assert not filter_route(
         JunosMainRibRoute(
             network="10.150.0.100/32",
             protocol="local",
