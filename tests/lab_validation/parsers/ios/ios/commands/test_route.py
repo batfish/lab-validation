@@ -122,7 +122,7 @@ S 10.100.128.0/24 is directly connected, Null0
             protocol="static",
             next_hop_ip=None,
             next_hop_int="Null0",
-            admin=0,
+            admin=1,
             metric=0,
         ),
     ]

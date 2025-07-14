@@ -112,12 +112,13 @@ def _get_v4_route(
         B        192.168.123.1 [20/0] via 10.12.11.1, 00:42:30
         B        192.168.123.2 [20/0] via 10.12.11.1, 00:42:30
     """
+    default_admin = 1 if protocol == "static" else 0
     return IosIpRoute(
         network=_get_network(network, subnet_prefix),
         protocol=protocol,
         next_hop_ip=parsed_route.get("nh_ip", None),
         next_hop_int=parsed_route.get("nh_iface", None),
-        admin=parsed_route.get("admin", 0),
+        admin=parsed_route.get("admin", default_admin),
         metric=parsed_route.get("metric", 0),
         vrf=vrf,
     )
