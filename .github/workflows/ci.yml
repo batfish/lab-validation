@@ -49,12 +49,13 @@ jobs:
         pytest tests/ -v --tb=short --cov=lab_validation --cov-report=xml --cov-report=term-missing
 
     - name: Upload coverage to Codecov
-      uses: codecov/codecov-action@v5
+      uses: codecov/codecov-action@v4
       with:
         file: ./coverage.xml
         flags: unittests
         name: codecov-umbrella
         fail_ci_if_error: false
+        verbose: true
 
     - name: Test package build
       run: |
