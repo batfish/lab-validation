@@ -205,3 +205,19 @@ jobs:
       run: |
         echo "=== Batfish logs ==="
         tail -100 batfish.log || echo "No batfish log found"
+
+  # Summary job for required status checks
+  all-labs-passed:
+    runs-on: ubuntu-latest
+    needs: [lab-integration-test]
+    if: always()  # Run even if some lab tests failed
+    
+    steps:
+    - name: Check all lab tests passed
+      run: |
+        if [ "${{ needs.lab-integration-test.result }}" != "success" ]; then
+          echo "❌ Some lab integration tests failed"
+          exit 1
+        else
+          echo "✅ All lab integration tests passed"
+        fi
