@@ -86,6 +86,10 @@ entries:
   - hostname: bl01
     test_name: test_interface_properties
   - hostname: fwl01
+    test_name: test_main_rib_routes
+    skip:
+      reason: https://github.com/batfish/lab-validation/issues/74
+  - hostname: fwl01
     test_name: test_bgp_rib_routes
   - hostname: fwl01
     test_name: test_interface_properties
