@@ -96,6 +96,20 @@ class BatfishBisector:
         self.logger.info(f"Bisection complete. Full log saved to {self.log_file}")
         return self.log_file
 
+    def _is_connection_error(self, test_output: str) -> bool:
+        """Check if test output indicates a connection error to Batfish server."""
+        connection_error_indicators = [
+            "Connection refused",
+            "ConnectionRefusedError",
+            "Failed to establish a new connection",
+            "NewConnectionError",
+            "Max retries exceeded",
+            "HTTPConnectionPool(host='localhost', port=9996)",
+        ]
+        return any(
+            indicator in test_output for indicator in connection_error_indicators
+        )
+
     def cleanup_containers(self) -> bool:
         """Remove containers directory to clear cached files."""
         try:
@@ -263,9 +277,9 @@ class BatfishBisector:
             self.logger.error(f"Error getting commit for date {date}: {e}")
             return None
 
-    def test_commit(self, commit: str) -> Optional[bool]:
+    def test_commit(self, commit: str, retry_count: int = 0) -> Optional[bool]:
         """Test a specific commit. Returns True if good, False if bad, None if error."""
-        self.logger.info(f"Testing commit: {commit}")
+        self.logger.info(f"Testing commit: {commit} (attempt {retry_count + 1})")
         error_msg = ""
         test_output = ""
 
@@ -288,11 +302,31 @@ class BatfishBisector:
             # Start server
             if not self.start_batfish_server():
                 error_msg = "Failed to start Batfish server"
-                self.log_commit_test(commit, None, test_output, error_msg)
-                return None
+                # Retry once for server startup failures
+                if retry_count == 0:
+                    self.logger.warning(
+                        f"Batfish server failed to start, retrying once..."
+                    )
+                    return self.test_commit(commit, retry_count + 1)
+                else:
+                    self.log_commit_test(commit, None, test_output, error_msg)
+                    return None
 
             # Test the lab
             result, test_output = self.test_lab()
+
+            # Check if the test failed due to connection errors (indicating server issues)
+            if not result and self._is_connection_error(test_output):
+                # Stop server and retry once for connection errors
+                self.stop_batfish_server()
+                if retry_count == 0:
+                    self.logger.warning(f"Connection error detected, retrying once...")
+                    return self.test_commit(commit, retry_count + 1)
+                else:
+                    # After retry, treat as skip (return None) rather than failure (return False)
+                    error_msg = "Connection error persisted after retry - skipping"
+                    self.log_commit_test(commit, None, test_output, error_msg)
+                    return None
 
             # Stop server
             self.stop_batfish_server()
