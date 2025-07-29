@@ -17,7 +17,7 @@ jobs:
           echo "Testing Slack notification on failure"
           exit 1
 
-  # Run the existing CI workflow
+  # Run the existing CI workflow (will be skipped due to test-failure)
   ci:
     uses: ./.github/workflows/ci.yml
     needs: test-failure
@@ -25,7 +25,7 @@ jobs:
   # Send Slack notification on failure
   notify-slack-on-failure:
     needs: [test-failure, ci]
-    if: always() && (needs.test-failure.result == 'failure' || needs.ci.result == 'failure')
+    if: always() && (needs.test-failure.result == 'failure' || needs.ci.result == 'failure' || needs.ci.result == 'skipped')
     runs-on: ubuntu-latest
     steps:
       - name: Send Slack notification on failure
