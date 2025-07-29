@@ -1,0 +1,30 @@
+# This file is an example of how to integrate lab validation into the docker release process
+# Add this job to docker/.github/workflows/reusable-upload.yml after artifact building
+
+  # Add this job to the docker upload workflow after dev artifacts are built
+  lab-validation-test:
+    runs-on: ubuntu-latest
+    needs: [dev_image_upload, dev_whl_upload]
+    if: inputs.BATFISH_GITHUB_BATFISH_REPO == 'batfish/batfish' && inputs.BATFISH_GITHUB_PYBATFISH_REPO == 'batfish/pybatfish'
+    steps:
+    - name: Call lab validation with test artifacts
+      uses: batfish/lab-validation/.github/workflows/reusable-lab-validation.yml@main
+      with:
+        batfish_docker: "batfish/batfish:${{ inputs.test_tag }}"
+        pybatfish_version: "${{ inputs.bf_version }}"
+        pybatfish_pypi_repo: "test"
+
+  # Update prod upload jobs to depend on lab validation passing
+  prod_image_upload:
+    if: inputs.queue_prod_release && inputs.BATFISH_GITHUB_BATFISH_REPO == 'batfish/batfish' && inputs.BATFISH_GITHUB_PYBATFISH_REPO == 'batfish/pybatfish'
+    environment: Release Containers
+    runs-on: ubuntu-latest
+    needs: [lab-validation-test]  # Add this dependency
+    # ... rest of existing job
+
+  prod_whl_upload:
+    if: inputs.queue_prod_release && inputs.BATFISH_GITHUB_BATFISH_REPO == 'batfish/batfish' && inputs.BATFISH_GITHUB_PYBATFISH_REPO == 'batfish/pybatfish'
+    environment: Release Pybatfish
+    runs-on: ubuntu-latest
+    needs: [lab-validation-test]  # Add this dependency
+    # ... rest of existing job

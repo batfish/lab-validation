@@ -1,0 +1,106 @@
+# This file is a template for adding lab validation to Batfish PRs via comments
+# Copy this to batfish/.github/workflows/ to enable PR-triggered lab validation
+
+name: PR Comment Lab Validation
+
+on:
+  issue_comment:
+    types: [created]
+
+jobs:
+  # Check if comment is on a PR and from authorized user
+  check-comment:
+    runs-on: ubuntu-latest
+    if: github.event.issue.pull_request && contains(github.event.comment.body, '/test-labs')
+    outputs:
+      should_run: ${{ steps.check.outputs.should_run }}
+      lab_filter: ${{ steps.parse.outputs.lab_filter }}
+      pr_ref: ${{ steps.pr.outputs.ref }}
+    steps:
+    - name: Check permissions
+      id: check
+      run: |
+        # Only allow repo collaborators to trigger lab validation
+        # You may want to customize this permission check
+        echo "should_run=true" >> $GITHUB_OUTPUT
+
+    - name: Get PR ref
+      id: pr
+      run: |
+        PR_NUMBER=${{ github.event.issue.number }}
+        echo "ref=refs/pull/$PR_NUMBER/head" >> $GITHUB_OUTPUT
+
+    - name: Parse lab filter
+      id: parse
+      run: |
+        COMMENT="${{ github.event.comment.body }}"
+        # Extract lab filter from comment (e.g., "/test-labs eos_*" -> "eos_*")
+        if [[ "$COMMENT" =~ /test-labs[[:space:]]+([^[:space:]]+) ]]; then
+          LAB_FILTER="${BASH_REMATCH[1]}"
+        else
+          LAB_FILTER=""
+        fi
+        echo "lab_filter=$LAB_FILTER" >> $GITHUB_OUTPUT
+        echo "Parsed lab filter: '$LAB_FILTER'"
+
+  # Add reaction to indicate the workflow started
+  react-start:
+    runs-on: ubuntu-latest
+    needs: check-comment
+    if: needs.check-comment.outputs.should_run == 'true'
+    steps:
+    - name: Add eyes reaction
+      run: |
+        curl -X POST \
+          -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+          -H "Accept: application/vnd.github.v3+json" \
+          https://api.github.com/repos/${{ github.repository }}/issues/comments/${{ github.event.comment.id }}/reactions \
+          -d '{"content":"eyes"}'
+
+  # Call the lab validation workflow
+  run-lab-validation:
+    needs: [check-comment, react-start]
+    if: needs.check-comment.outputs.should_run == 'true'
+    uses: batfish/lab-validation/.github/workflows/reusable-lab-validation.yml@main
+    with:
+      batfish_ref: ${{ needs.check-comment.outputs.pr_ref }}
+      pybatfish_ref: master
+      lab_filter: ${{ needs.check-comment.outputs.lab_filter }}
+
+  # React based on results
+  react-result:
+    runs-on: ubuntu-latest
+    needs: [check-comment, run-lab-validation]
+    if: always() && needs.check-comment.outputs.should_run == 'true'
+    steps:
+    - name: Add success reaction
+      if: needs.run-lab-validation.result == 'success'
+      run: |
+        curl -X POST \
+          -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+          -H "Accept: application/vnd.github.v3+json" \
+          https://api.github.com/repos/${{ github.repository }}/issues/comments/${{ github.event.comment.id }}/reactions \
+          -d '{"content":"+1"}'
+
+    - name: Add failure reaction
+      if: needs.run-lab-validation.result == 'failure'
+      run: |
+        curl -X POST \
+          -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+          -H "Accept: application/vnd.github.v3+json" \
+          https://api.github.com/repos/${{ github.repository }}/issues/comments/${{ github.event.comment.id }}/reactions \
+          -d '{"content":"-1"}'
+
+    - name: Comment with results
+      run: |
+        if [ "${{ needs.run-lab-validation.result }}" = "success" ]; then
+          COMMENT="✅ Lab validation passed!"
+        else
+          COMMENT="❌ Lab validation failed. Check the [workflow run](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}) for details."
+        fi
+
+        curl -X POST \
+          -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+          -H "Accept: application/vnd.github.v3+json" \
+          https://api.github.com/repos/${{ github.repository }}/issues/comments \
+          -d "{\"body\":\"$COMMENT\"}"
