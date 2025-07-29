@@ -4,16 +4,28 @@ on:
   schedule:
     - cron: "0 15 * * *" # 8AM Pacific; daily
   workflow_dispatch: # Allow manual triggering
+  push:
+    branches: [ add-daily-ci-workflow ] # Temporary for testing
 
 jobs:
+  # Temporary test job to simulate failure (remove after testing)
+  test-failure:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Simulate failure for testing
+        run: |
+          echo "Testing Slack notification on failure"
+          exit 1
+
   # Run the existing CI workflow
   ci:
     uses: ./.github/workflows/ci.yml
+    needs: test-failure
 
   # Send Slack notification on failure
   notify-slack-on-failure:
-    needs: ci
-    if: failure()
+    needs: [test-failure, ci]
+    if: always() && (needs.test-failure.result == 'failure' || needs.ci.result == 'failure')
     runs-on: ubuntu-latest
     steps:
       - name: Send Slack notification on failure
