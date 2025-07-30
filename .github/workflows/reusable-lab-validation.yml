@@ -1,15 +1,10 @@
-name: CI
+name: Lab Validation (reusable)
 
-# NOTE: The lab validation job in this workflow is kept in sync with
-# reusable-lab-validation.yml. Changes to lab validation logic should be
-# applied to both files to maintain consistency.
+# NOTE: This reusable workflow is kept in sync with the lab validation job
+# in ci.yml. Changes to lab validation logic should be applied to both files
+# to maintain consistency.
 
 on:
-  push:
-    branches: [ main, develop ]
-  pull_request:
-    branches: [ main, develop ]
-  workflow_dispatch:
   workflow_call:
     inputs:
       batfish_ref:
@@ -35,65 +30,12 @@ on:
         required: false
         default: "prod"
         type: string
+      lab_filter:
+        description: "Optional lab filter pattern (e.g., 'eos_*')"
+        required: false
+        type: string
 
 jobs:
-  lint:
-    runs-on: ubuntu-latest
-
-    steps:
-    - uses: actions/checkout@v4
-
-    - name: Set up Python 3.10
-      uses: actions/setup-python@v4
-      with:
-        python-version: "3.10"
-        cache: 'pip'
-        cache-dependency-path: '.pre-commit-config.yaml'
-
-    - name: Run pre-commit hooks
-      uses: pre-commit/action@v3.0.1
-
-  test:
-    runs-on: ubuntu-latest
-    permissions:
-      id-token: write
-
-    steps:
-    - uses: actions/checkout@v4
-
-    - name: Set up Python 3.10
-      uses: actions/setup-python@v4
-      with:
-        python-version: "3.10"
-        cache: 'pip'
-        cache-dependency-path: 'requirements*.txt'
-
-    - name: Install dependencies
-      run: |
-        python -m pip install --upgrade pip
-        pip install -r requirements.txt
-        pip install -r requirements-dev.txt
-        pip install -e .
-
-    - name: Run tests with coverage
-      run: |
-        pytest tests/ -v --tb=short --cov=lab_validation --cov-report=xml --cov-report=term-missing
-
-    - name: Upload coverage to Codecov
-      uses: codecov/codecov-action@v5
-      with:
-        files: ./coverage.xml
-        flags: unittests
-        name: codecov-umbrella
-        fail_ci_if_error: false
-        use_oidc: true
-
-    - name: Test package build
-      run: |
-        python -m build
-        pip install dist/*.whl
-        python -c "import lab_validation; print('Package imports successfully')"
-
   # First job to discover available labs
   discover-labs:
     runs-on: ubuntu-latest
@@ -106,8 +48,13 @@ jobs:
     - name: Discover available labs
       id: discover
       run: |
-        # Find all directories in snapshots/ and create JSON array
-        labs=$(ls -1 snapshots/ | jq -R -s -c 'split("\n")[:-1]')
+        if [ "${{ inputs.lab_filter }}" != "" ]; then
+          # Apply filter pattern
+          labs=$(ls -1 snapshots/ | grep -E "${{ inputs.lab_filter }}" | jq -R -s -c 'split("\n")[:-1]')
+        else
+          # Find all directories in snapshots/
+          labs=$(ls -1 snapshots/ | jq -R -s -c 'split("\n")[:-1]')
+        fi
         echo "labs=$labs" >> $GITHUB_OUTPUT
         echo "Discovered labs: $labs"
 
