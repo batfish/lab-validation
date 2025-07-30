@@ -18,7 +18,7 @@ on:
         default: "master"
         type: string
       pybatfish_version:
-        description: "PyPI version for Pybatfish (e.g., 1.2.3)"
+        description: "PyPI version for Pybatfish (e.g., 2025.7.7.2423)"
         required: false
         type: string
       pybatfish_pypi_repo:
@@ -197,7 +197,9 @@ jobs:
       run: |
         echo "=== Batfish logs ==="
         if [ "${{ inputs.batfish_docker }}" != "" ]; then
-          docker logs batfish || echo "No Docker container logs found"
+          # Save docker logs to batfish.log for consistency, then display
+          docker logs batfish > batfish.log 2>&1 || echo "No Docker container logs found"
+          tail -100 batfish.log || echo "No batfish log found"
         else
           tail -100 batfish.log || echo "No batfish log found"
         fi
