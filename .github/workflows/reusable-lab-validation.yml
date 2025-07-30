@@ -44,6 +44,8 @@ jobs:
     steps:
     - name: Checkout lab-validation
       uses: actions/checkout@v4
+      with:
+        repository: batfish/lab-validation
 
     - name: Discover available labs
       id: discover
@@ -116,6 +118,7 @@ jobs:
     - name: Checkout lab-validation
       uses: actions/checkout@v4
       with:
+        repository: batfish/lab-validation
         path: lab-validation
 
     - name: Set up Python 3.10
