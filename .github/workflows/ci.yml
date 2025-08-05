@@ -202,7 +202,20 @@ jobs:
         # Install Pybatfish based on input parameters (may override version from requirements.txt)
         if [ "${{ inputs.pybatfish_version }}" != "" ]; then
           if [ "${{ inputs.pybatfish_pypi_repo }}" = "test" ]; then
-            pip install -i https://test.pypi.org/simple --extra-index-url https://pypi.org/simple pybatfish==${{ inputs.pybatfish_version }}
+            # Retry installation from test.pypi.org to handle propagation delays
+            for attempt in 1 2 3 4 5; do
+              if pip install -i https://test.pypi.org/simple --extra-index-url https://pypi.org/simple pybatfish==${{ inputs.pybatfish_version }}; then
+                break
+              else
+                echo "Attempt $attempt failed, waiting 30 seconds before retry..."
+                if [ $attempt -lt 5 ]; then
+                  sleep 30
+                else
+                  echo "Failed to install pybatfish after 5 attempts"
+                  exit 1
+                fi
+              fi
+            done
           else
             pip install pybatfish==${{ inputs.pybatfish_version }}
           fi
