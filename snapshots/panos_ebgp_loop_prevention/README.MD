@@ -5,7 +5,6 @@
 ## LAB Facts
 
 - Lab is created to understand the `ebgp loop prevention` in `panos`
-
   - `d1` advertises route(`192.168.123.2/32`) to all peers `D2`
   - Based on the bgp peer configuration on D2, route will be accepted/rejected/not_sent
     - D2 does not advertise route to D3
