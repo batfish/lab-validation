@@ -1,8 +1,7 @@
 import re
-from typing import Text
 
 
-def to_interface_name(name: Text) -> Text:
+def to_interface_name(name: str) -> str:
     """Return the canonical interface name.
 
     Mostly geared at cisco devices.

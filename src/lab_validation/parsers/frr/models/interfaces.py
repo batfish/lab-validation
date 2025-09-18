@@ -1,14 +1,12 @@
-from typing import Optional, Text
-
 import attr
 
 
 @attr.s(frozen=True, auto_attribs=True)
-class FrrInterface(object):
+class FrrInterface:
     """Captures runtime properties of an interface."""
 
-    name: Text
+    name: str
     bandwidth: int
     mtu: int
     admin: bool
-    line: Optional[bool]
+    line: bool | None

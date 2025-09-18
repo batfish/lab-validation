@@ -1,4 +1,4 @@
-from typing import Any, Optional
+from typing import Any
 
 from pandas import DataFrame
 from pybatfish.client.session import Session
@@ -10,9 +10,7 @@ class MockSession(Session):
     """Mock session providing object storage and retrieval."""
 
     def __init__(self, load_questions: bool = False, **params: Any) -> None:
-        super(MockSession, self).__init__(
-            host="localhost", load_questions=load_questions, **params
-        )
+        super().__init__(host="localhost", load_questions=load_questions, **params)
 
     def _is_api_healthy(self) -> bool:
         return True
@@ -27,7 +25,7 @@ class MockTableAnswer(TableAnswer):
 
 
 class MockQuestion(QuestionBase):
-    def __init__(self, answer: Optional[TableAnswer] = None) -> None:
+    def __init__(self, answer: TableAnswer | None = None) -> None:
         self._answer = answer if answer is not None else MockTableAnswer()
 
     def answer(self, *args: Any, **kwargs: Any) -> TableAnswer:

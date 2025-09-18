@@ -1,5 +1,6 @@
 import json
-from typing import Any, Dict, List, Sequence
+from collections.abc import Sequence
+from typing import Any
 
 from ..models.routes import AristaIpRoute
 
@@ -17,7 +18,7 @@ VTEP_ADDR = "vtepAddr"
 
 def parse_show_ip_route_vrf_all_json(text: str) -> Sequence[AristaIpRoute]:
     json_obj = json.loads(text)
-    routes: List[AristaIpRoute] = []
+    routes: list[AristaIpRoute] = []
     assert VRFS in json_obj
     for vrf_name in json_obj[VRFS]:
         if ROUTES in json_obj[VRFS][vrf_name]:
@@ -25,8 +26,8 @@ def parse_show_ip_route_vrf_all_json(text: str) -> Sequence[AristaIpRoute]:
     return routes
 
 
-def _get_routes(vrf: str, json_obj: Dict[Any, Any]) -> Sequence[AristaIpRoute]:
-    routes: List[AristaIpRoute] = []
+def _get_routes(vrf: str, json_obj: dict[Any, Any]) -> Sequence[AristaIpRoute]:
+    routes: list[AristaIpRoute] = []
     for network in json_obj:
         routes_obj = json_obj[network]
         assert VIAS in routes_obj

@@ -1,9 +1,18 @@
 import logging
-from typing import Any, Dict, Optional, Text
+from typing import Any
 
-from pyparsing import Group, Literal, MatchFirst, OneOrMore
-from pyparsing import Optional as ParsingOptional
-from pyparsing import ParserElement, SkipTo, Word, printables, stringEnd
+from pyparsing import (
+    Group,
+    Literal,
+    MatchFirst,
+    OneOrMore,
+    Optional as ParsingOptional,
+    ParserElement,
+    SkipTo,
+    Word,
+    printables,
+    stringEnd,
+)
 
 from ...common.exceptions import UnrecognizedLinesError
 from ...common.tokens import dec, prefix, to_eol
@@ -61,9 +70,9 @@ def _interface_block() -> ParserElement:
 
 
 # TODO: this matches return values and signature of genie parsers. Write IosInterface model
-def parse_show_interfaces(text: Text) -> Dict[Text, Dict[Text, Any]]:
+def parse_show_interfaces(text: str) -> dict[str, dict[str, Any]]:
     all_parse_results = OneOrMore(Group(_interface_block())).scanString(text)
-    results: Dict[Text, Dict[Text, Any]] = {}
+    results: dict[str, dict[str, Any]] = {}
 
     logger = logging.getLogger(__name__)
     last_loc = 0
@@ -79,16 +88,14 @@ def parse_show_interfaces(text: Text) -> Dict[Text, Dict[Text, Any]]:
                 ipv4={} if iface_prefix is None else {iface_prefix: None},
             )
         if start_loc != last_loc and last_loc != 0:
-            raise UnrecognizedLinesError(
-                "Did not match:\n{}".format(text[last_loc:start_loc])
-            )
+            raise UnrecognizedLinesError(f"Did not match:\n{text[last_loc:start_loc]}")
         last_loc = end_loc
     if not results:
         logger.warning("No interface data found")
     return results
 
 
-def _convert_speed(speed: Optional[Text]) -> Optional[float]:
+def _convert_speed(speed: str | None) -> float | None:
     if speed is None:
         return speed
     if speed.lower().endswith("kbps"):

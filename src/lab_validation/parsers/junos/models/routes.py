@@ -1,4 +1,4 @@
-from typing import Optional, Sequence, Text
+from collections.abc import Sequence
 
 import attr
 
@@ -6,31 +6,31 @@ from ...common.utils import normalized_network, optional_int_converter
 
 
 @attr.s(frozen=True, auto_attribs=True, kw_only=True)
-class JunosMainRibRoute(object):
+class JunosMainRibRoute:
     # Route key
-    network: Text = attr.ib(converter=normalized_network)
-    vrf: Text
-    protocol: Text
-    next_hop_ip: Optional[Text]
+    network: str = attr.ib(converter=normalized_network)
+    vrf: str
+    protocol: str
+    next_hop_ip: str | None
 
     # Route attributes
     active: bool
     admin: int = attr.ib(converter=int)
-    next_hop_int: Optional[Text]
-    metric: Optional[int] = attr.ib(converter=optional_int_converter)
-    nh_type: Optional[Text]
+    next_hop_int: str | None
+    metric: int | None = attr.ib(converter=optional_int_converter)
+    nh_type: str | None
 
 
 @attr.s(frozen=True, auto_attribs=True, kw_only=True)
-class JunosBgpRoute(object):
-    vrf: Text
-    network: Text = attr.ib(converter=normalized_network)
+class JunosBgpRoute:
+    vrf: str
+    network: str = attr.ib(converter=normalized_network)
     is_active: bool
-    origin_protocol: Text
-    next_hop_ip: Text
-    next_hop_int: Text
+    origin_protocol: str
+    next_hop_ip: str
+    next_hop_int: str
     preference: int = attr.ib(converter=int)
-    metric: Optional[int] = attr.ib(converter=optional_int_converter)
+    metric: int | None = attr.ib(converter=optional_int_converter)
     local_preference: int = attr.ib(converter=int)
     as_path: Sequence[int]
     origin_type: str

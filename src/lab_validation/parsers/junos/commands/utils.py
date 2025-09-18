@@ -1,8 +1,7 @@
 import re
-from typing import Text, Tuple
 
 
-def remove_unused_lines(text: Text) -> Text:
+def remove_unused_lines(text: str) -> str:
     """
     remove "{master:0}" at the end to make the text a valid json string
     """
@@ -18,7 +17,7 @@ def remove_unused_lines(text: Text) -> Text:
 _table_header = re.compile(r"((?P<vrf>.*)\.)?(?P<rib>inet6?\.0)")
 
 
-def _parse_table_header(vrf_ip_info: Text) -> Tuple[Text, Text]:
+def _parse_table_header(vrf_ip_info: str) -> tuple[str, str]:
     m = _table_header.fullmatch(vrf_ip_info)
     assert m is not None
     vrf = m.group("vrf") if m.group("vrf") else "default"

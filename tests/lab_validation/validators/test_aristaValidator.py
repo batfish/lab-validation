@@ -461,7 +461,7 @@ def test_compare_all_interfaces_missing() -> None:
         expected_interfaces, batfish_interfaces
     )
     assert failures == {
-        "ethernet0": "Missing interface in Batfish: {}".format(expected_interfaces[0])
+        "ethernet0": f"Missing interface in Batfish: {expected_interfaces[0]}"
     }
 
 
@@ -500,7 +500,7 @@ def test_compare_all_interfaces_extra() -> None:
         expected_interfaces, batfish_interfaces
     )
     assert failures == {
-        "ethernet0": "Extra interface in Batfish: {}".format(batfish_interfaces[0])
+        "ethernet0": f"Extra interface in Batfish: {batfish_interfaces[0]}"
     }
 
 

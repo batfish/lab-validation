@@ -1,6 +1,6 @@
 import re
 from enum import Enum
-from typing import Any, ClassVar, Dict, List, Optional
+from typing import Any, ClassVar
 
 import attr
 from cerberus import Validator
@@ -18,7 +18,7 @@ class SkipType(Enum):
 
 
 @attr.s(auto_attribs=True, kw_only=True, frozen=True)
-class Skip(object):
+class Skip:
     """Details about how and why the test should be skipped."""
 
     SCHEMA: ClassVar = {
@@ -28,10 +28,10 @@ class Skip(object):
 
     # By default, run the test and XFAIL, give no reason.
     skip_type: SkipType = attr.ib(default=SkipType.XFAIL)
-    reason: Optional[str] = attr.ib(default=None)
+    reason: str | None = attr.ib(default=None)
 
     @classmethod
-    def from_dict(cls, d: Dict[str, str]) -> "Skip":
+    def from_dict(cls, d: dict[str, str]) -> "Skip":
         st = d.get("skip_type")
         return Skip(
             skip_type=SkipType.XFAIL if st is None else SkipType.of(st),
@@ -40,7 +40,7 @@ class Skip(object):
 
 
 @attr.s(auto_attribs=True, kw_only=True, frozen=True)
-class SickbayEntry(object):
+class SickbayEntry:
     """A single entry in the lab Sickbay"""
 
     SCHEMA: ClassVar = {
@@ -51,10 +51,10 @@ class SickbayEntry(object):
     }
 
     test_name: str
-    hostname: Optional[str]
+    hostname: str | None
     skip: Skip = attr.ib(factory=Skip)
 
-    def matches(self, test_name: str, hostname: Optional[str]) -> bool:
+    def matches(self, test_name: str, hostname: str | None) -> bool:
         if test_name is None and hostname is None:
             raise ValueError("Invalid criteria to match sickbay entry")
         return test_name == self.test_name and (
@@ -63,7 +63,7 @@ class SickbayEntry(object):
         )
 
     @classmethod
-    def from_dict(cls, d: Dict[str, Any]) -> "SickbayEntry":
+    def from_dict(cls, d: dict[str, Any]) -> "SickbayEntry":
         skip = d.get("skip")
         return SickbayEntry(
             test_name=d["test_name"],
@@ -73,7 +73,7 @@ class SickbayEntry(object):
 
 
 @attr.s(auto_attribs=True, kw_only=True, frozen=True)
-class Sickbay(object):
+class Sickbay:
     """Represents a set of sickbayed tests for a single lab."""
 
     SCHEMA: ClassVar = {
@@ -83,22 +83,20 @@ class Sickbay(object):
         },
     }
 
-    entries: List[SickbayEntry]
+    entries: list[SickbayEntry]
 
-    def matches(
-        self, test_name: str, hostname: Optional[str]
-    ) -> Optional[SickbayEntry]:
+    def matches(self, test_name: str, hostname: str | None) -> SickbayEntry | None:
         """Return first matching sickbay entry"""
         return next((e for e in self.entries if e.matches(test_name, hostname)), None)
 
     @classmethod
-    def from_dict(cls, d: Dict[str, Any]) -> "Sickbay":
+    def from_dict(cls, d: dict[str, Any]) -> "Sickbay":
         cls._validate_data(d)
         return Sickbay(
             entries=[SickbayEntry.from_dict(e) for e in d.get("entries", [])]
         )
 
     @classmethod
-    def _validate_data(cls, d: Dict[str, Any]) -> None:
+    def _validate_data(cls, d: dict[str, Any]) -> None:
         v = Validator()
         v.validate(d, cls.SCHEMA)

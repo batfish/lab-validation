@@ -1,7 +1,10 @@
 """Pytest plugin that implements custom test generation for lab validation."""
-from typing import List, Optional, Sequence, Tuple
+
+from collections.abc import Sequence
 
 import pytest
+from _pytest.mark import ParameterSet
+from pytest import MarkDecorator
 
 from lab_validation.validators import Vendor
 from lab_validation.validators.vendor_validator import ValidationError
@@ -23,15 +26,15 @@ def pytest_addoption(parser):
 
 
 def get_params(
-    host_nos: Sequence[Tuple[str, Vendor]], sickbay: Sickbay, test_name: str
-) -> List["ParameterSet"]:
+    host_nos: Sequence[tuple[str, Vendor]], sickbay: Sickbay, test_name: str
+) -> list[ParameterSet]:
     """Returns the parameterization of the given test name.
 
     Marks parameters for sickbayed tests as xfail, so that we see when they turn green.
     """
-    parameters: List["ParameterSet"] = []
+    parameters: list[ParameterSet] = []
     for hostname, vendor in host_nos:
-        sickbay_match: Optional[SickbayEntry] = sickbay.matches(test_name, hostname)
+        sickbay_match: SickbayEntry | None = sickbay.matches(test_name, hostname)
         if sickbay_match is None:
             # Not sickbayed
             parameters.append(pytest.param(hostname, vendor))
@@ -48,7 +51,7 @@ def get_params(
     return parameters
 
 
-def get_xfail_mark(bl: SickbayEntry) -> "Mark":
+def get_xfail_mark(bl: SickbayEntry) -> MarkDecorator:
     reason = bl.skip.reason
     return pytest.mark.xfail(
         reason=reason if reason is not None else "This test is sickbayed",

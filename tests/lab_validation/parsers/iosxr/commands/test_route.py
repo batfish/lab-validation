@@ -1,7 +1,8 @@
 """
 Tests of the common IOS model for show ip route, using IOS show data.
 """
-from typing import List, Sequence
+
+from collections.abc import Sequence
 
 import pytest
 from pyparsing import OneOrMore
@@ -16,7 +17,7 @@ from lab_validation.parsers.iosxr.grammar.route import single_route
 from lab_validation.parsers.iosxr.models.routes import IosXrRoute
 
 
-def _parse_route_table_only(text: str, vrf: str = "default") -> List[IosXrRoute]:
+def _parse_route_table_only(text: str, vrf: str = "default") -> list[IosXrRoute]:
     """Local utility function to just parse the routes section of a vrf's route table."""
     return _parse_routes_in_vrf(
         OneOrMore(single_route()).parseString(text, parseAll=True), vrf

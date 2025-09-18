@@ -1,16 +1,10 @@
 import math
 from collections import defaultdict
+from collections.abc import MutableSet, Sequence
 from os import PathLike, path
 from typing import (
     AbstractSet,
     Any,
-    DefaultDict,
-    Dict,
-    MutableSet,
-    Sequence,
-    Set,
-    Text,
-    Tuple,
 )
 
 from pybatfish.datamodel.route import (
@@ -56,7 +50,7 @@ class JunosValidator(VendorValidator):
 
     def validate_main_rib_routes(
         self, batfish_routes: Sequence[MainRibRoute]
-    ) -> Dict[Any, Any]:
+    ) -> dict[Any, Any]:
         """Validating main RIB routes from all VRFs"""
         real_routes: Sequence[JunosMainRibRoute] = self._parse_routes()
 
@@ -71,15 +65,15 @@ class JunosValidator(VendorValidator):
 
     def validate_bgp_rib_routes(
         self, batfish_routes: Sequence[BgpRibRoute]
-    ) -> Dict[Any, Any]:
+    ) -> dict[Any, Any]:
         return self._compare_all_bgp_routes(self._parse_bgp_routes(), batfish_routes)
 
     def validate_interface_properties(
         self, batfish_interfaces: Sequence[InterfaceProperties]
-    ) -> Dict[Any, Any]:
+    ) -> dict[Any, Any]:
         real_interfaces = self._parse_interface()
 
-        diffs: Dict[Any, Any] = {}
+        diffs: dict[Any, Any] = {}
         batfish_index = {i.name.lower(): i for i in batfish_interfaces}
         real_index = {i.name.lower(): i for i in real_interfaces}
 
@@ -103,7 +97,7 @@ class JunosValidator(VendorValidator):
         return diffs
 
     @staticmethod
-    def _exclude_iface(iface_name: Text, missing_in_batfish: Set[Text]) -> bool:
+    def _exclude_iface(iface_name: str, missing_in_batfish: set[str]) -> bool:
         exclude_iface = {
             # GRE: pseudo interface. Manual configured interfaces will be .1, .2 etc...
             # https://www.juniper.net/documentation/en_US/junos/topics/topic-map/switches-interface-gre.html#id-configuring-a-gre-tunnel
@@ -197,7 +191,7 @@ class JunosValidator(VendorValidator):
     @staticmethod
     def _compare_interfaces(
         real_interface: JunosInterface, batfish_interface: InterfaceProperties
-    ) -> Dict[Text, Text]:
+    ) -> dict[str, str]:
         diff = {}
 
         if not batfish_interface.name.startswith("em"):
@@ -205,9 +199,9 @@ class JunosValidator(VendorValidator):
             if batfish_interface.active != (
                 real_interface.state.admin and real_interface.state.line
             ):
-                diff[
-                    "active"
-                ] = f"Batfish: {batfish_interface.active}, JUNOS: admin={real_interface.state.admin} line={real_interface.state.line}"
+                diff["active"] = (
+                    f"Batfish: {batfish_interface.active}, JUNOS: admin={real_interface.state.admin} line={real_interface.state.line}"
+                )
 
         if real_interface.bandwidth is None:
             junos_bw = real_interface.speed
@@ -221,9 +215,9 @@ class JunosValidator(VendorValidator):
                 real_interface.name.startswith("lo0")
                 and real_interface.bandwidth is None
             ):
-                diff[
-                    "bandwidth"
-                ] = f"Batfish: {batfish_interface.bandwidth}, JUNOS: {junos_bw}"
+                diff["bandwidth"] = (
+                    f"Batfish: {batfish_interface.bandwidth}, JUNOS: {junos_bw}"
+                )
 
         # Ignoring MTU as Batfish does not model it correctly
         # if batfish_if.mtu != junos_interface.mtu:
@@ -234,7 +228,7 @@ class JunosValidator(VendorValidator):
     @staticmethod
     def get_interface_runtime_data(
         interfaces: Sequence[JunosInterface],
-    ) -> Dict[str, InterfaceRuntimeData]:
+    ) -> dict[str, InterfaceRuntimeData]:
         return {
             iface.name: InterfaceRuntimeData(
                 bandwidth=iface.bandwidth, lineUp=iface.state.line, speed=iface.speed
@@ -282,14 +276,14 @@ class JunosValidator(VendorValidator):
         self,
         real_routes: Sequence[JunosBgpRoute],
         batfish_routes: Sequence[BgpRibRoute],
-    ) -> Dict[Any, Any]:
+    ) -> dict[Any, Any]:
         # Group real routes by that key.
-        real: DefaultDict[Tuple, MutableSet[JunosBgpRoute]] = defaultdict(set)
+        real: defaultdict[tuple, MutableSet[JunosBgpRoute]] = defaultdict(set)
         for r in real_routes:
             real[(r.vrf, r.network, r.next_hop_ip)].add(r)
 
         # Group Batfish routes by that key.
-        batfish: DefaultDict[Tuple, MutableSet[BgpRibRoute]] = defaultdict(set)
+        batfish: defaultdict[tuple, MutableSet[BgpRibRoute]] = defaultdict(set)
         for bf_route in batfish_routes:
             batfish[(bf_route.vrf, bf_route.network, bf_route.next_hop_ip)].add(
                 bf_route
@@ -299,7 +293,7 @@ class JunosValidator(VendorValidator):
         missing_keys = real.keys() - batfish.keys()
         extra_keys = batfish.keys() - real.keys()
 
-        failures: Dict[Any, Any] = {}
+        failures: dict[Any, Any] = {}
         for k in common_keys:
             diff = JunosValidator._compare_bgp_rib_routes(real[k], batfish[k])
             if len(diff) != 0:
@@ -310,19 +304,19 @@ class JunosValidator(VendorValidator):
                 if route.is_active is False:
                     # Batfish only returns active routes. Skipping inactive routes
                     continue
-                failures[k] = "Batfish is missing route: {}".format(real[k])
+                failures[k] = f"Batfish is missing route: {real[k]}"
         for k in extra_keys:
-            failures[k] = "Batfish has extra route: {}".format(batfish[k])
+            failures[k] = f"Batfish has extra route: {batfish[k]}"
         return failures
 
     @staticmethod
     def _compare_bgp_rib_routes(
         real_routes: AbstractSet[JunosBgpRoute],
         batfish_routes: AbstractSet[BgpRibRoute],
-    ) -> Dict[Text, Text]:
+    ) -> dict[str, str]:
         real_route: JunosBgpRoute = next(iter(real_routes))
         batfish_route: BgpRibRoute = next(iter(batfish_routes))
-        diff: Dict[Text, Text] = {}
+        diff: dict[str, str] = {}
         real_metric = 0 if real_route.metric is None else real_route.metric
 
         if real_route.is_active is False:
@@ -330,29 +324,27 @@ class JunosValidator(VendorValidator):
             diff["Unexpected_inactive_route"] = f"Batfish: {batfish_route}"
 
         if batfish_route.metric != real_metric:
-            diff["metric"] = "Batfish: {}, real: {}".format(
-                batfish_route.metric, real_metric
-            )
+            diff["metric"] = f"Batfish: {batfish_route.metric}, real: {real_metric}"
         if batfish_route.local_preference != real_route.local_preference:
-            diff["local_preference"] = "Batfish: {}, real: {}".format(
-                batfish_route.local_preference, real_route.local_preference
+            diff["local_preference"] = (
+                f"Batfish: {batfish_route.local_preference}, real: {real_route.local_preference}"
             )
         if batfish_route.as_path != real_route.as_path:
-            diff["as_path"] = "Batfish: {}, real: {}".format(
-                batfish_route.as_path, real_route.as_path
+            diff["as_path"] = (
+                f"Batfish: {batfish_route.as_path}, real: {real_route.as_path}"
             )
         assert batfish_route.origin_protocol is not None
         if batfish_route.origin_protocol.lower() != real_route.origin_protocol.lower():
-            diff["origin_protocol"] = "Batfish: {}, real: {}".format(
-                batfish_route.origin_protocol, real_route.origin_protocol
+            diff["origin_protocol"] = (
+                f"Batfish: {batfish_route.origin_protocol}, real: {real_route.origin_protocol}"
             )
         valid_origin_pairs = {("I", "igp"), ("E", "egp"), ("?", "incomplete")}
         if (
             real_route.origin_type,
             batfish_route.origin_type,
         ) not in valid_origin_pairs:
-            diff["origin_type"] = "Batfish: {}, real: {}".format(
-                batfish_route.origin_type, real_route.origin_type
+            diff["origin_type"] = (
+                f"Batfish: {batfish_route.origin_type}, real: {real_route.origin_type}"
             )
         return diff
 

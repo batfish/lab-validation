@@ -1,7 +1,6 @@
 import json
 import sys
 from pathlib import Path
-from typing import Text
 
 from python_terraform import Terraform
 
@@ -9,7 +8,7 @@ USERNAME = "admin"
 PASSWORD = "P@ssword"
 
 
-def destroy_provider_aws(provider_aws: Text) -> None:
+def destroy_provider_aws(provider_aws: str) -> None:
     """
     Destroy aws infrastructure using Terraform
     """
@@ -17,7 +16,7 @@ def destroy_provider_aws(provider_aws: Text) -> None:
     tf_destroy_aws(provider_aws, tf_obj)
 
 
-def destroy_provider_panos(provider_panos: Text, mgmt_ip: Text) -> None:
+def destroy_provider_panos(provider_panos: str, mgmt_ip: str) -> None:
     """
     Destroy panos device configuration using Terraform
     """
@@ -25,7 +24,7 @@ def destroy_provider_panos(provider_panos: Text, mgmt_ip: Text) -> None:
     tf_destroy_panos(provider_panos, tf_obj, mgmt_ip)
 
 
-def get_tf_object(provider_tf: Text) -> Terraform:
+def get_tf_object(provider_tf: str) -> Terraform:
     """
     Creates Terraform object
     """
@@ -33,7 +32,7 @@ def get_tf_object(provider_tf: Text) -> Terraform:
     return Terraform(working_dir=path)
 
 
-def tf_destroy_aws(provider_aws: Text, tf_obj: Terraform) -> None:
+def tf_destroy_aws(provider_aws: str, tf_obj: Terraform) -> None:
     """
     Terraform destroy operation for aws provider
     """
@@ -47,7 +46,7 @@ def tf_destroy_aws(provider_aws: Text, tf_obj: Terraform) -> None:
         raise Exception("TF Destroy failed")
 
 
-def tf_destroy_panos(provider_panos: Text, tf_obj: Terraform, mgmt_ip: Text) -> None:
+def tf_destroy_panos(provider_panos: str, tf_obj: Terraform, mgmt_ip: str) -> None:
     """
     Terraform destroy operation for panos provider
     """

@@ -1,13 +1,7 @@
 import math
+from collections.abc import Callable, Sequence
 from typing import (
     Any,
-    Callable,
-    Dict,
-    List,
-    Optional,
-    Sequence,
-    Set,
-    Tuple,
     TypeVar,
     Union,
 )
@@ -18,7 +12,7 @@ from ..batfish_models.routes import BgpRibRoute
 
 T = TypeVar("T")
 S = TypeVar("S")
-CostResult = Union[Sequence[Union[Tuple[str, float], float]], float]
+CostResult = Union[Sequence[tuple[str, float] | float], float]
 CostFn = Callable[[S, T], CostResult]
 
 
@@ -42,7 +36,7 @@ def match_pairs(
     left: Sequence[S],
     right: Sequence[T],
     cost: CostFn,
-) -> Sequence[Tuple[Optional[S], Optional[T], CostResult]]:
+) -> Sequence[tuple[S | None, T | None, CostResult]]:
     """
     Tries to match elements in the left sequence to elements in the right sequence. Pairing is done by going through
     each element on the left (say e_left) and pairing it with an element on the right (say e_right) such that the cost
@@ -63,13 +57,11 @@ def match_pairs(
     :param cost: Cost function to be used to determine cost between elements from left and right
     :return: list of tuples of (element_left, element_right, cost_of_this_match)
     """
-    result: List[Tuple[Optional[S], Optional[T], CostResult]] = []
-    used_left: List[
+    result: list[tuple[S | None, T | None, CostResult]] = []
+    used_left: list[
         S
-    ] = (
-        []
-    )  # should ideally be set but not all real route objects are hashable (e.g., Panos)
-    used_right: Set[T] = set()
+    ] = []  # should ideally be set but not all real route objects are hashable (e.g., Panos)
+    used_right: set[T] = set()
 
     # match right with perfect matches if any
     for r in right:
@@ -110,16 +102,16 @@ def preprocess_batfish_bgp_route(batfish_route: BgpRibRoute) -> BgpRibRoute:
     """
     preprocess batfish route as necessary before comparing it with real show data
     """
-    nhip: Optional[str] = batfish_route.next_hop_ip
+    nhip: str | None = batfish_route.next_hop_ip
     if nhip == "AUTO/NONE(-1l)":
         return attr.evolve(batfish_route, next_hop_ip=None)
     return batfish_route
 
 
 def matched_pairs_to_failures(
-    matched_pairs: Sequence[Tuple[Any, Any, Any]],
-) -> Dict[str, str]:
-    failures: Dict[str, str] = {}
+    matched_pairs: Sequence[tuple[Any, Any, Any]],
+) -> dict[str, str]:
+    failures: dict[str, str] = {}
     for left, right, cost in matched_pairs:
         if left is None:
             failures[f"Right_element: {right}"] = "No_match_found_on_the_left"

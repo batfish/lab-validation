@@ -1,7 +1,8 @@
 import math
 import re
+from collections.abc import Sequence
 from pathlib import Path
-from typing import Any, Dict, List, Optional, Sequence, Text, Tuple
+from typing import Any
 
 from pybatfish.datamodel import (
     NextHop,
@@ -50,7 +51,7 @@ class IosXrValidator(VendorValidator):
     def __init__(self, device_path: Path) -> None:
         self.device_path: Path = device_path
         # Parsing interfaces show data is dang slow; cache them.
-        self.interfaces: Optional[List[IosXrInterface]] = None
+        self.interfaces: list[IosXrInterface] | None = None
 
     def get_runtime_data(self) -> NodeRuntimeData:
         interfaces = self._get_interfaces()
@@ -66,7 +67,7 @@ class IosXrValidator(VendorValidator):
 
     def validate_main_rib_routes(
         self, batfish_routes: Sequence[MainRibRoute]
-    ) -> Dict[Any, Any]:
+    ) -> dict[Any, Any]:
         """Validating main RIB routes from all VRFs"""
         real_routes: Sequence[IosXrRoute] = self._get_main_rib_all_vrfs()
 
@@ -88,7 +89,7 @@ class IosXrValidator(VendorValidator):
     @staticmethod
     def _validate_main_rib_routes(
         batfish_routes: Sequence[MainRibRoute], real_routes: Sequence[IosXrRoute]
-    ) -> Dict[Any, Any]:
+    ) -> dict[Any, Any]:
         # Drop routes with next hop to a mgmt interface and backup routes
         real_routes = [
             r
@@ -108,7 +109,7 @@ class IosXrValidator(VendorValidator):
     @staticmethod
     def _diff_routes_cost(
         xr_route: IosXrRoute, batfish_route: MainRibRoute
-    ) -> List[Tuple[str, float]]:
+    ) -> list[tuple[str, float]]:
         if xr_route.network != batfish_route.network:
             return [("network", math.inf)]
         if xr_route.vrf != batfish_route.vrf:
@@ -146,8 +147,8 @@ class IosXrValidator(VendorValidator):
 
     @staticmethod
     def compute_protocol_cost(
-        xr_protocol: Text, batfish_protocol: Text
-    ) -> List[Tuple[str, float]]:
+        xr_protocol: str, batfish_protocol: str
+    ) -> list[tuple[str, float]]:
         """
         Computes the protocol cost, given that they are not equal.
         Return [], when ios xr is bgp and batfish is bgp sub-types as ios xr does not provide bgp sub-type info.
@@ -184,7 +185,7 @@ class IosXrValidator(VendorValidator):
     @staticmethod
     def compute_next_hop_cost(
         xr_route: IosXrRoute, next_hop: NextHop
-    ) -> List[Tuple[str, float]]:
+    ) -> list[tuple[str, float]]:
         """Computes cost related to next hops."""
         if isinstance(next_hop, NextHopVrf):
             if xr_route.next_hop_vrf != next_hop.vrf:
@@ -223,10 +224,10 @@ class IosXrValidator(VendorValidator):
 
     def validate_bgp_rib_routes(
         self, batfish_routes: Sequence[BgpRibRoute]
-    ) -> Dict[Any, Any]:
+    ) -> dict[Any, Any]:
         """Validating BGP RIB routes from all VRFs"""
         # IosXrBgpRoute doesn't contain its VRF; the tuples in real_routes are (vrf, route)
-        real_routes: List[Tuple[Text, IosXrBgpRoute]] = self._get_bgp_rib_all_vrfs()
+        real_routes: list[tuple[str, IosXrBgpRoute]] = self._get_bgp_rib_all_vrfs()
         matched_routes = match_pairs(
             real_routes,
             list(map(preprocess_batfish_bgp_route, batfish_routes)),
@@ -245,10 +246,8 @@ class IosXrValidator(VendorValidator):
 
     @staticmethod
     def difference_matters(
-        difference: Tuple[
-            Optional[Tuple[Text, IosXrBgpRoute]], Optional[BgpRibRoute], Any
-        ],
-        show_routes: Sequence[Tuple[Text, IosXrBgpRoute]],
+        difference: tuple[tuple[str, IosXrBgpRoute] | None, BgpRibRoute | None, Any],
+        show_routes: Sequence[tuple[str, IosXrBgpRoute]],
     ) -> bool:
         """Checks if a difference produced by match_pairs really indicates an inconsistency between Batfish and show
         data. By default, differences matter, but need to weed out differences in VRF-leaked routes.
@@ -274,8 +273,8 @@ class IosXrValidator(VendorValidator):
 
     @staticmethod
     def could_have_been_leaked(
-        xr_route_tuple: Tuple[Text, IosXrBgpRoute],
-        show_routes: Sequence[Tuple[Text, IosXrBgpRoute]],
+        xr_route_tuple: tuple[str, IosXrBgpRoute],
+        show_routes: Sequence[tuple[str, IosXrBgpRoute]],
     ) -> bool:
         route_vrf = xr_route_tuple[0]
         route = xr_route_tuple[1]
@@ -286,10 +285,10 @@ class IosXrValidator(VendorValidator):
 
     def validate_interface_properties(
         self, batfish_interfaces: Sequence[InterfaceProperties]
-    ) -> Dict[Any, Any]:
+    ) -> dict[Any, Any]:
         """Validating interfaces"""
         xr_ifaces = self._get_interfaces()
-        diffs: Dict[Any, Any] = {}
+        diffs: dict[Any, Any] = {}
 
         batfish_ifaces = {i.name.lower(): i for i in batfish_interfaces}
         real_ifaces = {i.name.lower(): i for i in xr_ifaces}
@@ -312,14 +311,14 @@ class IosXrValidator(VendorValidator):
     def _compare_interfaces(
         iface: IosXrInterface,
         bf_iface: InterfaceProperties,
-    ) -> Dict[Text, Text]:
+    ) -> dict[str, str]:
         diff = {}
 
         xr_active = iface.admin_state == "up"
         if bf_iface.active != xr_active:
-            diff[
-                "active"
-            ] = f"Batfish: {bf_iface.active}, IOS XR: status={iface.admin_state}"
+            diff["active"] = (
+                f"Batfish: {bf_iface.active}, IOS XR: status={iface.admin_state}"
+            )
 
         if LOOPBACK_IFACE_PATTERN.match(iface.name):
             # Loopbacks don't have bandwidth on XR, so don't check those
@@ -331,15 +330,15 @@ class IosXrValidator(VendorValidator):
             # Batfish reports bps, XR uses kbps
             xr_bw_bps = iface.bw * 1000
             if bf_iface.bandwidth != xr_bw_bps:
-                diff[
-                    "bandwidth"
-                ] = f"Batfish: {bf_iface.bandwidth}, IOS XR: {xr_bw_bps}"
+                diff["bandwidth"] = (
+                    f"Batfish: {bf_iface.bandwidth}, IOS XR: {xr_bw_bps}"
+                )
 
         # TODO: compare primary address instead of all prefixes
         if iface.prefix and iface.prefix not in bf_iface.all_prefixes:
-            diff[
-                "ipv4 address"
-            ] = f"Batfish: {bf_iface.all_prefixes}, IOS XR: {iface.prefix}"
+            diff["ipv4 address"] = (
+                f"Batfish: {bf_iface.all_prefixes}, IOS XR: {iface.prefix}"
+            )
 
         # TODO: Ignoring MTU as Batfish does not model it correctly
         # See https://github.com/batfish/batfish/issues/3437 and https://github.com/batfish/batfish/issues/5119
@@ -348,7 +347,7 @@ class IosXrValidator(VendorValidator):
 
         return diff
 
-    def _get_bgp_rib_all_vrfs(self) -> List[Tuple[Text, IosXrBgpRoute]]:
+    def _get_bgp_rib_all_vrfs(self) -> list[tuple[str, IosXrBgpRoute]]:
         """Parses and returns the BGP rib for all VRFs."""
 
         bgp_path = self.device_path / "show_bgp_all_all.txt"
@@ -356,7 +355,7 @@ class IosXrValidator(VendorValidator):
 
         text = bgp_path.read_text()
         bgp_afs = parse_show_bgp_all_all(text)
-        ret: List[Tuple[Text, IosXrBgpRoute]] = []
+        ret: list[tuple[str, IosXrBgpRoute]] = []
         for af in bgp_afs:
             if af.name not in ["IPv4 Unicast", "VPNv4 Unicast"]:
                 continue
@@ -366,7 +365,7 @@ class IosXrValidator(VendorValidator):
                         ret.append((v.name, r))
         return ret
 
-    def _get_interfaces(self) -> List[IosXrInterface]:
+    def _get_interfaces(self) -> list[IosXrInterface]:
         if self.interfaces is not None:
             return self.interfaces
 
@@ -380,8 +379,8 @@ class IosXrValidator(VendorValidator):
 
     @staticmethod
     def _diff_bgp_routes_cost(
-        expected_route_and_vrf: Tuple[Text, IosXrBgpRoute], batfish_route: BgpRibRoute
-    ) -> List[Tuple[str, float]]:
+        expected_route_and_vrf: tuple[str, IosXrBgpRoute], batfish_route: BgpRibRoute
+    ) -> list[tuple[str, float]]:
         # return infinite cost if vrf or network subnet does not match
         expected_vrf = expected_route_and_vrf[0]
         if expected_vrf != batfish_route.vrf:
@@ -418,7 +417,7 @@ class IosXrValidator(VendorValidator):
     @staticmethod
     def compute_bgp_nexthop_cost(
         expected_route: IosXrBgpRoute, batfish_route: BgpRibRoute
-    ) -> List[Tuple[str, float]]:
+    ) -> list[tuple[str, float]]:
         if (
             batfish_route.next_hop_ip is None
             and batfish_route.next_hop_int == "null_interface"
@@ -441,7 +440,7 @@ class IosXrValidator(VendorValidator):
         )
 
     @staticmethod
-    def _bgp_origin_type_compatible(bf: Text, xr: Text) -> bool:
+    def _bgp_origin_type_compatible(bf: str, xr: str) -> bool:
         if bf == "igp":
             return xr == "i"
         elif bf == "egp":

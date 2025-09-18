@@ -1,5 +1,3 @@
-from typing import List
-
 import pandas as pd
 from pybatfish.datamodel.answer import TableAnswer
 
@@ -15,7 +13,7 @@ from lab_validation.validators.batfish_models.routes import (
 
 def get_batfish_interfaces(
     interface_properties: TableAnswer, node: str
-) -> List[InterfaceProperties]:
+) -> list[InterfaceProperties]:
     """Extract all interface properties for the given node and convert them into InterfaceProperties."""
     return list(
         InterfaceProperties(
@@ -44,7 +42,7 @@ def get_batfish_interfaces(
 
 def get_batfish_main_rib_routes(
     routes_answer: pd.DataFrame, node: str
-) -> List[MainRibRoute]:
+) -> list[MainRibRoute]:
     """Extract main rib routes for the given node and convert them into MainRibRoutes."""
     node_routes = routes_answer[routes_answer.Node == node]
     return node_routes.apply(
@@ -61,7 +59,7 @@ def get_batfish_main_rib_routes(
     ).values.tolist()
 
 
-def get_batfish_bgp_routes(routes_answer: pd.DataFrame, node: str) -> List[BgpRibRoute]:
+def get_batfish_bgp_routes(routes_answer: pd.DataFrame, node: str) -> list[BgpRibRoute]:
     """Extract BGP routes for the given node and convert them into BgpRibRoutes."""
     node_routes = routes_answer[routes_answer.Node == node]
     return node_routes.apply(
@@ -87,7 +85,7 @@ def get_batfish_bgp_routes(routes_answer: pd.DataFrame, node: str) -> List[BgpRi
 
 def get_batfish_evpn_routes(
     routes_answer: pd.DataFrame, node: str
-) -> List[EvpnRibRoute]:
+) -> list[EvpnRibRoute]:
     """Extract EVPN routes for the given node and convert them into EvpnRibRoutes."""
     node_routes = routes_answer[routes_answer.Node == node]
     return node_routes.apply(

@@ -159,7 +159,7 @@ def test_get_connectivity_files(tmp_path: Any) -> None:
     dummy_dir.mkdir()
     dummy_ping_file = dummy_dir / "ping 3.95.210.72 -c 1.txt"
     dummy_ping_file.write_text("dummy ping")
-    dummy_nmap_file = dummy_dir / "nmap 3.95.210.72 -p 22 " "-Pn.txt"
+    dummy_nmap_file = dummy_dir / "nmap 3.95.210.72 -p 22 -Pn.txt"
     dummy_nmap_file.write_text("dummy nmap")
     dummy_file = dummy_dir / "dummy.txt"
     dummy_file.write_text("dummy contents")

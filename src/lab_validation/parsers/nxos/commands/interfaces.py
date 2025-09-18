@@ -1,5 +1,5 @@
 import logging
-from typing import List, Optional, Sequence, Text
+from collections.abc import Sequence
 
 from pyparsing import Group, OneOrMore
 
@@ -9,10 +9,10 @@ from lab_validation.parsers.nxos.grammar.interface import interface_block
 from lab_validation.parsers.nxos.models.interfaces import NxosInterface
 
 
-def parse_show_interface(text: Text) -> Sequence[NxosInterface]:
+def parse_show_interface(text: str) -> Sequence[NxosInterface]:
     logger = logging.getLogger(__name__)
     all_parse_results = OneOrMore(Group(interface_block())).scanString(text)
-    results: List[NxosInterface] = []
+    results: list[NxosInterface] = []
 
     last_loc = 0
     for records, start_loc, end_loc in all_parse_results:
@@ -30,16 +30,14 @@ def parse_show_interface(text: Text) -> Sequence[NxosInterface]:
                 )
             )
         if start_loc != last_loc and last_loc != 0:
-            raise UnrecognizedLinesError(
-                "Did not match:\n{}".format(text[last_loc:start_loc])
-            )
+            raise UnrecognizedLinesError(f"Did not match:\n{text[last_loc:start_loc]}")
         last_loc = end_loc
     if not results:
         logger.warning("No interface data found")
     return results
 
 
-def get_admin_state(admin_state: Optional[Text], port_status_reason: Text) -> bool:
+def get_admin_state(admin_state: str | None, port_status_reason: str) -> bool:
     """
     return admin_state based on parsed admin_state or port_status_reason
     """

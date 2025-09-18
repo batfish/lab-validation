@@ -1,5 +1,5 @@
 import logging
-from typing import Iterable, List, Text
+from collections.abc import Iterable
 
 from pyparsing import (
     Group,
@@ -69,18 +69,16 @@ def _statistics_block() -> ParserElement:
     return "Statistics:" + to_eol + "TX" + to_eol + "RX" + to_eol
 
 
-def parse_show_interfaces(text: Text) -> Iterable[CheckpointInterface]:
+def parse_show_interfaces(text: str) -> Iterable[CheckpointInterface]:
     all_parse_results = OneOrMore(Group(_interface_block())).scanString(text)
-    results: List[CheckpointInterface] = []
+    results: list[CheckpointInterface] = []
 
     last_loc = 0
     for records, start_loc, end_loc in all_parse_results:
         for record in records:
             results.append(construct_iface(record))
         if start_loc != last_loc and last_loc != 0:
-            raise UnrecognizedLinesError(
-                "Did not match:\n{}".format(text[last_loc:start_loc])
-            )
+            raise UnrecognizedLinesError(f"Did not match:\n{text[last_loc:start_loc]}")
         last_loc = end_loc
     if not results:
         logging.getLogger(__name__).warning("No interface data found")

@@ -473,9 +473,7 @@ def test_compare_all_bgp_routes_mismatch_local_as_path() -> None:
     failures = JunosValidator("")._compare_all_bgp_routes(expected_routes, bf_routes)
     assert failures == {
         ("vrf", "1.1.1.0/24", "2.2.2.2"): {
-            "as_path": "Batfish: {}, real: {}".format(
-                bf_routes[0].as_path, expected_routes[0].as_path
-            )
+            "as_path": f"Batfish: {bf_routes[0].as_path}, real: {expected_routes[0].as_path}"
         }
     }
 
@@ -517,9 +515,7 @@ def test_compare_all_bgp_routes_mismatch_origin_protocol() -> None:
     failures = JunosValidator("")._compare_all_bgp_routes(expected_routes, bf_routes)
     assert failures == {
         ("vrf", "1.1.1.0/24", "2.2.2.2"): {
-            "origin_protocol": "Batfish: {}, real: {}".format(
-                bf_routes[0].origin_protocol, expected_routes[0].origin_protocol
-            )
+            "origin_protocol": f"Batfish: {bf_routes[0].origin_protocol}, real: {expected_routes[0].origin_protocol}"
         }
     }
 
@@ -588,9 +584,11 @@ def test_compare_all_bgp_routes_extra() -> None:
     ]
     failures = JunosValidator("")._compare_all_bgp_routes(expected_routes, bf_routes)
     assert failures == {
-        ("vrf", "1.1.1.0/24", "2.2.2.2"): "Batfish has extra route: {}".format(
-            {bf_routes[0]}
-        )
+        (
+            "vrf",
+            "1.1.1.0/24",
+            "2.2.2.2",
+        ): f"Batfish has extra route: { ({bf_routes[0]}) }"
     }
 
 
@@ -613,9 +611,11 @@ def test_compare_all_bgp_routes_missing() -> None:
     bf_routes = []
     failures = JunosValidator("")._compare_all_bgp_routes(expected_routes, bf_routes)
     assert failures == {
-        ("vrf", "1.1.1.0/24", "2.2.2.2"): "Batfish is missing route: {}".format(
-            {expected_routes[0]}
-        )
+        (
+            "vrf",
+            "1.1.1.0/24",
+            "2.2.2.2",
+        ): f"Batfish is missing route: { ({expected_routes[0]}) }"
     }
 
 

@@ -1,5 +1,4 @@
 import math
-from typing import List, Tuple
 
 import attr
 from pybatfish.datamodel import NextHopInterface, NextHopIp
@@ -243,7 +242,7 @@ def test_matched_routes_to_failures() -> None:
             admin=1,
         ),
     )
-    matched_routes: List[Tuple[IosIpRoute, MainRibRoute, float]] = [
+    matched_routes: list[tuple[IosIpRoute, MainRibRoute, float]] = [
         (ios_route1, batfish_route1, 1.0),
         (ios_route2, None, math.inf),
         (

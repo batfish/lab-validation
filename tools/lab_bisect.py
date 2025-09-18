@@ -20,7 +20,6 @@ import sys
 import time
 from datetime import datetime
 from pathlib import Path
-from typing import Optional
 
 
 class BatfishBisector:
@@ -58,7 +57,7 @@ class BatfishBisector:
     def log_commit_test(
         self,
         commit: str,
-        result: Optional[bool],
+        result: bool | None,
         test_output: str = "",
         error_msg: str = "",
     ):
@@ -84,7 +83,7 @@ class BatfishBisector:
             f"Logged commit {commit[:8]} as {commit_info['result']} to {self.log_file}"
         )
 
-    def finalize_log(self, first_bad_commit: Optional[str] = None):
+    def finalize_log(self, first_bad_commit: str | None = None):
         """Finalize the bisection log."""
         self.bisect_log["end_time"] = datetime.now().isoformat()
         self.bisect_log["first_bad_commit"] = first_bad_commit
@@ -138,7 +137,7 @@ class BatfishBisector:
                 with socket.create_connection(("localhost", 9996), timeout=2):
                     self.logger.info("Batfish server is ready!")
                     return True
-            except (socket.timeout, ConnectionRefusedError, OSError):
+            except (TimeoutError, ConnectionRefusedError, OSError):
                 # Server not ready yet, wait a bit
                 time.sleep(5)
 
@@ -207,7 +206,10 @@ class BatfishBisector:
             ]
 
             result = subprocess.run(
-                cmd, capture_output=True, text=True, timeout=300  # 5 minute timeout
+                cmd,
+                capture_output=True,
+                text=True,
+                timeout=300,  # 5 minute timeout
             )
 
             output = f"STDOUT:\n{result.stdout}\nSTDERR:\n{result.stderr}"
@@ -251,7 +253,7 @@ class BatfishBisector:
             self.logger.error(f"Error checking out commit {commit}: {e}")
             return False
 
-    def get_commit_from_date(self, date: str) -> Optional[str]:
+    def get_commit_from_date(self, date: str) -> str | None:
         """Get the commit hash closest to a given date."""
         try:
             # Get commit hash from date
@@ -277,7 +279,7 @@ class BatfishBisector:
             self.logger.error(f"Error getting commit for date {date}: {e}")
             return None
 
-    def test_commit(self, commit: str, retry_count: int = 0) -> Optional[bool]:
+    def test_commit(self, commit: str, retry_count: int = 0) -> bool | None:
         """Test a specific commit. Returns True if good, False if bad, None if error."""
         self.logger.info(f"Testing commit: {commit} (attempt {retry_count + 1})")
         error_msg = ""
@@ -305,7 +307,7 @@ class BatfishBisector:
                 # Retry once for server startup failures
                 if retry_count == 0:
                     self.logger.warning(
-                        f"Batfish server failed to start, retrying once..."
+                        "Batfish server failed to start, retrying once..."
                     )
                     return self.test_commit(commit, retry_count + 1)
                 else:
@@ -320,7 +322,7 @@ class BatfishBisector:
                 # Stop server and retry once for connection errors
                 self.stop_batfish_server()
                 if retry_count == 0:
-                    self.logger.warning(f"Connection error detected, retrying once...")
+                    self.logger.warning("Connection error detected, retrying once...")
                     return self.test_commit(commit, retry_count + 1)
                 else:
                     # After retry, treat as skip (return None) rather than failure (return False)
@@ -344,7 +346,7 @@ class BatfishBisector:
 
     def bisect(
         self, good_commit: str, bad_commit: str, skip_validation: bool = False
-    ) -> Optional[str]:
+    ) -> str | None:
         """
         Perform bisection to find the first bad commit.
         Returns the first bad commit hash, or None if bisection fails.

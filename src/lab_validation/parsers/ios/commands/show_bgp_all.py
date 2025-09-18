@@ -1,7 +1,6 @@
 import ipaddress
-from typing import Any, List
-from typing import Optional as OptionalTyping
-from typing import Sequence, Text
+from collections.abc import Sequence
+from typing import Any
 
 from pyparsing import (
     Group,
@@ -56,7 +55,7 @@ CLASS_B = ipaddress.ip_network("128.0.0.0/2")
 CLASS_C = ipaddress.ip_network("192.0.0.0/3")
 
 
-def parse_show_bgp_all(bgp_output: Text) -> Sequence[IosBgpAddressFamily]:
+def parse_show_bgp_all(bgp_output: str) -> Sequence[IosBgpAddressFamily]:
     """Parses IOS/XE 'show bgp all' output."""
     if bgp_output.strip() == "% BGP not active":
         return []
@@ -115,7 +114,7 @@ def _convert_route(record: Any, network: Any) -> IosBgpRoute:
     )
 
 
-def _get_best_path(status: OptionalTyping[Text]) -> bool:
+def _get_best_path(status: str | None) -> bool:
     """
     Todo: Have a better logic to handle valid bgp route that can make entry to RIB.
     Statuses containing "*" are valid routes (">" indicates best path, "m" indicates multipath).
@@ -131,11 +130,11 @@ def _get_best_path(status: OptionalTyping[Text]) -> bool:
         return False
 
 
-def _filter_empty(as_path_list: Sequence[Text]) -> List[Text]:
+def _filter_empty(as_path_list: Sequence[str]) -> list[str]:
     return list(filter(lambda x: (False if x == " " else True), as_path_list))
 
 
-def _classful_network(val: Text) -> Text:
+def _classful_network(val: str) -> str:
     """Returns either val network or the classful network containing val."""
     if "/" in val:
         return val

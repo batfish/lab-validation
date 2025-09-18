@@ -1,5 +1,5 @@
 import re
-from typing import List, Sequence, Text
+from collections.abc import Sequence
 
 from pyparsing import (
     Group,
@@ -22,12 +22,12 @@ from ..models.bgp import A10BgpRoute
 _IPv4_PATTERN = re.compile(r"\d+\.\d+\.\d+\.\d+")
 
 
-def parse_show_ip_bgp(text: Text) -> List[A10BgpRoute]:
+def parse_show_ip_bgp(text: str) -> list[A10BgpRoute]:
     """Parses the output of `show ip bgp`."""
     if not text.strip():
         return []
     parsed = show_ip_bgp().parseString(text)
-    routes: List[A10BgpRoute] = []
+    routes: list[A10BgpRoute] = []
     for r in parsed["v4_routes"]:
         routes.append(_deserialize_route(r))
     if _IPv4_PATTERN.search(parsed.padding):
@@ -39,7 +39,7 @@ def parse_show_ip_bgp(text: Text) -> List[A10BgpRoute]:
     return routes
 
 
-def _filter_empty(as_path_list: Sequence[Text]) -> List[Text]:
+def _filter_empty(as_path_list: Sequence[str]) -> list[str]:
     return list(filter(lambda x: (False if x == " " else True), as_path_list))
 
 
@@ -47,7 +47,7 @@ def _deserialize_route(r: ParseResults) -> A10BgpRoute:
     """Deserializes one parsed route."""
     as_path_str = _filter_empty(r.get("as_path", ""))
     as_path = tuple(map(int, as_path_str))
-    type_str: Text = str(r.get("type")).strip()
+    type_str: str = str(r.get("type")).strip()
     rtype = type_str if type_str in _types else None
     return A10BgpRoute(
         valid=bool("valid" in r),

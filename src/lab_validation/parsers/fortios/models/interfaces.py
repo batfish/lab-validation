@@ -1,31 +1,29 @@
-from typing import Optional, Text
-
 import attr
 
 
 @attr.s(frozen=True, auto_attribs=True, kw_only=True)
-class FortiosInterface(object):
+class FortiosInterface:
     """Captures runtime properties of an interface."""
 
-    name: Text
-    mode: Optional[Text]
-    ip_addr: Optional[Text]
-    ip_mask: Optional[Text]
-    status: Text
-    type: Text
+    name: str
+    mode: str | None
+    ip_addr: str | None
+    ip_mask: str | None
+    status: str
+    type: str
 
 
 @attr.s(frozen=True, auto_attribs=True, kw_only=True)
-class FortiosPhysicalInterface(object):
+class FortiosPhysicalInterface:
     """Captures runtime properties of a physical interface."""
 
-    name: Text
-    mode: Text
+    name: str
+    mode: str
     # Addr and mask are either both set or neither is set
-    ip_addr: Optional[Text]
-    ip_mask: Optional[Text]
-    ipv6_addr: Optional[Text]
-    status: Text
-    speed: Optional[int]
-    bit_rate_unit: Optional[Text]
-    duplex: Optional[Text]
+    ip_addr: str | None
+    ip_mask: str | None
+    ipv6_addr: str | None
+    status: str
+    speed: int | None
+    bit_rate_unit: str | None
+    duplex: str | None

@@ -1,5 +1,6 @@
 import json
-from typing import Any, Dict, List, Sequence
+from collections.abc import Sequence
+from typing import Any
 
 from ..models.routes import AristaEvpnRoute
 
@@ -23,7 +24,7 @@ VRF = "vrf"
 
 def parse_show_bgp_evpn_json(text: str) -> Sequence[AristaEvpnRoute]:
     json_obj = json.loads(text)
-    routes: List[AristaEvpnRoute] = []
+    routes: list[AristaEvpnRoute] = []
     if EVPN_ROUTES not in json_obj:
         return routes
     assert VRF in json_obj
@@ -31,8 +32,8 @@ def parse_show_bgp_evpn_json(text: str) -> Sequence[AristaEvpnRoute]:
     return routes
 
 
-def _get_evpn_routes(vrf: str, json_obj: Dict[Any, Any]) -> Sequence[AristaEvpnRoute]:
-    routes: List[AristaEvpnRoute] = []
+def _get_evpn_routes(vrf: str, json_obj: dict[Any, Any]) -> Sequence[AristaEvpnRoute]:
+    routes: list[AristaEvpnRoute] = []
     for routes_obj in json_obj.values():
         assert ROUTE_KEY_DETAIL in routes_obj
         key_detail = routes_obj[ROUTE_KEY_DETAIL]

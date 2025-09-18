@@ -1,16 +1,14 @@
-from typing import Optional, Text
-
 import attr
 
 
 @attr.s(frozen=True, auto_attribs=True, kw_only=True)
-class IosXrInterface(object):
+class IosXrInterface:
     """Captures runtime properties of an interface."""
 
-    name: Text
-    line_protocol: Text
-    admin_state: Text
-    prefix: Optional[Text]
+    name: str
+    line_protocol: str
+    admin_state: str
+    prefix: str | None
     mtu: int
     # Bandwidth, in Kbps
     bw: int

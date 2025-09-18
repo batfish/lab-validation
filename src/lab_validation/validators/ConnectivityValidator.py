@@ -1,7 +1,8 @@
 import ipaddress
 import os
+from collections.abc import Sequence
 from os import PathLike, path
-from typing import Any, Dict, Sequence, Text
+from typing import Any
 
 import pandas as pd
 from pybatfish.client.session import Session
@@ -13,8 +14,6 @@ from lab_validation.parsers.vendor_agnostic.commands.connectivity import (
 from lab_validation.parsers.vendor_agnostic.models.connectivity import Connectivity
 from lab_validation.validators.models.connectivity import (
     Connectivity as ConnectivityMatrix_Connectivity,
-)
-from lab_validation.validators.models.connectivity import (
     ConnectivityMatrix,
     Disposition,
     Flow,
@@ -34,7 +33,7 @@ DISPOSITION_FAIL = [
 
 def validate_connectivity(
     bf: Session, snapshot: str, device_path: PathLike, ipo_row: pd.DataFrame
-) -> Dict[Any, Any]:
+) -> dict[Any, Any]:
     """
     Validate Batfish connectivity results & return diff that do not match with real data
     :param bf: Batfish session
@@ -97,17 +96,17 @@ def get_bf_connectivity(
     return bf_disposition_converter(tr_output.Reverse_Traces[0][0].disposition)
 
 
-def get_connectivity_files(device_path: PathLike) -> Sequence[Text]:
+def get_connectivity_files(device_path: PathLike) -> Sequence[str]:
     files = next(os.walk(str(device_path)))[2]
     return [i for i in files if i.startswith("ping") or i.startswith("nmap")]
 
 
-def get_source_ip(src_ip: Text) -> Text:
+def get_source_ip(src_ip: str) -> str:
     assert ipaddress.ip_address(src_ip)
     return src_ip
 
 
-def get_start_location(input_data: Connectivity, ipo_row: pd.DataFrame) -> Text:
+def get_start_location(input_data: Connectivity, ipo_row: pd.DataFrame) -> str:
     # source ip '8.8.8.8' represents node on internet.
     if input_data.src_ip == "8.8.8.8":
         return "internet"
@@ -117,7 +116,7 @@ def get_start_location(input_data: Connectivity, ipo_row: pd.DataFrame) -> Text:
         return f"{node_name}[{interface}]"
 
 
-def bf_disposition_converter(bf_reverse_disposition: Text) -> bool:
+def bf_disposition_converter(bf_reverse_disposition: str) -> bool:
     if bf_reverse_disposition in DISPOSITION_SUCCESS:
         return True
     elif bf_reverse_disposition in DISPOSITION_FAIL:
@@ -128,9 +127,9 @@ def bf_disposition_converter(bf_reverse_disposition: Text) -> bool:
 
 def validate_connectivity_matrix(
     bf: Session, snapshot: str, matrix: ConnectivityMatrix
-) -> Dict[Flow, str]:
+) -> dict[Flow, str]:
     # Keep track of all differences found:
-    differences: Dict[Flow, str] = {}
+    differences: dict[Flow, str] = {}
     for conn_entry in matrix:
         tr_output = (
             bf.q.bidirectionalTraceroute(  # type: ignore
@@ -165,14 +164,14 @@ def validate_connectivity_matrix(
 def get_traceroute_diff(
     real_entry: ConnectivityMatrix_Connectivity,
     bf_disposition_raw: str,
-    differences: Dict[Flow, str],
+    differences: dict[Flow, str],
 ) -> None:
     """Get traceroute diff"""
     traceroute_match = matches_disposition(real_entry.disposition, bf_disposition_raw)
     if traceroute_match is False:
-        differences[
-            real_entry.flow
-        ] = f"Real: {real_entry.disposition.value}, Batfish: {bf_disposition_raw}"
+        differences[real_entry.flow] = (
+            f"Real: {real_entry.disposition.value}, Batfish: {bf_disposition_raw}"
+        )
 
 
 def matches_disposition(real_disposition: Disposition, bf_disposition_raw: str) -> bool:

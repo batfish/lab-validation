@@ -1,6 +1,6 @@
 import json
+from collections.abc import Sequence
 from pathlib import Path
-from typing import Sequence, Tuple
 
 import yaml
 
@@ -23,7 +23,7 @@ def snapshot_path(lab_name: str) -> Path:
     return SNAPSHOT_PATH.joinpath(lab_name)
 
 
-def get_host_nos(lab_name: str) -> Sequence[Tuple[str, Vendor]]:
+def get_host_nos(lab_name: str) -> Sequence[tuple[str, Vendor]]:
     """Returns a list of tuples (hostname, vendor) for the named lab.
 
     Read host and network OS from specified file.

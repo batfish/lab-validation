@@ -1,5 +1,6 @@
 import json
-from typing import Any, Dict, List, Sequence, Text
+from collections.abc import Sequence
+from typing import Any
 
 from ..models.routes import FrrBgpRoute, FrrBgpRouteNextHop
 
@@ -20,17 +21,17 @@ VALID = "valid"
 WEIGHT = "weight"
 
 
-def parse_show_ip_bgp_vrf_all_json(text: Text) -> Sequence[FrrBgpRoute]:
+def parse_show_ip_bgp_vrf_all_json(text: str) -> Sequence[FrrBgpRoute]:
     json_obj = json.loads(text)
-    routes: List[FrrBgpRoute] = []
+    routes: list[FrrBgpRoute] = []
     for vrf_name in json_obj:
         if ROUTES in json_obj[vrf_name]:
             routes += _get_bgp_routes(vrf_name, json_obj[vrf_name][ROUTES])
     return routes
 
 
-def _get_bgp_routes(vrf: Text, json_obj: Dict[Any, Any]) -> Sequence[FrrBgpRoute]:
-    routes: List[FrrBgpRoute] = []
+def _get_bgp_routes(vrf: str, json_obj: dict[Any, Any]) -> Sequence[FrrBgpRoute]:
+    routes: list[FrrBgpRoute] = []
     for network in json_obj:
         routes_obj = json_obj[network]
 
@@ -62,12 +63,12 @@ def _get_bgp_routes(vrf: Text, json_obj: Dict[Any, Any]) -> Sequence[FrrBgpRoute
     return routes
 
 
-def _get_as_path(as_path: Text) -> Sequence[int]:
+def _get_as_path(as_path: str) -> Sequence[int]:
     return tuple(map(int, as_path.split()))
 
 
-def _get_next_hops(json_obj: List[Dict[Any, Any]]) -> Sequence[FrrBgpRouteNextHop]:
-    next_hops: List[FrrBgpRouteNextHop] = []
+def _get_next_hops(json_obj: list[dict[Any, Any]]) -> Sequence[FrrBgpRouteNextHop]:
+    next_hops: list[FrrBgpRouteNextHop] = []
     for next_hop in json_obj:
         assert IP in next_hop
         assert AFI in next_hop

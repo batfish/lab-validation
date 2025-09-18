@@ -1,6 +1,6 @@
 """Runtime data models for Batfish."""
 
-from typing import Dict, Optional
+from typing import Optional
 
 import attr
 
@@ -19,7 +19,7 @@ class NodeRuntimeData:
     """Node runtime data corresponding to Batfish RuntimeData."""
 
     interfaces = attr.ib(
-        type=Dict[str, InterfaceRuntimeData], factory=dict, kw_only=True
+        type=dict[str, InterfaceRuntimeData], factory=dict, kw_only=True
     )
 
 
@@ -27,4 +27,4 @@ class NodeRuntimeData:
 class SnapshotRuntimeData:
     """Snapshot runtime data corresponding to Batfish SnapshotRuntimeData."""
 
-    runtimeData = attr.ib(type=Dict[str, NodeRuntimeData], factory=dict, kw_only=True)
+    runtimeData = attr.ib(type=dict[str, NodeRuntimeData], factory=dict, kw_only=True)

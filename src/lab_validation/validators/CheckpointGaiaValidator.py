@@ -1,5 +1,6 @@
+from collections.abc import Iterable, Sequence
 from pathlib import Path
-from typing import Any, Dict, Iterable, Sequence, Text
+from typing import Any
 
 from lab_validation.parsers.checkpoint.commands.interfaces import parse_show_interfaces
 from lab_validation.parsers.checkpoint.models.interfaces import CheckpointInterface
@@ -22,19 +23,19 @@ class CheckpointGaiaValidator(VendorValidator):
 
     def validate_main_rib_routes(
         self, batfish_routes: Sequence[MainRibRoute]
-    ) -> Dict[Any, Any]:
+    ) -> dict[Any, Any]:
         """Validating main RIB routes from all VRFs"""
         raise ValidationError("Not implemented")
 
     def validate_bgp_rib_routes(
         self, batfish_routes: Sequence[BgpRibRoute]
-    ) -> Dict[Any, Any]:
+    ) -> dict[Any, Any]:
         """Validating BGP RIB routes from all VRFs"""
         raise ValidationError("Not implemented")
 
     def validate_interface_properties(
         self, batfish_interfaces: Sequence[InterfaceProperties]
-    ) -> Dict[Any, Any]:
+    ) -> dict[Any, Any]:
         """Validating interfaces"""
         if_file = self.device_path / "show_interfaces_all.txt"
         cp_ifaces = parse_show_interfaces(if_file.read_text())
@@ -46,8 +47,8 @@ class CheckpointGaiaValidator(VendorValidator):
     def _compare_all_interfaces(
         cp_ifaces: Iterable[CheckpointInterface],
         bf_ifaces: Iterable[InterfaceProperties],
-    ) -> Dict[Text, Any]:
-        diffs: Dict[Text, Any] = {}
+    ) -> dict[str, Any]:
+        diffs: dict[str, Any] = {}
         bf_dict = {i.name.lower(): i for i in bf_ifaces}
         cp_dict = {i.name.lower(): i for i in cp_ifaces}
 
@@ -66,7 +67,7 @@ class CheckpointGaiaValidator(VendorValidator):
     def _compare_interfaces(
         iface: CheckpointInterface,
         bf_iface: InterfaceProperties,
-    ) -> Dict[Text, Text]:
+    ) -> dict[str, str]:
         diff = {}
 
         if bf_iface.active != iface.state:
@@ -82,9 +83,9 @@ class CheckpointGaiaValidator(VendorValidator):
 
         # TODO: compare primary address instead of all prefixes
         if iface.prefix and iface.prefix not in bf_iface.all_prefixes:
-            diff[
-                "ipv4 address"
-            ] = f"Batfish: {bf_iface.all_prefixes}, Checkpoint: {iface.prefix}"
+            diff["ipv4 address"] = (
+                f"Batfish: {bf_iface.all_prefixes}, Checkpoint: {iface.prefix}"
+            )
 
         if bf_iface.mtu != iface.mtu:
             diff["mtu"] = f"Batfish: {bf_iface.mtu}, Checkpoint: {iface.mtu}"

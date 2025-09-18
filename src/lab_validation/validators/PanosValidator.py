@@ -1,6 +1,7 @@
 import math
+from collections.abc import Sequence
 from pathlib import Path
-from typing import Any, Dict, Sequence, Text
+from typing import Any
 
 from pybatfish.datamodel import NextHop, NextHopDiscard, NextHopInterface, NextHopIp
 
@@ -26,7 +27,7 @@ class PanosValidator(VendorValidator):
 
     def validate_main_rib_routes(
         self, batfish_routes: Sequence[MainRibRoute]
-    ) -> Dict[Any, Any]:
+    ) -> dict[Any, Any]:
         """Validating main RIB routes from all VRFs"""
         real_routes: Sequence[PanosMainRibRoute] = self._get_main_rib_all_vrfs()
         matched_routes = match_pairs(
@@ -38,13 +39,13 @@ class PanosValidator(VendorValidator):
 
     def validate_bgp_rib_routes(
         self, batfish_routes: Sequence[BgpRibRoute]
-    ) -> Dict[Any, Any]:
+    ) -> dict[Any, Any]:
         """Validating BGP RIB routes from all VRFs"""
         raise ValidationError("Not implemented")
 
     def validate_interface_properties(
         self, batfish_interfaces: Sequence[InterfaceProperties]
-    ) -> Dict[Any, Any]:
+    ) -> dict[Any, Any]:
         """Validating interfaces"""
         raise ValidationError("Not implemented")
 
@@ -128,7 +129,7 @@ class PanosValidator(VendorValidator):
         raise ValueError("Unsupported next hop " + repr(next_hop))
 
     @staticmethod
-    def compute_protocol_cost(panos_protocol: Text, batfish_protocol: Text) -> float:
+    def compute_protocol_cost(panos_protocol: str, batfish_protocol: str) -> float:
         """
         Computes the protocol cost, given that they are not equal.
         Return math.inf when they are totally different protocols. Examples bgp & ospf, ospf & eigrp etc...

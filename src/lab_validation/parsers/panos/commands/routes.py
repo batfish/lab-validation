@@ -1,6 +1,6 @@
 import logging
 import re
-from typing import List, Sequence, Text
+from collections.abc import Sequence
 
 from pyparsing import ParseResults
 
@@ -11,7 +11,7 @@ from ..models.routes import PanosMainRibRoute
 _IPv4_PATTERN = re.compile(r"\d+\.\d+\.\d+\.\d+")
 
 
-def parse_show_routing_route(text: Text) -> Sequence[PanosMainRibRoute]:
+def parse_show_routing_route(text: str) -> Sequence[PanosMainRibRoute]:
     """
     Parses a PanOS `show routing route` output.
 
@@ -19,14 +19,12 @@ def parse_show_routing_route(text: Text) -> Sequence[PanosMainRibRoute]:
     """
     logger = logging.getLogger(__name__)
     all_parse_results = show_route().scanString(text)
-    routes: List[PanosMainRibRoute] = []
+    routes: list[PanosMainRibRoute] = []
     last_loc = 0
     for vr_record, start_loc, end_loc in all_parse_results:
         if start_loc != last_loc and last_loc != 0 and text[last_loc:start_loc].strip():
             raise UnrecognizedLinesError(
-                "Did not match: [bytes {} to {}, end_loc is {}]\n{}".format(
-                    last_loc, start_loc, end_loc, text[last_loc:start_loc]
-                )
+                f"Did not match: [bytes {last_loc} to {start_loc}, end_loc is {end_loc}]\n{text[last_loc:start_loc]}"
             )
         if _IPv4_PATTERN.search(vr_record.padding):
             # An IP address appears in the padding, likely indicating a parsing problem

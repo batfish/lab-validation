@@ -1,12 +1,13 @@
-from typing import Any, Dict, List, Sequence, Text
+from collections.abc import Sequence
+from typing import Any
 
 from ...common.utils import loads_multi_json
 from ..models.routes import FrrIpRoute
 
 
-def parse_show_ip_route_vrf_all_json(text: Text) -> Sequence[FrrIpRoute]:
+def parse_show_ip_route_vrf_all_json(text: str) -> Sequence[FrrIpRoute]:
     multi_json_obj = loads_multi_json(text)
-    routes: List[FrrIpRoute] = []
+    routes: list[FrrIpRoute] = []
 
     for json_obj in multi_json_obj:
         for route_key, route_json in json_obj.items():
@@ -15,10 +16,10 @@ def parse_show_ip_route_vrf_all_json(text: Text) -> Sequence[FrrIpRoute]:
     return routes
 
 
-def _get_route(route_json: Dict[Any, Any]) -> List[FrrIpRoute]:
+def _get_route(route_json: dict[Any, Any]) -> list[FrrIpRoute]:
     assert_list = ["prefix", "nexthops", "protocol"]
     assert all(item in route_json for item in assert_list)
-    route: List[FrrIpRoute] = []
+    route: list[FrrIpRoute] = []
     for i in range(len(route_json["nexthops"])):
         route += [
             FrrIpRoute(

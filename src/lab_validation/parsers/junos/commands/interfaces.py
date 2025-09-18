@@ -1,7 +1,7 @@
 import json
 import logging
 import re
-from typing import Dict, List, Optional, Sequence, Text, Tuple
+from collections.abc import Sequence
 
 from ..models.interfaces import JunosInterface, JunosInterfaceState
 from .utils import remove_unused_lines
@@ -9,9 +9,9 @@ from .utils import remove_unused_lines
 _bandwidth_map = {"k": 1000, "m": 1000000, "g": 1000000000}
 
 
-def parse_show_interfaces_json(text: Text) -> Sequence[JunosInterface]:
+def parse_show_interfaces_json(text: str) -> Sequence[JunosInterface]:
     json_obj = json.loads(remove_unused_lines(text))
-    interfaces: List[JunosInterface] = []
+    interfaces: list[JunosInterface] = []
     for iface_data in json_obj["interface-information"][0]["physical-interface"]:
         admin_physical = _get_admin(iface_data["admin-status"][0]["data"])
         line_physical = _get_line(iface_data["oper-status"][0]["data"])
@@ -51,14 +51,14 @@ def parse_show_interfaces_json(text: Text) -> Sequence[JunosInterface]:
     return interfaces
 
 
-def _get_admin(admin_status: Text) -> bool:
+def _get_admin(admin_status: str) -> bool:
     if admin_status == "up":
         return True
     assert admin_status == "down"
     return False
 
 
-def _get_line(line_status: Text) -> bool:
+def _get_line(line_status: str) -> bool:
     if line_status == "up":
         return True
     assert line_status == "down"
@@ -66,8 +66,8 @@ def _get_line(line_status: Text) -> bool:
 
 
 def _get_admin_logical(
-    admin_status: Dict, admin: bool, line: bool
-) -> Tuple[bool, bool]:
+    admin_status: dict, admin: bool, line: bool
+) -> tuple[bool, bool]:
     if "iff-up" in admin_status:
         return True, True
     elif "iff-down" in admin_status:
@@ -76,13 +76,13 @@ def _get_admin_logical(
         return admin, line
 
 
-def _to_bandwidth(bw: Optional[str]) -> Optional[int]:
+def _to_bandwidth(bw: str | None) -> int | None:
     if bw is None:
         return None
     bw = bw.lower()
     logger = logging.getLogger(__name__)
     match = re.fullmatch(r"([0-9]+)([gmk])bps", bw)
     if match is None:
-        logger.warning("Did not recognize bandwidth:{}".format(bw))
+        logger.warning(f"Did not recognize bandwidth:{bw}")
         return None
     return int(match[1]) * _bandwidth_map[match[2]]

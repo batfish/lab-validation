@@ -375,8 +375,8 @@ def test_parse_bgp_ecmp_routes() -> None:
 def test_get_weight() -> None:
     weight = None
     nhip = None
-    assert get_weight(weight, nhip) is 0
+    assert get_weight(weight, nhip) == 0
 
     weight = 123
     nhip = "1.2.3.4"
-    assert get_weight(weight, nhip) is 123
+    assert get_weight(weight, nhip) == 123

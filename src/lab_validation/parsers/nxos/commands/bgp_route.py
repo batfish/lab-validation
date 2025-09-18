@@ -1,5 +1,5 @@
 import re
-from typing import List, Sequence, Text
+from collections.abc import Sequence
 
 from pyparsing import (
     Combine,
@@ -26,9 +26,9 @@ from lab_validation.parsers.nxos.models.routes import NxosBgpRoute
 _IPv4_PATTERN = re.compile(r"\d+\.\d+\.\d+\.\d+")
 
 
-def parse_show_ip_bgp_all(text: Text) -> Sequence[NxosBgpRoute]:
+def parse_show_ip_bgp_all(text: str) -> Sequence[NxosBgpRoute]:
     all_parse_results = OneOrMore(_vrf_af_routes()).parseString(text)
-    routes: List[NxosBgpRoute] = []
+    routes: list[NxosBgpRoute] = []
     network = ""
     for table in all_parse_results:
         vrf = table["vrf"]
@@ -134,7 +134,7 @@ def _get_record() -> ParserElement:
     return record
 
 
-def _get_protocol(path_type: Text) -> Text:
+def _get_protocol(path_type: str) -> str:
     if path_type == "i":
         return "ibgp"
     if path_type == "a":
@@ -142,5 +142,5 @@ def _get_protocol(path_type: Text) -> Text:
     return "bgp"
 
 
-def _filter_empty(as_path_list: Sequence[Text]) -> List[Text]:
+def _filter_empty(as_path_list: Sequence[str]) -> list[str]:
     return list(filter(lambda x: (False if x == " " else True), as_path_list))

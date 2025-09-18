@@ -1,6 +1,7 @@
 import ipaddress
+from collections.abc import Sequence
 from pathlib import Path
-from typing import Any, Dict, Optional, Sequence, Text, Tuple
+from typing import Any
 
 from lab_validation.parsers.fortios.commands.interfaces import (
     parse_get_system_interface,
@@ -19,7 +20,7 @@ from lab_validation.validators.batfish_models.runtime_data import NodeRuntimeDat
 from .vendor_validator import ValidationError, VendorValidator
 
 
-def _get_speed(speed: Optional[int], bru: Optional[str]) -> Optional[int]:
+def _get_speed(speed: int | None, bru: str | None) -> int | None:
     """
     Get speed in bps for specified speed value and bit rate unit.
     If either is None, returns None instead.
@@ -40,7 +41,7 @@ def _get_speed(speed: Optional[int], bru: Optional[str]) -> Optional[int]:
     return speed * int(mult)
 
 
-def _get_ip_str(addr: Optional[str], mask: Optional[str]) -> Optional[str]:
+def _get_ip_str(addr: str | None, mask: str | None) -> str | None:
     """
     Convert ip address and mask to Batfish-style address with '/' prefix.
     If ip address is 0.0.0.0, returns None instead. Both addr and mask must be specified or both must be None.
@@ -56,9 +57,9 @@ def _get_ip_str(addr: Optional[str], mask: Optional[str]) -> Optional[str]:
 
 def _compare_interfaces(
     iface: FortiosInterface,
-    phys_iface: Optional[FortiosPhysicalInterface],
+    phys_iface: FortiosPhysicalInterface | None,
     bf_iface: InterfaceProperties,
-) -> Dict[Text, Text]:
+) -> dict[str, str]:
     diff = {}
 
     if bf_iface.active != (iface.status == "up"):
@@ -88,22 +89,22 @@ class FortiosValidator(VendorValidator):
 
     def validate_main_rib_routes(
         self, batfish_routes: Sequence[MainRibRoute]
-    ) -> Dict[Any, Any]:
+    ) -> dict[Any, Any]:
         """Validating main RIB routes from all VRFs"""
         raise ValidationError("Not implemented")
 
     def validate_bgp_rib_routes(
         self, batfish_routes: Sequence[BgpRibRoute]
-    ) -> Dict[Any, Any]:
+    ) -> dict[Any, Any]:
         """Validating BGP RIB routes from all VRFs"""
         raise ValidationError("Not implemented")
 
     def validate_interface_properties(
         self, batfish_interfaces: Sequence[InterfaceProperties]
-    ) -> Dict[Any, Any]:
+    ) -> dict[Any, Any]:
         """Validating interfaces"""
         fortios_ifaces, fortios_phys_ifaces = self._get_interfaces()
-        diffs: Dict[Any, Any] = {}
+        diffs: dict[Any, Any] = {}
 
         batfish_ifaces = {i.name.lower(): i for i in batfish_interfaces}
         real_phys_ifaces = {i.name.lower(): i for i in fortios_phys_ifaces}
@@ -130,7 +131,7 @@ class FortiosValidator(VendorValidator):
 
     def _get_interfaces(
         self,
-    ) -> Tuple[Sequence[FortiosInterface], Sequence[FortiosPhysicalInterface]]:
+    ) -> tuple[Sequence[FortiosInterface], Sequence[FortiosPhysicalInterface]]:
         """
         Parses and returns a tuple containing a list of interfaces and a list of physical interfaces.
         The physical interface list should be a subset of the first, full interface list.

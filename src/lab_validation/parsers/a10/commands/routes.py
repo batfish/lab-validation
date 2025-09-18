@@ -1,5 +1,4 @@
 import re
-from typing import List, Text
 
 from pyparsing import (
     Combine,
@@ -24,10 +23,10 @@ from ..models.routes import A10MainRibRoute
 _IPv4_PATTERN = re.compile(r"\d+\.\d+\.\d+\.\d+")
 
 
-def parse_show_ip_route_acos(text: Text) -> List[A10MainRibRoute]:
+def parse_show_ip_route_acos(text: str) -> list[A10MainRibRoute]:
     """Parses the output of `show ip route acos`."""
     parsed = show_ip_route_acos().parseString(text)
-    routes: List[A10MainRibRoute] = []
+    routes: list[A10MainRibRoute] = []
     if "v4_routes" in parsed:
         for r in parsed["v4_routes"]:
             routes.append(_deserialize_show_ip_route_acos_route(r))
@@ -52,10 +51,10 @@ def _deserialize_show_ip_route_acos_route(r: ParseResults) -> A10MainRibRoute:
     )
 
 
-def parse_show_ip_route_all(text: Text) -> List[A10MainRibRoute]:
+def parse_show_ip_route_all(text: str) -> list[A10MainRibRoute]:
     """Parses the output of `show ip route all`."""
     parsed = show_ip_route_all().parseString(text)
-    routes: List[A10MainRibRoute] = []
+    routes: list[A10MainRibRoute] = []
     for r in parsed["v4_routes"]:
         routes.append(_deserialize_show_ip_route_all_route(r))
     if _IPv4_PATTERN.search(parsed.padding):
@@ -67,7 +66,7 @@ def parse_show_ip_route_all(text: Text) -> List[A10MainRibRoute]:
     return routes
 
 
-def parse_one_show_ip_route_all_route(text: Text) -> A10MainRibRoute:
+def parse_one_show_ip_route_all_route(text: str) -> A10MainRibRoute:
     """Parses one route line of show ip route all, for testing."""
     parsed = _show_ip_route_all_ip_v4_route_line().parseString(text)
     return _deserialize_show_ip_route_all_route(parsed)
