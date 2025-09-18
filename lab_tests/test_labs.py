@@ -1,7 +1,6 @@
 import io
 import json
 import logging
-import os
 import zipfile
 from pathlib import Path
 from typing import Callable, Dict, Optional, Sequence, Tuple
@@ -10,7 +9,6 @@ import attr
 import pandas as pd
 import pytest
 from _pytest.config import Config
-from pybatfish.client.asserts import assert_zero_results
 from pybatfish.client.session import Session
 from pybatfish.datamodel.answer import TableAnswer
 
@@ -20,12 +18,7 @@ from lab_tests.bf_getters import (
     get_batfish_interfaces,
     get_batfish_main_rib_routes,
 )
-from lab_tests.lab_getters import (
-    SNAPSHOT_PATH,
-    get_connectivity_matrix,
-    get_host_nos,
-    snapshot_path,
-)
+from lab_tests.lab_getters import get_host_nos, snapshot_path
 from lab_validation.validators import (
     A10AcosValidator,
     AristaValidator,

@@ -1,17 +1,6 @@
 import math
 from pathlib import Path
-from typing import (
-    AbstractSet,
-    Any,
-    DefaultDict,
-    Dict,
-    List,
-    MutableSet,
-    Optional,
-    Sequence,
-    Text,
-    Tuple,
-)
+from typing import Any, Dict, List, Sequence, Text, Tuple
 
 from pybatfish.datamodel import (
     NextHop,

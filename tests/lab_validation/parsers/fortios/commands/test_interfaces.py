@@ -1,5 +1,3 @@
-import pytest
-
 from lab_validation.parsers.fortios.commands.interfaces import (
     parse_get_system_interface,
     parse_get_system_interface_physical,

@@ -5,7 +5,6 @@ from pyparsing import (
     MatchFirst,
     OneOrMore,
     Optional,
-    Or,
     ParserElement,
     QuotedString,
     Regex,
