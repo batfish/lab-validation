@@ -23,12 +23,23 @@ repos:
       - id: prettier
         types_or: [markdown, yaml]
         exclude: ^snapshots/.*/show/
-# MyPy type checking (run manually with: mypy src/)
-# Disabled in pre-commit due to module resolution issues in isolated environment
-# - repo: https://github.com/pre-commit/mirrors-mypy
-#   rev: v1.8.0
-#   hooks:
-#   - id: mypy
-#     additional_dependencies: [pybatfish, attrs, pyparsing, pandas-stubs, types-requests]
-#     args: [--explicit-package-bases, --namespace-packages]
-#     files: ^src/
+  - repo: https://github.com/pre-commit/mirrors-mypy
+    rev: v1.18.1
+    hooks:
+      - id: mypy
+        additional_dependencies:
+          [
+            pybatfish,
+            attrs,
+            pyparsing,
+            pandas-stubs,
+            types-requests,
+            PyYAML,
+            requests,
+            pandas,
+            pytest,
+            types-PyYAML,
+          ]
+        args: [src/]
+        pass_filenames: false
+        files: ^src/.*\.py$
