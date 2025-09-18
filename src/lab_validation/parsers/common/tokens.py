@@ -10,3 +10,19 @@ route_distinguisher = Combine(ip + ":" + dec) | Combine(dec + ":" + dec)
 to_eol = restOfLine
 newline = White("\r\n")
 uptime = dec + ":" + dec + ":" + dec
+
+
+def printables_and_space(length: int) -> Regex:
+    """
+    Creates a Regex pattern that matches printables + space for exact length.
+
+    This replaces the deprecated Word(printables + " ", exact=N) pattern that
+    no longer works in newer pyparsing versions due to missing re_match attribute.
+
+    Args:
+        length: Exact number of characters to match
+
+    Returns:
+        Regex pattern matching printables + space for the specified length
+    """
+    return Regex(r"[0-9a-zA-Z!\"#$%&'()*+,\-./:;<=>?@\[\\\]^_`{|}~ ]" + f"{{{length}}}")
