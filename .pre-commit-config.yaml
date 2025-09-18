@@ -25,7 +25,8 @@ repos:
     rev: v3.0.3
     hooks:
       - id: prettier
-        types_or: [markdown]
+        types_or: [markdown, yaml]
+        exclude: ^snapshots/.*/show/
 
   - repo: https://github.com/PyCQA/autoflake
     rev: v2.3.1
