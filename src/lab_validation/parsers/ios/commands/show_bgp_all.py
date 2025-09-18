@@ -15,7 +15,6 @@ from pyparsing import (
     Word,
     ZeroOrMore,
     alphanums,
-    printables,
 )
 
 from ...common.tokens import (

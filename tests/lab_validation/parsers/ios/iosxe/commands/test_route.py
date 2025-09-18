@@ -9,7 +9,6 @@ from pyparsing import OneOrMore
 from lab_validation.parsers.common.exceptions import UnrecognizedLinesError
 from lab_validation.parsers.ios.commands.route import (
     _parse_routes_in_vrf,
-    _parse_single_route_record,
     parse_show_ip_route,
 )
 from lab_validation.parsers.ios.grammar.route import single_route

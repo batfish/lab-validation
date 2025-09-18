@@ -3,7 +3,6 @@ from pyparsing import (
     Literal,
     MatchFirst,
     OneOrMore,
-    Optional,
     ParserElement,
     SkipTo,
     Word,

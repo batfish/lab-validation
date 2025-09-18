@@ -11,9 +11,7 @@ from pyparsing import (
     ParseResults,
     SkipTo,
     White,
-    Word,
     ZeroOrMore,
-    printables,
     stringEnd,
 )
 

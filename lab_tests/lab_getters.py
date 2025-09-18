@@ -1,6 +1,6 @@
 import json
 from pathlib import Path
-from typing import Optional, Sequence, Tuple
+from typing import Sequence, Tuple
 
 import yaml
 
