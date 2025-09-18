@@ -18,7 +18,14 @@ from pyparsing import (
     printables,
 )
 
-from ...common.tokens import dec, ip, prefix, route_distinguisher, to_eol
+from ...common.tokens import (
+    dec,
+    ip,
+    prefix,
+    printables_and_space,
+    route_distinguisher,
+    to_eol,
+)
 from ..models.bgp import IosBgpAddressFamily, IosBgpRoute, IosBgpVrf
 
 """Status code represents the type of bgp route using below codes combination. For example, '*>' = valid best,
@@ -247,11 +254,11 @@ def _af_table_routes_vrf_route() -> ParserElement:
         + (ip ^ prefix).setResultsName("network")
         + Optional(White("\n", exact=1).suppress())
         + White(" ", min=1).suppress()
-        + Word(printables + " ", exact=15).setResultsName("next_hop")
-        + Word(printables + " ", exact=11).setResultsName("metric")
+        + printables_and_space(15).setResultsName("next_hop")
+        + printables_and_space(11).setResultsName("metric")
         # exact=7 in local_preference is set as per the current show data examples that we have.
         # It needs to be adjusted if we see the value beyond it. Technically it can go up to 10 char.
-        + Word(printables + " ", exact=7).setResultsName("local_preference")
+        + printables_and_space(7).setResultsName("local_preference")
         + White(" ", min=1).suppress()
         + dec.setResultsName("weight")
         + White(" ", min=1).suppress()
@@ -274,11 +281,11 @@ def _af_table_routes_vrf_multi_route() -> ParserElement:
         White(min=1, max=2).suppress()
         + route_status
         + White(" ", min=1).suppress()
-        + Word(printables + " ", exact=15).setResultsName("next_hop")
-        + Word(printables + " ", exact=11).setResultsName("metric")
+        + printables_and_space(15).setResultsName("next_hop")
+        + printables_and_space(11).setResultsName("metric")
         # exact=7 in local_preference is set as per the current show data examples that we have.
         # It needs to be adjusted if we see the value beyond it. Technically it can go up to 10 char.
-        + Word(printables + " ", exact=7).setResultsName("local_preference")
+        + printables_and_space(7).setResultsName("local_preference")
         + White(" ", min=1).suppress()
         + dec.setResultsName("weight")
         + White(" ", min=1).suppress()

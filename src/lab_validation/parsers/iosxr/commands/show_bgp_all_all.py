@@ -17,7 +17,14 @@ from pyparsing import (
     printables,
 )
 
-from ...common.tokens import dec, ip, prefix, route_distinguisher, to_eol
+from ...common.tokens import (
+    dec,
+    ip,
+    prefix,
+    printables_and_space,
+    route_distinguisher,
+    to_eol,
+)
 from ..models.bgp import IosXrBgpAddressFamily, IosXrBgpRoute, IosXrBgpVrf
 
 """Status code represents the type of bgp route using below codes combination. For example, '*>' = valid best,
@@ -231,7 +238,7 @@ def _af_table_routes_vrf_route() -> ParserElement:
     # if a route has no listed metric, there may be less whitespace between
     # nhip and locprf than another route has between nhip and metric,
     # depending on the length of the nhip.
-    route_data = Word(printables + " ", exact=40).setResultsName("data")
+    route_data = printables_and_space(40).setResultsName("data")
     as_path = ZeroOrMore(dec + White(" ")).setResultsName("as_path")
     origin_type = Literal("e") ^ Literal("i") ^ Literal("?")
     record = Group(

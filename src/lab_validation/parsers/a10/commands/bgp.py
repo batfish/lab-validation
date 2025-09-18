@@ -18,7 +18,7 @@ from pyparsing import (
 )
 
 from ...common.exceptions import UnrecognizedLinesError
-from ...common.tokens import dec, ip, prefix, to_eol
+from ...common.tokens import dec, ip, prefix, printables_and_space, to_eol
 from ..models.bgp import A10BgpRoute
 
 _IPv4_PATTERN = re.compile(r"\d+\.\d+\.\d+\.\d+")
@@ -113,7 +113,7 @@ def _ip_v4_route_line() -> ParserElement:
         + Optional(dec.setResultsName("lp"))
         + White(" ", min=1, max=8)
         + dec.setResultsName("weight")
-        + Word(printables + " ", exact=10).setResultsName("type")
+        + printables_and_space(10).setResultsName("type")
         + ZeroOrMore(dec + White(" ")).setResultsName("as_path")
         + MatchFirst([Literal(code) for code in _origin_codes]).setResultsName("origin")
         + to_eol
