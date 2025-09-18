@@ -1,8 +1,9 @@
 import ipaddress
 import json
 import re
+from collections.abc import Generator, Mapping
 from json import JSONDecoder
-from typing import Any, Generator, Mapping, Optional
+from typing import Any
 
 
 def normalized_network(network: str) -> str:
@@ -20,7 +21,7 @@ def loads_multi_json(s: str) -> Generator[Mapping[str, Any], None, None]:
         s = s.strip()
         obj, pos = _decoder.raw_decode(s)
         if not pos:
-            raise ValueError("no JSON object found at %i" % pos)
+            raise ValueError(f"no JSON object found at {pos:d}")
         yield obj
         s = s[pos:]
 
@@ -90,7 +91,7 @@ def convert_cisco_intf_name(intf: str) -> str:
         return intf
 
 
-def optional_int_converter(x: Optional[Any]) -> Optional[int]:
+def optional_int_converter(x: Any | None) -> int | None:
     if x is None:
         return None
     return int(x)

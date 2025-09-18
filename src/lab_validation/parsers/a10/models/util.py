@@ -1,7 +1,4 @@
-from typing import Optional
-
-
-def canonicalize_interface_opt(iface: Optional[str]) -> Optional[str]:
+def canonicalize_interface_opt(iface: str | None) -> str | None:
     """Converts an interface name from show data into a canonical interface name."""
     if iface is None:
         return None

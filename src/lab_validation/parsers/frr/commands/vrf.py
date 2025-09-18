@@ -1,11 +1,9 @@
-from typing import Text
-
 from pyparsing import Group, OneOrMore
 
 from ..grammar.vrf import parse_vrf
 
 
-def get_show_vrf(text: Text) -> dict:
+def get_show_vrf(text: str) -> dict:
     parsed_result = OneOrMore(Group(parse_vrf())).parseString(text)
 
     vrf_result: dict = {}

@@ -1,11 +1,11 @@
 """Interface properties data model."""
 
-from typing import Any, List, Optional
+from typing import Any
 
 import attr
 
 
-def optional_int_converter(val: Any) -> Optional[int]:
+def optional_int_converter(val: Any) -> int | None:
     """Convert value to int if not None."""
     return int(val) if val is not None else None
 
@@ -15,15 +15,15 @@ class InterfaceProperties:
     """Network interface properties from Batfish interfaceProperties query."""
 
     name: str
-    access_vlan: Optional[int] = attr.ib(converter=optional_int_converter, default=None)
+    access_vlan: int | None = attr.ib(converter=optional_int_converter, default=None)
     active: bool
-    all_prefixes: List[str]
-    allowed_vlans: Optional[str]
+    all_prefixes: list[str]
+    allowed_vlans: str | None
     bandwidth: int
-    description: Optional[str]
-    native_vlan: Optional[int] = attr.ib(converter=optional_int_converter, default=None)
+    description: str | None
+    native_vlan: int | None = attr.ib(converter=optional_int_converter, default=None)
     mtu: int
     speed: int
     switchport: bool
-    switchport_mode: Optional[str]
+    switchport_mode: str | None
     vrf: str

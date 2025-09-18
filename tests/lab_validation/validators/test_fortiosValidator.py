@@ -189,17 +189,17 @@ def test_compare_interface_not_equal() -> None:
     new_bf_params = {**bf_params_equal, "active": False}
     assert _compare_interfaces(
         vs_interface, vs_physical_interface, InterfaceProperties(**new_bf_params)
-    ) == {"active": f"Batfish: False, Fortios: status=up"}
+    ) == {"active": "Batfish: False, Fortios: status=up"}
 
     # Mismatched ip addresses
     new_bf_params = {**bf_params_equal, "all_prefixes": ["10.10.10.11/24"]}
     assert _compare_interfaces(
         vs_interface, vs_physical_interface, InterfaceProperties(**new_bf_params)
-    ) == {"ipv4 address": f"Batfish: ['10.10.10.11/24'], Fortios: 10.10.10.10/24"}
+    ) == {"ipv4 address": "Batfish: ['10.10.10.11/24'], Fortios: 10.10.10.10/24"}
 
     # Physical-only interface data:
     # Mismatched speed
     new_bf_params = {**bf_params_equal, "speed": 1e4}
     assert _compare_interfaces(
         vs_interface, vs_physical_interface, InterfaceProperties(**new_bf_params)
-    ) == {"speed": f"Batfish: 10000.0, Fortios: 1000"}
+    ) == {"speed": "Batfish: 10000.0, Fortios: 1000"}

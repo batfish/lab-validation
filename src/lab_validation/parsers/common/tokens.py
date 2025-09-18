@@ -1,5 +1,5 @@
-# coding: utf-8
 """Contains helper pyparsing tokens that can be shared across parsers."""
+
 from pyparsing import Combine, MatchFirst, Regex, White, pyparsing_common, restOfLine
 
 ip = pyparsing_common.ipv4_address

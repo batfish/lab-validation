@@ -2,7 +2,7 @@ import attr
 
 
 @attr.s(frozen=True, auto_attribs=True)
-class AristaInterface(object):
+class AristaInterface:
     """Captures runtime properties of an interface."""
 
     name: str

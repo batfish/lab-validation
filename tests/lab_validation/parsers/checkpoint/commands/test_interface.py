@@ -1,6 +1,7 @@
 """
 Tests of the Checkpoint model for show interfaces, using Checkpoint show data.
 """
+
 from lab_validation.parsers.checkpoint.commands.interfaces import parse_show_interfaces
 from lab_validation.parsers.checkpoint.models.interfaces import CheckpointInterface
 

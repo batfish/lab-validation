@@ -1,6 +1,5 @@
-from typing import Any, Dict, List
-from typing import Optional as OptionalTyping
-from typing import Sequence, Text
+from collections.abc import Sequence
+from typing import Any
 
 from pyparsing import (
     Group,
@@ -47,7 +46,7 @@ _STATUS_CODES = [
 ]
 
 
-def parse_show_bgp_all_all(bgp_output: Text) -> Sequence[IosXrBgpAddressFamily]:
+def parse_show_bgp_all_all(bgp_output: str) -> Sequence[IosXrBgpAddressFamily]:
     """Parses IOS XR 'show bgp all all' output."""
     # TODO Handle show data for device with no active BGP
     parsed_afs = OneOrMore(_bgp_address_family()).parseString(bgp_output)
@@ -103,9 +102,7 @@ def _convert_routes(records: Sequence[Any]) -> Sequence[IosXrBgpRoute]:
     return routes
 
 
-def _get_best_path(
-    status: OptionalTyping[Text], network: Text, next_hop_ip: Text
-) -> bool:
+def _get_best_path(status: str | None, network: str, next_hop_ip: str) -> bool:
     """
     Returns true if a route with the given params is a best path route.
     Only best-path statuses (containing `>`) qualify for RIB entry.
@@ -120,7 +117,7 @@ def _get_best_path(
         return False
 
 
-def _filter_empty(as_path_list: Sequence[Text]) -> List[Text]:
+def _filter_empty(as_path_list: Sequence[str]) -> list[str]:
     return list(filter(lambda x: (False if x == " " else True), as_path_list))
 
 
@@ -186,7 +183,7 @@ def _af_table_routes_header() -> ParserElement:
     ).suppress()
 
 
-def parse_route_data(route_data: Text) -> Dict[str, Any]:
+def parse_route_data(route_data: str) -> dict[str, Any]:
     """Return the parsed route data. Includes next hop IP and (if present) metric, local pref, and weight."""
     ip_parser = ip.setResultsName("next_hop") + to_eol
     nhip = ip_parser.parseString(route_data)["next_hop"]

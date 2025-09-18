@@ -1,5 +1,6 @@
 import json
-from typing import Any, List, Optional, Sequence, Text
+from collections.abc import Sequence
+from typing import Any
 
 from ..models.routes import JunosMainRibRoute
 from .utils import _parse_table_header, remove_unused_lines
@@ -24,10 +25,10 @@ TO = "to"
 VIA = "via"
 
 
-def parse_show_route_display_json(text: Text) -> Sequence[JunosMainRibRoute]:
+def parse_show_route_display_json(text: str) -> Sequence[JunosMainRibRoute]:
     json_obj = json.loads(remove_unused_lines(text))
     assert ROUTE_INFORMATION in json_obj
-    junos_routes: List[JunosMainRibRoute] = []
+    junos_routes: list[JunosMainRibRoute] = []
     for rib in json_obj[ROUTE_INFORMATION]:
         assert ROUTE_TABLE in rib
         for table in rib[ROUTE_TABLE]:
@@ -42,8 +43,8 @@ def parse_show_route_display_json(text: Text) -> Sequence[JunosMainRibRoute]:
     return junos_routes
 
 
-def _get_routes(vrf: Text, route_json_obj: List[Any]) -> List[JunosMainRibRoute]:
-    junos_routes: List[JunosMainRibRoute] = []
+def _get_routes(vrf: str, route_json_obj: list[Any]) -> list[JunosMainRibRoute]:
+    junos_routes: list[JunosMainRibRoute] = []
     for route in route_json_obj:
         assert RT_DESTINATION in route
         assert len(route[RT_DESTINATION]) == 1
@@ -110,7 +111,7 @@ def _get_routes(vrf: Text, route_json_obj: List[Any]) -> List[JunosMainRibRoute]
     return junos_routes
 
 
-def convert_active(active_tag: Optional[Text]) -> bool:
+def convert_active(active_tag: str | None) -> bool:
     if active_tag == "*":
         # active route will have tag *
         return True

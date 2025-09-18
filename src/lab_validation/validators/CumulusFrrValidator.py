@@ -1,6 +1,7 @@
 import math
+from collections.abc import Sequence
 from os import PathLike, path
-from typing import Any, Dict, List, Sequence, Text
+from typing import Any
 
 from pybatfish.datamodel import NextHop, NextHopDiscard, NextHopInterface, NextHopIp
 
@@ -72,15 +73,15 @@ class CumulusFrrValidator(VendorValidator):
 
     def validate_interface_properties(
         self, batfish_interfaces: Sequence[InterfaceProperties]
-    ) -> Dict[Any, Any]:
+    ) -> dict[Any, Any]:
         return self._compare_all_interfaces(self._show_interfaces(), batfish_interfaces)
 
     def validate_main_rib_routes(
         self, batfish_routes: Sequence[MainRibRoute]
-    ) -> Dict[str, str]:
+    ) -> dict[str, str]:
         """Validating main RIB routes from all VRFs"""
         show_routes: Sequence[FrrIpRoute] = self._parse_routes()
-        show_routes_updated: List[FrrIpRoute] = self._show_route_processed(show_routes)
+        show_routes_updated: list[FrrIpRoute] = self._show_route_processed(show_routes)
 
         matched_routes = match_pairs(
             show_routes_updated,
@@ -91,8 +92,8 @@ class CumulusFrrValidator(VendorValidator):
 
     def _show_route_processed(
         self, show_routes: Sequence[FrrIpRoute]
-    ) -> List[FrrIpRoute]:
-        show_routes_updated: List[FrrIpRoute] = []
+    ) -> list[FrrIpRoute]:
+        show_routes_updated: list[FrrIpRoute] = []
         for r in show_routes:
             """Adding vrf from `show_vrf_cmd` as FRR `show_route` data does not have vrf_name.
             It only has vrf_id. So doing mapping of vrf_id --> vrf_name"""
@@ -137,8 +138,8 @@ class CumulusFrrValidator(VendorValidator):
     def _compare_all_interfaces(
         show_interfaces: Sequence[FrrInterface],
         batfish_interfaces: Sequence[InterfaceProperties],
-    ) -> Dict[Any, Any]:
-        diffs: Dict[Any, Any] = {
+    ) -> dict[Any, Any]:
+        diffs: dict[Any, Any] = {
             "batfish_extra": {},
             "batfish_missing": {},
             "batfish_mismatch": {},
@@ -161,23 +162,23 @@ class CumulusFrrValidator(VendorValidator):
     @staticmethod
     def _compare_interfaces(
         show_iface_detail: FrrInterface, batfish_iface_detail: InterfaceProperties
-    ) -> Dict[Text, Text]:
+    ) -> dict[str, str]:
         diff = {}
 
         if batfish_iface_detail.active != show_iface_detail.admin:
-            diff[
-                "active"
-            ] = f"Batfish: {batfish_iface_detail.active}, show_data: {show_iface_detail.admin}"
+            diff["active"] = (
+                f"Batfish: {batfish_iface_detail.active}, show_data: {show_iface_detail.admin}"
+            )
 
         if batfish_iface_detail.bandwidth != show_iface_detail.bandwidth:
-            diff[
-                "bandwidth"
-            ] = f"Batfish: {batfish_iface_detail.bandwidth}, show_data: {show_iface_detail.bandwidth}"
+            diff["bandwidth"] = (
+                f"Batfish: {batfish_iface_detail.bandwidth}, show_data: {show_iface_detail.bandwidth}"
+            )
 
         if batfish_iface_detail.mtu != show_iface_detail.mtu:
-            diff[
-                "mtu"
-            ] = f"Batfish: {batfish_iface_detail.mtu}, show_data: {show_iface_detail.mtu}"
+            diff["mtu"] = (
+                f"Batfish: {batfish_iface_detail.mtu}, show_data: {show_iface_detail.mtu}"
+            )
 
         return diff
 

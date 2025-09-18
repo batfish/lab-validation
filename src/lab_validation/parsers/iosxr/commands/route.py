@@ -1,6 +1,6 @@
 import logging
 import re
-from typing import Generator, List, Sequence, Text, Tuple
+from collections.abc import Generator, Sequence
 
 from pyparsing import ParseResults
 
@@ -29,23 +29,23 @@ _IPv4_PATTERN = re.compile(r"\d+\.\d+\.\d+\.\d+")
 _IPv4_PREFIX_PATTERN = re.compile(r"\d+\.\d+\.\d+\.\d+/\d+")
 
 
-def parse_show_route(routes_output: Text) -> Sequence[IosXrRoute]:
+def parse_show_route(routes_output: str) -> Sequence[IosXrRoute]:
     """Parses show route output for IOS XR"""
     return _parse_helper(routes_output, show_route().scanString(routes_output), True)
 
 
-def parse_show_route_vrf_all(routes_output: Text) -> Sequence[IosXrRoute]:
+def parse_show_route_vrf_all(routes_output: str) -> Sequence[IosXrRoute]:
     """Parses show route vrf all output for IOS XR"""
     return _parse_helper(routes_output, show_route_vrf().scanString(routes_output))
 
 
 def _parse_helper(
-    routes_output: Text,
-    raw_parsed_results: Generator[Tuple[ParseResults, int, int], None, None],
+    routes_output: str,
+    raw_parsed_results: Generator[tuple[ParseResults, int, int], None, None],
     default_vrf: bool = False,
 ) -> Sequence[IosXrRoute]:
     logger = logging.getLogger(__name__)
-    routes: List[IosXrRoute] = []
+    routes: list[IosXrRoute] = []
     last_loc = 0
     # the table for the default vrf will not have a vrf header
     last_vrf = "default" if default_vrf else None
@@ -57,9 +57,7 @@ def _parse_helper(
         ):
             # There is text between records that is not whitespace, throw an error so we investigate
             raise UnrecognizedLinesError(
-                "Did not match: [bytes {} to {}, end_loc is {}]\n{}".format(
-                    last_loc, start_loc, end_loc, routes_output[last_loc:start_loc]
-                )
+                f"Did not match: [bytes {last_loc} to {start_loc}, end_loc is {end_loc}]\n{routes_output[last_loc:start_loc]}"
             )
         if "preamble" in vrf_table and _IPv4_PREFIX_PATTERN.search(vrf_table.preamble):
             # A prefix appears in what is parsed as the preamble, indicating a parsing problem
@@ -87,14 +85,14 @@ def _parse_helper(
     return routes
 
 
-def _parse_routes_in_vrf(v4_route_records: ParseResults, vrf: str) -> List[IosXrRoute]:
+def _parse_routes_in_vrf(v4_route_records: ParseResults, vrf: str) -> list[IosXrRoute]:
     routes = []
     for record in v4_route_records:
         routes += _parse_single_record(record, vrf)
     return routes
 
 
-def _parse_single_record(record: ParseResults, vrf: str) -> List[IosXrRoute]:
+def _parse_single_record(record: ParseResults, vrf: str) -> list[IosXrRoute]:
     if "v4_route" not in record:
         raise UnrecognizedLinesError("Unexpected record: " + repr(record))
 
@@ -114,9 +112,9 @@ def _parse_single_record(record: ParseResults, vrf: str) -> List[IosXrRoute]:
 
 def _get_v4_ecmp_routes_block(
     parsed_route: ParseResults,
-    network: Text,
-    protocol: Text,
-    vrf: Text,
+    network: str,
+    protocol: str,
+    vrf: str,
 ) -> IosXrRoute:
     """
     Get v4_route from ecmp block
@@ -127,7 +125,7 @@ def _get_v4_ecmp_routes_block(
     return _get_v4_route_helper(network, protocol, parsed_route, vrf)
 
 
-def _get_v4_route(parsed_route: ParseResults, vrf: Text) -> IosXrRoute:
+def _get_v4_route(parsed_route: ParseResults, vrf: str) -> IosXrRoute:
     """
     Get normal/single v4_route
     Example:
@@ -139,7 +137,7 @@ def _get_v4_route(parsed_route: ParseResults, vrf: Text) -> IosXrRoute:
 
 
 def _get_v4_route_helper(
-    network: str, protocol: str, parsed_route: ParseResults, vrf: Text
+    network: str, protocol: str, parsed_route: ParseResults, vrf: str
 ) -> IosXrRoute:
     """
     Get normal/single v4_route
@@ -167,7 +165,7 @@ def _get_default_admin(protocol: str) -> int:
     return 0
 
 
-def _get_protocol(parsed_route: ParseResults) -> Text:
+def _get_protocol(parsed_route: ParseResults) -> str:
     protocol = _protocols[parsed_route["protocol"]]
     if protocol == "ospf":
         if "ospf_extensions" in parsed_route:

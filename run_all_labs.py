@@ -11,10 +11,9 @@ import subprocess
 import sys
 import time
 from pathlib import Path
-from typing import Dict, List, Tuple
 
 
-def discover_labs() -> List[str]:
+def discover_labs() -> list[str]:
     """Discover all available lab directories in the snapshots folder."""
     snapshots_dir = Path(__file__).parent / "snapshots"
     labs = []
@@ -31,7 +30,7 @@ def discover_labs() -> List[str]:
 
 def run_lab_tests(
     lab_name: str, verbose: bool = False
-) -> Tuple[bool, str, Dict[str, int]]:
+) -> tuple[bool, str, dict[str, int]]:
     """
     Run tests for a single lab.
 
@@ -43,7 +42,10 @@ def run_lab_tests(
 
     try:
         result = subprocess.run(
-            cmd, capture_output=True, text=True, timeout=300  # 5 minute timeout per lab
+            cmd,
+            capture_output=True,
+            text=True,
+            timeout=300,  # 5 minute timeout per lab
         )
 
         # Parse pytest output for statistics
@@ -86,7 +88,7 @@ def run_lab_tests(
     except subprocess.TimeoutExpired:
         return (
             False,
-            f"Timeout after 5 minutes",
+            "Timeout after 5 minutes",
             {"passed": 0, "failed": 0, "xfailed": 0, "skipped": 0},
         )
     except Exception as e:

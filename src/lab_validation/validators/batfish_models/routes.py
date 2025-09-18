@@ -1,6 +1,6 @@
 """Route data models."""
 
-from typing import List, Optional, Sequence, Tuple, Union
+from collections.abc import Sequence
 
 import attr
 from pybatfish.datamodel import NextHop
@@ -12,15 +12,15 @@ from lab_validation.parsers.common.utils import (
 
 
 def convert_as_path(
-    text: Union[str, Sequence[Union[int, Sequence[int]]]],
-) -> Sequence[Union[int, Sequence[int]]]:
+    text: str | Sequence[int | Sequence[int]],
+) -> Sequence[int | Sequence[int]]:
     """Convert Batfish AS path string to tuple of AS sets."""
     if not isinstance(text, str):
         return text
 
-    ret: List[Union[int, Tuple[int, ...]]] = []
+    ret: list[int | tuple[int, ...]] = []
     text_parts = text.split()
-    current_as_set: Optional[List[int]] = None
+    current_as_set: list[int] | None = None
 
     for part in text_parts:
         if part.startswith("("):
@@ -53,7 +53,7 @@ class MainRibRoute:
     protocol: str
     metric: int = attr.ib(converter=int)
     admin: int = attr.ib(converter=int)
-    tag: Optional[int] = attr.ib(converter=optional_int_converter)
+    tag: int | None = attr.ib(converter=optional_int_converter)
 
 
 @attr.s(frozen=True, auto_attribs=True)
@@ -63,19 +63,19 @@ class BgpRibRoute:
     vrf: str = attr.ib(kw_only=True)
     network: str = attr.ib(kw_only=True, converter=normalized_network)
     next_hop: NextHop
-    next_hop_ip: Optional[str] = attr.ib(kw_only=True)
+    next_hop_ip: str | None = attr.ib(kw_only=True)
     next_hop_int: str = attr.ib(kw_only=True)
     protocol: str = attr.ib(kw_only=True)
-    as_path: Sequence[Union[int, Sequence[int]]] = attr.ib(
+    as_path: Sequence[int | Sequence[int]] = attr.ib(
         converter=convert_as_path, kw_only=True
     )
     metric: int = attr.ib(converter=int, kw_only=True)
     local_preference: int = attr.ib(converter=int, kw_only=True)
     communities: Sequence[str] = attr.ib(converter=tuple, kw_only=True)
-    origin_protocol: Optional[str] = attr.ib(kw_only=True)
+    origin_protocol: str | None = attr.ib(kw_only=True)
     origin_type: str = attr.ib(kw_only=True)
     weight: int = attr.ib(converter=int, kw_only=True)
-    tag: Optional[int] = attr.ib(converter=optional_int_converter, kw_only=True)
+    tag: int | None = attr.ib(converter=optional_int_converter, kw_only=True)
 
 
 @attr.s(frozen=True, auto_attribs=True, kw_only=True)
@@ -89,10 +89,10 @@ class EvpnRibRoute:
     next_hop_ip: str
     next_hop_int: str
     protocol: str
-    as_path: Sequence[Union[int, Sequence[int]]] = attr.ib(converter=convert_as_path)
+    as_path: Sequence[int | Sequence[int]] = attr.ib(converter=convert_as_path)
     metric: int = attr.ib(converter=int)
     local_preference: int = attr.ib(converter=int)
     communities: Sequence[str]
-    origin_protocol: Optional[str]
+    origin_protocol: str | None
     origin_type: str
-    tag: Optional[int] = attr.ib(converter=optional_int_converter)
+    tag: int | None = attr.ib(converter=optional_int_converter)

@@ -1,5 +1,6 @@
 import json
-from typing import Any, List, Optional, Sequence, Text, Tuple
+from collections.abc import Sequence
+from typing import Any
 
 from ..commands.utils import _parse_table_header, remove_unused_lines
 from ..models.routes import JunosBgpRoute
@@ -26,10 +27,10 @@ VIA = "via"
 AS_PATH = "as-path"
 
 
-def parse_show_route_protocol_bgp_display_json(text: Text) -> Sequence[JunosBgpRoute]:
+def parse_show_route_protocol_bgp_display_json(text: str) -> Sequence[JunosBgpRoute]:
     json_obj = json.loads(remove_unused_lines(text))
     assert ROUTE_INFORMATION in json_obj
-    bgp_routes: List[JunosBgpRoute] = []
+    bgp_routes: list[JunosBgpRoute] = []
     for rib in json_obj[ROUTE_INFORMATION]:
         assert ROUTE_TABLE in rib
         for table in rib[ROUTE_TABLE]:
@@ -44,8 +45,8 @@ def parse_show_route_protocol_bgp_display_json(text: Text) -> Sequence[JunosBgpR
     return bgp_routes
 
 
-def _get_routes(vrf: Text, route_json_obj: List[Any]) -> List[JunosBgpRoute]:
-    bgp_routes: List[JunosBgpRoute] = []
+def _get_routes(vrf: str, route_json_obj: list[Any]) -> list[JunosBgpRoute]:
+    bgp_routes: list[JunosBgpRoute] = []
     for route in route_json_obj:
         assert RT_DESTINATION in route
         assert len(route[RT_DESTINATION]) == 1
@@ -91,7 +92,7 @@ def _get_routes(vrf: Text, route_json_obj: List[Any]) -> List[JunosBgpRoute]:
     return bgp_routes
 
 
-def _get_as_path(as_path_str: Text) -> Tuple[Sequence[int], str]:
+def _get_as_path(as_path_str: str) -> tuple[Sequence[int], str]:
     """Extract the AS Path from a string containing both AS Path and origin type."""
     split = as_path_str.split()
     as_path_list, origin_type = split[:-1], split[-1]
@@ -100,7 +101,7 @@ def _get_as_path(as_path_str: Text) -> Tuple[Sequence[int], str]:
     return (as_path, origin_type)
 
 
-def convert_active(active_tag: Optional[Text]) -> bool:
+def convert_active(active_tag: str | None) -> bool:
     if active_tag == "*":
         # active route will have tag *
         return True

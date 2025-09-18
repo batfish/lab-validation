@@ -1,6 +1,7 @@
 """
 Tests of the common IOS model for show vrf, using IOS show data.
 """
+
 from lab_validation.parsers.ios.commands.vrf import parse_show_vrf
 from lab_validation.parsers.ios.models.vrfs import Vrf
 

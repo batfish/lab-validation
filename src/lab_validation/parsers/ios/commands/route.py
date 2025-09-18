@@ -1,7 +1,7 @@
 import ipaddress
 import logging
 import re
-from typing import List, Optional, Sequence, Text
+from collections.abc import Sequence
 
 from pyparsing import ParseResults
 
@@ -29,11 +29,11 @@ _protocols = {
 _IPv4_PATTERN = re.compile(r"\d+\.\d+\.\d+\.\d+")
 
 
-def parse_show_ip_route(routes_output: Text) -> Sequence[IosIpRoute]:
+def parse_show_ip_route(routes_output: str) -> Sequence[IosIpRoute]:
     """Parses show ip route output for IOS"""
     logger = logging.getLogger(__name__)
     raw_parsed_results = show_route().scanString(routes_output)
-    routes: List[IosIpRoute] = []
+    routes: list[IosIpRoute] = []
     last_loc = 0
     last_vrf = "default"  # the table for the default vrf will not have a vrf header
     for vrf_table, start_loc, end_loc in raw_parsed_results:
@@ -44,9 +44,7 @@ def parse_show_ip_route(routes_output: Text) -> Sequence[IosIpRoute]:
         ):
             # There is text between records that is not whitespace, throw an error so we investigate
             raise UnrecognizedLinesError(
-                "Did not match: [bytes {} to {}, end_loc is {}]\n{}".format(
-                    last_loc, start_loc, end_loc, routes_output[last_loc:start_loc]
-                )
+                f"Did not match: [bytes {last_loc} to {start_loc}, end_loc is {end_loc}]\n{routes_output[last_loc:start_loc]}"
             )
         if "padding" in vrf_table and _IPv4_PATTERN.search(vrf_table.padding):
             # An IP address appears in the padding, likely indicating a parsing problem
@@ -63,14 +61,14 @@ def parse_show_ip_route(routes_output: Text) -> Sequence[IosIpRoute]:
     return routes
 
 
-def _parse_routes_in_vrf(v4_route_records: ParseResults, vrf: str) -> List[IosIpRoute]:
+def _parse_routes_in_vrf(v4_route_records: ParseResults, vrf: str) -> list[IosIpRoute]:
     routes = []
     for record in v4_route_records:
         routes += _parse_single_route_record(record, vrf)
     return routes
 
 
-def _parse_single_route_record(record: ParseResults, vrf: str) -> List[IosIpRoute]:
+def _parse_single_route_record(record: ParseResults, vrf: str) -> list[IosIpRoute]:
     if "v4_routes_block" not in record:
         raise UnrecognizedLinesError("Unexpected record: " + repr(record))
 
@@ -79,8 +77,8 @@ def _parse_single_route_record(record: ParseResults, vrf: str) -> List[IosIpRout
     else:
         subnet_prefix = None
 
-    network: Optional[str] = None
-    protocol: Optional[str] = None
+    network: str | None = None
+    protocol: str | None = None
     routes = []
     for v4_route in record["v4_routes_block"]:
         if "network" not in v4_route:
@@ -100,10 +98,10 @@ def _parse_single_route_record(record: ParseResults, vrf: str) -> List[IosIpRout
 
 def _get_v4_route(
     parsed_route: ParseResults,
-    network: Text,
-    protocol: Text,
-    subnet_prefix: Optional[Text],
-    vrf: Text,
+    network: str,
+    protocol: str,
+    subnet_prefix: str | None,
+    vrf: str,
 ) -> IosIpRoute:
     """
     Get v4_route from subnet block
@@ -124,7 +122,7 @@ def _get_v4_route(
     )
 
 
-def _get_network(network: Text, subnet_prefix: Optional[Text]) -> Text:
+def _get_network(network: str, subnet_prefix: str | None) -> str:
     """Add subnet mask to network if needed"""
     if "/" in network:
         return network
@@ -138,7 +136,7 @@ def _get_network(network: Text, subnet_prefix: Optional[Text]) -> Text:
     )
 
 
-def _get_protocol(parsed_route: ParseResults) -> Text:
+def _get_protocol(parsed_route: ParseResults) -> str:
     protocol = _protocols[parsed_route["protocol"]]
     if protocol == "ospf":
         if "ospf_extensions" in parsed_route:

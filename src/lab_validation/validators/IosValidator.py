@@ -1,6 +1,7 @@
 import math
+from collections.abc import Sequence
 from pathlib import Path
-from typing import Any, Dict, List, Sequence, Text, Tuple
+from typing import Any
 
 from pybatfish.datamodel import (
     NextHop,
@@ -34,7 +35,7 @@ class IosValidator(VendorValidator):
         """Currently produces empty NodeRuntimeData. Pending show interfaces"""
         return NodeRuntimeData()
 
-    def validate_bgp_rib_routes(self, routes: Sequence[BgpRibRoute]) -> Dict[Any, Any]:
+    def validate_bgp_rib_routes(self, routes: Sequence[BgpRibRoute]) -> dict[Any, Any]:
         """Validating BGP RIB routes from all VRFs"""
         return IosValidator._compare_all_bgp_rib_routes(
             self._get_bgp_rib_all_vrfs(), routes
@@ -42,9 +43,9 @@ class IosValidator(VendorValidator):
 
     @staticmethod
     def _compare_all_bgp_rib_routes(
-        expected_routes: Sequence[Tuple[Text, IosBgpRoute]],
+        expected_routes: Sequence[tuple[str, IosBgpRoute]],
         bf_routes: Sequence[BgpRibRoute],
-    ) -> Dict[Any, Any]:
+    ) -> dict[Any, Any]:
         matched_routes = match_pairs(
             expected_routes,
             bf_routes,
@@ -54,11 +55,11 @@ class IosValidator(VendorValidator):
 
     def validate_interface_properties(
         self, batfish_interfaces: Sequence[InterfaceProperties]
-    ) -> Dict[Any, Any]:
+    ) -> dict[Any, Any]:
         if_file = self.device_path / "show_interfaces.txt"
         ios_interfaces = parse_show_interfaces(if_file.read_text())
 
-        diffs: Dict[Any, Any] = {}
+        diffs: dict[Any, Any] = {}
         batfish_index = {i.name: i for i in batfish_interfaces}
         real_ifnames = ios_interfaces.keys()
         for name in batfish_index.keys() - real_ifnames:
@@ -77,7 +78,7 @@ class IosValidator(VendorValidator):
 
     def validate_main_rib_routes(
         self, batfish_routes: Sequence[MainRibRoute]
-    ) -> Dict[Any, Any]:
+    ) -> dict[Any, Any]:
         """Validating main RIB routes from all VRFs"""
         real_routes: Sequence[IosIpRoute] = self._get_main_rib_all_vrfs()
         # excluding "management routes"
@@ -91,8 +92,8 @@ class IosValidator(VendorValidator):
 
     @staticmethod
     def _compare_interfaces(
-        ios_interface: Dict[str, Any], batfish_if: InterfaceProperties
-    ) -> Dict[Text, Text]:
+        ios_interface: dict[str, Any], batfish_if: InterfaceProperties
+    ) -> dict[str, str]:
         diff = {}
 
         ios_active = ios_interface["enabled"]
@@ -111,15 +112,15 @@ class IosValidator(VendorValidator):
 
         ios_prefixes = list(ios_interface.get("ipv4", {}).keys())
         if batfish_if.all_prefixes != ios_prefixes:
-            diff[
-                "ipv4 address"
-            ] = f"Batfish: {batfish_if.all_prefixes}, IOS: {ios_prefixes}"
+            diff["ipv4 address"] = (
+                f"Batfish: {batfish_if.all_prefixes}, IOS: {ios_prefixes}"
+            )
 
         return diff
 
     @staticmethod
     def _diff_bgp_routes_cost(
-        ios_route_and_vrf: Tuple[Text, IosBgpRoute], bf_route: BgpRibRoute
+        ios_route_and_vrf: tuple[str, IosBgpRoute], bf_route: BgpRibRoute
     ) -> float:
         # return infinite cost if vrf or network subnet does not match
         expected_vrf = ios_route_and_vrf[0]
@@ -175,7 +176,7 @@ class IosValidator(VendorValidator):
         raise ValueError("Unsupported next hop " + repr(next_hop))
 
     @staticmethod
-    def _bgp_origin_type_compatible(bf: Text, ios: Text) -> bool:
+    def _bgp_origin_type_compatible(bf: str, ios: str) -> bool:
         if bf == "igp":
             return bool(ios == "i")
         elif bf == "egp":
@@ -198,14 +199,14 @@ class IosValidator(VendorValidator):
                 self.device_path / f"show_ip_route_vrf_{v.name}.txt" for v in vrfs
             )
 
-        all_vrf_ip_routes: List[IosIpRoute] = []
+        all_vrf_ip_routes: list[IosIpRoute] = []
         for vrf_routes_file in all_files:
             vrf_routes_text = vrf_routes_file.read_text()
             ios_vrf_routes: Sequence[IosIpRoute] = parse_show_ip_route(vrf_routes_text)
             all_vrf_ip_routes += ios_vrf_routes
         return all_vrf_ip_routes
 
-    def _get_bgp_rib_all_vrfs(self) -> Sequence[Tuple[Text, IosBgpRoute]]:
+    def _get_bgp_rib_all_vrfs(self) -> Sequence[tuple[str, IosBgpRoute]]:
         """Parses and returns the BGP rib for all VRFs."""
 
         bgp_path = self.device_path / "show_ip_bgp_all.txt"
@@ -213,7 +214,7 @@ class IosValidator(VendorValidator):
 
         text = bgp_path.read_text()
         bgp_afs = parse_show_bgp_all(text)
-        ret: List[Tuple[Text, IosBgpRoute]] = []
+        ret: list[tuple[str, IosBgpRoute]] = []
         for af in bgp_afs:
             if af.name not in ["IPv4 Unicast", "VPNv4 Unicast"]:
                 continue
@@ -290,7 +291,7 @@ class IosValidator(VendorValidator):
         raise ValueError("Unsupported next hop " + repr(next_hop))
 
     @staticmethod
-    def compute_protocol_cost(ios_protocol: Text, batfish_protocol: Text) -> float:
+    def compute_protocol_cost(ios_protocol: str, batfish_protocol: str) -> float:
         """
         Computes the protocol cost, given that they are not equal.
         Return 0, when ios is bgp and batfish is bgp sub-types as ios does provide bgp sub-type info.

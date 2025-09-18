@@ -2,7 +2,6 @@ import json
 import sys
 import time
 from pathlib import Path
-from typing import Dict, List, Text
 
 import netmiko
 from netmiko import Netmiko
@@ -12,7 +11,7 @@ USERNAME = "admin"
 PASSWORD = "P@ssword"
 
 
-def deploy_provider_aws(provider_aws: Text) -> None:
+def deploy_provider_aws(provider_aws: str) -> None:
     """
     Deploy aws infrastructure using Terraform. It performs Terraform init and apply operation.
     """
@@ -21,7 +20,7 @@ def deploy_provider_aws(provider_aws: Text) -> None:
     tf_apply_aws(provider_aws, tf_obj)
 
 
-def deploy_provider_panos(provider_aws: Text, mgmt_ip: Text) -> None:
+def deploy_provider_panos(provider_aws: str, mgmt_ip: str) -> None:
     """
     Configure panos device using Terraform. It performs Terraform init and apply operation.
     """
@@ -30,7 +29,7 @@ def deploy_provider_panos(provider_aws: Text, mgmt_ip: Text) -> None:
     tf_apply_panos(provider_aws, tf_obj, mgmt_ip)
 
 
-def get_tf_object(provider_tf: Text) -> Terraform:
+def get_tf_object(provider_tf: str) -> Terraform:
     """
     Creates Terraform object
     """
@@ -48,7 +47,7 @@ def tf_init(tf_obj: Terraform) -> None:
         raise Exception("TF apply failed")
 
 
-def tf_apply_aws(provider_aws: Text, tf_obj: Terraform) -> None:
+def tf_apply_aws(provider_aws: str, tf_obj: Terraform) -> None:
     """
     Terraform apply operation for aws provider
     """
@@ -62,7 +61,7 @@ def tf_apply_aws(provider_aws: Text, tf_obj: Terraform) -> None:
         raise Exception("TF apply failed")
 
 
-def tf_apply_panos(provider_panos: Text, tf_obj: Terraform, mgmt_ip: Text) -> None:
+def tf_apply_panos(provider_panos: str, tf_obj: Terraform, mgmt_ip: str) -> None:
     """
     Terraform apply operation for panos provider
     """
@@ -77,7 +76,7 @@ def tf_apply_panos(provider_panos: Text, tf_obj: Terraform, mgmt_ip: Text) -> No
         raise Exception("TF apply failed")
 
 
-def wait_for_fw(device_args: Dict) -> Netmiko:
+def wait_for_fw(device_args: dict) -> Netmiko:
     """
     Make SSH connection to device using netmiko and wait until fw comes online
     """
@@ -97,7 +96,7 @@ def wait_for_fw(device_args: Dict) -> Netmiko:
     return netmiko_obj
 
 
-def run_commands(device: Netmiko, commands: List) -> None:
+def run_commands(device: Netmiko, commands: list) -> None:
     """
     Run commands using netmiko
     """

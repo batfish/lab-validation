@@ -1,6 +1,7 @@
 """
 Tests of the common IOS model for show interfaces, using IOS show data.
 """
+
 from lab_validation.parsers.ios.commands.interfaces import (
     _convert_speed,
     parse_show_interfaces,

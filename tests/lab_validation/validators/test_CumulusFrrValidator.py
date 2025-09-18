@@ -73,7 +73,7 @@ def test_compare_interface_batfish_mismatch() -> None:
     )
     assert results["batfish_mismatch"] == {
         "swp1": {
-            "bandwidth": "Batfish: 1000000, show_data: " "100000",
+            "bandwidth": "Batfish: 1000000, show_data: 100000",
             "mtu": "Batfish: 1501, show_data: 1500",
         }
     }

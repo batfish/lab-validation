@@ -1,6 +1,7 @@
 import math
+from collections.abc import Sequence
 from pathlib import Path
-from typing import Any, Dict, List, Optional, Sequence, Tuple, Union
+from typing import Any
 
 from pybatfish.datamodel import (
     NextHop,
@@ -42,7 +43,7 @@ class AristaValidator(VendorValidator):
     SHOW_EVPN_FILENAME = "show_bgp_evpn_|_json.txt"
     SHOW_EVPN_FILENAME_TXT = "show_bgp_evpn_|_json.json"
 
-    def __init__(self, device_path: Union[str, Path]) -> None:
+    def __init__(self, device_path: str | Path) -> None:
         self.device_path = Path(device_path)
 
     def get_runtime_data(self) -> NodeRuntimeData:
@@ -58,13 +59,13 @@ class AristaValidator(VendorValidator):
 
     def validate_main_rib_routes(
         self, routes: Sequence[MainRibRoute]
-    ) -> Dict[Any, Any]:
+    ) -> dict[Any, Any]:
         """Validating main RIB routes from all VRFs"""
         return self._validate_main_rib_routes(self._parse_routes(), routes)
 
     def validate_bgp_rib_routes(
         self, bgp_routes: Sequence[BgpRibRoute]
-    ) -> Dict[Any, Any]:
+    ) -> dict[Any, Any]:
         """Validating main RIB routes from all VRFs"""
         return AristaValidator._validate_bgp_rib_routes(
             self._parse_bgp_routes(), bgp_routes
@@ -72,21 +73,21 @@ class AristaValidator(VendorValidator):
 
     def validate_interface_properties(
         self, batfish_interfaces: Sequence[InterfaceProperties]
-    ) -> Dict[Any, Any]:
+    ) -> dict[Any, Any]:
         return AristaValidator._compare_all_interfaces(
             self._parse_interfaces(), batfish_interfaces
         )
 
     def validate_evpn_rib_routes(
         self, evpn_routes: Sequence[EvpnRibRoute]
-    ) -> Dict[Any, Any]:
+    ) -> dict[Any, Any]:
         return self._validate_evpn_rib_routes(self._parse_evpn_routes(), evpn_routes)
 
     def _validate_main_rib_routes(
         self,
         arista_routes: Sequence[AristaIpRoute],
         batfish_routes: Sequence[MainRibRoute],
-    ) -> Dict[Any, Any]:
+    ) -> dict[Any, Any]:
         validate_routes = [
             r
             for r in arista_routes
@@ -106,7 +107,7 @@ class AristaValidator(VendorValidator):
     def _diff_routes_cost(
         arista_route: AristaIpRoute,
         batfish_route: MainRibRoute,
-    ) -> List[Tuple[str, float]]:
+    ) -> list[tuple[str, float]]:
         if arista_route.network != batfish_route.network:
             return [("network", math.inf)]
         if arista_route.vrf != batfish_route.vrf:
@@ -144,7 +145,7 @@ class AristaValidator(VendorValidator):
     @staticmethod
     def compute_protocol_cost(
         arista_protocol: str, batfish_protocol: str
-    ) -> List[Tuple[str, float]]:
+    ) -> list[tuple[str, float]]:
         """Computes the cost related to protocol differences in Main RIB."""
         if arista_protocol == batfish_protocol:
             return []
@@ -168,7 +169,7 @@ class AristaValidator(VendorValidator):
     @staticmethod
     def compute_next_hop_cost(
         arista_route: AristaIpRoute, next_hop: NextHop
-    ) -> List[Tuple[str, float]]:
+    ) -> list[tuple[str, float]]:
         """Computes the cost related to next hops."""
         if isinstance(next_hop, NextHopVtep):
             if not arista_route.vni or not arista_route.vtep_ip:
@@ -212,7 +213,7 @@ class AristaValidator(VendorValidator):
 
     @staticmethod
     def _next_hop_int_compatible(
-        arista_nhint: Optional[str], batfish_nhint: str, batfish_protocol: str
+        arista_nhint: str | None, batfish_nhint: str, batfish_protocol: str
     ) -> bool:
         """Returns true if the next-hop interfaces for Arista and Batfish routes are compatible."""
         if arista_nhint is None:
@@ -260,7 +261,7 @@ class AristaValidator(VendorValidator):
     def _validate_bgp_rib_routes(
         arista_routes: Sequence[AristaBgpRoute],
         batfish_routes: Sequence[BgpRibRoute],
-    ) -> Dict[Any, Any]:
+    ) -> dict[Any, Any]:
         # For now, drop non-best-path routes.
         validate_routes = [
             r for r in arista_routes if AristaValidator.is_best_bgp_route(r)
@@ -286,7 +287,7 @@ class AristaValidator(VendorValidator):
     def _diff_bgp_routes_cost(
         arista_route: AristaBgpRoute,
         batfish_route: BgpRibRoute,
-    ) -> List[Tuple[str, float]]:
+    ) -> list[tuple[str, float]]:
         if arista_route.network != batfish_route.network:
             return [("network", math.inf)]
         if arista_route.vrf != batfish_route.vrf:
@@ -344,8 +345,8 @@ class AristaValidator(VendorValidator):
     def _compare_all_interfaces(
         arista_interfaces: Sequence[AristaInterface],
         batfish_interfaces: Sequence[InterfaceProperties],
-    ) -> Dict[Any, Any]:
-        diffs: Dict[Any, Any] = {}
+    ) -> dict[Any, Any]:
+        diffs: dict[Any, Any] = {}
         batfish_index = {i.name.lower(): i for i in batfish_interfaces}
         real_index = {i.name.lower(): i for i in arista_interfaces}
         for name in batfish_index.keys() - real_index.keys():
@@ -371,13 +372,13 @@ class AristaValidator(VendorValidator):
     @staticmethod
     def _compare_interface(
         arista_interface: AristaInterface, batfish_if: InterfaceProperties
-    ) -> Dict[str, str]:
+    ) -> dict[str, str]:
         diff = {}
 
         if batfish_if.active != arista_interface.line:
-            diff[
-                "active"
-            ] = f"Batfish: {batfish_if.active}, Arista: {arista_interface.line}"
+            diff["active"] = (
+                f"Batfish: {batfish_if.active}, Arista: {arista_interface.line}"
+            )
 
         # bandwidth reported in GNS3 for Arista is not accurate, so we ignore it
         # arista_bw = arista_interface.bandwidth
@@ -406,7 +407,7 @@ class AristaValidator(VendorValidator):
         self,
         arista_routes: Sequence[AristaEvpnRoute],
         batfish_routes: Sequence[EvpnRibRoute],
-    ) -> Dict[Any, Any]:
+    ) -> dict[Any, Any]:
         validate_routes = [r for r in arista_routes if r.is_active]
 
         matched_routes = match_pairs(
@@ -421,7 +422,7 @@ class AristaValidator(VendorValidator):
     def _diff_evpn_routes_cost(
         arista_route: AristaEvpnRoute,
         batfish_route: EvpnRibRoute,
-    ) -> List[Tuple[str, float]]:
+    ) -> list[tuple[str, float]]:
         if arista_route.network != batfish_route.network:
             return [("network", math.inf)]
         if arista_route.vrf != batfish_route.vrf:

@@ -1,6 +1,7 @@
 """
 Tests of IosXr interface show data extraction.
 """
+
 from lab_validation.parsers.iosxr.commands.interfaces import parse_show_interfaces
 from lab_validation.parsers.iosxr.models.interfaces import IosXrInterface
 

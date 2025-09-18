@@ -1,5 +1,5 @@
 import logging
-from typing import List, Sequence, Text
+from collections.abc import Sequence
 
 from pyparsing import Group, OneOrMore, ParseResults
 
@@ -8,12 +8,12 @@ from ..grammar.interface import interface_block, physical_interface_block
 from ..models.interfaces import FortiosInterface, FortiosPhysicalInterface
 
 
-def parse_get_system_interface(ifaces_text: Text) -> Sequence[FortiosInterface]:
+def parse_get_system_interface(ifaces_text: str) -> Sequence[FortiosInterface]:
     logger = logging.getLogger(__name__)
     all_logical_parse_results = OneOrMore(Group(interface_block())).scanString(
         ifaces_text
     )
-    results: List[FortiosInterface] = []
+    results: list[FortiosInterface] = []
 
     last_loc = 0
     for records, start_loc, end_loc in all_logical_parse_results:
@@ -21,7 +21,7 @@ def parse_get_system_interface(ifaces_text: Text) -> Sequence[FortiosInterface]:
             results.append(construct_iface(record))
         if start_loc != last_loc and last_loc != 0:
             raise UnrecognizedLinesError(
-                "Did not match:\n{}".format(ifaces_text[last_loc:start_loc])
+                f"Did not match:\n{ifaces_text[last_loc:start_loc]}"
             )
         last_loc = end_loc
 
@@ -31,13 +31,13 @@ def parse_get_system_interface(ifaces_text: Text) -> Sequence[FortiosInterface]:
 
 
 def parse_get_system_interface_physical(
-    ifaces_physical_text: Text,
+    ifaces_physical_text: str,
 ) -> Sequence[FortiosPhysicalInterface]:
     logger = logging.getLogger(__name__)
     all_physical_parse_results = OneOrMore(
         Group(physical_interface_block())
     ).scanString(ifaces_physical_text)
-    results: List[FortiosPhysicalInterface] = []
+    results: list[FortiosPhysicalInterface] = []
 
     last_loc = 0
     for records, start_loc, end_loc in all_physical_parse_results:
@@ -45,7 +45,7 @@ def parse_get_system_interface_physical(
             results.append(construct_physical_iface(record))
         if start_loc != last_loc and last_loc != 0:
             raise UnrecognizedLinesError(
-                "Did not match:\n{}".format(ifaces_physical_text[last_loc:start_loc])
+                f"Did not match:\n{ifaces_physical_text[last_loc:start_loc]}"
             )
         last_loc = end_loc
 

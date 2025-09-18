@@ -568,7 +568,7 @@ def test_interface_not_equal_active() -> None:
     )
 
     assert NxosValidator._compare_interfaces(nxos_interface, bf_interface) == {
-        "active": f"Batfish: False, NXOS: admin=True line=True"
+        "active": "Batfish: False, NXOS: admin=True line=True"
     }
 
 
@@ -598,7 +598,7 @@ def test_interface_not_equal_bandwidth() -> None:
         vrf="default",
     )
     assert NxosValidator._compare_interfaces(nxos_interface, bf_interface) == {
-        "bandwidth": f"Batfish: 10000000, NXOS: 1"
+        "bandwidth": "Batfish: 10000000, NXOS: 1"
     }
 
 
@@ -628,7 +628,7 @@ def test_interface_not_equal_mtu() -> None:
         vrf="default",
     )
     assert NxosValidator._compare_interfaces(nxos_interface, bf_interface) == {
-        "mtu": f"Batfish: 1500, NXOS: 15"
+        "mtu": "Batfish: 1500, NXOS: 15"
     }
 
 
@@ -659,7 +659,7 @@ def test_interface_not_equal_switchport() -> None:
     )
 
     assert NxosValidator._compare_interfaces(nxos_interface, bf_interface) == {
-        "switchport_mode": f"Batfish: None, NXOS: access"
+        "switchport_mode": "Batfish: None, NXOS: access"
     }
 
 

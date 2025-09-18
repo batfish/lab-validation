@@ -1,6 +1,7 @@
 import math
+from collections.abc import Sequence
 from pathlib import Path
-from typing import Any, Dict, List, Optional, Sequence, Text, Tuple
+from typing import Any
 
 from pybatfish.datamodel.route import (
     NextHop,
@@ -32,7 +33,7 @@ class NxosValidator(VendorValidator):
     def __init__(self, device_path: Path) -> None:
         self.device_path: Path = device_path
         # Parsing interfaces show data is dang slow; cache them.
-        self.interfaces: Optional[Sequence[NxosInterface]] = None
+        self.interfaces: Sequence[NxosInterface] | None = None
 
     def get_runtime_data(self) -> NodeRuntimeData:
         interfaces = self._get_interfaces()
@@ -48,10 +49,10 @@ class NxosValidator(VendorValidator):
 
     def validate_interface_properties(
         self, batfish_interfaces: Sequence[InterfaceProperties]
-    ) -> Dict[Any, Any]:
+    ) -> dict[Any, Any]:
         nxos_interfaces = self._get_interfaces()
 
-        diffs: Dict[Any, Any] = {}
+        diffs: dict[Any, Any] = {}
         batfish_index = {i.name.lower(): i for i in batfish_interfaces}
         real_index = {i.name.lower(): i for i in nxos_interfaces}
         for name in batfish_index.keys() - real_index.keys():
@@ -67,7 +68,7 @@ class NxosValidator(VendorValidator):
 
     def validate_main_rib_routes(
         self, batfish_routes: Sequence[MainRibRoute]
-    ) -> Dict[Any, Any]:
+    ) -> dict[Any, Any]:
         """Validating main RIB routes from all VRFs"""
         nxos_routes = self._get_main_rib_all_vrfs()
 
@@ -76,7 +77,7 @@ class NxosValidator(VendorValidator):
     @staticmethod
     def _validate_main_rib_routes(
         batfish_routes: Sequence[MainRibRoute], nxos_routes: Sequence[NxosMainRibRoute]
-    ) -> Dict[Any, Any]:
+    ) -> dict[Any, Any]:
         # Drop mgmt routes and hsrp routes (https://github.com/batfish/lab-validation/issues/59)
         # Drop hmm routes: https://github.com/batfish/lab-validation/issues/61
         validate_routes = [
@@ -97,7 +98,7 @@ class NxosValidator(VendorValidator):
     @staticmethod
     def _diff_routes_cost(
         batfish_route: MainRibRoute, nxos_route: NxosMainRibRoute
-    ) -> List[Tuple[str, float]]:
+    ) -> list[tuple[str, float]]:
         if nxos_route.network != batfish_route.network:
             return [("network", math.inf)]
         if nxos_route.vrf != batfish_route.vrf:
@@ -117,7 +118,7 @@ class NxosValidator(VendorValidator):
             cost.append(("tag", 1.0))
         return cost
 
-    def validate_bgp_rib_routes(self, routes: Sequence[BgpRibRoute]) -> Dict[Any, Any]:
+    def validate_bgp_rib_routes(self, routes: Sequence[BgpRibRoute]) -> dict[Any, Any]:
         """Validating BGP RIB routes from all VRFs"""
         return NxosValidator._validate_bgp_rib_routes(
             self._get_bgp_rib_all_vrfs(), routes
@@ -126,7 +127,7 @@ class NxosValidator(VendorValidator):
     @staticmethod
     def _validate_bgp_rib_routes(
         nxos_routes: Sequence[NxosBgpRoute], batfish_routes: Sequence[BgpRibRoute]
-    ) -> Dict[Any, Any]:
+    ) -> dict[Any, Any]:
         # For now, drop non-best-path routes.
         validate_routes = [r for r in nxos_routes if r.best_path]
 
@@ -140,7 +141,7 @@ class NxosValidator(VendorValidator):
     @staticmethod
     def _diff_bgp_routes_cost(
         batfish_route: BgpRibRoute, nxos_route: NxosBgpRoute
-    ) -> List[Tuple[str, float]]:
+    ) -> list[tuple[str, float]]:
         if nxos_route.network != batfish_route.network:
             return [("network", math.inf)]
         if nxos_route.vrf != batfish_route.vrf:
@@ -177,7 +178,7 @@ class NxosValidator(VendorValidator):
     @staticmethod
     def _diff_bgp_next_hop_cost(
         next_hop: NextHop, nxos_route: NxosBgpRoute
-    ) -> List[Tuple[str, float]]:
+    ) -> list[tuple[str, float]]:
         cost = []
         if isinstance(next_hop, NextHopDiscard):
             if nxos_route.next_hop_ip != "0.0.0.0":
@@ -211,15 +212,15 @@ class NxosValidator(VendorValidator):
     @staticmethod
     def _compare_interfaces(
         nxos_interface: NxosInterface, batfish_if: InterfaceProperties
-    ) -> Dict[Text, Text]:
+    ) -> dict[str, str]:
         diff = {}
 
         if batfish_if.active != (nxos_interface.admin and nxos_interface.line):
             if not batfish_if.name.startswith("mgmt"):
                 # Batfish deactivates management interfaces
-                diff[
-                    "active"
-                ] = f"Batfish: {batfish_if.active}, NXOS: admin={nxos_interface.admin} line={nxos_interface.line}"
+                diff["active"] = (
+                    f"Batfish: {batfish_if.active}, NXOS: admin={nxos_interface.admin} line={nxos_interface.line}"
+                )
 
         nxos_bw = nxos_interface.bandwidth
         if batfish_if.bandwidth != nxos_bw:
@@ -235,14 +236,14 @@ class NxosValidator(VendorValidator):
             diff["mtu"] = f"Batfish: {batfish_if.mtu}, NXOS: {nxos_interface.mtu}"
 
         if str(batfish_if.switchport_mode).lower() != str(nxos_interface.mode).lower():
-            diff[
-                "switchport_mode"
-            ] = f"Batfish: {batfish_if.switchport_mode}, NXOS: {nxos_interface.mode}"
+            diff["switchport_mode"] = (
+                f"Batfish: {batfish_if.switchport_mode}, NXOS: {nxos_interface.mode}"
+            )
 
         return diff
 
     @staticmethod
-    def _tag_compatible(bf_tag: Optional[int], tag: Optional[int]) -> bool:
+    def _tag_compatible(bf_tag: int | None, tag: int | None) -> bool:
         if bf_tag == tag:
             return True
         if (bf_tag is None or bf_tag == 0) and (tag is None or tag == 0):
@@ -250,7 +251,7 @@ class NxosValidator(VendorValidator):
         return False
 
     @staticmethod
-    def _bgp_origin_type_compatible(bf: Text, nx: Text) -> bool:
+    def _bgp_origin_type_compatible(bf: str, nx: str) -> bool:
         if bf == "igp":
             return bool(nx == "i")
         elif bf == "egp":
@@ -293,8 +294,8 @@ class NxosValidator(VendorValidator):
 
     @staticmethod
     def compute_protocol_cost(
-        nxos_protocol: Text, batfish_protocol: Text
-    ) -> List[Tuple[str, float]]:
+        nxos_protocol: str, batfish_protocol: str
+    ) -> list[tuple[str, float]]:
         """Computes the cost related to protocol differences in Main RIB."""
         batfish_protocol = batfish_protocol
         if nxos_protocol == batfish_protocol:
@@ -320,8 +321,8 @@ class NxosValidator(VendorValidator):
 
     @staticmethod
     def compute_bgp_protocol_cost(
-        nxos_protocol: Text, batfish_protocol: Text
-    ) -> List[Tuple[str, float]]:
+        nxos_protocol: str, batfish_protocol: str
+    ) -> list[tuple[str, float]]:
         """Computes the cost related to protocol differences in BGP RIB."""
         batfish_protocol = batfish_protocol
         if nxos_protocol == batfish_protocol:
@@ -336,7 +337,7 @@ class NxosValidator(VendorValidator):
     @staticmethod
     def compute_next_hop_cost(
         nxos_route: NxosMainRibRoute, next_hop: NextHop
-    ) -> List[Tuple[str, float]]:
+    ) -> list[tuple[str, float]]:
         """Computes the cost related to next hops."""
         if isinstance(next_hop, NextHopVtep):
             # We judge if nxos_route is learned via EVPN using the evpn field

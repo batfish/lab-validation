@@ -1,9 +1,18 @@
 import logging
-from typing import List, Text
 
-from pyparsing import Group, Literal, MatchFirst, OneOrMore
-from pyparsing import Optional as ParsingOptional
-from pyparsing import ParserElement, ParseResults, SkipTo, Word, printables, stringEnd
+from pyparsing import (
+    Group,
+    Literal,
+    MatchFirst,
+    OneOrMore,
+    Optional as ParsingOptional,
+    ParserElement,
+    ParseResults,
+    SkipTo,
+    Word,
+    printables,
+    stringEnd,
+)
 
 from ...common.exceptions import UnrecognizedLinesError
 from ...common.tokens import dec, prefix, to_eol
@@ -72,9 +81,9 @@ def _dampening() -> ParserElement:
     )
 
 
-def parse_show_interfaces(text: Text) -> List[IosXrInterface]:
+def parse_show_interfaces(text: str) -> list[IosXrInterface]:
     all_parse_results = OneOrMore(Group(_interface_block())).scanString(text)
-    results: List[IosXrInterface] = []
+    results: list[IosXrInterface] = []
 
     logger = logging.getLogger(__name__)
     last_loc = 0
@@ -82,9 +91,7 @@ def parse_show_interfaces(text: Text) -> List[IosXrInterface]:
         for record in records:
             results.append(construct_iface(record))
         if start_loc != last_loc and last_loc != 0:
-            raise UnrecognizedLinesError(
-                "Did not match:\n{}".format(text[last_loc:start_loc])
-            )
+            raise UnrecognizedLinesError(f"Did not match:\n{text[last_loc:start_loc]}")
         last_loc = end_loc
     if not results:
         logger.warning("No interface data found")

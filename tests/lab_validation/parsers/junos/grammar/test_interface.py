@@ -1,4 +1,3 @@
-# coding: utf-8
 from lab_validation.parsers.junos.grammar.interface import (
     _logical_name_line,
     _logical_record,

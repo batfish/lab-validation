@@ -1,6 +1,7 @@
 import math
+from collections.abc import Sequence
 from pathlib import Path
-from typing import Any, Dict, List, Optional, Sequence, Text, Tuple
+from typing import Any
 
 from pybatfish.datamodel.route import (
     NextHop,
@@ -29,8 +30,8 @@ from .vendor_validator import ValidationError, VendorValidator
 class A10AcosValidator(VendorValidator):
     def __init__(self, device_path: Path) -> None:
         self.device_path: Path = device_path
-        self.bgp_routes: Optional[List[A10BgpRoute]] = None
-        self.routes: Optional[List[A10MainRibRoute]] = None
+        self.bgp_routes: list[A10BgpRoute] | None = None
+        self.routes: list[A10MainRibRoute] | None = None
 
     def get_runtime_data(self) -> NodeRuntimeData:
         """Currently produces empty NodeRuntimeData. Pending show interfaces"""
@@ -38,13 +39,13 @@ class A10AcosValidator(VendorValidator):
 
     def validate_bgp_rib_routes(
         self, batfish_routes: Sequence[BgpRibRoute]
-    ) -> Dict[Any, Any]:
+    ) -> dict[Any, Any]:
         """Validating BGP RIB routes from all VRFs"""
         return _compare_all_bgp_rib_routes(self._parse_bgp_rib_routes(), batfish_routes)
 
     def validate_main_rib_routes(
         self, batfish_routes: Sequence[MainRibRoute]
-    ) -> Dict[Any, Any]:
+    ) -> dict[Any, Any]:
         """Validate main RIB routes."""
         return _compare_all_main_rib_routes(
             self._parse_main_rib_routes(), batfish_routes
@@ -52,11 +53,11 @@ class A10AcosValidator(VendorValidator):
 
     def validate_interface_properties(
         self, batfish_interfaces: Sequence[InterfaceProperties]
-    ) -> Dict[Any, Any]:
+    ) -> dict[Any, Any]:
         """Validating interfaces"""
         raise ValidationError("Not implemented")
 
-    def _parse_bgp_rib_routes(self) -> List[A10BgpRoute]:
+    def _parse_bgp_rib_routes(self) -> list[A10BgpRoute]:
         """Returns the routes in the BGP RIB for this snapshot."""
         if self.bgp_routes is None:
             file = self.device_path / "show_ip_bgp.txt"
@@ -68,14 +69,14 @@ class A10AcosValidator(VendorValidator):
 
         return self.bgp_routes
 
-    def _parse_main_rib_routes(self) -> List[A10MainRibRoute]:
+    def _parse_main_rib_routes(self) -> list[A10MainRibRoute]:
         """Returns the routes in the Main RIB for this snapshot."""
         if self.routes is None:
             self.routes = self._parse_show_route_all() + self._parse_show_route_acos()
 
         return self.routes
 
-    def _parse_show_route_all(self) -> List[A10MainRibRoute]:
+    def _parse_show_route_all(self) -> list[A10MainRibRoute]:
         file = self.device_path / "show_ip_route_all.txt"
         if not file.is_file():
             return []
@@ -83,7 +84,7 @@ class A10AcosValidator(VendorValidator):
             text = file.read_text()
             return parse_show_ip_route_all(text)
 
-    def _parse_show_route_acos(self) -> List[A10MainRibRoute]:
+    def _parse_show_route_acos(self) -> list[A10MainRibRoute]:
         file = self.device_path / "show_ip_route_acos.txt"
         if not file.is_file():
             return []
@@ -93,8 +94,8 @@ class A10AcosValidator(VendorValidator):
 
 
 def _compare_all_bgp_rib_routes(
-    a10_routes: List[A10BgpRoute], batfish_routes: Sequence[BgpRibRoute]
-) -> Dict[str, str]:
+    a10_routes: list[A10BgpRoute], batfish_routes: Sequence[BgpRibRoute]
+) -> dict[str, str]:
     """Compares A10 and Batfish BGP RIB routes."""
     matched_routes = match_pairs(
         a10_routes,
@@ -105,8 +106,8 @@ def _compare_all_bgp_rib_routes(
 
 
 def _compare_all_main_rib_routes(
-    a10_routes: List[A10MainRibRoute], batfish_routes: Sequence[MainRibRoute]
-) -> Dict[str, str]:
+    a10_routes: list[A10MainRibRoute], batfish_routes: Sequence[MainRibRoute]
+) -> dict[str, str]:
     """Compares A10 and Batfish main RIB routes."""
     matched_routes = match_pairs(
         a10_routes,
@@ -118,12 +119,12 @@ def _compare_all_main_rib_routes(
 
 def _bgp_rib_cost(
     a10_route: A10BgpRoute, bf_route: BgpRibRoute
-) -> List[Tuple[str, float]]:
+) -> list[tuple[str, float]]:
     """Compares a single pair of A10 and Batfish BGP RIB routes, explaining any differences."""
     if a10_route.network != bf_route.network:
         return [("network", math.inf)]
 
-    ret: List[Tuple[str, float]] = []
+    ret: list[tuple[str, float]] = []
 
     if isinstance(bf_route.next_hop, NextHopDiscard):
         if a10_route.next_hop_ip != "0.0.0.0":
@@ -152,7 +153,7 @@ def _bgp_rib_cost(
     return ret
 
 
-def _bgp_origin_type_compatible(bf: Text, acos: Text) -> bool:
+def _bgp_origin_type_compatible(bf: str, acos: str) -> bool:
     if bf == "igp":
         return bool(acos == "i")
     elif bf == "egp":
@@ -163,12 +164,12 @@ def _bgp_origin_type_compatible(bf: Text, acos: Text) -> bool:
 
 def _main_rib_cost(
     a10_route: A10MainRibRoute, bf_route: MainRibRoute
-) -> List[Tuple[str, float]]:
+) -> list[tuple[str, float]]:
     """Compares a single pair of A10 and Batfish main RIB routes, explaining any differences."""
     if a10_route.network != bf_route.network:
         return [("network", math.inf)]
 
-    ret: List[Tuple[str, float]] = []
+    ret: list[tuple[str, float]] = []
     ret += _main_rib_protocol_cost(a10_route, bf_route)
     if any(cost == math.inf for reason, cost in ret):
         # Stop if we found inf already
@@ -190,7 +191,7 @@ _bf_kernel_route_tags = {"N": 1, "VF": 2, "V": 3, "F": 4}
 
 def _main_rib_protocol_cost(
     a10_route: A10MainRibRoute, bf_route: MainRibRoute
-) -> List[Tuple[str, float]]:
+) -> list[tuple[str, float]]:
     """Compares the protocol fields, explaining any differences."""
     # show ip route acos routes (in Batfish as kernel route with specific tag)
     if a10_route.protocol == "N":
@@ -237,7 +238,7 @@ def _main_rib_protocol_cost(
 
 def _main_rib_nexthop_cost(
     a10_route: A10MainRibRoute, next_hop: NextHop
-) -> List[Tuple[str, float]]:
+) -> list[tuple[str, float]]:
     """Compares the next hops, explaining any differences."""
 
     if a10_route.protocol in _bf_kernel_route_tags.keys():

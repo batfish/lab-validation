@@ -1,6 +1,6 @@
 import logging
 import re
-from typing import List, Sequence, Text
+from collections.abc import Sequence
 
 from pyparsing import Group, ParseResults
 
@@ -13,18 +13,16 @@ from lab_validation.parsers.nxos.models.routes import NxosMainRibRoute
 _IPv4_PATTERN = re.compile(r"\d+\.\d+\.\d+\.\d+")
 
 
-def parse_show_ip_route_vrf_all(text: Text) -> Sequence[NxosMainRibRoute]:
+def parse_show_ip_route_vrf_all(text: str) -> Sequence[NxosMainRibRoute]:
     logger = logging.getLogger(__name__)
     all_parse_results = Group(show_route()).scanString(text)
-    routes: List[NxosMainRibRoute] = []
+    routes: list[NxosMainRibRoute] = []
     last_loc = 0
     for records, start_loc, end_loc in all_parse_results:
         if last_loc != 0 and start_loc != last_loc and text[last_loc:start_loc].strip():
             # There is text between records that is not whitespace, throw an error so we investigate
             raise UnrecognizedLinesError(
-                "Did not match: [bytes {} to {}, end_loc is {}]\n{}".format(
-                    last_loc, start_loc, end_loc, text[last_loc:start_loc]
-                )
+                f"Did not match: [bytes {last_loc} to {start_loc}, end_loc is {end_loc}]\n{text[last_loc:start_loc]}"
             )
         for record in records:
             vrf = record["vrf"]
@@ -83,7 +81,7 @@ OSPF_EXTENSIONS = {
 }
 
 
-def _get_protocol(protocol: ParseResults) -> Text:
+def _get_protocol(protocol: ParseResults) -> str:
     if protocol.am:
         return "am"  # adjacency manager
     elif protocol.bgp:

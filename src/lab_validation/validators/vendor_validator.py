@@ -5,7 +5,8 @@ for validating Batfish network analysis results against real network device data
 """
 
 from abc import ABC
-from typing import Any, Dict, Sequence
+from collections.abc import Sequence
+from typing import Any
 
 from lab_validation.validators.batfish_models.interface_properties import (
     InterfaceProperties,
@@ -31,22 +32,22 @@ class VendorValidator(ABC):
 
     def validate_interface_properties(
         self, batfish_interfaces: Sequence[InterfaceProperties]
-    ) -> Dict[Any, Any]:
+    ) -> dict[Any, Any]:
         raise ValidationError("Not implemented")
 
     def validate_main_rib_routes(
         self, routes: Sequence[MainRibRoute]
-    ) -> Dict[Any, Any]:
+    ) -> dict[Any, Any]:
         raise ValidationError("Not implemented")
 
     def validate_bgp_rib_routes(
         self, bgp_routes: Sequence[BgpRibRoute]
-    ) -> Dict[Any, Any]:
+    ) -> dict[Any, Any]:
         raise ValidationError("Not implemented")
 
     def validate_evpn_rib_routes(
         self, evpn_routes: Sequence[EvpnRibRoute]
-    ) -> Dict[Any, Any]:
+    ) -> dict[Any, Any]:
         # Batfish does not support EVPN in many vendors and we don't build many labs.
         # As soon as we add a lab for a given vendor, we will have to override this implementation.
         if not evpn_routes:

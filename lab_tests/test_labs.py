@@ -2,8 +2,8 @@ import io
 import json
 import logging
 import zipfile
+from collections.abc import Callable, Sequence
 from pathlib import Path
-from typing import Callable, Dict, Optional, Sequence, Tuple
 
 import attr
 import pandas as pd
@@ -40,7 +40,7 @@ CONNECTIVITY_FILENAME = "connectivity.yaml"
 NETWORK_NAME_PREFIX = "lab_validation"
 LAB_NAME_CONFIG_OPTION = "labname"
 
-vendor_validators: Dict[Vendor, Callable[[Path], VendorValidator]] = {
+vendor_validators: dict[Vendor, Callable[[Path], VendorValidator]] = {
     Vendor.A10_ACOS: A10AcosValidator,
     Vendor.ARISTA: AristaValidator,
     Vendor.CHECKPOINTGAIA: CheckpointGaiaValidator,
@@ -65,7 +65,7 @@ logger.setLevel(logging.INFO)
 
 
 def is_sickbayed(
-    host: str, test: Optional[str], test_list: Sequence[Tuple[str, str]]
+    host: str, test: str | None, test_list: Sequence[tuple[str, str]]
 ) -> bool:
     """
     Check if the specified host, and test are sickbayed.
@@ -82,9 +82,7 @@ def is_sickbayed(
     return False
 
 
-def get_vendor_validator(
-    lab: str, host: str, vendor: Vendor
-) -> Optional[VendorValidator]:
+def get_vendor_validator(lab: str, host: str, vendor: Vendor) -> VendorValidator | None:
     if vendor not in vendor_validators:
         logger.warning("No validator available for vendor: %s", vendor)
         return None
@@ -93,7 +91,7 @@ def get_vendor_validator(
 
 
 def get_runtime_data(
-    lab: str, validators: Dict[str, Optional[VendorValidator]]
+    lab: str, validators: dict[str, VendorValidator | None]
 ) -> SnapshotRuntimeData:
     """Returns the runtime data for the given lab."""
     lab_nos = get_host_nos(lab)
@@ -106,7 +104,7 @@ def get_runtime_data(
     return SnapshotRuntimeData(runtimeData=node_runtime_data)
 
 
-def init_lab(bf: Session, lab: str, validators: Dict[str, VendorValidator]) -> str:
+def init_lab(bf: Session, lab: str, validators: dict[str, VendorValidator]) -> str:
     """Initializes the given lab in the given Batfish session.
 
     :returns: the snapshot name
@@ -172,7 +170,7 @@ def bf(pytestconfig: Config):
 
 
 @pytest.fixture(scope="module")
-def validators(pytestconfig) -> Dict[str, VendorValidator]:
+def validators(pytestconfig) -> dict[str, VendorValidator]:
     lab = pytestconfig.getoption(LAB_NAME_CONFIG_OPTION)
     lab_nos = get_host_nos(lab)
     validators = {}
@@ -182,7 +180,7 @@ def validators(pytestconfig) -> Dict[str, VendorValidator]:
 
 
 @pytest.fixture(scope="module")
-def snapshot(bf, pytestconfig, validators: Dict[str, VendorValidator]) -> str:
+def snapshot(bf, pytestconfig, validators: dict[str, VendorValidator]) -> str:
     """Guarantees a lab with a given name is initialized in batfish
 
     :returns the snapshot name
@@ -340,7 +338,7 @@ def test_interface_properties(
     hostname: str,
     vendor: Vendor,
     interface_properties: TableAnswer,
-    validators: Dict[str, Optional[VendorValidator]],
+    validators: dict[str, VendorValidator | None],
 ):
     validator = validators[hostname]
     if validator is None:
@@ -361,7 +359,7 @@ def test_main_rib_routes(
     hostname: str,
     vendor: Vendor,
     main_rib_routes: pd.DataFrame,
-    validators: Dict[str, Optional[VendorValidator]],
+    validators: dict[str, VendorValidator | None],
 ):
     validator = validators[hostname]
     if validator is None:
@@ -382,7 +380,7 @@ def test_bgp_rib_routes(
     hostname: str,
     vendor: Vendor,
     bgp_rib_routes: pd.DataFrame,
-    validators: Dict[str, Optional[VendorValidator]],
+    validators: dict[str, VendorValidator | None],
 ):
     validator = validators[hostname]
     if validator is None:
@@ -403,7 +401,7 @@ def test_evpn_rib_routes(
     hostname: str,
     vendor: Vendor,
     evpn_rib_routes: pd.DataFrame,
-    validators: Dict[str, Optional[VendorValidator]],
+    validators: dict[str, VendorValidator | None],
 ):
     validator = validators[hostname]
     if validator is None:

@@ -1,5 +1,6 @@
 import json
-from typing import Any, Dict, List, Optional, Sequence
+from collections.abc import Sequence
+from typing import Any
 
 from ..models.routes import AristaBgpRoute
 
@@ -21,7 +22,7 @@ WEIGHT = "weight"
 
 def parse_show_ip_bgp_vrf_all_json(text: str) -> Sequence[AristaBgpRoute]:
     json_obj = json.loads(text)
-    routes: List[AristaBgpRoute] = []
+    routes: list[AristaBgpRoute] = []
     assert VRFS in json_obj
     for vrf_name in json_obj[VRFS]:
         if BGP_ROUTE_ENTRIES in json_obj[VRFS][vrf_name]:
@@ -31,8 +32,8 @@ def parse_show_ip_bgp_vrf_all_json(text: str) -> Sequence[AristaBgpRoute]:
     return routes
 
 
-def _get_bgp_routes(vrf: str, json_obj: Dict[Any, Any]) -> Sequence[AristaBgpRoute]:
-    routes: List[AristaBgpRoute] = []
+def _get_bgp_routes(vrf: str, json_obj: dict[Any, Any]) -> Sequence[AristaBgpRoute]:
+    routes: list[AristaBgpRoute] = []
     for network in json_obj:
         routes_obj = json_obj[network]
         assert BGP_ROUTE_PATHS in routes_obj
@@ -66,7 +67,7 @@ def _get_bgp_routes(vrf: str, json_obj: Dict[Any, Any]) -> Sequence[AristaBgpRou
     return routes
 
 
-def get_weight(weight: Optional[int], next_hop_ip: Optional[str]) -> Optional[int]:
+def get_weight(weight: int | None, next_hop_ip: str | None) -> int | None:
     if next_hop_ip is None and weight is None:
         # ribd(single-agent) EOS does not provide weight for local routes
         return 0

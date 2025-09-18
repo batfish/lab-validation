@@ -1,5 +1,4 @@
 import re
-from typing import Text
 
 from lab_validation.parsers.vendor_agnostic.models.connectivity import Connectivity
 
@@ -54,7 +53,7 @@ def get_nmap_result(src_ip: str, contents: str) -> Connectivity:
     return Connectivity(src_ip=src_ip, dst_ip=dst_ip, app=app, real_result=success)
 
 
-def parse_connectivity(src_ip: Text, contents: Text) -> Connectivity:
+def parse_connectivity(src_ip: str, contents: str) -> Connectivity:
     """
     Parse vendor_agnostic file contents and returns back constructed result
     """

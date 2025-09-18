@@ -1,4 +1,4 @@
-from typing import Sequence, Text
+from collections.abc import Sequence
 
 from ttp import ttp
 
@@ -6,7 +6,7 @@ from ...common.utils import convert_cisco_intf_name
 from ..models.vrfs import Vrf
 
 
-def parse_show_vrf(vrf_output: Text) -> Sequence[Vrf]:
+def parse_show_vrf(vrf_output: str) -> Sequence[Vrf]:
     """Parses show vrf output for IOS or IOS_XE"""
     if not vrf_output.strip():
         # IOS/XE output will be empty if there are no non-default vrfs
@@ -53,7 +53,7 @@ def parse_show_vrf(vrf_output: Text) -> Sequence[Vrf]:
     return vrfs
 
 
-def get_vrf_templated() -> Text:
+def get_vrf_templated() -> str:
     """Return the template for show_vrf"""
 
     template = """
@@ -64,7 +64,7 @@ Name                             Default_RD            Protocols   Interfaces   
     return template
 
 
-def _append_iface(record: dict) -> Text:
+def _append_iface(record: dict) -> str:
     if record.get("Interfaces") == "":
         raise Exception(f'Interface value "" is not expected in this record: {record}')
     return convert_cisco_intf_name(record["Interfaces"])
