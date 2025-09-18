@@ -1,5 +1,5 @@
 entries:
-# leaf01
+  # leaf01
   - src_hostname: leaf01
     src_location: leaf01[lo]
     disposition: success
@@ -96,7 +96,7 @@ entries:
       src_ip: 10.16.1.1
       dst_ip: 10.2.1.69
       application: icmp
-# spine01
+  # spine01
   - src_hostname: spine01
     src_location: spine01[lo]
     disposition: success
@@ -193,7 +193,7 @@ entries:
       src_ip: 10.16.2.1
       dst_ip: 10.2.1.69
       application: icmp
-# bl01
+  # bl01
   - src_hostname: bl01
     src_location: bl01[lo]
     disposition: success
@@ -290,7 +290,7 @@ entries:
       src_ip: 10.16.3.1
       dst_ip: 10.2.1.69
       application: icmp
-# fwl01
+  # fwl01
   - src_hostname: fwl01
     src_location: fwl01[lo0.0]
     disposition: success
@@ -387,7 +387,7 @@ entries:
       src_ip: 10.16.4.1
       dst_ip: 10.2.1.69
       application: icmp
-# exitgw
+  # exitgw
   - src_hostname: exitgw
     src_location: exitgw[loopback123]
     disposition: success
@@ -452,7 +452,7 @@ entries:
       src_ip: 192.168.123.22
       dst_ip: 10.2.1.69
       application: icmp
-# bor01
+  # bor01
   - src_hostname: bor01
     src_location: bor01[lo0.0]
     disposition: failure
