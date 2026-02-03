@@ -7,6 +7,11 @@ name: Lab Validation (reusable)
 on:
   workflow_call:
     inputs:
+      batfish_repository:
+        description: "GitHub repository for Batfish (e.g., batfish/batfish or user/batfish for forks)"
+        required: false
+        default: "batfish/batfish"
+        type: string
       batfish_ref:
         description: "Git ref for Batfish version to test"
         required: false
@@ -68,7 +73,7 @@ jobs:
       - name: Checkout Batfish
         uses: actions/checkout@v4
         with:
-          repository: batfish/batfish
+          repository: ${{ inputs.batfish_repository || 'batfish/batfish' }}
           path: batfish
           ref: ${{ inputs.batfish_ref || 'master' }}
 
