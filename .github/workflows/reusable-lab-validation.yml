@@ -48,7 +48,7 @@ jobs:
       labs: ${{ steps.discover.outputs.labs }}
     steps:
       - name: Checkout lab-validation
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           repository: batfish/lab-validation
 
@@ -71,7 +71,7 @@ jobs:
     if: inputs.batfish_docker == ''
     steps:
       - name: Checkout Batfish
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           repository: ${{ inputs.batfish_repository || 'batfish/batfish' }}
           path: batfish
@@ -121,7 +121,7 @@ jobs:
 
     steps:
       - name: Checkout lab-validation
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           repository: batfish/lab-validation
           path: lab-validation

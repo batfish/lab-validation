@@ -41,7 +41,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
 
       - name: Set up Python 3.10
         uses: actions/setup-python@v6
@@ -59,7 +59,7 @@ jobs:
       id-token: write
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
 
       - name: Set up Python 3.10
         uses: actions/setup-python@v6
@@ -101,7 +101,7 @@ jobs:
       labs: ${{ steps.discover.outputs.labs }}
     steps:
       - name: Checkout lab-validation
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Discover available labs
         id: discover
@@ -117,7 +117,7 @@ jobs:
     if: inputs.batfish_docker == ''
     steps:
       - name: Checkout Batfish
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           repository: batfish/batfish
           path: batfish
@@ -167,7 +167,7 @@ jobs:
 
     steps:
       - name: Checkout lab-validation
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           path: lab-validation
 
