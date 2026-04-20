@@ -104,94 +104,56 @@ class JunosValidator(VendorValidator):
 
     @staticmethod
     def _exclude_iface(iface_name: str, missing_in_batfish: set[str]) -> bool:
-        exclude_iface = {
-            # GRE: pseudo interface. Manual configured interfaces will be .1, .2 etc...
-            # https://www.juniper.net/documentation/en_US/junos/topics/topic-map/switches-interface-gre.html#id-configuring-a-gre-tunnel
-            "gr-0/0/0",
-            # Packet forwarding engine: for internal communication between RE and PFE
-            "pfe-0/0/0",
-            "pfe-0/0/0.16383",
-            # PFH interfaces are pseudo/virtual interfaces, which represent the PFE Host Processor. It is used for
-            # intra-chassis communication and is not user-configurable.
-            # https://kb.juniper.net/InfoCenter/index?page=content&id=KB23578&actp=search
-            "pfh-0/0/0",
-            "pfh-0/0/0.16383",
-            "pfh-0/0/0.16384",
-            # backup mgmt interface for virtual chassis
-            # https://kb.juniper.net/InfoCenter/index?page=content&id=KB25724&cat=EX6200&actp=LIST
-            "bme0",
-            "bme0.0",
-            # customer backbone port: Manual configured interfaces will be .1, .2 etc...
-            # https://www.juniper.net/documentation/en_US/junos/topics/concept/pbb-evpn-integration-for-dci-overview.html
-            "cbp0",
-            # discard interface
-            # https://www.juniper.net/documentation/en_US/junos/topics/topic-map/discard-interfaces.html#id-discard-interfaces-overview
-            "dsc",
-            # Ethernet Segment Interface: related to EVPN
-            # https://www.juniper.net/documentation/en_US/junos/topics/example/evpn-mpls-esi-logical-interfaces.html
-            "esi",
-            # Internally generated interface that is configurable only as the control channel for Generalized MPLS (
-            # GMPLS).
-            "gre",
-            # IP-over-IP tunnel interface. Internally generated interface that is not configurable. Manual configured
-            # interfaces will be .1, .2 etc...
-            # https://www.juniper.net/documentation/en_US/junos/topics/topic-map/tunnel-services-overview.html#id
-            # -tunnel-services-overview
-            "ipip",
-            # integrated routing and bridging. L3 interface for inter-vlan routing. Manual configured interfaces will
-            # be .1, .2 etc...
-            "irb",
-            # Related to sFlow monitoring. Internally generated interface that is not configurable.
-            "jsrv",
-            "jsrv.1",
-            # non-configurable interface for router control traffic
-            "lo0.16385",
-            # label switched interface. Related to VPLS/MPLS. Internally generated interface that is not configurable.
-            "lsi",
-            # Internally generated interface that is not configurable.
-            "mtun",
-            # Multicast PIM: Internally generated interface that is not configurable.
-            "pimd",
-            "pime",
-            # provider instance port: Manual configured interfaces will be .1, .2 etc...
-            # https://www.juniper.net/documentation/en_US/junos/topics/example/example-pbb-mh-evpn-for-dci-configuring.html
-            "pip0",
-            # Traffic mirroring interface. Internally generated interface that is not configurable.
-            # https://kb.juniper.net/InfoCenter/index?page=content&id=KB34543&cat=SRX_210&actp=LIST
-            "tap",
-            # Virtual Management Ethernet interface. Manual configured interfaces will be .1, .2 etc...
-            # https://www.juniper.net/documentation/en_US/junos/topics/task/configuration/virtual-chassis-ex4200-vme-cli.html
-            "vme",
-            # Virtual Tunnel Endpoint Port: EVPN. Manual configured interfaces will be .1, .2 etc...
-            "vtep",
+        # Junos reports many internal/pseudo interfaces that Batfish does not
+        # model. Rather than enumerating every one, use prefix-based exclusion
+        # to handle both existing (17.x) and newer (25.x) Junos versions.
+        _EXCLUDE_PREFIXES = (
+            "bme",  # backup mgmt for virtual chassis
+            "cbp",  # customer backbone port
+            "demux",  # demux interfaces (Junos 25.x+)
+            "dsc",  # discard interface
+            "em",  # management ethernet (many sub-interfaces)
+            "esi",  # Ethernet Segment Interface (EVPN)
+            "fti",  # flexible tunnel interface
+            "fxp",  # management interface (vrnetlab/vMX)
+            "gr-",  # GRE pseudo interface
+            "gre",  # GMPLS control channel
+            "ipip",  # IP-over-IP tunnel
+            "irb",  # integrated routing and bridging
+            "jsrv",  # sFlow monitoring
+            "lc-",  # line card internal
+            "mif",  # management infrastructure filter
+            "lsi",  # label switched interface (VPLS/MPLS)
+            "lt-",  # logical tunnel
+            "mtun",  # multicast tunnel
+            "pfe-",  # RE-PFE internal communication
+            "pfh-",  # PFE host processor
+            "pimd",  # multicast PIM
+            "pime",  # multicast PIM
+            "pip0",  # provider instance port
+            "pp0",  # PPP interface
+            "rbeb",  # EVPN backbone edge bridge
+            "sp-",  # adaptive services
+            "st0",  # secure tunnel
+            "tap",  # traffic mirroring
+            "vme",  # virtual management ethernet
+            "vtep",  # VXLAN tunnel endpoint
+        )
+
+        _EXCLUDE_EXACT = {
+            "lo0.16384",  # internal loopback unit
+            "lo0.16385",  # non-configurable router control traffic
         }
 
-        if iface_name.startswith("xe"):
-            if (
-                iface_name.endswith(".16386")
-                or f"{iface_name}.16386" in missing_in_batfish
-            ):
-                """
-                Junos creates `xe` interface with ".16386" by default if the interface is not configured explicitly by
-                user. When user configures the interface, Junos will replace `.16386` interface with configured unit.
-                So, excluding specific interfaces "xe-a/a/a" & "xe-a/a/a.16386".
-                Example:
-                By Default                  = "xe-0/0/8" & "xe-0/0/8.16386"
-                After unit 0 configuration  = "xe-0/0/8" & "xe-0/0/8.0"
-                """
-                return True
-        if iface_name.startswith(("em", "fxp")):
-            # Junos management interfaces (em0, fxp0) have many sub-interfaces
+        if iface_name in _EXCLUDE_EXACT:
             return True
-        if iface_name in exclude_iface:
-            """
-            Junos 'show interface' displays many internal interfaces that junos creates by default. Batfish does not
-            create these interfaces unless it is configured explicitly. Excluding these interfaces. For more info
-            related to this interfaces refer below link:
-            "https://www.juniper.net/documentation/en_US/junos/topics/topic-map/router-interfaces-overview.html#id#
-            -10147130."
-            """
+        if iface_name.startswith(_EXCLUDE_PREFIXES):
             return True
+
+        # Unconfigured xe/ge/et interfaces get a .16386 default unit
+        if iface_name.endswith(".16386") or f"{iface_name}.16386" in missing_in_batfish:
+            return True
+
         return False
 
     @staticmethod
@@ -202,6 +164,7 @@ class JunosValidator(VendorValidator):
 
         is_mgmt = batfish_interface.name.startswith(("em", "fxp"))
         if not is_mgmt:
+            # Batfish deactivates management interfaces
             if batfish_interface.active != (
                 real_interface.state.admin and real_interface.state.line
             ):
