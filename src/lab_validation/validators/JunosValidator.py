@@ -52,16 +52,17 @@ class JunosValidator(VendorValidator):
         self, batfish_routes: Sequence[MainRibRoute]
     ) -> dict[Any, Any]:
         """Validating main RIB routes from all VRFs"""
-        real_routes: Sequence[JunosMainRibRoute] = self._parse_routes()
-
-        real_routes = [r for r in real_routes if not filter_route(r)]
+        real_routes = [r for r in self._parse_routes() if not filter_route(r)]
 
         matched_routes = match_pairs(
             real_routes,
             batfish_routes,
             _routes_cost,
         )
-        return matched_pairs_to_failures(matched_routes)
+        failures = matched_pairs_to_failures(matched_routes)
+        return {
+            k: v for k, v in failures.items() if not _is_unmatched_mgmt_discard(k, v)
+        }
 
     def validate_bgp_rib_routes(
         self, batfish_routes: Sequence[BgpRibRoute]
@@ -174,8 +175,8 @@ class JunosValidator(VendorValidator):
                 After unit 0 configuration  = "xe-0/0/8" & "xe-0/0/8.0"
                 """
                 return True
-        if iface_name.startswith("em"):
-            # Junos displays lot of `em` interfaces in show data. So, excluding `em` interfaces that is not in config
+        if iface_name.startswith(("em", "fxp")):
+            # Junos management interfaces (em0, fxp0) have many sub-interfaces
             return True
         if iface_name in exclude_iface:
             """
@@ -194,8 +195,8 @@ class JunosValidator(VendorValidator):
     ) -> dict[str, str]:
         diff = {}
 
-        if not batfish_interface.name.startswith("em"):
-            # Batfish deactivates management interfaces
+        is_mgmt = batfish_interface.name.startswith(("em", "fxp"))
+        if not is_mgmt:
             if batfish_interface.active != (
                 real_interface.state.admin and real_interface.state.line
             ):
@@ -208,7 +209,7 @@ class JunosValidator(VendorValidator):
         else:
             junos_bw = real_interface.bandwidth
 
-        if batfish_interface.bandwidth != junos_bw:
+        if not is_mgmt and batfish_interface.bandwidth != junos_bw:
             # Skipping loopback interface bw: Junos sets it to `None` and batfish sets 1E12. So we already know it
             # will always disagree.
             if not (
@@ -408,7 +409,7 @@ def _is_mgmt_iface(junos_name: str | None) -> bool:
     """Return true iff Batfish treats this interface as a management interface."""
     if junos_name is None:
         return False
-    return junos_name.startswith("em0")
+    return junos_name.startswith(("em0", "fxp0"))
 
 
 def _compute_nexthop_cost(
@@ -450,15 +451,33 @@ def _compute_nexthop_cost(
     raise ValueError("Unsupported next hop " + repr(next_hop))
 
 
+def _is_unmatched_mgmt_discard(failure_key: Any, failure_value: Any) -> bool:
+    """Filter unmatched Batfish local discard routes for management interfaces.
+
+    When Junos uses management-instance, management routes (fxp0/em0) live in
+    mgmt_junos VRF. Batfish deactivates these interfaces and creates local
+    discard routes in the default VRF. These are Batfish-only (Right_element)
+    because the device-side routes are filtered as mgmt_junos VRF.
+    """
+    key_str = str(failure_key)
+    val_str = str(failure_value)
+    return (
+        "Right_element" in key_str
+        and "NextHopDiscard" in key_str
+        and "protocol='local'" in key_str
+        and val_str == "No_match_found_on_the_left"
+    )
+
+
 def filter_route(real_route: JunosMainRibRoute) -> bool:
     # Juniper throws in a multicast route when you're using OSPF, filter it out
     if real_route.network.startswith("224.0.0") and real_route.nh_type == "MultiRecv":
         return True
-    # em0.0 is junos dedicated mgmt interface
+    # mgmt_junos is the management routing instance (vrnetlab/vMX)
+    elif real_route.vrf == "mgmt_junos":
+        return True
     elif _is_mgmt_iface(real_route.next_hop_int):
-        # Junos creates local /32 for down interfaces,
-        # and so does Batfish.
-        return not real_route.network.endswith("/32")
+        return True
     # batfish creates only active routes
     elif not real_route.active:
         return True
