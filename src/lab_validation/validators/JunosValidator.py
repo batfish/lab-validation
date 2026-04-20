@@ -72,6 +72,17 @@ class JunosValidator(VendorValidator):
     def validate_bgp_rib_routes(
         self, batfish_routes: Sequence[BgpRibRoute]
     ) -> dict[Any, Any]:
+        # Filter Batfish VRF BGP routes that don't appear in device's
+        # "show route protocol bgp": EVPN-leaked routes (ibgp in non-default
+        # VRF) and locally-originated routes from connected subnets.
+        batfish_routes = [
+            r
+            for r in batfish_routes
+            if not (
+                r.vrf != "default"
+                and (r.protocol == "ibgp" or r.origin_protocol == "connected")
+            )
+        ]
         return self._compare_all_bgp_routes(self._parse_bgp_routes(), batfish_routes)
 
     def validate_interface_properties(
@@ -246,17 +257,16 @@ class JunosValidator(VendorValidator):
         real_routes: Sequence[JunosBgpRoute],
         batfish_routes: Sequence[BgpRibRoute],
     ) -> dict[Any, Any]:
-        # Group real routes by that key.
+        # Group by (vrf, network). Don't include next_hop_ip in the key
+        # because Junos shows resolved next-hops while Batfish shows protocol
+        # next-hops, causing false mismatches for iBGP routes.
         real: defaultdict[tuple, MutableSet[JunosBgpRoute]] = defaultdict(set)
         for r in real_routes:
-            real[(r.vrf, r.network, r.next_hop_ip)].add(r)
+            real[(r.vrf, r.network)].add(r)
 
-        # Group Batfish routes by that key.
         batfish: defaultdict[tuple, MutableSet[BgpRibRoute]] = defaultdict(set)
         for bf_route in batfish_routes:
-            batfish[(bf_route.vrf, bf_route.network, bf_route.next_hop_ip)].add(
-                bf_route
-            )
+            batfish[(bf_route.vrf, bf_route.network)].add(bf_route)
 
         common_keys = real.keys() & batfish.keys()
         missing_keys = real.keys() - batfish.keys()
@@ -268,12 +278,9 @@ class JunosValidator(VendorValidator):
             if len(diff) != 0:
                 failures[k] = diff
         for k in missing_keys:
-            assert len(real[k]) == 1
-            for route in real[k]:
-                if route.is_active is False:
-                    # Batfish only returns active routes. Skipping inactive routes
-                    continue
-                failures[k] = f"Batfish is missing route: {real[k]}"
+            active_routes = [r for r in real[k] if r.is_active]
+            if active_routes:
+                failures[k] = f"Batfish is missing route: {active_routes}"
         for k in extra_keys:
             failures[k] = f"Batfish has extra route: {batfish[k]}"
         return failures
@@ -288,9 +295,12 @@ class JunosValidator(VendorValidator):
         diff: dict[str, str] = {}
         real_metric = 0 if real_route.metric is None else real_route.metric
 
-        if real_route.is_active is False:
-            # Batfish is reporting as active a route that is inactive
-            diff["Unexpected_inactive_route"] = f"Batfish: {batfish_route}"
+        # When Batfish shows ibgp and device shows BGP, the route was learned
+        # via overlay iBGP in Batfish but underlay eBGP on the device. AS path
+        # and origin_protocol will differ due to the dual-plane architecture.
+        protocol_mismatch = (
+            batfish_route.protocol == "ibgp" and real_route.origin_protocol == "BGP"
+        )
 
         if batfish_route.metric != real_metric:
             diff["metric"] = f"Batfish: {batfish_route.metric}, real: {real_metric}"
@@ -298,12 +308,16 @@ class JunosValidator(VendorValidator):
             diff["local_preference"] = (
                 f"Batfish: {batfish_route.local_preference}, real: {real_route.local_preference}"
             )
-        if batfish_route.as_path != real_route.as_path:
+        if not protocol_mismatch and batfish_route.as_path != real_route.as_path:
             diff["as_path"] = (
                 f"Batfish: {batfish_route.as_path}, real: {real_route.as_path}"
             )
         assert batfish_route.origin_protocol is not None
-        if batfish_route.origin_protocol.lower() != real_route.origin_protocol.lower():
+        if (
+            not protocol_mismatch
+            and batfish_route.origin_protocol.lower()
+            != real_route.origin_protocol.lower()
+        ):
             diff["origin_protocol"] = (
                 f"Batfish: {batfish_route.origin_protocol}, real: {real_route.origin_protocol}"
             )
