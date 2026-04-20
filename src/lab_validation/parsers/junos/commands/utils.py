@@ -13,13 +13,32 @@ def remove_unused_lines(text: str) -> str:
         return match["json_text"]
 
 
-# Table header includes optional VRF name and RIB
-_table_header = re.compile(r"((?P<vrf>.*)\.)?(?P<rib>inet6?\.0)")
+# Known Junos RIB suffixes. These appear as the tail of a table name.
+# Longest first so bgp.evpn.0 matches before evpn.0
+_KNOWN_RIBS = (
+    "bgp.evpn.0",
+    "inetflow.0",
+    "inet6.0",
+    "inet.0",
+    "evpn.0",
+    "mpls.0",
+)
 
 
-def _parse_table_header(vrf_ip_info: str) -> tuple[str, str]:
-    m = _table_header.fullmatch(vrf_ip_info)
-    assert m is not None
-    vrf = m.group("vrf") if m.group("vrf") else "default"
-    rib = m.group("rib")
-    return vrf, rib
+def _parse_table_header(table_name: str) -> tuple[str, str]:
+    """Parse a Junos routing table name into (vrf, rib).
+
+    Examples:
+        "inet.0" -> ("default", "inet.0")
+        "TENANT-A.inet.0" -> ("TENANT-A", "inet.0")
+        "bgp.evpn.0" -> ("default", "bgp.evpn.0")
+        "TENANT-A.evpn.0" -> ("TENANT-A", "evpn.0")
+        "mpls.0" -> ("default", "mpls.0")
+    """
+    for rib in _KNOWN_RIBS:
+        if table_name == rib:
+            return "default", rib
+        if table_name.endswith("." + rib):
+            vrf = table_name[: -(len(rib) + 1)]
+            return vrf, rib
+    return "default", table_name

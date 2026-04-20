@@ -926,10 +926,12 @@ def test_show_route_display_json_multiple_routes() -> None:
 
 
 def test_convert_active() -> None:
-    active_tag = "*"
-    result = convert_active(active_tag)
-    assert result is True
+    assert convert_active("*") is True
+    assert convert_active(None) is False
 
-    active_tag = None
-    result = convert_active(active_tag)
-    assert result is False
+
+def test_convert_active_evpn_tags() -> None:
+    # @ = routing use only (EVPN routes contribute to routing but not FIB)
+    assert convert_active("@") is True
+    # # = forwarding use only
+    assert convert_active("#") is True
