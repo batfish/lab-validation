@@ -1,0 +1,31 @@
+# L3VPN lab: inter-PE VPN-IPv4 route exchange
+#
+# Topology:
+#   pe1 (AS 65000) ---[ge-0/0/0]---[ge-0/0/0]--- pe2 (AS 65000)
+#     lo0: 10.255.0.1/32                           lo0: 10.255.0.2/32
+#     PE-PE link: 10.0.12.0/31
+#     VRF CUSTOMERS: ge-0/0/1, 10.100.1.0/24       VRF CUSTOMERS: ge-0/0/1, 10.100.2.0/24
+#
+# iBGP with family inet-vpn unicast between PE1 and PE2.
+# Each PE has a CUSTOMERS VRF with a static route.
+# After convergence, each PE's CUSTOMERS VRF should contain the other's
+# static route, leaked via VPN-IPv4.
+#
+# Interface mapping: containerlab ethN+1 = Junos ge-0/0/N
+
+name: l3vpn
+
+topology:
+  nodes:
+    pe1:
+      kind: juniper_vjunosrouter
+      image: vrnetlab/juniper_vjunos-router:25.4R1.12
+      startup-config: configs/pe1.cfg
+    pe2:
+      kind: juniper_vjunosrouter
+      image: vrnetlab/juniper_vjunos-router:25.4R1.12
+      startup-config: configs/pe2.cfg
+
+  links:
+    # pe1 ge-0/0/0 (eth1) <-> pe2 ge-0/0/0 (eth1)
+    - endpoints: ["pe1:eth1", "pe2:eth1"]
