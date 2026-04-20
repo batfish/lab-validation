@@ -1261,20 +1261,58 @@ def test_compare_interfaces_mgmt_fxp() -> None:
     assert diff == {}
 
 
-def test_is_unmatched_mgmt_discard() -> None:
-    """Unmatched Batfish local discard routes for mgmt IPs should be filtered."""
-    from lab_validation.validators.JunosValidator import _is_unmatched_mgmt_discard
+def test_is_local_discard_host_route() -> None:
+    """Local /32 discard routes should be filtered (deactivated interfaces)."""
+    from lab_validation.validators.JunosValidator import _is_local_discard_host_route
 
-    key = "Right_element: MainRibRoute(vrf='default', network='10.0.0.15/32', next_hop=NextHopDiscard(type='discard'), protocol='local', metric=0, admin=0, tag=None)"
-    val = "No_match_found_on_the_left"
-    assert _is_unmatched_mgmt_discard(key, val)
-
-    # Should NOT filter matched routes or non-local routes
-    assert not _is_unmatched_mgmt_discard(
-        "Left_element: something",
-        "No_match_found_on_the_right",
+    # Should filter: local /32 discard
+    assert _is_local_discard_host_route(
+        MainRibRoute(
+            vrf="default",
+            network="10.254.4.1/32",
+            next_hop=NextHopDiscard(),
+            protocol="local",
+            metric=0,
+            admin=0,
+            tag=None,
+        )
     )
-    assert not _is_unmatched_mgmt_discard(
-        "Right_element: MainRibRoute(protocol='bgp')",
-        "No_match_found_on_the_left",
+
+    # Should NOT filter: not /32
+    assert not _is_local_discard_host_route(
+        MainRibRoute(
+            vrf="default",
+            network="10.254.4.0/24",
+            next_hop=NextHopDiscard(),
+            protocol="local",
+            metric=0,
+            admin=0,
+            tag=None,
+        )
+    )
+
+    # Should NOT filter: not local protocol
+    assert not _is_local_discard_host_route(
+        MainRibRoute(
+            vrf="default",
+            network="10.254.4.1/32",
+            next_hop=NextHopDiscard(),
+            protocol="static",
+            metric=0,
+            admin=5,
+            tag=None,
+        )
+    )
+
+    # Should NOT filter: not NextHopDiscard
+    assert not _is_local_discard_host_route(
+        MainRibRoute(
+            vrf="default",
+            network="10.254.4.1/32",
+            next_hop=NextHopInterface(interface="fxp0.0"),
+            protocol="local",
+            metric=0,
+            admin=0,
+            tag=None,
+        )
     )

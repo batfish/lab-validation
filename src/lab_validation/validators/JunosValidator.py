@@ -54,15 +54,20 @@ class JunosValidator(VendorValidator):
         """Validating main RIB routes from all VRFs"""
         real_routes = [r for r in self._parse_routes() if not filter_route(r)]
 
+        # Filter Batfish local discard /32 routes. These are created for
+        # deactivated interfaces (management or otherwise). The device never
+        # has local+discard /32 routes — active interfaces have local routes
+        # pointing to the interface, and deactivated interfaces have no route.
+        batfish_routes = [
+            r for r in batfish_routes if not _is_local_discard_host_route(r)
+        ]
+
         matched_routes = match_pairs(
             real_routes,
             batfish_routes,
             _routes_cost,
         )
-        failures = matched_pairs_to_failures(matched_routes)
-        return {
-            k: v for k, v in failures.items() if not _is_unmatched_mgmt_discard(k, v)
-        }
+        return matched_pairs_to_failures(matched_routes)
 
     def validate_bgp_rib_routes(
         self, batfish_routes: Sequence[BgpRibRoute]
@@ -451,21 +456,17 @@ def _compute_nexthop_cost(
     raise ValueError("Unsupported next hop " + repr(next_hop))
 
 
-def _is_unmatched_mgmt_discard(failure_key: Any, failure_value: Any) -> bool:
-    """Filter unmatched Batfish local discard routes for management interfaces.
+def _is_local_discard_host_route(route: MainRibRoute) -> bool:
+    """Check if a Batfish route is a local /32 discard route.
 
-    When Junos uses management-instance, management routes (fxp0/em0) live in
-    mgmt_junos VRF. Batfish deactivates these interfaces and creates local
-    discard routes in the default VRF. These are Batfish-only (Right_element)
-    because the device-side routes are filtered as mgmt_junos VRF.
+    Batfish creates these for deactivated interfaces. The device never has
+    local+discard /32 routes — active interfaces produce local routes
+    pointing to the interface, and deactivated interfaces produce no route.
     """
-    key_str = str(failure_key)
-    val_str = str(failure_value)
     return (
-        "Right_element" in key_str
-        and "NextHopDiscard" in key_str
-        and "protocol='local'" in key_str
-        and val_str == "No_match_found_on_the_left"
+        isinstance(route.next_hop, NextHopDiscard)
+        and route.protocol == "local"
+        and route.network.endswith("/32")
     )
 
 
