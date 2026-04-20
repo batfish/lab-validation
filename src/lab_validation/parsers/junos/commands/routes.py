@@ -35,8 +35,7 @@ def parse_show_route_display_json(text: str) -> Sequence[JunosMainRibRoute]:
             assert TABLE_NAME in table
             assert len(table[TABLE_NAME]) == 1
             vrf, rib = _parse_table_header(table[TABLE_NAME][0][DATA])
-            # skip ipv6
-            if rib == "inet6.0":
+            if rib not in ("inet.0",):
                 continue
             junos_routes += _get_routes(vrf, table[RT])
 
@@ -112,11 +111,12 @@ def _get_routes(vrf: str, route_json_obj: list[Any]) -> list[JunosMainRibRoute]:
 
 
 def convert_active(active_tag: str | None) -> bool:
-    if active_tag == "*":
-        # active route will have tag *
+    # * = active for both routing and forwarding
+    # @ = routing use only (EVPN contributes to routing table but not FIB)
+    # # = forwarding use only
+    if active_tag in ("*", "@", "#"):
         return True
     elif active_tag is None:
-        # inactive route will have tag None
         return False
     else:
         raise Exception(f"'{active_tag}' is not expected active tag")
