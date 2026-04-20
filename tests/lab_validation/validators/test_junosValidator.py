@@ -82,9 +82,9 @@ def test_nexthop_cost_static_routes() -> None:
         nh_type=None,
         active=True,
     )
-    # Batfish NHIP routes are compatible with JunOS routes that have a resolved NHINT
+    # Batfish NHIP routes are compatible with Junos routes that have a resolved NHINT
     assert _compute_nexthop_cost(junos_route, NextHopIp(ip="10.12.1.1")) == 0.0
-    # Since Batfish shows protocol NHOP while JunOS shows resolved, cannot enforce
+    # Since Batfish shows protocol NHOP while Junos shows resolved, cannot enforce
     # that they appear equal
     assert _compute_nexthop_cost(junos_route, NextHopIp(ip="10.12.1.2")) == 0.0
 

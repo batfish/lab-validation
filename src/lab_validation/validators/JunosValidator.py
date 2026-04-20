@@ -12,6 +12,7 @@ from pybatfish.datamodel.route import (
     NextHopDiscard,
     NextHopInterface,
     NextHopIp,
+    NextHopVtep,
 )
 
 from lab_validation.parsers.junos.commands.bgp_routes import (
@@ -67,7 +68,10 @@ class JunosValidator(VendorValidator):
             batfish_routes,
             _routes_cost,
         )
-        return matched_pairs_to_failures(matched_routes)
+        failures = matched_pairs_to_failures(matched_routes)
+        return {
+            k: v for k, v in failures.items() if not _is_unmatched_auto_export(k, v)
+        }
 
     def validate_bgp_rib_routes(
         self, batfish_routes: Sequence[BgpRibRoute]
@@ -365,6 +369,10 @@ def _compute_protocol_cost(
         if batfish_route.protocol in {"bgp", "ibgp"}:
             return 0.0
         return math.inf
+    if expected_route.protocol == "EVPN":
+        if batfish_route.protocol in {"bgp", "ibgp"}:
+            return 0.0
+        return math.inf
     if expected_route.protocol == "OSPF":
         if batfish_route.protocol in {"ospf", "ospfE1", "ospfE2", "ospfIA", "ospfIS"}:
             return 0.0
@@ -393,15 +401,22 @@ def _compute_nexthop_cost(
         next_hop, NextHopDiscard
     ):
         return 0.0
-    elif expected_route.nh_type in {"Discard", "Reject"} or isinstance(
+    if expected_route.nh_type == "Reject" and isinstance(next_hop, NextHopInterface):
+        # Local /32 routes for IRB interfaces with virtual-gateway-address show
+        # as Reject on the device but NextHopInterface in Batfish.
+        if expected_route.protocol == "Local" and expected_route.network.endswith(
+            "/32"
+        ):
+            return 0.0
+    if expected_route.nh_type in {"Discard", "Reject"} or isinstance(
         next_hop, NextHopDiscard
     ):
         # Only one is null-routed.
         return 10.0
 
     if isinstance(next_hop, NextHopIp):
-        if expected_route.protocol == "Static":
-            # For static nhip-only routes, Batfish shows protocol nhip, while junos shows resolved nhip
+        if expected_route.protocol in ("Static", "BGP", "EVPN"):
+            # Batfish shows the protocol next-hop; Junos shows the resolved next-hop
             return 0.0
         elif expected_route.next_hop_ip == next_hop.ip:
             return 0.0
@@ -416,7 +431,26 @@ def _compute_nexthop_cost(
             cost += 1.0
         return cost
 
+    if isinstance(next_hop, NextHopVtep):
+        return 0.0
+
     raise ValueError("Unsupported next hop " + repr(next_hop))
+
+
+def _is_unmatched_auto_export(failure_key: Any, failure_value: Any) -> bool:
+    """Filter unmatched device-only Local Reject routes from auto-export.
+
+    Junos auto-export leaks Local /32 routes (virtual-gateway IPs) between
+    VRFs. Batfish doesn't implement auto-export so these are device-only.
+    """
+    key_str = str(failure_key)
+    val_str = str(failure_value)
+    return (
+        "Left_element" in key_str
+        and "protocol='Local'" in key_str
+        and "nh_type='Reject'" in key_str
+        and val_str == "No_match_found_on_the_right"
+    )
 
 
 def _is_local_discard_host_route(route: MainRibRoute) -> bool:
@@ -434,6 +468,9 @@ def _is_local_discard_host_route(route: MainRibRoute) -> bool:
 
 
 def filter_route(real_route: JunosMainRibRoute) -> bool:
+    # Multipath routes are ECMP resolution entries, not independent routes
+    if real_route.protocol == "Multipath":
+        return True
     # Juniper throws in a multicast route when you're using OSPF, filter it out
     if real_route.network.startswith("224.0.0") and real_route.nh_type == "MultiRecv":
         return True
