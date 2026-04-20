@@ -1,0 +1,2494 @@
+{
+    "bgp-information" : [
+    {
+        "attributes" : {"xmlns" : "http://xml.juniper.net/junos/25.4R0/junos-routing"}, 
+        "bgp-peer" : [
+        {
+            "attributes" : {"junos:style" : "detail"}, 
+            "peer-address" : [
+            {
+                "data" : "172.16.0.1+52331"
+            }
+            ], 
+            "peer-as" : [
+            {
+                "data" : "65000"
+            }
+            ], 
+            "local-address" : [
+            {
+                "data" : "172.16.0.11+179"
+            }
+            ], 
+            "local-as" : [
+            {
+                "data" : "65000"
+            }
+            ], 
+            "description" : [
+            {
+                "data" : "node1-1"
+            }
+            ], 
+            "peer-group" : [
+            {
+                "data" : "overlay"
+            }
+            ], 
+            "peer-cfg-rti" : [
+            {
+                "data" : "master"
+            }
+            ], 
+            "peer-fwd-rti" : [
+            {
+                "data" : "master"
+            }
+            ], 
+            "peer-type" : [
+            {
+                "data" : "Internal"
+            }
+            ], 
+            "route-reflector-client" : [
+            {
+                "data" : [null]
+            }
+            ], 
+            "peer-state" : [
+            {
+                "data" : "Established"
+            }
+            ], 
+            "peer-flags" : [
+            {
+                "data" : "Sync"
+            }
+            ], 
+            "rsync-flags" : [
+            {
+            }
+            ], 
+            "last-state" : [
+            {
+                "data" : "OpenConfirm"
+            }
+            ], 
+            "last-event" : [
+            {
+                "data" : "RecvKeepAlive"
+            }
+            ], 
+            "last-error" : [
+            {
+                "data" : "None"
+            }
+            ], 
+            "bgp-option-information" : [
+            {
+                "send-community-type" : [
+                {
+                }
+                ], 
+                "bgp-options" : [
+                {
+                    "data" : "LocalAddress LogUpDown Cluster AddressFamily Multipath LocalAS Rib-group Refresh"
+                }
+                ], 
+                "bgp-options2" : [
+                {
+                    "data" : "VpnApplyExport MtuDiscovery"
+                }
+                ], 
+                "bgp-options-extended" : [
+                {
+                    "data" : "GracefulShutdownRcv"
+                }
+                ], 
+                "bgp-options-extended2" : [
+                {
+                }
+                ], 
+                "address-families" : [
+                {
+                    "data" : "evpn"
+                }
+                ], 
+                "local-address" : [
+                {
+                    "data" : "172.16.0.11"
+                }
+                ], 
+                "holdtime" : [
+                {
+                    "data" : "90"
+                }
+                ], 
+                "preference" : [
+                {
+                    "data" : "170"
+                }
+                ], 
+                "gshut-recv-local-preference" : [
+                {
+                    "data" : "0"
+                }
+                ], 
+                "local-as" : [
+                {
+                    "data" : "65000"
+                }
+                ], 
+                "local-system-as" : [
+                {
+                    "data" : "65011"
+                }
+                ]
+            }
+            ], 
+            "flap-count" : [
+            {
+                "data" : "0"
+            }
+            ], 
+            "elapsed-time" : [
+            {
+                "data" : "9:05", 
+                "attributes" : {"junos:seconds" : "545"}
+            }
+            ], 
+            "recv-ebgp-origin-validation-state" : [
+            {
+                "data" : "Accept"
+            }
+            ], 
+            "bgp-malformed-attributes" : [
+            {
+                "malformed-information" : [
+                {
+                    "log-interval" : [
+                    {
+                        "data" : "300"
+                    }
+                    ], 
+                    "route-limit" : [
+                    {
+                        "data" : "1000"
+                    }
+                    ]
+                }
+                ]
+            }
+            ], 
+            "peer-id" : [
+            {
+                "data" : "172.16.0.1"
+            }
+            ], 
+            "local-id" : [
+            {
+                "data" : "172.16.0.11"
+            }
+            ], 
+            "active-holdtime" : [
+            {
+                "data" : "90"
+            }
+            ], 
+            "keepalive-interval" : [
+            {
+                "data" : "30"
+            }
+            ], 
+            "group-index" : [
+            {
+                "data" : "1"
+            }
+            ], 
+            "peer-index" : [
+            {
+                "data" : "1"
+            }
+            ], 
+            "snmp-index" : [
+            {
+                "data" : "3"
+            }
+            ], 
+            "bgp-peer-iosession" : [
+            {
+                "iosession-thread-name" : [
+                {
+                    "data" : "bgpio-0"
+                }
+                ], 
+                "iosession-state" : [
+                {
+                    "data" : "Enabled"
+                }
+                ]
+            }
+            ], 
+            "bgp-bfd" : [
+            {
+                "bfd-configuration-state" : [
+                {
+                    "data" : "disabled"
+                }
+                ], 
+                "bfd-operational-state" : [
+                {
+                    "data" : "down"
+                }
+                ]
+            }
+            ], 
+            "peer-restart-nlri-configured" : [
+            {
+                "data" : "evpn"
+            }
+            ], 
+            "nlri-type-peer" : [
+            {
+                "data" : "evpn"
+            }
+            ], 
+            "nlri-type-session" : [
+            {
+                "data" : "evpn"
+            }
+            ], 
+            "loop-check-display" : [
+            {
+                "data" : "AS loop check: Domain Scoped"
+            }
+            ], 
+            "peer-refresh-capability" : [
+            {
+                "data" : "2"
+            }
+            ], 
+            "peer-4byte-as-capability-advertised" : [
+            {
+                "data" : "65000"
+            }
+            ], 
+            "peer-addpath-not-supported" : [
+            {
+                "data" : [null]
+            }
+            ], 
+            "local-ext-nh-color-nlri" : [
+            {
+                "data" : "evpn"
+            }
+            ], 
+            "bgp-rib" : [
+            {
+                "attributes" : {"junos:style" : "detail"}, 
+                "name" : [
+                {
+                    "data" : "bgp.evpn.0"
+                }
+                ], 
+                "rib-bit" : [
+                {
+                    "data" : "30000"
+                }
+                ], 
+                "bgp-rib-state" : [
+                {
+                    "data" : "BGP restart is complete"
+                }
+                ], 
+                "vpn-rib-state" : [
+                {
+                    "data" : "VPN restart is complete"
+                }
+                ], 
+                "send-state" : [
+                {
+                    "data" : "in sync"
+                }
+                ], 
+                "active-prefix-count" : [
+                {
+                    "data" : "0"
+                }
+                ], 
+                "received-prefix-count" : [
+                {
+                    "data" : "0"
+                }
+                ], 
+                "accepted-prefix-count" : [
+                {
+                    "data" : "0"
+                }
+                ], 
+                "suppressed-prefix-count" : [
+                {
+                    "data" : "0"
+                }
+                ], 
+                "advertised-prefix-count" : [
+                {
+                    "data" : "2"
+                }
+                ]
+            }
+            ], 
+            "peer-stale-route-time-configured" : [
+            {
+                "data" : "300"
+            }
+            ], 
+            "peer-no-restart" : [
+            {
+                "data" : [null]
+            }
+            ], 
+            "peer-restart-flags-received" : [
+            {
+                "data" : "Notification"
+            }
+            ], 
+            "peer-restart-nlri-negotiated" : [
+            {
+                "data" : "evpn"
+            }
+            ], 
+            "peer-end-of-rib-received" : [
+            {
+                "data" : "evpn"
+            }
+            ], 
+            "peer-end-of-rib-sent" : [
+            {
+                "data" : "evpn"
+            }
+            ], 
+            "peer-end-of-rib-scheduled" : [
+            {
+            }
+            ], 
+            "peer-no-llgr-restarter" : [
+            {
+                "data" : [null]
+            }
+            ], 
+            "bgp-family-stat" : [
+            {
+                "attributes" : {"junos:style" : "detail"}, 
+                "nlri-type" : [
+                {
+                    "data" : "evpn"
+                }
+                ], 
+                "bgp-nlri-send-time" : [
+                {
+                    "data" : "1"
+                }
+                ], 
+                "bgp-nlri-recv-time" : [
+                {
+                    "data" : "3"
+                }
+                ]
+            }
+            ], 
+            "last-received" : [
+            {
+                "data" : "2"
+            }
+            ], 
+            "last-sent" : [
+            {
+                "data" : "25"
+            }
+            ], 
+            "last-checked" : [
+            {
+                "data" : "545"
+            }
+            ], 
+            "input-messages" : [
+            {
+                "data" : "23"
+            }
+            ], 
+            "input-updates" : [
+            {
+                "data" : "1"
+            }
+            ], 
+            "input-refreshes" : [
+            {
+                "data" : "0"
+            }
+            ], 
+            "input-octets" : [
+            {
+                "data" : "492"
+            }
+            ], 
+            "output-messages" : [
+            {
+                "data" : "23"
+            }
+            ], 
+            "output-updates" : [
+            {
+                "data" : "2"
+            }
+            ], 
+            "output-refreshes" : [
+            {
+                "data" : "0"
+            }
+            ], 
+            "output-octets" : [
+            {
+                "data" : "674"
+            }
+            ], 
+            "bgp-output-queue" : [
+            {
+                "number" : [
+                {
+                    "data" : "2"
+                }
+                ], 
+                "count" : [
+                {
+                    "data" : "0"
+                }
+                ], 
+                "table-name" : [
+                {
+                    "data" : "bgp.evpn.0"
+                }
+                ], 
+                "rib-adv-nlri" : [
+                {
+                    "data" : "evpn"
+                }
+                ]
+            }
+            ]
+        }, 
+        {
+            "attributes" : {"junos:style" : "detail"}, 
+            "peer-address" : [
+            {
+                "data" : "172.16.0.2"
+            }
+            ], 
+            "peer-as" : [
+            {
+                "data" : "65000"
+            }
+            ], 
+            "local-address" : [
+            {
+                "data" : "172.16.0.11"
+            }
+            ], 
+            "local-as" : [
+            {
+                "data" : "65000"
+            }
+            ], 
+            "description" : [
+            {
+                "data" : "node1-2"
+            }
+            ], 
+            "peer-group" : [
+            {
+                "data" : "overlay"
+            }
+            ], 
+            "peer-cfg-rti" : [
+            {
+                "data" : "master"
+            }
+            ], 
+            "peer-fwd-rti" : [
+            {
+                "data" : "master"
+            }
+            ], 
+            "peer-type" : [
+            {
+                "data" : "Internal"
+            }
+            ], 
+            "route-reflector-client" : [
+            {
+                "data" : [null]
+            }
+            ], 
+            "peer-state" : [
+            {
+                "data" : "Active"
+            }
+            ], 
+            "peer-flags" : [
+            {
+            }
+            ], 
+            "rsync-flags" : [
+            {
+            }
+            ], 
+            "last-state" : [
+            {
+                "data" : "Idle"
+            }
+            ], 
+            "last-event" : [
+            {
+                "data" : "Start"
+            }
+            ], 
+            "last-error" : [
+            {
+                "data" : "None"
+            }
+            ], 
+            "bgp-option-information" : [
+            {
+                "send-community-type" : [
+                {
+                }
+                ], 
+                "bgp-options" : [
+                {
+                    "data" : "LocalAddress LogUpDown Cluster AddressFamily Multipath LocalAS Rib-group Refresh"
+                }
+                ], 
+                "bgp-options2" : [
+                {
+                    "data" : "VpnApplyExport MtuDiscovery"
+                }
+                ], 
+                "bgp-options-extended" : [
+                {
+                    "data" : "GracefulShutdownRcv"
+                }
+                ], 
+                "bgp-options-extended2" : [
+                {
+                }
+                ], 
+                "address-families" : [
+                {
+                    "data" : "evpn"
+                }
+                ], 
+                "local-address" : [
+                {
+                    "data" : "172.16.0.11"
+                }
+                ], 
+                "holdtime" : [
+                {
+                    "data" : "90"
+                }
+                ], 
+                "preference" : [
+                {
+                    "data" : "170"
+                }
+                ], 
+                "gshut-recv-local-preference" : [
+                {
+                    "data" : "0"
+                }
+                ], 
+                "local-as" : [
+                {
+                    "data" : "65000"
+                }
+                ], 
+                "local-system-as" : [
+                {
+                    "data" : "65011"
+                }
+                ]
+            }
+            ], 
+            "flap-count" : [
+            {
+                "data" : "0"
+            }
+            ], 
+            "elapsed-time" : [
+            {
+                "data" : "12:31", 
+                "attributes" : {"junos:seconds" : "751"}
+            }
+            ], 
+            "recv-ebgp-origin-validation-state" : [
+            {
+                "data" : "Accept"
+            }
+            ], 
+            "bgp-malformed-attributes" : [
+            {
+                "malformed-information" : [
+                {
+                    "log-interval" : [
+                    {
+                        "data" : "300"
+                    }
+                    ], 
+                    "route-limit" : [
+                    {
+                        "data" : "1000"
+                    }
+                    ]
+                }
+                ]
+            }
+            ]
+        }, 
+        {
+            "attributes" : {"junos:style" : "detail"}, 
+            "peer-address" : [
+            {
+                "data" : "172.16.0.12"
+            }
+            ], 
+            "peer-as" : [
+            {
+                "data" : "65000"
+            }
+            ], 
+            "local-address" : [
+            {
+                "data" : "172.16.0.11"
+            }
+            ], 
+            "local-as" : [
+            {
+                "data" : "65000"
+            }
+            ], 
+            "description" : [
+            {
+                "data" : "node2-2"
+            }
+            ], 
+            "peer-group" : [
+            {
+                "data" : "overlay"
+            }
+            ], 
+            "peer-cfg-rti" : [
+            {
+                "data" : "master"
+            }
+            ], 
+            "peer-fwd-rti" : [
+            {
+                "data" : "master"
+            }
+            ], 
+            "peer-type" : [
+            {
+                "data" : "Internal"
+            }
+            ], 
+            "route-reflector-client" : [
+            {
+                "data" : [null]
+            }
+            ], 
+            "peer-state" : [
+            {
+                "data" : "Active"
+            }
+            ], 
+            "peer-flags" : [
+            {
+            }
+            ], 
+            "rsync-flags" : [
+            {
+            }
+            ], 
+            "last-state" : [
+            {
+                "data" : "Idle"
+            }
+            ], 
+            "last-event" : [
+            {
+                "data" : "Start"
+            }
+            ], 
+            "last-error" : [
+            {
+                "data" : "None"
+            }
+            ], 
+            "bgp-option-information" : [
+            {
+                "send-community-type" : [
+                {
+                }
+                ], 
+                "bgp-options" : [
+                {
+                    "data" : "LocalAddress LogUpDown Cluster AddressFamily Multipath LocalAS Rib-group Refresh"
+                }
+                ], 
+                "bgp-options2" : [
+                {
+                    "data" : "VpnApplyExport MtuDiscovery"
+                }
+                ], 
+                "bgp-options-extended" : [
+                {
+                    "data" : "GracefulShutdownRcv"
+                }
+                ], 
+                "bgp-options-extended2" : [
+                {
+                }
+                ], 
+                "address-families" : [
+                {
+                    "data" : "evpn"
+                }
+                ], 
+                "local-address" : [
+                {
+                    "data" : "172.16.0.11"
+                }
+                ], 
+                "holdtime" : [
+                {
+                    "data" : "90"
+                }
+                ], 
+                "preference" : [
+                {
+                    "data" : "170"
+                }
+                ], 
+                "gshut-recv-local-preference" : [
+                {
+                    "data" : "0"
+                }
+                ], 
+                "local-as" : [
+                {
+                    "data" : "65000"
+                }
+                ], 
+                "local-system-as" : [
+                {
+                    "data" : "65011"
+                }
+                ]
+            }
+            ], 
+            "flap-count" : [
+            {
+                "data" : "0"
+            }
+            ], 
+            "elapsed-time" : [
+            {
+                "data" : "12:31", 
+                "attributes" : {"junos:seconds" : "751"}
+            }
+            ], 
+            "recv-ebgp-origin-validation-state" : [
+            {
+                "data" : "Accept"
+            }
+            ], 
+            "bgp-malformed-attributes" : [
+            {
+                "malformed-information" : [
+                {
+                    "log-interval" : [
+                    {
+                        "data" : "300"
+                    }
+                    ], 
+                    "route-limit" : [
+                    {
+                        "data" : "1000"
+                    }
+                    ]
+                }
+                ]
+            }
+            ]
+        }, 
+        {
+            "attributes" : {"junos:style" : "detail"}, 
+            "peer-address" : [
+            {
+                "data" : "172.16.0.100+179"
+            }
+            ], 
+            "peer-as" : [
+            {
+                "data" : "65000"
+            }
+            ], 
+            "local-address" : [
+            {
+                "data" : "172.16.0.11+56051"
+            }
+            ], 
+            "local-as" : [
+            {
+                "data" : "65000"
+            }
+            ], 
+            "description" : [
+            {
+                "data" : "router1"
+            }
+            ], 
+            "peer-group" : [
+            {
+                "data" : "overlay"
+            }
+            ], 
+            "peer-cfg-rti" : [
+            {
+                "data" : "master"
+            }
+            ], 
+            "peer-fwd-rti" : [
+            {
+                "data" : "master"
+            }
+            ], 
+            "peer-type" : [
+            {
+                "data" : "Internal"
+            }
+            ], 
+            "route-reflector-client" : [
+            {
+                "data" : [null]
+            }
+            ], 
+            "peer-state" : [
+            {
+                "data" : "Established"
+            }
+            ], 
+            "peer-flags" : [
+            {
+                "data" : "Sync"
+            }
+            ], 
+            "rsync-flags" : [
+            {
+            }
+            ], 
+            "last-state" : [
+            {
+                "data" : "OpenConfirm"
+            }
+            ], 
+            "last-event" : [
+            {
+                "data" : "RecvKeepAlive"
+            }
+            ], 
+            "last-error" : [
+            {
+                "data" : "None"
+            }
+            ], 
+            "bgp-option-information" : [
+            {
+                "send-community-type" : [
+                {
+                }
+                ], 
+                "bgp-options" : [
+                {
+                    "data" : "LocalAddress LogUpDown Cluster AddressFamily Multipath LocalAS Rib-group Refresh"
+                }
+                ], 
+                "bgp-options2" : [
+                {
+                    "data" : "VpnApplyExport MtuDiscovery"
+                }
+                ], 
+                "bgp-options-extended" : [
+                {
+                    "data" : "GracefulShutdownRcv"
+                }
+                ], 
+                "bgp-options-extended2" : [
+                {
+                }
+                ], 
+                "address-families" : [
+                {
+                    "data" : "evpn"
+                }
+                ], 
+                "local-address" : [
+                {
+                    "data" : "172.16.0.11"
+                }
+                ], 
+                "holdtime" : [
+                {
+                    "data" : "90"
+                }
+                ], 
+                "preference" : [
+                {
+                    "data" : "170"
+                }
+                ], 
+                "gshut-recv-local-preference" : [
+                {
+                    "data" : "0"
+                }
+                ], 
+                "local-as" : [
+                {
+                    "data" : "65000"
+                }
+                ], 
+                "local-system-as" : [
+                {
+                    "data" : "65011"
+                }
+                ]
+            }
+            ], 
+            "flap-count" : [
+            {
+                "data" : "0"
+            }
+            ], 
+            "elapsed-time" : [
+            {
+                "data" : "10:31", 
+                "attributes" : {"junos:seconds" : "631"}
+            }
+            ], 
+            "recv-ebgp-origin-validation-state" : [
+            {
+                "data" : "Accept"
+            }
+            ], 
+            "bgp-malformed-attributes" : [
+            {
+                "malformed-information" : [
+                {
+                    "log-interval" : [
+                    {
+                        "data" : "300"
+                    }
+                    ], 
+                    "route-limit" : [
+                    {
+                        "data" : "1000"
+                    }
+                    ]
+                }
+                ]
+            }
+            ], 
+            "peer-id" : [
+            {
+                "data" : "172.16.0.100"
+            }
+            ], 
+            "local-id" : [
+            {
+                "data" : "172.16.0.11"
+            }
+            ], 
+            "active-holdtime" : [
+            {
+                "data" : "90"
+            }
+            ], 
+            "keepalive-interval" : [
+            {
+                "data" : "30"
+            }
+            ], 
+            "group-index" : [
+            {
+                "data" : "1"
+            }
+            ], 
+            "peer-index" : [
+            {
+                "data" : "0"
+            }
+            ], 
+            "snmp-index" : [
+            {
+                "data" : "6"
+            }
+            ], 
+            "bgp-peer-iosession" : [
+            {
+                "iosession-thread-name" : [
+                {
+                    "data" : "bgpio-0"
+                }
+                ], 
+                "iosession-state" : [
+                {
+                    "data" : "Enabled"
+                }
+                ]
+            }
+            ], 
+            "bgp-bfd" : [
+            {
+                "bfd-configuration-state" : [
+                {
+                    "data" : "disabled"
+                }
+                ], 
+                "bfd-operational-state" : [
+                {
+                    "data" : "down"
+                }
+                ]
+            }
+            ], 
+            "peer-restart-nlri-configured" : [
+            {
+                "data" : "evpn"
+            }
+            ], 
+            "nlri-type-peer" : [
+            {
+                "data" : "evpn"
+            }
+            ], 
+            "nlri-type-session" : [
+            {
+                "data" : "evpn"
+            }
+            ], 
+            "loop-check-display" : [
+            {
+                "data" : "AS loop check: Domain Scoped"
+            }
+            ], 
+            "peer-refresh-capability" : [
+            {
+                "data" : "2"
+            }
+            ], 
+            "peer-4byte-as-capability-advertised" : [
+            {
+                "data" : "65000"
+            }
+            ], 
+            "peer-addpath-not-supported" : [
+            {
+                "data" : [null]
+            }
+            ], 
+            "local-ext-nh-color-nlri" : [
+            {
+                "data" : "evpn"
+            }
+            ], 
+            "bgp-rib" : [
+            {
+                "attributes" : {"junos:style" : "detail"}, 
+                "name" : [
+                {
+                    "data" : "bgp.evpn.0"
+                }
+                ], 
+                "rib-bit" : [
+                {
+                    "data" : "30000"
+                }
+                ], 
+                "bgp-rib-state" : [
+                {
+                    "data" : "BGP restart is complete"
+                }
+                ], 
+                "vpn-rib-state" : [
+                {
+                    "data" : "VPN restart is complete"
+                }
+                ], 
+                "send-state" : [
+                {
+                    "data" : "in sync"
+                }
+                ], 
+                "active-prefix-count" : [
+                {
+                    "data" : "2"
+                }
+                ], 
+                "received-prefix-count" : [
+                {
+                    "data" : "2"
+                }
+                ], 
+                "accepted-prefix-count" : [
+                {
+                    "data" : "2"
+                }
+                ], 
+                "suppressed-prefix-count" : [
+                {
+                    "data" : "0"
+                }
+                ], 
+                "advertised-prefix-count" : [
+                {
+                    "data" : "0"
+                }
+                ]
+            }
+            ], 
+            "peer-stale-route-time-configured" : [
+            {
+                "data" : "300"
+            }
+            ], 
+            "peer-no-restart" : [
+            {
+                "data" : [null]
+            }
+            ], 
+            "peer-restart-flags-received" : [
+            {
+                "data" : "Notification"
+            }
+            ], 
+            "peer-restart-nlri-negotiated" : [
+            {
+                "data" : "evpn"
+            }
+            ], 
+            "peer-end-of-rib-received" : [
+            {
+                "data" : "evpn"
+            }
+            ], 
+            "peer-end-of-rib-sent" : [
+            {
+                "data" : "evpn"
+            }
+            ], 
+            "peer-end-of-rib-scheduled" : [
+            {
+            }
+            ], 
+            "peer-no-llgr-restarter" : [
+            {
+                "data" : [null]
+            }
+            ], 
+            "bgp-family-stat" : [
+            {
+                "attributes" : {"junos:style" : "detail"}, 
+                "nlri-type" : [
+                {
+                    "data" : "evpn"
+                }
+                ], 
+                "bgp-nlri-send-time" : [
+                {
+                    "data" : "0"
+                }
+                ], 
+                "bgp-nlri-recv-time" : [
+                {
+                    "data" : "0"
+                }
+                ]
+            }
+            ], 
+            "last-received" : [
+            {
+                "data" : "1"
+            }
+            ], 
+            "last-sent" : [
+            {
+                "data" : "25"
+            }
+            ], 
+            "last-checked" : [
+            {
+                "data" : "632"
+            }
+            ], 
+            "input-messages" : [
+            {
+                "data" : "27"
+            }
+            ], 
+            "input-updates" : [
+            {
+                "data" : "3"
+            }
+            ], 
+            "input-refreshes" : [
+            {
+                "data" : "0"
+            }
+            ], 
+            "input-octets" : [
+            {
+                "data" : "766"
+            }
+            ], 
+            "output-messages" : [
+            {
+                "data" : "24"
+            }
+            ], 
+            "output-updates" : [
+            {
+                "data" : "0"
+            }
+            ], 
+            "output-refreshes" : [
+            {
+                "data" : "0"
+            }
+            ], 
+            "output-octets" : [
+            {
+                "data" : "467"
+            }
+            ], 
+            "bgp-output-queue" : [
+            {
+                "number" : [
+                {
+                    "data" : "2"
+                }
+                ], 
+                "count" : [
+                {
+                    "data" : "0"
+                }
+                ], 
+                "table-name" : [
+                {
+                    "data" : "bgp.evpn.0"
+                }
+                ], 
+                "rib-adv-nlri" : [
+                {
+                    "data" : "evpn"
+                }
+                ]
+            }
+            ]
+        }, 
+        {
+            "attributes" : {"junos:style" : "detail"}, 
+            "peer-address" : [
+            {
+                "data" : "172.16.254.0+179"
+            }
+            ], 
+            "peer-as" : [
+            {
+                "data" : "65001"
+            }
+            ], 
+            "local-address" : [
+            {
+                "data" : "172.16.254.1+56197"
+            }
+            ], 
+            "local-as" : [
+            {
+                "data" : "65011"
+            }
+            ], 
+            "description" : [
+            {
+                "data" : "node1-1"
+            }
+            ], 
+            "peer-group" : [
+            {
+                "data" : "underlay"
+            }
+            ], 
+            "peer-cfg-rti" : [
+            {
+                "data" : "master"
+            }
+            ], 
+            "peer-fwd-rti" : [
+            {
+                "data" : "master"
+            }
+            ], 
+            "peer-type" : [
+            {
+                "data" : "External"
+            }
+            ], 
+            "peer-state" : [
+            {
+                "data" : "Established"
+            }
+            ], 
+            "peer-flags" : [
+            {
+                "data" : "Sync"
+            }
+            ], 
+            "rsync-flags" : [
+            {
+            }
+            ], 
+            "last-state" : [
+            {
+                "data" : "OpenConfirm"
+            }
+            ], 
+            "last-event" : [
+            {
+                "data" : "RecvKeepAlive"
+            }
+            ], 
+            "last-error" : [
+            {
+                "data" : "None"
+            }
+            ], 
+            "bgp-option-information" : [
+            {
+                "export-policy" : [
+                {
+                    "data" : "export-underlay"
+                }
+                ], 
+                "import-policy" : [
+                {
+                    "data" : "import-underlay"
+                }
+                ], 
+                "nlri-policy" : [
+                {
+                    "nlri-type" : [
+                    {
+                        "data" : "inet-unicast"
+                    }
+                    ], 
+                    "nlri-export-policy" : [
+                    {
+                        "data" : "export-underlay"
+                    }
+                    ], 
+                    "nlri-import-policy" : [
+                    {
+                        "data" : "import-underlay"
+                    }
+                    ]
+                }
+                ], 
+                "send-community-type" : [
+                {
+                }
+                ], 
+                "bgp-options" : [
+                {
+                    "data" : "LogUpDown AddressFamily PeerAS Multipath LocalAS Refresh"
+                }
+                ], 
+                "bgp-options2" : [
+                {
+                    "data" : "MtuDiscovery MultipathAs BfdEnabled"
+                }
+                ], 
+                "bgp-options-extended" : [
+                {
+                    "data" : "GracefulShutdownRcv"
+                }
+                ], 
+                "bgp-options-extended2" : [
+                {
+                }
+                ], 
+                "address-families" : [
+                {
+                    "data" : "inet-unicast"
+                }
+                ], 
+                "holdtime" : [
+                {
+                    "data" : "90"
+                }
+                ], 
+                "preference" : [
+                {
+                    "data" : "170"
+                }
+                ], 
+                "gshut-recv-local-preference" : [
+                {
+                    "data" : "0"
+                }
+                ], 
+                "local-as" : [
+                {
+                    "data" : "65011"
+                }
+                ], 
+                "local-system-as" : [
+                {
+                    "data" : "65011"
+                }
+                ]
+            }
+            ], 
+            "flap-count" : [
+            {
+                "data" : "0"
+            }
+            ], 
+            "elapsed-time" : [
+            {
+                "data" : "9:10", 
+                "attributes" : {"junos:seconds" : "550"}
+            }
+            ], 
+            "recv-ebgp-origin-validation-state" : [
+            {
+                "data" : "Reject"
+            }
+            ], 
+            "bgp-malformed-attributes" : [
+            {
+                "malformed-information" : [
+                {
+                    "log-interval" : [
+                    {
+                        "data" : "300"
+                    }
+                    ], 
+                    "route-limit" : [
+                    {
+                        "data" : "1000"
+                    }
+                    ]
+                }
+                ]
+            }
+            ], 
+            "peer-id" : [
+            {
+                "data" : "172.16.0.1"
+            }
+            ], 
+            "local-id" : [
+            {
+                "data" : "172.16.0.11"
+            }
+            ], 
+            "active-holdtime" : [
+            {
+                "data" : "90"
+            }
+            ], 
+            "keepalive-interval" : [
+            {
+                "data" : "30"
+            }
+            ], 
+            "group-index" : [
+            {
+                "data" : "0"
+            }
+            ], 
+            "peer-index" : [
+            {
+                "data" : "1"
+            }
+            ], 
+            "snmp-index" : [
+            {
+                "data" : "0"
+            }
+            ], 
+            "bgp-peer-iosession" : [
+            {
+                "iosession-thread-name" : [
+                {
+                    "data" : "bgpio-0"
+                }
+                ], 
+                "iosession-state" : [
+                {
+                    "data" : "Enabled"
+                }
+                ]
+            }
+            ], 
+            "bgp-bfd" : [
+            {
+                "bfd-configuration-state" : [
+                {
+                    "data" : "enabled"
+                }
+                ], 
+                "bfd-operational-state" : [
+                {
+                    "data" : "up"
+                }
+                ]
+            }
+            ], 
+            "local-interface-name" : [
+            {
+                "data" : "ge-0/0/1.0"
+            }
+            ], 
+            "local-interface-index" : [
+            {
+                "data" : "541"
+            }
+            ], 
+            "peer-restart-nlri-configured" : [
+            {
+                "data" : "inet-unicast"
+            }
+            ], 
+            "nlri-type-peer" : [
+            {
+                "data" : "inet-unicast"
+            }
+            ], 
+            "nlri-type-session" : [
+            {
+                "data" : "inet-unicast"
+            }
+            ], 
+            "loop-check-display" : [
+            {
+                "data" : "AS loop check: Domain Scoped"
+            }
+            ], 
+            "peer-refresh-capability" : [
+            {
+                "data" : "2"
+            }
+            ], 
+            "peer-4byte-as-capability-advertised" : [
+            {
+                "data" : "65001"
+            }
+            ], 
+            "peer-addpath-not-supported" : [
+            {
+                "data" : [null]
+            }
+            ], 
+            "bgp-rib" : [
+            {
+                "attributes" : {"junos:style" : "detail"}, 
+                "name" : [
+                {
+                    "data" : "inet.0"
+                }
+                ], 
+                "rib-bit" : [
+                {
+                    "data" : "20000"
+                }
+                ], 
+                "bgp-rib-state" : [
+                {
+                    "data" : "BGP restart is complete"
+                }
+                ], 
+                "send-state" : [
+                {
+                    "data" : "in sync"
+                }
+                ], 
+                "active-prefix-count" : [
+                {
+                    "data" : "1"
+                }
+                ], 
+                "received-prefix-count" : [
+                {
+                    "data" : "2"
+                }
+                ], 
+                "accepted-prefix-count" : [
+                {
+                    "data" : "2"
+                }
+                ], 
+                "suppressed-prefix-count" : [
+                {
+                    "data" : "0"
+                }
+                ], 
+                "advertised-prefix-count" : [
+                {
+                    "data" : "6"
+                }
+                ]
+            }
+            ], 
+            "peer-stale-route-time-configured" : [
+            {
+                "data" : "300"
+            }
+            ], 
+            "peer-no-restart" : [
+            {
+                "data" : [null]
+            }
+            ], 
+            "peer-restart-flags-received" : [
+            {
+                "data" : "Notification"
+            }
+            ], 
+            "peer-restart-nlri-negotiated" : [
+            {
+                "data" : "inet-unicast"
+            }
+            ], 
+            "peer-end-of-rib-received" : [
+            {
+                "data" : "inet-unicast"
+            }
+            ], 
+            "peer-end-of-rib-sent" : [
+            {
+                "data" : "inet-unicast"
+            }
+            ], 
+            "peer-end-of-rib-scheduled" : [
+            {
+            }
+            ], 
+            "peer-no-llgr-restarter" : [
+            {
+                "data" : [null]
+            }
+            ], 
+            "bgp-family-stat" : [
+            {
+                "attributes" : {"junos:style" : "detail"}, 
+                "nlri-type" : [
+                {
+                    "data" : "inet-unicast"
+                }
+                ], 
+                "bgp-nlri-send-time" : [
+                {
+                    "data" : "2"
+                }
+                ], 
+                "bgp-nlri-recv-time" : [
+                {
+                    "data" : "2"
+                }
+                ]
+            }
+            ], 
+            "last-received" : [
+            {
+                "data" : "2"
+            }
+            ], 
+            "last-sent" : [
+            {
+                "data" : "14"
+            }
+            ], 
+            "last-checked" : [
+            {
+                "data" : "552"
+            }
+            ], 
+            "input-messages" : [
+            {
+                "data" : "24"
+            }
+            ], 
+            "input-updates" : [
+            {
+                "data" : "2"
+            }
+            ], 
+            "input-refreshes" : [
+            {
+                "data" : "0"
+            }
+            ], 
+            "input-octets" : [
+            {
+                "data" : "538"
+            }
+            ], 
+            "output-messages" : [
+            {
+                "data" : "24"
+            }
+            ], 
+            "output-updates" : [
+            {
+                "data" : "2"
+            }
+            ], 
+            "output-refreshes" : [
+            {
+                "data" : "0"
+            }
+            ], 
+            "output-octets" : [
+            {
+                "data" : "542"
+            }
+            ], 
+            "bgp-output-queue" : [
+            {
+                "number" : [
+                {
+                    "data" : "1"
+                }
+                ], 
+                "count" : [
+                {
+                    "data" : "0"
+                }
+                ], 
+                "table-name" : [
+                {
+                    "data" : "inet.0"
+                }
+                ], 
+                "rib-adv-nlri" : [
+                {
+                    "data" : "inet-unicast"
+                }
+                ]
+            }
+            ]
+        }, 
+        {
+            "attributes" : {"junos:style" : "detail"}, 
+            "peer-address" : [
+            {
+                "data" : "172.16.254.4+179"
+            }
+            ], 
+            "peer-as" : [
+            {
+                "data" : "65002"
+            }
+            ], 
+            "local-address" : [
+            {
+                "data" : "172.16.254.5"
+            }
+            ], 
+            "local-as" : [
+            {
+                "data" : "65011"
+            }
+            ], 
+            "description" : [
+            {
+                "data" : "node1-2"
+            }
+            ], 
+            "peer-group" : [
+            {
+                "data" : "underlay"
+            }
+            ], 
+            "peer-cfg-rti" : [
+            {
+                "data" : "master"
+            }
+            ], 
+            "peer-fwd-rti" : [
+            {
+                "data" : "master"
+            }
+            ], 
+            "peer-type" : [
+            {
+                "data" : "External"
+            }
+            ], 
+            "peer-state" : [
+            {
+                "data" : "Connect"
+            }
+            ], 
+            "peer-flags" : [
+            {
+                "data" : "TryConnect"
+            }
+            ], 
+            "rsync-flags" : [
+            {
+            }
+            ], 
+            "last-state" : [
+            {
+                "data" : "Connect"
+            }
+            ], 
+            "last-event" : [
+            {
+                "data" : "ConnectRetry"
+            }
+            ], 
+            "last-error" : [
+            {
+                "data" : "None"
+            }
+            ], 
+            "bgp-option-information" : [
+            {
+                "export-policy" : [
+                {
+                    "data" : "export-underlay"
+                }
+                ], 
+                "import-policy" : [
+                {
+                    "data" : "import-underlay"
+                }
+                ], 
+                "nlri-policy" : [
+                {
+                    "nlri-type" : [
+                    {
+                        "data" : "inet-unicast"
+                    }
+                    ], 
+                    "nlri-export-policy" : [
+                    {
+                        "data" : "export-underlay"
+                    }
+                    ], 
+                    "nlri-import-policy" : [
+                    {
+                        "data" : "import-underlay"
+                    }
+                    ]
+                }
+                ], 
+                "send-community-type" : [
+                {
+                }
+                ], 
+                "bgp-options" : [
+                {
+                    "data" : "LogUpDown AddressFamily PeerAS Multipath LocalAS Refresh"
+                }
+                ], 
+                "bgp-options2" : [
+                {
+                    "data" : "MtuDiscovery MultipathAs BfdEnabled"
+                }
+                ], 
+                "bgp-options-extended" : [
+                {
+                    "data" : "GracefulShutdownRcv"
+                }
+                ], 
+                "bgp-options-extended2" : [
+                {
+                }
+                ], 
+                "address-families" : [
+                {
+                    "data" : "inet-unicast"
+                }
+                ], 
+                "holdtime" : [
+                {
+                    "data" : "90"
+                }
+                ], 
+                "preference" : [
+                {
+                    "data" : "170"
+                }
+                ], 
+                "gshut-recv-local-preference" : [
+                {
+                    "data" : "0"
+                }
+                ], 
+                "local-as" : [
+                {
+                    "data" : "65011"
+                }
+                ], 
+                "local-system-as" : [
+                {
+                    "data" : "65011"
+                }
+                ]
+            }
+            ], 
+            "flap-count" : [
+            {
+                "data" : "0"
+            }
+            ], 
+            "elapsed-time" : [
+            {
+                "data" : "12:31", 
+                "attributes" : {"junos:seconds" : "751"}
+            }
+            ], 
+            "recv-ebgp-origin-validation-state" : [
+            {
+                "data" : "Reject"
+            }
+            ], 
+            "bgp-malformed-attributes" : [
+            {
+                "malformed-information" : [
+                {
+                    "log-interval" : [
+                    {
+                        "data" : "300"
+                    }
+                    ], 
+                    "route-limit" : [
+                    {
+                        "data" : "1000"
+                    }
+                    ]
+                }
+                ]
+            }
+            ]
+        }, 
+        {
+            "attributes" : {"junos:style" : "detail"}, 
+            "peer-address" : [
+            {
+                "data" : "172.16.254.8+58316"
+            }
+            ], 
+            "peer-as" : [
+            {
+                "data" : "65100"
+            }
+            ], 
+            "local-address" : [
+            {
+                "data" : "172.16.254.9+179"
+            }
+            ], 
+            "local-as" : [
+            {
+                "data" : "65011"
+            }
+            ], 
+            "description" : [
+            {
+                "data" : "router1"
+            }
+            ], 
+            "peer-group" : [
+            {
+                "data" : "underlay"
+            }
+            ], 
+            "peer-cfg-rti" : [
+            {
+                "data" : "master"
+            }
+            ], 
+            "peer-fwd-rti" : [
+            {
+                "data" : "master"
+            }
+            ], 
+            "peer-type" : [
+            {
+                "data" : "External"
+            }
+            ], 
+            "peer-state" : [
+            {
+                "data" : "Established"
+            }
+            ], 
+            "peer-flags" : [
+            {
+                "data" : "Sync"
+            }
+            ], 
+            "rsync-flags" : [
+            {
+            }
+            ], 
+            "last-state" : [
+            {
+                "data" : "OpenConfirm"
+            }
+            ], 
+            "last-event" : [
+            {
+                "data" : "RecvKeepAlive"
+            }
+            ], 
+            "last-error" : [
+            {
+                "data" : "None"
+            }
+            ], 
+            "bgp-option-information" : [
+            {
+                "export-policy" : [
+                {
+                    "data" : "export-underlay"
+                }
+                ], 
+                "import-policy" : [
+                {
+                    "data" : "import-underlay"
+                }
+                ], 
+                "nlri-policy" : [
+                {
+                    "nlri-type" : [
+                    {
+                        "data" : "inet-unicast"
+                    }
+                    ], 
+                    "nlri-export-policy" : [
+                    {
+                        "data" : "export-underlay"
+                    }
+                    ], 
+                    "nlri-import-policy" : [
+                    {
+                        "data" : "import-underlay"
+                    }
+                    ]
+                }
+                ], 
+                "send-community-type" : [
+                {
+                }
+                ], 
+                "bgp-options" : [
+                {
+                    "data" : "LogUpDown AddressFamily PeerAS Multipath LocalAS Refresh"
+                }
+                ], 
+                "bgp-options2" : [
+                {
+                    "data" : "MtuDiscovery MultipathAs BfdEnabled"
+                }
+                ], 
+                "bgp-options-extended" : [
+                {
+                    "data" : "GracefulShutdownRcv"
+                }
+                ], 
+                "bgp-options-extended2" : [
+                {
+                }
+                ], 
+                "address-families" : [
+                {
+                    "data" : "inet-unicast"
+                }
+                ], 
+                "holdtime" : [
+                {
+                    "data" : "90"
+                }
+                ], 
+                "preference" : [
+                {
+                    "data" : "170"
+                }
+                ], 
+                "gshut-recv-local-preference" : [
+                {
+                    "data" : "0"
+                }
+                ], 
+                "local-as" : [
+                {
+                    "data" : "65011"
+                }
+                ], 
+                "local-system-as" : [
+                {
+                    "data" : "65011"
+                }
+                ]
+            }
+            ], 
+            "flap-count" : [
+            {
+                "data" : "0"
+            }
+            ], 
+            "elapsed-time" : [
+            {
+                "data" : "10:35", 
+                "attributes" : {"junos:seconds" : "635"}
+            }
+            ], 
+            "recv-ebgp-origin-validation-state" : [
+            {
+                "data" : "Reject"
+            }
+            ], 
+            "bgp-malformed-attributes" : [
+            {
+                "malformed-information" : [
+                {
+                    "log-interval" : [
+                    {
+                        "data" : "300"
+                    }
+                    ], 
+                    "route-limit" : [
+                    {
+                        "data" : "1000"
+                    }
+                    ]
+                }
+                ]
+            }
+            ], 
+            "peer-id" : [
+            {
+                "data" : "172.16.0.100"
+            }
+            ], 
+            "local-id" : [
+            {
+                "data" : "172.16.0.11"
+            }
+            ], 
+            "active-holdtime" : [
+            {
+                "data" : "90"
+            }
+            ], 
+            "keepalive-interval" : [
+            {
+                "data" : "30"
+            }
+            ], 
+            "group-index" : [
+            {
+                "data" : "0"
+            }
+            ], 
+            "peer-index" : [
+            {
+                "data" : "0"
+            }
+            ], 
+            "snmp-index" : [
+            {
+                "data" : "2"
+            }
+            ], 
+            "bgp-peer-iosession" : [
+            {
+                "iosession-thread-name" : [
+                {
+                    "data" : "bgpio-0"
+                }
+                ], 
+                "iosession-state" : [
+                {
+                    "data" : "Enabled"
+                }
+                ]
+            }
+            ], 
+            "bgp-bfd" : [
+            {
+                "bfd-configuration-state" : [
+                {
+                    "data" : "enabled"
+                }
+                ], 
+                "bfd-operational-state" : [
+                {
+                    "data" : "up"
+                }
+                ]
+            }
+            ], 
+            "local-interface-name" : [
+            {
+                "data" : "ge-0/0/3.0"
+            }
+            ], 
+            "local-interface-index" : [
+            {
+                "data" : "543"
+            }
+            ], 
+            "peer-restart-nlri-configured" : [
+            {
+                "data" : "inet-unicast"
+            }
+            ], 
+            "nlri-type-peer" : [
+            {
+                "data" : "inet-unicast"
+            }
+            ], 
+            "nlri-type-session" : [
+            {
+                "data" : "inet-unicast"
+            }
+            ], 
+            "loop-check-display" : [
+            {
+                "data" : "AS loop check: Domain Scoped"
+            }
+            ], 
+            "peer-refresh-capability" : [
+            {
+                "data" : "2"
+            }
+            ], 
+            "peer-4byte-as-capability-advertised" : [
+            {
+                "data" : "65100"
+            }
+            ], 
+            "peer-addpath-not-supported" : [
+            {
+                "data" : [null]
+            }
+            ], 
+            "bgp-rib" : [
+            {
+                "attributes" : {"junos:style" : "detail"}, 
+                "name" : [
+                {
+                    "data" : "inet.0"
+                }
+                ], 
+                "rib-bit" : [
+                {
+                    "data" : "20000"
+                }
+                ], 
+                "bgp-rib-state" : [
+                {
+                    "data" : "BGP restart is complete"
+                }
+                ], 
+                "send-state" : [
+                {
+                    "data" : "in sync"
+                }
+                ], 
+                "active-prefix-count" : [
+                {
+                    "data" : "2"
+                }
+                ], 
+                "received-prefix-count" : [
+                {
+                    "data" : "3"
+                }
+                ], 
+                "accepted-prefix-count" : [
+                {
+                    "data" : "3"
+                }
+                ], 
+                "suppressed-prefix-count" : [
+                {
+                    "data" : "0"
+                }
+                ], 
+                "advertised-prefix-count" : [
+                {
+                    "data" : "5"
+                }
+                ]
+            }
+            ], 
+            "peer-stale-route-time-configured" : [
+            {
+                "data" : "300"
+            }
+            ], 
+            "peer-no-restart" : [
+            {
+                "data" : [null]
+            }
+            ], 
+            "peer-restart-flags-received" : [
+            {
+                "data" : "Notification"
+            }
+            ], 
+            "peer-restart-nlri-negotiated" : [
+            {
+                "data" : "inet-unicast"
+            }
+            ], 
+            "peer-end-of-rib-received" : [
+            {
+                "data" : "inet-unicast"
+            }
+            ], 
+            "peer-end-of-rib-sent" : [
+            {
+                "data" : "inet-unicast"
+            }
+            ], 
+            "peer-end-of-rib-scheduled" : [
+            {
+            }
+            ], 
+            "peer-no-llgr-restarter" : [
+            {
+                "data" : [null]
+            }
+            ], 
+            "bgp-family-stat" : [
+            {
+                "attributes" : {"junos:style" : "detail"}, 
+                "nlri-type" : [
+                {
+                    "data" : "inet-unicast"
+                }
+                ], 
+                "bgp-nlri-send-time" : [
+                {
+                    "data" : "0"
+                }
+                ], 
+                "bgp-nlri-recv-time" : [
+                {
+                    "data" : "2"
+                }
+                ]
+            }
+            ], 
+            "last-received" : [
+            {
+                "data" : "19"
+            }
+            ], 
+            "last-sent" : [
+            {
+                "data" : "8"
+            }
+            ], 
+            "last-checked" : [
+            {
+                "data" : "635"
+            }
+            ], 
+            "input-messages" : [
+            {
+                "data" : "27"
+            }
+            ], 
+            "input-updates" : [
+            {
+                "data" : "2"
+            }
+            ], 
+            "input-refreshes" : [
+            {
+                "data" : "0"
+            }
+            ], 
+            "input-octets" : [
+            {
+                "data" : "600"
+            }
+            ], 
+            "output-messages" : [
+            {
+                "data" : "26"
+            }
+            ], 
+            "output-updates" : [
+            {
+                "data" : "2"
+            }
+            ], 
+            "output-refreshes" : [
+            {
+                "data" : "0"
+            }
+            ], 
+            "output-octets" : [
+            {
+                "data" : "575"
+            }
+            ], 
+            "bgp-output-queue" : [
+            {
+                "number" : [
+                {
+                    "data" : "1"
+                }
+                ], 
+                "count" : [
+                {
+                    "data" : "0"
+                }
+                ], 
+                "table-name" : [
+                {
+                    "data" : "inet.0"
+                }
+                ], 
+                "rib-adv-nlri" : [
+                {
+                    "data" : "inet-unicast"
+                }
+                ]
+            }
+            ]
+        }
+        ]
+    }
+    ]
+}

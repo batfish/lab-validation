@@ -1,0 +1,407 @@
+{
+    "instance-information" : [
+    {
+        "attributes" : {"xmlns" : "http://xml.juniper.net/junos/25.4R0/junos-routing", 
+                        "junos:style" : "terse"
+                       }, 
+        "instance-core" : [
+        {
+            "instance-name" : [
+            {
+                "data" : "master"
+            }
+            ], 
+            "instance-type" : [
+            {
+                "data" : "forwarding"
+            }
+            ], 
+            "instance-rib" : [
+            {
+                "irib-name" : [
+                {
+                    "data" : "inet.0"
+                }
+                ], 
+                "irib-active-count" : [
+                {
+                    "data" : "9"
+                }
+                ], 
+                "irib-holddown-count" : [
+                {
+                    "data" : "0"
+                }
+                ], 
+                "irib-hidden-count" : [
+                {
+                    "data" : "0"
+                }
+                ]
+            }, 
+            {
+                "irib-name" : [
+                {
+                    "data" : "mpls.0"
+                }
+                ], 
+                "irib-active-count" : [
+                {
+                    "data" : "2"
+                }
+                ], 
+                "irib-holddown-count" : [
+                {
+                    "data" : "0"
+                }
+                ], 
+                "irib-hidden-count" : [
+                {
+                    "data" : "0"
+                }
+                ]
+            }, 
+            {
+                "irib-name" : [
+                {
+                    "data" : "bgp.evpn.0"
+                }
+                ], 
+                "irib-active-count" : [
+                {
+                    "data" : "2"
+                }
+                ], 
+                "irib-holddown-count" : [
+                {
+                    "data" : "0"
+                }
+                ], 
+                "irib-hidden-count" : [
+                {
+                    "data" : "0"
+                }
+                ]
+            }
+            ]
+        }, 
+        {
+            "instance-name" : [
+            {
+                "data" : "TENANT-A"
+            }
+            ], 
+            "instance-type" : [
+            {
+                "data" : "vrf"
+            }
+            ], 
+            "instance-rib" : [
+            {
+                "irib-name" : [
+                {
+                    "data" : "TENANT-A.inet.0"
+                }
+                ], 
+                "irib-active-count" : [
+                {
+                    "data" : "6"
+                }
+                ], 
+                "irib-holddown-count" : [
+                {
+                    "data" : "0"
+                }
+                ], 
+                "irib-hidden-count" : [
+                {
+                    "data" : "0"
+                }
+                ]
+            }, 
+            {
+                "irib-name" : [
+                {
+                    "data" : "TENANT-A.evpn.0"
+                }
+                ], 
+                "irib-active-count" : [
+                {
+                    "data" : "2"
+                }
+                ], 
+                "irib-holddown-count" : [
+                {
+                    "data" : "0"
+                }
+                ], 
+                "irib-hidden-count" : [
+                {
+                    "data" : "0"
+                }
+                ]
+            }
+            ]
+        }, 
+        {
+            "instance-name" : [
+            {
+                "data" : "TENANT-B"
+            }
+            ], 
+            "instance-type" : [
+            {
+                "data" : "vrf"
+            }
+            ], 
+            "instance-rib" : [
+            {
+                "irib-name" : [
+                {
+                    "data" : "TENANT-B.inet.0"
+                }
+                ], 
+                "irib-active-count" : [
+                {
+                    "data" : "6"
+                }
+                ], 
+                "irib-holddown-count" : [
+                {
+                    "data" : "0"
+                }
+                ], 
+                "irib-hidden-count" : [
+                {
+                    "data" : "0"
+                }
+                ]
+            }, 
+            {
+                "irib-name" : [
+                {
+                    "data" : "TENANT-B.evpn.0"
+                }
+                ], 
+                "irib-active-count" : [
+                {
+                    "data" : "2"
+                }
+                ], 
+                "irib-holddown-count" : [
+                {
+                    "data" : "0"
+                }
+                ], 
+                "irib-hidden-count" : [
+                {
+                    "data" : "0"
+                }
+                ]
+            }
+            ]
+        }, 
+        {
+            "instance-name" : [
+            {
+                "data" : "__default_evpn__"
+            }
+            ], 
+            "instance-type" : [
+            {
+                "data" : "non-forwarding evpn"
+            }
+            ]
+        }, 
+        {
+            "instance-name" : [
+            {
+                "data" : "__juniper_private1__"
+            }
+            ], 
+            "instance-type" : [
+            {
+                "data" : "forwarding"
+            }
+            ], 
+            "instance-rib" : [
+            {
+                "irib-name" : [
+                {
+                    "data" : "__juniper_private1__.inet.0"
+                }
+                ], 
+                "irib-active-count" : [
+                {
+                    "data" : "5"
+                }
+                ], 
+                "irib-holddown-count" : [
+                {
+                    "data" : "0"
+                }
+                ], 
+                "irib-hidden-count" : [
+                {
+                    "data" : "0"
+                }
+                ]
+            }, 
+            {
+                "irib-name" : [
+                {
+                    "data" : "__juniper_private1__.inet6.0"
+                }
+                ], 
+                "irib-active-count" : [
+                {
+                    "data" : "3"
+                }
+                ], 
+                "irib-holddown-count" : [
+                {
+                    "data" : "0"
+                }
+                ], 
+                "irib-hidden-count" : [
+                {
+                    "data" : "0"
+                }
+                ]
+            }
+            ]
+        }, 
+        {
+            "instance-name" : [
+            {
+                "data" : "__juniper_private2__"
+            }
+            ], 
+            "instance-type" : [
+            {
+                "data" : "forwarding"
+            }
+            ], 
+            "instance-rib" : [
+            {
+                "irib-name" : [
+                {
+                    "data" : "__juniper_private2__.inet.0"
+                }
+                ], 
+                "irib-active-count" : [
+                {
+                    "data" : "0"
+                }
+                ], 
+                "irib-holddown-count" : [
+                {
+                    "data" : "0"
+                }
+                ], 
+                "irib-hidden-count" : [
+                {
+                    "data" : "1"
+                }
+                ]
+            }
+            ]
+        }, 
+        {
+            "instance-name" : [
+            {
+                "data" : "__juniper_private4__"
+            }
+            ], 
+            "instance-type" : [
+            {
+                "data" : "forwarding"
+            }
+            ]
+        }, 
+        {
+            "instance-name" : [
+            {
+                "data" : "__master.anon__"
+            }
+            ], 
+            "instance-type" : [
+            {
+                "data" : "forwarding"
+            }
+            ]
+        }, 
+        {
+            "instance-name" : [
+            {
+                "data" : "default-switch"
+            }
+            ], 
+            "instance-type" : [
+            {
+                "data" : "evpn"
+            }
+            ]
+        }, 
+        {
+            "instance-name" : [
+            {
+                "data" : "mgmt_junos"
+            }
+            ], 
+            "instance-type" : [
+            {
+                "data" : "forwarding"
+            }
+            ], 
+            "instance-rib" : [
+            {
+                "irib-name" : [
+                {
+                    "data" : "mgmt_junos.inet.0"
+                }
+                ], 
+                "irib-active-count" : [
+                {
+                    "data" : "3"
+                }
+                ], 
+                "irib-holddown-count" : [
+                {
+                    "data" : "0"
+                }
+                ], 
+                "irib-hidden-count" : [
+                {
+                    "data" : "0"
+                }
+                ]
+            }, 
+            {
+                "irib-name" : [
+                {
+                    "data" : "mgmt_junos.inet6.0"
+                }
+                ], 
+                "irib-active-count" : [
+                {
+                    "data" : "4"
+                }
+                ], 
+                "irib-holddown-count" : [
+                {
+                    "data" : "0"
+                }
+                ], 
+                "irib-hidden-count" : [
+                {
+                    "data" : "0"
+                }
+                ]
+            }
+            ]
+        }
+        ]
+    }
+    ]
+}
