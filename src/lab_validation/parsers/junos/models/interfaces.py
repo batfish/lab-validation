@@ -4,9 +4,10 @@ import attr
 def _optional_bw(x: str | None) -> int | str | None:
     if x is None:
         return None
-    if x == "Unlimited":
-        return "Unlimited"
-    return int(x)
+    try:
+        return int(x)
+    except ValueError:
+        return x
 
 
 @attr.s(frozen=True, auto_attribs=True)

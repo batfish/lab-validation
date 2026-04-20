@@ -1135,8 +1135,8 @@ def test_filter_route() -> None:
         )
     )
 
-    # /32 to em0.0 is kept to compare it to local discard route: https://github.com/batfish/batfish/pull/8658
-    assert not filter_route(
+    # All em0 routes are now filtered (Batfish deactivates mgmt interfaces)
+    assert filter_route(
         JunosMainRibRoute(
             network="10.150.0.100/32",
             protocol="local",
@@ -1177,5 +1177,142 @@ def test_filter_route() -> None:
                 nh_type=None,
                 active=True,
             )
+        )
+    )
+
+
+def test_filter_route_fxp0() -> None:
+    """fxp0 management interface routes should be filtered, like em0."""
+    assert filter_route(
+        JunosMainRibRoute(
+            network="10.0.0.15/32",
+            protocol="Local",
+            next_hop_ip=None,
+            next_hop_int="fxp0.0",
+            admin=0,
+            metric=None,
+            vrf="default",
+            nh_type=None,
+            active=True,
+        )
+    )
+    assert filter_route(
+        JunosMainRibRoute(
+            network="10.0.0.0/24",
+            protocol="Direct",
+            next_hop_ip=None,
+            next_hop_int="fxp0.0",
+            admin=0,
+            metric=None,
+            vrf="default",
+            nh_type=None,
+            active=True,
+        )
+    )
+
+
+def test_filter_route_mgmt_junos_vrf() -> None:
+    """Routes in mgmt_junos VRF should be filtered."""
+    assert filter_route(
+        JunosMainRibRoute(
+            network="0.0.0.0/0",
+            protocol="Static",
+            next_hop_ip="10.0.0.2",
+            next_hop_int=None,
+            admin=5,
+            metric=None,
+            vrf="mgmt_junos",
+            nh_type=None,
+            active=True,
+        )
+    )
+
+
+def test_exclude_iface_fxp() -> None:
+    """fxp management interfaces should be excluded."""
+    assert JunosValidator._exclude_iface("fxp0", set())
+    assert JunosValidator._exclude_iface("fxp0.0", set())
+
+
+def test_compare_interfaces_mgmt_fxp() -> None:
+    """fxp management interfaces should skip active and bandwidth checks."""
+    real = JunosInterface(
+        name="fxp0",
+        state=JunosInterfaceState(admin=True, line=True),
+        speed=None,
+        bandwidth=10000000000,
+        mtu=1514,
+        interface_type="Physical interface",
+    )
+    batfish = InterfaceProperties(
+        name="fxp0",
+        active=False,
+        all_prefixes=["10.254.4.1/16"],
+        allowed_vlans=None,
+        bandwidth=1000000000000.0,
+        description=None,
+        mtu=1514,
+        speed=1000000000,
+        switchport=False,
+        switchport_mode=None,
+        vrf="default",
+    )
+    diff = JunosValidator._compare_interfaces(real, batfish)
+    assert diff == {}
+
+
+def test_is_local_discard_host_route() -> None:
+    """Local /32 discard routes should be filtered (deactivated interfaces)."""
+    from lab_validation.validators.JunosValidator import _is_local_discard_host_route
+
+    # Should filter: local /32 discard
+    assert _is_local_discard_host_route(
+        MainRibRoute(
+            vrf="default",
+            network="10.254.4.1/32",
+            next_hop=NextHopDiscard(),
+            protocol="local",
+            metric=0,
+            admin=0,
+            tag=None,
+        )
+    )
+
+    # Should NOT filter: not /32
+    assert not _is_local_discard_host_route(
+        MainRibRoute(
+            vrf="default",
+            network="10.254.4.0/24",
+            next_hop=NextHopDiscard(),
+            protocol="local",
+            metric=0,
+            admin=0,
+            tag=None,
+        )
+    )
+
+    # Should NOT filter: not local protocol
+    assert not _is_local_discard_host_route(
+        MainRibRoute(
+            vrf="default",
+            network="10.254.4.1/32",
+            next_hop=NextHopDiscard(),
+            protocol="static",
+            metric=0,
+            admin=5,
+            tag=None,
+        )
+    )
+
+    # Should NOT filter: not NextHopDiscard
+    assert not _is_local_discard_host_route(
+        MainRibRoute(
+            vrf="default",
+            network="10.254.4.1/32",
+            next_hop=NextHopInterface(interface="fxp0.0"),
+            protocol="local",
+            metric=0,
+            admin=0,
+            tag=None,
         )
     )
