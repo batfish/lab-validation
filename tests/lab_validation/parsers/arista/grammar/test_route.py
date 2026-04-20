@@ -8,7 +8,7 @@ from lab_validation.parsers.arista.grammar.route import (
 
 
 def test_show_ip_route_vrf_all() -> None:
-    parsed_data = show_ip_route_vrf_all().parseString(
+    parsed_data = show_ip_route_vrf_all().parse_string(
         """
     VRF: default
 Codes: C - connected, S - static, K - kernel,
@@ -70,7 +70,7 @@ Gateway of last resort is not set
 
 
 def test_routes_block_within_subnet() -> None:
-    parsed_data = _routes_block_within_subnet().parseString(
+    parsed_data = _routes_block_within_subnet().parse_string(
         """
         C      10.10.30.0/24 is directly connected, Ethernet1
         B E    10.10.10.0/24 [200/0] via 10.10.30.1, Ethernet1
@@ -92,7 +92,7 @@ def test_routes_block_within_subnet() -> None:
 
 
 def test_ip_v4_route_line_direct() -> None:
-    parsed_data = _ip_v4_route_line().parseString(
+    parsed_data = _ip_v4_route_line().parse_string(
         "C      10.10.30.0/24 is directly connected, Ethernet1"
     )
     assert parsed_data.protocol == "C"
@@ -101,7 +101,7 @@ def test_ip_v4_route_line_direct() -> None:
 
 
 def test_ip_v4_route_line_not_direct() -> None:
-    parsed_data = _ip_v4_route_line().parseString(
+    parsed_data = _ip_v4_route_line().parse_string(
         "B E    10.10.10.0/24 [200/0] via 10.10.30.1, Ethernet1"
     )
     assert parsed_data.protocol == "B E"
@@ -113,14 +113,14 @@ def test_ip_v4_route_line_not_direct() -> None:
 
 
 def test_directly_connected_line() -> None:
-    parsed_data = _directly_connected_line().parseString(
+    parsed_data = _directly_connected_line().parse_string(
         "is directly connected, Ethernet1"
     )
     assert parsed_data.nh_iface == "Ethernet1"
 
 
 def test_prefix_via_nhip_line() -> None:
-    parsed_data = _prefix_via_nhip_line().parseString(
+    parsed_data = _prefix_via_nhip_line().parse_string(
         "[20/21] via 10.10.10.1, Ethernet1"
     )
     assert parsed_data.admin == 20

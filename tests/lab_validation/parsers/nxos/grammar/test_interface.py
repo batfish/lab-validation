@@ -7,53 +7,53 @@ from lab_validation.parsers.nxos.grammar.interface import (
 
 
 def test_interface_line() -> None:
-    result = _get_iface_line().parseString("Ethernet1/1 is up")
+    result = _get_iface_line().parse_string("Ethernet1/1 is up")
     assert result.name == "Ethernet1/1"
     assert result.line_state == "up"
 
-    result = _get_iface_line().parseString("mgmt0 is up")
+    result = _get_iface_line().parse_string("mgmt0 is up")
     assert result.name == "mgmt0"
     assert result.line_state == "up"
 
-    result = _get_iface_line().parseString("Ethernet1/1 is down")
+    result = _get_iface_line().parse_string("Ethernet1/1 is down")
     assert result.name == "Ethernet1/1"
     assert result.line_state == "down"
 
-    result = _get_iface_line().parseString(
+    result = _get_iface_line().parse_string(
         "Ethernet1/4 is down (Administratively down)"
     )
     assert result.name == "Ethernet1/4"
     assert result.line_state == "down"
 
-    result = _get_iface_line().parseString("Ethernet1/3 is down (Link not connected)")
+    result = _get_iface_line().parse_string("Ethernet1/3 is down (Link not connected)")
     assert result.name == "Ethernet1/3"
     assert result.line_state == "down"
 
 
 def test_get_iface_line_vlan() -> None:
     """test iface vlan line parsing"""
-    result = _get_iface_line().parseString(
+    result = _get_iface_line().parse_string(
         "Vlan200 is up, line protocol is up, autostate enabled"
     )
     assert result.name == "Vlan200"
     assert result.admin_state == "up"
     assert result.line_state == "up"
 
-    result = _get_iface_line().parseString(
+    result = _get_iface_line().parse_string(
         "Vlan1 is down (Administratively down), line protocol is down, autostate enabled"
     )
     assert result.name == "Vlan1"
     assert result.admin_state == "down"
     assert result.line_state == "down"
 
-    result = _get_iface_line().parseString(
+    result = _get_iface_line().parse_string(
         "Vlan10 is down (VLAN/BD is down), line protocol is down, autostate enabled"
     )
     assert result.name == "Vlan10"
     assert result.admin_state == "down"
     assert result.line_state == "down"
 
-    result = _get_iface_line().parseString(
+    result = _get_iface_line().parse_string(
         "Vlan506 is down (VLAN/BD does not exist), line protocol is down, autostate enabled"
     )
     assert result.name == "Vlan506"
@@ -62,10 +62,10 @@ def test_get_iface_line_vlan() -> None:
 
 
 def test_admin_line() -> None:
-    result = _get_admin_line().parseString("admin state is up, Dedicated Interface")
+    result = _get_admin_line().parse_string("admin state is up, Dedicated Interface")
     assert result.admin_state == "up"
 
-    result = _get_admin_line().parseString("admin state is down, Dedicated Interface")
+    result = _get_admin_line().parse_string("admin state is down, Dedicated Interface")
     assert result.admin_state == "down"
 
 
@@ -90,7 +90,7 @@ admin state is up,
     284 output packets 0 unicast packets 284 multicast packets
     0 broadcast packets 61336 bytes
     """
-    interface = interface_block().parseString(input_text)
+    interface = interface_block().parse_string(input_text)
     assert interface.name == "mgmt0"
     assert interface.admin_state == "up"
     assert interface.line_state == "up"
@@ -140,7 +140,7 @@ admin state is up, Dedicated Interface
     0 output error  0 collision  0 deferred  0 late collision
     0 lost carrier  0 no carrier  0 babble  0 output discard
     0 Tx pause"""
-    interface = interface_block().parseString(input_text)
+    interface = interface_block().parse_string(input_text)
     assert interface.name == "Ethernet1/2"
     assert interface.admin_state == "up"
     assert interface.line_state == "up"
@@ -161,7 +161,7 @@ Ethernet1/1 is up
   Port mode is trunk
   full-duplex, 10 Gb/s, media type is 10G
     """
-    interface = interface_block().parseString(input_text)
+    interface = interface_block().parse_string(input_text)
     assert interface.name == "Ethernet1/1"
     assert interface.admin_state == ""
     assert interface.line_state == "up"
@@ -179,7 +179,7 @@ Ethernet1/4 is down (Administratively down)
   Port mode is access
   Full-duplex, 10 Gb/s, media type is 10G
     """
-    interface = interface_block().parseString(input_text)
+    interface = interface_block().parse_string(input_text)
     assert interface.name == "Ethernet1/4"
     assert interface.admin_state == ""
     assert interface.line_state == "down"
@@ -197,7 +197,7 @@ Ethernet1/8 is down (Link not connected)
   Port mode is trunk
   Full-duplex, 10 Gb/s, media type is 10G
     """
-    interface = interface_block().parseString(input_text)
+    interface = interface_block().parse_string(input_text)
     assert interface.name == "Ethernet1/8"
     assert interface.admin_state == ""
     assert interface.line_state == "down"
@@ -215,7 +215,7 @@ Ethernet1/16 is down (SFP not inserted)
   Port mode is access
   Full-duplex, 10 Gb/s
     """
-    interface = interface_block().parseString(input_text)
+    interface = interface_block().parse_string(input_text)
     assert interface.name == "Ethernet1/16"
     assert interface.admin_state == ""
     assert interface.line_state == "down"

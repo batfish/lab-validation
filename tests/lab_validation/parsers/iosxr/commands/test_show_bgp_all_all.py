@@ -256,7 +256,7 @@ Processed 1 prefixes, 1 paths
 
 def test_6152() -> None:
     """Test parsing of suppressed BGP routes with multiple status codes (e.g. 's i')"""
-    record = _af_table_routes_vrf_route().parseString(
+    record = _af_table_routes_vrf_route().parse_string(
         """s i210.171.104.0/24   10.169.6.153                  100      0 65240 i
 """
     )[0]

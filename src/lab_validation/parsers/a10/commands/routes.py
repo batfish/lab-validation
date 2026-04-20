@@ -25,7 +25,7 @@ _IPv4_PATTERN = re.compile(r"\d+\.\d+\.\d+\.\d+")
 
 def parse_show_ip_route_acos(text: str) -> list[A10MainRibRoute]:
     """Parses the output of `show ip route acos`."""
-    parsed = show_ip_route_acos().parseString(text)
+    parsed = show_ip_route_acos().parse_string(text)
     routes: list[A10MainRibRoute] = []
     if "v4_routes" in parsed:
         for r in parsed["v4_routes"]:
@@ -53,7 +53,7 @@ def _deserialize_show_ip_route_acos_route(r: ParseResults) -> A10MainRibRoute:
 
 def parse_show_ip_route_all(text: str) -> list[A10MainRibRoute]:
     """Parses the output of `show ip route all`."""
-    parsed = show_ip_route_all().parseString(text)
+    parsed = show_ip_route_all().parse_string(text)
     routes: list[A10MainRibRoute] = []
     for r in parsed["v4_routes"]:
         routes.append(_deserialize_show_ip_route_all_route(r))
@@ -68,7 +68,7 @@ def parse_show_ip_route_all(text: str) -> list[A10MainRibRoute]:
 
 def parse_one_show_ip_route_all_route(text: str) -> A10MainRibRoute:
     """Parses one route line of show ip route all, for testing."""
-    parsed = _show_ip_route_all_ip_v4_route_line().parseString(text)
+    parsed = _show_ip_route_all_ip_v4_route_line().parse_string(text)
     return _deserialize_show_ip_route_all_route(parsed)
 
 
@@ -95,18 +95,18 @@ def show_ip_route_acos() -> ParserElement:
     return (
         _show_route_acos_codes()
         + _show_route_acos_routes_block()
-        + SkipTo(stringEnd).setResultsName("padding")
+        + SkipTo(stringEnd).set_results_name("padding")
     )
 
 
 def _show_route_acos_codes() -> ParserElement:
-    return Group(Literal("Codes:") + SkipTo("NAT Map") + to_eol).setResultsName(
+    return Group(Literal("Codes:") + SkipTo("NAT Map") + to_eol).set_results_name(
         "skipped"
     )
 
 
 def _show_route_acos_routes_block() -> ParserElement:
-    return ZeroOrMore(_show_ip_route_acos_ip_v4_route_line()).setResultsName(
+    return ZeroOrMore(_show_ip_route_acos_ip_v4_route_line()).set_results_name(
         "v4_routes"
     )
 
@@ -129,8 +129,8 @@ def _show_ip_route_acos_ip_v4_route_line() -> ParserElement:
     return Group(
         MatchFirst(
             [Literal(code) for code in _show_route_acos_protocol_codes]
-        ).setResultsName("protocol")
-        + prefix.setResultsName("network")
+        ).set_results_name("protocol")
+        + prefix.set_results_name("network")
     )
 
 
@@ -139,18 +139,20 @@ def show_ip_route_all() -> ParserElement:
     return (
         _show_ip_route_all_codes()
         + _show_ip_route_all_routes_block()
-        + SkipTo(stringEnd).setResultsName("padding")
+        + SkipTo(stringEnd).set_results_name("padding")
     )
 
 
 def _show_ip_route_all_codes() -> ParserElement:
     return Group(
         Literal("Codes:") + SkipTo("Gateway of last resort is") + to_eol
-    ).setResultsName("skipped")
+    ).set_results_name("skipped")
 
 
 def _show_ip_route_all_routes_block() -> ParserElement:
-    return OneOrMore(_show_ip_route_all_ip_v4_route_line()).setResultsName("v4_routes")
+    return OneOrMore(_show_ip_route_all_ip_v4_route_line()).set_results_name(
+        "v4_routes"
+    )
 
 
 _show_route_all_protocol_codes = [
@@ -182,13 +184,13 @@ def _show_ip_route_all_ip_v4_route_line() -> ParserElement:
     return Group(
         MatchFirst(
             [Literal(code) for code in _show_route_all_protocol_codes]
-        ).setResultsName("protocol")
-        + Optional("*").setResultsName("candidate_default")
-        + prefix.setResultsName("network")
+        ).set_results_name("protocol")
+        + Optional("*").set_results_name("candidate_default")
+        + prefix.set_results_name("network")
         + MatchFirst([_directly_connected(), _admin_via_nhip()])
-        + _interface_name().setResultsName("nh_iface")
+        + _interface_name().set_results_name("nh_iface")
         + Literal(",").suppress()
-        + _time.setResultsName("time")
+        + _time.set_results_name("time")
     )
 
 
@@ -201,11 +203,11 @@ def _admin_via_nhip() -> ParserElement:
     """Expect admin, metric, and next-hop IP."""
     return (
         "["
-        + dec.setResultsName("admin")
+        + dec.set_results_name("admin")
         + "/"
-        + dec.setResultsName("metric")
+        + dec.set_results_name("metric")
         + "]"
         + "via"
-        + ip.setResultsName("nh_ip")
+        + ip.set_results_name("nh_ip")
         + ","
     )

@@ -11,7 +11,7 @@ from lab_validation.parsers.nxos.models.interfaces import NxosInterface
 
 def parse_show_interface(text: str) -> Sequence[NxosInterface]:
     logger = logging.getLogger(__name__)
-    all_parse_results = OneOrMore(Group(interface_block())).scanString(text)
+    all_parse_results = OneOrMore(Group(interface_block())).scan_string(text)
     results: list[NxosInterface] = []
 
     last_loc = 0

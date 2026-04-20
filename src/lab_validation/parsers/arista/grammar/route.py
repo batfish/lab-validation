@@ -20,18 +20,18 @@ def show_ip_route_vrf_all() -> ParserElement:
 
 
 def _vrf_header() -> ParserElement:
-    return Literal("VRF:") + Word(printables).setResultsName("vrf")
+    return Literal("VRF:") + Word(printables).set_results_name("vrf")
 
 
 def _middle() -> ParserElement:
     to_skip = (
         Literal("Codes:") + SkipTo("Gateway of last resort is") + to_eol
-    ).setResultsName("skipped")
+    ).set_results_name("skipped")
     return Group(to_skip)
 
 
 def _routes_block_within_subnet() -> ParserElement:
-    return OneOrMore(Group(_ip_v4_route_line())).setResultsName("v4_routes")
+    return OneOrMore(Group(_ip_v4_route_line())).set_results_name("v4_routes")
 
 
 _protocol_codes = [
@@ -62,27 +62,27 @@ _protocol_codes = [
 
 def _ip_v4_route_line() -> ParserElement:
     return (
-        MatchFirst([Literal(code) for code in _protocol_codes]).setResultsName(
+        MatchFirst([Literal(code) for code in _protocol_codes]).set_results_name(
             "protocol"
         )
-        + prefix.setResultsName("network")
+        + prefix.set_results_name("network")
         + MatchFirst([_directly_connected_line(), _prefix_via_nhip_line()])
     )
 
 
 def _directly_connected_line() -> ParserElement:
-    return "is directly connected," + Word(printables).setResultsName("nh_iface")
+    return "is directly connected," + Word(printables).set_results_name("nh_iface")
 
 
 def _prefix_via_nhip_line() -> ParserElement:
     return (
         "["
-        + dec.setResultsName("admin")
+        + dec.set_results_name("admin")
         + "/"
-        + dec.setResultsName("metric")
+        + dec.set_results_name("metric")
         + "]"
         + "via"
-        + ip.setResultsName("nh_ip")
+        + ip.set_results_name("nh_ip")
         + ", "
-        + Word(printables).setResultsName("nh_iface")
+        + Word(printables).set_results_name("nh_iface")
     )

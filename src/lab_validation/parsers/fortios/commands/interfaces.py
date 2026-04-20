@@ -10,7 +10,7 @@ from ..models.interfaces import FortiosInterface, FortiosPhysicalInterface
 
 def parse_get_system_interface(ifaces_text: str) -> Sequence[FortiosInterface]:
     logger = logging.getLogger(__name__)
-    all_logical_parse_results = OneOrMore(Group(interface_block())).scanString(
+    all_logical_parse_results = OneOrMore(Group(interface_block())).scan_string(
         ifaces_text
     )
     results: list[FortiosInterface] = []
@@ -36,7 +36,7 @@ def parse_get_system_interface_physical(
     logger = logging.getLogger(__name__)
     all_physical_parse_results = OneOrMore(
         Group(physical_interface_block())
-    ).scanString(ifaces_physical_text)
+    ).scan_string(ifaces_physical_text)
     results: list[FortiosPhysicalInterface] = []
 
     last_loc = 0

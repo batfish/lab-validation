@@ -10,18 +10,18 @@ from lab_validation.parsers.ios.grammar.route import (
 def test_directly_connected_line() -> None:
     """Test if we can parse the directly connected portion of a route line"""
     input_text = "is directly connected, GigabitEthernet1/0"
-    parsed_data = _directly_connected_line().parseString(input_text)
+    parsed_data = _directly_connected_line().parse_string(input_text)
     assert parsed_data.nh_iface == "GigabitEthernet1/0"
 
     """Test directly connected routes in vrf leaking"""
     input_text = "is directly connected, 00:38:55, GigabitEthernet1"
-    parsed_data = _directly_connected_line().parseString(input_text)
+    parsed_data = _directly_connected_line().parse_string(input_text)
     assert parsed_data.nh_iface == "GigabitEthernet1"
 
 
 def test_prefix_via_nhip_line() -> None:
     """Test if we can parse the admin/metric and next hop portion of a route line"""
-    parsed_data = _prefix_via_nhip_line().parseString(
+    parsed_data = _prefix_via_nhip_line().parse_string(
         "[20/21] via 10.10.10.1, 00:02:50"
     )
     assert parsed_data.admin == 20
@@ -31,12 +31,12 @@ def test_prefix_via_nhip_line() -> None:
 
 def test_prefix_subnetted_line() -> None:
     """Test that we can parse subnetted/variably subnetted line"""
-    parsed_data = _prefix_is_subnetted_line().parseString(
+    parsed_data = _prefix_is_subnetted_line().parse_string(
         "15.0.0.0/24 is subnetted, 1 subnets", parseAll=True
     )
     assert parsed_data.subnet_prefix == "15.0.0.0/24"
 
-    parsed_data = _prefix_is_subnetted_line().parseString(
+    parsed_data = _prefix_is_subnetted_line().parse_string(
         "192.168.61.0/24 is variably subnetted, 7 subnets, 2 masks", parseAll=True
     )
     assert parsed_data.subnet_prefix == "192.168.61.0/24"
@@ -44,7 +44,7 @@ def test_prefix_subnetted_line() -> None:
 
 def test_v4_route_line() -> None:
     """Test single route without subnet block"""
-    parsed_data = _v4_route().parseString(
+    parsed_data = _v4_route().parse_string(
         "B     192.168.122.0/24 [20/0] via 10.12.11.1, 00:03:11", parseAll=True
     )
     assert parsed_data.protocol == "B"
@@ -56,7 +56,7 @@ def test_v4_route_line() -> None:
 
 def test_candidate_v4_route() -> None:
     """Test that we can parse a candidate default route line"""
-    parsed_data = _v4_route().parseString(
+    parsed_data = _v4_route().parse_string(
         "O*IA  0.0.0.0/0 [110/11] via 14.2.0.1, 00:31:32, Ethernet2/0", parseAll=True
     )
     assert parsed_data.protocol == "O"
@@ -70,7 +70,7 @@ def test_candidate_v4_route() -> None:
 
 def test_v4_route_ospf_summary() -> None:
     """Test that we can parse an OSPF summary route"""
-    parsed_data = _v4_route().parseString(
+    parsed_data = _v4_route().parse_string(
         "O        10.4.0.0/16 is a summary, 01:05:17, Null0", parseAll=True
     )
     assert parsed_data.protocol == "O"
@@ -81,7 +81,7 @@ def test_v4_route_ospf_summary() -> None:
 
 def test_v4_route_normal() -> None:
     """Test that we can parse a normal IP v4 route (which is not candidate default)"""
-    parsed_data = _v4_route().parseString(
+    parsed_data = _v4_route().parse_string(
         "C        192.168.61.0/24 is directly connected, Loopback61", parseAll=True
     )
     route = parsed_data
@@ -89,7 +89,7 @@ def test_v4_route_normal() -> None:
     assert route.network == "192.168.61.0/24"
     assert route.nh_iface == "Loopback61"
 
-    parsed_data = _v4_route().parseString(
+    parsed_data = _v4_route().parse_string(
         "O IA     192.168.61.1/32 [110/11] via 14.2.0.1, 00:31:32, Ethernet2/0",
         parseAll=True,
     )
@@ -103,7 +103,7 @@ def test_v4_route_normal() -> None:
     assert route.nh_iface == "Ethernet2/0"
 
     # test eigrp line
-    parsed_data = _v4_route().parseString(
+    parsed_data = _v4_route().parse_string(
         "D        172.16.1.2 [90/130816] via 10.12.11.2, 03:12:43, GigabitEthernet1",
         parseAll=True,
     )
@@ -117,7 +117,7 @@ def test_v4_route_normal() -> None:
     assert route.nh_iface == "GigabitEthernet1"
 
     # test eigrp external line
-    parsed_data = _v4_route().parseString(
+    parsed_data = _v4_route().parse_string(
         "D EX       172.16.1.2 [90/130816] via 10.12.11.2, 03:12:43, GigabitEthernet1",
         parseAll=True,
     )
@@ -133,7 +133,7 @@ def test_v4_route_normal() -> None:
 
 def test_routes_block_within_subnet() -> None:
     """Test that we can parse routes under a subnetted block"""
-    parsed_data = _routes_block_within_subnet().parseString(
+    parsed_data = _routes_block_within_subnet().parse_string(
         """192.168.61.0/24 is variably subnetted, 8 subnets, 2 masks
 O IA     192.168.61.3/32 [110/12] via 12.0.0.1, 00:29:31, GigabitEthernet0/0
 D EX     192.168.61.4/32 [90/13] via 12.0.0.2, 00:29:31, GigabitEthernet0/1"""

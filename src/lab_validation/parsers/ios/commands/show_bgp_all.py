@@ -59,7 +59,7 @@ def parse_show_bgp_all(bgp_output: str) -> Sequence[IosBgpAddressFamily]:
     """Parses IOS/XE 'show bgp all' output."""
     if bgp_output.strip() == "% BGP not active":
         return []
-    parsed_afs = OneOrMore(_bgp_address_family()).parseString(bgp_output)
+    parsed_afs = OneOrMore(_bgp_address_family()).parse_string(bgp_output)
     afs = []
     for record in parsed_afs:
         name = record["af"]
@@ -164,7 +164,9 @@ def _af_name() -> ParserElement:
 
 
 def _af_header() -> ParserElement:
-    return Literal("For address family: ").suppress() + _af_name().setResultsName("af")
+    return Literal("For address family: ").suppress() + _af_name().set_results_name(
+        "af"
+    )
 
 
 def _af_table() -> ParserElement:
@@ -176,7 +178,7 @@ def _af_table_header() -> ParserElement:
         Literal("BGP table version is").suppress()
         + dec.suppress()
         + Literal(", local router ID is").suppress()
-        + ip.setResultsName("router_id")
+        + ip.set_results_name("router_id")
     )
 
 
@@ -189,7 +191,7 @@ def _af_table_codes() -> ParserElement:
 def _af_table_routes() -> ParserElement:
     return _af_table_routes_header() + ZeroOrMore(
         MatchFirst([_af_table_routes_default_vrf(), _af_table_routes_vrf()])
-    ).setResultsName("vrfs")
+    ).set_results_name("vrfs")
 
 
 def _af_table_routes_header() -> ParserElement:
@@ -209,27 +211,27 @@ def _af_table_routes_default_vrf() -> ParserElement:
             MatchFirst(
                 [_af_table_routes_vrf_route(), _af_table_routes_vrf_multi_route()]
             )
-        ).setResultsName("routes")
+        ).set_results_name("routes")
     )
 
 
 def _af_table_routes_vrf() -> ParserElement:
     return Group(
-        _af_table_routes_vrf_rd().setResultsName("vrf_info")
-        + ZeroOrMore(_af_table_routes_vrf_route()).setResultsName("routes")
+        _af_table_routes_vrf_rd().set_results_name("vrf_info")
+        + ZeroOrMore(_af_table_routes_vrf_route()).set_results_name("routes")
     )
 
 
 def _af_table_routes_vrf_rd() -> ParserElement:
     return Group(
         Literal("Route Distinguisher:").suppress()
-        + route_distinguisher.setResultsName("rd")
+        + route_distinguisher.set_results_name("rd")
         + Literal("(default for vrf ").suppress()
-        + Word(alphanums + "-_").setResultsName("vrf_name")
+        + Word(alphanums + "-_").set_results_name("vrf_name")
         + MatchFirst(
             [
                 Literal(") VRF Router ID").suppress()
-                + ip.setResultsName("vrf_router_id"),
+                + ip.set_results_name("vrf_router_id"),
                 Literal(")").suppress(),
             ]
         )
@@ -240,29 +242,29 @@ def _af_table_routes_vrf_route() -> ParserElement:
     """
     parse route entry in bgp rib
     """
-    route_status = MatchFirst([Literal(code) for code in _STATUS_CODES]).setResultsName(
-        "status"
-    )
-    as_path = ZeroOrMore(dec + White(" ", exact=1)).setResultsName("as_path")
+    route_status = MatchFirst(
+        [Literal(code) for code in _STATUS_CODES]
+    ).set_results_name("status")
+    as_path = ZeroOrMore(dec + White(" ", exact=1)).set_results_name("as_path")
     origin_type = Literal("e") ^ Literal("i") ^ Literal("?")
     record = Group(
         White(min=1, max=2).suppress()
         + Optional(route_status)
         + Optional(White(" ", min=1).suppress())
-        + (ip ^ prefix).setResultsName("network")
+        + (ip ^ prefix).set_results_name("network")
         + Optional(White("\n", exact=1).suppress())
         + White(" ", min=1).suppress()
-        + printables_and_space(15).setResultsName("next_hop")
-        + printables_and_space(11).setResultsName("metric")
+        + printables_and_space(15).set_results_name("next_hop")
+        + printables_and_space(11).set_results_name("metric")
         # exact=7 in local_preference is set as per the current show data examples that we have.
         # It needs to be adjusted if we see the value beyond it. Technically it can go up to 10 char.
-        + printables_and_space(7).setResultsName("local_preference")
+        + printables_and_space(7).set_results_name("local_preference")
         + White(" ", min=1).suppress()
-        + dec.setResultsName("weight")
+        + dec.set_results_name("weight")
         + White(" ", min=1).suppress()
         + as_path
-        + origin_type.setResultsName("origin_type")
-    ).leaveWhitespace()
+        + origin_type.set_results_name("origin_type")
+    ).leave_whitespace()
     return record
 
 
@@ -270,26 +272,26 @@ def _af_table_routes_vrf_multi_route() -> ParserElement:
     """
     parse multi route entry in bgp rib. It may or may not be ecmp("*m") in bgp rib
     """
-    route_status = MatchFirst([Literal(code) for code in _STATUS_CODES]).setResultsName(
-        "status"
-    )
-    as_path = ZeroOrMore(dec + White(" ")).setResultsName("as_path")
+    route_status = MatchFirst(
+        [Literal(code) for code in _STATUS_CODES]
+    ).set_results_name("status")
+    as_path = ZeroOrMore(dec + White(" ")).set_results_name("as_path")
     origin_type = Literal("e") ^ Literal("i") ^ Literal("?")
     record = Group(
         White(min=1, max=2).suppress()
         + route_status
         + White(" ", min=1).suppress()
-        + printables_and_space(15).setResultsName("next_hop")
-        + printables_and_space(11).setResultsName("metric")
+        + printables_and_space(15).set_results_name("next_hop")
+        + printables_and_space(11).set_results_name("metric")
         # exact=7 in local_preference is set as per the current show data examples that we have.
         # It needs to be adjusted if we see the value beyond it. Technically it can go up to 10 char.
-        + printables_and_space(7).setResultsName("local_preference")
+        + printables_and_space(7).set_results_name("local_preference")
         + White(" ", min=1).suppress()
-        + dec.setResultsName("weight")
+        + dec.set_results_name("weight")
         + White(" ", min=1).suppress()
         + as_path
-        + origin_type.setResultsName("origin_type")
-    ).leaveWhitespace()
+        + origin_type.set_results_name("origin_type")
+    ).leave_whitespace()
     return record
 
 

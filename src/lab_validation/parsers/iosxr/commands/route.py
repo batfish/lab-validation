@@ -31,12 +31,12 @@ _IPv4_PREFIX_PATTERN = re.compile(r"\d+\.\d+\.\d+\.\d+/\d+")
 
 def parse_show_route(routes_output: str) -> Sequence[IosXrRoute]:
     """Parses show route output for IOS XR"""
-    return _parse_helper(routes_output, show_route().scanString(routes_output), True)
+    return _parse_helper(routes_output, show_route().scan_string(routes_output), True)
 
 
 def parse_show_route_vrf_all(routes_output: str) -> Sequence[IosXrRoute]:
     """Parses show route vrf all output for IOS XR"""
-    return _parse_helper(routes_output, show_route_vrf().scanString(routes_output))
+    return _parse_helper(routes_output, show_route_vrf().scan_string(routes_output))
 
 
 def _parse_helper(

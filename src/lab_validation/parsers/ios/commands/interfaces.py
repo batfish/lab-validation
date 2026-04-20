@@ -23,10 +23,10 @@ _state = MatchFirst([Literal("up"), Literal("down")])
 
 def _get_iface_line() -> ParserElement:
     return (
-        Word(printables).setResultsName("name")
+        Word(printables).set_results_name("name")
         + _get_admin_line()
         + ", line protocol is"
-        + _state.setResultsName("line_protocol")
+        + _state.set_results_name("line_protocol")
         + to_eol
     )
 
@@ -35,24 +35,24 @@ def _get_admin_line() -> ParserElement:
     return (
         "is"
         + ParsingOptional("administratively")
-        + _state.setResultsName("admin_state")
+        + _state.set_results_name("admin_state")
     )
 
 
 def _get_mtu_bw_line() -> ParserElement:
     return (
         "MTU"
-        + dec.setResultsName("mtu")
+        + dec.set_results_name("mtu")
         + "bytes,"
         + "BW"
-        + dec.setResultsName("bw")
+        + dec.set_results_name("bw")
         + "Kbit/sec,"
         + to_eol
     )
 
 
 def _get_addr_line() -> ParserElement:
-    return "Internet address is" + prefix.setResultsName("prefix")
+    return "Internet address is" + prefix.set_results_name("prefix")
 
 
 def _interface_block() -> ParserElement:
@@ -71,7 +71,7 @@ def _interface_block() -> ParserElement:
 
 # TODO: this matches return values and signature of genie parsers. Write IosInterface model
 def parse_show_interfaces(text: str) -> dict[str, dict[str, Any]]:
-    all_parse_results = OneOrMore(Group(_interface_block())).scanString(text)
+    all_parse_results = OneOrMore(Group(_interface_block())).scan_string(text)
     results: dict[str, dict[str, Any]] = {}
 
     logger = logging.getLogger(__name__)

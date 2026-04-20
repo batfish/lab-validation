@@ -581,7 +581,7 @@ def test_af_table_routes_vrf() -> None:
 Route Distinguisher: 65003:1 (default for vrf d1_ce) VRF Router ID 192.168.123.31
  *>   10.13.11.0/30    0.0.0.0                  0         32768 ?
     """
-    parsed_output = _af_table_routes_vrf().parseString(input_text)
+    parsed_output = _af_table_routes_vrf().parse_string(input_text)
 
     assert parsed_output[0][0]["rd"] == "65003:1"
     assert parsed_output[0][0]["vrf_name"] == "d1_ce"
@@ -600,7 +600,7 @@ Route Distinguisher: 65003:1 (default for vrf d1_ce) VRF Router ID 192.168.123.3
 Route Distinguisher: 65003:1 (default for vrf d1_ce)
  *>   10.13.11.0/30    0.0.0.0                  0         32768 ?
     """
-    parsed_output = _af_table_routes_vrf().parseString(input_text)
+    parsed_output = _af_table_routes_vrf().parse_string(input_text)
 
     assert parsed_output[0][0]["rd"] == "65003:1"
     assert parsed_output[0][0]["vrf_name"] == "d1_ce"

@@ -49,7 +49,7 @@ _STATUS_CODES = [
 def parse_show_bgp_all_all(bgp_output: str) -> Sequence[IosXrBgpAddressFamily]:
     """Parses IOS XR 'show bgp all all' output."""
     # TODO Handle show data for device with no active BGP
-    parsed_afs = OneOrMore(_bgp_address_family()).parseString(bgp_output)
+    parsed_afs = OneOrMore(_bgp_address_family()).parse_string(bgp_output)
     afs = []
     for record in parsed_afs:
         name = record["af"]
@@ -135,7 +135,7 @@ def _af_name() -> ParserElement:
 def _af_header() -> ParserElement:
     return (
         Literal("Address Family: ").suppress()
-        + _af_name().setResultsName("af")
+        + _af_name().set_results_name("af")
         + White("\n", exact=1).suppress()
         + OneOrMore(Literal("-")).suppress()
     )
@@ -153,9 +153,9 @@ def _af_table() -> ParserElement:
 def _af_table_header() -> ParserElement:
     return (
         Literal("BGP router identifier ").suppress()
-        + ip.setResultsName("router_id")
+        + ip.set_results_name("router_id")
         + Literal(", local AS number ").suppress()
-        + dec.setResultsName("local_as")
+        + dec.set_results_name("local_as")
     )
 
 
@@ -168,7 +168,7 @@ def _af_table_state_and_codes() -> ParserElement:
 def _af_table_routes() -> ParserElement:
     return _af_table_routes_header() + ZeroOrMore(
         MatchFirst([_af_table_routes_default_vrf(), _af_table_routes_vrf()])
-    ).setResultsName("vrfs")
+    ).set_results_name("vrfs")
 
 
 def _af_table_routes_header() -> ParserElement:
@@ -185,8 +185,8 @@ def _af_table_routes_header() -> ParserElement:
 
 def parse_route_data(route_data: str) -> dict[str, Any]:
     """Return the parsed route data. Includes next hop IP and (if present) metric, local pref, and weight."""
-    ip_parser = ip.setResultsName("next_hop") + to_eol
-    nhip = ip_parser.parseString(route_data)["next_hop"]
+    ip_parser = ip.set_results_name("next_hop") + to_eol
+    nhip = ip_parser.parse_string(route_data)["next_hop"]
     route_obj = {"next_hop": nhip}
     metric_str = route_data[len(nhip) + 1 : 26].strip()
     loc_prf_str = route_data[27:33].strip()
@@ -201,22 +201,22 @@ def parse_route_data(route_data: str) -> dict[str, Any]:
 
 
 def _af_table_routes_default_vrf() -> ParserElement:
-    return Group(OneOrMore(_af_table_routes_vrf_route()).setResultsName("routes"))
+    return Group(OneOrMore(_af_table_routes_vrf_route()).set_results_name("routes"))
 
 
 def _af_table_routes_vrf() -> ParserElement:
     return Group(
-        _af_table_routes_vrf_rd().setResultsName("vrf_info")
-        + ZeroOrMore(_af_table_routes_vrf_route()).setResultsName("routes")
+        _af_table_routes_vrf_rd().set_results_name("vrf_info")
+        + ZeroOrMore(_af_table_routes_vrf_route()).set_results_name("routes")
     )
 
 
 def _af_table_routes_vrf_rd() -> ParserElement:
     return Group(
         Literal("Route Distinguisher: ").suppress()
-        + route_distinguisher.setResultsName("rd")
+        + route_distinguisher.set_results_name("rd")
         + Literal("(default for vrf ").suppress()
-        + Word(alphanums + "-_").setResultsName("vrf_name")
+        + Word(alphanums + "-_").set_results_name("vrf_name")
         + Literal(")").suppress()
         + White("\n", exact=1).suppress()
     )
@@ -226,30 +226,30 @@ def _af_table_routes_vrf_route() -> ParserElement:
     """
     parse route entry in bgp rib
     """
-    route_status = MatchFirst([Literal(code) for code in _STATUS_CODES]).setResultsName(
-        "status"
-    )
+    route_status = MatchFirst(
+        [Literal(code) for code in _STATUS_CODES]
+    ).set_results_name("status")
     # Parse nhip, metric, locprf, weight as one big block to parse later.
     # Can't parse now because whitespace expectations aren't consistent:
     # if a route has no listed metric, there may be less whitespace between
     # nhip and locprf than another route has between nhip and metric,
     # depending on the length of the nhip.
-    route_data = printables_and_space(40).setResultsName("data")
-    as_path = ZeroOrMore(dec + White(" ")).setResultsName("as_path")
+    route_data = printables_and_space(40).set_results_name("data")
+    as_path = ZeroOrMore(dec + White(" ")).set_results_name("as_path")
     origin_type = Literal("e") ^ Literal("i") ^ Literal("?")
     record = Group(
         Optional(White(" ", max=1)).suppress()
         + Optional(route_status)
         + Optional(White(" ", max=1).suppress())
-        + Optional(prefix.setResultsName("network"))
+        + Optional(prefix.set_results_name("network"))
         + White(" ", min=1).suppress()
         + route_data
         + White(" ", min=1).suppress()
         + as_path
-        + origin_type.setResultsName("origin_type")
+        + origin_type.set_results_name("origin_type")
         + White("\n", exact=1).suppress()
     )
-    record.leaveWhitespace()
+    record.leave_whitespace()
     return record
 
 

@@ -18,7 +18,7 @@ def parse_show_routing_route(text: str) -> Sequence[PanosMainRibRoute]:
     A given file may contain more than one routing table.
     """
     logger = logging.getLogger(__name__)
-    all_parse_results = show_route().scanString(text)
+    all_parse_results = show_route().scan_string(text)
     routes: list[PanosMainRibRoute] = []
     last_loc = 0
     for vr_record, start_loc, end_loc in all_parse_results:

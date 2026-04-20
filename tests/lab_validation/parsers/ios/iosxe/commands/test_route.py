@@ -19,7 +19,7 @@ from lab_validation.parsers.ios.models.routes import IosIpRoute
 def _parse_route_table_only(text: str, vrf: str = "default") -> list[IosIpRoute]:
     """Local utility function to just parse the routes section of a vrf's route table."""
     return _parse_routes_in_vrf(
-        OneOrMore(single_route()).parseString(text, parseAll=True), vrf
+        OneOrMore(single_route()).parse_string(text, parseAll=True), vrf
     )
 
 

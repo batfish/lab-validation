@@ -13,7 +13,7 @@ from lab_validation.parsers.nxos.grammar.route import (
 
 
 def test_show_route() -> None:
-    records = show_route().parseString(
+    records = show_route().parse_string(
         """
         IP Route Table for VRF "default"
             '*' denotes best ucast next-hop
@@ -33,7 +33,7 @@ def test_show_route() -> None:
 
 
 def test_v4_route_for_a_prefix() -> None:
-    result = _v4_route_for_a_prefix().parseString(
+    result = _v4_route_for_a_prefix().parse_string(
         """
         2.2.2.2/32, ubest/mbest: 2/0, attached
         *via 2.2.2.2, Lo0, [0/10], 01:05:49, local
@@ -57,7 +57,7 @@ def test_v4_route_for_a_prefix() -> None:
 
 
 def test_prefix_line() -> None:
-    result = _prefix_line().parseString(
+    result = _prefix_line().parse_string(
         """
         2.2.2.2/32, ubest/mbest: 2/0, attached
         """
@@ -66,7 +66,7 @@ def test_prefix_line() -> None:
 
 
 def test_null_routed_line() -> None:
-    result = _null_routed_line().parseString(
+    result = _null_routed_line().parse_string(
         """
         *via Null0, [220/0], 03:28:31, bgp-65114, discard, tag 65114
         """
@@ -81,7 +81,7 @@ def test_null_routed_line() -> None:
 
 
 def test_ebgp_next_hop_line() -> None:
-    result = _next_hop_line().parseString(
+    result = _next_hop_line().parse_string(
         """
         *via 10.10.100.1, [20/0], 01:03:27, bgp-65100, external, tag 65000
         """
@@ -96,7 +96,7 @@ def test_ebgp_next_hop_line() -> None:
 
 
 def test_ibgp_next_hop_line() -> None:
-    result = _next_hop_line().parseString(
+    result = _next_hop_line().parse_string(
         """
         *via 10.10.11.1, [200/0], 03:27:40, bgp-65001, internal, tag 65001
         """
@@ -111,7 +111,7 @@ def test_ibgp_next_hop_line() -> None:
 
 
 def test_eigrp_next_hop_line() -> None:
-    result = _next_hop_line().parseString(
+    result = _next_hop_line().parse_string(
         """
         *via 10.13.21.1, Eth1/1, [170/2585856], 01:32:31, eigrp-1, external
         """
@@ -125,7 +125,7 @@ def test_eigrp_next_hop_line() -> None:
 
 
 def test_eigrp_external_next_hop_line() -> None:
-    result = _next_hop_line().parseString(
+    result = _next_hop_line().parse_string(
         """
         *via 10.13.21.2, Eth1/2, [90/130816], 01:32:30, eigrp-1, internal
         """
@@ -142,7 +142,7 @@ def test_eigrp_external_next_hop_line() -> None:
 
 
 def test_evpn_next_hop_line() -> None:
-    result = _next_hop_line().parseString(
+    result = _next_hop_line().parse_string(
         """
         *via 2.2.2.2%default, [200/0], 02:35:20, bgp-65001, internal, tag 65200 (evpn) segid: 100333 tunnelid: 0x2020202 encap: VXLAN
         """
@@ -162,7 +162,7 @@ def test_evpn_next_hop_line() -> None:
 
 
 def test_vxlan_static_next_hop_line() -> None:
-    result = _next_hop_line().parseString(
+    result = _next_hop_line().parse_string(
         """
         *via 10.198.226.133, [1/0], 22w6d, static, tag 65333 segid: 3002 tunnelid: 0xac6e045 encap: VXLAN
         """
@@ -180,7 +180,7 @@ def test_vxlan_static_next_hop_line() -> None:
 
 
 def test_direct_next_hop_line() -> None:
-    result = _next_hop_line().parseString(
+    result = _next_hop_line().parse_string(
         """
         *via 192.168.10.1, Vlan10, [0/0], 03:31:02, direct
         """
@@ -193,7 +193,7 @@ def test_direct_next_hop_line() -> None:
 
 
 def test_hsrp_next_hop_line() -> None:
-    result = _next_hop_line().parseString(
+    result = _next_hop_line().parse_string(
         """
         *via 10.102.5.35, Vlan101, [0/0], 49w3d, hsrp
         """
@@ -207,18 +207,18 @@ def test_hsrp_next_hop_line() -> None:
 
 def test_uptime() -> None:
     # valid ones don't raise
-    _uptime().parseString("01:05:49")
-    _uptime().parseString("2d02h")
-    _uptime().parseString("30w4d")
-    _uptime().parseString("2y12w")
-    _uptime().parseString("0.000000")
+    _uptime().parse_string("01:05:49")
+    _uptime().parse_string("2d02h")
+    _uptime().parse_string("30w4d")
+    _uptime().parse_string("2y12w")
+    _uptime().parse_string("0.000000")
     # validate that invalid ones will
     with pytest.raises(ParseException):
-        _uptime().parseString("not-a-time")
+        _uptime().parse_string("not-a-time")
 
 
 def test_local_next_hop_line() -> None:
-    result = _next_hop_line().parseString(
+    result = _next_hop_line().parse_string(
         """
         *via 2.2.2.2, Lo0, [0/0], 01:05:49, local
         """
@@ -231,7 +231,7 @@ def test_local_next_hop_line() -> None:
 
 
 def test_ospf_next_hop_line_type5() -> None:
-    result = _next_hop_line().parseString(
+    result = _next_hop_line().parse_string(
         """
         *via 15.1.1.1, Eth1/1, [110/41], 00:26:29, ospf-5, inter
         """
@@ -245,7 +245,7 @@ def test_ospf_next_hop_line_type5() -> None:
 
 
 def test_static_next_hop_line() -> None:
-    result = _next_hop_line().parseString(
+    result = _next_hop_line().parse_string(
         """
         *via 10.12.11.2, [1/0], 03:16:08, static
         """
@@ -257,7 +257,7 @@ def test_static_next_hop_line() -> None:
 
 
 def test_next_hop_line_subinterface() -> None:
-    result = _next_hop_line().parseString(
+    result = _next_hop_line().parse_string(
         """
         *via 10.10.100.1, Eth1/2.313, [0/0], 23:53:40, direct
         """
@@ -271,22 +271,22 @@ def test_next_hop_line_subinterface() -> None:
 
 def test_protocol() -> None:
     # valid ones don't raise
-    _protocol().parseString("am")
-    _protocol().parseString("bgp-11111")
-    _protocol().parseString("eigrp-11111, internal")
-    _protocol().parseString("direct")
-    _protocol().parseString("hmm")
-    _protocol().parseString("hsrp")
-    _protocol().parseString("local")
-    _protocol().parseString("ospf-11111, inter")
-    _protocol().parseString("static")
+    _protocol().parse_string("am")
+    _protocol().parse_string("bgp-11111")
+    _protocol().parse_string("eigrp-11111, internal")
+    _protocol().parse_string("direct")
+    _protocol().parse_string("hmm")
+    _protocol().parse_string("hsrp")
+    _protocol().parse_string("local")
+    _protocol().parse_string("ospf-11111, inter")
+    _protocol().parse_string("static")
     # validate that invalid ones will barf
     with pytest.raises(ParseException):
-        _uptime().parseString("not-a-protocol")
+        _uptime().parse_string("not-a-protocol")
 
 
 def test_trailing_comma_next_hop_line() -> None:
-    result = _next_hop_line().parseString(
+    result = _next_hop_line().parse_string(
         """
         *via 10.10.100.1, [20/0], 01:03:27, bgp-65100, external, tag 65000,
         """
@@ -301,7 +301,7 @@ def test_trailing_comma_next_hop_line() -> None:
 
 
 def test_trailing_comma_null_routed_line() -> None:
-    result = _null_routed_line().parseString(
+    result = _null_routed_line().parse_string(
         """
         *via Null0, [220/0], 03:28:31, bgp-65114, discard, tag 65114,
         """
@@ -316,14 +316,14 @@ def test_trailing_comma_null_routed_line() -> None:
 
 
 def test_best_status() -> None:
-    result = _next_hop_line().parseString(
+    result = _next_hop_line().parse_string(
         """
         *via 10.198.226.165, [1/0], 28w1d, static, tag 65333 segid: 3002 tunnelid: 0xac6e048 encap: VXLAN
         """
     )
     assert result.best_ucast == "*via"
 
-    result = _next_hop_line().parseString(
+    result = _next_hop_line().parse_string(
         """
         via 10.198.224.94%default, [20/0], 1y32w, bgp-65333, external, tag 65011 (evpn) segid: 3002 tunnelid: 0xac6e05e encap: VXLAN
         """
@@ -331,7 +331,7 @@ def test_best_status() -> None:
     assert result.not_best == "via"
 
     # unlike the previous two lines, this line is not from real data
-    result = _next_hop_line().parseString(
+    result = _next_hop_line().parse_string(
         """
         **via 10.198.224.94%default, [20/0], 1y32w, bgp-65333, external, tag 65011 (evpn) segid: 3002 tunnelid: 0xac6e05e encap: VXLAN
         """

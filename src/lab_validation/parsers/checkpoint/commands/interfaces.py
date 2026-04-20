@@ -20,16 +20,16 @@ _state = MatchFirst([Literal("on"), Literal("off")])
 
 
 def _interface_block() -> ParserElement:
-    iface_line = "Interface" + Word(printables).setResultsName("name") + to_eol
-    state_line = "state" + _state.setResultsName("state") + to_eol
+    iface_line = "Interface" + Word(printables).set_results_name("name") + to_eol
+    state_line = "state" + _state.set_results_name("state") + to_eol
     mac_addr_line = "mac-addr" + to_eol
-    type_line = "type" + Word(printables).setResultsName("type") + to_eol
+    type_line = "type" + Word(printables).set_results_name("type") + to_eol
     link_state_line = "link-state" + to_eol
-    mtu_line = "mtu" + dec.setResultsName("mtu") + to_eol
+    mtu_line = "mtu" + dec.set_results_name("mtu") + to_eol
     auto_negotiation_line = "auto-negotiation" + to_eol
     speed_line = (
         "speed"
-        + MatchFirst([dec.setResultsName("speed_Mbps"), Literal("N/A")])
+        + MatchFirst([dec.set_results_name("speed_Mbps"), Literal("N/A")])
         + to_eol
     )
     ipv6_autoconfig_line = "ipv6-autoconfig" + to_eol
@@ -39,7 +39,7 @@ def _interface_block() -> ParserElement:
     comments_line = "comments" + to_eol
     ipv4_address_line = (
         "ipv4-address"
-        + MatchFirst([prefix.setResultsName("prefix"), Literal("Not")])
+        + MatchFirst([prefix.set_results_name("prefix"), Literal("Not")])
         + to_eol
     )
     ipv6_address_line = "ipv6-address" + to_eol
@@ -70,7 +70,7 @@ def _statistics_block() -> ParserElement:
 
 
 def parse_show_interfaces(text: str) -> Iterable[CheckpointInterface]:
-    all_parse_results = OneOrMore(Group(_interface_block())).scanString(text)
+    all_parse_results = OneOrMore(Group(_interface_block())).scan_string(text)
     results: list[CheckpointInterface] = []
 
     last_loc = 0

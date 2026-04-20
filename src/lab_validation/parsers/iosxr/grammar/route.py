@@ -34,9 +34,9 @@ def routes_body() -> ParserElement:
     """Parses a non-empty routes table."""
     return (
         Literal("Codes:")
-        + SkipTo(single_route()).setResultsName("preamble")
-        + OneOrMore(single_route()).setResultsName("v4_routes")
-        + SkipTo(MatchFirst([vrf_line(), stringEnd])).setResultsName("padding")
+        + SkipTo(single_route()).set_results_name("preamble")
+        + OneOrMore(single_route()).set_results_name("v4_routes")
+        + SkipTo(MatchFirst([vrf_line(), stringEnd])).set_results_name("padding")
     )
 
 
@@ -46,7 +46,7 @@ def routes_body_empty() -> ParserElement:
 
 
 def vrf_line() -> ParserElement:
-    return "VRF: " + Word(printables).setResultsName("vrf") + to_eol
+    return "VRF: " + Word(printables).set_results_name("vrf") + to_eol
 
 
 def single_route() -> ParserElement:
@@ -54,71 +54,73 @@ def single_route() -> ParserElement:
     return Group(
         MatchFirst(
             [
-                _v4_ecmp_routes().setResultsName("v4_ecmp_routes"),
-                _v4_route().setResultsName("v4_route"),
+                _v4_ecmp_routes().set_results_name("v4_ecmp_routes"),
+                _v4_route().set_results_name("v4_route"),
             ]
         )
     )
 
 
 def _v4_ecmp_routes() -> ParserElement:
-    return _v4_route().setResultsName("v4_route") + OneOrMore(
+    return _v4_route().set_results_name("v4_route") + OneOrMore(
         Group(_route_suffix())
-    ).setResultsName("v4_ecmp_routes_block")
+    ).set_results_name("v4_ecmp_routes_block")
 
 
 def _directly_connected_line() -> ParserElement:
     return (
         "is directly connected,"
         + Optional(_time + ",")
-        + Word(printables).setResultsName("nh_iface")
+        + Word(printables).set_results_name("nh_iface")
         + Optional(_nh_in_vrf())
     )
 
 
 def _is_a_summary_line() -> ParserElement:
     return (
-        Literal("is a summary,").setResultsName("summary")
+        Literal("is a summary,").set_results_name("summary")
         + Optional(_time + ",")
-        + Word(printables).setResultsName("nh_iface")
+        + Word(printables).set_results_name("nh_iface")
     )
 
 
 def _prefix_via_nhip_line() -> ParserElement:
     return (
         "["
-        + dec.setResultsName("admin")
+        + dec.set_results_name("admin")
         + "/"
-        + dec.setResultsName("metric")
+        + dec.set_results_name("metric")
         + "]"
         + "via"
-        + ip.setResultsName("nh_ip")
+        + ip.set_results_name("nh_ip")
         + Optional(_nh_in_vrf())
         + Optional(
-            "(" + Word(printables, excludeChars="!)").setResultsName("source_vrf") + ")"
+            "("
+            + Word(printables, excludeChars="!)").set_results_name("source_vrf")
+            + ")"
         )
         + Optional("," + _time)
-        + Optional(", " + Word(printables).setResultsName("nh_iface"))
-        + Optional(Literal("(!)").setResultsName("backup"))  # FRR backup indicator
+        + Optional(", " + Word(printables).set_results_name("nh_iface"))
+        + Optional(Literal("(!)").set_results_name("backup"))  # FRR backup indicator
     )
 
 
 def _prefix_null_route_line() -> ParserElement:
     return (
         "["
-        + dec.setResultsName("admin")
+        + dec.set_results_name("admin")
         + "/"
-        + dec.setResultsName("metric")
+        + dec.set_results_name("metric")
         + "]"
         + Optional("," + _time)
-        + Optional(", " + (Regex(r"Null\d+")).setResultsName("nh_iface"))
+        + Optional(", " + (Regex(r"Null\d+")).set_results_name("nh_iface"))
     )
 
 
 def _nh_in_vrf() -> ParserElement:
     return (
         "(nexthop in vrf"
-        + Word(printables, excludeChars=")").setResultsName("nh_vrf")
+        + Word(printables, excludeChars=")").set_results_name("nh_vrf")
         + ")"
     )
 
@@ -136,8 +138,8 @@ def _v4_route() -> ParserElement:
                     Literal("D"),
                 ]
             )
-        ).setResultsName("protocol")
-        + Optional(Literal("*").setResultsName("candidate_default"))
+        ).set_results_name("protocol")
+        + Optional(Literal("*").set_results_name("candidate_default"))
         + Optional(
             MatchFirst(
                 [
@@ -148,9 +150,9 @@ def _v4_route() -> ParserElement:
                     Literal("N2"),
                 ]
             )
-        ).setResultsName("ospf_extensions")
-        + Optional(MatchFirst([Literal("EX")])).setResultsName("eigrp_extensions")
-        + Optional(prefix).setResultsName("network")
+        ).set_results_name("ospf_extensions")
+        + Optional(MatchFirst([Literal("EX")])).set_results_name("eigrp_extensions")
+        + Optional(prefix).set_results_name("network")
         + _route_suffix()
     )
 
