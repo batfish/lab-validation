@@ -22,6 +22,22 @@ class JunosMainRibRoute:
 
 
 @attr.s(frozen=True, auto_attribs=True, kw_only=True)
+class JunosEvpnRoute:
+    """EVPN Type 5 route parsed from Junos evpn.0 tables."""
+
+    network: str = attr.ib(converter=normalized_network)
+    route_distinguisher: str
+    vrf: str
+    protocol: str
+    next_hop_ip: str | None
+    next_hop_int: str | None
+    active: bool
+    admin: int = attr.ib(converter=int)
+    as_path: Sequence[int]
+    origin_type: str
+
+
+@attr.s(frozen=True, auto_attribs=True, kw_only=True)
 class JunosBgpRoute:
     vrf: str
     network: str = attr.ib(converter=normalized_network)
