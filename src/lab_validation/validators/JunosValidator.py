@@ -19,13 +19,24 @@ from lab_validation.parsers.junos.commands.bgp_routes import (
     parse_show_route_protocol_bgp_display_json,
 )
 from lab_validation.parsers.junos.commands.interfaces import parse_show_interfaces_json
-from lab_validation.parsers.junos.commands.routes import parse_show_route_display_json
+from lab_validation.parsers.junos.commands.routes import (
+    parse_show_route_display_json,
+    parse_show_route_evpn_display_json,
+)
 from lab_validation.parsers.junos.models.interfaces import JunosInterface
-from lab_validation.parsers.junos.models.routes import JunosBgpRoute, JunosMainRibRoute
+from lab_validation.parsers.junos.models.routes import (
+    JunosBgpRoute,
+    JunosEvpnRoute,
+    JunosMainRibRoute,
+)
 from lab_validation.validators.batfish_models.interface_properties import (
     InterfaceProperties,
 )
-from lab_validation.validators.batfish_models.routes import BgpRibRoute, MainRibRoute
+from lab_validation.validators.batfish_models.routes import (
+    BgpRibRoute,
+    EvpnRibRoute,
+    MainRibRoute,
+)
 from lab_validation.validators.batfish_models.runtime_data import (
     InterfaceRuntimeData,
     NodeRuntimeData,
@@ -85,6 +96,16 @@ class JunosValidator(VendorValidator):
             )
         ]
         return self._compare_all_bgp_routes(self._parse_bgp_routes(), batfish_routes)
+
+    def validate_evpn_rib_routes(
+        self, batfish_routes: Sequence[EvpnRibRoute]
+    ) -> dict[Any, Any]:
+        if not batfish_routes:
+            return {}
+        real_routes = self._parse_evpn_routes()
+        if not real_routes:
+            return {}
+        return self._compare_evpn_routes(real_routes, batfish_routes)
 
     def validate_interface_properties(
         self, batfish_interfaces: Sequence[InterfaceProperties]
@@ -228,6 +249,55 @@ class JunosValidator(VendorValidator):
         with open(show_route_path) as fp:
             routes_text = fp.read()
         return parse_show_route_display_json(routes_text)
+
+    def _parse_evpn_routes(self) -> Sequence[JunosEvpnRoute]:
+        show_route_path = path.join(
+            self.device_path, JunosValidator.SHOW_ROUTE_FILENAME
+        )
+
+        if not path.isfile(show_route_path):
+            return []
+
+        with open(show_route_path) as fp:
+            routes_text = fp.read()
+        return parse_show_route_evpn_display_json(routes_text)
+
+    @staticmethod
+    def _compare_evpn_routes(
+        real_routes: Sequence[JunosEvpnRoute],
+        batfish_routes: Sequence[EvpnRibRoute],
+    ) -> dict[Any, Any]:
+        failures: dict[Any, Any] = {}
+
+        real_by_key: dict[tuple[str, str], JunosEvpnRoute] = {}
+        for real_rt in real_routes:
+            real_by_key[(real_rt.route_distinguisher, real_rt.network)] = real_rt
+
+        bf_by_key: dict[tuple[str, str], EvpnRibRoute] = {}
+        for bf_rt in batfish_routes:
+            bf_by_key[(bf_rt.route_distinguisher, bf_rt.network)] = bf_rt
+
+        for key in real_by_key.keys() - bf_by_key.keys():
+            failures[key] = f"Batfish is missing EVPN route: {real_by_key[key]}"
+
+        for key in bf_by_key.keys() - real_by_key.keys():
+            failures[key] = f"Batfish has extra EVPN route: {bf_by_key[key]}"
+
+        for key in real_by_key.keys() & bf_by_key.keys():
+            real = real_by_key[key]
+            bf = bf_by_key[key]
+            diff: dict[str, str] = {}
+
+            valid_origin_pairs = {("I", "igp"), ("E", "egp"), ("?", "incomplete")}
+            if (real.origin_type, bf.origin_type) not in valid_origin_pairs:
+                diff["origin_type"] = (
+                    f"Batfish: {bf.origin_type}, real: {real.origin_type}"
+                )
+
+            if diff:
+                failures[key] = diff
+
+        return failures
 
     def _parse_bgp_routes(self) -> Sequence[JunosBgpRoute]:
         show_route_path = path.join(
