@@ -12,6 +12,7 @@ from pybatfish.datamodel.route import (
     NextHopDiscard,
     NextHopInterface,
     NextHopIp,
+    NextHopVtep,
 )
 
 from lab_validation.parsers.junos.commands.bgp_routes import (
@@ -365,6 +366,10 @@ def _compute_protocol_cost(
         if batfish_route.protocol in {"bgp", "ibgp"}:
             return 0.0
         return math.inf
+    if expected_route.protocol == "EVPN":
+        if batfish_route.protocol in {"bgp", "ibgp"}:
+            return 0.0
+        return math.inf
     if expected_route.protocol == "OSPF":
         if batfish_route.protocol in {"ospf", "ospfE1", "ospfE2", "ospfIA", "ospfIS"}:
             return 0.0
@@ -393,15 +398,22 @@ def _compute_nexthop_cost(
         next_hop, NextHopDiscard
     ):
         return 0.0
-    elif expected_route.nh_type in {"Discard", "Reject"} or isinstance(
+    if expected_route.nh_type in {"Discard", "Reject"} or isinstance(
         next_hop, NextHopDiscard
     ):
         # Only one is null-routed.
         return 10.0
 
     if isinstance(next_hop, NextHopIp):
-        if expected_route.protocol == "Static":
-            # For static nhip-only routes, Batfish shows protocol nhip, while junos shows resolved nhip
+        if expected_route.protocol in ("Static", "BGP", "EVPN"):
+            # Junos recursively resolves next-hops to underlay addresses while
+            # Batfish reports the protocol-level next-hop. For Static routes
+            # this was always the case. For BGP/EVPN it manifests in overlay
+            # topologies: e.g., a VRF BGP route with Batfish next-hop
+            # 172.16.0.100 (iBGP peer loopback) appears on Junos with
+            # next-hop 172.16.254.1 (the underlay physical hop toward that
+            # loopback). The IPs are in different address planes so comparing
+            # them would always produce false mismatches.
             return 0.0
         elif expected_route.next_hop_ip == next_hop.ip:
             return 0.0
@@ -415,6 +427,14 @@ def _compute_nexthop_cost(
         if next_hop.ip is not None and expected_route.next_hop_ip != next_hop.ip:
             cost += 1.0
         return cost
+
+    if isinstance(next_hop, NextHopVtep):
+        # NextHopVtep carries the VTEP IP and VNI, but Junos resolves EVPN
+        # routes to underlay physical next-hops (e.g., VTEP 172.16.0.100
+        # resolves to 172.16.254.1 via ge-0/0/1.0). The device's next_hop_ip
+        # is the resolved underlay address, not the VTEP, so they can't be
+        # meaningfully compared.
+        return 0.0
 
     raise ValueError("Unsupported next hop " + repr(next_hop))
 
@@ -434,6 +454,9 @@ def _is_local_discard_host_route(route: MainRibRoute) -> bool:
 
 
 def filter_route(real_route: JunosMainRibRoute) -> bool:
+    # Multipath routes are ECMP resolution entries, not independent routes
+    if real_route.protocol == "Multipath":
+        return True
     # Juniper throws in a multicast route when you're using OSPF, filter it out
     if real_route.network.startswith("224.0.0") and real_route.nh_type == "MultiRecv":
         return True

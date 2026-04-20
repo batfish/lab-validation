@@ -82,9 +82,9 @@ def test_nexthop_cost_static_routes() -> None:
         nh_type=None,
         active=True,
     )
-    # Batfish NHIP routes are compatible with JunOS routes that have a resolved NHINT
+    # Batfish NHIP routes are compatible with Junos routes that have a resolved NHINT
     assert _compute_nexthop_cost(junos_route, NextHopIp(ip="10.12.1.1")) == 0.0
-    # Since Batfish shows protocol NHOP while JunOS shows resolved, cannot enforce
+    # Since Batfish shows protocol NHOP while Junos shows resolved, cannot enforce
     # that they appear equal
     assert _compute_nexthop_cost(junos_route, NextHopIp(ip="10.12.1.2")) == 0.0
 
@@ -1177,6 +1177,23 @@ def test_filter_route() -> None:
                 nh_type=None,
                 active=True,
             )
+        )
+    )
+
+
+def test_filter_route_multipath() -> None:
+    """Multipath ECMP resolution entries should be filtered."""
+    assert filter_route(
+        JunosMainRibRoute(
+            network="10.99.0.0/31",
+            protocol="Multipath",
+            next_hop_ip="172.16.254.1",
+            next_hop_int="ge-0/0/1.0",
+            admin=255,
+            metric=0,
+            vrf="TENANT-A",
+            nh_type=None,
+            active=True,
         )
     )
 
