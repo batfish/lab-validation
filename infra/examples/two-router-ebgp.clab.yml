@@ -1,0 +1,24 @@
+# Two-router eBGP lab for testing the lab-builder workflow.
+#
+# Topology:
+#   r1 (AS 65001) ---[ge-0/0/0]---[ge-0/0/0]--- r2 (AS 65002)
+#     lo0: 1.1.1.1/32                              lo0: 2.2.2.2/32
+#     link: 10.0.0.0/31                            link: 10.0.0.1/31
+#
+# After convergence, each router should have the other's loopback via eBGP.
+
+name: ebgp-test
+
+topology:
+  nodes:
+    r1:
+      kind: juniper_vjunosrouter
+      image: vrnetlab/juniper_vjunos-router:25.4R1.12
+      startup-config: configs/r1.cfg
+    r2:
+      kind: juniper_vjunosrouter
+      image: vrnetlab/juniper_vjunos-router:25.4R1.12
+      startup-config: configs/r2.cfg
+
+  links:
+    - endpoints: ["r1:eth1", "r2:eth1"]
