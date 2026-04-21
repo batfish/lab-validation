@@ -1,0 +1,38 @@
+set version 25.4R1.12
+set system host-name edge1
+set system root-authentication encrypted-password "$6$B2Jxr63W$VZbaBhqZB5Z73IIi9z4Z.dCBvo1mT9oqZh6wSJocrv5zTLbHvJHq8UuuKRAMDoQU28yt5lMtdY.0hjcVUCXT3."
+set system login user admin uid 2000
+set system login user admin class super-user
+set system login user admin authentication encrypted-password "$6$0rlDF/VY$aAmS2gNa4Kgak0tyUMbABxz2w6Ebz6ZOw2YaC.1erL7AWGt0hq2YvxUf9FHd5o/UsTwMorVipvaOA3YNpWDsY0"
+set system services netconf ssh
+set system services ssh root-login allow
+set system management-instance
+set chassis fpc 0 pic 0 number-of-ports 12
+set interfaces ge-0/0/1 description "to router1 - p2p link"
+set interfaces ge-0/0/1 unit 0 family inet address 10.99.0.1/31
+set interfaces ge-0/0/2 description "to client3 - LAN segment"
+set interfaces ge-0/0/2 unit 0 family inet address 192.168.99.1/24
+set interfaces fxp0 unit 0 family inet address 10.0.0.15/24
+set interfaces fxp0 unit 0 family inet6 address 2001:db8::2/64
+set interfaces lo0 unit 0 family inet address 10.99.99.1/32
+set policy-options policy-statement export-to-fabric term client3-network from protocol direct
+set policy-options policy-statement export-to-fabric term client3-network from protocol static
+set policy-options policy-statement export-to-fabric term client3-network from route-filter 192.168.99.0/24 exact
+set policy-options policy-statement export-to-fabric term client3-network then accept
+set policy-options policy-statement export-to-fabric term deny then reject
+set policy-options policy-statement import-from-fabric term accept-all then accept
+set routing-instances mgmt_junos routing-options rib mgmt_junos.inet6.0 static route ::/0 next-hop 2001:db8::1
+set routing-instances mgmt_junos routing-options static route 0.0.0.0/0 next-hop 10.0.0.2
+set routing-options router-id 10.99.99.1
+set routing-options autonomous-system 65200
+set routing-options static route 192.168.99.0/24 discard
+set protocols bgp group fabric type external
+set protocols bgp group fabric import import-from-fabric
+set protocols bgp group fabric family inet unicast
+set protocols bgp group fabric export export-to-fabric
+set protocols bgp group fabric neighbor 10.99.0.0 description router1
+set protocols bgp group fabric neighbor 10.99.0.0 peer-as 65100
+set protocols bgp log-updown
+set protocols bgp graceful-restart
+set protocols lldp port-id-subtype interface-name
+set protocols lldp interface all
