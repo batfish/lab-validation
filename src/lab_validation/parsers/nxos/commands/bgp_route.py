@@ -27,7 +27,7 @@ _IPv4_PATTERN = re.compile(r"\d+\.\d+\.\d+\.\d+")
 
 
 def parse_show_ip_bgp_all(text: str) -> Sequence[NxosBgpRoute]:
-    all_parse_results = OneOrMore(_vrf_af_routes()).parseString(text)
+    all_parse_results = OneOrMore(_vrf_af_routes()).parse_string(text)
     routes: list[NxosBgpRoute] = []
     network = ""
     for table in all_parse_results:
@@ -75,9 +75,9 @@ def _vrf_af_header() -> ParserElement:
     """The header for a BGP table for one VRF, one AF."""
     return (
         Literal("BGP routing table information for VRF ").suppress()
-        + Word(alphanums + "-_").setResultsName("vrf")
+        + Word(alphanums + "-_").set_results_name("vrf")
         + Literal(", address family ").suppress()
-        + _af_name().setResultsName("af")
+        + _af_name().set_results_name("af")
     )
 
 
@@ -98,39 +98,39 @@ def _vrf_af_routes() -> ParserElement:
         _vrf_af_header()
         + SkipTo(_af_table_routes_header())
         + _af_table_routes_header().suppress()
-        + OneOrMore(_get_record()).setResultsName("routes")
+        + OneOrMore(_get_record()).set_results_name("routes")
         # Next VRF or EOF. Save the skipped text as padding.
-        + SkipTo(MatchFirst([_vrf_af_header(), stringEnd])).setResultsName("padding")
+        + SkipTo(MatchFirst([_vrf_af_header(), stringEnd])).set_results_name("padding")
     )
 
 
 def _get_record() -> ParserElement:
     route_status = Combine(
         oneOf(["*", "s", " "]) + oneOf([">", "|", " "])
-    ).setResultsName("status")
+    ).set_results_name("status")
     path_type = MatchFirst(
         [Literal("e"), Literal("l"), Literal("i"), Literal("a"), Literal("r")]
     )
     origin_type = Regex(r"(e|i|\?)")
-    as_path = ZeroOrMore(dec + White(" ")).setResultsName("as_path")
+    as_path = ZeroOrMore(dec + White(" ")).set_results_name("as_path")
     record = Group(
         route_status
         + Optional(White(" ", max=1))
-        + path_type.setResultsName("path_type")
-        + Optional(prefix.setResultsName("network"))
+        + path_type.set_results_name("path_type")
+        + Optional(prefix.set_results_name("network"))
         + White(" ", min=1)
-        + ip.setResultsName("next_hop")
+        + ip.set_results_name("next_hop")
         + White(" ", min=1, max=18)
-        + Optional(dec).setResultsName("metric")
+        + Optional(dec).set_results_name("metric")
         + White(" ", min=1, max=9)
-        + Optional(dec).setResultsName("local_preference")
+        + Optional(dec).set_results_name("local_preference")
         + White(" ", min=1)
-        + dec.setResultsName("weight")
+        + dec.set_results_name("weight")
         + White(" ", min=1)
         + as_path
-        + origin_type.setResultsName("origin_type")
+        + origin_type.set_results_name("origin_type")
         + Optional(newline)
-    ).leaveWhitespace()
+    ).leave_whitespace()
     return record
 
 

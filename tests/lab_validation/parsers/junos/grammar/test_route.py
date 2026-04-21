@@ -13,7 +13,7 @@ from lab_validation.parsers.junos.grammar.route import (
 
 
 def test_route_block() -> None:
-    parsed_data = _route_block().parseString(
+    parsed_data = _route_block().parse_string(
         """10.10.50.0/24      *[Direct/0] 01:48:58
                     > via em0.0
                     [BGP/170] 01:48:54, MED 0, localpref 100
@@ -30,7 +30,7 @@ def test_route_block() -> None:
 
 
 def test_route_info_block() -> None:
-    parsed_data = _route_info_block().parseString(
+    parsed_data = _route_info_block().parse_string(
         """[Direct/0] 01:48:58
             > via em0.0
            [BGP/170] 01:48:54, MED 0, localpref 100
@@ -46,7 +46,7 @@ def test_route_info_block() -> None:
 
 
 def test_route_info_block_no_med() -> None:
-    parsed_data = _route_info_block().parseString(
+    parsed_data = _route_info_block().parse_string(
         """*[Direct/0] 03:26:32
                 > via em3.0
                 [BGP/170] 01:08:18, localpref 100
@@ -62,28 +62,28 @@ def test_route_info_block_no_med() -> None:
 
 
 def test_status_route_info_block() -> None:
-    parsed_data = _status_route_info_block().parseString(
+    parsed_data = _status_route_info_block().parse_string(
         """*[Direct/0] 01:48:58
             > via em0.0
         """
     )
     assert parsed_data.status == "*"
 
-    parsed_data = _status_route_info_block().parseString(
+    parsed_data = _status_route_info_block().parse_string(
         """+[Direct/0] 01:48:58
             > via em0.0
         """
     )
     assert parsed_data.status == "+"
 
-    parsed_data = _status_route_info_block().parseString(
+    parsed_data = _status_route_info_block().parse_string(
         """-[Direct/0] 01:48:58
             > via em0.0
         """
     )
     assert parsed_data.status == "-"
 
-    parsed_data = _status_route_info_block().parseString(
+    parsed_data = _status_route_info_block().parse_string(
         """[Direct/0] 01:48:58
             > via em0.0
         """
@@ -92,7 +92,7 @@ def test_status_route_info_block() -> None:
 
 
 def test_local_route_info() -> None:
-    parsed_data = _local_route_info_block().parseString(
+    parsed_data = _local_route_info_block().parse_string(
         """[Local/0] 02:05:54
                       Local via em1.0
         """
@@ -106,7 +106,7 @@ def test_local_route_info() -> None:
 
 def test_direct_route_info() -> None:
     """Test if we can parse the direct route info block"""
-    parsed_data = _direct_route_info_block().parseString(
+    parsed_data = _direct_route_info_block().parse_string(
         """[Direct/0] 01:48:58
             > via em0.0
         """
@@ -120,7 +120,7 @@ def test_direct_route_info() -> None:
 
 def test_static_discard_route_info() -> None:
     """Test if we can parse the static discard route info block"""
-    parsed_data = _static_discard_route_info_block().parseString(
+    parsed_data = _static_discard_route_info_block().parse_string(
         """[Static/5] 00:08:11
         Discard
         """
@@ -130,7 +130,7 @@ def test_static_discard_route_info() -> None:
 
 def test_static_route_info() -> None:
     """Test if we can parse the static route info block"""
-    parsed_data = _static_route_info_block().parseString(
+    parsed_data = _static_route_info_block().parse_string(
         """[Static/5] 00:07:57
         > to 10.46.55.2 via em5.0
         """
@@ -145,7 +145,7 @@ def test_static_route_info() -> None:
 
 def test_isis_route_info() -> None:
     """Test if we can parse the is-is route info block"""
-    parsed_data = _isis_route_info_block().parseString(
+    parsed_data = _isis_route_info_block().parse_string(
         """[IS-IS/15] 00:07:47, metric 10
         > to 10.34.11.1 via em1.0
         """
@@ -161,7 +161,7 @@ def test_isis_route_info() -> None:
 
 def test_bgp_route_info() -> None:
     """Test if we can parse the bgp route info block"""
-    parsed_data = _bgp_route_info_block().parseString(
+    parsed_data = _bgp_route_info_block().parse_string(
         """[BGP/170] 01:48:54, MED 0, localpref 100
         AS path: 1 10 I, validation-state: unverified
         > to 10.10.50.1 via em0.0
@@ -182,7 +182,7 @@ def test_bgp_route_info() -> None:
 
 def test_bgp_route_info_no_as_path() -> None:
     """Test if we can parse the bgp route info where as path is empty"""
-    parsed_data = _bgp_route_info_block().parseString(
+    parsed_data = _bgp_route_info_block().parse_string(
         """[BGP/170] 04:14:18, localpref 100
                   AS path: I, validation-state: valid
                 > to 10.12.11.1 via em1.0
@@ -199,7 +199,7 @@ def test_bgp_route_info_no_as_path() -> None:
 
 
 def test_ospf_route_info() -> None:
-    parsed_data = _ospf_route_info_block().parseString(
+    parsed_data = _ospf_route_info_block().parse_string(
         """
         [OSPF/10] 02:12:38, metric 2
                     > to 10.16.63.2 via em1.0

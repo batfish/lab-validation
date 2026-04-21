@@ -17,7 +17,9 @@ from pyparsing import (
 
 from lab_validation.parsers.common.tokens import dec, ip, prefix, to_eol
 
-_vrf_line = "IP Route Table for VRF" + QuotedString('"').setResultsName("vrf") + to_eol
+_vrf_line = (
+    "IP Route Table for VRF" + QuotedString('"').set_results_name("vrf") + to_eol
+)
 _vrf_header = (
     Literal("'*' denotes best ucast next-hop")
     + Literal("'**' denotes best mcast next-hop")
@@ -26,9 +28,9 @@ _vrf_header = (
 )
 _via = MatchFirst(
     [
-        Literal("*via").setResultsName("best_ucast"),
-        Literal("**via").setResultsName("best_mcast"),
-        Literal("via").setResultsName("not_best"),
+        Literal("*via").set_results_name("best_ucast"),
+        Literal("**via").set_results_name("best_mcast"),
+        Literal("via").set_results_name("not_best"),
     ]
 )
 _uptime_hours = Regex(r"\d+:\d+:\d+")
@@ -41,47 +43,51 @@ _uptime = MatchFirst(
 )
 _admin_and_metric = (
     Literal("[")
-    + dec.setResultsName("admin")
+    + dec.set_results_name("admin")
     + "/"
-    + dec.setResultsName("metric")
+    + dec.set_results_name("metric")
     + "]"
 )
-_bgp = Regex(r"bgp-\d+").setResultsName("process") + Optional(
+_bgp = Regex(r"bgp-\d+").set_results_name("process") + Optional(
     ","
-    + MatchFirst([Literal("internal"), Literal("external")]).setResultsName("extension")
+    + MatchFirst([Literal("internal"), Literal("external")]).set_results_name(
+        "extension"
+    )
 )
 _eigrp = (
-    Regex(r"eigrp-\d+").setResultsName("process")
+    Regex(r"eigrp-\d+").set_results_name("process")
     + ","
-    + MatchFirst([Literal("internal"), Literal("external")]).setResultsName("extension")
+    + MatchFirst([Literal("internal"), Literal("external")]).set_results_name(
+        "extension"
+    )
 )
 _ospf = (
-    Regex(r"ospf-\d+").setResultsName("process")
+    Regex(r"ospf-\d+").set_results_name("process")
     + ","
     + MatchFirst(
         [Literal("inter"), Literal("intra"), Literal("type-1"), Literal("type-2")]
-    ).setResultsName("extension")
+    ).set_results_name("extension")
 )
 _protocol = MatchFirst(
     [
-        _bgp.setResultsName("bgp"),
-        _eigrp.setResultsName("eigrp"),
-        Literal("am").setResultsName("am"),  # adjacency manager
-        Literal("direct").setResultsName("direct"),
-        Literal("hmm").setResultsName("hmm"),
-        Literal("hsrp").setResultsName("hsrp"),
-        Literal("local").setResultsName("local"),
-        _ospf.setResultsName("ospf"),
-        Literal("static").setResultsName("static"),
+        _bgp.set_results_name("bgp"),
+        _eigrp.set_results_name("eigrp"),
+        Literal("am").set_results_name("am"),  # adjacency manager
+        Literal("direct").set_results_name("direct"),
+        Literal("hmm").set_results_name("hmm"),
+        Literal("hsrp").set_results_name("hsrp"),
+        Literal("local").set_results_name("local"),
+        _ospf.set_results_name("ospf"),
+        Literal("static").set_results_name("static"),
     ]
 )
 
 _evpn = "(evpn)"
 _vxlan = (
     Literal("segid:")
-    + dec.setResultsName("segid")
+    + dec.set_results_name("segid")
     + Literal("tunnelid: 0x")
-    + Word(hexnums).setResultsName("tunnelid")
+    + Word(hexnums).set_results_name("tunnelid")
     + Literal("encap: VXLAN")
 )
 
@@ -94,57 +100,57 @@ def show_route() -> ParserElement:
         # The lines about flags ('*', '**', '[x/y]', '%', etc).
         + _vrf_header
         # Routes table may be empty.
-        + ZeroOrMore(Group(_v4_route_for_a_prefix())).setResultsName("v4_routes")
+        + ZeroOrMore(Group(_v4_route_for_a_prefix())).set_results_name("v4_routes")
         # Next VRF or EOF. Save the skipped text as padding.
-        + SkipTo(MatchFirst([_vrf_line, stringEnd])).setResultsName("padding")
+        + SkipTo(MatchFirst([_vrf_line, stringEnd])).set_results_name("padding")
     )
 
 
 def _v4_route_for_a_prefix() -> ParserElement:
     return _prefix_line() + OneOrMore(
         Group(MatchFirst([_next_hop_line(), _null_routed_line()]))
-    ).setResultsName("next_hops")
+    ).set_results_name("next_hops")
 
 
 def _prefix_line() -> ParserElement:
-    return prefix.setResultsName("network") + "," + to_eol
+    return prefix.set_results_name("network") + "," + to_eol
 
 
 def _next_hop_line() -> ParserElement:
     return (
         _via
-        + ip.setResultsName("nhip")
-        + Optional("%" + Word(alphanums + "/" + ".").setResultsName("nhvrf"))
+        + ip.set_results_name("nhip")
+        + Optional("%" + Word(alphanums + "/" + ".").set_results_name("nhvrf"))
         + ","
-        + Optional(Word(alphanums + "/" + ".").setResultsName("nhint") + ",")
+        + Optional(Word(alphanums + "/" + ".").set_results_name("nhint") + ",")
         + _admin_and_metric
         + ","
         + _uptime
         + ","
-        + _protocol.setResultsName("protocol")
-        + Optional(", tag" + dec.setResultsName("tag"))
+        + _protocol.set_results_name("protocol")
+        + Optional(", tag" + dec.set_results_name("tag"))
         # Sometimes, there is a stray comma after the tag
         + Optional(",")
-        + Optional(_evpn).setResultsName("evpn")
-        + Optional(_vxlan).setResultsName("vxlan")
+        + Optional(_evpn).set_results_name("evpn")
+        + Optional(_vxlan).set_results_name("vxlan")
     )
 
 
 def _null_routed_line() -> ParserElement:
     return (
         _via
-        + Literal("Null0").setResultsName("nhint")
+        + Literal("Null0").set_results_name("nhint")
         + ","
         + _admin_and_metric
         + ","
         + _uptime
         + ","
-        + _protocol.setResultsName("protocol")
+        + _protocol.set_results_name("protocol")
         + ","
         + "discard"
-        + Optional(", tag" + dec.setResultsName("tag"))
+        + Optional(", tag" + dec.set_results_name("tag"))
         # Sometimes, there is a stray comma after the tag
         + Optional(",")
-        + Optional(_evpn).setResultsName("evpn")
-        + Optional(_vxlan).setResultsName("vxlan")
+        + Optional(_evpn).set_results_name("evpn")
+        + Optional(_vxlan).set_results_name("vxlan")
     )

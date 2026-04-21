@@ -4,9 +4,9 @@ from pyparsing import Literal, ParserElement, Word, nums, printables
 def parse_vrf() -> ParserElement:
     return (
         Literal("vrf").suppress()
-        + Word(printables).setResultsName("name")
+        + Word(printables).set_results_name("name")
         + Literal("id").suppress()
-        + Word(nums).setResultsName("id")
+        + Word(nums).set_results_name("id")
         + Literal("table").suppress()
-        + Word(nums).setResultsName("table_index")
+        + Word(nums).set_results_name("table_index")
     )

@@ -13,7 +13,7 @@ from pyparsing import (
 
 from ...common.tokens import to_eol
 
-_state = MatchFirst([Literal("up"), Literal("down")]).setName("state")
+_state = MatchFirst([Literal("up"), Literal("down")]).set_name("state")
 _ip_or_ethernet_mtu = MatchFirst([Literal("IP MTU"), Literal("Ethernet MTU")])
 
 _physical_block_header = "Physical interface"
@@ -48,16 +48,16 @@ def _physical_record() -> ParserElement:
 
 def _physical_name_line() -> ParserElement:
     return (
-        Literal(_physical_block_header).setResultsName("type")
+        Literal(_physical_block_header).set_results_name("type")
         + ":"
-        + Word(_noncomma_printables).setResultsName("name")
+        + Word(_noncomma_printables).set_results_name("name")
         + ","
-        + MatchFirst([Literal("Enabled"), Literal("Disabled")]).setResultsName(
+        + MatchFirst([Literal("Enabled"), Literal("Disabled")]).set_results_name(
             "admin_state"
         )
         + ","
         + "Physical link is"
-        + MatchFirst([Literal("Up"), Literal("Down")]).setResultsName("line_state")
+        + MatchFirst([Literal("Up"), Literal("Down")]).set_results_name("line_state")
     )
 
 
@@ -66,9 +66,11 @@ def _physical_type_line() -> ParserElement:
         "Type:"
         + SkipTo("MTU")
         + "MTU:"
-        + Word(_noncomma_printables).setResultsName("mtu")
+        + Word(_noncomma_printables).set_results_name("mtu")
         + Optional(
-            Literal(",") + Literal("Speed:") + Word(printables).setResultsName("speed")
+            Literal(",")
+            + Literal("Speed:")
+            + Word(printables).set_results_name("speed")
         )
     )
 
@@ -77,19 +79,19 @@ def _logical_record() -> ParserElement:
     return (
         _logical_name_line()
         + "Flags:"
-        + Word(printables).setResultsName("admin_state")
+        + Word(printables).set_results_name("admin_state")
         + to_eol
-        + Optional("Bandwidth:" + Word(printables).setResultsName("bw"))
+        + Optional("Bandwidth:" + Word(printables).set_results_name("bw"))
         + SkipTo("MTU:")
         + "MTU:"
-        + Word(printables).setResultsName("mtu")
+        + Word(printables).set_results_name("mtu")
         + SkipTo(_interface_block_header | stringEnd)
     )
 
 
 def _logical_name_line() -> ParserElement:
     return (
-        Literal(_logical_block_header).setResultsName("type")
-        + Word(_noncomma_printables).setResultsName("name")
+        Literal(_logical_block_header).set_results_name("type")
+        + Word(_noncomma_printables).set_results_name("name")
         + to_eol
     )

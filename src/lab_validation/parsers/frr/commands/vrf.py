@@ -4,7 +4,7 @@ from ..grammar.vrf import parse_vrf
 
 
 def get_show_vrf(text: str) -> dict:
-    parsed_result = OneOrMore(Group(parse_vrf())).parseString(text)
+    parsed_result = OneOrMore(Group(parse_vrf())).parse_string(text)
 
     vrf_result: dict = {}
     for record in parsed_result:

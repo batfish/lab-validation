@@ -35,12 +35,12 @@ def _get_iface_line() -> ParserElement:
 def _get_iface_line_admin_up() -> ParserElement:
     return (
         Literal("Interface").suppress()
-        + Word(printables).setResultsName("name")
+        + Word(printables).set_results_name("name")
         + Literal("is").suppress()
-        + Literal("up").setResultsName("admin_state")
+        + Literal("up").set_results_name("admin_state")
         + Literal(",").suppress()
         + Literal("line protocol is").suppress()
-        + _state.setResultsName("line_state")
+        + _state.set_results_name("line_state")
         + to_eol
     )
 
@@ -48,9 +48,9 @@ def _get_iface_line_admin_up() -> ParserElement:
 def _get_iface_line_admin_down() -> ParserElement:
     return (
         Literal("Interface").suppress()
-        + Word(printables).setResultsName("name")
+        + Word(printables).set_results_name("name")
         + Literal("is").suppress()
-        + Word(printables).setResultsName("admin_state")
+        + Word(printables).set_results_name("admin_state")
         + to_eol
     )
 
@@ -58,10 +58,10 @@ def _get_iface_line_admin_down() -> ParserElement:
 def _get_mtu_speed() -> ParserElement:
     return (
         Literal("mtu").suppress()
-        + dec.setResultsName("mtu")
+        + dec.set_results_name("mtu")
         # bit-rate unit for speed is mbps in FRR show interface
         + Literal("speed").suppress()
-        + dec.setResultsName("speed")
+        + dec.set_results_name("speed")
         + to_eol
     )
 
@@ -69,7 +69,7 @@ def _get_mtu_speed() -> ParserElement:
 def _get_bandwidth() -> ParserElement:
     return (
         Literal("bandwidth").suppress()
-        + dec.setResultsName("bandwidth")
-        + Word(printables).setResultsName("bit_rate_unit")
+        + dec.set_results_name("bandwidth")
+        + Word(printables).set_results_name("bit_rate_unit")
         + to_eol
     )

@@ -42,42 +42,42 @@ def _get_iface_line() -> ParserElement:
         Combine(
             oneOf(["Ethernet", "loopback", "mgmt", "port-channel", "vasi", "Vlan"])
             + Word(printables)
-        ).setResultsName("name")
+        ).set_results_name("name")
         + "is"
         + Optional(
-            _state.setResultsName("admin_state")
+            _state.set_results_name("admin_state")
             + Optional(
                 MatchFirst(
                     [Literal(reason) for reason in port_status_reason]
-                ).setResultsName("port_status_reason")
+                ).set_results_name("port_status_reason")
             )
             + ", line protocol is"
         )
-        + _state.setResultsName("line_state")
+        + _state.set_results_name("line_state")
         + Optional(
             MatchFirst(
                 [Literal(reason) for reason in port_status_reason]
-            ).setResultsName("port_status_reason")
+            ).set_results_name("port_status_reason")
         )
         + to_eol
     )
 
 
 def _get_admin_line() -> ParserElement:
-    return "admin state is" + _state.setResultsName("admin_state") + to_eol
+    return "admin state is" + _state.set_results_name("admin_state") + to_eol
 
 
 def _get_mtu_bw_line() -> ParserElement:
     return (
         "MTU"
-        + dec.setResultsName("mtu")
+        + dec.set_results_name("mtu")
         + "bytes,"
         + "BW"
-        + dec.setResultsName("bw")
+        + dec.set_results_name("bw")
         + "Kbit,"
         + to_eol
     )
 
 
 def _get_port_mode_line() -> ParserElement:
-    return "Port mode is" + Word(printables).setResultsName("mode") + to_eol
+    return "Port mode is" + Word(printables).set_results_name("mode") + to_eol

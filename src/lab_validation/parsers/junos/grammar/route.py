@@ -21,13 +21,16 @@ def show_route() -> ParserElement:
     """Grammar for parsing output of 'show route tblae'"""
     return OneOrMore(
         Group(
-            rib_meta_info() + OneOrMore(Group(_route_block())).setResultsName("routes")
+            rib_meta_info()
+            + OneOrMore(Group(_route_block())).set_results_name("routes")
         )
     )
 
 
 def _route_block() -> ParserElement:
-    return prefix.setResultsName("network") + _route_info_block().setResultsName("info")
+    return prefix.set_results_name("network") + _route_info_block().set_results_name(
+        "info"
+    )
 
 
 def _route_info_block() -> ParserElement:
@@ -35,7 +38,7 @@ def _route_info_block() -> ParserElement:
 
 
 def _status_route_info_block() -> ParserElement:
-    return Optional(Literal("+") | Literal("-") | Literal("*")).setResultsName(
+    return Optional(Literal("+") | Literal("-") | Literal("*")).set_results_name(
         "status"
     ) + (
         _direct_route_info_block()
@@ -51,15 +54,15 @@ def _status_route_info_block() -> ParserElement:
 def _local_route_info_block() -> ParserElement:
     return (
         "["
-        + Literal("Local").setResultsName("protocol")
+        + Literal("Local").set_results_name("protocol")
         + "/"
-        + dec.setResultsName("admin")
+        + dec.set_results_name("admin")
         + "]"
         + uptime
         + newline
         + "Local"
         + "via"
-        + Word(printables).setResultsName("nh_iface")
+        + Word(printables).set_results_name("nh_iface")
         + newline
     )
 
@@ -67,15 +70,15 @@ def _local_route_info_block() -> ParserElement:
 def _direct_route_info_block() -> ParserElement:
     return (
         "["
-        + Literal("Direct").setResultsName("protocol")
+        + Literal("Direct").set_results_name("protocol")
         + "/"
-        + dec.setResultsName("admin")
+        + dec.set_results_name("admin")
         + "]"
         + uptime
         + newline
         + ">"
         + "via"
-        + Word(printables).setResultsName("nh_iface")
+        + Word(printables).set_results_name("nh_iface")
         + newline
     )
 
@@ -83,9 +86,9 @@ def _direct_route_info_block() -> ParserElement:
 def _static_discard_route_info_block() -> ParserElement:
     return (
         "["
-        + Literal("Static").setResultsName("protocol")
+        + Literal("Static").set_results_name("protocol")
         + "/"
-        + dec.setResultsName("admin")
+        + dec.set_results_name("admin")
         + "]"
         + uptime
         + newline
@@ -97,17 +100,17 @@ def _static_discard_route_info_block() -> ParserElement:
 def _static_route_info_block() -> ParserElement:
     return (
         "["
-        + Literal("Static").setResultsName("protocol")
+        + Literal("Static").set_results_name("protocol")
         + "/"
-        + dec.setResultsName("admin")
+        + dec.set_results_name("admin")
         + "]"
         + uptime
         + newline
         + ">"
         + "to"
-        + ip.setResultsName("nh_ip")
+        + ip.set_results_name("nh_ip")
         + "via"
-        + Word(printables).setResultsName("nh_iface")
+        + Word(printables).set_results_name("nh_iface")
         + newline
     )
 
@@ -115,20 +118,20 @@ def _static_route_info_block() -> ParserElement:
 def _isis_route_info_block() -> ParserElement:
     return (
         "["
-        + Literal("IS-IS").setResultsName("protocol")
+        + Literal("IS-IS").set_results_name("protocol")
         + "/"
-        + dec.setResultsName("admin")
+        + dec.set_results_name("admin")
         + "]"
         + uptime
         + ","
         + "metric"
-        + dec.setResultsName("metric")
+        + dec.set_results_name("metric")
         + newline
         + ">"
         + "to"
-        + ip.setResultsName("nh_ip")
+        + ip.set_results_name("nh_ip")
         + "via"
-        + Word(printables).setResultsName("nh_iface")
+        + Word(printables).set_results_name("nh_iface")
         + newline
     )
 
@@ -136,27 +139,27 @@ def _isis_route_info_block() -> ParserElement:
 def _bgp_route_info_block() -> ParserElement:
     return (
         "["
-        + Literal("BGP").setResultsName("protocol")
+        + Literal("BGP").set_results_name("protocol")
         + "/"
-        + dec.setResultsName("admin")
+        + dec.set_results_name("admin")
         + "]"
         + uptime
         + ","
-        + Optional("MED" + dec.setResultsName("metric") + ",")
+        + Optional("MED" + dec.set_results_name("metric") + ",")
         + "localpref"
-        + dec.setResultsName("localpref")
+        + dec.set_results_name("localpref")
         + newline
         + "AS path:"
-        + as_path.setResultsName("as_path")
-        + origin_type.setResultsName("origin_type")
+        + as_path.set_results_name("as_path")
+        + origin_type.set_results_name("origin_type")
         + ","
         + "validation-state:"
         + (Literal("unverified") | Literal("valid"))
         + newline
         + "> to"
-        + ip.setResultsName("nh_ip")
+        + ip.set_results_name("nh_ip")
         + "via"
-        + Word(printables).setResultsName("nh_iface")
+        + Word(printables).set_results_name("nh_iface")
         + newline
     )
 
@@ -164,19 +167,19 @@ def _bgp_route_info_block() -> ParserElement:
 def _ospf_route_info_block() -> ParserElement:
     return (
         "["
-        + Literal("OSPF").setResultsName("protocol")
+        + Literal("OSPF").set_results_name("protocol")
         + "/"
-        + dec.setResultsName("admin")
+        + dec.set_results_name("admin")
         + "]"
         + uptime
         + ","
         + "metric"
-        + dec.setResultsName("metric")
+        + dec.set_results_name("metric")
         + newline
         + ">"
         + "to"
-        + ip.setResultsName("nh_ip")
+        + ip.set_results_name("nh_ip")
         + "via"
-        + Word(printables).setResultsName("nh_iface")
+        + Word(printables).set_results_name("nh_iface")
         + newline
     )

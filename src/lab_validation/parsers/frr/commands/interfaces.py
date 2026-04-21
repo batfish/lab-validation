@@ -12,7 +12,7 @@ _state_code = ["up", "down"]
 
 def parse_show_interface(text: str) -> Sequence[FrrInterface]:
     logger = logging.getLogger(__name__)
-    all_parse_results = OneOrMore(Group(interface_block())).scanString(text)
+    all_parse_results = OneOrMore(Group(interface_block())).scan_string(text)
     results: list[FrrInterface] = []
 
     last_loc = 0

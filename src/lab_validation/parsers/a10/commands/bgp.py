@@ -26,7 +26,7 @@ def parse_show_ip_bgp(text: str) -> list[A10BgpRoute]:
     """Parses the output of `show ip bgp`."""
     if not text.strip():
         return []
-    parsed = show_ip_bgp().parseString(text)
+    parsed = show_ip_bgp().parse_string(text)
     routes: list[A10BgpRoute] = []
     for r in parsed["v4_routes"]:
         routes.append(_deserialize_route(r))
@@ -65,7 +65,7 @@ def _deserialize_route(r: ParseResults) -> A10BgpRoute:
 
 def show_ip_bgp() -> ParserElement:
     """Grammar for parsing output of 'show ip bgp'"""
-    return _header() + _routes_block() + SkipTo(stringEnd).setResultsName("padding")
+    return _header() + _routes_block() + SkipTo(stringEnd).set_results_name("padding")
 
 
 def _header() -> ParserElement:
@@ -73,13 +73,13 @@ def _header() -> ParserElement:
         Group(
             Literal("BGP Address Family IPv4 Unicast") + SkipTo(" Path") + to_eol + "\n"
         )
-        .leaveWhitespace()
-        .setResultsName("skipped")
+        .leave_whitespace()
+        .set_results_name("skipped")
     )
 
 
 def _routes_block() -> ParserElement:
-    return OneOrMore(_ip_v4_route_line()).setResultsName("v4_routes")
+    return OneOrMore(_ip_v4_route_line()).set_results_name("v4_routes")
 
 
 _origin_codes = [
@@ -99,21 +99,23 @@ _types = {
 def _ip_v4_route_line() -> ParserElement:
     """Parses a single route on a single line."""
     return Group(
-        Optional("*").setResultsName("valid")
-        + Optional(">").setResultsName("best")
+        Optional("*").set_results_name("valid")
+        + Optional(">").set_results_name("best")
         + White(" ", min=1, max=3)
-        + prefix.setResultsName("network")
+        + prefix.set_results_name("network")
         + White(" \n", min=1, max=21)
-        + ip.setResultsName("nh_ip")
+        + ip.set_results_name("nh_ip")
         + White(" ", min=1, max=19)
-        + dec.setResultsName("metric")
+        + dec.set_results_name("metric")
         + White(" ", min=1, max=8)
-        + Optional(dec.setResultsName("lp"))
+        + Optional(dec.set_results_name("lp"))
         + White(" ", min=1, max=8)
-        + dec.setResultsName("weight")
-        + printables_and_space(10).setResultsName("type")
-        + ZeroOrMore(dec + White(" ")).setResultsName("as_path")
-        + MatchFirst([Literal(code) for code in _origin_codes]).setResultsName("origin")
+        + dec.set_results_name("weight")
+        + printables_and_space(10).set_results_name("type")
+        + ZeroOrMore(dec + White(" ")).set_results_name("as_path")
+        + MatchFirst([Literal(code) for code in _origin_codes]).set_results_name(
+            "origin"
+        )
         + to_eol
         + "\n"
-    ).leaveWhitespace()
+    ).leave_whitespace()

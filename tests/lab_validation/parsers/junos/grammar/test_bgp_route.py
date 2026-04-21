@@ -8,7 +8,7 @@ from lab_validation.parsers.junos.grammar.bgp_route import (
 
 
 def test_show_bgp_route() -> None:
-    parsed_data = show_bgp_route().parseString(
+    parsed_data = show_bgp_route().parse_string(
         """
         inet.0: 13 destinations, 14 routes (13 active, 0 holddown, 0 hidden)
     + = Active Route, - = Last Active, * = Both
@@ -42,7 +42,7 @@ def test_show_bgp_route() -> None:
 
 
 def test_route_block() -> None:
-    parsed_data = _route_block().parseString(
+    parsed_data = _route_block().parse_string(
         """
     A V Destination        P Prf   Metric 1   Metric 2  Next hop        AS path
       V 10.12.11.0/24      B 170        100                             I
@@ -82,7 +82,7 @@ def test_route_block() -> None:
 
 
 def test_table_schema() -> None:
-    _table_schema().parseString(
+    _table_schema().parse_string(
         """
         A V Destination        P Prf   Metric 1   Metric 2  Next hop        AS path
         """
@@ -90,7 +90,7 @@ def test_table_schema() -> None:
 
 
 def test_bgp_route_not_active() -> None:
-    parsed_data = _bgp_route().parseString(
+    parsed_data = _bgp_route().parse_string(
         """
           V 10.12.11.0/24      B 170        100                             I
   valid                                            >10.12.11.2
@@ -110,7 +110,7 @@ def test_bgp_route_not_active() -> None:
 
 
 def test_bgp_route_not_valid() -> None:
-    parsed_data = _bgp_route().parseString(
+    parsed_data = _bgp_route().parse_string(
         """
           ? 10.12.11.0/24      B 170        100                             I
   unverified                                            >10.12.11.2
@@ -130,7 +130,7 @@ def test_bgp_route_not_valid() -> None:
 
 
 def test_bgp_route_metric2() -> None:
-    parsed_data = _bgp_route().parseString(
+    parsed_data = _bgp_route().parse_string(
         """
           V 10.12.11.0/24      B 170        100    101                         I
   valid                                            >10.12.11.2
@@ -150,7 +150,7 @@ def test_bgp_route_metric2() -> None:
 
 
 def test_bgp_route_active_no_as_path() -> None:
-    parsed_data = _bgp_route().parseString(
+    parsed_data = _bgp_route().parse_string(
         """
 * V 10.23.33.0/24      B 170        100                             I
   valid                                            >10.12.11.2
@@ -170,7 +170,7 @@ def test_bgp_route_active_no_as_path() -> None:
 
 
 def test_bgp_route_active_with_as_path() -> None:
-    parsed_data = _bgp_route().parseString(
+    parsed_data = _bgp_route().parse_string(
         """
 * V 10.34.11.0/24      B 170        100                             (65001 65002) 2 I
   valid                                            >10.12.11.2
@@ -192,7 +192,7 @@ def test_bgp_route_active_with_as_path() -> None:
 
 
 def test_bgp_route_line2_unverified() -> None:
-    parsed_data = _bgp_route_line2().parseString(
+    parsed_data = _bgp_route_line2().parse_string(
         """
   unverified                                            >10.12.11.2
         """
@@ -203,7 +203,7 @@ def test_bgp_route_line2_unverified() -> None:
 
 
 def test_bgp_route_line2_valid() -> None:
-    parsed_data = _bgp_route_line2().parseString(
+    parsed_data = _bgp_route_line2().parse_string(
         """
   valid                                            >10.12.11.2
         """

@@ -15,7 +15,7 @@ _IPv4_PATTERN = re.compile(r"\d+\.\d+\.\d+\.\d+")
 
 def parse_show_ip_route_vrf_all(text: str) -> Sequence[NxosMainRibRoute]:
     logger = logging.getLogger(__name__)
-    all_parse_results = Group(show_route()).scanString(text)
+    all_parse_results = Group(show_route()).scan_string(text)
     routes: list[NxosMainRibRoute] = []
     last_loc = 0
     for records, start_loc, end_loc in all_parse_results:

@@ -9,7 +9,7 @@ from lab_validation.parsers.junos.grammar.interface import (
 
 
 def test_show_interface_coverage() -> None:
-    interfaces = show_interface().parseString(
+    interfaces = show_interface().parse_string(
         """
 Physical interface: gr-0/0/0, Enabled, Physical link is Up
   Interface index: 645, SNMP ifIndex: 504
@@ -396,7 +396,7 @@ Physical interface: vtep, Enabled, Physical link is Up
 
 
 def test_show_interface() -> None:
-    interfaces = show_interface().parseString(
+    interfaces = show_interface().parse_string(
         """
 Physical interface: jsrv, Enabled, Physical link is Up
   Interface index: 646, SNMP ifIndex: 508
@@ -440,7 +440,7 @@ Physical interface: jsrv, Enabled, Physical link is Up
 
 
 def test_physical_record() -> None:
-    result = _physical_record().parseString(
+    result = _physical_record().parse_string(
         """
         Physical interface: bme0, Enabled, Physical link is Up
       Interface index: 64, SNMP ifIndex: 37
@@ -462,7 +462,7 @@ def test_physical_record() -> None:
 
 
 def test_physical_record_no_link_level() -> None:
-    result = _physical_record().parseString(
+    result = _physical_record().parse_string(
         """
         Physical interface: dsc, Enabled, Physical link is Up
           Interface index: 5, SNMP ifIndex: 5
@@ -484,7 +484,7 @@ def test_physical_record_no_link_level() -> None:
 
 
 def test_physical_name_line() -> None:
-    result = _physical_name_line().parseString(
+    result = _physical_name_line().parse_string(
         "Physical interface: gr-0/0/0, Enabled, Physical link is Up"
     )
     assert result.name == "gr-0/0/0"
@@ -494,13 +494,13 @@ def test_physical_name_line() -> None:
 
 
 def test_physical_type_line() -> None:
-    result = _physical_type_line().parseString(
+    result = _physical_type_line().parse_string(
         "Type: GRE, Link-level type: GRE, MTU: Unlimited, Speed: 800mbps"
     )
     assert result.speed == "800mbps"
     assert result.mtu == "Unlimited"
 
-    result = _physical_type_line().parseString(
+    result = _physical_type_line().parse_string(
         "Type: GRE, Link-level type: GRE, MTU: 2000"
     )
     assert "speed" not in result
@@ -508,7 +508,7 @@ def test_physical_type_line() -> None:
 
 
 def test_logical_record_with_bw() -> None:
-    result = _logical_record().parseString(
+    result = _logical_record().parse_string(
         """Logical interface jsrv.1 (Index 548) (SNMP ifIndex 509)
     Flags: Up 0x24004000 Encapsulation: unknown
     Bandwidth: 1000mbps
@@ -526,7 +526,7 @@ def test_logical_record_with_bw() -> None:
 
 
 def test_logical_record_no_bw() -> None:
-    result = _logical_record().parseString(
+    result = _logical_record().parse_string(
         """
       Logical interface bme0.0 (Index 6) (SNMP ifIndex 220)
         Flags: Up 0x4000000 Encapsulation: ENET2
@@ -553,7 +553,7 @@ def test_logical_record_no_bw() -> None:
 
 
 def test_logical_record_admin_state_down() -> None:
-    result = _logical_record().parseString(
+    result = _logical_record().parse_string(
         """Logical interface jsrv.1 (Index 548) (SNMP ifIndex 509)
     Flags: Down 0x24004000 Encapsulation: unknown
     Bandwidth: 1000mbps
@@ -571,7 +571,7 @@ def test_logical_record_admin_state_down() -> None:
 
 
 def test_logical_name_line() -> None:
-    result = _logical_name_line().parseString(
+    result = _logical_name_line().parse_string(
         "Logical interface bme0.0 (Index 4) (SNMP ifIndex 220)\n"
     )
     assert result.name == "bme0.0"

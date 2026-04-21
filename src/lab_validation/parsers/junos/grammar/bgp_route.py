@@ -32,12 +32,12 @@ def show_bgp_route() -> ParserElement:
     for the semantics of the output of the command
     """
     return OneOrMore(
-        Group(rib_meta_info() + _route_block().setResultsName("route_tables"))
+        Group(rib_meta_info() + _route_block().set_results_name("route_tables"))
     )
 
 
 def _route_block() -> ParserElement:
-    return _table_schema() + OneOrMore(Group(_bgp_route())).setResultsName("routes")
+    return _table_schema() + OneOrMore(Group(_bgp_route())).set_results_name("routes")
 
 
 def _table_schema() -> ParserElement:
@@ -60,25 +60,27 @@ def _bgp_route() -> ParserElement:
 
 def _bgp_route_line1() -> ParserElement:
     return (
-        Optional(MatchFirst([Literal("+"), Literal("-"), Literal("*")])).setResultsName(
-            "status"
-        )
+        Optional(
+            MatchFirst([Literal("+"), Literal("-"), Literal("*")])
+        ).set_results_name("status")
         + MatchFirst([Literal("V"), Literal("?")])
-        + prefix.setResultsName("network")
-        + MatchFirst([Literal(k) for k in protocol_abbr.keys()]).setResultsName(
+        + prefix.set_results_name("network")
+        + MatchFirst([Literal(k) for k in protocol_abbr.keys()]).set_results_name(
             "learn_from"
         )
-        + dec.setResultsName("pref")
-        + dec.setResultsName("metric_1")
-        + Optional(dec).setResultsName("metric_2")
-        + as_path.setResultsName("as_path")
-        + origin_type.setResultsName("origin_type")
+        + dec.set_results_name("pref")
+        + dec.set_results_name("metric_1")
+        + Optional(dec).set_results_name("metric_2")
+        + as_path.set_results_name("as_path")
+        + origin_type.set_results_name("origin_type")
     )
 
 
 def _bgp_route_line2() -> ParserElement:
     return (
-        MatchFirst([Literal("valid"), Literal("unverified")]).setResultsName("is_valid")
-        + Optional(">").setResultsName("is_selected")
-        + ip.setResultsName("next_hop")
+        MatchFirst([Literal("valid"), Literal("unverified")]).set_results_name(
+            "is_valid"
+        )
+        + Optional(">").set_results_name("is_selected")
+        + ip.set_results_name("next_hop")
     )

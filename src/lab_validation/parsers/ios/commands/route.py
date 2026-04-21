@@ -32,7 +32,7 @@ _IPv4_PATTERN = re.compile(r"\d+\.\d+\.\d+\.\d+")
 def parse_show_ip_route(routes_output: str) -> Sequence[IosIpRoute]:
     """Parses show ip route output for IOS"""
     logger = logging.getLogger(__name__)
-    raw_parsed_results = show_route().scanString(routes_output)
+    raw_parsed_results = show_route().scan_string(routes_output)
     routes: list[IosIpRoute] = []
     last_loc = 0
     last_vrf = "default"  # the table for the default vrf will not have a vrf header

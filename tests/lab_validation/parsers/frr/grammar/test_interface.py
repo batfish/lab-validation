@@ -9,21 +9,21 @@ from lab_validation.parsers.frr.grammar.interface import (
 
 
 def test_interface_line() -> None:
-    result = _get_iface_line_admin_up().parseString(
+    result = _get_iface_line_admin_up().parse_string(
         "Interface lo is up, line protocol is up"
     )
     assert result.name == "lo"
     assert result.admin_state == "up"
     assert result.line_state == "up"
 
-    result = _get_iface_line_admin_up().parseString(
+    result = _get_iface_line_admin_up().parse_string(
         "Interface swp1 is up, line protocol is down"
     )
     assert result.name == "swp1"
     assert result.admin_state == "up"
     assert result.line_state == "down"
 
-    result = _get_iface_line_admin_down().parseString("Interface swp1 is down")
+    result = _get_iface_line_admin_down().parse_string("Interface swp1 is down")
     assert result.name == "swp1"
     assert result.admin_state == "down"
 
@@ -32,19 +32,19 @@ def test_interface_line() -> None:
     Interface swp1 is down
     Interface swp1 is up, line protocol is down
     """
-    result = _get_iface_line().parseString(input_text)
+    result = _get_iface_line().parse_string(input_text)
     assert result.name == "swp1"
     assert result.admin_state == "down"
 
 
 def test_get_mtu_speed() -> None:
-    result = _get_mtu_speed().parseString("mtu 1500 speed 1000")
+    result = _get_mtu_speed().parse_string("mtu 1500 speed 1000")
     assert result.mtu == 1500
     assert result.speed == 1000
 
 
 def test_get_bandwidth() -> None:
-    result = _get_bandwidth().parseString("bandwidth 100 Mbps")
+    result = _get_bandwidth().parse_string("bandwidth 100 Mbps")
     assert result.bandwidth == 100
     assert result.bit_rate_unit == "Mbps"
 
@@ -64,7 +64,7 @@ Interface swp1 is up, line protocol is up
   inet6 fe80::a00:27ff:fe01:7ac6/64
   Interface Type Other
     """
-    interface = interface_block().parseString(input_text)
+    interface = interface_block().parse_string(input_text)
     assert interface.name == "swp1"
     assert interface.admin_state == "up"
     assert interface.line_state == "up"
@@ -85,7 +85,7 @@ Interface swp6 is down
   HWaddr: 08:00:27:a9:5f:fe
   Interface Type Other
     """
-    interface = interface_block().parseString(input_text)
+    interface = interface_block().parse_string(input_text)
     assert interface.name == "swp6"
     assert interface.admin_state == "down"
     assert interface.mtu == 1500
@@ -109,7 +109,7 @@ Interface swp1 is up, line protocol is up
   inet6 fe80::a00:27ff:fe0f:c31c/64
   Interface Type Other
     """
-    interface = interface_block().parseString(input_text)
+    interface = interface_block().parse_string(input_text)
     assert interface.name == "swp1"
     assert interface.admin_state == "up"
     assert interface.mtu == 1500
