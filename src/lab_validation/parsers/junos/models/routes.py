@@ -33,6 +33,7 @@ class JunosEvpnRoute:
     next_hop_int: str | None
     active: bool
     admin: int = attr.ib(converter=int)
+    local_preference: int | None = attr.ib(converter=optional_int_converter)
     as_path: Sequence[int]
     origin_type: str
 
