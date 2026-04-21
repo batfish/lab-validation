@@ -62,13 +62,13 @@ _flags = ZeroOrMore(
 _route_line = Group(
     prefix.set_results_name("destination")
     + ip.set_results_name("nexthop")
-    + Optional(dec).setWhitespaceChars(" ").set_results_name("metric")
-    + _flags.setWhitespaceChars(" ").set_results_name("flags")
-    + Optional(dec).setWhitespaceChars(" ").set_results_name("age")
+    + Optional(dec).set_whitespace_chars(" ").set_results_name("metric")
+    + _flags.set_whitespace_chars(" ").set_results_name("flags")
+    + Optional(dec).set_whitespace_chars(" ").set_results_name("age")
     + Optional(Word(alphas, printables))
-    .setWhitespaceChars(" ")
+    .set_whitespace_chars(" ")
     .set_results_name("interface")
-    + Optional(dec).setWhitespaceChars(" ").set_results_name("next-AS")
+    + Optional(dec).set_whitespace_chars(" ").set_results_name("next-AS")
     + to_eol.set_results_name("route_line_tail")
 )
 
