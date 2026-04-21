@@ -1341,6 +1341,7 @@ def _make_real_evpn_route(**kwargs: object) -> JunosEvpnRoute:
         next_hop_int="ge-0/0/1.0",
         active=True,
         admin=170,
+        local_preference=100,
         as_path=(65100, 65200),
         origin_type="I",
     )
@@ -1407,6 +1408,54 @@ def test_compare_evpn_routes_origin_mismatch() -> None:
     failures = JunosValidator._compare_evpn_routes(real, bf)
     assert ("172.16.0.100:10000", "192.168.99.0/24") in failures
     assert "origin_type" in failures[("172.16.0.100:10000", "192.168.99.0/24")]
+
+
+def test_compare_evpn_routes_as_path_match() -> None:
+    """Matching AS paths produce no failures."""
+    real = [_make_real_evpn_route(as_path=(65100, 65200))]
+    bf = [_make_bf_evpn_route(as_path="65100 65200")]
+    assert JunosValidator._compare_evpn_routes(real, bf) == {}
+
+
+def test_compare_evpn_routes_as_path_mismatch() -> None:
+    """Mismatched AS paths produce a failure."""
+    real = [_make_real_evpn_route(as_path=(65100, 65200))]
+    bf = [_make_bf_evpn_route(as_path="65100 65300")]
+    failures = JunosValidator._compare_evpn_routes(real, bf)
+    key = ("172.16.0.100:10000", "192.168.99.0/24")
+    assert key in failures
+    assert "as_path" in failures[key]
+
+
+def test_compare_evpn_routes_as_path_empty() -> None:
+    """Empty AS paths on both sides produce no failures."""
+    real = [_make_real_evpn_route(as_path=())]
+    bf = [_make_bf_evpn_route(as_path="")]
+    assert JunosValidator._compare_evpn_routes(real, bf) == {}
+
+
+def test_compare_evpn_routes_local_preference_match() -> None:
+    """Matching local preference produces no failures."""
+    real = [_make_real_evpn_route(local_preference=100)]
+    bf = [_make_bf_evpn_route(local_preference=100)]
+    assert JunosValidator._compare_evpn_routes(real, bf) == {}
+
+
+def test_compare_evpn_routes_local_preference_mismatch() -> None:
+    """Mismatched local preference produces a failure."""
+    real = [_make_real_evpn_route(local_preference=200)]
+    bf = [_make_bf_evpn_route(local_preference=100)]
+    failures = JunosValidator._compare_evpn_routes(real, bf)
+    key = ("172.16.0.100:10000", "192.168.99.0/24")
+    assert key in failures
+    assert "local_preference" in failures[key]
+
+
+def test_compare_evpn_routes_local_preference_none_skipped() -> None:
+    """When device has no local_preference (e.g., route reflector), skip the check."""
+    real = [_make_real_evpn_route(local_preference=None)]
+    bf = [_make_bf_evpn_route(local_preference=100)]
+    assert JunosValidator._compare_evpn_routes(real, bf) == {}
 
 
 def test_compare_evpn_routes_missing_in_batfish() -> None:

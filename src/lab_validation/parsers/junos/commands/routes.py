@@ -171,6 +171,7 @@ def _get_evpn_routes(route_json_obj: list[Any]) -> list[JunosEvpnRoute]:
             admin = entry[PREFERENCE][0][DATA]
             as_path_str = entry.get("as-path", [{}])[0].get(DATA, "")
             as_path, origin_type = _parse_as_path_with_origin(as_path_str)
+            local_preference = entry.get("local-preference", [{}])[0].get(DATA, None)
 
             next_hop_ip = None
             next_hop_int = None
@@ -191,6 +192,7 @@ def _get_evpn_routes(route_json_obj: list[Any]) -> list[JunosEvpnRoute]:
                     next_hop_int=next_hop_int,
                     active=active,
                     admin=admin,
+                    local_preference=local_preference,
                     as_path=as_path,
                     origin_type=origin_type,
                 )

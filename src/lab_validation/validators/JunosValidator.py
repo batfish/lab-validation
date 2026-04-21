@@ -288,6 +288,17 @@ class JunosValidator(VendorValidator):
             bf = bf_by_key[key]
             diff: dict[str, str] = {}
 
+            if bf.as_path != tuple(real.as_path):
+                diff["as_path"] = (
+                    f"Batfish: {list(bf.as_path)}, real: {list(real.as_path)}"
+                )
+
+            if real.local_preference is not None:
+                if bf.local_preference != real.local_preference:
+                    diff["local_preference"] = (
+                        f"Batfish: {bf.local_preference}, real: {real.local_preference}"
+                    )
+
             valid_origin_pairs = {("I", "igp"), ("E", "egp"), ("?", "incomplete")}
             if (real.origin_type, bf.origin_type) not in valid_origin_pairs:
                 diff["origin_type"] = (
