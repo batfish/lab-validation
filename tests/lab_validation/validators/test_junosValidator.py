@@ -8,11 +8,19 @@ from lab_validation.parsers.junos.models.interfaces import (
     JunosInterface,
     JunosInterfaceState,
 )
-from lab_validation.parsers.junos.models.routes import JunosBgpRoute, JunosMainRibRoute
+from lab_validation.parsers.junos.models.routes import (
+    JunosBgpRoute,
+    JunosEvpnRoute,
+    JunosMainRibRoute,
+)
 from lab_validation.validators.batfish_models.interface_properties import (
     InterfaceProperties,
 )
-from lab_validation.validators.batfish_models.routes import BgpRibRoute, MainRibRoute
+from lab_validation.validators.batfish_models.routes import (
+    BgpRibRoute,
+    EvpnRibRoute,
+    MainRibRoute,
+)
 from lab_validation.validators.batfish_models.runtime_data import InterfaceRuntimeData
 from lab_validation.validators.JunosValidator import (
     JunosValidator,
@@ -1318,3 +1326,137 @@ def test_is_local_discard_host_route() -> None:
             tag=None,
         )
     )
+
+
+def _make_real_evpn_route(**kwargs: object) -> JunosEvpnRoute:
+    """Helper: builds a JunosEvpnRoute with sensible defaults from the
+    junos_evpn_type5 lab (node1-1 bgp.evpn.0 table).
+    """
+    defaults = dict(
+        network="192.168.99.0/24",
+        route_distinguisher="172.16.0.100:10000",
+        vrf="default",
+        protocol="BGP",
+        next_hop_ip="172.16.254.1",
+        next_hop_int="ge-0/0/1.0",
+        active=True,
+        admin=170,
+        as_path=(65100, 65200),
+        origin_type="I",
+    )
+    defaults.update(kwargs)
+    return JunosEvpnRoute(**defaults)
+
+
+def _make_bf_evpn_route(**kwargs: object) -> EvpnRibRoute:
+    """Helper: builds an EvpnRibRoute with sensible defaults matching
+    the real route above.
+    """
+    defaults = dict(
+        vrf="default",
+        network="192.168.99.0/24",
+        route_distinguisher="172.16.0.100:10000",
+        next_hop=NextHopIp(ip="172.16.0.100"),
+        next_hop_ip="172.16.0.100",
+        next_hop_int="dynamic",
+        protocol="bgp",
+        as_path="65100 65200",
+        metric=0,
+        local_preference=100,
+        communities=(),
+        origin_protocol="bgp",
+        origin_type="igp",
+        tag=0,
+    )
+    defaults.update(kwargs)
+    return EvpnRibRoute(**defaults)
+
+
+def test_compare_evpn_routes_matching() -> None:
+    """Matching routes with correct origin type mapping produce no failures."""
+    real = [_make_real_evpn_route()]
+    bf = [_make_bf_evpn_route()]
+    assert JunosValidator._compare_evpn_routes(real, bf) == {}
+
+
+def test_compare_evpn_routes_origin_igp() -> None:
+    """Device 'I' maps to Batfish 'igp'."""
+    real = [_make_real_evpn_route(origin_type="I")]
+    bf = [_make_bf_evpn_route(origin_type="igp")]
+    assert JunosValidator._compare_evpn_routes(real, bf) == {}
+
+
+def test_compare_evpn_routes_origin_egp() -> None:
+    """Device 'E' maps to Batfish 'egp'."""
+    real = [_make_real_evpn_route(origin_type="E")]
+    bf = [_make_bf_evpn_route(origin_type="egp")]
+    assert JunosValidator._compare_evpn_routes(real, bf) == {}
+
+
+def test_compare_evpn_routes_origin_incomplete() -> None:
+    """Device '?' maps to Batfish 'incomplete'."""
+    real = [_make_real_evpn_route(origin_type="?")]
+    bf = [_make_bf_evpn_route(origin_type="incomplete")]
+    assert JunosValidator._compare_evpn_routes(real, bf) == {}
+
+
+def test_compare_evpn_routes_origin_mismatch() -> None:
+    """Mismatched origin type produces a failure."""
+    real = [_make_real_evpn_route(origin_type="I")]
+    bf = [_make_bf_evpn_route(origin_type="egp")]
+    failures = JunosValidator._compare_evpn_routes(real, bf)
+    assert ("172.16.0.100:10000", "192.168.99.0/24") in failures
+    assert "origin_type" in failures[("172.16.0.100:10000", "192.168.99.0/24")]
+
+
+def test_compare_evpn_routes_missing_in_batfish() -> None:
+    """Device has a route that Batfish does not."""
+    real = [_make_real_evpn_route()]
+    bf: list[EvpnRibRoute] = []
+    failures = JunosValidator._compare_evpn_routes(real, bf)
+    key = ("172.16.0.100:10000", "192.168.99.0/24")
+    assert key in failures
+    assert "missing" in failures[key].lower()
+
+
+def test_compare_evpn_routes_extra_in_batfish() -> None:
+    """Batfish has a route that the device does not."""
+    real: list[JunosEvpnRoute] = []
+    bf = [_make_bf_evpn_route()]
+    failures = JunosValidator._compare_evpn_routes(real, bf)
+    key = ("172.16.0.100:10000", "192.168.99.0/24")
+    assert key in failures
+    assert "extra" in failures[key].lower()
+
+
+def test_compare_evpn_routes_multiple() -> None:
+    """Multiple routes: one matching, one extra in Batfish."""
+    real = [_make_real_evpn_route()]
+    bf = [
+        _make_bf_evpn_route(),
+        _make_bf_evpn_route(network="10.99.0.0/31"),
+    ]
+    failures = JunosValidator._compare_evpn_routes(real, bf)
+    assert ("172.16.0.100:10000", "192.168.99.0/24") not in failures
+    assert ("172.16.0.100:10000", "10.99.0.0/31") in failures
+
+
+def test_compare_evpn_routes_different_rd() -> None:
+    """Same network from different RDs are distinct routes."""
+    real = [_make_real_evpn_route(route_distinguisher="10.0.0.1:100")]
+    bf = [_make_bf_evpn_route(route_distinguisher="10.0.0.2:100")]
+    failures = JunosValidator._compare_evpn_routes(real, bf)
+    assert ("10.0.0.1:100", "192.168.99.0/24") in failures
+    assert ("10.0.0.2:100", "192.168.99.0/24") in failures
+
+
+def test_validate_evpn_rib_routes_empty_batfish() -> None:
+    """No Batfish EVPN routes -> skip validation (empty result)."""
+    result = JunosValidator("")._compare_evpn_routes([], [])
+    assert result == {}
+
+
+def test_validate_evpn_rib_routes_no_batfish_routes() -> None:
+    """validate_evpn_rib_routes returns {} when batfish_routes is empty."""
+    result = JunosValidator("").validate_evpn_rib_routes([])
+    assert result == {}
