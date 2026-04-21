@@ -1,0 +1,9 @@
+entries:
+  - hostname: "pe1|pe2"
+    test_name: test_main_rib_routes
+    skip:
+      reason: https://github.com/batfish/batfish/issues/8098
+  - hostname: "pe1|pe2"
+    test_name: test_bgp_rib_routes
+    skip:
+      reason: https://github.com/batfish/batfish/issues/8098
