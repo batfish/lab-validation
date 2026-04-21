@@ -391,9 +391,7 @@ def test_compare_all_bgp_routes_mismatch_metric() -> None:
         )
     ]
     failures = JunosValidator("")._compare_all_bgp_routes(expected_routes, bf_routes)
-    assert failures == {
-        ("vrf", "1.1.1.0/24", "2.2.2.2"): {"metric": "Batfish: 0, real: 10"}
-    }
+    assert failures == {("vrf", "1.1.1.0/24"): {"metric": "Batfish: 0, real: 10"}}
 
 
 def test_compare_all_bgp_routes_mismatch_local_pref() -> None:
@@ -432,7 +430,7 @@ def test_compare_all_bgp_routes_mismatch_local_pref() -> None:
     ]
     failures = JunosValidator("")._compare_all_bgp_routes(expected_routes, bf_routes)
     assert failures == {
-        ("vrf", "1.1.1.0/24", "2.2.2.2"): {"local_preference": "Batfish: 100, real: 0"}
+        ("vrf", "1.1.1.0/24"): {"local_preference": "Batfish: 100, real: 0"}
     }
 
 
@@ -472,7 +470,7 @@ def test_compare_all_bgp_routes_mismatch_local_as_path() -> None:
     ]
     failures = JunosValidator("")._compare_all_bgp_routes(expected_routes, bf_routes)
     assert failures == {
-        ("vrf", "1.1.1.0/24", "2.2.2.2"): {
+        ("vrf", "1.1.1.0/24"): {
             "as_path": f"Batfish: {bf_routes[0].as_path}, real: {expected_routes[0].as_path}"
         }
     }
@@ -514,7 +512,7 @@ def test_compare_all_bgp_routes_mismatch_origin_protocol() -> None:
     ]
     failures = JunosValidator("")._compare_all_bgp_routes(expected_routes, bf_routes)
     assert failures == {
-        ("vrf", "1.1.1.0/24", "2.2.2.2"): {
+        ("vrf", "1.1.1.0/24"): {
             "origin_protocol": f"Batfish: {bf_routes[0].origin_protocol}, real: {expected_routes[0].origin_protocol}"
         }
     }
@@ -556,9 +554,7 @@ def test_compare_all_bgp_routes_mismatch_origin_type() -> None:
     ]
     failures = JunosValidator("")._compare_all_bgp_routes(expected_routes, bf_routes)
     assert failures == {
-        ("vrf", "1.1.1.0/24", "2.2.2.2"): {
-            "origin_type": "Batfish: incomplete, real: I"
-        }
+        ("vrf", "1.1.1.0/24"): {"origin_type": "Batfish: incomplete, real: I"}
     }
 
 
@@ -584,11 +580,7 @@ def test_compare_all_bgp_routes_extra() -> None:
     ]
     failures = JunosValidator("")._compare_all_bgp_routes(expected_routes, bf_routes)
     assert failures == {
-        (
-            "vrf",
-            "1.1.1.0/24",
-            "2.2.2.2",
-        ): f"Batfish has extra route: { ({bf_routes[0]}) }"
+        ("vrf", "1.1.1.0/24"): f"Batfish has extra route: { ({bf_routes[0]}) }"
     }
 
 
@@ -611,11 +603,7 @@ def test_compare_all_bgp_routes_missing() -> None:
     bf_routes = []
     failures = JunosValidator("")._compare_all_bgp_routes(expected_routes, bf_routes)
     assert failures == {
-        (
-            "vrf",
-            "1.1.1.0/24",
-            "2.2.2.2",
-        ): f"Batfish is missing route: { ({expected_routes[0]}) }"
+        ("vrf", "1.1.1.0/24"): f"Batfish is missing route: {[expected_routes[0]]}"
     }
 
 
@@ -1062,7 +1050,8 @@ def test_compare_routes_skip_inactive_route_bgprib() -> None:
 
 
 def test_compare_routes_batfish_inactive_route_bgprib() -> None:
-    # Check that batfish have inactive route
+    # Batfish reports BGP-best even when the route is inactive in the main
+    # RIB, so matching routes (even when device-side inactive) do not flag.
     junos_bgp_routes = [
         JunosBgpRoute(
             vrf="default",
@@ -1098,11 +1087,7 @@ def test_compare_routes_batfish_inactive_route_bgprib() -> None:
     ]
 
     result = JunosValidator("")._compare_all_bgp_routes(junos_bgp_routes, bf_bgp_routes)
-    assert result == {
-        ("default", "192.168.123.2/32", "10.12.2.2"): {
-            "Unexpected_inactive_route": f"Batfish: {bf_bgp_routes[0]}"
-        },
-    }
+    assert result == {}
 
 
 def test_filter_route() -> None:
