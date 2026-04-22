@@ -68,7 +68,11 @@ def _get_line(line_status: str) -> bool:
 def _get_admin_logical(
     admin_status: dict, admin: bool, line: bool
 ) -> tuple[bool, bool]:
-    if "iff-up" in admin_status:
+    if "iff-hardware-down" in admin_status:
+        return True, False
+    elif "iff-device-down" in admin_status:
+        return True, False
+    elif "iff-up" in admin_status:
         return True, True
     elif "iff-down" in admin_status:
         return False, False
