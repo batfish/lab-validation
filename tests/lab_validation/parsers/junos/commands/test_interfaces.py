@@ -1558,6 +1558,67 @@ def test_get_admin_logical() -> None:
     assert _get_admin_logical(text, admin_physical, line_physical) == (False, False)
 
     """
+    Testing logical admin and line with value "iff-hardware-down" (e.g., IRB with no bridge members)
+    """
+
+    text = """
+    {
+                "if-config-flags" : [
+                {
+                    "iff-up" : [
+                    {
+                        "data" : [null]
+                    }
+                    ],
+                    "iff-hardware-down" : [
+                    {
+                        "data" : [null]
+                    }
+                    ],
+                    "iff-snmp-traps" : [
+                    {
+                        "data" : [null]
+                    }
+                    ]
+                }
+                ]
+    }
+    """
+    admin_physical = True
+    line_physical = True
+    text = json.loads(text)
+    text = text["if-config-flags"][0]
+    assert _get_admin_logical(text, admin_physical, line_physical) == (True, False)
+
+    """
+    Testing logical admin and line with value "iff-device-down" (parent physical interface down)
+    """
+
+    text = """
+    {
+                "if-config-flags" : [
+                {
+                    "iff-device-down" : [
+                    {
+                        "data" : [null]
+                    }
+                    ],
+                    "iff-snmp-traps" : [
+                    {
+                        "data" : [null]
+                    }
+                    ]
+                }
+                ]
+    }
+    """
+    admin_physical = True
+    line_physical = False
+    text = json.loads(text)
+    text = text["if-config-flags"][0]
+    assert _get_admin_logical(text, admin_physical, line_physical) == (True, False)
+
+    """
     Testing logical admin and line being inherited from physical
     """
 
