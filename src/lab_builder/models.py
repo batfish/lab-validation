@@ -36,11 +36,14 @@ class HealthStatus:
     bgp_established: bool | None = None  # None if BGP not configured
     ospf_full: bool | None = None
     isis_up: bool | None = None
+    platform_warnings: list[str] = field(default_factory=list)
     details: str = ""
 
     @property
     def healthy(self) -> bool:
         if not self.ssh_reachable:
+            return False
+        if self.platform_warnings:
             return False
         for status in [self.bgp_established, self.ospf_full, self.isis_up]:
             if status is False:

@@ -2,9 +2,11 @@
 
 from __future__ import annotations
 
+import logging
 import time
 
-from netmiko import ConnectHandler  # type: ignore[import-untyped,import-not-found]
+from netmiko import ConnectHandler
+from netmiko.exceptions import NetmikoAuthenticationException
 
 from lab_builder.models import NodeInfo
 
@@ -19,6 +21,10 @@ def connect(node: NodeInfo, timeout: int = 30) -> ConnectHandler:
         password=node.password,
         timeout=timeout,
         session_timeout=120,
+        # Containerlab containers get new host keys on each deploy.
+        ssh_strict=False,
+        system_host_keys=False,
+        alt_host_keys=False,
     )
 
 
@@ -52,12 +58,21 @@ def push_config(node: NodeInfo, config_lines: list[str]) -> str:
         conn.disconnect()
 
 
+class SshPermanentError(Exception):
+    """SSH error that will not resolve by retrying (e.g., auth failure)."""
+
+
 def check_ssh_reachable(node: NodeInfo, timeout: int = 10) -> bool:
-    """Check if SSH is reachable on a node."""
+    """Check if SSH is reachable on a node.
+
+    Raises SshPermanentError for errors that won't resolve by retrying.
+    """
     try:
         conn = connect(node, timeout=timeout)
         conn.disconnect()
         return True
+    except NetmikoAuthenticationException as e:
+        raise SshPermanentError(f"authentication failed: {e}") from e
     except Exception:
         return False
 
@@ -66,17 +81,29 @@ def wait_for_ssh(node: NodeInfo, timeout: int = 900, interval: int = 15) -> bool
     """Wait until SSH is reachable on a node.
 
     Returns True if reachable within timeout, False otherwise.
+    Raises SshPermanentError immediately on non-transient failures.
     """
+    # Suppress paramiko's transport thread tracebacks during retries.
+    # Without this, every failed SSH attempt prints a multi-line exception
+    # to stderr (from paramiko's background thread), flooding the output.
+    paramiko_logger = logging.getLogger("paramiko.transport")
+    original_level = paramiko_logger.level
+    paramiko_logger.setLevel(logging.CRITICAL)
+
     deadline = time.time() + timeout
     attempt = 0
-    while time.time() < deadline:
-        attempt += 1
-        if check_ssh_reachable(node, timeout=10):
-            print(f"  {node.name}: SSH reachable (attempt {attempt})")
-            return True
-        remaining = int(deadline - time.time())
-        print(
-            f"  {node.name}: SSH not ready (attempt {attempt}, {remaining}s remaining)"
-        )
-        time.sleep(interval)
-    return False
+    try:
+        while time.time() < deadline:
+            attempt += 1
+            if check_ssh_reachable(node, timeout=10):
+                print(f"  {node.name}: SSH reachable (attempt {attempt})")
+                return True
+            remaining = int(deadline - time.time())
+            print(
+                f"  {node.name}: SSH not ready "
+                f"(attempt {attempt}, {remaining}s remaining)"
+            )
+            time.sleep(interval)
+        return False
+    finally:
+        paramiko_logger.setLevel(original_level)
