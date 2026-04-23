@@ -84,6 +84,25 @@ def check_isis_up(node: NodeInfo) -> bool | None:
     return True
 
 
+def check_platform_warnings(node: NodeInfo) -> list[str]:
+    """Check for 'unsupported platform' warnings in the running config.
+
+    Junos silently ignores config blocks that aren't supported on the
+    platform (e.g., family ethernet-switching on VMX). These show up as
+    '## Warning: configuration block ignored: unsupported platform'
+    comments in 'show configuration'.
+    """
+    try:
+        output = run_command(node, "show configuration")
+    except Exception:
+        return []
+    warnings = []
+    for line in output.splitlines():
+        if "unsupported platform" in line.lower():
+            warnings.append(line.strip())
+    return warnings
+
+
 def check_node_health(node: NodeInfo) -> HealthStatus:
     """Run all health checks on a single node."""
     status = HealthStatus(node=node.name)
@@ -137,7 +156,11 @@ def wait_for_convergence(
             print(f"  {s.node}: {'OK' if s.healthy else 'WAITING'} - {s.details}")
 
         if all_healthy:
-            print("All nodes converged.")
+            print("All nodes converged. Checking for platform warnings...")
+            for node, s in zip(nodes, statuses):
+                s.platform_warnings = check_platform_warnings(node)
+                for w in s.platform_warnings:
+                    print(f"  WARNING {s.node}: {w}")
             return statuses
 
         remaining = int(deadline - time.time())
