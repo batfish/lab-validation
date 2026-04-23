@@ -1,13 +1,13 @@
 set version 25.4R1.12
 set system host-name router1
-set system root-authentication encrypted-password "$6$6oSRD8vj$YXbSQaQuFB88ebJUgnRVphRiLOaFR6S1KznxVDOIUYaCbL2/ad.dVsb7WbQ/TvW2HhjKeAuz1slA/LGZEyPIH."
+set system root-authentication encrypted-password "$6$sr/SJsLZ$n1stApaAKubyIZNKxJxnfIfdW4/ohw9GsO7QbQSxS09jHzhNoXRy4qzfIOZZN2iza3lKfeN9wN90.cNEkIY1y/"
 set system login user admin uid 2000
 set system login user admin class super-user
-set system login user admin authentication encrypted-password "$6$DuOvsvyO$YvhkHAij1BmfDUtXWASlpruvD2Z8f5mYDc1kIXq5i8/e47Tj7Kw6M6uer6t9E0GO2soF8rZiVnobsg0ATu18j/"
+set system login user admin authentication encrypted-password "$6$KegR.zg0$k3Y/SRgCrs/fjCXyHNGcxg.hi8qjQjd9GARqRsrRGIRF4qJzO19oq2s/W4hF/QhIb4wCBL2BasNU68o.uQc/W1"
 set system services netconf ssh
 set system services ssh root-login allow
 set system management-instance
-set chassis fpc 0 pic 0 number-of-ports 12
+set chassis fpc 0 pic 0 number-of-ports 56
 set interfaces ge-0/0/1 description "to node2-1 (spine1)"
 set interfaces ge-0/0/1 mtu 9192
 set interfaces ge-0/0/1 unit 0 family inet address 172.16.254.8/31

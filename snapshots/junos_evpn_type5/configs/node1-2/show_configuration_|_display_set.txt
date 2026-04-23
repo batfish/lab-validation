@@ -1,30 +1,30 @@
 set version 25.4R1.12
-set system host-name node1-1
-set system root-authentication encrypted-password "$6$unZHCcmC$GtapybGS6gUvB4nrur2LIZZY2X3lkX5bUi0ZBcphZZ.ijHfThPvc2455G8pI8nhCpPJx6DqJ3jMKTiG0MVkkm0"
+set system host-name node1-2
+set system root-authentication encrypted-password "$6$et.4l7o7$1hmsUPHXAAGnoZgMP3WRAjZLzT6ZDZflLwm5KwsliWOKfKsOKyEArKkkIAUFBeIkyH.LQXc5j/yird.gYRFuw1"
 set system login user admin uid 2000
 set system login user admin class super-user
-set system login user admin authentication encrypted-password "$6$usX2XJHb$Sf61QUnCokKWpdcFS/43bwbOjpgqj/H7S2MtuWjTauDAiZx26sAeR6e4875h1vJWolfmD1ixUOiNGZ97l.YZ4/"
+set system login user admin authentication encrypted-password "$6$Ub8C.4yv$LbdUOqhBFBcgMPpuuNs/Ehwr./KllRzuEUbze/ZJ9g8AMNzrlMLd/AO.HxuzDpw6xJXQVxwg7yN1BaOM/1BbZ/"
 set system services netconf ssh
 set system services ssh root-login allow
 set system management-instance
 set chassis fpc 0 pic 0 number-of-ports 56
 set interfaces ge-0/0/1 description "to node2-1 (spine1)"
 set interfaces ge-0/0/1 mtu 9192
-set interfaces ge-0/0/1 unit 0 family inet address 172.16.254.0/31
+set interfaces ge-0/0/1 unit 0 family inet address 172.16.254.4/31
 set interfaces ge-0/0/2 description "to node2-2 (spine2)"
 set interfaces ge-0/0/2 mtu 9192
-set interfaces ge-0/0/2 unit 0 family inet address 172.16.254.2/31
+set interfaces ge-0/0/2 unit 0 family inet address 172.16.254.6/31
 set interfaces ge-0/0/6 description "client1 access port"
 set interfaces ge-0/0/6 unit 0 family ethernet-switching interface-mode trunk
 set interfaces ge-0/0/6 unit 0 family ethernet-switching vlan members VLAN100
 set interfaces ge-0/0/6 unit 0 family ethernet-switching vlan members VLAN300
 set interfaces fxp0 unit 0 family inet address 10.0.0.15/24
 set interfaces fxp0 unit 0 family inet6 address 2001:db8::2/64
-set interfaces irb unit 100 family inet address 172.16.100.1/24 virtual-gateway-address 172.16.100.100
-set interfaces irb unit 200 family inet address 172.16.200.1/24 virtual-gateway-address 172.16.200.100
-set interfaces irb unit 300 family inet address 172.16.101.1/24 virtual-gateway-address 172.16.101.100
-set interfaces irb unit 400 family inet address 172.16.201.1/24 virtual-gateway-address 172.16.201.100
-set interfaces lo0 unit 0 family inet address 172.16.0.1/32
+set interfaces irb unit 100 family inet address 172.16.100.2/24 virtual-gateway-address 172.16.100.100
+set interfaces irb unit 200 family inet address 172.16.200.2/24 virtual-gateway-address 172.16.200.100
+set interfaces irb unit 300 family inet address 172.16.101.2/24 virtual-gateway-address 172.16.101.100
+set interfaces irb unit 400 family inet address 172.16.201.2/24 virtual-gateway-address 172.16.201.100
+set interfaces lo0 unit 0 family inet address 172.16.0.2/32
 set forwarding-options storm-control-profiles default all
 set policy-options policy-statement TENANT-A-export term export then community add TENANT-A-RT
 set policy-options policy-statement TENANT-A-export term export then accept
@@ -67,7 +67,7 @@ set routing-instances TENANT-A protocols evpn ip-prefix-routes vni 50000
 set routing-instances TENANT-A protocols evpn ip-prefix-routes import TENANT-A-ipr-import
 set routing-instances TENANT-A interface irb.100
 set routing-instances TENANT-A interface irb.200
-set routing-instances TENANT-A route-distinguisher 172.16.0.1:10000
+set routing-instances TENANT-A route-distinguisher 172.16.0.2:10000
 set routing-instances TENANT-A vrf-import TENANT-A-import
 set routing-instances TENANT-A vrf-export TENANT-A-export
 set routing-instances TENANT-A vrf-target target:65000:10000
@@ -81,15 +81,15 @@ set routing-instances TENANT-B protocols evpn ip-prefix-routes encapsulation vxl
 set routing-instances TENANT-B protocols evpn ip-prefix-routes vni 50001
 set routing-instances TENANT-B interface irb.300
 set routing-instances TENANT-B interface irb.400
-set routing-instances TENANT-B route-distinguisher 172.16.0.1:20000
+set routing-instances TENANT-B route-distinguisher 172.16.0.2:20000
 set routing-instances TENANT-B vrf-import TENANT-B-import
 set routing-instances TENANT-B vrf-export TENANT-B-export
 set routing-instances TENANT-B vrf-target target:65000:20000
 set routing-instances TENANT-B vrf-table-label
 set routing-instances mgmt_junos routing-options rib mgmt_junos.inet6.0 static route ::/0 next-hop 2001:db8::1
 set routing-instances mgmt_junos routing-options static route 0.0.0.0/0 next-hop 10.0.0.2
-set routing-options router-id 172.16.0.1
-set routing-options autonomous-system 65001
+set routing-options router-id 172.16.0.2
+set routing-options autonomous-system 65002
 set routing-options forwarding-table export load-balance-per-flow
 set routing-options forwarding-table ecmp-fast-reroute
 set protocols bgp group underlay type external
@@ -97,17 +97,17 @@ set protocols bgp group underlay mtu-discovery
 set protocols bgp group underlay import import-underlay
 set protocols bgp group underlay family inet unicast
 set protocols bgp group underlay export export-underlay
-set protocols bgp group underlay local-as 65001
+set protocols bgp group underlay local-as 65002
 set protocols bgp group underlay multipath multiple-as
 set protocols bgp group underlay bfd-liveness-detection minimum-interval 350
 set protocols bgp group underlay bfd-liveness-detection multiplier 3
 set protocols bgp group underlay bfd-liveness-detection session-mode single-hop
-set protocols bgp group underlay neighbor 172.16.254.1 description node2-1
-set protocols bgp group underlay neighbor 172.16.254.1 peer-as 65011
-set protocols bgp group underlay neighbor 172.16.254.3 description node2-2
-set protocols bgp group underlay neighbor 172.16.254.3 peer-as 65012
+set protocols bgp group underlay neighbor 172.16.254.5 description node2-1
+set protocols bgp group underlay neighbor 172.16.254.5 peer-as 65011
+set protocols bgp group underlay neighbor 172.16.254.7 description node2-2
+set protocols bgp group underlay neighbor 172.16.254.7 peer-as 65012
 set protocols bgp group overlay type internal
-set protocols bgp group overlay local-address 172.16.0.1
+set protocols bgp group overlay local-address 172.16.0.2
 set protocols bgp group overlay mtu-discovery
 set protocols bgp group overlay family evpn signaling
 set protocols bgp group overlay local-as 65000
@@ -123,7 +123,7 @@ set protocols evpn extended-vni-list all
 set protocols lldp port-id-subtype interface-name
 set protocols lldp interface all
 set switch-options vtep-source-interface lo0.0
-set switch-options route-distinguisher 172.16.0.1:1
+set switch-options route-distinguisher 172.16.0.2:1
 set switch-options vrf-target target:65000:9999
 set vlans VLAN100 vlan-id 100
 set vlans VLAN100 l3-interface irb.100

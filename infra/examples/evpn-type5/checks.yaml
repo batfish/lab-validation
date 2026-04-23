@@ -1,0 +1,89 @@
+# Validation checks for the EVPN Type 5 lab.
+# Run after health-check, before collection:
+#   lab_builder validate topology.clab.yml --checks checks.yaml
+
+checks:
+  # Access port must be wired and up for VLAN autostate
+  - type: interface_up
+    node: node1-1
+    interface: ge-0/0/6
+    description: "trunk port for VLAN100/300 must be up"
+
+  # IRBs with physical VLAN members should be up
+  - type: interface_up
+    node: node1-1
+    interface: irb.100
+    description: "TENANT-A gateway (VLAN100 has switchport member)"
+  - type: interface_up
+    node: node1-1
+    interface: irb.300
+    description: "TENANT-B gateway (VLAN300 has switchport member)"
+
+  # IRBs on router1 should be up via VXLAN overlay
+  - type: interface_up
+    node: router1
+    interface: irb.100
+    description: "TENANT-A gateway on service PE"
+  - type: interface_up
+    node: router1
+    interface: irb.300
+    description: "TENANT-B gateway on service PE"
+
+  # Connected routes from IRBs must exist in VRF tables
+  - type: route_exists
+    node: node1-1
+    table: TENANT-A.inet.0
+    prefix: 172.16.100.0/24
+    description: "irb.100 connected route in TENANT-A"
+  - type: route_exists
+    node: node1-1
+    table: TENANT-B.inet.0
+    prefix: 172.16.101.0/24
+    description: "irb.300 connected route in TENANT-B"
+  - type: route_exists
+    node: router1
+    table: TENANT-A.inet.0
+    prefix: 172.16.100.0/24
+    description: "irb.100 connected route in TENANT-A on router1"
+
+  # EVPN Type 5 routes should be exchanged
+  - type: route_exists
+    node: node1-1
+    table: TENANT-A.inet.0
+    prefix: 192.168.99.0/24
+    description: "CE route via EVPN Type 5"
+  - type: route_exists
+    node: node1-1
+    table: TENANT-A.inet.0
+    prefix: 10.99.0.0/31
+    description: "PE link route via EVPN Type 5"
+
+  # All underlay BGP sessions should be established
+  - type: bgp_peer_established
+    node: node1-1
+    neighbor: 172.16.254.1
+    description: "node1-1 ↔ node2-1 underlay"
+  - type: bgp_peer_established
+    node: node1-1
+    neighbor: 172.16.254.3
+    description: "node1-1 ↔ node2-2 underlay"
+  - type: bgp_peer_established
+    node: node1-2
+    neighbor: 172.16.254.5
+    description: "node1-2 ↔ node2-1 underlay"
+  - type: bgp_peer_established
+    node: node1-2
+    neighbor: 172.16.254.7
+    description: "node1-2 ↔ node2-2 underlay"
+  - type: bgp_peer_established
+    node: router1
+    neighbor: 172.16.254.9
+    description: "router1 ↔ node2-1 underlay"
+  - type: bgp_peer_established
+    node: router1
+    neighbor: 172.16.254.11
+    description: "router1 ↔ node2-2 underlay"
+  - type: bgp_peer_established
+    node: edge1
+    neighbor: 10.99.0.0
+    description: "edge1 ↔ router1 CE peering"
