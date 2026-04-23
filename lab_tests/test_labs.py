@@ -17,6 +17,7 @@ from lab_tests.bf_getters import (
     get_batfish_evpn_routes,
     get_batfish_interfaces,
     get_batfish_main_rib_routes,
+    get_vni_backed_ifaces,
 )
 from lab_tests.lab_getters import get_host_nos, snapshot_path
 from lab_validation.validators import (
@@ -230,6 +231,15 @@ def interface_properties(bf, snapshot) -> TableAnswer:
 
 
 @pytest.fixture(scope="module")
+def vni_ifaces(bf, snapshot, interface_properties) -> dict[str, set[str]]:
+    """VLAN/IRB interface names with VNI backing per node (L2 and L3 VNIs)."""
+    l2_vni_props = (
+        bf.q.vxlanVniProperties(question_name="vxlan").answer(snapshot=snapshot).frame()
+    )
+    return get_vni_backed_ifaces(interface_properties, l2_vni_props)
+
+
+@pytest.fixture(scope="module")
 def ip_owners(bf, snapshot) -> pd.DataFrame:
     """Grabs IP Owners for the given snapshot.
 
@@ -338,6 +348,7 @@ def test_interface_properties(
     hostname: str,
     vendor: Vendor,
     interface_properties: TableAnswer,
+    vni_ifaces: dict[str, set[str]],
     validators: dict[str, VendorValidator | None],
 ):
     validator = validators[hostname]
@@ -346,8 +357,11 @@ def test_interface_properties(
         return
 
     batfish_interfaces = get_batfish_interfaces(interface_properties, hostname.lower())
+    node_vni_ifaces = vni_ifaces.get(hostname.lower(), set())
 
-    result = validator.validate_interface_properties(batfish_interfaces)
+    result = validator.validate_interface_properties(
+        batfish_interfaces, node_vni_ifaces
+    )
     try:
         assert result == {}
     except AssertionError as e:

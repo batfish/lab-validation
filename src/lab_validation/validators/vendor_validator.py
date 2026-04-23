@@ -6,7 +6,7 @@ for validating Batfish network analysis results against real network device data
 
 from abc import ABC
 from collections.abc import Sequence
-from typing import Any
+from typing import AbstractSet, Any
 
 from lab_validation.validators.batfish_models.interface_properties import (
     InterfaceProperties,
@@ -31,7 +31,9 @@ class VendorValidator(ABC):
         raise ValidationError("Not implemented")
 
     def validate_interface_properties(
-        self, batfish_interfaces: Sequence[InterfaceProperties]
+        self,
+        batfish_interfaces: Sequence[InterfaceProperties],
+        vni_ifaces: AbstractSet[str],
     ) -> dict[Any, Any]:
         raise ValidationError("Not implemented")
 

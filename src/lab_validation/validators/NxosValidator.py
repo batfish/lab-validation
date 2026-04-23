@@ -1,7 +1,7 @@
 import math
 from collections.abc import Sequence
 from pathlib import Path
-from typing import Any
+from typing import AbstractSet, Any
 
 from pybatfish.datamodel.route import (
     NextHop,
@@ -48,7 +48,9 @@ class NxosValidator(VendorValidator):
         )
 
     def validate_interface_properties(
-        self, batfish_interfaces: Sequence[InterfaceProperties]
+        self,
+        batfish_interfaces: Sequence[InterfaceProperties],
+        vni_ifaces: AbstractSet[str],
     ) -> dict[Any, Any]:
         nxos_interfaces = self._get_interfaces()
 
@@ -61,7 +63,9 @@ class NxosValidator(VendorValidator):
             if name not in batfish_index:
                 diffs[name] = f"Missing interface in Batfish: {nxos_if}"
                 continue
-            diff = NxosValidator._compare_interfaces(nxos_if, batfish_index[name])
+            diff = NxosValidator._compare_interfaces(
+                nxos_if, batfish_index[name], vni_ifaces
+            )
             if diff:
                 diffs[name] = diff
         return diffs
@@ -211,13 +215,23 @@ class NxosValidator(VendorValidator):
 
     @staticmethod
     def _compare_interfaces(
-        nxos_interface: NxosInterface, batfish_if: InterfaceProperties
+        nxos_interface: NxosInterface,
+        batfish_if: InterfaceProperties,
+        vni_ifaces: AbstractSet[str] = frozenset(),
     ) -> dict[str, str]:
         diff = {}
 
+        is_mgmt = batfish_if.name.startswith("mgmt")
+        # VLAN interfaces backed by VXLAN VNIs are inactive pre-dataplane in
+        # Batfish but come up once VXLAN tunnels establish on the real device.
+        is_vni_predataplane = (
+            not batfish_if.active
+            and nxos_interface.admin
+            and nxos_interface.line
+            and batfish_if.name in vni_ifaces
+        )
         if batfish_if.active != (nxos_interface.admin and nxos_interface.line):
-            if not batfish_if.name.startswith("mgmt"):
-                # Batfish deactivates management interfaces
+            if not is_mgmt and not is_vni_predataplane:
                 diff["active"] = (
                     f"Batfish: {batfish_if.active}, NXOS: admin={nxos_interface.admin} line={nxos_interface.line}"
                 )

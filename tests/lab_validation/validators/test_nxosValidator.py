@@ -572,6 +572,66 @@ def test_interface_not_equal_active() -> None:
     }
 
 
+def test_interface_vlan_vni_backed_skips_active() -> None:
+    """VLAN interface with VNI backing: skip active mismatch (pre-dataplane)."""
+    nxos_interface = NxosInterface(
+        name="Vlan777",
+        admin=True,
+        line=True,
+        mtu=1500,
+        bandwidth=10000000,
+        mode=None,
+    )
+    bf_interface = InterfaceProperties(
+        name="Vlan777",
+        access_vlan=None,
+        active=False,
+        all_prefixes=[],
+        allowed_vlans=None,
+        bandwidth=10000000,
+        description=None,
+        native_vlan=None,
+        mtu=1500,
+        speed=1000,
+        switchport=False,
+        switchport_mode=None,
+        vrf="TENANT-777",
+    )
+    assert "active" not in NxosValidator._compare_interfaces(
+        nxos_interface, bf_interface, {"Vlan777"}
+    )
+
+
+def test_interface_vlan_no_vni_reports_active() -> None:
+    """VLAN interface without VNI backing: report active mismatch."""
+    nxos_interface = NxosInterface(
+        name="Vlan777",
+        admin=True,
+        line=True,
+        mtu=1500,
+        bandwidth=10000000,
+        mode=None,
+    )
+    bf_interface = InterfaceProperties(
+        name="Vlan777",
+        access_vlan=None,
+        active=False,
+        all_prefixes=[],
+        allowed_vlans=None,
+        bandwidth=10000000,
+        description=None,
+        native_vlan=None,
+        mtu=1500,
+        speed=1000,
+        switchport=False,
+        switchport_mode=None,
+        vrf="TENANT-777",
+    )
+    assert "active" in NxosValidator._compare_interfaces(
+        nxos_interface, bf_interface, set()
+    )
+
+
 def test_interface_not_equal_bandwidth() -> None:
     nxos_interface = NxosInterface(
         name="Ethernet1/2",

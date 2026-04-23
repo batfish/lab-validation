@@ -1271,6 +1271,87 @@ def test_compare_interfaces_mgmt_fxp() -> None:
     assert diff == {}
 
 
+def test_compare_interfaces_irb_vni_backed_skips_active() -> None:
+    """IRB with VNI backing: skip active mismatch (pre-dataplane)."""
+    real = JunosInterface(
+        name="irb.200",
+        state=JunosInterfaceState(admin=True, line=True),
+        speed=None,
+        bandwidth=None,
+        mtu=1514,
+        interface_type="Logical interface",
+    )
+    batfish = InterfaceProperties(
+        name="irb.200",
+        active=False,
+        all_prefixes=["172.16.200.1/24"],
+        allowed_vlans=None,
+        bandwidth=0,
+        description=None,
+        mtu=1514,
+        speed=0,
+        switchport=False,
+        switchport_mode=None,
+        vrf="TENANT-A",
+    )
+    diff = JunosValidator._compare_interfaces(real, batfish, vni_ifaces={"irb.200"})
+    assert "active" not in diff
+
+
+def test_compare_interfaces_irb_no_vni_reports_active() -> None:
+    """IRB without VNI backing: report active mismatch."""
+    real = JunosInterface(
+        name="irb.200",
+        state=JunosInterfaceState(admin=True, line=True),
+        speed=None,
+        bandwidth=None,
+        mtu=1514,
+        interface_type="Logical interface",
+    )
+    batfish = InterfaceProperties(
+        name="irb.200",
+        active=False,
+        all_prefixes=["172.16.200.1/24"],
+        allowed_vlans=None,
+        bandwidth=0,
+        description=None,
+        mtu=1514,
+        speed=0,
+        switchport=False,
+        switchport_mode=None,
+        vrf="TENANT-A",
+    )
+    diff = JunosValidator._compare_interfaces(real, batfish, vni_ifaces=set())
+    assert "active" in diff
+
+
+def test_compare_interfaces_irb_vni_backed_both_active_no_skip() -> None:
+    """IRB with VNI backing but both agree active: no special handling needed."""
+    real = JunosInterface(
+        name="irb.200",
+        state=JunosInterfaceState(admin=True, line=True),
+        speed=None,
+        bandwidth=None,
+        mtu=1514,
+        interface_type="Logical interface",
+    )
+    batfish = InterfaceProperties(
+        name="irb.200",
+        active=True,
+        all_prefixes=["172.16.200.1/24"],
+        allowed_vlans=None,
+        bandwidth=0,
+        description=None,
+        mtu=1514,
+        speed=0,
+        switchport=False,
+        switchport_mode=None,
+        vrf="TENANT-A",
+    )
+    diff = JunosValidator._compare_interfaces(real, batfish, vni_ifaces={"irb.200"})
+    assert "active" not in diff
+
+
 def test_is_local_discard_host_route() -> None:
     """Local /32 discard routes should be filtered (deactivated interfaces)."""
     from lab_validation.validators.JunosValidator import _is_local_discard_host_route

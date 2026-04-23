@@ -1,7 +1,7 @@
 import math
 from collections.abc import Sequence
 from pathlib import Path
-from typing import Any
+from typing import AbstractSet, Any
 
 from pybatfish.datamodel import (
     NextHop,
@@ -72,7 +72,9 @@ class AristaValidator(VendorValidator):
         )
 
     def validate_interface_properties(
-        self, batfish_interfaces: Sequence[InterfaceProperties]
+        self,
+        batfish_interfaces: Sequence[InterfaceProperties],
+        vni_ifaces: AbstractSet[str],
     ) -> dict[Any, Any]:
         return AristaValidator._compare_all_interfaces(
             self._parse_interfaces(), batfish_interfaces

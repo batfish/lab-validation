@@ -1,6 +1,6 @@
 from collections.abc import Iterable, Sequence
 from pathlib import Path
-from typing import Any
+from typing import AbstractSet, Any
 
 from lab_validation.parsers.checkpoint.commands.interfaces import parse_show_interfaces
 from lab_validation.parsers.checkpoint.models.interfaces import CheckpointInterface
@@ -34,7 +34,9 @@ class CheckpointGaiaValidator(VendorValidator):
         raise ValidationError("Not implemented")
 
     def validate_interface_properties(
-        self, batfish_interfaces: Sequence[InterfaceProperties]
+        self,
+        batfish_interfaces: Sequence[InterfaceProperties],
+        vni_ifaces: AbstractSet[str],
     ) -> dict[Any, Any]:
         """Validating interfaces"""
         if_file = self.device_path / "show_interfaces_all.txt"

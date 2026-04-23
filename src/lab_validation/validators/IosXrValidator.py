@@ -2,7 +2,7 @@ import math
 import re
 from collections.abc import Sequence
 from pathlib import Path
-from typing import Any
+from typing import AbstractSet, Any
 
 from pybatfish.datamodel import (
     NextHop,
@@ -284,7 +284,9 @@ class IosXrValidator(VendorValidator):
         return False
 
     def validate_interface_properties(
-        self, batfish_interfaces: Sequence[InterfaceProperties]
+        self,
+        batfish_interfaces: Sequence[InterfaceProperties],
+        vni_ifaces: AbstractSet[str],
     ) -> dict[Any, Any]:
         """Validating interfaces"""
         xr_ifaces = self._get_interfaces()
