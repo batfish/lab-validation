@@ -196,8 +196,15 @@ class JunosValidator(VendorValidator):
         diff = {}
 
         is_mgmt = batfish_interface.name.startswith(("em", "fxp"))
-        if not is_mgmt:
-            # Batfish deactivates management interfaces
+        # IRB interfaces backed by VXLAN VNIs are inactive pre-dataplane in
+        # Batfish but come up once VXLAN tunnels establish on the real device.
+        is_irb_predataplane = (
+            batfish_interface.name.startswith("irb")
+            and not batfish_interface.active
+            and real_interface.state.admin
+            and real_interface.state.line
+        )
+        if not is_mgmt and not is_irb_predataplane:
             if batfish_interface.active != (
                 real_interface.state.admin and real_interface.state.line
             ):

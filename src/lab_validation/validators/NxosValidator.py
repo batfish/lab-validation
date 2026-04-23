@@ -215,9 +215,17 @@ class NxosValidator(VendorValidator):
     ) -> dict[str, str]:
         diff = {}
 
+        is_mgmt = batfish_if.name.startswith("mgmt")
+        # VLAN interfaces backed by VXLAN VNIs are inactive pre-dataplane in
+        # Batfish but come up once VXLAN tunnels establish on the real device.
+        is_vlan_predataplane = (
+            batfish_if.name.startswith(("Vlan", "vlan"))
+            and not batfish_if.active
+            and nxos_interface.admin
+            and nxos_interface.line
+        )
         if batfish_if.active != (nxos_interface.admin and nxos_interface.line):
-            if not batfish_if.name.startswith("mgmt"):
-                # Batfish deactivates management interfaces
+            if not is_mgmt and not is_vlan_predataplane:
                 diff["active"] = (
                     f"Batfish: {batfish_if.active}, NXOS: admin={nxos_interface.admin} line={nxos_interface.line}"
                 )
