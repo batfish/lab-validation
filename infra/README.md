@@ -157,6 +157,10 @@ format in `infra/examples/evpn-type5/checks.yaml` for an example.
 If no `checks.yaml` exists, manually verify the lab state by connecting to
 each node and checking:
 
+- `show configuration` — look for `## Warning: configuration block ignored:
+unsupported platform` comments, which indicate the device is silently
+  dropping config (e.g., using vJunos-router for features that need
+  vJunos-switch)
 - `show interfaces` — look for `hardware-down` flags on key interfaces
 - `show route table <vrf>.inet.0` — confirm expected routes exist
 - `show ethernet-switching vxlan-tunnel-endpoint remote` — confirm VXLAN
