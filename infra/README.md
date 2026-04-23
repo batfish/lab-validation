@@ -135,6 +135,45 @@ ssh -i $KEY ubuntu@$IP \
 This waits for SSH on all nodes, then polls BGP/OSPF/ISIS neighbor status
 until sessions are established.
 
+**Important**: health-check only verifies routing protocol convergence. It
+does not check that the lab is actually demonstrating the intended behavior
+(e.g., IRBs are up, expected routes are present, VXLAN tunnels are
+established). Use the `validate` step below to verify lab state.
+
+### Step 4.5: Validate Lab State
+
+If the topology has a `checks.yaml` file, run validation checks to verify
+the lab is in the expected state before collecting data:
+
+```bash
+ssh -i $KEY ubuntu@$IP \
+    'cd ~/lab && PYTHONPATH=src python3 -m lab_builder validate mylab/topology.clab.yml --checks mylab/checks.yaml'
+```
+
+This runs topology-specific checks (interface state, route existence, BGP
+peer status) and exits non-zero if any check fails. See the `checks.yaml`
+format in `infra/examples/evpn-type5/checks.yaml` for an example.
+
+If no `checks.yaml` exists, manually verify the lab state by connecting to
+each node and checking:
+
+- `show interfaces` — look for `hardware-down` flags on key interfaces
+- `show route table <vrf>.inet.0` — confirm expected routes exist
+- `show ethernet-switching vxlan-tunnel-endpoint remote` — confirm VXLAN
+  tunnels (if applicable)
+
+**Do not proceed to collection if the lab is in a degraded state.** Common
+pitfalls:
+
+- **IRBs hardware-down**: VLAN autostate deactivates IRBs when no
+  switchport members are active in the VLAN. Verify access ports are wired
+  in the containerlab topology and are oper-up.
+- **Missing containerlab wiring**: Configs referencing interfaces that have
+  no link in the topology YAML will have those interfaces oper-down.
+- **Dead BGP peers**: Neighbors configured for nodes not in the topology
+  will sit in Idle/Active, which may be harmless or may indicate a
+  topology/config mismatch.
+
 ### Step 5: Collect Show Commands
 
 ```bash
@@ -221,6 +260,7 @@ Run on EC2 as `PYTHONPATH=src python3 -m lab_builder <command>`:
 | `deploy <topo.yml>`                                                      | Deploy containerlab topology         |
 | `inspect <topo.yml>`                                                     | Show discovered nodes and IPs        |
 | `health-check <topo.yml> [--timeout N]`                                  | Wait for SSH + routing convergence   |
+| `validate <topo.yml> --checks FILE`                                      | Run topology-level validation checks |
 | `collect <topo.yml> --output-dir DIR`                                    | Collect show commands from all nodes |
 | `recollect <topo.yml> NODE --output-dir DIR`                             | Re-collect one node                  |
 | `push-config <topo.yml> NODE FILE`                                       | Push set-format config and commit    |
@@ -321,8 +361,14 @@ For spot pricing (~70% cheaper), add `--spot`.
 | containerlab kind       | Vendor              | Default creds     | Boot time | KVM required |
 | ----------------------- | ------------------- | ----------------- | --------- | ------------ |
 | `juniper_vjunosrouter`  | Junos (MX)          | admin / admin@123 | 5-10 min  | Yes          |
+| `juniper_vjunosswitch`  | Junos (QFX)         | admin / admin@123 | 5-10 min  | Yes          |
 | `juniper_vjunosevolved` | Junos Evolved (PTX) | admin / admin@123 | ~15 min   | Yes          |
 | `juniper_crpd`          | Junos cRPD          | root / clab123    | ~1 min    | No           |
+
+**Platform selection**: vJunos-router (MX) does NOT support `family
+ethernet-switching`, VLANs with IRBs, or EVPN bridge domains. Labs that use
+these features must use vJunos-switch (QFX). Use vJunos-router only for
+pure IP routing (underlay, L3VPN, route reflectors, CE devices).
 
 ## Troubleshooting
 

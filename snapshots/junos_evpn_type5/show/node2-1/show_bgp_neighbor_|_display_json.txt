@@ -7,7 +7,7 @@
             "attributes" : {"junos:style" : "detail"}, 
             "peer-address" : [
             {
-                "data" : "172.16.0.1+52331"
+                "data" : "172.16.0.1+179"
             }
             ], 
             "peer-as" : [
@@ -17,7 +17,7 @@
             ], 
             "local-address" : [
             {
-                "data" : "172.16.0.11+179"
+                "data" : "172.16.0.11+64301"
             }
             ], 
             "local-as" : [
@@ -153,8 +153,8 @@
             ], 
             "elapsed-time" : [
             {
-                "data" : "9:05", 
-                "attributes" : {"junos:seconds" : "545"}
+                "data" : "6:32", 
+                "attributes" : {"junos:seconds" : "392"}
             }
             ], 
             "recv-ebgp-origin-validation-state" : [
@@ -207,7 +207,7 @@
             ], 
             "peer-index" : [
             {
-                "data" : "1"
+                "data" : "0"
             }
             ], 
             "snmp-index" : [
@@ -313,17 +313,17 @@
                 ], 
                 "active-prefix-count" : [
                 {
-                    "data" : "0"
+                    "data" : "32"
                 }
                 ], 
                 "received-prefix-count" : [
                 {
-                    "data" : "0"
+                    "data" : "32"
                 }
                 ], 
                 "accepted-prefix-count" : [
                 {
-                    "data" : "0"
+                    "data" : "32"
                 }
                 ], 
                 "suppressed-prefix-count" : [
@@ -333,7 +333,7 @@
                 ], 
                 "advertised-prefix-count" : [
                 {
-                    "data" : "2"
+                    "data" : "62"
                 }
                 ]
             }
@@ -387,12 +387,12 @@
                 ], 
                 "bgp-nlri-send-time" : [
                 {
-                    "data" : "1"
+                    "data" : "0"
                 }
                 ], 
                 "bgp-nlri-recv-time" : [
                 {
-                    "data" : "3"
+                    "data" : "0"
                 }
                 ]
             }
@@ -404,22 +404,22 @@
             ], 
             "last-sent" : [
             {
-                "data" : "25"
+                "data" : "22"
             }
             ], 
             "last-checked" : [
             {
-                "data" : "545"
+                "data" : "392"
             }
             ], 
             "input-messages" : [
             {
-                "data" : "23"
+                "data" : "35"
             }
             ], 
             "input-updates" : [
             {
-                "data" : "1"
+                "data" : "20"
             }
             ], 
             "input-refreshes" : [
@@ -429,17 +429,17 @@
             ], 
             "input-octets" : [
             {
-                "data" : "492"
+                "data" : "2994"
             }
             ], 
             "output-messages" : [
             {
-                "data" : "23"
+                "data" : "37"
             }
             ], 
             "output-updates" : [
             {
-                "data" : "2"
+                "data" : "22"
             }
             ], 
             "output-refreshes" : [
@@ -449,7 +449,7 @@
             ], 
             "output-octets" : [
             {
-                "data" : "674"
+                "data" : "4492"
             }
             ], 
             "bgp-output-queue" : [
@@ -481,7 +481,7 @@
             "attributes" : {"junos:style" : "detail"}, 
             "peer-address" : [
             {
-                "data" : "172.16.0.2"
+                "data" : "172.16.0.2+179"
             }
             ], 
             "peer-as" : [
@@ -491,7 +491,7 @@
             ], 
             "local-address" : [
             {
-                "data" : "172.16.0.11"
+                "data" : "172.16.0.11+64470"
             }
             ], 
             "local-as" : [
@@ -531,11 +531,12 @@
             ], 
             "peer-state" : [
             {
-                "data" : "Active"
+                "data" : "Established"
             }
             ], 
             "peer-flags" : [
             {
+                "data" : "Sync"
             }
             ], 
             "rsync-flags" : [
@@ -544,12 +545,12 @@
             ], 
             "last-state" : [
             {
-                "data" : "Idle"
+                "data" : "OpenConfirm"
             }
             ], 
             "last-event" : [
             {
-                "data" : "Start"
+                "data" : "RecvKeepAlive"
             }
             ], 
             "last-error" : [
@@ -626,8 +627,8 @@
             ], 
             "elapsed-time" : [
             {
-                "data" : "12:31", 
-                "attributes" : {"junos:seconds" : "751"}
+                "data" : "6:00", 
+                "attributes" : {"junos:seconds" : "360"}
             }
             ], 
             "recv-ebgp-origin-validation-state" : [
@@ -649,6 +650,302 @@
                         "data" : "1000"
                     }
                     ]
+                }
+                ]
+            }
+            ], 
+            "peer-id" : [
+            {
+                "data" : "172.16.0.2"
+            }
+            ], 
+            "local-id" : [
+            {
+                "data" : "172.16.0.11"
+            }
+            ], 
+            "active-holdtime" : [
+            {
+                "data" : "90"
+            }
+            ], 
+            "keepalive-interval" : [
+            {
+                "data" : "30"
+            }
+            ], 
+            "group-index" : [
+            {
+                "data" : "1"
+            }
+            ], 
+            "peer-index" : [
+            {
+                "data" : "1"
+            }
+            ], 
+            "snmp-index" : [
+            {
+                "data" : "4"
+            }
+            ], 
+            "bgp-peer-iosession" : [
+            {
+                "iosession-thread-name" : [
+                {
+                    "data" : "bgpio-0"
+                }
+                ], 
+                "iosession-state" : [
+                {
+                    "data" : "Enabled"
+                }
+                ]
+            }
+            ], 
+            "bgp-bfd" : [
+            {
+                "bfd-configuration-state" : [
+                {
+                    "data" : "disabled"
+                }
+                ], 
+                "bfd-operational-state" : [
+                {
+                    "data" : "down"
+                }
+                ]
+            }
+            ], 
+            "peer-restart-nlri-configured" : [
+            {
+                "data" : "evpn"
+            }
+            ], 
+            "nlri-type-peer" : [
+            {
+                "data" : "evpn"
+            }
+            ], 
+            "nlri-type-session" : [
+            {
+                "data" : "evpn"
+            }
+            ], 
+            "loop-check-display" : [
+            {
+                "data" : "AS loop check: Domain Scoped"
+            }
+            ], 
+            "peer-refresh-capability" : [
+            {
+                "data" : "2"
+            }
+            ], 
+            "peer-4byte-as-capability-advertised" : [
+            {
+                "data" : "65000"
+            }
+            ], 
+            "peer-addpath-not-supported" : [
+            {
+                "data" : [null]
+            }
+            ], 
+            "local-ext-nh-color-nlri" : [
+            {
+                "data" : "evpn"
+            }
+            ], 
+            "bgp-rib" : [
+            {
+                "attributes" : {"junos:style" : "detail"}, 
+                "name" : [
+                {
+                    "data" : "bgp.evpn.0"
+                }
+                ], 
+                "rib-bit" : [
+                {
+                    "data" : "30000"
+                }
+                ], 
+                "bgp-rib-state" : [
+                {
+                    "data" : "BGP restart is complete"
+                }
+                ], 
+                "vpn-rib-state" : [
+                {
+                    "data" : "VPN restart is complete"
+                }
+                ], 
+                "send-state" : [
+                {
+                    "data" : "in sync"
+                }
+                ], 
+                "active-prefix-count" : [
+                {
+                    "data" : "32"
+                }
+                ], 
+                "received-prefix-count" : [
+                {
+                    "data" : "32"
+                }
+                ], 
+                "accepted-prefix-count" : [
+                {
+                    "data" : "32"
+                }
+                ], 
+                "suppressed-prefix-count" : [
+                {
+                    "data" : "0"
+                }
+                ], 
+                "advertised-prefix-count" : [
+                {
+                    "data" : "62"
+                }
+                ]
+            }
+            ], 
+            "peer-stale-route-time-configured" : [
+            {
+                "data" : "300"
+            }
+            ], 
+            "peer-no-restart" : [
+            {
+                "data" : [null]
+            }
+            ], 
+            "peer-restart-flags-received" : [
+            {
+                "data" : "Notification"
+            }
+            ], 
+            "peer-restart-nlri-negotiated" : [
+            {
+                "data" : "evpn"
+            }
+            ], 
+            "peer-end-of-rib-received" : [
+            {
+                "data" : "evpn"
+            }
+            ], 
+            "peer-end-of-rib-sent" : [
+            {
+                "data" : "evpn"
+            }
+            ], 
+            "peer-end-of-rib-scheduled" : [
+            {
+            }
+            ], 
+            "peer-no-llgr-restarter" : [
+            {
+                "data" : [null]
+            }
+            ], 
+            "bgp-family-stat" : [
+            {
+                "attributes" : {"junos:style" : "detail"}, 
+                "nlri-type" : [
+                {
+                    "data" : "evpn"
+                }
+                ], 
+                "bgp-nlri-send-time" : [
+                {
+                    "data" : "1"
+                }
+                ], 
+                "bgp-nlri-recv-time" : [
+                {
+                    "data" : "0"
+                }
+                ]
+            }
+            ], 
+            "last-received" : [
+            {
+                "data" : "12"
+            }
+            ], 
+            "last-sent" : [
+            {
+                "data" : "22"
+            }
+            ], 
+            "last-checked" : [
+            {
+                "data" : "361"
+            }
+            ], 
+            "input-messages" : [
+            {
+                "data" : "28"
+            }
+            ], 
+            "input-updates" : [
+            {
+                "data" : "13"
+            }
+            ], 
+            "input-refreshes" : [
+            {
+                "data" : "0"
+            }
+            ], 
+            "input-octets" : [
+            {
+                "data" : "2415"
+            }
+            ], 
+            "output-messages" : [
+            {
+                "data" : "43"
+            }
+            ], 
+            "output-updates" : [
+            {
+                "data" : "29"
+            }
+            ], 
+            "output-refreshes" : [
+            {
+                "data" : "0"
+            }
+            ], 
+            "output-octets" : [
+            {
+                "data" : "5150"
+            }
+            ], 
+            "bgp-output-queue" : [
+            {
+                "number" : [
+                {
+                    "data" : "2"
+                }
+                ], 
+                "count" : [
+                {
+                    "data" : "0"
+                }
+                ], 
+                "table-name" : [
+                {
+                    "data" : "bgp.evpn.0"
+                }
+                ], 
+                "rib-adv-nlri" : [
+                {
+                    "data" : "evpn"
                 }
                 ]
             }
@@ -803,8 +1100,8 @@
             ], 
             "elapsed-time" : [
             {
-                "data" : "12:31", 
-                "attributes" : {"junos:seconds" : "751"}
+                "data" : "8:21", 
+                "attributes" : {"junos:seconds" : "501"}
             }
             ], 
             "recv-ebgp-origin-validation-state" : [
@@ -845,7 +1142,7 @@
             ], 
             "local-address" : [
             {
-                "data" : "172.16.0.11+56051"
+                "data" : "172.16.0.11+52475"
             }
             ], 
             "local-as" : [
@@ -981,8 +1278,8 @@
             ], 
             "elapsed-time" : [
             {
-                "data" : "10:31", 
-                "attributes" : {"junos:seconds" : "631"}
+                "data" : "5:56", 
+                "attributes" : {"junos:seconds" : "356"}
             }
             ], 
             "recv-ebgp-origin-validation-state" : [
@@ -1035,7 +1332,7 @@
             ], 
             "peer-index" : [
             {
-                "data" : "0"
+                "data" : "2"
             }
             ], 
             "snmp-index" : [
@@ -1141,17 +1438,17 @@
                 ], 
                 "active-prefix-count" : [
                 {
-                    "data" : "2"
+                    "data" : "30"
                 }
                 ], 
                 "received-prefix-count" : [
                 {
-                    "data" : "2"
+                    "data" : "30"
                 }
                 ], 
                 "accepted-prefix-count" : [
                 {
-                    "data" : "2"
+                    "data" : "30"
                 }
                 ], 
                 "suppressed-prefix-count" : [
@@ -1161,7 +1458,7 @@
                 ], 
                 "advertised-prefix-count" : [
                 {
-                    "data" : "0"
+                    "data" : "64"
                 }
                 ]
             }
@@ -1215,39 +1512,39 @@
                 ], 
                 "bgp-nlri-send-time" : [
                 {
-                    "data" : "0"
+                    "data" : "1"
                 }
                 ], 
                 "bgp-nlri-recv-time" : [
                 {
-                    "data" : "0"
+                    "data" : "1"
                 }
                 ]
             }
             ], 
             "last-received" : [
             {
-                "data" : "1"
+                "data" : "27"
             }
             ], 
             "last-sent" : [
             {
-                "data" : "25"
+                "data" : "20"
             }
             ], 
             "last-checked" : [
             {
-                "data" : "632"
+                "data" : "356"
             }
             ], 
             "input-messages" : [
             {
-                "data" : "27"
+                "data" : "26"
             }
             ], 
             "input-updates" : [
             {
-                "data" : "3"
+                "data" : "12"
             }
             ], 
             "input-refreshes" : [
@@ -1257,17 +1554,17 @@
             ], 
             "input-octets" : [
             {
-                "data" : "766"
+                "data" : "2249"
             }
             ], 
             "output-messages" : [
             {
-                "data" : "24"
+                "data" : "35"
             }
             ], 
             "output-updates" : [
             {
-                "data" : "0"
+                "data" : "22"
             }
             ], 
             "output-refreshes" : [
@@ -1277,7 +1574,7 @@
             ], 
             "output-octets" : [
             {
-                "data" : "467"
+                "data" : "4524"
             }
             ], 
             "bgp-output-queue" : [
@@ -1309,7 +1606,7 @@
             "attributes" : {"junos:style" : "detail"}, 
             "peer-address" : [
             {
-                "data" : "172.16.254.0+179"
+                "data" : "172.16.254.0+53988"
             }
             ], 
             "peer-as" : [
@@ -1319,7 +1616,7 @@
             ], 
             "local-address" : [
             {
-                "data" : "172.16.254.1+56197"
+                "data" : "172.16.254.1+179"
             }
             ], 
             "local-as" : [
@@ -1474,8 +1771,8 @@
             ], 
             "elapsed-time" : [
             {
-                "data" : "9:10", 
-                "attributes" : {"junos:seconds" : "550"}
+                "data" : "6:42", 
+                "attributes" : {"junos:seconds" : "402"}
             }
             ], 
             "recv-ebgp-origin-validation-state" : [
@@ -1528,7 +1825,7 @@
             ], 
             "peer-index" : [
             {
-                "data" : "1"
+                "data" : "0"
             }
             ], 
             "snmp-index" : [
@@ -1634,17 +1931,17 @@
                 ], 
                 "active-prefix-count" : [
                 {
-                    "data" : "1"
+                    "data" : "2"
                 }
                 ], 
                 "received-prefix-count" : [
                 {
-                    "data" : "2"
+                    "data" : "3"
                 }
                 ], 
                 "accepted-prefix-count" : [
                 {
-                    "data" : "2"
+                    "data" : "3"
                 }
                 ], 
                 "suppressed-prefix-count" : [
@@ -1654,7 +1951,7 @@
                 ], 
                 "advertised-prefix-count" : [
                 {
-                    "data" : "6"
+                    "data" : "8"
                 }
                 ]
             }
@@ -1708,34 +2005,34 @@
                 ], 
                 "bgp-nlri-send-time" : [
                 {
-                    "data" : "2"
+                    "data" : "0"
                 }
                 ], 
                 "bgp-nlri-recv-time" : [
                 {
-                    "data" : "2"
+                    "data" : "1"
                 }
                 ]
             }
             ], 
             "last-received" : [
             {
-                "data" : "2"
+                "data" : "23"
             }
             ], 
             "last-sent" : [
             {
-                "data" : "14"
+                "data" : "15"
             }
             ], 
             "last-checked" : [
             {
-                "data" : "552"
+                "data" : "402"
             }
             ], 
             "input-messages" : [
             {
-                "data" : "24"
+                "data" : "18"
             }
             ], 
             "input-updates" : [
@@ -1750,17 +2047,17 @@
             ], 
             "input-octets" : [
             {
-                "data" : "538"
+                "data" : "429"
             }
             ], 
             "output-messages" : [
             {
-                "data" : "24"
+                "data" : "18"
             }
             ], 
             "output-updates" : [
             {
-                "data" : "2"
+                "data" : "3"
             }
             ], 
             "output-refreshes" : [
@@ -1770,7 +2067,7 @@
             ], 
             "output-octets" : [
             {
-                "data" : "542"
+                "data" : "466"
             }
             ], 
             "bgp-output-queue" : [
@@ -1812,7 +2109,7 @@
             ], 
             "local-address" : [
             {
-                "data" : "172.16.254.5"
+                "data" : "172.16.254.5+63871"
             }
             ], 
             "local-as" : [
@@ -1847,12 +2144,12 @@
             ], 
             "peer-state" : [
             {
-                "data" : "Connect"
+                "data" : "Established"
             }
             ], 
             "peer-flags" : [
             {
-                "data" : "TryConnect"
+                "data" : "Sync"
             }
             ], 
             "rsync-flags" : [
@@ -1861,12 +2158,12 @@
             ], 
             "last-state" : [
             {
-                "data" : "Connect"
+                "data" : "OpenConfirm"
             }
             ], 
             "last-event" : [
             {
-                "data" : "ConnectRetry"
+                "data" : "RecvKeepAlive"
             }
             ], 
             "last-error" : [
@@ -1967,8 +2264,8 @@
             ], 
             "elapsed-time" : [
             {
-                "data" : "12:31", 
-                "attributes" : {"junos:seconds" : "751"}
+                "data" : "6:09", 
+                "attributes" : {"junos:seconds" : "369"}
             }
             ], 
             "recv-ebgp-origin-validation-state" : [
@@ -1993,13 +2290,309 @@
                 }
                 ]
             }
+            ], 
+            "peer-id" : [
+            {
+                "data" : "172.16.0.2"
+            }
+            ], 
+            "local-id" : [
+            {
+                "data" : "172.16.0.11"
+            }
+            ], 
+            "active-holdtime" : [
+            {
+                "data" : "90"
+            }
+            ], 
+            "keepalive-interval" : [
+            {
+                "data" : "30"
+            }
+            ], 
+            "group-index" : [
+            {
+                "data" : "0"
+            }
+            ], 
+            "peer-index" : [
+            {
+                "data" : "1"
+            }
+            ], 
+            "snmp-index" : [
+            {
+                "data" : "1"
+            }
+            ], 
+            "bgp-peer-iosession" : [
+            {
+                "iosession-thread-name" : [
+                {
+                    "data" : "bgpio-0"
+                }
+                ], 
+                "iosession-state" : [
+                {
+                    "data" : "Enabled"
+                }
+                ]
+            }
+            ], 
+            "bgp-bfd" : [
+            {
+                "bfd-configuration-state" : [
+                {
+                    "data" : "enabled"
+                }
+                ], 
+                "bfd-operational-state" : [
+                {
+                    "data" : "up"
+                }
+                ]
+            }
+            ], 
+            "local-interface-name" : [
+            {
+                "data" : "ge-0/0/2.0"
+            }
+            ], 
+            "local-interface-index" : [
+            {
+                "data" : "542"
+            }
+            ], 
+            "peer-restart-nlri-configured" : [
+            {
+                "data" : "inet-unicast"
+            }
+            ], 
+            "nlri-type-peer" : [
+            {
+                "data" : "inet-unicast"
+            }
+            ], 
+            "nlri-type-session" : [
+            {
+                "data" : "inet-unicast"
+            }
+            ], 
+            "loop-check-display" : [
+            {
+                "data" : "AS loop check: Domain Scoped"
+            }
+            ], 
+            "peer-refresh-capability" : [
+            {
+                "data" : "2"
+            }
+            ], 
+            "peer-4byte-as-capability-advertised" : [
+            {
+                "data" : "65002"
+            }
+            ], 
+            "peer-addpath-not-supported" : [
+            {
+                "data" : [null]
+            }
+            ], 
+            "bgp-rib" : [
+            {
+                "attributes" : {"junos:style" : "detail"}, 
+                "name" : [
+                {
+                    "data" : "inet.0"
+                }
+                ], 
+                "rib-bit" : [
+                {
+                    "data" : "20000"
+                }
+                ], 
+                "bgp-rib-state" : [
+                {
+                    "data" : "BGP restart is complete"
+                }
+                ], 
+                "send-state" : [
+                {
+                    "data" : "in sync"
+                }
+                ], 
+                "active-prefix-count" : [
+                {
+                    "data" : "2"
+                }
+                ], 
+                "received-prefix-count" : [
+                {
+                    "data" : "3"
+                }
+                ], 
+                "accepted-prefix-count" : [
+                {
+                    "data" : "3"
+                }
+                ], 
+                "suppressed-prefix-count" : [
+                {
+                    "data" : "0"
+                }
+                ], 
+                "advertised-prefix-count" : [
+                {
+                    "data" : "8"
+                }
+                ]
+            }
+            ], 
+            "peer-stale-route-time-configured" : [
+            {
+                "data" : "300"
+            }
+            ], 
+            "peer-no-restart" : [
+            {
+                "data" : [null]
+            }
+            ], 
+            "peer-restart-flags-received" : [
+            {
+                "data" : "Notification"
+            }
+            ], 
+            "peer-restart-nlri-negotiated" : [
+            {
+                "data" : "inet-unicast"
+            }
+            ], 
+            "peer-end-of-rib-received" : [
+            {
+                "data" : "inet-unicast"
+            }
+            ], 
+            "peer-end-of-rib-sent" : [
+            {
+                "data" : "inet-unicast"
+            }
+            ], 
+            "peer-end-of-rib-scheduled" : [
+            {
+            }
+            ], 
+            "peer-no-llgr-restarter" : [
+            {
+                "data" : [null]
+            }
+            ], 
+            "bgp-family-stat" : [
+            {
+                "attributes" : {"junos:style" : "detail"}, 
+                "nlri-type" : [
+                {
+                    "data" : "inet-unicast"
+                }
+                ], 
+                "bgp-nlri-send-time" : [
+                {
+                    "data" : "1"
+                }
+                ], 
+                "bgp-nlri-recv-time" : [
+                {
+                    "data" : "1"
+                }
+                ]
+            }
+            ], 
+            "last-received" : [
+            {
+                "data" : "18"
+            }
+            ], 
+            "last-sent" : [
+            {
+                "data" : "12"
+            }
+            ], 
+            "last-checked" : [
+            {
+                "data" : "369"
+            }
+            ], 
+            "input-messages" : [
+            {
+                "data" : "17"
+            }
+            ], 
+            "input-updates" : [
+            {
+                "data" : "2"
+            }
+            ], 
+            "input-refreshes" : [
+            {
+                "data" : "0"
+            }
+            ], 
+            "input-octets" : [
+            {
+                "data" : "410"
+            }
+            ], 
+            "output-messages" : [
+            {
+                "data" : "17"
+            }
+            ], 
+            "output-updates" : [
+            {
+                "data" : "3"
+            }
+            ], 
+            "output-refreshes" : [
+            {
+                "data" : "0"
+            }
+            ], 
+            "output-octets" : [
+            {
+                "data" : "447"
+            }
+            ], 
+            "bgp-output-queue" : [
+            {
+                "number" : [
+                {
+                    "data" : "1"
+                }
+                ], 
+                "count" : [
+                {
+                    "data" : "0"
+                }
+                ], 
+                "table-name" : [
+                {
+                    "data" : "inet.0"
+                }
+                ], 
+                "rib-adv-nlri" : [
+                {
+                    "data" : "inet-unicast"
+                }
+                ]
+            }
             ]
         }, 
         {
             "attributes" : {"junos:style" : "detail"}, 
             "peer-address" : [
             {
-                "data" : "172.16.254.8+58316"
+                "data" : "172.16.254.8+179"
             }
             ], 
             "peer-as" : [
@@ -2009,7 +2602,7 @@
             ], 
             "local-address" : [
             {
-                "data" : "172.16.254.9+179"
+                "data" : "172.16.254.9+53194"
             }
             ], 
             "local-as" : [
@@ -2164,8 +2757,8 @@
             ], 
             "elapsed-time" : [
             {
-                "data" : "10:35", 
-                "attributes" : {"junos:seconds" : "635"}
+                "data" : "6:05", 
+                "attributes" : {"junos:seconds" : "365"}
             }
             ], 
             "recv-ebgp-origin-validation-state" : [
@@ -2218,7 +2811,7 @@
             ], 
             "peer-index" : [
             {
-                "data" : "0"
+                "data" : "2"
             }
             ], 
             "snmp-index" : [
@@ -2344,7 +2937,7 @@
                 ], 
                 "advertised-prefix-count" : [
                 {
-                    "data" : "5"
+                    "data" : "8"
                 }
                 ]
             }
@@ -2398,34 +2991,34 @@
                 ], 
                 "bgp-nlri-send-time" : [
                 {
-                    "data" : "0"
+                    "data" : "1"
                 }
                 ], 
                 "bgp-nlri-recv-time" : [
                 {
-                    "data" : "2"
+                    "data" : "0"
                 }
                 ]
             }
             ], 
             "last-received" : [
             {
-                "data" : "19"
+                "data" : "6"
             }
             ], 
             "last-sent" : [
             {
-                "data" : "8"
+                "data" : "12"
             }
             ], 
             "last-checked" : [
             {
-                "data" : "635"
+                "data" : "365"
             }
             ], 
             "input-messages" : [
             {
-                "data" : "27"
+                "data" : "17"
             }
             ], 
             "input-updates" : [
@@ -2440,17 +3033,17 @@
             ], 
             "input-octets" : [
             {
-                "data" : "600"
+                "data" : "410"
             }
             ], 
             "output-messages" : [
             {
-                "data" : "26"
+                "data" : "18"
             }
             ], 
             "output-updates" : [
             {
-                "data" : "2"
+                "data" : "3"
             }
             ], 
             "output-refreshes" : [
@@ -2460,7 +3053,7 @@
             ], 
             "output-octets" : [
             {
-                "data" : "575"
+                "data" : "466"
             }
             ], 
             "bgp-output-queue" : [

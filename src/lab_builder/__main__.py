@@ -11,6 +11,7 @@ from lab_builder.collector import collect_all, collect_node
 from lab_builder.device import push_config as device_push_config
 from lab_builder.health import wait_for_convergence
 from lab_builder.snapshot import build_snapshot
+from lab_builder.validate import load_checks, run_checks
 
 
 def cmd_deploy(args: argparse.Namespace) -> None:
@@ -70,6 +71,30 @@ def cmd_push_config(args: argparse.Namespace) -> None:
     print(output)
 
 
+def cmd_validate(args: argparse.Namespace) -> None:
+    checks_path = Path(args.checks)
+    if not checks_path.exists():
+        print(f"Warning: checks file not found: {checks_path}")
+        return
+
+    nodes = clab.inspect(args.topology)
+    checks = load_checks(checks_path)
+    print(f"Running {len(checks)} validation checks from {checks_path}...")
+
+    results = run_checks(nodes, checks)
+    passed = sum(1 for r in results if r.passed)
+    failed = sum(1 for r in results if not r.passed)
+
+    for r in results:
+        marker = "PASS" if r.passed else "FAIL"
+        desc = f" ({r.description})" if r.description else ""
+        print(f"  [{marker}] {r.node}: {r.check_type}{desc} - {r.detail}")
+
+    print(f"\n{passed} passed, {failed} failed")
+    if failed:
+        sys.exit(1)
+
+
 def cmd_build_snapshot(args: argparse.Namespace) -> None:
     nodes = clab.inspect(args.topology)
     build_snapshot(
@@ -106,6 +131,12 @@ def main() -> None:
     p.add_argument("topology", help="Path to .clab.yml file")
     p.add_argument("--timeout", type=int, default=600, help="Timeout in seconds")
     p.set_defaults(func=cmd_health_check)
+
+    # validate
+    p = sub.add_parser("validate", help="Run topology-level validation checks")
+    p.add_argument("topology", help="Path to .clab.yml file")
+    p.add_argument("--checks", required=True, help="Path to checks.yaml file")
+    p.set_defaults(func=cmd_validate)
 
     # collect
     p = sub.add_parser("collect", help="Collect show commands from all nodes")

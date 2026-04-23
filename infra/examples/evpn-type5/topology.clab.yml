@@ -1,16 +1,23 @@
-# EVPN Type 5 lab: shared services VRF with route leaking
+# EVPN Type 5 lab: ERB fabric with shared services VRF and route leaking
 #
-# Topology (from batfish/batfish PR #9843):
+# Topology:
 #
-#   edge1 (CE, AS 65200)
-#     |  ge-0/0/1 ↔ ge-0/0/3
-#   router1 (Service PE, AS 65100)
-#     |  ge-0/0/1 ↔ ge-0/0/3
-#   node2-1 (Spine/RR, AS 65011)
-#     |  ge-0/0/1 ↔ ge-0/0/1
-#   node1-1 (Leaf/ERB, AS 65001)
+#   client1 (linux) ----+
+#                       |  eth1 ↔ ge-0/0/6 (trunk VLAN100/300)
+#   node1-1 (Leaf1, AS 65001)
+#     |  ge-0/0/1 ↔ ge-0/0/1  |  ge-0/0/2 ↔ ge-0/0/1
+#   node2-1 (Spine1/RR, AS 65011)   node2-2 (Spine2/RR, AS 65012)
+#     |  ge-0/0/2 ↔ ge-0/0/1  |  ge-0/0/2 ↔ ge-0/0/2
+#   node1-2 (Leaf2, AS 65002)
 #
-# iBGP overlay (AS 65000) with EVPN signaling between node1-1, node2-1, router1
+#   node2-1 ge-0/0/3 ↔ ge-0/0/1 router1 (Service PE, AS 65100)
+#   node2-2 ge-0/0/3 ↔ ge-0/0/2 router1
+#
+#   router1 ge-0/0/3 ↔ ge-0/0/1 edge1 (CE, AS 65200)
+#
+# iBGP overlay (AS 65000) with EVPN signaling between node1-1, node1-2,
+# node2-1 (RR), node2-2 (RR), router1
+#
 # TENANT-A and TENANT-B VRFs with EVPN Type 5 ip-prefix-routes
 #
 # Interface mapping: containerlab ethN+1 = Junos ge-0/0/N
@@ -20,26 +27,47 @@ name: evpn-type5
 topology:
   nodes:
     node1-1:
-      kind: juniper_vjunosrouter
-      image: vrnetlab/juniper_vjunos-router:25.4R1.12
+      kind: juniper_vjunosswitch
+      image: vrnetlab/juniper_vjunos-switch:25.4R1.12
       startup-config: configs/node1-1.cfg
+    node1-2:
+      kind: juniper_vjunosswitch
+      image: vrnetlab/juniper_vjunos-switch:25.4R1.12
+      startup-config: configs/node1-2.cfg
     node2-1:
       kind: juniper_vjunosrouter
       image: vrnetlab/juniper_vjunos-router:25.4R1.12
       startup-config: configs/node2-1.cfg
-    router1:
+    node2-2:
       kind: juniper_vjunosrouter
       image: vrnetlab/juniper_vjunos-router:25.4R1.12
+      startup-config: configs/node2-2.cfg
+    router1:
+      kind: juniper_vjunosswitch
+      image: vrnetlab/juniper_vjunos-switch:25.4R1.12
       startup-config: configs/router1.cfg
     edge1:
       kind: juniper_vjunosrouter
       image: vrnetlab/juniper_vjunos-router:25.4R1.12
       startup-config: configs/edge1.cfg
+    client1:
+      kind: linux
+      image: alpine:latest
 
   links:
-    # node1-1 ge-0/0/1 (eth2) ↔ node2-1 ge-0/0/1 (eth2)
+    # Leaf1 ↔ Spine1: node1-1 ge-0/0/1 (eth2) ↔ node2-1 ge-0/0/1 (eth2)
     - endpoints: ["node1-1:eth2", "node2-1:eth2"]
-    # node2-1 ge-0/0/3 (eth4) ↔ router1 ge-0/0/1 (eth2)
+    # Leaf1 ↔ Spine2: node1-1 ge-0/0/2 (eth3) ↔ node2-2 ge-0/0/1 (eth2)
+    - endpoints: ["node1-1:eth3", "node2-2:eth2"]
+    # Leaf2 ↔ Spine1: node1-2 ge-0/0/1 (eth2) ↔ node2-1 ge-0/0/2 (eth3)
+    - endpoints: ["node1-2:eth2", "node2-1:eth3"]
+    # Leaf2 ↔ Spine2: node1-2 ge-0/0/2 (eth3) ↔ node2-2 ge-0/0/2 (eth3)
+    - endpoints: ["node1-2:eth3", "node2-2:eth3"]
+    # Spine1 ↔ Gateway: node2-1 ge-0/0/3 (eth4) ↔ router1 ge-0/0/1 (eth2)
     - endpoints: ["node2-1:eth4", "router1:eth2"]
-    # router1 ge-0/0/3 (eth4) ↔ edge1 ge-0/0/1 (eth2)
+    # Spine2 ↔ Gateway: node2-2 ge-0/0/3 (eth4) ↔ router1 ge-0/0/2 (eth3)
+    - endpoints: ["node2-2:eth4", "router1:eth3"]
+    # Gateway ↔ CE: router1 ge-0/0/3 (eth4) ↔ edge1 ge-0/0/1 (eth2)
     - endpoints: ["router1:eth4", "edge1:eth2"]
+    # Client ↔ Leaf1: client1 eth1 ↔ node1-1 ge-0/0/6 (eth7)
+    - endpoints: ["client1:eth1", "node1-1:eth7"]

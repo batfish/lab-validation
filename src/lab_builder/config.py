@@ -51,6 +51,19 @@ VJUNOS_ROUTER = VendorProfile(
     boot_timeout_seconds=900,
 )
 
+VJUNOS_SWITCH = VendorProfile(
+    name="junos",
+    containerlab_kind="juniper_vjunosswitch",
+    default_username="admin",
+    default_password="admin@123",
+    netmiko_device_type="juniper_junos",
+    interface_prefix="ge-0/0/",
+    interface_offset=0,
+    show_commands=VJUNOS_ROUTER.show_commands,
+    config_command=VJUNOS_ROUTER.config_command,
+    boot_timeout_seconds=900,
+)
+
 VJUNOS_EVOLVED = VendorProfile(
     name="junos",
     containerlab_kind="juniper_vjunosevolved",
@@ -79,6 +92,7 @@ CRPD = VendorProfile(
 
 VENDOR_PROFILES: dict[str, VendorProfile] = {
     "juniper_vjunosrouter": VJUNOS_ROUTER,
+    "juniper_vjunosswitch": VJUNOS_SWITCH,
     "juniper_vjunosevolved": VJUNOS_EVOLVED,
     "juniper_crpd": CRPD,
 }

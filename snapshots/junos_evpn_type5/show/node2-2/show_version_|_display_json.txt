@@ -3,17 +3,17 @@
     {
         "host-name" : [
         {
-            "data" : "router1"
+            "data" : "node2-2"
         }
         ], 
         "product-model" : [
         {
-            "data" : "ex9214"
+            "data" : "vmx"
         }
         ], 
         "product-name" : [
         {
-            "data" : "ex9214"
+            "data" : "vmx"
         }
         ], 
         "os-name" : [
@@ -41,40 +41,6 @@
             "comment" : [
             {
                 "data" : "JUNOS OS Kernel 64-bit  [20251024.861cae5_builder_bsd15_254]"
-            }
-            ]
-        }, 
-        {
-            "name" : [
-            {
-                "data" : "os-libs"
-            }
-            ], 
-            "package-name" : [
-            {
-                "data" : "os-libs-15-x86-64-20251024.861cae5_builder_bsd15_254"
-            }
-            ], 
-            "comment" : [
-            {
-                "data" : "JUNOS OS libs [20251024.861cae5_builder_bsd15_254]"
-            }
-            ]
-        }, 
-        {
-            "name" : [
-            {
-                "data" : "os-vmguest"
-            }
-            ], 
-            "package-name" : [
-            {
-                "data" : "os-vmguest-x86-64-20251024.861cae5_builder_bsd15_254"
-            }
-            ], 
-            "comment" : [
-            {
-                "data" : "JUNOS OS vmguest [20251024.861cae5_builder_bsd15_254]"
             }
             ]
         }, 
@@ -115,17 +81,34 @@
         {
             "name" : [
             {
-                "data" : "os-compat32"
+                "data" : "os-vmguest"
             }
             ], 
             "package-name" : [
             {
-                "data" : "os-compat32-x86-64-20251024.861cae5_builder_bsd15_254"
+                "data" : "os-vmguest-x86-64-20251024.861cae5_builder_bsd15_254"
             }
             ], 
             "comment" : [
             {
-                "data" : "JUNOS OS 32-bit compatibility [20251024.861cae5_builder_bsd15_254]"
+                "data" : "JUNOS OS vmguest [20251024.861cae5_builder_bsd15_254]"
+            }
+            ]
+        }, 
+        {
+            "name" : [
+            {
+                "data" : "os-libs"
+            }
+            ], 
+            "package-name" : [
+            {
+                "data" : "os-libs-15-x86-64-20251024.861cae5_builder_bsd15_254"
+            }
+            ], 
+            "comment" : [
+            {
+                "data" : "JUNOS OS libs [20251024.861cae5_builder_bsd15_254]"
             }
             ]
         }, 
@@ -143,6 +126,40 @@
             "comment" : [
             {
                 "data" : "JUNOS OS runtime [20251024.861cae5_builder_bsd15_254]"
+            }
+            ]
+        }, 
+        {
+            "name" : [
+            {
+                "data" : "os-compat32"
+            }
+            ], 
+            "package-name" : [
+            {
+                "data" : "os-compat32-x86-64-20251024.861cae5_builder_bsd15_254"
+            }
+            ], 
+            "comment" : [
+            {
+                "data" : "JUNOS OS 32-bit compatibility [20251024.861cae5_builder_bsd15_254]"
+            }
+            ]
+        }, 
+        {
+            "name" : [
+            {
+                "data" : "junos-libs-platform"
+            }
+            ], 
+            "package-name" : [
+            {
+                "data" : "junos-libs-mx-x86-64-20251216.154259_builder_junos_254_r1"
+            }
+            ], 
+            "comment" : [
+            {
+                "data" : "JUNOS mx libs [20251216.154259_builder_junos_254_r1]"
             }
             ]
         }, 
@@ -177,6 +194,23 @@
             "comment" : [
             {
                 "data" : "JUNOS OS EFI boot files [20251024.861cae5_builder_bsd15_254]"
+            }
+            ]
+        }, 
+        {
+            "name" : [
+            {
+                "data" : "jail-runtime"
+            }
+            ], 
+            "package-name" : [
+            {
+                "data" : "jail-runtime-x86-32-20251024.861cae5_builder_bsd15_254"
+            }
+            ], 
+            "comment" : [
+            {
+                "data" : "JUNOS jail runtime [20251024.861cae5_builder_bsd15_254]"
             }
             ]
         }, 
@@ -285,23 +319,6 @@
         {
             "name" : [
             {
-                "data" : "junos-libs-platform"
-            }
-            ], 
-            "package-name" : [
-            {
-                "data" : "junos-libs-mx-x86-64-20251216.154259_builder_junos_254_r1"
-            }
-            ], 
-            "comment" : [
-            {
-                "data" : "JUNOS mx libs [20251216.154259_builder_junos_254_r1]"
-            }
-            ]
-        }, 
-        {
-            "name" : [
-            {
                 "data" : "netstack"
             }
             ], 
@@ -336,17 +353,17 @@
         {
             "name" : [
             {
-                "data" : "jail-runtime"
+                "data" : "junos-daemons-platform"
             }
             ], 
             "package-name" : [
             {
-                "data" : "jail-runtime-x86-32-20251024.861cae5_builder_bsd15_254"
+                "data" : "junos-daemons-mx-x86-64-20251216.154259_builder_junos_254_r1"
             }
             ], 
             "comment" : [
             {
-                "data" : "JUNOS jail runtime [20251024.861cae5_builder_bsd15_254]"
+                "data" : "JUNOS mx daemons [20251216.154259_builder_junos_254_r1]"
             }
             ]
         }, 
@@ -387,6 +404,57 @@
         {
             "name" : [
             {
+                "data" : "junos-libs-compat32"
+            }
+            ], 
+            "package-name" : [
+            {
+                "data" : "junos-libs-compat32-x86-64-20251216.154259_builder_junos_254_r1"
+            }
+            ], 
+            "comment" : [
+            {
+                "data" : "JUNOS libs compat32 [20251216.154259_builder_junos_254_r1]"
+            }
+            ]
+        }, 
+        {
+            "name" : [
+            {
+                "data" : "junos-vmguest"
+            }
+            ], 
+            "package-name" : [
+            {
+                "data" : "junos-vmguest-x86-64-20251216.154259_builder_junos_254_r1"
+            }
+            ], 
+            "comment" : [
+            {
+                "data" : "JUNOS vmguest  [20251216.154259_builder_junos_254_r1]"
+            }
+            ]
+        }, 
+        {
+            "name" : [
+            {
+                "data" : "junos-daemons"
+            }
+            ], 
+            "package-name" : [
+            {
+                "data" : "junos-daemons-x86-64-20251216.154259_builder_junos_254_r1"
+            }
+            ], 
+            "comment" : [
+            {
+                "data" : "JUNOS daemons [20251216.154259_builder_junos_254_r1]"
+            }
+            ]
+        }, 
+        {
+            "name" : [
+            {
                 "data" : "os-modules-net"
             }
             ], 
@@ -415,108 +483,6 @@
             "comment" : [
             {
                 "data" : "JUNOS mx libs compat32 [20251216.154259_builder_junos_254_r1]"
-            }
-            ]
-        }, 
-        {
-            "name" : [
-            {
-                "data" : "junos-libs-compat32"
-            }
-            ], 
-            "package-name" : [
-            {
-                "data" : "junos-libs-compat32-x86-64-20251216.154259_builder_junos_254_r1"
-            }
-            ], 
-            "comment" : [
-            {
-                "data" : "JUNOS libs compat32 [20251216.154259_builder_junos_254_r1]"
-            }
-            ]
-        }, 
-        {
-            "name" : [
-            {
-                "data" : "junos-daemons"
-            }
-            ], 
-            "package-name" : [
-            {
-                "data" : "junos-daemons-x86-64-20251216.154259_builder_junos_254_r1"
-            }
-            ], 
-            "comment" : [
-            {
-                "data" : "JUNOS daemons [20251216.154259_builder_junos_254_r1]"
-            }
-            ]
-        }, 
-        {
-            "name" : [
-            {
-                "data" : "junos-daemons-platform"
-            }
-            ], 
-            "package-name" : [
-            {
-                "data" : "junos-daemons-mx-x86-64-20251216.154259_builder_junos_254_r1"
-            }
-            ], 
-            "comment" : [
-            {
-                "data" : "JUNOS mx daemons [20251216.154259_builder_junos_254_r1]"
-            }
-            ]
-        }, 
-        {
-            "name" : [
-            {
-                "data" : "junos-vmguest"
-            }
-            ], 
-            "package-name" : [
-            {
-                "data" : "junos-vmguest-x86-64-20251216.154259_builder_junos_254_r1"
-            }
-            ], 
-            "comment" : [
-            {
-                "data" : "JUNOS vmguest  [20251216.154259_builder_junos_254_r1]"
-            }
-            ]
-        }, 
-        {
-            "name" : [
-            {
-                "data" : "junos-runtime-vmx"
-            }
-            ], 
-            "package-name" : [
-            {
-                "data" : "junos-runtime-vmx-x86-32-20251216.154259_builder_junos_254_r1"
-            }
-            ], 
-            "comment" : [
-            {
-                "data" : "JUNOS vmx runtime [20251216.154259_builder_junos_254_r1]"
-            }
-            ]
-        }, 
-        {
-            "name" : [
-            {
-                "data" : "junos-runtime-platform"
-            }
-            ], 
-            "package-name" : [
-            {
-                "data" : "junos-runtime-mx-x86-32-20251216.154259_builder_junos_254_r1"
-            }
-            ], 
-            "comment" : [
-            {
-                "data" : "JUNOS mx runtime [20251216.154259_builder_junos_254_r1]"
             }
             ]
         }, 
@@ -557,34 +523,34 @@
         {
             "name" : [
             {
-                "data" : "jpfe-X"
+                "data" : "junos-runtime-vmx"
             }
             ], 
             "package-name" : [
             {
-                "data" : "jpfe-X-x86-32-20251216.154259_builder_junos_254_r1"
+                "data" : "junos-runtime-vmx-x86-32-20251216.154259_builder_junos_254_r1"
             }
             ], 
             "comment" : [
             {
-                "data" : "JUNOS Packet Forwarding Engine Support (MX Common) [20251216.154259_builder_junos_254_r1]"
+                "data" : "JUNOS vmx runtime [20251216.154259_builder_junos_254_r1]"
             }
             ]
         }, 
         {
             "name" : [
             {
-                "data" : "jmrt-base"
+                "data" : "junos-runtime-platform"
             }
             ], 
             "package-name" : [
             {
-                "data" : "jmrt-base-x86-64-25.4R1.12"
+                "data" : "junos-runtime-mx-x86-32-20251216.154259_builder_junos_254_r1"
             }
             ], 
             "comment" : [
             {
-                "data" : "JUNOS Juniper Malware Removal Tool (JMRT) [1.0.0+25.4R1.12]"
+                "data" : "JUNOS mx runtime [20251216.154259_builder_junos_254_r1]"
             }
             ]
         }, 
@@ -1135,17 +1101,17 @@
         {
             "name" : [
             {
-                "data" : "jpfe-aft"
+                "data" : "jmrt-base"
             }
             ], 
             "package-name" : [
             {
-                "data" : "jpfe-aft-x86-32-20251216.154259_builder_junos_254_r1"
+                "data" : "jmrt-base-x86-64-25.4R1.12"
             }
             ], 
             "comment" : [
             {
-                "data" : "JUNOS Packet Forwarding Engine Support (aft) [20251216.154259_builder_junos_254_r1]"
+                "data" : "JUNOS Juniper Malware Removal Tool (JMRT) [1.0.0+25.4R1.12]"
             }
             ]
         }, 
