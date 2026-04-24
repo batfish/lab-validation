@@ -3,7 +3,3 @@ entries:
     test_name: test_bgp_rib_routes
     skip:
       reason: weight difference, https://github.com/batfish/lab-validation/issues/6
-  - hostname: EOS-2
-    test_name: test_bgp_rib_routes
-    skip:
-      reason: origin_type mismatch on aggregate routes, https://github.com/batfish/lab-validation/issues/141
