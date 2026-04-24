@@ -23,7 +23,7 @@ from lab_validation.validators.batfish_models.interface_properties import (
 from lab_validation.validators.batfish_models.routes import BgpRibRoute, MainRibRoute
 from lab_validation.validators.batfish_models.runtime_data import NodeRuntimeData
 
-from .utils.validation_utils import match_pairs, matched_pairs_to_failures
+from .utils.validation_utils import CostResult, match_pairs, matched_pairs_to_failures
 from .vendor_validator import VendorValidator
 
 
@@ -123,7 +123,7 @@ class IosValidator(VendorValidator):
     @staticmethod
     def _diff_bgp_routes_cost(
         ios_route_and_vrf: tuple[str, IosBgpRoute], bf_route: BgpRibRoute
-    ) -> list[tuple[str, float]]:
+    ) -> CostResult:
         expected_vrf = ios_route_and_vrf[0]
         if expected_vrf != bf_route.vrf:
             return [("vrf", math.inf)]
@@ -131,7 +131,7 @@ class IosValidator(VendorValidator):
         if ios_route.network != bf_route.network:
             return [("network", math.inf)]
 
-        cost: list[tuple[str, float]] = []
+        cost: CostResult = []
 
         if bf_route.metric != ios_route.metric:
             cost.append(("metric", 1.0))
@@ -162,7 +162,7 @@ class IosValidator(VendorValidator):
     @staticmethod
     def compute_bgp_nexthop_cost(
         ios_route: IosBgpRoute, next_hop: NextHop
-    ) -> list[tuple[str, float]]:
+    ) -> CostResult:
         if isinstance(next_hop, NextHopDiscard):
             if IosValidator.is_local_route(ios_route):
                 return []
@@ -232,13 +232,13 @@ class IosValidator(VendorValidator):
     @staticmethod
     def _diff_routes_cost(
         expected_route: IosIpRoute, batfish_route: MainRibRoute
-    ) -> list[tuple[str, float]]:
+    ) -> CostResult:
         if expected_route.network != batfish_route.network:
             return [("network", math.inf)]
         if expected_route.vrf != batfish_route.vrf:
             return [("vrf", math.inf)]
 
-        cost: list[tuple[str, float]] = []
+        cost: CostResult = []
 
         cost += IosValidator.compute_protocol_cost(
             expected_route.protocol, batfish_route.protocol
@@ -261,9 +261,7 @@ class IosValidator(VendorValidator):
         return cost
 
     @staticmethod
-    def _next_hop_cost(
-        ios_route: IosIpRoute, next_hop: NextHop
-    ) -> list[tuple[str, float]]:
+    def _next_hop_cost(ios_route: IosIpRoute, next_hop: NextHop) -> CostResult:
         if isinstance(next_hop, NextHopDiscard):
             if ios_route.next_hop_int == "Null0":
                 return []
@@ -272,7 +270,7 @@ class IosValidator(VendorValidator):
             return [("next_hop", 10.0)]
 
         if isinstance(next_hop, NextHopInterface):
-            cost: list[tuple[str, float]] = []
+            cost: CostResult = []
             if (
                 ios_route.next_hop_int is None
                 or ios_route.next_hop_int.lower() != next_hop.interface.lower()
@@ -295,9 +293,7 @@ class IosValidator(VendorValidator):
         raise ValueError("Unsupported next hop " + repr(next_hop))
 
     @staticmethod
-    def compute_protocol_cost(
-        ios_protocol: str, batfish_protocol: str
-    ) -> list[tuple[str, float]]:
+    def compute_protocol_cost(ios_protocol: str, batfish_protocol: str) -> CostResult:
         if ios_protocol == batfish_protocol:
             return []
 

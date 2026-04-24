@@ -23,7 +23,7 @@ from lab_validation.validators.batfish_models.interface_properties import (
 from lab_validation.validators.batfish_models.routes import BgpRibRoute, MainRibRoute
 from lab_validation.validators.batfish_models.runtime_data import NodeRuntimeData
 
-from .utils.validation_utils import match_pairs, matched_pairs_to_failures
+from .utils.validation_utils import CostResult, match_pairs, matched_pairs_to_failures
 from .vendor_validator import ValidationError, VendorValidator
 
 
@@ -119,14 +119,12 @@ def _compare_all_main_rib_routes(
     return matched_pairs_to_failures(matched_routes)
 
 
-def _bgp_rib_cost(
-    a10_route: A10BgpRoute, bf_route: BgpRibRoute
-) -> list[tuple[str, float]]:
+def _bgp_rib_cost(a10_route: A10BgpRoute, bf_route: BgpRibRoute) -> CostResult:
     """Compares a single pair of A10 and Batfish BGP RIB routes, explaining any differences."""
     if a10_route.network != bf_route.network:
         return [("network", math.inf)]
 
-    ret: list[tuple[str, float]] = []
+    ret: CostResult = []
 
     if isinstance(bf_route.next_hop, NextHopDiscard):
         if a10_route.next_hop_ip != "0.0.0.0":
@@ -164,14 +162,12 @@ def _bgp_origin_type_compatible(bf: str, acos: str) -> bool:
     return bool(acos == "?")
 
 
-def _main_rib_cost(
-    a10_route: A10MainRibRoute, bf_route: MainRibRoute
-) -> list[tuple[str, float]]:
+def _main_rib_cost(a10_route: A10MainRibRoute, bf_route: MainRibRoute) -> CostResult:
     """Compares a single pair of A10 and Batfish main RIB routes, explaining any differences."""
     if a10_route.network != bf_route.network:
         return [("network", math.inf)]
 
-    ret: list[tuple[str, float]] = []
+    ret: CostResult = []
     ret += _main_rib_protocol_cost(a10_route, bf_route)
     if any(cost == math.inf for reason, cost in ret):
         # Stop if we found inf already
@@ -193,7 +189,7 @@ _bf_kernel_route_tags = {"N": 1, "VF": 2, "V": 3, "F": 4}
 
 def _main_rib_protocol_cost(
     a10_route: A10MainRibRoute, bf_route: MainRibRoute
-) -> list[tuple[str, float]]:
+) -> CostResult:
     """Compares the protocol fields, explaining any differences."""
     # show ip route acos routes (in Batfish as kernel route with specific tag)
     if a10_route.protocol == "N":
@@ -238,9 +234,7 @@ def _main_rib_protocol_cost(
     return [("protocol", math.inf)]
 
 
-def _main_rib_nexthop_cost(
-    a10_route: A10MainRibRoute, next_hop: NextHop
-) -> list[tuple[str, float]]:
+def _main_rib_nexthop_cost(a10_route: A10MainRibRoute, next_hop: NextHop) -> CostResult:
     """Compares the next hops, explaining any differences."""
 
     if a10_route.protocol in _bf_kernel_route_tags.keys():

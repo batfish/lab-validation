@@ -29,7 +29,7 @@ from lab_validation.parsers.arista.models.routes import (
 from .batfish_models.interface_properties import InterfaceProperties
 from .batfish_models.routes import BgpRibRoute, EvpnRibRoute, MainRibRoute
 from .batfish_models.runtime_data import InterfaceRuntimeData, NodeRuntimeData
-from .utils.validation_utils import match_pairs, matched_pairs_to_failures
+from .utils.validation_utils import CostResult, match_pairs, matched_pairs_to_failures
 from .vendor_validator import VendorValidator
 
 
@@ -109,7 +109,7 @@ class AristaValidator(VendorValidator):
     def _diff_routes_cost(
         arista_route: AristaIpRoute,
         batfish_route: MainRibRoute,
-    ) -> list[tuple[str, float]]:
+    ) -> CostResult:
         if arista_route.network != batfish_route.network:
             return [("network", math.inf)]
         if arista_route.vrf != batfish_route.vrf:
@@ -147,7 +147,7 @@ class AristaValidator(VendorValidator):
     @staticmethod
     def compute_protocol_cost(
         arista_protocol: str, batfish_protocol: str
-    ) -> list[tuple[str, float]]:
+    ) -> CostResult:
         """Computes the cost related to protocol differences in Main RIB."""
         if arista_protocol == batfish_protocol:
             return []
@@ -171,7 +171,7 @@ class AristaValidator(VendorValidator):
     @staticmethod
     def compute_next_hop_cost(
         arista_route: AristaIpRoute, next_hop: NextHop
-    ) -> list[tuple[str, float]]:
+    ) -> CostResult:
         """Computes the cost related to next hops."""
         if isinstance(next_hop, NextHopVtep):
             if not arista_route.vni or not arista_route.vtep_ip:
@@ -289,7 +289,7 @@ class AristaValidator(VendorValidator):
     def _diff_bgp_routes_cost(
         arista_route: AristaBgpRoute,
         batfish_route: BgpRibRoute,
-    ) -> list[tuple[str, float]]:
+    ) -> CostResult:
         if arista_route.network != batfish_route.network:
             return [("network", math.inf)]
         if arista_route.vrf != batfish_route.vrf:
@@ -424,7 +424,7 @@ class AristaValidator(VendorValidator):
     def _diff_evpn_routes_cost(
         arista_route: AristaEvpnRoute,
         batfish_route: EvpnRibRoute,
-    ) -> list[tuple[str, float]]:
+    ) -> CostResult:
         if arista_route.network != batfish_route.network:
             return [("network", math.inf)]
         if arista_route.vrf != batfish_route.vrf:

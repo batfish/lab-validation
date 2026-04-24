@@ -19,7 +19,7 @@ from lab_validation.validators.batfish_models.runtime_data import (
     NodeRuntimeData,
 )
 
-from .utils.validation_utils import match_pairs, matched_pairs_to_failures
+from .utils.validation_utils import CostResult, match_pairs, matched_pairs_to_failures
 from .vendor_validator import VendorValidator
 
 
@@ -198,11 +198,11 @@ class CumulusFrrValidator(VendorValidator):
     @staticmethod
     def _diff_routes_cost(
         show_route: FrrIpRoute, batfish_route: MainRibRoute
-    ) -> list[tuple[str, float]]:
+    ) -> CostResult:
         if show_route.network != batfish_route.network:
             return [("network", math.inf)]
 
-        cost: list[tuple[str, float]] = []
+        cost: CostResult = []
         cost += compute_protocol_cost(show_route.protocol, batfish_route.protocol)
 
         if show_route.metric != batfish_route.metric:
@@ -216,9 +216,7 @@ class CumulusFrrValidator(VendorValidator):
         return cost
 
 
-def compute_next_hop_cost(
-    frr_route: FrrIpRoute, next_hop: NextHop
-) -> list[tuple[str, float]]:
+def compute_next_hop_cost(frr_route: FrrIpRoute, next_hop: NextHop) -> CostResult:
     if frr_route.blackhole and isinstance(next_hop, NextHopDiscard):
         return []
     if frr_route.blackhole or isinstance(next_hop, NextHopDiscard):
@@ -232,7 +230,7 @@ def compute_next_hop_cost(
     # so do not check that it's not present.
 
     if isinstance(next_hop, NextHopInterface):
-        cost: list[tuple[str, float]] = []
+        cost: CostResult = []
         if frr_route.next_hop_int != next_hop.interface:
             cost.append(("next_hop_int", 3.0))
         if next_hop.ip and frr_route.next_hop_ip != next_hop.ip:
@@ -242,9 +240,7 @@ def compute_next_hop_cost(
     raise ValueError("Unsupported next hop " + repr(next_hop))
 
 
-def compute_protocol_cost(
-    real_protocol: str, batfish_protocol: str
-) -> list[tuple[str, float]]:
+def compute_protocol_cost(real_protocol: str, batfish_protocol: str) -> CostResult:
     if real_protocol == batfish_protocol:
         return []
     if real_protocol == "bgp" and batfish_protocol in {"bgp", "ibgp"}:

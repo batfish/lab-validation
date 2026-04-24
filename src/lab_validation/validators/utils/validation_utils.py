@@ -11,7 +11,8 @@ from ..batfish_models.routes import BgpRibRoute
 
 T = TypeVar("T")
 S = TypeVar("S")
-CostResult = Sequence[tuple[str, float]]
+CostItem = tuple[str, float]
+CostResult = list[CostItem]
 CostFn = Callable[[S, T], CostResult]
 
 

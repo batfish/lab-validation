@@ -41,7 +41,7 @@ from lab_validation.validators.batfish_models.runtime_data import (
     NodeRuntimeData,
 )
 
-from .utils.validation_utils import match_pairs, matched_pairs_to_failures
+from .utils.validation_utils import CostResult, match_pairs, matched_pairs_to_failures
 from .vendor_validator import VendorValidator
 
 
@@ -368,13 +368,13 @@ class JunosValidator(VendorValidator):
 
 def _bgp_routes_cost(
     real_route: JunosBgpRoute, batfish_route: BgpRibRoute
-) -> list[tuple[str, float]]:
+) -> CostResult:
     if real_route.network != batfish_route.network:
         return [("network", math.inf)]
     if real_route.vrf != batfish_route.vrf:
         return [("vrf", math.inf)]
 
-    cost: list[tuple[str, float]] = []
+    cost: CostResult = []
     real_metric = 0 if real_route.metric is None else real_route.metric
 
     # When Batfish shows ibgp and device shows BGP, the route was learned
@@ -405,13 +405,13 @@ def _bgp_routes_cost(
 
 def _routes_cost(
     expected_route: JunosMainRibRoute, batfish_route: MainRibRoute
-) -> list[tuple[str, float]]:
+) -> CostResult:
     if expected_route.network != batfish_route.network:
         return [("network", math.inf)]
     if expected_route.vrf != batfish_route.vrf:
         return [("vrf", math.inf)]
 
-    cost: list[tuple[str, float]] = []
+    cost: CostResult = []
 
     cost += _compute_protocol_cost(expected_route, batfish_route)
     cost += _compute_nexthop_cost(expected_route, batfish_route.next_hop)
@@ -426,7 +426,7 @@ def _routes_cost(
 
 def _compute_protocol_cost(
     expected_route: JunosMainRibRoute, batfish_route: MainRibRoute
-) -> list[tuple[str, float]]:
+) -> CostResult:
     _PROTOCOL_MAP = {
         "Direct": {"connected"},
         "Local": {"local"},
@@ -451,7 +451,7 @@ def _is_mgmt_iface(junos_name: str | None) -> bool:
 
 def _compute_nexthop_cost(
     expected_route: JunosMainRibRoute, next_hop: NextHop
-) -> list[tuple[str, float]]:
+) -> CostResult:
     if _is_mgmt_iface(expected_route.next_hop_int) and isinstance(
         next_hop, NextHopDiscard
     ):
@@ -477,7 +477,7 @@ def _compute_nexthop_cost(
             return [("next_hop_ip", 1.0)]
 
     if isinstance(next_hop, NextHopInterface):
-        cost: list[tuple[str, float]] = []
+        cost: CostResult = []
         if expected_route.next_hop_int != next_hop.interface:
             cost.append(("next_hop_int", 5.0))
         if next_hop.ip is not None and expected_route.next_hop_ip != next_hop.ip:

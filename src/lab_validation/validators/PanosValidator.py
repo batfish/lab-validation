@@ -13,7 +13,7 @@ from lab_validation.validators.batfish_models.interface_properties import (
 from lab_validation.validators.batfish_models.routes import BgpRibRoute, MainRibRoute
 from lab_validation.validators.batfish_models.runtime_data import NodeRuntimeData
 
-from .utils.validation_utils import match_pairs, matched_pairs_to_failures
+from .utils.validation_utils import CostResult, match_pairs, matched_pairs_to_failures
 from .vendor_validator import ValidationError, VendorValidator
 
 
@@ -63,7 +63,7 @@ class PanosValidator(VendorValidator):
     @staticmethod
     def _diff_routes_cost(
         expected_route: PanosMainRibRoute, batfish_route: MainRibRoute
-    ) -> list[tuple[str, float]]:
+    ) -> CostResult:
         expected_network_tokens = expected_route.network.split("/")
         batfish_network_tokens = batfish_route.network.split("/")
         if expected_network_tokens[0] != batfish_network_tokens[0]:
@@ -71,7 +71,7 @@ class PanosValidator(VendorValidator):
         if expected_route.virtual_router != batfish_route.vrf:
             return [("vrf", math.inf)]
 
-        cost: list[tuple[str, float]] = []
+        cost: CostResult = []
 
         if expected_network_tokens[1] != batfish_network_tokens[1]:
             cost.append(
@@ -104,7 +104,7 @@ class PanosValidator(VendorValidator):
     @staticmethod
     def compute_nexthop_cost(
         expected_route: PanosMainRibRoute, next_hop: NextHop
-    ) -> list[tuple[str, float]]:
+    ) -> CostResult:
         if expected_route.next_hop_ip == "discard" and isinstance(
             next_hop, NextHopDiscard
         ):
@@ -120,7 +120,7 @@ class PanosValidator(VendorValidator):
             return [("next_hop_ip", 1.0)]
 
         if isinstance(next_hop, NextHopInterface):
-            cost: list[tuple[str, float]] = []
+            cost: CostResult = []
             if next_hop.interface != expected_route.next_hop_int:
                 if "H" not in expected_route.flags:
                     # PanOS Host routes (local routes) do not have the interface listed
@@ -132,9 +132,7 @@ class PanosValidator(VendorValidator):
         raise ValueError("Unsupported next hop " + repr(next_hop))
 
     @staticmethod
-    def compute_protocol_cost(
-        panos_protocol: str, batfish_protocol: str
-    ) -> list[tuple[str, float]]:
+    def compute_protocol_cost(panos_protocol: str, batfish_protocol: str) -> CostResult:
         if panos_protocol == batfish_protocol:
             return []
 
