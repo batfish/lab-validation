@@ -25,7 +25,7 @@ from lab_validation.validators.batfish_models.runtime_data import (
     NodeRuntimeData,
 )
 
-from .utils.validation_utils import match_pairs, matched_pairs_to_failures
+from .utils.validation_utils import CostResult, match_pairs, matched_pairs_to_failures
 from .vendor_validator import VendorValidator
 
 
@@ -102,7 +102,7 @@ class NxosValidator(VendorValidator):
     @staticmethod
     def _diff_routes_cost(
         batfish_route: MainRibRoute, nxos_route: NxosMainRibRoute
-    ) -> list[tuple[str, float]]:
+    ) -> CostResult:
         if nxos_route.network != batfish_route.network:
             return [("network", math.inf)]
         if nxos_route.vrf != batfish_route.vrf:
@@ -145,7 +145,7 @@ class NxosValidator(VendorValidator):
     @staticmethod
     def _diff_bgp_routes_cost(
         batfish_route: BgpRibRoute, nxos_route: NxosBgpRoute
-    ) -> list[tuple[str, float]]:
+    ) -> CostResult:
         if nxos_route.network != batfish_route.network:
             return [("network", math.inf)]
         if nxos_route.vrf != batfish_route.vrf:
@@ -182,7 +182,7 @@ class NxosValidator(VendorValidator):
     @staticmethod
     def _diff_bgp_next_hop_cost(
         next_hop: NextHop, nxos_route: NxosBgpRoute
-    ) -> list[tuple[str, float]]:
+    ) -> CostResult:
         cost = []
         if isinstance(next_hop, NextHopDiscard):
             if nxos_route.next_hop_ip != "0.0.0.0":
@@ -307,9 +307,7 @@ class NxosValidator(VendorValidator):
         return parse_show_ip_bgp_all(file_text)
 
     @staticmethod
-    def compute_protocol_cost(
-        nxos_protocol: str, batfish_protocol: str
-    ) -> list[tuple[str, float]]:
+    def compute_protocol_cost(nxos_protocol: str, batfish_protocol: str) -> CostResult:
         """Computes the cost related to protocol differences in Main RIB."""
         batfish_protocol = batfish_protocol
         if nxos_protocol == batfish_protocol:
@@ -336,7 +334,7 @@ class NxosValidator(VendorValidator):
     @staticmethod
     def compute_bgp_protocol_cost(
         nxos_protocol: str, batfish_protocol: str
-    ) -> list[tuple[str, float]]:
+    ) -> CostResult:
         """Computes the cost related to protocol differences in BGP RIB."""
         batfish_protocol = batfish_protocol
         if nxos_protocol == batfish_protocol:
@@ -351,7 +349,7 @@ class NxosValidator(VendorValidator):
     @staticmethod
     def compute_next_hop_cost(
         nxos_route: NxosMainRibRoute, next_hop: NextHop
-    ) -> list[tuple[str, float]]:
+    ) -> CostResult:
         """Computes the cost related to next hops."""
         if isinstance(next_hop, NextHopVtep):
             # We judge if nxos_route is learned via EVPN using the evpn field
