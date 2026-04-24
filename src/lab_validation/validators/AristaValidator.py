@@ -34,8 +34,8 @@ from .vendor_validator import VendorValidator
 
 
 class AristaValidator(VendorValidator):
-    SHOW_ROUTE_FILENAME = "show_ip_route_vrf_all__|_json.txt"
-    SHOW_ROUTE_FILENAME_TXT = "show_ip_route_vrf_all__|_json.json"
+    SHOW_ROUTE_FILENAME = "show_ip_route_vrf_all_|_json.txt"
+    SHOW_ROUTE_FILENAME_TXT = "show_ip_route_vrf_all_|_json.json"
     SHOW_BGP_ROUTE_FILENAME = "show_ip_bgp_vrf_all_|_json.txt"
     SHOW_BGP_ROUTE_FILENAME_TXT = "show_ip_bgp_vrf_all_|_json.json"
     SHOW_INTERFACES_FILENAME = "show_interfaces_|_json.txt"
