@@ -114,12 +114,26 @@ ARISTA_CEOS = VendorProfile(
     boot_timeout_seconds=300,
 )
 
+ARISTA_VEOS = VendorProfile(
+    name="arista",
+    containerlab_kind="arista_veos",
+    default_username="admin",
+    default_password="admin",
+    netmiko_device_type="arista_eos",
+    interface_prefix="Ethernet1/",
+    interface_offset=1,  # eth1 -> Ethernet1/1, eth2 -> Ethernet1/2, ...
+    show_commands=ARISTA_CEOS.show_commands,
+    config_command=ARISTA_CEOS.config_command,
+    boot_timeout_seconds=600,
+)
+
 VENDOR_PROFILES: dict[str, VendorProfile] = {
     "juniper_vjunosrouter": VJUNOS_ROUTER,
     "juniper_vjunosswitch": VJUNOS_SWITCH,
     "juniper_vjunosevolved": VJUNOS_EVOLVED,
     "juniper_crpd": CRPD,
     "arista_ceos": ARISTA_CEOS,
+    "arista_veos": ARISTA_VEOS,
 }
 
 

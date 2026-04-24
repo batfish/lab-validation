@@ -88,17 +88,18 @@ See `infra/examples/` for working examples:
 
 - `two-router-ebgp.clab.yml` — minimal 2-router Junos eBGP lab
 - `ceos-ebgp/topology.clab.yml` — minimal 2-router Arista cEOS eBGP lab
+- `veos-ebgp/topology.clab.yml` — minimal 2-router Arista vEOS eBGP lab
 - `evpn-type5/topology.clab.yml` — 4-node EVPN Type 5 fabric (Junos)
 
 **Interface mapping**: containerlab `ethN` maps to vendor interfaces:
 
-| containerlab | Junos (vJunos-router) | Arista (cEOS) |
-| ------------ | --------------------- | ------------- |
-| eth0         | management (auto)     | Management0   |
-| eth1         | ge-0/0/0              | Ethernet1     |
-| eth2         | ge-0/0/1              | Ethernet2     |
-| eth3         | ge-0/0/2              | Ethernet3     |
-| ethN         | ge-0/0/(N-1)          | EthernetN     |
+| containerlab | Junos (vJunos-router) | Arista (cEOS) | Arista (vEOS) |
+| ------------ | --------------------- | ------------- | ------------- |
+| eth0         | management (auto)     | Management0   | Management1   |
+| eth1         | ge-0/0/0              | Ethernet1     | Ethernet1/1   |
+| eth2         | ge-0/0/1              | Ethernet2     | Ethernet1/2   |
+| eth3         | ge-0/0/2              | Ethernet3     | Ethernet1/3   |
+| ethN         | ge-0/0/(N-1)          | EthernetN     | Ethernet1/N   |
 
 ### Step 2: Launch EC2 and Upload
 
@@ -372,7 +373,8 @@ For spot pricing (~70% cheaper), add `--spot`.
 - containerlab (from netdevops apt repo)
 - KVM/QEMU tools (qemu-kvm, libvirt)
 - Python 3 with netmiko, paramiko, PyYAML, awscli
-- Pre-built Docker images from S3 (or builds from qcow2 as fallback)
+- Pre-built Docker images from S3 (or builds from qcow2/vmdk via vrnetlab as fallback)
+- Arista cEOS container images from S3 (imported from .tar.xz)
 
 ## Lab Design Principles
 
@@ -391,6 +393,7 @@ For spot pricing (~70% cheaper), add `--spot`.
 | `juniper_vjunosevolved` | Junos Evolved (PTX) | admin / admin@123 | ~15 min   | Yes          |
 | `juniper_crpd`          | Junos cRPD          | root / clab123    | ~1 min    | No           |
 | `arista_ceos`           | Arista EOS          | admin / admin     | ~1 min    | No           |
+| `arista_veos`           | Arista vEOS         | admin / admin     | ~4 min    | Yes          |
 
 **Junos platform selection**: vJunos-router (MX) does NOT support `family
 ethernet-switching`, VLANs with IRBs, or EVPN bridge domains. Labs that use
@@ -400,6 +403,11 @@ pure IP routing (underlay, L3VPN, route reflectors, CE devices).
 **Arista cEOS**: Container-native EOS image. No KVM required, boots in
 under a minute. Startup configs use standard EOS CLI format. cEOS-64
 (64-bit) is required for containerlab.
+
+**Arista vEOS**: VM-based EOS image. Requires KVM and ~2 GB RAM per node.
+Built from a VMDK via vrnetlab (automatic on first EC2 launch). Use for
+testing older EOS syntax (pre-4.21) or features not available in cEOS.
+Interface names use `Ethernet1/N` format (vs `EthernetN` in cEOS).
 
 ## Troubleshooting
 

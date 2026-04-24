@@ -1,0 +1,26 @@
+# Two-router eBGP lab using Arista vEOS (VM-based, pre-4.21 syntax).
+#
+# Topology:
+#   r1 (AS 65001) ---[Ethernet1/1]---[Ethernet1/1]--- r2 (AS 65002)
+#     Loopback0: 1.1.1.1/32                            Loopback0: 2.2.2.2/32
+#     link: 10.0.0.0/31                                link: 10.0.0.1/31
+#
+# After convergence, each router should have the other's loopback via eBGP.
+#
+# vEOS requires KVM and takes ~4 minutes to boot.
+
+name: veos-ebgp
+
+topology:
+  nodes:
+    r1:
+      kind: arista_veos
+      image: vrnetlab/arista_veos:4.20.15M
+      startup-config: configs/r1.cfg
+    r2:
+      kind: arista_veos
+      image: vrnetlab/arista_veos:4.20.15M
+      startup-config: configs/r2.cfg
+
+  links:
+    - endpoints: ["r1:eth1", "r2:eth1"]
