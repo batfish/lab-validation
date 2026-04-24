@@ -18,12 +18,23 @@
 set -euo pipefail
 
 BUCKET_NAME="%%BUCKET_NAME%%"
+IMAGE_FILTER="%%IMAGE_FILTER%%"
 
 LOG_FILE="/var/log/ec2-setup.log"
 exec > >(tee -a "${LOG_FILE}") 2>&1
 
 echo "=== ec2-setup.sh starting at $(date -u) ==="
 echo "Image bucket: ${BUCKET_NAME}"
+echo "Image filter: ${IMAGE_FILTER}"
+
+# Check if an image tag matches the filter.
+# Usage: image_wanted <tag>  (e.g., image_wanted "vjunos-router")
+# Returns 0 (true) if the filter is "all" or contains the tag.
+image_wanted() {
+    local tag="$1"
+    [[ "${IMAGE_FILTER}" == "all" ]] && return 0
+    echo ",${IMAGE_FILTER}," | grep -q ",${tag},"
+}
 
 export DEBIAN_FRONTEND=noninteractive
 
@@ -83,6 +94,18 @@ DOCKER_TARBALLS=$(aws s3 ls "s3://${BUCKET_NAME}/docker-images/" 2>/dev/null \
 if [[ -n "${DOCKER_TARBALLS}" ]]; then
     # Strategy 1: Load pre-built Docker images
     for tarball in ${DOCKER_TARBALLS}; do
+        # Derive image tag from tarball name for filtering
+        case "${tarball}" in
+            vjunos-router*) image_tag="vjunos-router" ;;
+            vjunos-switch*) image_tag="vjunos-switch" ;;
+            vjunos*evolved*) image_tag="vjunos-evolved" ;;
+            *veos*|*arista*) image_tag="veos" ;;
+            *) image_tag="unknown" ;;
+        esac
+        if ! image_wanted "${image_tag}"; then
+            echo "Skipping ${tarball} (not in filter: ${IMAGE_FILTER})"
+            continue
+        fi
         echo "Loading Docker image: ${tarball}"
         aws s3 cp "s3://${BUCKET_NAME}/docker-images/${tarball}" - | gunzip | docker load
     done
@@ -102,15 +125,22 @@ else
 
             case "${qcow2}" in
                 vJunos-router-*|vjunos-router-*)
+                    image_tag="vjunos-router"
                     dest="/home/ubuntu/vrnetlab/juniper/vjunosrouter" ;;
                 vJunosEvolved-*|vjunosevolved-*)
+                    image_tag="vjunos-evolved"
                     dest="/home/ubuntu/vrnetlab/juniper/vjunosevolved" ;;
                 vJunos-switch-*|vjunosswitch-*)
+                    image_tag="vjunos-switch"
                     dest="/home/ubuntu/vrnetlab/juniper/vjunosswitch" ;;
                 *)
                     echo "  Unknown image type: ${qcow2}, skipping"
                     continue ;;
             esac
+            if ! image_wanted "${image_tag}"; then
+                echo "  Skipping ${qcow2} (not in filter: ${IMAGE_FILTER})"
+                continue
+            fi
 
             echo "  Downloading from S3..."
             aws s3 cp "s3://${BUCKET_NAME}/images/${qcow2}" "${dest}/"
@@ -158,6 +188,10 @@ if [[ -n "${CONTAINER_TARBALLS}" ]]; then
                 continue
                 ;;
         esac
+        if ! image_wanted "ceos"; then
+            echo "  Skipping ${tarball} (not in filter: ${IMAGE_FILTER})"
+            continue
+        fi
 
         if docker image inspect "${tag}" &>/dev/null; then
             echo "  Already loaded: ${tag}"

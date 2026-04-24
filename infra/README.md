@@ -358,7 +358,13 @@ For spot pricing (~70% cheaper), add `--spot`.
 --key-name NAME        Use existing EC2 key pair (auto-created if omitted)
 --timeout-hours N      Auto-terminate after N hours (default: 4)
 --spot                 Request spot instance
+--images FILTER        Comma-separated list of images to load (default: all)
+                       Available: ceos, vjunos-router, vjunos-switch, vjunos-evolved
 ```
+
+For example, `--images ceos` loads only the Arista cEOS image, skipping
+the large Juniper VM images and reducing bootstrap time from ~5 min to
+~2 min.
 
 ### Cost Safety
 
