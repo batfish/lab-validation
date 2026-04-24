@@ -234,6 +234,8 @@ def test_diff_bgp_routes_cost() -> None:
         local_preference=100,
         as_path=(1,),
         weight=1,
+        origin_protocol="bgp",
+        origin_type="igp",
     )
     batfish_route = BgpRibRoute(
         weight=1,
@@ -248,7 +250,7 @@ def test_diff_bgp_routes_cost() -> None:
         local_preference=100,
         as_path="1",
         origin_protocol="bgp",
-        origin_type="type",
+        origin_type="igp",
         tag=0,
     )
 
@@ -263,6 +265,25 @@ def test_diff_bgp_routes_cost() -> None:
     assert AristaValidator._diff_bgp_routes_cost(
         arista_route, attr.evolve(batfish_route, vrf="other")
     ) == [("vrf", math.inf)]
+
+    # bgp subtype mismatch
+    assert AristaValidator._diff_bgp_routes_cost(
+        arista_route, attr.evolve(batfish_route, protocol="ibgp")
+    ) == [("bgp subtype", 1.0)]
+
+    # origin_type mismatch
+    assert AristaValidator._diff_bgp_routes_cost(
+        arista_route, attr.evolve(batfish_route, origin_type="incomplete")
+    ) == [("origin_type", 1.0)]
+
+    # origin_protocol is None: skip protocol comparison
+    assert (
+        AristaValidator._diff_bgp_routes_cost(
+            attr.evolve(arista_route, origin_protocol=None),
+            attr.evolve(batfish_route, protocol="ibgp"),
+        )
+        == []
+    )
 
     # metric mismatch
     assert AristaValidator._diff_bgp_routes_cost(
@@ -302,6 +323,8 @@ def test_validate_bgp_rib_routes_ignore_non_best() -> None:
             local_preference=100,
             as_path=(1, 2),
             weight=1,
+            origin_protocol="bgp",
+            origin_type="igp",
         )
     ]
     failures = AristaValidator._validate_bgp_rib_routes(arista_routes, [])
@@ -320,6 +343,8 @@ def test_is_best_bgp_route() -> None:
         local_preference=100,
         as_path=(1, 2),
         weight=1,
+        origin_protocol="bgp",
+        origin_type="igp",
     )
     active = attr.evolve(inactive, is_active=True)
     rib_failure = attr.evolve(inactive, not_installed_reason="routeBestInactive")
@@ -345,6 +370,8 @@ def test_validate_bgp_rib_routes_local() -> None:
             local_preference=100,
             as_path=(),
             weight=32768,
+            origin_protocol="bgp",
+            origin_type="igp",
         )
     ]
     bf_routes = [
@@ -361,7 +388,7 @@ def test_validate_bgp_rib_routes_local() -> None:
             local_preference=100,
             as_path="",
             origin_protocol="bgp",
-            origin_type="type",
+            origin_type="igp",
             tag=0,
         )
     ]
@@ -513,8 +540,9 @@ def test_validate_evpn_rib_routes_equal() -> None:
         local_preference=100,
         as_path=(1,),
         weight=1,
-        as_path_type="internal",
+        as_path_type="Internal",
         origin="Igp",
+        origin_protocol="ibgp",
         route_distinguisher="rd",
     )
 
@@ -524,7 +552,7 @@ def test_validate_evpn_rib_routes_equal() -> None:
         next_hop=NextHopInterface(interface="iface", ip="2.2.2.2"),
         next_hop_ip="2.2.2.2",
         next_hop_int="iface",
-        protocol="bgp",
+        protocol="ibgp",
         metric=0,
         communities=(),
         local_preference=100,
@@ -551,6 +579,20 @@ def test_validate_evpn_rib_routes_equal() -> None:
     assert AristaValidator._diff_evpn_routes_cost(
         arista_route, attr.evolve(batfish_route, route_distinguisher="rdd")
     ) == [("route_distinguisher", math.inf)]
+
+    # bgp subtype mismatch
+    assert AristaValidator._diff_evpn_routes_cost(
+        arista_route, attr.evolve(batfish_route, protocol="bgp")
+    ) == [("bgp subtype", 1.0)]
+
+    # origin_protocol is None: skip protocol comparison
+    assert (
+        AristaValidator._diff_evpn_routes_cost(
+            attr.evolve(arista_route, origin_protocol=None),
+            attr.evolve(batfish_route, protocol="bgp"),
+        )
+        == []
+    )
 
     # next hop ip mismatch
     assert AristaValidator._diff_evpn_routes_cost(
@@ -582,8 +624,9 @@ def test_diff_evpn_routes_cost_special_nhip_cases() -> None:
         local_preference=100,
         as_path=(1,),
         weight=1,
-        as_path_type="internal",
+        as_path_type="Internal",
         origin="Igp",
+        origin_protocol="ibgp",
         route_distinguisher="rd",
     )
 
@@ -593,7 +636,7 @@ def test_diff_evpn_routes_cost_special_nhip_cases() -> None:
         next_hop_ip="AUTO/NONE(-1l)",
         next_hop=NextHopDiscard(),
         next_hop_int="null_interface",
-        protocol="bgp",
+        protocol="ibgp",
         metric=0,
         communities=(),
         local_preference=100,
@@ -628,8 +671,9 @@ def test_diff_evpn_routes_cost_special_localpref_cases() -> None:
         local_preference=None,
         as_path=(1,),
         weight=1,
-        as_path_type="internal",
+        as_path_type="Internal",
         origin="Igp",
+        origin_protocol="ibgp",
         route_distinguisher="rd",
     )
 
@@ -639,7 +683,7 @@ def test_diff_evpn_routes_cost_special_localpref_cases() -> None:
         next_hop=NextHopInterface(interface="iface", ip="2.2.2.2"),
         next_hop_ip="2.2.2.2",
         next_hop_int="iface",
-        protocol="bgp",
+        protocol="ibgp",
         metric=0,
         communities=(),
         local_preference=0,

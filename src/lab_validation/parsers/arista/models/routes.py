@@ -36,6 +36,8 @@ class AristaBgpRoute:
     local_preference: int | None = attr.ib(converter=optional_int_converter)
     as_path: Sequence[int]
     weight: int | None = attr.ib(converter=optional_int_converter)
+    origin_protocol: str | None
+    origin_type: str
 
 
 @attr.s(frozen=True, auto_attribs=True, kw_only=True)
@@ -49,6 +51,7 @@ class AristaEvpnRoute:
     as_path_type: str
     weight: int | None
     origin: str
+    origin_protocol: str | None
 
     # Evpn attributes
     route_distinguisher: str

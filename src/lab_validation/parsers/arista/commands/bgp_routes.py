@@ -8,6 +8,7 @@ ACTIVE = "active"
 ADDRESS = "address"
 AS_PATH = "asPath"
 AS_PATH_ENTRY = "asPathEntry"
+AS_PATH_TYPE = "asPathType"
 BGP_ROUTE_ENTRIES = "bgpRouteEntries"
 BGP_ROUTE_PATHS = "bgpRoutePaths"
 ECMP = "ecmp"
@@ -15,6 +16,7 @@ LOCAL_PREFERENCE = "localPreference"
 MED = "med"
 NEXT_HOP = "nextHop"
 NOT_INSTALLED_REASON = "notInstalledReason"
+ORIGIN = "origin"
 ROUTE_TYPE = "routeType"
 VRFS = "vrfs"
 WEIGHT = "weight"
@@ -48,6 +50,7 @@ def _get_bgp_routes(vrf: str, json_obj: dict[Any, Any]) -> Sequence[AristaBgpRou
             if next_hop_ip == "":
                 next_hop_ip = None
 
+            as_path, origin_type = _get_as_path_and_origin(path[AS_PATH_ENTRY][AS_PATH])
             routes.append(
                 AristaBgpRoute(
                     vrf=vrf,
@@ -55,13 +58,17 @@ def _get_bgp_routes(vrf: str, json_obj: dict[Any, Any]) -> Sequence[AristaBgpRou
                     next_hop_ip=next_hop_ip,
                     local_preference=path.get(LOCAL_PREFERENCE, None),
                     metric=path.get(MED, None),
-                    as_path=_get_as_path(path[AS_PATH_ENTRY][AS_PATH]),
+                    as_path=as_path,
                     weight=get_weight(path.get(WEIGHT), next_hop_ip),
                     is_active=path[ROUTE_TYPE][ACTIVE],
                     is_ecmp=path[ROUTE_TYPE][ECMP],
                     not_installed_reason=path[ROUTE_TYPE].get(
                         NOT_INSTALLED_REASON, None
                     ),
+                    origin_protocol=get_origin_protocol(
+                        path[AS_PATH_ENTRY].get(AS_PATH_TYPE)
+                    ),
+                    origin_type=origin_type,
                 )
             )
     return routes
@@ -75,5 +82,24 @@ def get_weight(weight: int | None, next_hop_ip: str | None) -> int | None:
         return weight
 
 
-def _get_as_path(as_path: str) -> Sequence[int]:
-    return tuple(map(int, as_path.split()[:-1]))
+_ORIGIN_TYPE_MAP = {"i": "igp", "e": "egp", "?": "incomplete"}
+
+_ORIGIN_PROTOCOL_MAP = {
+    "Internal": "ibgp",
+    "External": "bgp",
+    "Local": "bgp",
+}
+
+
+def _get_as_path_and_origin(as_path: str) -> tuple[Sequence[int], str]:
+    parts = as_path.split()
+    origin_char = parts[-1]
+    origin_type = _ORIGIN_TYPE_MAP[origin_char]
+    as_numbers = tuple(map(int, parts[:-1]))
+    return as_numbers, origin_type
+
+
+def get_origin_protocol(as_path_type: str | None) -> str | None:
+    if as_path_type is None:
+        return None
+    return _ORIGIN_PROTOCOL_MAP.get(as_path_type)

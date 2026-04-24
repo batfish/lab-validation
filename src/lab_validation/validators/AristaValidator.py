@@ -297,8 +297,13 @@ class AristaValidator(VendorValidator):
 
         cost = []
 
-        # AristaBgpRoute currently doesn't have information on whether the route is iBGP or eBGP or the origin_protocol
-        # https://github.com/batfish/lab-validation/issues/62
+        if arista_route.origin_protocol is not None:
+            cost += AristaValidator._compute_bgp_protocol_cost(
+                arista_route.origin_protocol, batfish_route.protocol
+            )
+
+        if arista_route.origin_type != batfish_route.origin_type:
+            cost.append(("origin_type", 1.0))
 
         if arista_route.next_hop_ip != batfish_route.next_hop_ip:
             if (
@@ -329,6 +334,14 @@ class AristaValidator(VendorValidator):
             cost.append(("as path", 1.0))
 
         return cost
+
+    @staticmethod
+    def _compute_bgp_protocol_cost(
+        arista_protocol: str, batfish_protocol: str
+    ) -> CostResult:
+        if arista_protocol == batfish_protocol:
+            return []
+        return [("bgp subtype", 1.0)]
 
     def _parse_interfaces(self) -> Sequence[AristaInterface]:
         show_interfaces_path = self._first_file(
@@ -433,6 +446,11 @@ class AristaValidator(VendorValidator):
             return [("route_distinguisher", math.inf)]
 
         cost = []
+
+        if arista_route.origin_protocol is not None:
+            cost += AristaValidator._compute_bgp_protocol_cost(
+                arista_route.origin_protocol, batfish_route.protocol
+            )
 
         if batfish_route.next_hop_ip != arista_route.next_hop_ip:
             if (
