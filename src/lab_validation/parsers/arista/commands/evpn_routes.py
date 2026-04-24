@@ -3,6 +3,7 @@ from collections.abc import Sequence
 from typing import Any
 
 from ..models.routes import AristaEvpnRoute
+from .bgp_routes import get_origin_protocol
 
 ACTIVE = "active"
 AS_PATH = "asPath"
@@ -69,6 +70,9 @@ def _get_evpn_routes(vrf: str, json_obj: dict[Any, Any]) -> Sequence[AristaEvpnR
                     next_hop_ip=next_hop,
                     is_active=path[ROUTE_TYPE][ACTIVE],
                     origin=path[ROUTE_TYPE][ORIGIN],
+                    origin_protocol=get_origin_protocol(
+                        path[AS_PATH_ENTRY][AS_PATH_TYPE]
+                    ),
                     route_distinguisher=rd,
                 )
             )

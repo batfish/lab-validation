@@ -50,6 +50,8 @@ def test_parse_show_ip_bgp_vrf_all_json() -> None:
             is_active=True,
             is_ecmp=False,
             not_installed_reason=None,
+            origin_protocol=None,
+            origin_type="igp",
         ),
         AristaBgpRoute(
             vrf="default",
@@ -62,6 +64,8 @@ def test_parse_show_ip_bgp_vrf_all_json() -> None:
             is_active=True,
             is_ecmp=False,
             not_installed_reason=None,
+            origin_protocol=None,
+            origin_type="igp",
         ),
         AristaBgpRoute(
             vrf="default",
@@ -74,6 +78,8 @@ def test_parse_show_ip_bgp_vrf_all_json() -> None:
             is_active=False,
             is_ecmp=False,
             not_installed_reason="routeBestInactive",
+            origin_protocol=None,
+            origin_type="igp",
         ),
         AristaBgpRoute(
             vrf="default",
@@ -86,6 +92,8 @@ def test_parse_show_ip_bgp_vrf_all_json() -> None:
             is_active=True,
             is_ecmp=False,
             not_installed_reason=None,
+            origin_protocol=None,
+            origin_type="igp",
         ),
         AristaBgpRoute(
             vrf="cust10",
@@ -98,6 +106,8 @@ def test_parse_show_ip_bgp_vrf_all_json() -> None:
             is_active=True,
             is_ecmp=False,
             not_installed_reason=None,
+            origin_protocol=None,
+            origin_type="igp",
         ),
     ]
 
@@ -140,6 +150,8 @@ def test_parse_show_ip_bgp_vrf_all_json_no_metric() -> None:
             is_active=True,
             is_ecmp=False,
             not_installed_reason=None,
+            origin_protocol=None,
+            origin_type="igp",
         )
     ]
 
@@ -182,6 +194,8 @@ def test_parse_show_ip_bgp_vrf_all_json_no_local_pref() -> None:
             is_active=True,
             is_ecmp=False,
             not_installed_reason=None,
+            origin_protocol=None,
+            origin_type="igp",
         )
     ]
 
@@ -224,6 +238,8 @@ def test_parse_show_ip_bgp_vrf_all_json_origin_incomplete() -> None:
             is_active=True,
             is_ecmp=False,
             not_installed_reason=None,
+            origin_protocol=None,
+            origin_type="incomplete",
         )
     ]
 
@@ -266,6 +282,8 @@ def test_parse_bgp_local_route() -> None:
             is_active=True,
             is_ecmp=False,
             not_installed_reason=None,
+            origin_protocol=None,
+            origin_type="igp",
         )
     ]
 
@@ -356,6 +374,8 @@ def test_parse_bgp_ecmp_routes() -> None:
             is_active=True,
             is_ecmp=True,
             not_installed_reason=None,
+            origin_protocol=None,
+            origin_type="igp",
         ),
         AristaBgpRoute(
             vrf="default",
@@ -368,6 +388,83 @@ def test_parse_bgp_ecmp_routes() -> None:
             is_active=False,
             is_ecmp=True,
             not_installed_reason=None,
+            origin_protocol=None,
+            origin_type="igp",
+        ),
+    ]
+
+
+def test_parse_show_ip_bgp_vrf_all_json_with_as_path_type() -> None:
+    text = """
+    {
+    "vrfs":
+    {"default": {
+        "routerId": "1.1.1.1",
+        "vrf": "default",
+        "bgpRouteEntries":
+        {"1.1.1.1/32": {
+            "bgpAdvertisedPeerGroups": {},
+            "maskLength": 32,
+            "bgpRoutePaths": [{
+                "asPathEntry": {"asPathType": "Local", "asPath": "i"},
+                "nextHop": "",
+                "peerEntry": {},
+                "reasonNotBestpath": null,
+                "routeType": {"atomicAggregator": false, "suppressed": false, "queued": false, "valid": true, "ecmpContributor": false, "luRoute": false, "active": true, "stale": false, "ecmp": false, "backup": false, "ecmpHead": false, "ucmp": false, "sixPeRoute": false, "origin": "Igp"},
+                "tag": 0,
+                "weight": 32768
+            }],
+            "address": "1.1.1.1"},
+            "2.2.2.2/32": {"bgpAdvertisedPeerGroups": {}, "maskLength": 32, "bgpRoutePaths": [{"asPathEntry": {"asPathType": "External", "asPath": "65002 i"}, "localPreference": 100, "med": 0, "nextHop": "10.0.0.2", "peerEntry": {}, "reasonNotBestpath": null, "routeType": {"atomicAggregator": false, "suppressed": false, "queued": false, "valid": true, "ecmpContributor": false, "luRoute": false, "active": true, "stale": false, "ecmp": false, "backup": false, "ecmpHead": false, "ucmp": false, "sixPeRoute": false, "origin": "Igp"}, "tag": 0, "weight": 0}], "address": "2.2.2.2"},
+            "3.3.3.3/32": {"bgpAdvertisedPeerGroups": {}, "maskLength": 32, "bgpRoutePaths": [{"asPathEntry": {"asPathType": "Internal", "asPath": "i"}, "localPreference": 100, "med": 0, "nextHop": "10.0.0.3", "peerEntry": {}, "reasonNotBestpath": null, "routeType": {"atomicAggregator": false, "suppressed": false, "queued": false, "valid": true, "ecmpContributor": false, "luRoute": false, "active": true, "stale": false, "ecmp": false, "backup": false, "ecmpHead": false, "ucmp": false, "sixPeRoute": false, "origin": "Igp"}, "tag": 0, "weight": 0}], "address": "3.3.3.3"}
+         },
+     "asn": "65001"
+    }
+    }}
+    """
+    routes = parse_show_ip_bgp_vrf_all_json(text)
+    assert routes == [
+        AristaBgpRoute(
+            vrf="default",
+            network="1.1.1.1/32",
+            next_hop_ip=None,
+            local_preference=None,
+            metric=None,
+            as_path=(),
+            weight=32768,
+            is_active=True,
+            is_ecmp=False,
+            not_installed_reason=None,
+            origin_protocol="bgp",
+            origin_type="igp",
+        ),
+        AristaBgpRoute(
+            vrf="default",
+            network="2.2.2.2/32",
+            next_hop_ip="10.0.0.2",
+            local_preference=100,
+            metric=0,
+            as_path=(65002,),
+            weight=0,
+            is_active=True,
+            is_ecmp=False,
+            not_installed_reason=None,
+            origin_protocol="bgp",
+            origin_type="igp",
+        ),
+        AristaBgpRoute(
+            vrf="default",
+            network="3.3.3.3/32",
+            next_hop_ip="10.0.0.3",
+            local_preference=100,
+            metric=0,
+            as_path=(),
+            weight=0,
+            is_active=True,
+            is_ecmp=False,
+            not_installed_reason=None,
+            origin_protocol="ibgp",
+            origin_type="igp",
         ),
     ]
 
