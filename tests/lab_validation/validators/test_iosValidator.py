@@ -38,7 +38,7 @@ def test_bgp_equal() -> None:
         as_path=(1, 2),
         origin_type="e",
     )
-    assert IosValidator._diff_bgp_routes_cost(("default", ios), bf) == 0
+    assert IosValidator._diff_bgp_routes_cost(("default", ios), bf) == []
 
 
 def test_bgp_equal_local_routes() -> None:
@@ -68,7 +68,7 @@ def test_bgp_equal_local_routes() -> None:
         as_path=(),
         origin_type="?",
     )
-    assert IosValidator._diff_bgp_routes_cost(("default", ios), bf) == 0
+    assert IosValidator._diff_bgp_routes_cost(("default", ios), bf) == []
 
 
 def test_bgp_not_equal() -> None:
@@ -99,8 +99,9 @@ def test_bgp_not_equal() -> None:
         as_path=(1, 2, 3),
         origin_type="i",
     )
-    # Accumulates a difference cost of 4 (AS path, local pref, origin type, metric, weight)
-    assert IosValidator._diff_bgp_routes_cost(("default", ios), bf) == 5
+    # 5 mismatches: metric, local_preference, weight, as_path, origin_type
+    result = IosValidator._diff_bgp_routes_cost(("default", ios), bf)
+    assert len(result) == 5
 
 
 def test_origin_types() -> None:
@@ -235,9 +236,9 @@ def test_diff_routes_cost_nhint_dynamic() -> None:
         metric=0,
         admin=1,
     )
-    assert (
-        IosValidator._diff_routes_cost(expected_route, batfish_route) == 1
-    )  # next hop IP
+    assert IosValidator._diff_routes_cost(expected_route, batfish_route) == [
+        ("next_hop_ip", 1.0)
+    ]  # next hop IP
 
 
 def test_compat_routes_null() -> None:
@@ -259,7 +260,7 @@ def test_compat_routes_null() -> None:
         metric=0,
         admin=0,
     )
-    assert IosValidator._diff_routes_cost(expected_route, batfish_route) == 0
+    assert IosValidator._diff_routes_cost(expected_route, batfish_route) == []
 
 
 def test_diff_routes_cost_null() -> None:
@@ -281,9 +282,9 @@ def test_diff_routes_cost_null() -> None:
         metric=0,
         admin=0,
     )
-    assert (
-        IosValidator._diff_routes_cost(expected_route, batfish_route) == 10.0
-    )  # only one side null
+    assert IosValidator._diff_routes_cost(expected_route, batfish_route) == [
+        ("next_hop", 10.0)
+    ]  # only one side null
 
 
 def test_diff_routes_cost_nhint_ignore() -> None:
@@ -305,7 +306,7 @@ def test_diff_routes_cost_nhint_ignore() -> None:
         metric=0,
         admin=1,
     )
-    assert IosValidator._diff_routes_cost(expected_route, batfish_route) == 0
+    assert IosValidator._diff_routes_cost(expected_route, batfish_route) == []
 
 
 def test_diff_routes_cost_skip_ibgp_comparision() -> None:
@@ -330,7 +331,7 @@ def test_diff_routes_cost_skip_ibgp_comparision() -> None:
         metric=0,
         admin=200,
     )
-    assert IosValidator._diff_routes_cost(expected_route, batfish_route) == 0
+    assert IosValidator._diff_routes_cost(expected_route, batfish_route) == []
 
 
 def test_diff_routes_cost_route_in_multiple_vrf() -> None:
@@ -355,7 +356,9 @@ def test_diff_routes_cost_route_in_multiple_vrf() -> None:
         metric=0,
         admin=20,
     )
-    assert IosValidator._diff_routes_cost(expected_route, batfish_route) == math.inf
+    assert IosValidator._diff_routes_cost(expected_route, batfish_route) == [
+        ("vrf", math.inf)
+    ]
 
 
 def test_ospf_summary_ignores_ad_and_metric() -> None:
@@ -378,18 +381,18 @@ def test_ospf_summary_ignores_ad_and_metric() -> None:
         admin=20,
     )
     # Ignore different admin, metric
-    assert IosValidator._diff_routes_cost(expected_route, batfish_route) == 0
+    assert IosValidator._diff_routes_cost(expected_route, batfish_route) == []
 
 
 def test_compute_protocol_cost() -> None:
     result = IosValidator.compute_protocol_cost("bgp", "ibgp")
-    assert result == 0.0
+    assert result == []
 
     result = IosValidator.compute_protocol_cost("ospf", "ospfE1")
-    assert result == 1.0
+    assert result == [("protocol", 1.0)]
 
     result = IosValidator.compute_protocol_cost("eigrp", "eigrpEX")
-    assert result == 1.0
+    assert result == [("protocol", 1.0)]
 
     result = IosValidator.compute_protocol_cost("bgp", "ospf")
-    assert result == math.inf
+    assert result == [("protocol", math.inf)]
