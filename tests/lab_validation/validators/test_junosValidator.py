@@ -53,28 +53,32 @@ def test_routes_cost() -> None:
         vrf="vrf",
     )
     # Routes are compatible
-    assert _routes_cost(junos_route, batfish_route) == 0.0
+    assert _routes_cost(junos_route, batfish_route) == []
 
     # Wrong vrf -> routes are incompatible
-    assert _routes_cost(junos_route, attr.evolve(batfish_route, vrf="vrf2")) == math.inf
+    assert _routes_cost(junos_route, attr.evolve(batfish_route, vrf="vrf2")) == [
+        ("vrf", math.inf)
+    ]
 
     # Wrong network -> routes are incompatible
-    assert (
-        _routes_cost(junos_route, attr.evolve(batfish_route, network="1.1.1.1/30"))
-        == math.inf
-    )
+    assert _routes_cost(
+        junos_route, attr.evolve(batfish_route, network="1.1.1.1/30")
+    ) == [("network", math.inf)]
 
     # Wrong protocol -> routes are incompatible
-    assert (
-        _routes_cost(junos_route, attr.evolve(batfish_route, protocol="ospf"))
-        == math.inf
-    )
+    assert _routes_cost(junos_route, attr.evolve(batfish_route, protocol="ospf")) == [
+        ("protocol", math.inf)
+    ]
 
     # Wrong metric -> routes are incompatible
-    assert _routes_cost(junos_route, attr.evolve(batfish_route, metric=5)) == 1.0
+    assert _routes_cost(junos_route, attr.evolve(batfish_route, metric=5)) == [
+        ("metric", 1.0)
+    ]
 
     # Wrong admin -> routes are incompatible
-    assert _routes_cost(junos_route, attr.evolve(batfish_route, admin=5)) == 1.0
+    assert _routes_cost(junos_route, attr.evolve(batfish_route, admin=5)) == [
+        ("admin", 1.0)
+    ]
 
 
 def test_nexthop_cost_static_routes() -> None:
@@ -91,31 +95,25 @@ def test_nexthop_cost_static_routes() -> None:
         active=True,
     )
     # Batfish NHIP routes are compatible with Junos routes that have a resolved NHINT
-    assert _compute_nexthop_cost(junos_route, NextHopIp(ip="10.12.1.1")) == 0.0
+    assert _compute_nexthop_cost(junos_route, NextHopIp(ip="10.12.1.1")) == []
     # Since Batfish shows protocol NHOP while Junos shows resolved, cannot enforce
     # that they appear equal
-    assert _compute_nexthop_cost(junos_route, NextHopIp(ip="10.12.1.2")) == 0.0
+    assert _compute_nexthop_cost(junos_route, NextHopIp(ip="10.12.1.2")) == []
 
     # Also compatible if it's a Batfish NHINT + NHIP route.
     assert (
         _compute_nexthop_cost(
             junos_route, NextHopInterface(interface="xe-0/0/1.0", ip="10.12.1.1")
         )
-        == 0.0
+        == []
     )
     # Incompatible if either NHIP or NHINT is wrong
-    assert (
-        _compute_nexthop_cost(
-            junos_route, NextHopInterface(interface="xe-0/0/1.1", ip="10.12.1.1")
-        )
-        == 5.0
-    )
-    assert (
-        _compute_nexthop_cost(
-            junos_route, NextHopInterface(interface="xe-0/0/1.0", ip="10.12.1.2")
-        )
-        == 1.0
-    )
+    assert _compute_nexthop_cost(
+        junos_route, NextHopInterface(interface="xe-0/0/1.1", ip="10.12.1.1")
+    ) == [("next_hop_int", 5.0)]
+    assert _compute_nexthop_cost(
+        junos_route, NextHopInterface(interface="xe-0/0/1.0", ip="10.12.1.2")
+    ) == [("next_hop_ip", 1.0)]
 
 
 def test_nexthop_cost_ospf_routes() -> None:
@@ -136,16 +134,13 @@ def test_nexthop_cost_ospf_routes() -> None:
         _compute_nexthop_cost(
             junos_route, NextHopInterface(interface="xe-0/0/1.0", ip="2.2.2.2")
         )
-        == 0.0
+        == []
     )
 
     # next-hop interface does not match
-    assert (
-        _compute_nexthop_cost(
-            junos_route, NextHopInterface(interface="xe-0/0/1.1", ip="2.2.2.2")
-        )
-        == 5.0
-    )
+    assert _compute_nexthop_cost(
+        junos_route, NextHopInterface(interface="xe-0/0/1.1", ip="2.2.2.2")
+    ) == [("next_hop_int", 5.0)]
 
 
 def test_nexthop_cost_discard() -> None:
@@ -162,12 +157,11 @@ def test_nexthop_cost_discard() -> None:
         active=True,
     )
     # Batfish null routes are compatible with junos null routes
-    assert _compute_nexthop_cost(junos_route, NextHopDiscard()) == 0.0
+    assert _compute_nexthop_cost(junos_route, NextHopDiscard()) == []
     # Not a null route -> incompatible
-    assert (
-        _compute_nexthop_cost(junos_route, NextHopInterface(interface="xe-0/1/0.0"))
-        == 10.0
-    )
+    assert _compute_nexthop_cost(
+        junos_route, NextHopInterface(interface="xe-0/1/0.0")
+    ) == [("next_hop", 10.0)]
 
 
 def test_nexthop_cost_reject() -> None:
@@ -185,12 +179,11 @@ def test_nexthop_cost_reject() -> None:
     )
 
     # Batfish null aggregates are compatible with junos null routes
-    assert _compute_nexthop_cost(junos_route, NextHopDiscard()) == 0.0
+    assert _compute_nexthop_cost(junos_route, NextHopDiscard()) == []
     # Not a null route -> incompatible
-    assert (
-        _compute_nexthop_cost(junos_route, NextHopInterface(interface="xe-0/1/0.0"))
-        == 10.0
-    )
+    assert _compute_nexthop_cost(
+        junos_route, NextHopInterface(interface="xe-0/1/0.0")
+    ) == [("next_hop", 10.0)]
 
 
 def test_protocol_cost() -> None:
@@ -216,12 +209,11 @@ def test_protocol_cost() -> None:
     )
 
     # Static and static work
-    assert _compute_protocol_cost(junos_static, bf_static) == 0.0
+    assert _compute_protocol_cost(junos_static, bf_static) == []
     # Static and not static doesn't
-    assert (
-        _compute_protocol_cost(junos_static, attr.evolve(bf_static, protocol="ospf"))
-        == math.inf
-    )
+    assert _compute_protocol_cost(
+        junos_static, attr.evolve(bf_static, protocol="ospf")
+    ) == [("protocol", math.inf)]
 
     # Direct and connected work
     junos_direct = attr.evolve(junos_static, protocol="Direct")
@@ -229,19 +221,19 @@ def test_protocol_cost() -> None:
         _compute_protocol_cost(
             junos_direct, attr.evolve(bf_static, protocol="connected")
         )
-        == 0.0
+        == []
     )
     # Direct and static doesn't
-    assert _compute_protocol_cost(junos_direct, bf_static) == math.inf
+    assert _compute_protocol_cost(junos_direct, bf_static) == [("protocol", math.inf)]
 
     # Local and Local work
     junos_local = attr.evolve(junos_static, protocol="Local")
     assert (
         _compute_protocol_cost(junos_local, attr.evolve(bf_static, protocol="local"))
-        == 0.0
+        == []
     )
     # Local and static doesn't
-    assert _compute_protocol_cost(junos_local, bf_static) == math.inf
+    assert _compute_protocol_cost(junos_local, bf_static) == [("protocol", math.inf)]
 
     # Aggregate and aggregate work
     junos_aggregate = attr.evolve(junos_static, protocol="Aggregate")
@@ -249,47 +241,48 @@ def test_protocol_cost() -> None:
         _compute_protocol_cost(
             junos_aggregate, attr.evolve(bf_static, protocol="aggregate")
         )
-        == 0.0
+        == []
     )
     # Aggregate and static doesn't
-    assert _compute_protocol_cost(junos_aggregate, bf_static) == math.inf
+    assert _compute_protocol_cost(junos_aggregate, bf_static) == [
+        ("protocol", math.inf)
+    ]
 
     # BGP and bgp/ibgp
     junos_bgp = attr.evolve(junos_static, protocol="BGP")
     assert (
-        _compute_protocol_cost(junos_bgp, attr.evolve(bf_static, protocol="bgp")) == 0.0
+        _compute_protocol_cost(junos_bgp, attr.evolve(bf_static, protocol="bgp")) == []
     )
     assert (
-        _compute_protocol_cost(junos_bgp, attr.evolve(bf_static, protocol="ibgp"))
-        == 0.0
+        _compute_protocol_cost(junos_bgp, attr.evolve(bf_static, protocol="ibgp")) == []
     )
     # BGP and static doesn't
-    assert _compute_protocol_cost(junos_bgp, bf_static) == math.inf
+    assert _compute_protocol_cost(junos_bgp, bf_static) == [("protocol", math.inf)]
 
     # OSPF and ospf*
     junos_ospf = attr.evolve(junos_static, protocol="OSPF")
     assert (
         _compute_protocol_cost(junos_ospf, attr.evolve(bf_static, protocol="ospf"))
-        == 0.0
+        == []
     )
     assert (
         _compute_protocol_cost(junos_ospf, attr.evolve(bf_static, protocol="ospfIA"))
-        == 0.0
+        == []
     )
     assert (
         _compute_protocol_cost(junos_ospf, attr.evolve(bf_static, protocol="ospfIS"))
-        == 0.0
+        == []
     )
     assert (
         _compute_protocol_cost(junos_ospf, attr.evolve(bf_static, protocol="ospfE1"))
-        == 0.0
+        == []
     )
     assert (
         _compute_protocol_cost(junos_ospf, attr.evolve(bf_static, protocol="ospfE2"))
-        == 0.0
+        == []
     )
     # OSPF and static doesn't
-    assert _compute_protocol_cost(junos_ospf, bf_static) == math.inf
+    assert _compute_protocol_cost(junos_ospf, bf_static) == [("protocol", math.inf)]
 
 
 def test_get_interface_runtime_date() -> None:
