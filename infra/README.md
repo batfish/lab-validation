@@ -2,7 +2,7 @@
 
 Tools for creating new lab-validation snapshots using
 [containerlab](https://containerlab.dev/) on AWS EC2 with Juniper
-vJunos-router virtual images.
+vJunos and Arista cEOS images.
 
 ## Overview
 
@@ -23,19 +23,25 @@ The workflow is designed to be driven by Claude Code or run manually.
 - **Juniper vJunos-router qcow2 image** — free download from
   [Juniper vJunos Labs](https://www.juniper.net/us/en/dm/vjunos-labs.html)
   (non-production use, no time limit)
+- **Arista cEOS-64 tar.xz image** (optional) — download from
+  [Arista Software Download](https://www.arista.com/en/support/software-download)
+  (requires Arista account)
 - **Batfish** running locally for validation (Docker image or built from
   source)
 
 ## One-Time Setup
 
-### 1. Download the Juniper Image
+### 1. Download Images
 
-Download `vJunos-router-*.qcow2` from Juniper's website and save it to
-`infra/images/` (this directory is gitignored):
+Download vendor images and save them to `infra/images/` (gitignored):
+
+- **Juniper**: `vJunos-router-*.qcow2` from Juniper's website
+- **Arista**: `cEOS64-lab-*.tar.xz` from Arista's software download portal
 
 ```bash
 ls infra/images/
 # vJunos-router-25.4R1.12.qcow2
+# cEOS64-lab-4.36.0.1F.tar.xz
 ```
 
 ### 2. Upload to S3
@@ -46,8 +52,8 @@ AWS_PROFILE=<profile> ./upload-image.sh
 ```
 
 This creates an S3 bucket named `lab-validation-images-<account-id>` (if it
-doesn't exist) and uploads all qcow2 files from `infra/images/`. Idempotent —
-skips files already in S3.
+doesn't exist) and uploads all qcow2 and tar.xz files from `infra/images/`.
+Idempotent — skips files already in S3.
 
 ### 3. First Launch — Build the Docker Image
 
@@ -80,18 +86,19 @@ them with its init.conf and loads them as a config disk.
 
 See `infra/examples/` for working examples:
 
-- `two-router-ebgp.clab.yml` — minimal 2-router eBGP lab
-- `evpn-type5/topology.clab.yml` — 4-node EVPN Type 5 fabric
+- `two-router-ebgp.clab.yml` — minimal 2-router Junos eBGP lab
+- `ceos-ebgp/topology.clab.yml` — minimal 2-router Arista cEOS eBGP lab
+- `evpn-type5/topology.clab.yml` — 4-node EVPN Type 5 fabric (Junos)
 
-**Interface mapping**: containerlab `ethN` maps to Junos `ge-0/0/(N-1)`:
+**Interface mapping**: containerlab `ethN` maps to vendor interfaces:
 
-| containerlab | Junos             |
-| ------------ | ----------------- |
-| eth0         | management (auto) |
-| eth1         | ge-0/0/0          |
-| eth2         | ge-0/0/1          |
-| eth3         | ge-0/0/2          |
-| ethN         | ge-0/0/(N-1)      |
+| containerlab | Junos (vJunos-router) | Arista (cEOS) |
+| ------------ | --------------------- | ------------- |
+| eth0         | management (auto)     | Management0   |
+| eth1         | ge-0/0/0              | Ethernet1     |
+| eth2         | ge-0/0/1              | Ethernet2     |
+| eth3         | ge-0/0/2              | Ethernet3     |
+| ethN         | ge-0/0/(N-1)          | EthernetN     |
 
 ### Step 2: Launch EC2 and Upload
 
@@ -273,7 +280,7 @@ Run on EC2 as `PYTHONPATH=src python3 -m lab_builder <command>`:
 
 ## Show Commands Collected
 
-For Juniper (vJunos-router), these are collected automatically:
+### Juniper (vJunos)
 
 | Command                                   | Goes to           | Purpose              |
 | ----------------------------------------- | ----------------- | -------------------- |
@@ -286,6 +293,21 @@ For Juniper (vJunos-router), these are collected automatically:
 | `show bgp neighbor \| display json`       | `show/<node>/`    | BGP peer status      |
 | `show ospf neighbor \| display json`      | `show/<node>/`    | OSPF status          |
 | `show isis adjacency \| display json`     | `show/<node>/`    | ISIS status          |
+
+### Arista (cEOS)
+
+| Command                                 | Goes to           | Purpose              |
+| --------------------------------------- | ----------------- | -------------------- |
+| `show running-config`                   | `configs/<node>/` | Device config        |
+| `show ip route vrf all \| json`         | `show/<node>/`    | Main routing table   |
+| `show ip bgp vrf all \| json`           | `show/<node>/`    | BGP routes           |
+| `show ip bgp neighbors vrf all \| json` | `show/<node>/`    | BGP peer details     |
+| `show interfaces \| json`               | `show/<node>/`    | Interface properties |
+| `show vrf \| json`                      | `show/<node>/`    | VRF info             |
+| `show version \| json`                  | `show/<node>/`    | Software version     |
+| `show bgp evpn \| json`                 | `show/<node>/`    | EVPN routes          |
+| `show ip ospf neighbor \| json`         | `show/<node>/`    | OSPF status          |
+| `show isis neighbors \| json`           | `show/<node>/`    | ISIS status          |
 
 ## Snapshot Directory Structure
 
@@ -368,11 +390,16 @@ For spot pricing (~70% cheaper), add `--spot`.
 | `juniper_vjunosswitch`  | Junos (QFX)         | admin / admin@123 | 5-10 min  | Yes          |
 | `juniper_vjunosevolved` | Junos Evolved (PTX) | admin / admin@123 | ~15 min   | Yes          |
 | `juniper_crpd`          | Junos cRPD          | root / clab123    | ~1 min    | No           |
+| `arista_ceos`           | Arista EOS          | admin / admin     | ~1 min    | No           |
 
-**Platform selection**: vJunos-router (MX) does NOT support `family
+**Junos platform selection**: vJunos-router (MX) does NOT support `family
 ethernet-switching`, VLANs with IRBs, or EVPN bridge domains. Labs that use
 these features must use vJunos-switch (QFX). Use vJunos-router only for
 pure IP routing (underlay, L3VPN, route reflectors, CE devices).
+
+**Arista cEOS**: Container-native EOS image. No KVM required, boots in
+under a minute. Startup configs use standard EOS CLI format. cEOS-64
+(64-bit) is required for containerlab.
 
 ## Troubleshooting
 

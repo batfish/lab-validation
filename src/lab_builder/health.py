@@ -8,8 +8,12 @@ import time
 from lab_builder.device import run_command, wait_for_ssh
 from lab_builder.models import HealthStatus, NodeInfo
 
+# ---------------------------------------------------------------------------
+# Junos health checks
+# ---------------------------------------------------------------------------
 
-def check_bgp_established(node: NodeInfo) -> bool | None:
+
+def _junos_check_bgp(node: NodeInfo) -> bool | None:
     """Check if all BGP neighbors are Established. Returns None if no BGP configured."""
     try:
         output = run_command(node, "show bgp neighbor | display json")
@@ -34,7 +38,7 @@ def check_bgp_established(node: NodeInfo) -> bool | None:
     return True
 
 
-def check_ospf_full(node: NodeInfo) -> bool | None:
+def _junos_check_ospf(node: NodeInfo) -> bool | None:
     """Check if all OSPF neighbors are Full. Returns None if no OSPF configured."""
     try:
         output = run_command(node, "show ospf neighbor | display json")
@@ -59,7 +63,7 @@ def check_ospf_full(node: NodeInfo) -> bool | None:
     return True
 
 
-def check_isis_up(node: NodeInfo) -> bool | None:
+def _junos_check_isis(node: NodeInfo) -> bool | None:
     """Check if all ISIS adjacencies are Up. Returns None if no ISIS configured."""
     try:
         output = run_command(node, "show isis adjacency | display json")
@@ -84,7 +88,7 @@ def check_isis_up(node: NodeInfo) -> bool | None:
     return True
 
 
-def check_platform_warnings(node: NodeInfo) -> list[str]:
+def _junos_check_platform_warnings(node: NodeInfo) -> list[str]:
     """Check for 'unsupported platform' warnings in the running config.
 
     Junos silently ignores config blocks that aren't supported on the
@@ -101,6 +105,120 @@ def check_platform_warnings(node: NodeInfo) -> list[str]:
         if "unsupported platform" in line.lower():
             warnings.append(line.strip())
     return warnings
+
+
+# ---------------------------------------------------------------------------
+# Arista EOS health checks
+# ---------------------------------------------------------------------------
+
+
+def _arista_check_bgp(node: NodeInfo) -> bool | None:
+    """Check if all BGP peers are Established via 'show ip bgp summary | json'."""
+    try:
+        output = run_command(node, "show ip bgp summary | json")
+        data = json.loads(output)
+    except Exception:
+        return False
+
+    vrfs = data.get("vrfs", {})
+    if not vrfs:
+        return None
+
+    found_any = False
+    for vrf_info in vrfs.values():
+        peers = vrf_info.get("peers", {})
+        for peer_info in peers.values():
+            found_any = True
+            state = peer_info.get("peerState", "")
+            if state != "Established":
+                return False
+
+    return True if found_any else None
+
+
+def _arista_check_ospf(node: NodeInfo) -> bool | None:
+    """Check if all OSPF neighbors are full via 'show ip ospf neighbor | json'."""
+    try:
+        output = run_command(node, "show ip ospf neighbor | json")
+        data = json.loads(output)
+    except Exception:
+        return False
+
+    vrfs = data.get("vrfs", {})
+    if not vrfs:
+        return None
+
+    found_any = False
+    for vrf_info in vrfs.values():
+        for inst in vrf_info.get("instList", {}).values():
+            neighbors = inst.get("ospfNeighborEntries", [])
+            for nbr in neighbors:
+                found_any = True
+                state = nbr.get("adjacencyState", "")
+                if state != "full":
+                    return False
+
+    return True if found_any else None
+
+
+def _arista_check_isis(node: NodeInfo) -> bool | None:
+    """Check if all ISIS adjacencies are up via 'show isis neighbors | json'."""
+    try:
+        output = run_command(node, "show isis neighbors | json")
+        data = json.loads(output)
+    except Exception:
+        return False
+
+    vrfs = data.get("vrfs", {})
+    if not vrfs:
+        return None
+
+    found_any = False
+    for vrf_info in vrfs.values():
+        for inst in vrf_info.get("isisInstances", {}).values():
+            neighbors = inst.get("neighbors", {})
+            for nbr_list in neighbors.values():
+                for adj in nbr_list.get("adjacencies", []):
+                    found_any = True
+                    state = adj.get("state", "")
+                    if state != "up":
+                        return False
+
+    return True if found_any else None
+
+
+# ---------------------------------------------------------------------------
+# Dispatch by vendor
+# ---------------------------------------------------------------------------
+
+
+def check_bgp_established(node: NodeInfo) -> bool | None:
+    if node.profile.name == "arista":
+        return _arista_check_bgp(node)
+    return _junos_check_bgp(node)
+
+
+def check_ospf_full(node: NodeInfo) -> bool | None:
+    if node.profile.name == "arista":
+        return _arista_check_ospf(node)
+    return _junos_check_ospf(node)
+
+
+def check_isis_up(node: NodeInfo) -> bool | None:
+    if node.profile.name == "arista":
+        return _arista_check_isis(node)
+    return _junos_check_isis(node)
+
+
+def check_platform_warnings(node: NodeInfo) -> list[str]:
+    if node.profile.name == "arista":
+        return []
+    return _junos_check_platform_warnings(node)
+
+
+# ---------------------------------------------------------------------------
+# Orchestration (unchanged)
+# ---------------------------------------------------------------------------
 
 
 def check_node_health(node: NodeInfo) -> HealthStatus:

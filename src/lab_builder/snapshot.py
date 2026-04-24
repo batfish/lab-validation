@@ -40,9 +40,9 @@ def build_snapshot(
     (show_dir / "host_nos.txt").write_text(json.dumps(host_nos))
     print(f"Created host_nos.txt: {host_nos}")
 
-    config_filename = command_to_filename("show configuration | display set")
-
     for node in nodes:
+        config_filename = command_to_filename(node.profile.config_command)
+
         src_node_dir = collected_dir / node.name
         if not src_node_dir.exists():
             print(f"Warning: no collected data for {node.name}")

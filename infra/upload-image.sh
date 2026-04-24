@@ -38,12 +38,13 @@ if [[ $# -ge 1 ]]; then
     FILES=("$@")
 else
     FILES=()
-    for f in "${IMAGES_DIR}"/*.qcow2; do
+    for f in "${IMAGES_DIR}"/*.qcow2 "${IMAGES_DIR}"/*.tar.xz; do
         [[ -f "${f}" ]] && FILES+=("${f}")
     done
     if [[ ${#FILES[@]} -eq 0 ]]; then
-        echo "No .qcow2 files found in ${IMAGES_DIR}/"
-        echo "Download images from https://www.juniper.net/us/en/dm/vjunos-labs.html"
+        echo "No .qcow2 or .tar.xz files found in ${IMAGES_DIR}/"
+        echo "Download Juniper images from https://www.juniper.net/us/en/dm/vjunos-labs.html"
+        echo "Download Arista cEOS images from https://www.arista.com/en/support/software-download"
         exit 0
     fi
 fi
