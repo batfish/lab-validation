@@ -31,6 +31,7 @@ INSTANCE_TYPE="m8i.2xlarge"
 KEY_NAME=""
 TIMEOUT_HOURS=4
 USE_SPOT=false
+IMAGE_FILTER="all"
 SECURITY_GROUP_NAME="lab-validation-containerlab"
 
 usage() {
@@ -44,6 +45,8 @@ Options:
   --key-name NAME        Existing EC2 key pair name (auto-created if omitted)
   --timeout-hours N      Auto-terminate after N hours (default: 4)
   --spot                 Request a spot instance (~70% cheaper, may be interrupted)
+  --images FILTER        Comma-separated list of images to load (default: all)
+                         Available: ceos, vjunos-router, vjunos-switch, vjunos-evolved, all
   --help                 Show this help
 
 Environment:
@@ -59,6 +62,7 @@ while [[ $# -gt 0 ]]; do
         --key-name) KEY_NAME="$2"; shift 2 ;;
         --timeout-hours) TIMEOUT_HOURS="$2"; shift 2 ;;
         --spot) USE_SPOT=true; shift ;;
+        --images) IMAGE_FILTER="$2"; shift 2 ;;
         --help) usage ;;
         *) echo "Unknown option: $1" >&2; usage ;;
     esac
@@ -220,9 +224,11 @@ else
     fi
 fi
 
-# Generate user-data script with bucket name baked in
+# Generate user-data script with parameters baked in
 USER_DATA_FILE=$(mktemp)
-sed "s|%%BUCKET_NAME%%|${BUCKET_NAME}|g" "${SCRIPT_DIR}/ec2-setup.sh" > "${USER_DATA_FILE}"
+sed -e "s|%%BUCKET_NAME%%|${BUCKET_NAME}|g" \
+    -e "s|%%IMAGE_FILTER%%|${IMAGE_FILTER}|g" \
+    "${SCRIPT_DIR}/ec2-setup.sh" > "${USER_DATA_FILE}"
 
 # Build run-instances command
 RUN_ARGS=(
@@ -314,6 +320,7 @@ echo "============================================"
 echo "Instance ID:  ${INSTANCE_ID}"
 echo "Public IP:    ${PUBLIC_IP}"
 echo "Instance type: ${INSTANCE_TYPE}"
+echo "Images:       ${IMAGE_FILTER}"
 echo "Auto-terminate: ${EXPIRY}"
 echo ""
 echo "SSH command:"
