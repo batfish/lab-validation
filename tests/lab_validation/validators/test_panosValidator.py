@@ -28,7 +28,7 @@ def test_diff_routes_cost_nhint_ignore() -> None:
         metric=0,
         admin=1,
     )
-    assert PanosValidator._diff_routes_cost(expected_route, batfish_route) == 0
+    assert PanosValidator._diff_routes_cost(expected_route, batfish_route) == []
 
 
 def test_diff_routes_cost_skip_ibgp_comparision() -> None:
@@ -54,7 +54,7 @@ def test_diff_routes_cost_skip_ibgp_comparision() -> None:
         metric=0,
         admin=1,
     )
-    assert PanosValidator._diff_routes_cost(expected_route, batfish_route) == 0
+    assert PanosValidator._diff_routes_cost(expected_route, batfish_route) == []
 
 
 def test_diff_routes_cost_route_in_multiple_vrf() -> None:
@@ -80,15 +80,17 @@ def test_diff_routes_cost_route_in_multiple_vrf() -> None:
         metric=0,
         admin=1,
     )
-    assert PanosValidator._diff_routes_cost(expected_route, batfish_route) == math.inf
+    assert PanosValidator._diff_routes_cost(expected_route, batfish_route) == [
+        ("vrf", math.inf)
+    ]
 
 
 def test_compute_protocol_cost() -> None:
     result = PanosValidator.compute_protocol_cost("bgp", "ibgp")
-    assert result == 0.0
+    assert result == []
 
     result = PanosValidator.compute_protocol_cost("bgp", "ospf")
-    assert result == math.inf
+    assert result == [("protocol", math.inf)]
 
 
 def test_compute_nexthop_cost_local() -> None:
@@ -106,7 +108,7 @@ def test_compute_nexthop_cost_local() -> None:
     result = PanosValidator.compute_nexthop_cost(
         real_route, NextHopInterface(interface="ethernet1/1")
     )
-    assert result == 0.0
+    assert result == []
 
 
 def test_compute_nexthop_cost_connected() -> None:
@@ -124,13 +126,13 @@ def test_compute_nexthop_cost_connected() -> None:
     result = PanosValidator.compute_nexthop_cost(
         real_route, NextHopInterface(interface="ethernet1/1")
     )
-    assert result == 0.0
+    assert result == []
 
     # not compatible_nh: connected
     result = PanosValidator.compute_nexthop_cost(
         real_route, NextHopInterface(interface="ethernet1/2")
     )
-    assert result == 1.0
+    assert result == [("next_hop_int", 1.0)]
 
 
 def test_compute_nexthop_cost_static_null() -> None:
@@ -146,13 +148,13 @@ def test_compute_nexthop_cost_static_null() -> None:
         next_AS=None,
     )
     result = PanosValidator.compute_nexthop_cost(real_route, NextHopDiscard())
-    assert result == 0.0
+    assert result == []
 
     # not compatible_nh: static null
     result = PanosValidator.compute_nexthop_cost(
         real_route, NextHopInterface(interface="ethernet2/2", ip="11.22.33.44")
     )
-    assert result == 10.0
+    assert result == [("next_hop", 10.0)]
 
 
 def test_compute_nexthop_cost_static() -> None:
@@ -170,21 +172,21 @@ def test_compute_nexthop_cost_static() -> None:
     result = PanosValidator.compute_nexthop_cost(
         real_route, NextHopInterface(interface="ethernet1/1", ip="1.2.3.4")
     )
-    assert result == 0.0
+    assert result == []
 
     # compatible_nh: static route using next_hop ip
     result = PanosValidator.compute_nexthop_cost(
         real_route,
         NextHopIp(ip="1.2.3.4"),
     )
-    assert result == 0.0
+    assert result == []
 
     # not compatible_nh: static
     result = PanosValidator.compute_nexthop_cost(
         real_route,
         NextHopInterface(interface="ethernet2/2", ip="11.22.33.44"),
     )
-    assert result == 2.0
+    assert result == [("next_hop_int", 1.0), ("next_hop_ip", 1.0)]
 
 
 def test_compute_nexthop_cost_bgp() -> None:
@@ -200,13 +202,13 @@ def test_compute_nexthop_cost_bgp() -> None:
         next_AS=None,
     )
     result = PanosValidator.compute_nexthop_cost(real_route, NextHopIp(ip="1.2.3.4"))
-    assert result == 0.0
+    assert result == []
 
     # not compatible_nh: bgp
     result = PanosValidator.compute_nexthop_cost(
         real_route, NextHopIp(ip="11.22.33.44")
     )
-    assert result == 1.0
+    assert result == [("next_hop_ip", 1.0)]
 
 
 def test_diff_routes_cost_metric_none() -> None:
@@ -230,10 +232,9 @@ def test_diff_routes_cost_metric_none() -> None:
         metric=0,
         admin=20,
     )
-    assert PanosValidator._diff_routes_cost(real_route, bf_route) == 0.0
+    assert PanosValidator._diff_routes_cost(real_route, bf_route) == []
 
     # test metric real = none & batfish = 10
-    assert (
-        PanosValidator._diff_routes_cost(real_route, attr.evolve(bf_route, metric=10))
-        == 1.0
-    )
+    assert PanosValidator._diff_routes_cost(
+        real_route, attr.evolve(bf_route, metric=10)
+    ) == [("metric", 1.0)]

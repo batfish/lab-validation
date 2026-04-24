@@ -1,4 +1,5 @@
 import math
+from typing import Any
 
 import attr
 from pybatfish.datamodel import NextHopInterface, NextHopIp
@@ -83,9 +84,9 @@ def test_match_pairs_same_count() -> None:
     ]
     matched_pairs = match_pairs(left, right, IosValidator._diff_routes_cost)
     assert matched_pairs == [
-        (left[0], None, math.inf),
-        (left[1], right[0], 2),  # metric and admin
-        (None, right[1], math.inf),
+        (left[0], None, [("unmatched", math.inf)]),
+        (left[1], right[0], [("metric", 1.0), ("admin", 1.0)]),
+        (None, right[1], [("unmatched", math.inf)]),
     ]
 
 
@@ -128,9 +129,9 @@ def test_match_pairs_more_in_left() -> None:
         (
             left[0],
             right[0],
-            2.0,
+            [("next_hop_int", 1.0), ("next_hop_ip", 1.0)],
         ),  # cost 2 (for next hop IP and interface)
-        (left[1], None, math.inf),
+        (left[1], None, [("unmatched", math.inf)]),
     ]
 
 
@@ -197,9 +198,9 @@ def test_match_pairs_duplicate_route_in_different_vrf() -> None:
 
     matched_pairs = match_pairs(left, right, IosValidator._diff_routes_cost)
     assert matched_pairs == [
-        (left[2], right[0], 0.0),
-        (left[0], right[2], 1.0),
-        (left[1], right[1], 1.0),
+        (left[2], right[0], []),
+        (left[0], right[2], [("next_hop_ip", 1.0)]),
+        (left[1], right[1], [("next_hop_ip", 1.0)]),
     ]
 
 
@@ -242,21 +243,21 @@ def test_matched_routes_to_failures() -> None:
             admin=1,
         ),
     )
-    matched_routes: list[tuple[IosIpRoute, MainRibRoute, float]] = [
-        (ios_route1, batfish_route1, 1.0),
-        (ios_route2, None, math.inf),
+    matched_routes: list[tuple[IosIpRoute | None, MainRibRoute | None, Any]] = [
+        (ios_route1, batfish_route1, [("next_hop_ip", 1.0)]),
+        (ios_route2, None, [("unmatched", math.inf)]),
         (
             None,
             batfish_route2,
             math.inf,
         ),
-        (batfish_route1, batfish_route1, 0.0),
+        (batfish_route1, batfish_route1, []),
         (batfish_route2, batfish_route2, []),
     ]
 
     failures = matched_pairs_to_failures(matched_routes)
     assert failures == {
-        f"Left_element: {ios_route1}": f"Right_element: {batfish_route1} (cost 1.0)",
+        f"Left_element: {ios_route1}": f"Right_element: {batfish_route1} (cost {[('next_hop_ip', 1.0)]})",
         f"Left_element: {ios_route2}": "No_match_found_on_the_right",
         f"Right_element: {batfish_route2}": "No_match_found_on_the_left",
     }
@@ -308,8 +309,8 @@ def test_match_pairs_perfectly_match_right() -> None:
     matched_pairs = match_pairs(left, right, IosValidator._diff_routes_cost)
     # right[0] should get its perfect match even though it is the best match for left[0]
     assert matched_pairs == [
-        (left[1], right[0], 0.0),
-        (left[0], right[1], 1.0),
+        (left[1], right[0], []),
+        (left[0], right[1], [("metric", 1.0)]),
     ]
 
 

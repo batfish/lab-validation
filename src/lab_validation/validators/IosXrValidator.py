@@ -33,6 +33,7 @@ from lab_validation.validators.batfish_models.runtime_data import (
 )
 
 from .utils.validation_utils import (
+    CostResult,
     match_pairs,
     matched_pairs_to_failures,
     preprocess_batfish_bgp_route,
@@ -109,7 +110,7 @@ class IosXrValidator(VendorValidator):
     @staticmethod
     def _diff_routes_cost(
         xr_route: IosXrRoute, batfish_route: MainRibRoute
-    ) -> list[tuple[str, float]]:
+    ) -> CostResult:
         if xr_route.network != batfish_route.network:
             return [("network", math.inf)]
         if xr_route.vrf != batfish_route.vrf:
@@ -146,9 +147,7 @@ class IosXrValidator(VendorValidator):
         return cost
 
     @staticmethod
-    def compute_protocol_cost(
-        xr_protocol: str, batfish_protocol: str
-    ) -> list[tuple[str, float]]:
+    def compute_protocol_cost(xr_protocol: str, batfish_protocol: str) -> CostResult:
         """
         Computes the protocol cost, given that they are not equal.
         Return [], when ios xr is bgp and batfish is bgp sub-types as ios xr does not provide bgp sub-type info.
@@ -183,9 +182,7 @@ class IosXrValidator(VendorValidator):
         return [("protocol", math.inf)]
 
     @staticmethod
-    def compute_next_hop_cost(
-        xr_route: IosXrRoute, next_hop: NextHop
-    ) -> list[tuple[str, float]]:
+    def compute_next_hop_cost(xr_route: IosXrRoute, next_hop: NextHop) -> CostResult:
         """Computes cost related to next hops."""
         if isinstance(next_hop, NextHopVrf):
             if xr_route.next_hop_vrf != next_hop.vrf:
@@ -382,7 +379,7 @@ class IosXrValidator(VendorValidator):
     @staticmethod
     def _diff_bgp_routes_cost(
         expected_route_and_vrf: tuple[str, IosXrBgpRoute], batfish_route: BgpRibRoute
-    ) -> list[tuple[str, float]]:
+    ) -> CostResult:
         # return infinite cost if vrf or network subnet does not match
         expected_vrf = expected_route_and_vrf[0]
         if expected_vrf != batfish_route.vrf:
@@ -419,7 +416,7 @@ class IosXrValidator(VendorValidator):
     @staticmethod
     def compute_bgp_nexthop_cost(
         expected_route: IosXrBgpRoute, batfish_route: BgpRibRoute
-    ) -> list[tuple[str, float]]:
+    ) -> CostResult:
         if (
             batfish_route.next_hop_ip is None
             and batfish_route.next_hop_int == "null_interface"
