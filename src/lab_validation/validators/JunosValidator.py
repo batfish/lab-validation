@@ -1,6 +1,5 @@
 import math
-from collections import defaultdict
-from collections.abc import MutableSet, Sequence
+from collections.abc import Sequence
 from os import PathLike, path
 from typing import (
     AbstractSet,
@@ -350,120 +349,58 @@ class JunosValidator(VendorValidator):
         real_routes: Sequence[JunosBgpRoute],
         batfish_routes: Sequence[BgpRibRoute],
     ) -> dict[Any, Any]:
-        # Group by (vrf, network). Don't include next_hop_ip in the key
-        # because Junos shows resolved next-hops while Batfish shows protocol
-        # next-hops, causing false mismatches for iBGP routes.
-        real: defaultdict[tuple, MutableSet[JunosBgpRoute]] = defaultdict(set)
-        for r in real_routes:
-            real[(r.vrf, r.network)].add(r)
-
-        batfish: defaultdict[tuple, MutableSet[BgpRibRoute]] = defaultdict(set)
-        for bf_route in batfish_routes:
-            batfish[(bf_route.vrf, bf_route.network)].add(bf_route)
-
-        common_keys = real.keys() & batfish.keys()
-        missing_keys = real.keys() - batfish.keys()
-        extra_keys = batfish.keys() - real.keys()
-
-        failures: dict[Any, Any] = {}
-        for k in common_keys:
-            active_real = {r for r in real[k] if r.is_active}
-            if not active_real:
-                continue
-            diff = JunosValidator._compare_bgp_rib_routes(active_real, batfish[k])
-            if len(diff) != 0:
-                failures[k] = diff
-        for k in missing_keys:
-            # is_active=False means BGP-best but inactive in the main RIB
-            # (lost to a lower-admin-distance protocol). Truly unresolvable
-            # or hidden routes never appear in "show route protocol bgp"
-            # brief output, so every route the parser produces is valid.
-            active_routes = [r for r in real[k] if r.is_active]
-            if active_routes:
-                failures[k] = f"Batfish is missing route: {active_routes}"
-        for k in extra_keys:
-            failures[k] = f"Batfish has extra route: {batfish[k]}"
-        return failures
-
-    @staticmethod
-    def _compare_bgp_rib_routes(
-        real_routes: AbstractSet[JunosBgpRoute],
-        batfish_routes: AbstractSet[BgpRibRoute],
-    ) -> dict[str, str]:
-        unmatched_real = list(real_routes)
-        unmatched_bf = list(batfish_routes)
-
-        # First pass: remove exact matches
-        for bf_route in list(unmatched_bf):
-            for real_route in list(unmatched_real):
-                if not JunosValidator._diff_single_bgp_route(real_route, bf_route):
-                    unmatched_real.remove(real_route)
-                    unmatched_bf.remove(bf_route)
-                    break
-
-        # Second pass: pair remaining by closest match for informative diffs
-        diff: dict[str, str] = {}
-        for bf_route in list(unmatched_bf):
-            if not unmatched_real:
-                break
-            best_real = min(
-                unmatched_real,
-                key=lambda r: len(JunosValidator._diff_single_bgp_route(r, bf_route)),
-            )
-            diff.update(JunosValidator._diff_single_bgp_route(best_real, bf_route))
-            unmatched_real.remove(best_real)
-            unmatched_bf.remove(bf_route)
-
-        for bf_r in unmatched_bf:
-            diff[f"extra_batfish_{bf_r.as_path}"] = f"Batfish has extra route: {bf_r}"
-        for real_r in unmatched_real:
-            diff[f"missing_batfish_{real_r.as_path}"] = (
-                f"Batfish is missing route: {real_r}"
-            )
-        return diff
-
-    @staticmethod
-    def _diff_single_bgp_route(
-        real_route: JunosBgpRoute, batfish_route: BgpRibRoute
-    ) -> dict[str, str]:
-        diff: dict[str, str] = {}
-        real_metric = 0 if real_route.metric is None else real_route.metric
-
-        # When Batfish shows ibgp and device shows BGP, the route was learned
-        # via overlay iBGP in Batfish but underlay eBGP on the device. AS path
-        # and origin_protocol will differ due to the dual-plane architecture.
-        protocol_mismatch = (
-            batfish_route.protocol == "ibgp" and real_route.origin_protocol == "BGP"
+        matched_routes = match_pairs(
+            real_routes,
+            batfish_routes,
+            _bgp_routes_cost,
+        )
+        # Don't report inactive device routes as missing from Batfish.
+        # Inactive means BGP-best but lost to a lower-admin-distance protocol
+        # in the main RIB — Batfish may or may not have them.
+        return matched_pairs_to_failures(
+            [
+                (left, right, cost)
+                for left, right, cost in matched_routes
+                if right is not None or (left is not None and left.is_active)
+            ]
         )
 
-        if batfish_route.metric != real_metric:
-            diff["metric"] = f"Batfish: {batfish_route.metric}, real: {real_metric}"
-        if batfish_route.local_preference != real_route.local_preference:
-            diff["local_preference"] = (
-                f"Batfish: {batfish_route.local_preference}, real: {real_route.local_preference}"
-            )
-        if not protocol_mismatch and batfish_route.as_path != real_route.as_path:
-            diff["as_path"] = (
-                f"Batfish: {batfish_route.as_path}, real: {real_route.as_path}"
-            )
-        assert batfish_route.origin_protocol is not None
-        if (
-            not protocol_mismatch
-            and batfish_route.origin_protocol.lower()
-            != real_route.origin_protocol.lower()
-        ):
-            diff["origin_protocol"] = (
-                f"Batfish: {batfish_route.origin_protocol}, real: {real_route.origin_protocol}"
-            )
-        valid_origin_pairs = {("I", "igp"), ("E", "egp"), ("?", "incomplete")}
-        if (
-            real_route.origin_type,
-            batfish_route.origin_type,
-        ) not in valid_origin_pairs:
-            diff["origin_type"] = (
-                f"Batfish: {batfish_route.origin_type}, real: {real_route.origin_type}"
-            )
-        return diff
+
+def _bgp_routes_cost(
+    real_route: JunosBgpRoute, batfish_route: BgpRibRoute
+) -> list[tuple[str, float]]:
+    if real_route.network != batfish_route.network:
+        return [("network", math.inf)]
+    if real_route.vrf != batfish_route.vrf:
+        return [("vrf", math.inf)]
+
+    cost: list[tuple[str, float]] = []
+    real_metric = 0 if real_route.metric is None else real_route.metric
+
+    # When Batfish shows ibgp and device shows BGP, the route was learned
+    # via overlay iBGP in Batfish but underlay eBGP on the device. AS path
+    # and origin_protocol will differ due to the dual-plane architecture.
+    protocol_mismatch = (
+        batfish_route.protocol == "ibgp" and real_route.origin_protocol == "BGP"
+    )
+
+    if batfish_route.metric != real_metric:
+        cost.append(("metric", 1.0))
+    if batfish_route.local_preference != real_route.local_preference:
+        cost.append(("local_preference", 1.0))
+    if not protocol_mismatch and batfish_route.as_path != real_route.as_path:
+        cost.append(("as_path", 1.0))
+    assert batfish_route.origin_protocol is not None
+    if (
+        not protocol_mismatch
+        and batfish_route.origin_protocol.lower() != real_route.origin_protocol.lower()
+    ):
+        cost.append(("origin_protocol", 1.0))
+    valid_origin_pairs = {("I", "igp"), ("E", "egp"), ("?", "incomplete")}
+    if (real_route.origin_type, batfish_route.origin_type) not in valid_origin_pairs:
+        cost.append(("origin_type", 1.0))
+
+    return cost
 
 
 def _routes_cost(
