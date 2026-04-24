@@ -136,6 +136,43 @@ else
     fi
 fi
 
+# --- Load pre-built container images (e.g., Arista cEOS) ---
+echo "--- Loading container images from S3 ---"
+
+CONTAINER_TARBALLS=$(aws s3 ls "s3://${BUCKET_NAME}/images/" 2>/dev/null \
+    | awk '{print $4}' | grep '\.tar\.xz$' || true)
+
+if [[ -n "${CONTAINER_TARBALLS}" ]]; then
+    for tarball in ${CONTAINER_TARBALLS}; do
+        echo "Processing container image: ${tarball}"
+        # Extract image name and tag from filename, e.g.:
+        #   cEOS64-lab-4.36.0.1F.tar.xz -> ceos:4.36.0.1F
+        base="${tarball%.tar.xz}"
+        case "${base}" in
+            cEOS64-lab-*|cEOS-lab-*)
+                version="${base#*-lab-}"
+                tag="ceos:${version}"
+                ;;
+            *)
+                echo "  Unknown container image: ${tarball}, skipping"
+                continue
+                ;;
+        esac
+
+        if docker image inspect "${tag}" &>/dev/null; then
+            echo "  Already loaded: ${tag}"
+        else
+            echo "  Importing as ${tag}..."
+            aws s3 cp "s3://${BUCKET_NAME}/images/${tarball}" "/tmp/${tarball}"
+            docker import "/tmp/${tarball}" "${tag}"
+            rm -f "/tmp/${tarball}"
+            echo "  Loaded: ${tag}"
+        fi
+    done
+else
+    echo "No .tar.xz container images found in S3."
+fi
+
 echo "--- Docker images ---"
 docker images --format '  {{.Repository}}:{{.Tag}}  {{.Size}}' | grep -v '<none>' || echo "  (none)"
 

@@ -90,11 +90,36 @@ CRPD = VendorProfile(
     boot_timeout_seconds=60,
 )
 
+ARISTA_CEOS = VendorProfile(
+    name="arista",
+    containerlab_kind="arista_ceos",
+    default_username="admin",
+    default_password="admin",
+    netmiko_device_type="arista_eos",
+    interface_prefix="Ethernet",
+    interface_offset=1,  # eth1 -> Ethernet1, eth2 -> Ethernet2, ...
+    show_commands=[
+        "show running-config",
+        "show interfaces | json",
+        "show ip route vrf all | json",
+        "show ip bgp vrf all | json",
+        "show ip bgp neighbors vrf all | json",
+        "show bgp evpn | json",
+        "show version | json",
+        "show ip ospf neighbor | json",
+        "show isis neighbors | json",
+        "show vrf | json",
+    ],
+    config_command="show running-config",
+    boot_timeout_seconds=300,
+)
+
 VENDOR_PROFILES: dict[str, VendorProfile] = {
     "juniper_vjunosrouter": VJUNOS_ROUTER,
     "juniper_vjunosswitch": VJUNOS_SWITCH,
     "juniper_vjunosevolved": VJUNOS_EVOLVED,
     "juniper_crpd": CRPD,
+    "arista_ceos": ARISTA_CEOS,
 }
 
 

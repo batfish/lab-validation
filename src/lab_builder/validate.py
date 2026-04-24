@@ -42,7 +42,12 @@ def _find_node(nodes: list[NodeInfo], name: str) -> NodeInfo | None:
     return None
 
 
-def check_interface_up(node: NodeInfo, interface: str) -> CheckResult:
+# ---------------------------------------------------------------------------
+# Junos checks
+# ---------------------------------------------------------------------------
+
+
+def _junos_check_interface_up(node: NodeInfo, interface: str) -> CheckResult:
     """Check that an interface is operationally up with no hardware-down flag.
 
     For logical interfaces (e.g., irb.100), checks the parent physical
@@ -98,7 +103,7 @@ def check_interface_up(node: NodeInfo, interface: str) -> CheckResult:
     )
 
 
-def check_route_exists(node: NodeInfo, table: str, prefix: str) -> CheckResult:
+def _junos_check_route_exists(node: NodeInfo, table: str, prefix: str) -> CheckResult:
     """Check that a route exists in a specific routing table."""
     try:
         output = run_command(
@@ -126,7 +131,7 @@ def check_route_exists(node: NodeInfo, table: str, prefix: str) -> CheckResult:
     )
 
 
-def check_bgp_peer_established(node: NodeInfo, neighbor: str) -> CheckResult:
+def _junos_check_bgp_peer(node: NodeInfo, neighbor: str) -> CheckResult:
     """Check that a specific BGP peer is in Established state."""
     try:
         output = run_command(node, "show bgp neighbor | display json")
@@ -138,7 +143,6 @@ def check_bgp_peer_established(node: NodeInfo, neighbor: str) -> CheckResult:
 
     for peer in data.get("bgp-information", [{}])[0].get("bgp-peer", []):
         addr = peer.get("peer-address", [{}])[0].get("data", "")
-        # Junos sometimes appends +port to the address
         addr_clean = addr.split("+")[0]
         if addr_clean == neighbor:
             state = peer.get("peer-state", [{}])[0].get("data", "")
@@ -159,6 +163,121 @@ def check_bgp_peer_established(node: NodeInfo, neighbor: str) -> CheckResult:
     return CheckResult(
         "bgp_peer_established", node.name, False, f"{neighbor}: peer not found"
     )
+
+
+# ---------------------------------------------------------------------------
+# Arista EOS checks
+# ---------------------------------------------------------------------------
+
+
+def _arista_check_interface_up(node: NodeInfo, interface: str) -> CheckResult:
+    """Check that an interface is operationally up on Arista EOS."""
+    try:
+        output = run_command(node, f"show interfaces {interface} | json")
+        data = json.loads(output)
+    except Exception as e:
+        return CheckResult("interface_up", node.name, False, f"command failed: {e}")
+
+    interfaces = data.get("interfaces", {})
+    if interface not in interfaces:
+        return CheckResult(
+            "interface_up", node.name, False, f"{interface}: not found in output"
+        )
+
+    intf = interfaces[interface]
+    line_status = intf.get("lineProtocolStatus", "")
+    intf_status = intf.get("interfaceStatus", "")
+    if line_status == "up" and intf_status == "connected":
+        return CheckResult(
+            "interface_up", node.name, True, f"{interface}: connected/up"
+        )
+    return CheckResult(
+        "interface_up",
+        node.name,
+        False,
+        f"{interface}: interfaceStatus={intf_status}, lineProtocol={line_status}",
+    )
+
+
+def _arista_check_route_exists(node: NodeInfo, table: str, prefix: str) -> CheckResult:
+    """Check that a route exists in a VRF routing table on Arista EOS.
+
+    The 'table' parameter uses Junos-style names (e.g., 'Tenant_A.inet.0').
+    For Arista, we extract the VRF name (part before '.inet.0') and query
+    'show ip route vrf <vrf> <prefix> | json'.
+    """
+    vrf = table.split(".")[0] if "." in table else table
+    try:
+        output = run_command(node, f"show ip route vrf {vrf} {prefix} | json")
+        data = json.loads(output)
+    except Exception as e:
+        return CheckResult("route_exists", node.name, False, f"command failed: {e}")
+
+    vrfs = data.get("vrfs", {})
+    vrf_info = vrfs.get(vrf, {})
+    routes = vrf_info.get("routes", {})
+    if prefix in routes:
+        return CheckResult("route_exists", node.name, True, f"{prefix} in {vrf}: found")
+
+    return CheckResult(
+        "route_exists", node.name, False, f"{prefix} in {vrf}: not found"
+    )
+
+
+def _arista_check_bgp_peer(node: NodeInfo, neighbor: str) -> CheckResult:
+    """Check that a specific BGP peer is in Established state on Arista EOS."""
+    try:
+        output = run_command(node, "show ip bgp summary | json")
+        data = json.loads(output)
+    except Exception as e:
+        return CheckResult(
+            "bgp_peer_established", node.name, False, f"command failed: {e}"
+        )
+
+    for vrf_info in data.get("vrfs", {}).values():
+        peers = vrf_info.get("peers", {})
+        if neighbor in peers:
+            state = peers[neighbor].get("peerState", "")
+            if state == "Established":
+                return CheckResult(
+                    "bgp_peer_established",
+                    node.name,
+                    True,
+                    f"{neighbor}: Established",
+                )
+            return CheckResult(
+                "bgp_peer_established",
+                node.name,
+                False,
+                f"{neighbor}: {state}",
+            )
+
+    return CheckResult(
+        "bgp_peer_established", node.name, False, f"{neighbor}: peer not found"
+    )
+
+
+# ---------------------------------------------------------------------------
+# Dispatch
+# ---------------------------------------------------------------------------
+
+
+def check_interface_up(node: NodeInfo, interface: str) -> CheckResult:
+    if node.profile.name == "arista":
+        return _arista_check_interface_up(node, interface)
+    return _junos_check_interface_up(node, interface)
+
+
+def check_route_exists(node: NodeInfo, table: str, prefix: str) -> CheckResult:
+    if node.profile.name == "arista":
+        return _arista_check_route_exists(node, table, prefix)
+    return _junos_check_route_exists(node, table, prefix)
+
+
+def check_bgp_peer_established(node: NodeInfo, neighbor: str) -> CheckResult:
+    if node.profile.name == "arista":
+        return _arista_check_bgp_peer(node, neighbor)
+    return _junos_check_bgp_peer(node, neighbor)
 
 
 CHECK_FUNCTIONS = {
