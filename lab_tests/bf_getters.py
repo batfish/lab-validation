@@ -1,3 +1,5 @@
+from collections import defaultdict
+
 import pandas as pd
 from pybatfish.datamodel.answer import TableAnswer
 
@@ -9,6 +11,57 @@ from lab_validation.validators.batfish_models.routes import (
     EvpnRibRoute,
     MainRibRoute,
 )
+
+_VLAN_IFACE_PREFIXES = ("irb.", "vlan")
+
+
+def get_vni_backed_ifaces(
+    interface_properties: TableAnswer, l2_vni_properties: pd.DataFrame
+) -> dict[str, set[str]]:
+    """Compute the set of VLAN/IRB interface names with VNI backing per node.
+
+    Combines L2 VNIs (from vxlanVniProperties, which provides VLAN numbers
+    directly) and L3 VNIs (detected by nve~ interfaces sharing a VRF with a
+    VLAN/IRB interface in interfaceProperties).
+    """
+    # Build L2 VNI VLAN numbers per node
+    l2_vlans: dict[str, set[int]] = defaultdict(set)
+    for _, row in l2_vni_properties.iterrows():
+        l2_vlans[row["Node"]].add(int(row["VLAN"]))
+
+    # Scan interfaceProperties for nve~ VRFs and VLAN/IRB interfaces
+    nve_vrfs: dict[str, set[str]] = defaultdict(set)
+    ifaces_by_vrf: dict[str, dict[str, list[str]]] = defaultdict(
+        lambda: defaultdict(list)
+    )
+    for r in interface_properties.rows:
+        hostname = r["Interface"]["hostname"]
+        iface = r["Interface"]["interface"]
+        vrf = r["VRF"]
+        if iface.startswith("nve~"):
+            nve_vrfs[hostname].add(vrf)
+        if iface.lower().startswith(_VLAN_IFACE_PREFIXES):
+            ifaces_by_vrf[hostname][vrf].append(iface)
+
+    # Collect VNI-backed interface names
+    result: dict[str, set[str]] = defaultdict(set)
+
+    # L2 VNIs: match VLAN number from vxlanVniProperties to interface names.
+    # Interface naming: irb.{vlan} (Junos) or Vlan{vlan} (NX-OS/EOS).
+    for hostname, vlans in l2_vlans.items():
+        for vrf_ifaces in ifaces_by_vrf[hostname].values():
+            for iface in vrf_ifaces:
+                for vlan in vlans:
+                    if iface == f"irb.{vlan}" or iface.lower() == f"vlan{vlan}":
+                        result[hostname].add(iface)
+
+    # L3 VNIs: any VLAN/IRB in a VRF that also has an nve~ interface
+    for hostname, vrfs in nve_vrfs.items():
+        for vrf in vrfs:
+            for iface in ifaces_by_vrf[hostname].get(vrf, []):
+                result[hostname].add(iface)
+
+    return dict(result)
 
 
 def get_batfish_interfaces(

@@ -1,7 +1,7 @@
 import ipaddress
 from collections.abc import Sequence
 from pathlib import Path
-from typing import Any
+from typing import AbstractSet, Any
 
 from lab_validation.parsers.fortios.commands.interfaces import (
     parse_get_system_interface,
@@ -100,7 +100,9 @@ class FortiosValidator(VendorValidator):
         raise ValidationError("Not implemented")
 
     def validate_interface_properties(
-        self, batfish_interfaces: Sequence[InterfaceProperties]
+        self,
+        batfish_interfaces: Sequence[InterfaceProperties],
+        vni_ifaces: AbstractSet[str],
     ) -> dict[Any, Any]:
         """Validating interfaces"""
         fortios_ifaces, fortios_phys_ifaces = self._get_interfaces()

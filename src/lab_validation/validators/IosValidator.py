@@ -1,7 +1,7 @@
 import math
 from collections.abc import Sequence
 from pathlib import Path
-from typing import Any
+from typing import AbstractSet, Any
 
 from pybatfish.datamodel import (
     NextHop,
@@ -54,7 +54,9 @@ class IosValidator(VendorValidator):
         return matched_pairs_to_failures(matched_routes)
 
     def validate_interface_properties(
-        self, batfish_interfaces: Sequence[InterfaceProperties]
+        self,
+        batfish_interfaces: Sequence[InterfaceProperties],
+        vni_ifaces: AbstractSet[str],
     ) -> dict[Any, Any]:
         if_file = self.device_path / "show_interfaces.txt"
         ios_interfaces = parse_show_interfaces(if_file.read_text())

@@ -1,7 +1,7 @@
 import math
 from collections.abc import Sequence
 from pathlib import Path
-from typing import Any
+from typing import AbstractSet, Any
 
 from pybatfish.datamodel import NextHop, NextHopDiscard, NextHopInterface, NextHopIp
 
@@ -44,7 +44,9 @@ class PanosValidator(VendorValidator):
         raise ValidationError("Not implemented")
 
     def validate_interface_properties(
-        self, batfish_interfaces: Sequence[InterfaceProperties]
+        self,
+        batfish_interfaces: Sequence[InterfaceProperties],
+        vni_ifaces: AbstractSet[str],
     ) -> dict[Any, Any]:
         """Validating interfaces"""
         raise ValidationError("Not implemented")

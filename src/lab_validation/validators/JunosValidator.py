@@ -108,7 +108,9 @@ class JunosValidator(VendorValidator):
         return self._compare_evpn_routes(real_routes, batfish_routes)
 
     def validate_interface_properties(
-        self, batfish_interfaces: Sequence[InterfaceProperties]
+        self,
+        batfish_interfaces: Sequence[InterfaceProperties],
+        vni_ifaces: AbstractSet[str],
     ) -> dict[Any, Any]:
         real_interfaces = self._parse_interface()
 
@@ -129,7 +131,7 @@ class JunosValidator(VendorValidator):
         # Get the diff for common interfaces
         for name in real_index.keys() & batfish_index.keys():
             diff = JunosValidator._compare_interfaces(
-                real_index[name], batfish_index[name]
+                real_index[name], batfish_index[name], vni_ifaces
             )
             if diff:
                 diffs[name] = diff
@@ -191,13 +193,22 @@ class JunosValidator(VendorValidator):
 
     @staticmethod
     def _compare_interfaces(
-        real_interface: JunosInterface, batfish_interface: InterfaceProperties
+        real_interface: JunosInterface,
+        batfish_interface: InterfaceProperties,
+        vni_ifaces: AbstractSet[str] = frozenset(),
     ) -> dict[str, str]:
         diff = {}
 
         is_mgmt = batfish_interface.name.startswith(("em", "fxp"))
-        if not is_mgmt:
-            # Batfish deactivates management interfaces
+        # IRB interfaces backed by VXLAN VNIs are inactive pre-dataplane in
+        # Batfish but come up once VXLAN tunnels establish on the real device.
+        is_vni_predataplane = (
+            not batfish_interface.active
+            and real_interface.state.admin
+            and real_interface.state.line
+            and batfish_interface.name in vni_ifaces
+        )
+        if not is_mgmt and not is_vni_predataplane:
             if batfish_interface.active != (
                 real_interface.state.admin and real_interface.state.line
             ):
@@ -356,7 +367,10 @@ class JunosValidator(VendorValidator):
 
         failures: dict[Any, Any] = {}
         for k in common_keys:
-            diff = JunosValidator._compare_bgp_rib_routes(real[k], batfish[k])
+            active_real = {r for r in real[k] if r.is_active}
+            if not active_real:
+                continue
+            diff = JunosValidator._compare_bgp_rib_routes(active_real, batfish[k])
             if len(diff) != 0:
                 failures[k] = diff
         for k in missing_keys:
@@ -376,8 +390,42 @@ class JunosValidator(VendorValidator):
         real_routes: AbstractSet[JunosBgpRoute],
         batfish_routes: AbstractSet[BgpRibRoute],
     ) -> dict[str, str]:
-        real_route: JunosBgpRoute = next(iter(real_routes))
-        batfish_route: BgpRibRoute = next(iter(batfish_routes))
+        unmatched_real = list(real_routes)
+        unmatched_bf = list(batfish_routes)
+
+        # First pass: remove exact matches
+        for bf_route in list(unmatched_bf):
+            for real_route in list(unmatched_real):
+                if not JunosValidator._diff_single_bgp_route(real_route, bf_route):
+                    unmatched_real.remove(real_route)
+                    unmatched_bf.remove(bf_route)
+                    break
+
+        # Second pass: pair remaining by closest match for informative diffs
+        diff: dict[str, str] = {}
+        for bf_route in list(unmatched_bf):
+            if not unmatched_real:
+                break
+            best_real = min(
+                unmatched_real,
+                key=lambda r: len(JunosValidator._diff_single_bgp_route(r, bf_route)),
+            )
+            diff.update(JunosValidator._diff_single_bgp_route(best_real, bf_route))
+            unmatched_real.remove(best_real)
+            unmatched_bf.remove(bf_route)
+
+        for bf_r in unmatched_bf:
+            diff[f"extra_batfish_{bf_r.as_path}"] = f"Batfish has extra route: {bf_r}"
+        for real_r in unmatched_real:
+            diff[f"missing_batfish_{real_r.as_path}"] = (
+                f"Batfish is missing route: {real_r}"
+            )
+        return diff
+
+    @staticmethod
+    def _diff_single_bgp_route(
+        real_route: JunosBgpRoute, batfish_route: BgpRibRoute
+    ) -> dict[str, str]:
         diff: dict[str, str] = {}
         real_metric = 0 if real_route.metric is None else real_route.metric
 

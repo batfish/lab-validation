@@ -1,7 +1,7 @@
 import math
 from collections.abc import Sequence
 from os import PathLike, path
-from typing import Any
+from typing import AbstractSet, Any
 
 from pybatfish.datamodel import NextHop, NextHopDiscard, NextHopInterface, NextHopIp
 
@@ -72,7 +72,9 @@ class CumulusFrrValidator(VendorValidator):
         )
 
     def validate_interface_properties(
-        self, batfish_interfaces: Sequence[InterfaceProperties]
+        self,
+        batfish_interfaces: Sequence[InterfaceProperties],
+        vni_ifaces: AbstractSet[str],
     ) -> dict[Any, Any]:
         return self._compare_all_interfaces(self._show_interfaces(), batfish_interfaces)
 
