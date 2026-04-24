@@ -120,6 +120,7 @@ def test_parse_show_bgp_evpn_json() -> None:
             is_active=True,
             route_distinguisher="2.2.2.2:4001",
             origin="Igp",
+            origin_protocol="bgp",
         ),
         AristaEvpnRoute(
             vrf="default",
@@ -132,6 +133,7 @@ def test_parse_show_bgp_evpn_json() -> None:
             is_active=False,
             route_distinguisher="2.2.2.2:4001",
             origin="Igp",
+            origin_protocol="ibgp",
         ),
         AristaEvpnRoute(
             vrf="default",
@@ -144,5 +146,6 @@ def test_parse_show_bgp_evpn_json() -> None:
             is_active=True,
             route_distinguisher="3.2.2.2:4001",
             origin="Igp",
+            origin_protocol="bgp",
         ),
     ]
