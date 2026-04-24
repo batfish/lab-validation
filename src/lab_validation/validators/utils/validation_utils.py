@@ -3,7 +3,6 @@ from collections.abc import Callable, Sequence
 from typing import (
     Any,
     TypeVar,
-    Union,
 )
 
 import attr
@@ -12,24 +11,13 @@ from ..batfish_models.routes import BgpRibRoute
 
 T = TypeVar("T")
 S = TypeVar("S")
-CostResult = Union[Sequence[tuple[str, float] | float], float]
+CostResult = Sequence[tuple[str, float]]
 CostFn = Callable[[S, T], CostResult]
 
 
 def cost_total(left: S, right: T, cost: CostFn) -> float:
-    """Returns the total cost after applying the given cost function to left and right.
-
-    Handles all the union complexities of CostFn."""
-    result: CostResult = cost(left, right)
-    if isinstance(result, float):
-        return result
-    ret = 0.0
-    for c in result:
-        if isinstance(c, float):
-            ret += c
-        else:
-            ret += c[1]
-    return ret
+    """Returns the total cost after applying the given cost function to left and right."""
+    return sum(c for _, c in cost(left, right))
 
 
 def match_pairs(
@@ -70,7 +58,7 @@ def match_pairs(
             None,
         )
         if matched_left is not None:
-            result.append((matched_left, r, 0))
+            result.append((matched_left, r, []))
             used_left.append(matched_left)
             used_right.add(r)
 
@@ -92,9 +80,9 @@ def match_pairs(
             result.append((l, best_right, cost(l, best_right)))
             used_right.add(best_right)
         else:
-            result.append((l, None, math.inf))
+            result.append((l, None, [("unmatched", math.inf)]))
     for r in set(right) - used_right:
-        result.append((None, r, math.inf))
+        result.append((None, r, [("unmatched", math.inf)]))
     return result
 
 

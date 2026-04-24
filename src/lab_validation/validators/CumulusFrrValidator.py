@@ -196,59 +196,59 @@ class CumulusFrrValidator(VendorValidator):
         return parse_show_ip_route_vrf_all_json(routes_text)
 
     @staticmethod
-    def _diff_routes_cost(show_route: FrrIpRoute, batfish_route: MainRibRoute) -> float:
-        cost = 0.0
-        # return infinite cost if prefix does not match
+    def _diff_routes_cost(
+        show_route: FrrIpRoute, batfish_route: MainRibRoute
+    ) -> list[tuple[str, float]]:
         if show_route.network != batfish_route.network:
-            return math.inf
-        if show_route.protocol != batfish_route.protocol:
-            cost += compute_protocol_cost(show_route.protocol, batfish_route.protocol)
+            return [("network", math.inf)]
+
+        cost: list[tuple[str, float]] = []
+        cost += compute_protocol_cost(show_route.protocol, batfish_route.protocol)
 
         if show_route.metric != batfish_route.metric:
-            cost += 1.0
+            cost.append(("metric", 1.0))
         if show_route.admin_distance != batfish_route.admin:
-            cost += 1.0
+            cost.append(("admin", 1.0))
         if show_route.vrf != batfish_route.vrf:
-            cost += 1.0
+            cost.append(("vrf", 1.0))
         cost += compute_next_hop_cost(show_route, batfish_route.next_hop)
 
         return cost
 
 
-def compute_next_hop_cost(frr_route: FrrIpRoute, next_hop: NextHop) -> float:
-    """Returns a cost based on the next-hops of the routes. Takes into account null route, ip, and interface."""
+def compute_next_hop_cost(
+    frr_route: FrrIpRoute, next_hop: NextHop
+) -> list[tuple[str, float]]:
     if frr_route.blackhole and isinstance(next_hop, NextHopDiscard):
-        # Both null routes, don't compare anything else
-        return 0.0
+        return []
     if frr_route.blackhole or isinstance(next_hop, NextHopDiscard):
-        # Null route and non-null route are dang incompatible
-        return 10.0
+        return [("next_hop", 10.0)]
 
     if isinstance(next_hop, NextHopIp):
         if frr_route.next_hop_ip != next_hop.ip:
-            return 1.0
-        return 0.0
+            return [("next_hop_ip", 1.0)]
+        return []
     # For static routes with only next-hop IP, FRR includes the resolved interface,
     # so do not check that it's not present.
 
     if isinstance(next_hop, NextHopInterface):
-        cost = 0.0
+        cost: list[tuple[str, float]] = []
         if frr_route.next_hop_int != next_hop.interface:
-            # Different interfaces, not a match.
-            cost += 3.0
+            cost.append(("next_hop_int", 3.0))
         if next_hop.ip and frr_route.next_hop_ip != next_hop.ip:
-            cost += 1.0
+            cost.append(("next_hop_ip", 1.0))
         return cost
 
     raise ValueError("Unsupported next hop " + repr(next_hop))
 
 
-def compute_protocol_cost(real_protocol: str, batfish_protocol: str) -> float:
+def compute_protocol_cost(
+    real_protocol: str, batfish_protocol: str
+) -> list[tuple[str, float]]:
     if real_protocol == batfish_protocol:
-        return 0.0
+        return []
     if real_protocol == "bgp" and batfish_protocol in {"bgp", "ibgp"}:
-        # Show data doesn't distinguish different BGP types
-        return 0.0
+        return []
     if real_protocol == "ospf" and batfish_protocol in {
         "ospf",
         "ospfE1",
@@ -256,6 +256,5 @@ def compute_protocol_cost(real_protocol: str, batfish_protocol: str) -> float:
         "ospfIA",
         "ospfIS",
     }:
-        # Show data doesn't distinguish different OSPF types
-        return 0.0
-    return math.inf
+        return []
+    return [("protocol", math.inf)]

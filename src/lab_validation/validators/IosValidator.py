@@ -123,34 +123,33 @@ class IosValidator(VendorValidator):
     @staticmethod
     def _diff_bgp_routes_cost(
         ios_route_and_vrf: tuple[str, IosBgpRoute], bf_route: BgpRibRoute
-    ) -> float:
-        # return infinite cost if vrf or network subnet does not match
+    ) -> list[tuple[str, float]]:
         expected_vrf = ios_route_and_vrf[0]
         if expected_vrf != bf_route.vrf:
-            return math.inf
+            return [("vrf", math.inf)]
         ios_route = ios_route_and_vrf[1]
         if ios_route.network != bf_route.network:
-            return math.inf
+            return [("network", math.inf)]
 
-        cost = 0.0
+        cost: list[tuple[str, float]] = []
 
         if bf_route.metric != ios_route.metric:
-            cost += 1.0
+            cost.append(("metric", 1.0))
 
         if bf_route.local_preference != ios_route.local_preference:
-            cost += 1.0
+            cost.append(("local_preference", 1.0))
 
         if bf_route.weight != ios_route.weight:
-            cost += 1.0
+            cost.append(("weight", 1.0))
 
         if bf_route.as_path != ios_route.as_path:
             # TODO Better AS path comparison
-            cost += 1.0
+            cost.append(("as_path", 1.0))
 
         if not IosValidator._bgp_origin_type_compatible(
             bf_route.origin_type, ios_route.origin_type
         ):
-            cost += 1.0
+            cost.append(("origin_type", 1.0))
 
         cost += IosValidator.compute_bgp_nexthop_cost(ios_route, bf_route.next_hop)
 
@@ -161,19 +160,23 @@ class IosValidator(VendorValidator):
         return r.weight == 32768 and r.next_hop_ip == "0.0.0.0"
 
     @staticmethod
-    def compute_bgp_nexthop_cost(ios_route: IosBgpRoute, next_hop: NextHop) -> float:
+    def compute_bgp_nexthop_cost(
+        ios_route: IosBgpRoute, next_hop: NextHop
+    ) -> list[tuple[str, float]]:
         if isinstance(next_hop, NextHopDiscard):
             if IosValidator.is_local_route(ios_route):
-                return 0.0
-            return 10.0
+                return []
+            return [("next_hop", 10.0)]
 
         if isinstance(next_hop, NextHopIp):
-            return 0.0 if ios_route.next_hop_ip == next_hop.ip else 1.0
+            if ios_route.next_hop_ip == next_hop.ip:
+                return []
+            return [("next_hop_ip", 1.0)]
 
         if isinstance(next_hop, NextHopVrf):
             # It's indistinguishable in IOS show data, trust Batfish.
             # TODO: We simply need to not build labs where the same route is originated in different VRFs.
-            return 0.0
+            return []
 
         raise ValueError("Unsupported next hop " + repr(next_hop))
 
@@ -229,94 +232,88 @@ class IosValidator(VendorValidator):
     @staticmethod
     def _diff_routes_cost(
         expected_route: IosIpRoute, batfish_route: MainRibRoute
-    ) -> float:
-        cost = 0.0
+    ) -> list[tuple[str, float]]:
         if expected_route.network != batfish_route.network:
-            return math.inf
+            return [("network", math.inf)]
         if expected_route.vrf != batfish_route.vrf:
-            return math.inf
+            return [("vrf", math.inf)]
 
-        if expected_route.protocol != batfish_route.protocol:
-            cost += IosValidator.compute_protocol_cost(
-                expected_route.protocol, batfish_route.protocol
-            )
+        cost: list[tuple[str, float]] = []
+
+        cost += IosValidator.compute_protocol_cost(
+            expected_route.protocol, batfish_route.protocol
+        )
         if expected_route.metric != batfish_route.metric:
             if expected_route.protocol == "ospfIS":
                 # IOS doesn't put metric in the show output for these routes.
                 pass
             else:
-                cost += 1.0
+                cost.append(("metric", 1.0))
         if expected_route.admin != batfish_route.admin:
             if expected_route.protocol == "ospfIS":
                 # IOS doesn't put AD in the show output for these routes.
                 pass
             else:
-                cost += 1.0
+                cost.append(("admin", 1.0))
 
         cost += IosValidator._next_hop_cost(expected_route, batfish_route.next_hop)
 
         return cost
 
     @staticmethod
-    def _next_hop_cost(ios_route: IosIpRoute, next_hop: NextHop) -> float:
-        """Returns the cost of the next-hop difference."""
+    def _next_hop_cost(
+        ios_route: IosIpRoute, next_hop: NextHop
+    ) -> list[tuple[str, float]]:
         if isinstance(next_hop, NextHopDiscard):
             if ios_route.next_hop_int == "Null0":
-                return 0.0
-            # Next-hop mismatch - IOS is not null routed.
-            return 10.0
+                return []
+            return [("next_hop", 10.0)]
         elif ios_route.next_hop_int == "Null0":
-            # Next-hop mismatch - Batfish is not null routed.
-            return 10.0
+            return [("next_hop", 10.0)]
 
         if isinstance(next_hop, NextHopInterface):
-            cost = 0.0
+            cost: list[tuple[str, float]] = []
             if (
                 ios_route.next_hop_int is None
                 or ios_route.next_hop_int.lower() != next_hop.interface.lower()
             ):
-                cost += 1.0
+                cost.append(("next_hop_int", 1.0))
             if next_hop.ip is not None and next_hop.ip != ios_route.next_hop_ip:
-                cost += 1.0
+                cost.append(("next_hop_ip", 1.0))
             return cost
 
         if isinstance(next_hop, NextHopIp):
             if next_hop.ip != ios_route.next_hop_ip:
-                return 1.0
-            return 0.0
+                return [("next_hop_ip", 1.0)]
+            return []
 
         if isinstance(next_hop, NextHopVrf):
             if next_hop.vrf != ios_route.vrf:
-                return 5.0
-            return 0.0
+                return [("next_hop_vrf", 5.0)]
+            return []
 
         raise ValueError("Unsupported next hop " + repr(next_hop))
 
     @staticmethod
-    def compute_protocol_cost(ios_protocol: str, batfish_protocol: str) -> float:
-        """
-        Computes the protocol cost, given that they are not equal.
-        Return 0, when ios is bgp and batfish is bgp sub-types as ios does provide bgp sub-type info.
-        Return 1, when protocols are from ospf sub-types.
-        Return math.inf, when they are totally different protocols. Examples bgp & ospf, ospf & eigrp etc...
-        :param ios_protocol:
-        :param batfish_protocol:
-        :return: cost
-        """
+    def compute_protocol_cost(
+        ios_protocol: str, batfish_protocol: str
+    ) -> list[tuple[str, float]]:
+        if ios_protocol == batfish_protocol:
+            return []
 
         # IOS does not provide granular(IBGP/EBGP) info. IOS will only show `bgp`, while Batfish will say IBGP.
         if ios_protocol == "bgp" and batfish_protocol in {"ibgp", "bgp"}:
-            return 0.0
+            return []
 
         # Both IOS and Batfish model OSPF subtype. So if they disagree, return 1.
         ospf_sub_types = {"ospf", "ospfE1", "ospfE2", "ospfIA"}
         if ios_protocol in ospf_sub_types and batfish_protocol in ospf_sub_types:
-            return 1.0
+            return [("protocol", 1.0)]
 
         # Both IOS and Batfish model EIGRP subtype. So if they disagree, return 1.
         eigrp_sub_types = {"eigrp", "eigrpEX"}
         if ios_protocol in eigrp_sub_types and batfish_protocol in eigrp_sub_types:
-            return 1.0
+            return [("protocol", 1.0)]
 
         # Protocols are completely different. (TODO: update when we have labs with other protocols that have subtypes)
-        return math.inf
+        return [("protocol", math.inf)]

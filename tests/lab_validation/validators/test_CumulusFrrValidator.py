@@ -158,7 +158,9 @@ def test_diff_routes_cost_nhint_mismatch() -> None:
         metric=0,
         admin=0,
     )
-    assert CumulusFrrValidator._diff_routes_cost(show_route, batfish_route) == 3.0
+    assert CumulusFrrValidator._diff_routes_cost(show_route, batfish_route) == [
+        ("next_hop_int", 3.0)
+    ]
 
 
 def test_diff_routes_cost_blackhole_match() -> None:
@@ -182,7 +184,7 @@ def test_diff_routes_cost_blackhole_match() -> None:
         metric=0,
         admin=0,
     )
-    assert CumulusFrrValidator._diff_routes_cost(show_route, batfish_route) == 0.0
+    assert CumulusFrrValidator._diff_routes_cost(show_route, batfish_route) == []
 
 
 def test_diff_routes_cost_blackhole_mismatch() -> None:
@@ -206,7 +208,9 @@ def test_diff_routes_cost_blackhole_mismatch() -> None:
         metric=0,
         admin=0,
     )
-    assert CumulusFrrValidator._diff_routes_cost(show_route, batfish_route) == 10.0
+    assert CumulusFrrValidator._diff_routes_cost(show_route, batfish_route) == [
+        ("next_hop", 10.0)
+    ]
 
 
 def test_diff_routes_cost_nhint_ignore() -> None:
@@ -230,7 +234,7 @@ def test_diff_routes_cost_nhint_ignore() -> None:
         metric=0,
         admin=1,
     )
-    assert CumulusFrrValidator._diff_routes_cost(show_route, batfish_route) == 0.0
+    assert CumulusFrrValidator._diff_routes_cost(show_route, batfish_route) == []
 
 
 def test_show_route_processed_update_vrf() -> None:
@@ -291,7 +295,7 @@ def test_match_pairs_single_route_equal() -> None:
         match_pairs(show_route, batfish_route, CumulusFrrValidator._diff_routes_cost)[
             0
         ][2]
-        == 0
+        == []
     )
 
 
@@ -322,12 +326,9 @@ def test_match_pairs_single_route_not_equal() -> None:
         ),
     ]
 
-    assert (
-        match_pairs(show_route, batfish_route, CumulusFrrValidator._diff_routes_cost)[
-            0
-        ][2]
-        == math.inf
-    )
+    assert match_pairs(
+        show_route, batfish_route, CumulusFrrValidator._diff_routes_cost
+    )[0][2] == [("unmatched", math.inf)]
 
 
 def test_match_pairs_single_route_attribute_mismatch() -> None:
@@ -358,12 +359,9 @@ def test_match_pairs_single_route_attribute_mismatch() -> None:
         ),
     ]
 
-    assert (
-        match_pairs(show_route, batfish_route, CumulusFrrValidator._diff_routes_cost)[
-            0
-        ][2]
-        == 2
-    )
+    assert match_pairs(
+        show_route, batfish_route, CumulusFrrValidator._diff_routes_cost
+    )[0][2] == [("metric", 1.0), ("admin", 1.0)]
 
 
 def test_match_pairs_ecmp_route_equal() -> None:
@@ -416,13 +414,13 @@ def test_match_pairs_ecmp_route_equal() -> None:
         match_pairs(show_route, batfish_route, CumulusFrrValidator._diff_routes_cost)[
             0
         ][2]
-        == 0
+        == []
     )
     assert (
         match_pairs(show_route, batfish_route, CumulusFrrValidator._diff_routes_cost)[
             1
         ][2]
-        == 0
+        == []
     )
 
 
@@ -472,18 +470,12 @@ def test_match_pairs_ecmp_route_not_equal() -> None:
             tag=None,
         ),
     ]
-    assert (
-        match_pairs(show_route, batfish_route, CumulusFrrValidator._diff_routes_cost)[
-            0
-        ][2]
-        == 2
-    )
-    assert (
-        match_pairs(show_route, batfish_route, CumulusFrrValidator._diff_routes_cost)[
-            1
-        ][2]
-        == 2
-    )
+    assert match_pairs(
+        show_route, batfish_route, CumulusFrrValidator._diff_routes_cost
+    )[0][2] == [("metric", 1.0), ("admin", 1.0)]
+    assert match_pairs(
+        show_route, batfish_route, CumulusFrrValidator._diff_routes_cost
+    )[1][2] == [("metric", 1.0), ("admin", 1.0)]
 
 
 def test_match_pairs_static_route_ip() -> None:
@@ -518,7 +510,7 @@ def test_match_pairs_static_route_ip() -> None:
         match_pairs(show_route, batfish_route, CumulusFrrValidator._diff_routes_cost)[
             0
         ][2]
-        == 0
+        == []
     )
 
 
@@ -554,24 +546,24 @@ def test_match_pairs_static_route_interface() -> None:
         match_pairs(show_route, batfish_route, CumulusFrrValidator._diff_routes_cost)[
             0
         ][2]
-        == 0
+        == []
     )
 
 
 def test_compute_protocol_cost() -> None:
     """Test the custom protocol differ."""
-    assert compute_protocol_cost("connected", "connected") == 0
+    assert compute_protocol_cost("connected", "connected") == []
 
-    assert compute_protocol_cost("static", "static") == 0
+    assert compute_protocol_cost("static", "static") == []
 
-    assert compute_protocol_cost("bgp", "bgp") == 0
-    assert compute_protocol_cost("bgp", "ibgp") == 0
+    assert compute_protocol_cost("bgp", "bgp") == []
+    assert compute_protocol_cost("bgp", "ibgp") == []
 
-    assert compute_protocol_cost("ospf", "ospf") == 0
-    assert compute_protocol_cost("ospf", "ospfIA") == 0
-    assert compute_protocol_cost("ospf", "ospfE1") == 0
-    assert compute_protocol_cost("ospf", "ospfE2") == 0
-    assert compute_protocol_cost("ospf", "ospfIS") == 0
+    assert compute_protocol_cost("ospf", "ospf") == []
+    assert compute_protocol_cost("ospf", "ospfIA") == []
+    assert compute_protocol_cost("ospf", "ospfE1") == []
+    assert compute_protocol_cost("ospf", "ospfE2") == []
+    assert compute_protocol_cost("ospf", "ospfIS") == []
 
-    assert compute_protocol_cost("ospf", "bgp") == math.inf
-    assert compute_protocol_cost("connected", "static") == math.inf
+    assert compute_protocol_cost("ospf", "bgp") == [("protocol", math.inf)]
+    assert compute_protocol_cost("connected", "static") == [("protocol", math.inf)]

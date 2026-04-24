@@ -63,33 +63,37 @@ class PanosValidator(VendorValidator):
     @staticmethod
     def _diff_routes_cost(
         expected_route: PanosMainRibRoute, batfish_route: MainRibRoute
-    ) -> float:
-        cost = 0.0
+    ) -> list[tuple[str, float]]:
         expected_network_tokens = expected_route.network.split("/")
         batfish_network_tokens = batfish_route.network.split("/")
-        # return infinite cost if vrf or network subnet does not match
         if expected_network_tokens[0] != batfish_network_tokens[0]:
-            return math.inf
+            return [("network", math.inf)]
         if expected_route.virtual_router != batfish_route.vrf:
-            return math.inf
+            return [("vrf", math.inf)]
+
+        cost: list[tuple[str, float]] = []
 
         if expected_network_tokens[1] != batfish_network_tokens[1]:
-            cost += abs(
-                float(expected_network_tokens[1]) - float(batfish_network_tokens[1])
+            cost.append(
+                (
+                    "prefix_length",
+                    abs(
+                        float(expected_network_tokens[1])
+                        - float(batfish_network_tokens[1])
+                    ),
+                )
             )
 
-        expected_protocol = expected_route.get_protocol()
-        if expected_protocol != batfish_route.protocol:
-            cost += PanosValidator.compute_protocol_cost(
-                expected_protocol, batfish_route.protocol
-            )
+        cost += PanosValidator.compute_protocol_cost(
+            expected_route.get_protocol(), batfish_route.protocol
+        )
 
         if expected_route.metric != batfish_route.metric:
             # show data metric missing(none) means 0. So, skipping that case
             if expected_route.metric is None and batfish_route.metric == 0:
                 pass
             else:
-                cost += 1.0
+                cost.append(("metric", 1.0))
 
         cost += PanosValidator.compute_nexthop_cost(
             expected_route, batfish_route.next_hop
@@ -100,47 +104,43 @@ class PanosValidator(VendorValidator):
     @staticmethod
     def compute_nexthop_cost(
         expected_route: PanosMainRibRoute, next_hop: NextHop
-    ) -> float:
-        # null route section
+    ) -> list[tuple[str, float]]:
         if expected_route.next_hop_ip == "discard" and isinstance(
             next_hop, NextHopDiscard
         ):
-            return 0.0
+            return []
         elif expected_route.next_hop_ip == "discard" or isinstance(
             next_hop, NextHopDiscard
         ):
-            # Only one is null-routed.
-            return 10.0
+            return [("next_hop", 10.0)]
 
-        # nh_ip section
         if isinstance(next_hop, NextHopIp):
             if expected_route.next_hop_ip == next_hop.ip:
-                return 0.0
-            return 1.0
+                return []
+            return [("next_hop_ip", 1.0)]
 
         if isinstance(next_hop, NextHopInterface):
-            cost = 0.0
+            cost: list[tuple[str, float]] = []
             if next_hop.interface != expected_route.next_hop_int:
                 if "H" not in expected_route.flags:
                     # PanOS Host routes (local routes) do not have the interface listed
-                    cost += 1.0
+                    cost.append(("next_hop_int", 1.0))
             if next_hop.ip is not None and next_hop.ip != expected_route.next_hop_ip:
-                cost += 1.0
+                cost.append(("next_hop_ip", 1.0))
             return cost
 
         raise ValueError("Unsupported next hop " + repr(next_hop))
 
     @staticmethod
-    def compute_protocol_cost(panos_protocol: str, batfish_protocol: str) -> float:
-        """
-        Computes the protocol cost, given that they are not equal.
-        Return math.inf when they are totally different protocols. Examples bgp & ospf, ospf & eigrp etc...
-        """
+    def compute_protocol_cost(
+        panos_protocol: str, batfish_protocol: str
+    ) -> list[tuple[str, float]]:
+        if panos_protocol == batfish_protocol:
+            return []
 
         # Return 0 when panos is bgp and batfish is bgp sub-type; panos does not provide bgp sub-type info.
         if panos_protocol == "bgp" and batfish_protocol in {"ibgp", "bgp"}:
-            return 0.0
+            return []
 
         # TODO: Add cases for more protocols (e.g. OSPF, EIGRP) as PAN showparser supports them.
-        # Protocols are completely different.
-        return math.inf
+        return [("protocol", math.inf)]

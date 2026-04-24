@@ -405,61 +405,41 @@ def _bgp_routes_cost(
 
 def _routes_cost(
     expected_route: JunosMainRibRoute, batfish_route: MainRibRoute
-) -> float:
-    """A cost function between Juniper show routes and Batfish routes for the main RIB"""
-
-    # Different networks, different VRFs, are wholly incompatible.
+) -> list[tuple[str, float]]:
     if expected_route.network != batfish_route.network:
-        return math.inf
+        return [("network", math.inf)]
     if expected_route.vrf != batfish_route.vrf:
-        return math.inf
+        return [("vrf", math.inf)]
 
-    cost = 0.0
+    cost: list[tuple[str, float]] = []
 
     cost += _compute_protocol_cost(expected_route, batfish_route)
     cost += _compute_nexthop_cost(expected_route, batfish_route.next_hop)
 
     if (expected_route.metric or 0) != batfish_route.metric:
-        cost += 1.0
+        cost.append(("metric", 1.0))
     if expected_route.admin != batfish_route.admin:
-        cost += 1.0
+        cost.append(("admin", 1.0))
 
     return cost
 
 
 def _compute_protocol_cost(
     expected_route: JunosMainRibRoute, batfish_route: MainRibRoute
-) -> float:
-    if expected_route.protocol == "Direct":
-        if batfish_route.protocol == "connected":
-            return 0.0
-        return math.inf
-    if expected_route.protocol == "Local":
-        if batfish_route.protocol == "local":
-            return 0.0
-        return math.inf
-    if expected_route.protocol == "Aggregate":
-        if batfish_route.protocol == "aggregate":
-            return 0.0
-        return math.inf
-    if expected_route.protocol == "Static":
-        if batfish_route.protocol == "static":
-            return 0.0
-        return math.inf
-    if expected_route.protocol == "BGP":
-        if batfish_route.protocol in {"bgp", "ibgp"}:
-            return 0.0
-        return math.inf
-    if expected_route.protocol == "EVPN":
-        if batfish_route.protocol in {"bgp", "ibgp"}:
-            return 0.0
-        return math.inf
-    if expected_route.protocol == "OSPF":
-        if batfish_route.protocol in {"ospf", "ospfE1", "ospfE2", "ospfIA", "ospfIS"}:
-            return 0.0
-        return math.inf
-
-    return math.inf
+) -> list[tuple[str, float]]:
+    _PROTOCOL_MAP = {
+        "Direct": {"connected"},
+        "Local": {"local"},
+        "Aggregate": {"aggregate"},
+        "Static": {"static"},
+        "BGP": {"bgp", "ibgp"},
+        "EVPN": {"bgp", "ibgp"},
+        "OSPF": {"ospf", "ospfE1", "ospfE2", "ospfIA", "ospfIS"},
+    }
+    valid = _PROTOCOL_MAP.get(expected_route.protocol)
+    if valid is not None and batfish_route.protocol in valid:
+        return []
+    return [("protocol", math.inf)]
 
 
 def _is_mgmt_iface(junos_name: str | None) -> bool:
@@ -471,54 +451,43 @@ def _is_mgmt_iface(junos_name: str | None) -> bool:
 
 def _compute_nexthop_cost(
     expected_route: JunosMainRibRoute, next_hop: NextHop
-) -> float:
+) -> list[tuple[str, float]]:
     if _is_mgmt_iface(expected_route.next_hop_int) and isinstance(
         next_hop, NextHopDiscard
     ):
-        # Batfish creates null discard routes for down management interfaces.
-        return 0.0
+        return []
 
     if expected_route.nh_type in {"Discard", "Reject"} and isinstance(
         next_hop, NextHopDiscard
     ):
-        return 0.0
+        return []
     if expected_route.nh_type in {"Discard", "Reject"} or isinstance(
         next_hop, NextHopDiscard
     ):
-        # Only one is null-routed.
-        return 10.0
+        return [("next_hop", 10.0)]
 
     if isinstance(next_hop, NextHopIp):
         if expected_route.protocol in ("Static", "BGP", "EVPN"):
             # Junos recursively resolves next-hops to underlay addresses while
-            # Batfish reports the protocol-level next-hop. For Static routes
-            # this was always the case. For BGP/EVPN it manifests in overlay
-            # topologies: e.g., a VRF BGP route with Batfish next-hop
-            # 172.16.0.100 (iBGP peer loopback) appears on Junos with
-            # next-hop 172.16.254.1 (the underlay physical hop toward that
-            # loopback). The IPs are in different address planes so comparing
-            # them would always produce false mismatches.
-            return 0.0
+            # Batfish reports the protocol-level next-hop.
+            return []
         elif expected_route.next_hop_ip == next_hop.ip:
-            return 0.0
+            return []
         else:
-            return 1.0
+            return [("next_hop_ip", 1.0)]
 
     if isinstance(next_hop, NextHopInterface):
-        cost = 0.0
+        cost: list[tuple[str, float]] = []
         if expected_route.next_hop_int != next_hop.interface:
-            cost += 5.0
+            cost.append(("next_hop_int", 5.0))
         if next_hop.ip is not None and expected_route.next_hop_ip != next_hop.ip:
-            cost += 1.0
+            cost.append(("next_hop_ip", 1.0))
         return cost
 
     if isinstance(next_hop, NextHopVtep):
         # NextHopVtep carries the VTEP IP and VNI, but Junos resolves EVPN
-        # routes to underlay physical next-hops (e.g., VTEP 172.16.0.100
-        # resolves to 172.16.254.1 via ge-0/0/1.0). The device's next_hop_ip
-        # is the resolved underlay address, not the VTEP, so they can't be
-        # meaningfully compared.
-        return 0.0
+        # routes to underlay physical next-hops.
+        return []
 
     raise ValueError("Unsupported next hop " + repr(next_hop))
 
