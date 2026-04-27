@@ -1,0 +1,43 @@
+# Preconditions for the BGP local-path experiments. These verify that
+# the lab is reachable and the BGP sessions are up. The experiments
+# themselves (which path wins for each prefix) are checked by hand
+# after this passes.
+
+checks:
+  - type: interface_up
+    node: r-upstream
+    interface: Ethernet1
+    description: "r-upstream Et1 to r-ma"
+  - type: interface_up
+    node: r-upstream
+    interface: Ethernet2
+    description: "r-upstream Et2 to r-ribd"
+  - type: interface_up
+    node: r-ma
+    interface: Ethernet1
+    description: "r-ma Et1 to r-upstream"
+  - type: interface_up
+    node: r-ribd
+    interface: Ethernet1
+    description: "r-ribd Et1 to r-upstream"
+
+  - type: route_exists
+    node: r-upstream
+    table: default
+    prefix: 10.100.0.0/24
+    description: "10.100.0.0/24 in upstream RIB"
+  - type: route_exists
+    node: r-upstream
+    table: default
+    prefix: 10.200.0.0/24
+    description: "10.200.0.0/24 in upstream RIB"
+  - type: route_exists
+    node: r-upstream
+    table: default
+    prefix: 10.101.0.0/24
+    description: "10.101.0.0/24 in upstream RIB"
+  - type: route_exists
+    node: r-upstream
+    table: default
+    prefix: 10.102.0.0/24
+    description: "10.102.0.0/24 in upstream RIB"

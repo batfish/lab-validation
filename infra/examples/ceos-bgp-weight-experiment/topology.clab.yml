@@ -1,0 +1,69 @@
+# Experiment lab: measure the effective BGP weight of locally-originated
+# paths on Arista EOS, in both multi-agent and ribd routing-protocol models.
+#
+# Background:
+#   - Arista EOS "show ip bgp ... | json" does not accurately report the
+#     weight of locally-originated paths. ribd omits the field entirely;
+#     multi-agent reports weight: 0. Batfish models such paths with 32768
+#     per the EOS manual's documented default. This mismatch produces
+#     "weight difference" failures in test_bgp_rib_routes across many
+#     labs. See lab-validation issues #6 (ribd) and #7 (multi-agent).
+#
+# What this lab measures:
+#   The only way to know the effective weight used by best-path selection
+#   is to force a tiebreak. Each test router has both a local origin and
+#   a received path for the same prefix, with `neighbor <peer> weight
+#   10000` applied to the received path. Whichever path becomes active
+#   tells us whether the local effective weight is > 10000 or < 10000.
+#
+# Prefixes:
+#   10.100.0.0/24 - Control. Stock `network 10.100.0.0/24` on the test
+#                   router. Active-path outcome reveals the default
+#                   effective weight of a locally-originated path.
+#   10.200.0.0/24 - `network 10.200.0.0/24 route-map SET_WEIGHT_50000`
+#                   on the test router, where the route-map sets weight
+#                   to 50000. If `set weight` actually takes effect on
+#                   locally-originated paths, the local path (50000)
+#                   wins over received (10000). If it doesn't, outcome
+#                   mirrors the control prefix.
+#
+# Topology:
+#
+#   r-upstream (AS 100)
+#     Loopback100 10.100.0.100/24     originates 10.100.0.0/24
+#     Loopback200 10.200.0.100/24     originates 10.200.0.0/24
+#     eth1 10.0.1.1/31 --------+
+#     eth2 10.0.2.1/31 ----+   |
+#                          |   |
+#                          |   +--- eth1 10.0.1.0/31    r-ma   (AS 200, multi-agent)
+#                          |             Loopback10 10.100.0.200/24
+#                          |             Loopback20 10.200.0.200/24
+#                          |             neighbor 10.0.1.1 weight 10000
+#                          |
+#                          +------- eth1 10.0.2.0/31    r-ribd (AS 300, ribd)
+#                                    (same config as r-ma but ribd mode)
+#
+# Both test routers peer eBGP with the same upstream using different AS
+# numbers so the routers' own advertisements are accepted back (AS-path
+# loop check sees only the upstream AS, not the local AS).
+
+name: ceos-bgp-weight-experiment
+
+topology:
+  nodes:
+    r-upstream:
+      kind: arista_ceos
+      image: ceos:4.36.0.1F
+      startup-config: configs/r-upstream.cfg
+    r-ma:
+      kind: arista_ceos
+      image: ceos:4.36.0.1F
+      startup-config: configs/r-ma.cfg
+    r-ribd:
+      kind: arista_ceos
+      image: ceos:4.36.0.1F
+      startup-config: configs/r-ribd.cfg
+
+  links:
+    - endpoints: ["r-upstream:eth1", "r-ma:eth1"]
+    - endpoints: ["r-upstream:eth2", "r-ribd:eth1"]
