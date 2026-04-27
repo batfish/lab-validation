@@ -32,6 +32,64 @@ from .batfish_models.runtime_data import InterfaceRuntimeData, NodeRuntimeData
 from .utils.validation_utils import CostResult, match_pairs, matched_pairs_to_failures
 from .vendor_validator import VendorValidator
 
+# RFC 5549 unnumbered BGP: Arista reports the peer's IPv6 link-local as the
+# next-hop (e.g. 'fe80::.../Et1') while Batfish models it with a synthetic
+# IPv4 169.254.x.x address paired with the outgoing interface.
+_IPV6_LINK_LOCAL_PREFIX = "fe80:"
+_IPV4_LINK_LOCAL_PREFIX = "169.254."
+
+# Arista interface name abbreviations used in IPv6 zone identifiers and CLI
+# short forms. Used to normalize e.g. 'Et1' into the canonical 'Ethernet1'.
+_ARISTA_IFACE_ABBREVIATIONS = {
+    "Eth": "Ethernet",
+    "Et": "Ethernet",
+    "Lo": "Loopback",
+    "Ma": "Management",
+    "Po": "Port-Channel",
+    "Vl": "Vlan",
+}
+
+
+def _canonicalize_arista_interface(name: str) -> str:
+    """Expand an abbreviated Arista interface name to its canonical form."""
+    for prefix in sorted(_ARISTA_IFACE_ABBREVIATIONS, key=len, reverse=True):
+        if (
+            name.startswith(prefix)
+            and len(name) > len(prefix)
+            and not name[len(prefix)].isalpha()
+        ):
+            return _ARISTA_IFACE_ABBREVIATIONS[prefix] + name[len(prefix) :]
+    return name
+
+
+def _split_ipv6_zone(nhip: str | None) -> tuple[str | None, str | None]:
+    """Split an IPv6 address with an optional zone identifier.
+
+    e.g. 'fe80::1%Et1' -> ('fe80::1', 'Ethernet1'); '10.0.0.1' -> ('10.0.0.1', None).
+    """
+    if nhip is None:
+        return (None, None)
+    ip, sep, zone = nhip.partition("%")
+    if not sep:
+        return (ip, None)
+    return (ip, _canonicalize_arista_interface(zone))
+
+
+def _is_rfc5549_unnumbered_match(
+    arista_nhip: str | None,
+    batfish_nhip: str | None,
+) -> bool:
+    """Return True if the device's IPv6 link-local next-hop matches Batfish's
+    synthetic IPv4 link-local next-hop used for RFC 5549 unnumbered peering."""
+    if not arista_nhip or not batfish_nhip:
+        return False
+    arista_ip, _ = _split_ipv6_zone(arista_nhip)
+    return bool(
+        arista_ip
+        and arista_ip.lower().startswith(_IPV6_LINK_LOCAL_PREFIX)
+        and batfish_nhip.startswith(_IPV4_LINK_LOCAL_PREFIX)
+    )
+
 
 class AristaValidator(VendorValidator):
     SHOW_ROUTE_FILENAME = "show_ip_route_vrf_all_|_json.txt"
@@ -207,7 +265,13 @@ class AristaValidator(VendorValidator):
                 cost.append(("asymmetric nhint", 5.0))
             elif arista_route.next_hop_int.lower() != next_hop.interface.lower():
                 cost.append(("nhint", 5.0))
-            if next_hop.ip and next_hop.ip != arista_route.next_hop_ip:
+            if (
+                next_hop.ip
+                and next_hop.ip != arista_route.next_hop_ip
+                and not _is_rfc5549_unnumbered_match(
+                    arista_route.next_hop_ip, next_hop.ip
+                )
+            ):
                 cost.append(("nhip", 1.0))
             return cost
 
@@ -305,15 +369,34 @@ class AristaValidator(VendorValidator):
         if arista_route.origin_type != batfish_route.origin_type:
             cost.append(("origin_type", 1.0))
 
-        if arista_route.next_hop_ip != batfish_route.next_hop_ip:
+        arista_ip, arista_zone = _split_ipv6_zone(arista_route.next_hop_ip)
+        batfish_nh_ip = (
+            batfish_route.next_hop.ip
+            if isinstance(batfish_route.next_hop, (NextHopIp, NextHopInterface))
+            else batfish_route.next_hop_ip
+        )
+        if arista_ip != batfish_nh_ip:
             if (
                 arista_route.next_hop_ip is None
                 and batfish_route.next_hop_ip == "AUTO/NONE(-1l)"
                 and batfish_route.next_hop_int == "null_interface"
             ):
                 pass
+            elif _is_rfc5549_unnumbered_match(arista_route.next_hop_ip, batfish_nh_ip):
+                pass
             else:
                 cost.append(("nhip", 1.0))
+
+        # For routes whose next-hop is an IPv6 link-local (e.g. unnumbered BGP),
+        # the outgoing interface is encoded in the zone identifier. Use it to
+        # disambiguate parallel paths during cost-based matching.
+        if (
+            arista_zone is not None
+            and batfish_route.next_hop_int
+            and batfish_route.next_hop_int != "dynamic"
+            and arista_zone.lower() != batfish_route.next_hop_int.lower()
+        ):
+            cost.append(("nhint", 5.0))
 
         arista_metric = 0 if arista_route.metric is None else arista_route.metric
         if batfish_route.metric != arista_metric:
