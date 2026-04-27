@@ -3,7 +3,7 @@
 !
 no aaa root
 !
-username admin privilege 15 role network-admin secret sha512 $6$SuIWy285uErsAFn9$9N4rKhjHt3/ZMtDWJH5hnvmcBNVYTj8PsiyRnjpkZnYsjnAoXGu.UWIJpfiQYZjjCqjI7uEe.LxncNXEm0Bzm/
+username admin privilege 15 role network-admin secret sha512 $6$ywW2ON.fZRUW0T1E$6O8CMf1hxcP.i/17TVSwlP7wcOKw50D2Xx/x1ykHXDxey/WGOI.k9GvmWJusLwTyty0vgaRxW/2kgniz8E.If1
 !
 no service interface inactive port-id allocation disabled
 !
@@ -31,8 +31,8 @@ interface Loopback0
    ip address 10.0.0.1/32
 !
 interface Management0
-   ip address 172.20.20.3/24
-   ipv6 address 3fff:172:20:20::3/64
+   ip address 172.20.20.2/24
+   ipv6 address 3fff:172:20:20::2/64
 !
 ip routing ipv6 interfaces 
 !
@@ -41,6 +41,7 @@ ipv6 unicast-routing
 router bgp 65000
    router-id 10.0.0.1
    no bgp default ipv4-unicast
+   maximum-paths 2 ecmp 2
    neighbor LEAVES peer group
    neighbor LEAVES remote-as 65001
    neighbor interface Ethernet1 peer-group LEAVES
