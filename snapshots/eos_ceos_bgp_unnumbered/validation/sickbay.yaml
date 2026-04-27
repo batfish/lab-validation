@@ -1,17 +1,9 @@
 entries:
   - hostname: leaf
-    test_name: test_main_rib_routes
-    skip:
-      reason: Batfish does not yet model BGP route exchange for unnumbered interface peers, https://github.com/batfish/batfish/pull/9894
-  - hostname: spine
-    test_name: test_main_rib_routes
-    skip:
-      reason: Batfish does not yet model BGP route exchange for unnumbered interface peers, https://github.com/batfish/batfish/pull/9894
-  - hostname: leaf
     test_name: test_bgp_rib_routes
     skip:
-      reason: weight difference on locally-originated route (https://github.com/batfish/lab-validation/issues/6) and missing received routes from unnumbered peers (https://github.com/batfish/batfish/pull/9894)
+      reason: weight difference on locally-originated route, https://github.com/batfish/lab-validation/issues/6
   - hostname: spine
     test_name: test_bgp_rib_routes
     skip:
-      reason: weight difference on locally-originated route (https://github.com/batfish/lab-validation/issues/6) and missing received routes from unnumbered peers (https://github.com/batfish/batfish/pull/9894)
+      reason: weight difference on locally-originated route, https://github.com/batfish/lab-validation/issues/6
