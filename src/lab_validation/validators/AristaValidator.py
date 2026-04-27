@@ -402,10 +402,18 @@ class AristaValidator(VendorValidator):
         if batfish_route.metric != arista_metric:
             cost.append(("metric", 1.0))
 
+        # Arista's "show ip bgp" omits localPreference for locally-
+        # originated paths on newer EOS (4.36+ multi-agent), parsed as
+        # None. Older EOS (4.23 ribd) reports explicit 0. In both cases
+        # the effective local-pref used on iBGP export is the BGP
+        # default 100 (see lab-validation#8 and private issue analysis).
+        # We treat None (field absent) as 100. Explicit 0 is ambiguous
+        # (could be unset-default or route-map-set-to-0) and is left
+        # as-is; mismatches from that ambiguity are tracked under #8.
         arista_local_pref = (
             arista_route.local_preference
             if arista_route.local_preference is not None
-            else 0
+            else 100
         )
         if batfish_route.local_preference != arista_local_pref:
             cost.append(("local preference", 1.0))
