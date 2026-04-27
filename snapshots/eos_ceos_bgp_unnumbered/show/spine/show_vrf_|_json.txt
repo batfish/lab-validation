@@ -1,0 +1,38 @@
+{
+    "vrfs": {
+        "default": {
+            "routeDistinguisher": "",
+            "protocols": {
+                "ipv4": {
+                    "supported": true,
+                    "protocolState": "up",
+                    "routingState": "up"
+                },
+                "ipv6": {
+                    "supported": true,
+                    "protocolState": "up",
+                    "routingState": "up"
+                }
+            },
+            "vrfState": "up",
+            "interfacesV4": [
+                "Loopback0",
+                "Ethernet1",
+                "Management0",
+                "Ethernet2"
+            ],
+            "interfacesV6": [
+                "Ethernet1",
+                "Management0",
+                "Ethernet2"
+            ],
+            "interfaces": [
+                "Loopback0",
+                "Ethernet1",
+                "Management0",
+                "Ethernet2"
+            ],
+            "vrfId": 0
+        }
+    }
+}

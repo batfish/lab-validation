@@ -1,0 +1,58 @@
+{
+    "vrfs": {
+        "default": {
+            "routingDisabled": false,
+            "allRoutesProgrammedHardware": true,
+            "allRoutesProgrammedKernel": true,
+            "defaultRouteState": "notSet",
+            "routes": {
+                "10.0.0.1/32": {
+                    "hardwareProgrammed": true,
+                    "routeType": "eBGP",
+                    "routeLeaked": false,
+                    "kernelProgrammed": true,
+                    "preference": 200,
+                    "metric": 0,
+                    "vias": [
+                        {
+                            "nexthopAddr": "fe80::a8c1:abff:fe02:b602",
+                            "interface": "Ethernet1"
+                        }
+                    ],
+                    "routeAction": "forward",
+                    "directlyConnected": false
+                },
+                "10.0.0.2/32": {
+                    "hardwareProgrammed": true,
+                    "routeType": "connected",
+                    "routeLeaked": false,
+                    "kernelProgrammed": true,
+                    "preference": 0,
+                    "metric": 0,
+                    "vias": [
+                        {
+                            "interface": "Loopback0"
+                        }
+                    ],
+                    "routeAction": "forward",
+                    "directlyConnected": true
+                },
+                "172.20.20.0/24": {
+                    "hardwareProgrammed": true,
+                    "routeType": "connected",
+                    "routeLeaked": false,
+                    "kernelProgrammed": true,
+                    "preference": 0,
+                    "metric": 0,
+                    "vias": [
+                        {
+                            "interface": "Management0"
+                        }
+                    ],
+                    "routeAction": "forward",
+                    "directlyConnected": true
+                }
+            }
+        }
+    }
+}
