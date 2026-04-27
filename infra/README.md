@@ -251,6 +251,51 @@ ssh -i $KEY ubuntu@$IP \
 
 Then re-download and re-validate locally.
 
+**Always re-collect after changing the lab.** The snapshot's
+`configs/<node>/show_running-config.txt` and every file under
+`show/<node>/` must come from the actual running device after your
+change. Do not hand-edit collected show data to match an updated
+startup config — the snapshot is the observed state of the real lab,
+and editing it defeats the point of empirical validation. If you
+change a startup config (e.g., add ECMP), redeploy (or push-config)
+and re-run `collect` + `build-snapshot`.
+
+### Adding or editing `checks.yaml`
+
+`checks.yaml` lives alongside the topology in `infra/examples/<lab>/`
+and defines preconditions the lab must satisfy before collection
+(interfaces up, specific routes learned, BGP peers Established). To
+add or iterate on one:
+
+1. Write `infra/examples/<lab>/checks.yaml` (see
+   `infra/examples/evpn-type5/checks.yaml` for the schema).
+2. Upload to the EC2 box alongside the topology and run:
+   ```bash
+   ssh -i $KEY ubuntu@$IP \
+       'cd ~/lab && PYTHONPATH=src python3 -m lab_builder validate mylab/topology.clab.yml --checks mylab/checks.yaml'
+   ```
+3. Adjust checks until everything passes against the deployed lab,
+   then commit the final version to `infra/examples/<lab>/`.
+
+## What to check in
+
+Only commit artifacts that were actually produced by (or fed into)
+the lab process:
+
+- `infra/examples/<lab>/` — the inputs used to build the lab:
+  `topology.clab.yml`, startup `configs/*.cfg`, and `checks.yaml`
+  (if any). These must match what was last deployed to produce the
+  snapshot.
+- `snapshots/<lab>/` — the outputs collected from the running lab:
+  `configs/<node>/`, `show/<node>/`, `show/host_nos.txt`, plus hand-
+  authored `batfish/layer1_topology.json` and `validation/sickbay.yaml`
+  as needed.
+
+Do not commit files you did not exercise end-to-end. If `checks.yaml`
+was never run against the lab, don't check it in yet — run it first.
+If startup configs drifted from what produced the snapshot, either
+redeploy+re-collect or revert the configs.
+
 ## Scripts Reference
 
 | Script            | Where it runs | Purpose                                                   |
@@ -385,7 +430,17 @@ the large Juniper VM images and reducing bootstrap time from ~5 min to
 - **Simplicity**: minimum routers to demonstrate the feature (2-3 typical)
 - **Feature isolation**: one feature per lab
 - **Corner cases**: misconfigurations, asymmetric settings, boundary values
-- **Reproducibility**: deterministic results, avoid time-dependent behavior
+- **Determinism**: eliminate ties that can be broken differently by the
+  device vs. Batfish, or non-deterministically across reboots (e.g.,
+  some vendors' default BGP tiebreaker is "oldest path"). Common
+  techniques, using whatever the vendor's equivalent CLI is:
+  - **Deterministic tiebreakers**: force tiebreaks to use router-id
+    rather than path age.
+  - **ECMP**: enable multipath so equal-cost paths are all active,
+    sidestepping tiebreakers entirely.
+  - **Differentiated candidates**: give routes distinct local-prefs,
+    MEDs, or AS-path lengths so best-path selection is unambiguous
+    before the tiebreak stage.
 - **Documentation**: README explaining what the lab tests and why
 
 ## Supported Vendor Profiles
