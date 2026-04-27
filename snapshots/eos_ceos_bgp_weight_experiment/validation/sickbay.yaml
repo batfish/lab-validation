@@ -1,0 +1,19 @@
+entries:
+  # This lab is the reproducer for the Arista local-path attribute
+  # divergence issue. The weight half has been fixed in Batfish; the
+  # local-preference half remains (the device emits localpref="-" for
+  # network-statement-originated paths, which Batfish currently
+  # models as local-pref 0 but empirically behaves as the BGP default
+  # 100). Entries remain sickbayed until #152 is fully resolved.
+  - hostname: r-upstream
+    test_name: test_bgp_rib_routes
+    skip:
+      reason: locally-originated path attribute divergence, https://github.com/batfish/lab-validation/issues/152
+  - hostname: r-ma
+    test_name: test_bgp_rib_routes
+    skip:
+      reason: locally-originated path attribute divergence, https://github.com/batfish/lab-validation/issues/152
+  - hostname: r-ribd
+    test_name: test_bgp_rib_routes
+    skip:
+      reason: locally-originated path attribute divergence, https://github.com/batfish/lab-validation/issues/152
