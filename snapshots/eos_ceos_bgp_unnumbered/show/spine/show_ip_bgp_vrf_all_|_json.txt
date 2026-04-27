@@ -47,7 +47,7 @@
                     "maskLength": 32,
                     "bgpRoutePaths": [
                         {
-                            "nextHop": "fe80::a8c1:abff:fe1d:89a4%Et1",
+                            "nextHop": "fe80::a8c1:abff:feaf:260d%Et2",
                             "reasonNotBestpath": "noReason",
                             "localPreference": 100,
                             "weight": 0,
@@ -59,9 +59,9 @@
                                 "suppressed": false,
                                 "active": true,
                                 "backup": false,
-                                "ecmpHead": false,
-                                "ecmp": false,
-                                "ecmpContributor": false,
+                                "ecmpHead": true,
+                                "ecmp": true,
+                                "ecmpContributor": true,
                                 "atomicAggregator": false,
                                 "queued": false,
                                 "luRoute": false,
@@ -70,7 +70,7 @@
                                 "origin": "Igp"
                             },
                             "peerEntry": {
-                                "peerAddr": "fe80::a8c1:abff:fe1d:89a4%Et1",
+                                "peerAddr": "fe80::a8c1:abff:feaf:260d%Et2",
                                 "peerRouterId": "10.0.0.2"
                             },
                             "asPathEntry": {
@@ -79,7 +79,7 @@
                             }
                         },
                         {
-                            "nextHop": "fe80::a8c1:abff:fea9:d37f%Et2",
+                            "nextHop": "fe80::a8c1:abff:fe39:fae4%Et1",
                             "reasonNotBestpath": "noReason",
                             "localPreference": 100,
                             "weight": 0,
@@ -92,8 +92,8 @@
                                 "active": false,
                                 "backup": false,
                                 "ecmpHead": false,
-                                "ecmp": false,
-                                "ecmpContributor": false,
+                                "ecmp": true,
+                                "ecmpContributor": true,
                                 "atomicAggregator": false,
                                 "queued": false,
                                 "luRoute": false,
@@ -102,7 +102,7 @@
                                 "origin": "Igp"
                             },
                             "peerEntry": {
-                                "peerAddr": "fe80::a8c1:abff:fea9:d37f%Et2",
+                                "peerAddr": "fe80::a8c1:abff:fe39:fae4%Et1",
                                 "peerRouterId": "10.0.0.2"
                             },
                             "asPathEntry": {
