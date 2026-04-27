@@ -3,7 +3,7 @@
 !
 no aaa root
 !
-username admin privilege 15 role network-admin secret sha512 $6$ywW2ON.fZRUW0T1E$6O8CMf1hxcP.i/17TVSwlP7wcOKw50D2Xx/x1ykHXDxey/WGOI.k9GvmWJusLwTyty0vgaRxW/2kgniz8E.If1
+username admin privilege 15 role network-admin secret sha512 $6$rMqGKuDn3RwKHZhv$iU7R1MVF1vcGePbMGusGde0aHwH65sUItsGFj.5kkCn.j5EzXFkGYnfSA9nP1wKm7ZBvHG2YaNKGvgoBlcxJx.
 !
 no service interface inactive port-id allocation disabled
 !
@@ -42,6 +42,7 @@ router bgp 65000
    router-id 10.0.0.1
    no bgp default ipv4-unicast
    maximum-paths 2 ecmp 2
+   bgp bestpath tie-break router-id
    neighbor LEAVES peer group
    neighbor LEAVES remote-as 65001
    neighbor interface Ethernet1 peer-group LEAVES
