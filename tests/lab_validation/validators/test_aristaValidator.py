@@ -704,3 +704,90 @@ def test_diff_evpn_routes_cost_special_localpref_cases() -> None:
     assert AristaValidator._diff_evpn_routes_cost(
         arista_route, attr.evolve(batfish_route, local_preference=10)
     ) == [("local_preference", 1.0)]
+
+
+def test_compute_next_hop_cost_rfc5549_unnumbered() -> None:
+    """Arista IPv6 link-local next-hop matches Batfish's synthetic 169.254.x.x."""
+    arista_route = AristaIpRoute(
+        network="10.0.0.1/32",
+        protocol="eBGP",
+        next_hop_ip="fe80::a8c1:abff:fe02:b602",
+        next_hop_int="Ethernet1",
+        preference=200,
+        metric=0,
+        vrf="default",
+        vni=None,
+        vtep_ip=None,
+    )
+
+    # IPv6 link-local on the device matches Batfish's 169.254.x.x on the
+    # same interface with zero cost.
+    assert (
+        AristaValidator.compute_next_hop_cost(
+            arista_route,
+            NextHopInterface(interface="Ethernet1", ip="169.254.0.1"),
+        )
+        == []
+    )
+
+    # A different Batfish interface is still an nhint mismatch.
+    assert AristaValidator.compute_next_hop_cost(
+        arista_route,
+        NextHopInterface(interface="Ethernet2", ip="169.254.0.1"),
+    ) == [("nhint", 5.0)]
+
+    # A non-link-local IPv4 Batfish next-hop is not the unnumbered case.
+    assert AristaValidator.compute_next_hop_cost(
+        arista_route,
+        NextHopInterface(interface="Ethernet1", ip="10.0.0.1"),
+    ) == [("nhip", 1.0)]
+
+
+def test_diff_bgp_routes_cost_rfc5549_unnumbered() -> None:
+    """RFC 5549 unnumbered: Arista uses 'fe80::...%EtN' zone IDs, Batfish uses
+    169.254.x.x paired with the outgoing interface. Pairing must match by
+    interface (zone id vs next_hop_int), and the nhip difference is expected."""
+    arista_route = AristaBgpRoute(
+        vrf="default",
+        network="10.0.0.1/32",
+        is_active=True,
+        is_ecmp=True,
+        not_installed_reason=None,
+        next_hop_ip="fe80::a8c1:abff:fe02:b602%Et1",
+        metric=0,
+        local_preference=100,
+        as_path=(65000,),
+        weight=0,
+        origin_protocol="bgp",
+        origin_type="igp",
+    )
+    batfish_route_et1 = BgpRibRoute(
+        weight=0,
+        vrf="default",
+        network="10.0.0.1/32",
+        next_hop=NextHopInterface(interface="Ethernet1", ip="169.254.0.1"),
+        next_hop_ip=None,
+        next_hop_int="Ethernet1",
+        protocol="bgp",
+        metric=0,
+        communities=(),
+        local_preference=100,
+        as_path="65000",
+        origin_protocol="bgp",
+        origin_type="igp",
+        tag=0,
+    )
+
+    # Same interface: zero cost.
+    assert AristaValidator._diff_bgp_routes_cost(arista_route, batfish_route_et1) == []
+
+    # Different interface: nhint cost, ensuring the matcher can pair by
+    # interface across parallel ECMP paths.
+    batfish_route_et2 = attr.evolve(
+        batfish_route_et1,
+        next_hop=NextHopInterface(interface="Ethernet2", ip="169.254.0.1"),
+        next_hop_int="Ethernet2",
+    )
+    assert AristaValidator._diff_bgp_routes_cost(arista_route, batfish_route_et2) == [
+        ("nhint", 5.0)
+    ]
