@@ -18,7 +18,7 @@ entries:
   - hostname: bl0[12]
     test_name: test_bgp_rib_routes
     skip:
-      reason: weight difference, maybe https://github.com/batfish/lab-validation/issues/7
+      reason: locally-originated path attribute divergence, https://github.com/batfish/lab-validation/issues/152
   - hostname: bor0[1-2]
     test_name: test_bgp_rib_routes
     skip:
@@ -26,4 +26,4 @@ entries:
   - hostname: spine01|spine02
     test_name: test_bgp_rib_routes
     skip:
-      reason: https://github.com/batfish/lab-validation/issues/6
+      reason: https://github.com/batfish/lab-validation/issues/152
