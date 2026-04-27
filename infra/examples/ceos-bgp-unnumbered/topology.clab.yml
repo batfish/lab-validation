@@ -1,0 +1,31 @@
+# Two-router eBGP lab using Arista cEOS with BGP unnumbered (RFC 5549).
+#
+# Tests the `neighbor interface` syntax for interface-based peering
+# without explicit IPv4/IPv6 addresses on the point-to-point links.
+#
+# Topology:
+#   spine (AS 65000) ---[Ethernet1]---[Ethernet1]--- leaf (AS 65001)
+#                    ---[Ethernet2]---[Ethernet2]---
+#     Loopback0: 10.0.0.1/32                         Loopback0: 10.0.0.2/32
+#
+# After convergence, each router should have the other's loopback via eBGP
+# over unnumbered interfaces.
+#
+# Related: https://github.com/batfish/batfish/pull/9894
+
+name: ceos-bgp-unnumbered
+
+topology:
+  nodes:
+    spine:
+      kind: arista_ceos
+      image: ceos:4.36.0.1F
+      startup-config: configs/spine.cfg
+    leaf:
+      kind: arista_ceos
+      image: ceos:4.36.0.1F
+      startup-config: configs/leaf.cfg
+
+  links:
+    - endpoints: ["spine:eth1", "leaf:eth1"]
+    - endpoints: ["spine:eth2", "leaf:eth2"]

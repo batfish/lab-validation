@@ -1,0 +1,54 @@
+! Command: show running-config
+! device: leaf (cEOSLab, EOS-4.36.0.1F-47401373.43601F (engineering build))
+!
+no aaa root
+!
+username admin privilege 15 role network-admin secret sha512 $6$RCrMhu4RXCVTcKZu$8G/QK6J6UHtVdOGXM1r7uiziXMTuXWPQMCS0CzQH4dTND7IVcMiZYU7JEVDuw1wC4ks.4hPFOdPWovTpg4e9G.
+!
+no service interface inactive port-id allocation disabled
+!
+service routing protocols model multi-agent
+!
+hostname leaf
+!
+spanning-tree mode mstp
+!
+system l1
+   unsupported speed action error
+   unsupported error-correction action error
+!
+aaa authorization exec default local
+!
+interface Ethernet1
+   no switchport
+   ipv6 enable
+!
+interface Ethernet2
+   no switchport
+   ipv6 enable
+!
+interface Loopback0
+   ip address 10.0.0.2/32
+!
+interface Management0
+   ip address 172.20.20.2/24
+   ipv6 address 3fff:172:20:20::2/64
+!
+ip routing ipv6 interfaces 
+!
+ipv6 unicast-routing
+!
+router bgp 65001
+   router-id 10.0.0.2
+   no bgp default ipv4-unicast
+   neighbor SPINES peer group
+   neighbor SPINES remote-as 65000
+   neighbor interface Ethernet1 peer-group SPINES
+   neighbor interface Ethernet2 peer-group SPINES
+   !
+   address-family ipv4
+      neighbor SPINES activate
+      neighbor SPINES next-hop address-family ipv6 originate
+      network 10.0.0.2/32
+!
+end
