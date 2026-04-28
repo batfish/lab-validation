@@ -1,0 +1,84 @@
+# Validation checks for the Junos community delete lab.
+# Run after health-check, before collection:
+#   lab_builder validate topology.clab.yml --checks checks.yaml
+
+checks:
+  # BGP sessions must be established
+  - type: bgp_peer_established
+    node: sender
+    neighbor: 10.0.12.1
+    description: "sender -> dut eBGP"
+  - type: bgp_peer_established
+    node: dut
+    neighbor: 10.0.12.0
+    description: "dut -> sender eBGP"
+  - type: bgp_peer_established
+    node: dut
+    neighbor: 10.0.23.1
+    description: "dut -> collector eBGP"
+  - type: bgp_peer_established
+    node: collector
+    neighbor: 10.0.23.0
+    description: "collector -> dut eBGP"
+
+  # Control route (no community) must reach collector
+  - type: route_exists
+    node: collector
+    table: inet.0
+    prefix: 10.10.0.0/24
+    description: "control route (no community) reaches collector"
+
+  # Standard community route should reach collector
+  # (community stripped, so no behavioral suppression)
+  - type: route_exists
+    node: collector
+    table: inet.0
+    prefix: 10.10.1.0/24
+    description: "standard community route reaches collector"
+
+  # All routes must be present on dut (imported from sender)
+  - type: route_exists
+    node: dut
+    table: inet.0
+    prefix: 10.10.0.0/24
+    description: "control route present on dut"
+  - type: route_exists
+    node: dut
+    table: inet.0
+    prefix: 10.10.1.0/24
+    description: "standard community route present on dut"
+  - type: route_exists
+    node: dut
+    table: inet.0
+    prefix: 10.10.2.0/24
+    description: "no-export route present on dut"
+  - type: route_exists
+    node: dut
+    table: inet.0
+    prefix: 10.10.3.0/24
+    description: "no-advertise route present on dut"
+  - type: route_exists
+    node: dut
+    table: inet.0
+    prefix: 10.10.4.0/24
+    description: "no-export-subconfed route present on dut"
+  - type: route_exists
+    node: dut
+    table: inet.0
+    prefix: 10.10.5.0/24
+    description: "extended target route present on dut"
+  - type: route_exists
+    node: dut
+    table: inet.0
+    prefix: 10.10.6.0/24
+    description: "extended origin route present on dut"
+  - type: route_exists
+    node: dut
+    table: inet.0
+    prefix: 10.10.7.0/24
+    description: "large community route present on dut"
+  - type: route_exists
+    node: dut
+    table: inet.0
+    prefix: 10.10.8.0/24
+    description: "kitchen sink route present on dut"
