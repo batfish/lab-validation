@@ -1,0 +1,45 @@
+# Junos community delete lab: does "community delete" with members ".*:.*"
+# actually remove ALL community types?
+#
+# Topology:
+#   sender (AS 65001) --[ge-0/0/0]--[ge-0/0/0]-- dut (AS 65002) --[ge-0/0/1]--[ge-0/0/0]-- collector (AS 65003)
+#     lo0: 1.1.1.1/32                               lo0: 2.2.2.2/32                             lo0: 3.3.3.3/32
+#     link1: 10.0.12.0/31                           link1: 10.0.12.1/31
+#                                                    link2: 10.0.23.0/31                         link2: 10.0.23.1/31
+#
+# sender: originates 10.10.0-7.0/24 via static, tags each with a different
+#         community type (standard, no-export, no-advertise, no-export-subconfed,
+#         extended target, large, and a kitchen-sink combination).
+#
+# dut: imports from sender with:
+#         community delete ALL-COMMUNITIES (members ".*:.*")
+#       then exports to collector.
+#
+# collector: receives routes from dut; we inspect which routes arrive and
+#            which communities survived the delete.
+#
+# Key test: if well-known communities (no-export, no-advertise) survive the
+# delete, those routes won't reach the collector at all.
+
+name: junos-community-delete
+
+topology:
+  nodes:
+    sender:
+      kind: juniper_vjunosrouter
+      image: vrnetlab/juniper_vjunos-router:25.4R1.12
+      startup-config: configs/sender.cfg
+    dut:
+      kind: juniper_vjunosrouter
+      image: vrnetlab/juniper_vjunos-router:25.4R1.12
+      startup-config: configs/dut.cfg
+    collector:
+      kind: juniper_vjunosrouter
+      image: vrnetlab/juniper_vjunos-router:25.4R1.12
+      startup-config: configs/collector.cfg
+
+  links:
+    # sender ge-0/0/0 (eth1) <-> dut ge-0/0/0 (eth1)
+    - endpoints: ["sender:eth1", "dut:eth1"]
+    # dut ge-0/0/1 (eth2) <-> collector ge-0/0/0 (eth1)
+    - endpoints: ["dut:eth2", "collector:eth1"]
