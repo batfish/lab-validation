@@ -33,3 +33,16 @@ class NxosBgpRoute:
     as_path: Sequence[int]
     best_path: bool
     origin_type: str
+
+
+@attr.s(frozen=True, auto_attribs=True, kw_only=True)
+class NxosEvpnRoute:
+    route_distinguisher: str
+    network: str = attr.ib(converter=normalized_network)
+    next_hop_ip: str
+    metric: int | None
+    local_preference: int
+    weight: int
+    as_path: Sequence[int]
+    best_path: bool
+    origin_type: str

@@ -5,11 +5,19 @@ from pybatfish.datamodel import NextHopDiscard, NextHopInterface
 from pybatfish.datamodel.route import NextHopIp, NextHopVtep
 
 from lab_validation.parsers.nxos.models.interfaces import NxosInterface
-from lab_validation.parsers.nxos.models.routes import NxosBgpRoute, NxosMainRibRoute
+from lab_validation.parsers.nxos.models.routes import (
+    NxosBgpRoute,
+    NxosEvpnRoute,
+    NxosMainRibRoute,
+)
 from lab_validation.validators.batfish_models.interface_properties import (
     InterfaceProperties,
 )
-from lab_validation.validators.batfish_models.routes import BgpRibRoute, MainRibRoute
+from lab_validation.validators.batfish_models.routes import (
+    BgpRibRoute,
+    EvpnRibRoute,
+    MainRibRoute,
+)
 from lab_validation.validators.NxosValidator import NxosValidator
 
 
@@ -742,3 +750,122 @@ def test_mgmt_route_skipped() -> None:
         )
     ]
     assert NxosValidator._validate_main_rib_routes(batfish_routes, real_routes) == {}
+
+
+_NXOS_EVPN = NxosEvpnRoute(
+    route_distinguisher="1.1.1.1:3",
+    network="192.168.10.0/24",
+    next_hop_ip="1.1.1.1",
+    metric=0,
+    local_preference=100,
+    weight=32768,
+    as_path=(),
+    best_path=True,
+    origin_type="?",
+)
+
+_BF_EVPN = EvpnRibRoute(
+    vrf="default",
+    network="192.168.10.0/24",
+    route_distinguisher="1.1.1.1:3",
+    next_hop=NextHopVtep(vni=100777, vtep="1.1.1.1"),
+    next_hop_ip=None,
+    next_hop_int="null_interface",
+    protocol="bgp",
+    as_path="",
+    metric=0,
+    local_preference=100,
+    communities=(),
+    origin_protocol=None,
+    origin_type="incomplete",
+    tag=None,
+)
+
+
+def test_evpn_cost_equal() -> None:
+    assert NxosValidator._diff_evpn_routes_cost(_NXOS_EVPN, _BF_EVPN) == []
+
+
+def test_evpn_cost_network_mismatch() -> None:
+    assert NxosValidator._diff_evpn_routes_cost(
+        attr.evolve(_NXOS_EVPN, network="10.0.0.0/8"), _BF_EVPN
+    ) == [("network", math.inf)]
+
+
+def test_evpn_cost_rd_mismatch() -> None:
+    assert NxosValidator._diff_evpn_routes_cost(
+        attr.evolve(_NXOS_EVPN, route_distinguisher="9.9.9.9:3"), _BF_EVPN
+    ) == [("route_distinguisher", math.inf)]
+
+
+def test_evpn_cost_next_hop_ip_mismatch() -> None:
+    bf = attr.evolve(_BF_EVPN, next_hop_ip="2.2.2.2")
+    assert NxosValidator._diff_evpn_routes_cost(_NXOS_EVPN, bf) == [
+        ("next_hop_ip", 10.0)
+    ]
+
+
+def test_evpn_cost_next_hop_ip_none_skipped() -> None:
+    assert NxosValidator._diff_evpn_routes_cost(_NXOS_EVPN, _BF_EVPN) == []
+
+
+def test_evpn_cost_metric_mismatch() -> None:
+    assert NxosValidator._diff_evpn_routes_cost(
+        attr.evolve(_NXOS_EVPN, metric=5), _BF_EVPN
+    ) == [("metric", 1.0)]
+
+
+def test_evpn_cost_metric_none_treated_as_zero() -> None:
+    assert (
+        NxosValidator._diff_evpn_routes_cost(
+            attr.evolve(_NXOS_EVPN, metric=None), _BF_EVPN
+        )
+        == []
+    )
+
+
+def test_evpn_cost_local_preference_mismatch() -> None:
+    assert NxosValidator._diff_evpn_routes_cost(
+        attr.evolve(_NXOS_EVPN, local_preference=200), _BF_EVPN
+    ) == [("local_preference", 1.0)]
+
+
+def test_evpn_cost_as_path_mismatch() -> None:
+    assert NxosValidator._diff_evpn_routes_cost(
+        attr.evolve(_NXOS_EVPN, as_path=(65001,)), _BF_EVPN
+    ) == [("as_path", 1.0)]
+
+
+def test_evpn_cost_origin_type_mismatch() -> None:
+    assert NxosValidator._diff_evpn_routes_cost(
+        attr.evolve(_NXOS_EVPN, origin_type="i"), _BF_EVPN
+    ) == [("origin_type", 1.0)]
+
+
+def test_evpn_cost_multiple_mismatches() -> None:
+    nxos = attr.evolve(_NXOS_EVPN, metric=5, local_preference=200, origin_type="i")
+    cost = NxosValidator._diff_evpn_routes_cost(nxos, _BF_EVPN)
+    assert set(cost) == {
+        ("metric", 1.0),
+        ("local_preference", 1.0),
+        ("origin_type", 1.0),
+    }
+
+
+def test_evpn_validate_non_best_path_skipped() -> None:
+    nxos = attr.evolve(_NXOS_EVPN, best_path=False)
+    assert NxosValidator._validate_evpn_rib_routes([nxos], []) == {}
+
+
+def test_evpn_validate_matching() -> None:
+    assert NxosValidator._validate_evpn_rib_routes([_NXOS_EVPN], [_BF_EVPN]) == {}
+
+
+def test_evpn_validate_missing_from_batfish() -> None:
+    result = NxosValidator._validate_evpn_rib_routes([_NXOS_EVPN], [])
+    assert len(result) == 1
+
+
+def test_evpn_validate_extra_in_batfish() -> None:
+    result = NxosValidator._validate_evpn_rib_routes([], [_BF_EVPN])
+    assert len(result) == 1

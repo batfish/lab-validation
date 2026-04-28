@@ -12,14 +12,23 @@ from pybatfish.datamodel.route import (
 )
 
 from lab_validation.parsers.nxos.commands.bgp_route import parse_show_ip_bgp_all
+from lab_validation.parsers.nxos.commands.evpn_routes import parse_show_bgp_l2vpn_evpn
 from lab_validation.parsers.nxos.commands.interfaces import parse_show_interface
 from lab_validation.parsers.nxos.commands.routes import parse_show_ip_route_vrf_all
 from lab_validation.parsers.nxos.models.interfaces import NxosInterface
-from lab_validation.parsers.nxos.models.routes import NxosBgpRoute, NxosMainRibRoute
+from lab_validation.parsers.nxos.models.routes import (
+    NxosBgpRoute,
+    NxosEvpnRoute,
+    NxosMainRibRoute,
+)
 from lab_validation.validators.batfish_models.interface_properties import (
     InterfaceProperties,
 )
-from lab_validation.validators.batfish_models.routes import BgpRibRoute, MainRibRoute
+from lab_validation.validators.batfish_models.routes import (
+    BgpRibRoute,
+    EvpnRibRoute,
+    MainRibRoute,
+)
 from lab_validation.validators.batfish_models.runtime_data import (
     InterfaceRuntimeData,
     NodeRuntimeData,
@@ -128,6 +137,16 @@ class NxosValidator(VendorValidator):
             self._get_bgp_rib_all_vrfs(), routes
         )
 
+    def validate_evpn_rib_routes(
+        self, batfish_routes: Sequence[EvpnRibRoute]
+    ) -> dict[Any, Any]:
+        if not batfish_routes:
+            return {}
+        nxos_routes = self._get_evpn_routes()
+        if not nxos_routes:
+            return {}
+        return NxosValidator._validate_evpn_rib_routes(nxos_routes, batfish_routes)
+
     @staticmethod
     def _validate_bgp_rib_routes(
         nxos_routes: Sequence[NxosBgpRoute], batfish_routes: Sequence[BgpRibRoute]
@@ -211,6 +230,51 @@ class NxosValidator(VendorValidator):
                 cost.append(("nhip", 1.0))
         else:
             raise ValueError("Unsupported next hop " + repr(next_hop))
+        return cost
+
+    @staticmethod
+    def _validate_evpn_rib_routes(
+        nxos_routes: Sequence[NxosEvpnRoute],
+        batfish_routes: Sequence[EvpnRibRoute],
+    ) -> dict[Any, Any]:
+        validate_routes = [r for r in nxos_routes if r.best_path]
+        matched_routes = match_pairs(
+            validate_routes,
+            batfish_routes,
+            NxosValidator._diff_evpn_routes_cost,
+        )
+        return matched_pairs_to_failures(matched_routes)
+
+    @staticmethod
+    def _diff_evpn_routes_cost(
+        nxos_route: NxosEvpnRoute,
+        batfish_route: EvpnRibRoute,
+    ) -> CostResult:
+        if nxos_route.network != batfish_route.network:
+            return [("network", math.inf)]
+        if nxos_route.route_distinguisher != batfish_route.route_distinguisher:
+            return [("route_distinguisher", math.inf)]
+
+        cost: CostResult = []
+
+        if (
+            batfish_route.next_hop_ip is not None
+            and batfish_route.next_hop_ip != nxos_route.next_hop_ip
+        ):
+            cost.append(("next_hop_ip", 10.0))
+
+        nxos_metric = 0 if nxos_route.metric is None else nxos_route.metric
+        if batfish_route.metric != nxos_metric:
+            cost.append(("metric", 1.0))
+        if batfish_route.local_preference != nxos_route.local_preference:
+            cost.append(("local_preference", 1.0))
+        if batfish_route.as_path != nxos_route.as_path:
+            cost.append(("as_path", 1.0))
+        if not NxosValidator._bgp_origin_type_compatible(
+            batfish_route.origin_type, nxos_route.origin_type
+        ):
+            cost.append(("origin_type", 1.0))
+
         return cost
 
     @staticmethod
@@ -305,6 +369,19 @@ class NxosValidator(VendorValidator):
             return []
 
         return parse_show_ip_bgp_all(file_text)
+
+    def _get_evpn_routes(self) -> Sequence[NxosEvpnRoute]:
+        """Parses and returns EVPN routes from show bgp l2vpn evpn."""
+
+        evpn_path = self.device_path / "show_bgp_l2vpn_evpn.txt"
+        if not evpn_path.is_file():
+            return []
+
+        file_text = evpn_path.read_text()
+        if not file_text.strip():
+            return []
+
+        return parse_show_bgp_l2vpn_evpn(file_text)
 
     @staticmethod
     def compute_protocol_cost(nxos_protocol: str, batfish_protocol: str) -> CostResult:
