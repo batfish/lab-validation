@@ -5,7 +5,7 @@ from __future__ import annotations
 import json
 import time
 
-from lab_builder.device import run_command, wait_for_ssh
+from lab_builder.device import SshPermanentError, run_command, wait_for_ssh
 from lab_builder.models import HealthStatus, NodeInfo
 
 # ---------------------------------------------------------------------------
@@ -16,7 +16,7 @@ from lab_builder.models import HealthStatus, NodeInfo
 def _junos_check_bgp(node: NodeInfo) -> bool | None:
     """Check if all BGP neighbors are Established. Returns None if no BGP configured."""
     try:
-        output = run_command(node, "show bgp neighbor | display json")
+        output = run_command(node, "show bgp neighbor | display json", timeout=10)
         data = json.loads(output)
     except Exception:
         return False
@@ -41,7 +41,7 @@ def _junos_check_bgp(node: NodeInfo) -> bool | None:
 def _junos_check_ospf(node: NodeInfo) -> bool | None:
     """Check if all OSPF neighbors are Full. Returns None if no OSPF configured."""
     try:
-        output = run_command(node, "show ospf neighbor | display json")
+        output = run_command(node, "show ospf neighbor | display json", timeout=10)
         data = json.loads(output)
     except Exception:
         return False
@@ -66,7 +66,7 @@ def _junos_check_ospf(node: NodeInfo) -> bool | None:
 def _junos_check_isis(node: NodeInfo) -> bool | None:
     """Check if all ISIS adjacencies are Up. Returns None if no ISIS configured."""
     try:
-        output = run_command(node, "show isis adjacency | display json")
+        output = run_command(node, "show isis adjacency | display json", timeout=10)
         data = json.loads(output)
     except Exception:
         return False
@@ -97,7 +97,7 @@ def _junos_check_platform_warnings(node: NodeInfo) -> list[str]:
     comments in 'show configuration'.
     """
     try:
-        output = run_command(node, "show configuration")
+        output = run_command(node, "show configuration", timeout=10)
     except Exception:
         return []
     warnings = []
@@ -115,7 +115,7 @@ def _junos_check_platform_warnings(node: NodeInfo) -> list[str]:
 def _arista_check_bgp(node: NodeInfo) -> bool | None:
     """Check if all BGP peers are Established via 'show ip bgp summary | json'."""
     try:
-        output = run_command(node, "show ip bgp summary | json")
+        output = run_command(node, "show ip bgp summary | json", timeout=10)
         data = json.loads(output)
     except Exception:
         return False
@@ -139,7 +139,7 @@ def _arista_check_bgp(node: NodeInfo) -> bool | None:
 def _arista_check_ospf(node: NodeInfo) -> bool | None:
     """Check if all OSPF neighbors are full via 'show ip ospf neighbor | json'."""
     try:
-        output = run_command(node, "show ip ospf neighbor | json")
+        output = run_command(node, "show ip ospf neighbor | json", timeout=10)
         data = json.loads(output)
     except Exception:
         return False
@@ -164,7 +164,7 @@ def _arista_check_ospf(node: NodeInfo) -> bool | None:
 def _arista_check_isis(node: NodeInfo) -> bool | None:
     """Check if all ISIS adjacencies are up via 'show isis neighbors | json'."""
     try:
-        output = run_command(node, "show isis neighbors | json")
+        output = run_command(node, "show isis neighbors | json", timeout=10)
         data = json.loads(output)
     except Exception:
         return False
@@ -225,7 +225,12 @@ def check_node_health(node: NodeInfo) -> HealthStatus:
     """Run all health checks on a single node."""
     status = HealthStatus(node=node.name)
 
-    status.ssh_reachable = wait_for_ssh(node, timeout=10, interval=5)
+    try:
+        status.ssh_reachable = wait_for_ssh(node, timeout=10, interval=5)
+    except SshPermanentError:
+        status.ssh_reachable = False
+        status.details = "SSH authentication failed"
+        return status
     if not status.ssh_reachable:
         status.details = "SSH not reachable"
         return status
@@ -260,18 +265,24 @@ def wait_for_convergence(
     print("Waiting for SSH on all nodes...")
     boot_timeout = max(n.profile.boot_timeout_seconds for n in nodes)
     for node in nodes:
-        if not wait_for_ssh(node, timeout=boot_timeout, interval=15):
-            print(f"  {node.name}: TIMEOUT waiting for SSH")
-            return [HealthStatus(node=n.name, details="SSH timeout") for n in nodes]
+        try:
+            if not wait_for_ssh(node, timeout=boot_timeout, interval=15):
+                print(f"  {node.name}: TIMEOUT waiting for SSH")
+                return [HealthStatus(node=n.name, details="SSH timeout") for n in nodes]
+        except SshPermanentError:
+            print(f"  {node.name}: SSH authentication failed persistently")
+            return [HealthStatus(node=n.name, details="SSH auth failed") for n in nodes]
 
     print("All nodes reachable. Waiting for routing protocol convergence...")
     deadline = time.time() + timeout
     while time.time() < deadline:
-        statuses = [check_node_health(node) for node in nodes]
+        statuses = []
+        for node in nodes:
+            print(f"  Checking {node.name}...", end="", flush=True)
+            s = check_node_health(node)
+            print(f" {'OK' if s.healthy else 'WAITING'} - {s.details}")
+            statuses.append(s)
         all_healthy = all(s.healthy for s in statuses)
-
-        for s in statuses:
-            print(f"  {s.node}: {'OK' if s.healthy else 'WAITING'} - {s.details}")
 
         if all_healthy:
             print("All nodes converged. Checking for platform warnings...")

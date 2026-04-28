@@ -16,7 +16,7 @@
 #   - A security group allowing SSH from your current IP
 #   - A key pair (if --key-name not provided)
 #   - An EC2 instance with ec2-setup.sh as user-data
-#   - A CloudWatch alarm to auto-terminate after --timeout-hours (default: 4)
+#   - Auto-termination via scheduled shutdown (InstanceInitiatedShutdownBehavior=terminate)
 #
 # Instance state is saved to ~/.lab-validation/instance.json for use by other scripts.
 
@@ -225,9 +225,11 @@ else
 fi
 
 # Generate user-data script with parameters baked in
+TIMEOUT_MINUTES=$((TIMEOUT_HOURS * 60))
 USER_DATA_FILE=$(mktemp)
 sed -e "s|%%BUCKET_NAME%%|${BUCKET_NAME}|g" \
     -e "s|%%IMAGE_FILTER%%|${IMAGE_FILTER}|g" \
+    -e "s|%%TIMEOUT_MINUTES%%|${TIMEOUT_MINUTES}|g" \
     "${SCRIPT_DIR}/ec2-setup.sh" > "${USER_DATA_FILE}"
 
 # Build run-instances command
@@ -239,6 +241,7 @@ RUN_ARGS=(
     --user-data "file://${USER_DATA_FILE}"
     --iam-instance-profile "Name=${PROFILE_NAME}"
     --cpu-options "NestedVirtualization=enabled"
+    --instance-initiated-shutdown-behavior terminate
     --block-device-mappings '[{"DeviceName":"/dev/sda1","Ebs":{"VolumeSize":50,"VolumeType":"gp3"}}]'
     --tag-specifications "ResourceType=instance,Tags=[{Key=Name,Value=lab-validation-containerlab},{Key=Project,Value=lab-validation}]"
     --query 'Instances[0].InstanceId'
@@ -267,25 +270,9 @@ PUBLIC_IP=$(aws ec2 describe-instances \
     --output text)
 echo "Public IP: ${PUBLIC_IP}"
 
-# Set up auto-termination alarm
-echo "Setting auto-terminate alarm (${TIMEOUT_HOURS}h)..."
-ALARM_NAME="lab-validation-auto-terminate-${INSTANCE_ID}"
-aws cloudwatch put-metric-alarm \
-    --alarm-name "${ALARM_NAME}" \
-    --namespace AWS/EC2 \
-    --metric-name CPUUtilization \
-    --statistic Average \
-    --period 300 \
-    --evaluation-periods 1 \
-    --threshold 100 \
-    --comparison-operator GreaterThanThreshold \
-    --alarm-actions "arn:aws:automate:${REGION}:ec2:terminate" \
-    --dimensions "Name=InstanceId,Value=${INSTANCE_ID}" \
-    --treat-missing-data missing 2>/dev/null || true
-
-# Schedule the alarm to fire after timeout (set state to ALARM after delay)
-# We use a simpler approach: tag with expiry time, and the alarm is a safety net.
-# The real auto-termination relies on the alarm being set to ALARM state.
+# Auto-termination is handled by `shutdown` scheduled in ec2-setup.sh.
+# The instance has InstanceInitiatedShutdownBehavior=terminate, so
+# shutdown will terminate it (and delete the EBS volume).
 EXPIRY=$(date -u -v+${TIMEOUT_HOURS}H +%Y-%m-%dT%H:%M:%SZ 2>/dev/null || \
          date -u -d "+${TIMEOUT_HOURS} hours" +%Y-%m-%dT%H:%M:%SZ 2>/dev/null || \
          echo "unknown")
@@ -303,7 +290,6 @@ state = {
     'key_name': '${KEY_NAME}',
     'key_file': '${KEY_FILE}',
     'security_group_id': '${SG_ID}',
-    'alarm_name': '${ALARM_NAME}',
     'auto_terminate_after': '${EXPIRY}',
     'spot': True if '${USE_SPOT}' == 'true' else False,
 }
