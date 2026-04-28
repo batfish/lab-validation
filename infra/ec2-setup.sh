@@ -19,6 +19,7 @@ set -euo pipefail
 
 BUCKET_NAME="%%BUCKET_NAME%%"
 IMAGE_FILTER="%%IMAGE_FILTER%%"
+TIMEOUT_MINUTES="%%TIMEOUT_MINUTES%%"
 
 LOG_FILE="/var/log/ec2-setup.log"
 exec > >(tee -a "${LOG_FILE}") 2>&1
@@ -26,6 +27,11 @@ exec > >(tee -a "${LOG_FILE}") 2>&1
 echo "=== ec2-setup.sh starting at $(date -u) ==="
 echo "Image bucket: ${BUCKET_NAME}"
 echo "Image filter: ${IMAGE_FILTER}"
+
+# Schedule auto-shutdown. The instance is configured with
+# InstanceInitiatedShutdownBehavior=terminate, so this terminates it.
+echo "Scheduling shutdown in ${TIMEOUT_MINUTES} minutes"
+shutdown -h +${TIMEOUT_MINUTES}
 
 # Check if an image tag matches the filter.
 # Usage: image_wanted <tag>  (e.g., image_wanted "vjunos-router")
@@ -84,6 +90,10 @@ echo "--- Installing Python tools ---"
 apt-get install -y python3-pip python3-venv
 pip3 install --break-system-packages --ignore-installed netmiko paramiko PyYAML
 pip3 install --break-system-packages awscli
+
+# Debugging tools
+echo "--- Installing debugging tools ---"
+apt-get install -y sshpass jq
 
 # --- Load network OS images ---
 echo "--- Loading network OS images ---"

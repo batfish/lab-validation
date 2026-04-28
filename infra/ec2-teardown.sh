@@ -26,15 +26,6 @@ echo "Terminating instance: ${INSTANCE_ID}"
 aws ec2 terminate-instances --instance-ids "${INSTANCE_ID}" \
     --query 'TerminatingInstances[0].CurrentState.Name' --output text
 
-# Clean up CloudWatch alarm
-if [[ -f "${STATE_FILE}" ]]; then
-    ALARM_NAME=$(python3 -c "import json; print(json.load(open('${STATE_FILE}')).get('alarm_name', ''))" 2>/dev/null || true)
-    if [[ -n "${ALARM_NAME}" ]]; then
-        echo "Deleting alarm: ${ALARM_NAME}"
-        aws cloudwatch delete-alarms --alarm-names "${ALARM_NAME}" 2>/dev/null || true
-    fi
-fi
-
 # Remove state file
 rm -f "${STATE_FILE}"
 echo "Instance terminated. State file removed."

@@ -77,11 +77,18 @@ def check_ssh_reachable(node: NodeInfo, timeout: int = 10) -> bool:
         return False
 
 
-def wait_for_ssh(node: NodeInfo, timeout: int = 900, interval: int = 15) -> bool:
+def wait_for_ssh(
+    node: NodeInfo,
+    timeout: int = 900,
+    interval: int = 15,
+    max_auth_failures: int = 5,
+) -> bool:
     """Wait until SSH is reachable on a node.
 
     Returns True if reachable within timeout, False otherwise.
-    Raises SshPermanentError immediately on non-transient failures.
+    Raises SshPermanentError if authentication fails repeatedly (more than
+    *max_auth_failures* consecutive times), indicating bad credentials
+    rather than a device still booting.
     """
     # Suppress paramiko's transport thread tracebacks during retries.
     # Without this, every failed SSH attempt prints a multi-line exception
@@ -92,12 +99,28 @@ def wait_for_ssh(node: NodeInfo, timeout: int = 900, interval: int = 15) -> bool
 
     deadline = time.time() + timeout
     attempt = 0
+    consecutive_auth_failures = 0
     try:
         while time.time() < deadline:
             attempt += 1
-            if check_ssh_reachable(node, timeout=10):
-                print(f"  {node.name}: SSH reachable (attempt {attempt})")
-                return True
+            try:
+                if check_ssh_reachable(node, timeout=10):
+                    print(f"  {node.name}: SSH reachable (attempt {attempt})")
+                    return True
+                consecutive_auth_failures = 0
+            except SshPermanentError:
+                consecutive_auth_failures += 1
+                remaining = int(deadline - time.time())
+                print(
+                    f"  {node.name}: SSH auth failed "
+                    f"(attempt {attempt}, "
+                    f"{consecutive_auth_failures}/{max_auth_failures}, "
+                    f"{remaining}s remaining)"
+                )
+                if consecutive_auth_failures >= max_auth_failures:
+                    raise
+                time.sleep(interval)
+                continue
             remaining = int(deadline - time.time())
             print(
                 f"  {node.name}: SSH not ready "
