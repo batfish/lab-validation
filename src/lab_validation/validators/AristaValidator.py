@@ -183,6 +183,15 @@ class AristaValidator(VendorValidator):
             arista_route, batfish_route.next_hop
         )
 
+        # EOS reports directly-connected OSPF neighbor routes (e.g., on unnumbered p2p links)
+        # with no preference, metric, or next-hop IP. Skip those comparisons when all are absent.
+        _directly_connected = (
+            arista_route.preference is None
+            and arista_route.metric is None
+            and arista_route.next_hop_ip is None
+            and arista_protocol == "ospf"
+        )
+
         arista_preference = arista_route.preference
         if arista_preference is None:
             if arista_protocol == "connected":
@@ -193,12 +202,13 @@ class AristaValidator(VendorValidator):
                 # local BGP route admin distance
                 arista_preference = 200
 
-        if arista_preference != batfish_route.admin:
+        if not _directly_connected and arista_preference != batfish_route.admin:
             cost.append(("admin", 2.0))
 
-        arista_metric = 0 if arista_route.metric is None else arista_route.metric
-        if arista_metric != batfish_route.metric:
-            cost.append(("metric", 1.0))
+        if not _directly_connected:
+            arista_metric = 0 if arista_route.metric is None else arista_route.metric
+            if arista_metric != batfish_route.metric:
+                cost.append(("metric", 1.0))
 
         return cost
 
@@ -267,6 +277,7 @@ class AristaValidator(VendorValidator):
                 cost.append(("nhint", 5.0))
             if (
                 next_hop.ip
+                and arista_route.next_hop_ip is not None
                 and next_hop.ip != arista_route.next_hop_ip
                 and not _is_rfc5549_unnumbered_match(
                     arista_route.next_hop_ip, next_hop.ip
