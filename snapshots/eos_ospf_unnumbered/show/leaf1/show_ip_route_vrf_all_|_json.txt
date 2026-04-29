@@ -1,0 +1,67 @@
+{
+    "vrfs": {
+        "default": {
+            "routingDisabled": false,
+            "allRoutesProgrammedHardware": true,
+            "allRoutesProgrammedKernel": true,
+            "defaultRouteState": "notSet",
+            "routes": {
+                "10.0.0.1/32": {
+                    "hardwareProgrammed": true,
+                    "routeType": "OSPF",
+                    "routeLeaked": false,
+                    "kernelProgrammed": true,
+                    "routeAction": "forward",
+                    "vias": [
+                        {
+                            "interface": "Ethernet1"
+                        }
+                    ],
+                    "directlyConnected": true
+                },
+                "10.0.1.1/32": {
+                    "hardwareProgrammed": true,
+                    "routeType": "connected",
+                    "routeLeaked": false,
+                    "kernelProgrammed": true,
+                    "routeAction": "forward",
+                    "vias": [
+                        {
+                            "interface": "Loopback0"
+                        }
+                    ],
+                    "directlyConnected": true
+                },
+                "10.0.2.1/32": {
+                    "hardwareProgrammed": true,
+                    "routeType": "OSPF",
+                    "routeLeaked": false,
+                    "kernelProgrammed": true,
+                    "preference": 110,
+                    "metric": 30,
+                    "routeAction": "forward",
+                    "directlyConnected": false,
+                    "vias": [
+                        {
+                            "nexthopAddr": "10.0.0.1",
+                            "interface": "Ethernet1"
+                        }
+                    ]
+                },
+                "172.20.20.0/24": {
+                    "hardwareProgrammed": true,
+                    "routeType": "connected",
+                    "routeLeaked": false,
+                    "kernelProgrammed": true,
+                    "routeAction": "forward",
+                    "vias": [
+                        {
+                            "interface": "Management0"
+                        }
+                    ],
+                    "directlyConnected": true
+                }
+            }
+        }
+    }
+}

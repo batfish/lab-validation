@@ -1,0 +1,46 @@
+# Validation checks for the cEOS OSPF unnumbered lab.
+# Run after health-check, before collection:
+#   lab_builder validate topology.clab.yml --checks checks.yaml
+
+checks:
+  # Unnumbered interfaces should be operationally up
+  - type: interface_up
+    node: spine
+    interface: Ethernet1
+    description: "spine Ethernet1 (unnumbered p2p to leaf1)"
+  - type: interface_up
+    node: spine
+    interface: Ethernet2
+    description: "spine Ethernet2 (unnumbered p2p to leaf2)"
+  - type: interface_up
+    node: leaf1
+    interface: Ethernet1
+    description: "leaf1 Ethernet1 (unnumbered p2p to spine)"
+  - type: interface_up
+    node: leaf2
+    interface: Ethernet1
+    description: "leaf2 Ethernet1 (unnumbered p2p to spine)"
+
+  # OSPF routes: each leaf should have a route to the other leaf's loopback
+  - type: route_exists
+    node: leaf1
+    table: default
+    prefix: 10.0.2.1/32
+    description: "leaf1 has OSPF route to leaf2 loopback"
+  - type: route_exists
+    node: leaf2
+    table: default
+    prefix: 10.0.1.1/32
+    description: "leaf2 has OSPF route to leaf1 loopback"
+
+  # Spine should have routes to both leaf loopbacks
+  - type: route_exists
+    node: spine
+    table: default
+    prefix: 10.0.1.1/32
+    description: "spine has OSPF route to leaf1 loopback"
+  - type: route_exists
+    node: spine
+    table: default
+    prefix: 10.0.2.1/32
+    description: "spine has OSPF route to leaf2 loopback"

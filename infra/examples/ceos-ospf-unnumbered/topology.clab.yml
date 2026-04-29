@@ -1,0 +1,28 @@
+# Spine-leaf OSPF lab with unnumbered point-to-point interfaces.
+#
+# Topology:
+#   leaf1 (10.0.1.1) ---[Ethernet1]---[Ethernet1]--- spine (10.0.0.1) ---[Ethernet2]---[Ethernet1]--- leaf2 (10.0.2.1)
+#
+# All point-to-point links use "ip address unnumbered Loopback0".
+# OSPF should form adjacencies and distribute all loopback routes.
+
+name: ceos-ospf-unnumbered
+
+topology:
+  nodes:
+    spine:
+      kind: arista_ceos
+      image: ceos:4.36.0.1F
+      startup-config: configs/spine.cfg
+    leaf1:
+      kind: arista_ceos
+      image: ceos:4.36.0.1F
+      startup-config: configs/leaf1.cfg
+    leaf2:
+      kind: arista_ceos
+      image: ceos:4.36.0.1F
+      startup-config: configs/leaf2.cfg
+
+  links:
+    - endpoints: ["leaf1:eth1", "spine:eth1"]
+    - endpoints: ["leaf2:eth1", "spine:eth2"]
