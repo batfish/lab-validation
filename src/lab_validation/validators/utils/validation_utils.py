@@ -5,10 +5,6 @@ from typing import (
     TypeVar,
 )
 
-import attr
-
-from ..batfish_models.routes import BgpRibRoute
-
 T = TypeVar("T")
 S = TypeVar("S")
 CostItem = tuple[str, float]
@@ -85,16 +81,6 @@ def match_pairs(
     for r in set(right) - used_right:
         result.append((None, r, [("unmatched", math.inf)]))
     return result
-
-
-def preprocess_batfish_bgp_route(batfish_route: BgpRibRoute) -> BgpRibRoute:
-    """
-    preprocess batfish route as necessary before comparing it with real show data
-    """
-    nhip: str | None = batfish_route.next_hop_ip
-    if nhip == "AUTO/NONE(-1l)":
-        return attr.evolve(batfish_route, next_hop_ip=None)
-    return batfish_route
 
 
 def matched_pairs_to_failures(

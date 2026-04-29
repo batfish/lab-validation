@@ -36,7 +36,6 @@ from .utils.validation_utils import (
     CostResult,
     match_pairs,
     matched_pairs_to_failures,
-    preprocess_batfish_bgp_route,
 )
 from .vendor_validator import VendorValidator
 
@@ -227,7 +226,7 @@ class IosXrValidator(VendorValidator):
         real_routes: list[tuple[str, IosXrBgpRoute]] = self._get_bgp_rib_all_vrfs()
         matched_routes = match_pairs(
             real_routes,
-            list(map(preprocess_batfish_bgp_route, batfish_routes)),
+            batfish_routes,
             IosXrValidator._diff_bgp_routes_cost,
         )
         # Post-process differences to eliminate expected differences:
@@ -260,9 +259,8 @@ class IosXrValidator(VendorValidator):
             xr_tuple is not None
             and bf is not None
             and IosXrValidator.could_have_been_leaked(xr_tuple, show_routes)
-            # Check that both routes look like they could have been leaked from another VRF
-            and bf.next_hop_ip is None
-            and bf.next_hop_int == "dynamic"
+            # Check that the Batfish route looks like it could have been leaked from another VRF
+            and isinstance(bf.next_hop, NextHopVrf)
         ):
             # TODO: add next VRF to BgpRibRoute so that these differences can be ignored in compute_bgp_nexthop_cost.
             return False
@@ -417,26 +415,18 @@ class IosXrValidator(VendorValidator):
     def compute_bgp_nexthop_cost(
         expected_route: IosXrBgpRoute, batfish_route: BgpRibRoute
     ) -> CostResult:
-        if (
-            batfish_route.next_hop_ip is None
-            and batfish_route.next_hop_int == "null_interface"
-            and IosXrValidator.is_local_route(expected_route)
-        ):
-            # This is a local route.
-            return []
-        if (
-            expected_route.next_hop_ip is None
-            or batfish_route.next_hop_int == "null_interface"
-        ):
-            # TODO: handle null route. Currently no XR labs have null-routed BGP routes
+        next_hop = batfish_route.next_hop
+        if isinstance(next_hop, NextHopDiscard):
+            if IosXrValidator.is_local_route(expected_route):
+                return []
+            return [("nhip/null", 1.0)]
+        if expected_route.next_hop_ip is None:
             return [("nhip/null", 1.0)]
 
-        # TODO Can BGP routes in show data have next hop interfaces?
-        return (
-            []
-            if expected_route.next_hop_ip == batfish_route.next_hop_ip
-            else [("nhip", 1.0)]
-        )
+        if isinstance(next_hop, (NextHopIp, NextHopInterface)):
+            return [] if expected_route.next_hop_ip == next_hop.ip else [("nhip", 1.0)]
+
+        return [("nhip", 1.0)]
 
     @staticmethod
     def _bgp_origin_type_compatible(bf: str, xr: str) -> bool:

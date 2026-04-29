@@ -1,43 +1,15 @@
 import math
 from typing import Any
 
-import attr
 from pybatfish.datamodel import NextHopInterface, NextHopIp
 
 from lab_validation.parsers.ios.models.routes import IosIpRoute
-from lab_validation.validators.batfish_models.routes import BgpRibRoute, MainRibRoute
+from lab_validation.validators.batfish_models.routes import MainRibRoute
 from lab_validation.validators.IosValidator import IosValidator
 from lab_validation.validators.utils.validation_utils import (
     match_pairs,
     matched_pairs_to_failures,
-    preprocess_batfish_bgp_route,
 )
-
-
-def test_preprocess_batfish_bgp_route() -> None:
-    r = BgpRibRoute(
-        weight=0,
-        vrf="vrf",
-        network="10.10.0.0/16",
-        next_hop=NextHopIp(ip="192.168.0.1"),
-        next_hop_ip="192.168.0.1",
-        next_hop_int="dynamic",
-        protocol="bgp",
-        as_path="65100",
-        metric=100,
-        local_preference=101,
-        communities=["comm1"],
-        origin_protocol="ospf",
-        origin_type="type",
-        tag=102,
-    )
-    # Should be no-op
-    assert r == preprocess_batfish_bgp_route(r)
-
-    r_nh_ip_auto_none = attr.evolve(r, next_hop_ip="AUTO/NONE(-1l)")
-    r_nh_ip_none = attr.evolve(r, next_hop_ip=None)
-    # Should convert Batfish AUTO/NONE string into a proper python None
-    assert r_nh_ip_none == preprocess_batfish_bgp_route(r_nh_ip_auto_none)
 
 
 def test_match_pairs_same_count() -> None:
