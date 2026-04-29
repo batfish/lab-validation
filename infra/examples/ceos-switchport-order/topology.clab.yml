@@ -1,0 +1,27 @@
+# Lab to test whether Arista EOS accepts L3 config (ip address) before
+# `no switchport` on physical interfaces.
+#
+# Topology:
+#   r1 (AS 65001) ---[Ethernet1]---[Ethernet1]--- r2 (AS 65002)
+#     Loopback0: 1.1.1.1/32                        Loopback0: 2.2.2.2/32
+#     link: 10.0.0.0/31                            link: 10.0.0.1/31
+#
+# r1 has `ip address` BEFORE `no switchport` on Ethernet1.
+# r2 has the normal order (`no switchport` before `ip address`).
+# If BGP establishes, the device accepts L3 config regardless of order.
+
+name: ceos-switchport-order
+
+topology:
+  nodes:
+    r1:
+      kind: arista_ceos
+      image: ceos:4.36.0.1F
+      startup-config: configs/r1.cfg
+    r2:
+      kind: arista_ceos
+      image: ceos:4.36.0.1F
+      startup-config: configs/r2.cfg
+
+  links:
+    - endpoints: ["r1:eth1", "r2:eth1"]
