@@ -102,6 +102,7 @@ def cmd_build_snapshot(args: argparse.Namespace) -> None:
         nodes=nodes,
         collected_dir=Path(args.collected_dir),
         snapshots_dir=Path(args.snapshots_dir),
+        topology_file=Path(args.topology),
     )
 
 
