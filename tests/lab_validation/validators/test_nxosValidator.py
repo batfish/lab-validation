@@ -273,8 +273,6 @@ def test_bgp_equal() -> None:
         vrf="default",
         network="1.2.3.4/20",
         next_hop=NextHopInterface(interface="Ethernet1"),
-        next_hop_ip="removeme",
-        next_hop_int="removeme",
         protocol="ibgp",
         as_path="1 2",
         metric=5,
@@ -323,8 +321,6 @@ def test_bgp_compare_local_routes() -> None:
         vrf="default",
         network="1.2.3.4/20",
         next_hop=NextHopDiscard(),
-        next_hop_ip="AUTO/NONE(-1l)",
-        next_hop_int="null_interface",
         protocol="bgp",
         as_path="",
         metric=0,
@@ -446,8 +442,6 @@ def test_bgp_not_equal() -> None:
         vrf="default",
         network="1.2.3.4/20",
         next_hop=NextHopInterface(interface="Ethernet1"),
-        next_hop_ip="removemelater",
-        next_hop_int="removemelater",
         protocol="ibgp",
         as_path="1 2",
         metric=5,
@@ -769,8 +763,6 @@ _BF_EVPN = EvpnRibRoute(
     network="192.168.10.0/24",
     route_distinguisher="1.1.1.1:3",
     next_hop=NextHopVtep(vni=100777, vtep="1.1.1.1"),
-    next_hop_ip=None,
-    next_hop_int="null_interface",
     protocol="bgp",
     as_path="",
     metric=0,
@@ -799,7 +791,7 @@ def test_evpn_cost_rd_mismatch() -> None:
 
 
 def test_evpn_cost_next_hop_ip_mismatch() -> None:
-    bf = attr.evolve(_BF_EVPN, next_hop_ip="2.2.2.2")
+    bf = attr.evolve(_BF_EVPN, next_hop=NextHopVtep(vni=100777, vtep="2.2.2.2"))
     assert NxosValidator._diff_evpn_routes_cost(_NXOS_EVPN, bf) == [
         ("next_hop_ip", 10.0)
     ]

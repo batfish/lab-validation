@@ -19,8 +19,6 @@ def test_diff_bgp_routes_cost() -> None:
         vrf="default",
         network="1.2.0.0/20",
         next_hop=NextHopInterface(interface="Ethernet1", ip="2.2.2.2"),
-        next_hop_ip="2.2.2.2",
-        next_hop_int="Ethernet1",
         protocol="IBGP",
         as_path="1 2",
         metric=0,
@@ -89,8 +87,6 @@ def test_difference_matters() -> None:
         vrf="default",
         network="1.1.1.1/32",
         next_hop=NextHopInterface(interface="Ethernet1", ip="2.2.2.2"),
-        next_hop_ip="2.2.2.2",
-        next_hop_int="Ethernet1",
         protocol="IBGP",
         as_path="1 2",
         metric=0,
@@ -112,11 +108,11 @@ def test_difference_matters() -> None:
     )
 
     # Leaked routes that only differ in next hop info don't matter
-    bf_no_nh_info = attr.evolve(bf, next_hop_ip=None, next_hop_int="dynamic")
+    bf_leaked = attr.evolve(bf, next_hop=NextHopVrf(vrf="other"))
     diff = (
         ("default", xr),
-        bf_no_nh_info,
-        IosXrValidator.compute_bgp_nexthop_cost(xr, bf_no_nh_info),
+        bf_leaked,
+        IosXrValidator.compute_bgp_nexthop_cost(xr, bf_leaked),
     )
     show_routes = [
         ("default", xr),
@@ -127,19 +123,11 @@ def test_difference_matters() -> None:
     # Can't ignore the "leaked" route if it doesn't appear to have been leaked
     assert IosXrValidator.difference_matters(diff, [("default", xr)])
 
-    # Can't ignore the "leaked" route if the BF route has any next hop info
-    bf_no_nhip = attr.evolve(bf, next_hop_ip=None)
+    # Can't ignore a route whose BF next_hop is not NextHopVrf
     diff = (
         ("default", xr),
-        bf_no_nhip,
-        IosXrValidator.compute_bgp_nexthop_cost(xr, bf_no_nhip),
-    )
-    assert IosXrValidator.difference_matters(diff, show_routes)
-    bf_no_nhint = attr.evolve(bf, next_hop_int="dynamic")
-    diff = (
-        ("default", xr),
-        bf_no_nhint,
-        IosXrValidator.compute_bgp_nexthop_cost(xr, bf_no_nhint),
+        bf,
+        IosXrValidator.compute_bgp_nexthop_cost(xr, bf),
     )
     assert IosXrValidator.difference_matters(diff, show_routes)
 

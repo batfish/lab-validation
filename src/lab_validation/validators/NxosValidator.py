@@ -257,10 +257,15 @@ class NxosValidator(VendorValidator):
 
         cost: CostResult = []
 
-        if (
-            batfish_route.next_hop_ip is not None
-            and batfish_route.next_hop_ip != nxos_route.next_hop_ip
-        ):
+        next_hop = batfish_route.next_hop
+        bf_nhip = (
+            next_hop.ip
+            if isinstance(next_hop, (NextHopIp, NextHopInterface))
+            else next_hop.vtep
+            if isinstance(next_hop, NextHopVtep)
+            else None
+        )
+        if bf_nhip is not None and bf_nhip != nxos_route.next_hop_ip:
             cost.append(("next_hop_ip", 10.0))
 
         nxos_metric = 0 if nxos_route.metric is None else nxos_route.metric

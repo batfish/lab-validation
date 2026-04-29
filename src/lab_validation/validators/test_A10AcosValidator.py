@@ -25,10 +25,8 @@ def test_bgp_rib_cost() -> None:
     )
     bf_route: BgpRibRoute = BgpRibRoute(
         vrf="default",
-        network="00.0.0.0/0",
+        network="0.0.0.0/0",
         next_hop=NextHopIp("10.139.1.133"),
-        next_hop_ip="10.139.1.133",
-        next_hop_int="dynamic",
         protocol="bgp",
         as_path=tuple([65333]),
         metric=0,

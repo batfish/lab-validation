@@ -277,21 +277,6 @@ class AristaValidator(VendorValidator):
 
         raise ValueError("Unsupported next hop " + repr(next_hop))
 
-    @staticmethod
-    def _next_hop_int_compatible(
-        arista_nhint: str | None, batfish_nhint: str, batfish_protocol: str
-    ) -> bool:
-        """Returns true if the next-hop interfaces for Arista and Batfish routes are compatible."""
-        if arista_nhint is None:
-            return batfish_nhint == "dynamic"
-
-        # skip next hop interfaces that need resolution
-        if batfish_protocol == "static" and batfish_nhint == "dynamic":
-            return True
-
-        assert batfish_nhint is not None
-        return bool(arista_nhint.lower() == batfish_nhint.lower())
-
     def _first_file(self, json_filename: str, txt_filename: str) -> Path:
         """Returns the path of the first file that exists."""
         json_path = self.device_path / json_filename
@@ -369,34 +354,9 @@ class AristaValidator(VendorValidator):
         if arista_route.origin_type != batfish_route.origin_type:
             cost.append(("origin_type", 1.0))
 
-        arista_ip, arista_zone = _split_ipv6_zone(arista_route.next_hop_ip)
-        batfish_nh_ip = (
-            batfish_route.next_hop.ip
-            if isinstance(batfish_route.next_hop, (NextHopIp, NextHopInterface))
-            else batfish_route.next_hop_ip
+        cost += AristaValidator._compute_bgp_next_hop_cost(
+            arista_route, batfish_route.next_hop
         )
-        if arista_ip != batfish_nh_ip:
-            if (
-                arista_route.next_hop_ip is None
-                and batfish_route.next_hop_ip == "AUTO/NONE(-1l)"
-                and batfish_route.next_hop_int == "null_interface"
-            ):
-                pass
-            elif _is_rfc5549_unnumbered_match(arista_route.next_hop_ip, batfish_nh_ip):
-                pass
-            else:
-                cost.append(("nhip", 1.0))
-
-        # For routes whose next-hop is an IPv6 link-local (e.g. unnumbered BGP),
-        # the outgoing interface is encoded in the zone identifier. Use it to
-        # disambiguate parallel paths during cost-based matching.
-        if (
-            arista_zone is not None
-            and batfish_route.next_hop_int
-            and batfish_route.next_hop_int != "dynamic"
-            and arista_zone.lower() != batfish_route.next_hop_int.lower()
-        ):
-            cost.append(("nhint", 5.0))
 
         arista_metric = 0 if arista_route.metric is None else arista_route.metric
         if batfish_route.metric != arista_metric:
@@ -425,6 +385,43 @@ class AristaValidator(VendorValidator):
             cost.append(("as path", 1.0))
 
         return cost
+
+    @staticmethod
+    def _compute_bgp_next_hop_cost(
+        arista_route: AristaBgpRoute, next_hop: NextHop
+    ) -> CostResult:
+        arista_ip, arista_zone = _split_ipv6_zone(arista_route.next_hop_ip)
+
+        if isinstance(next_hop, NextHopDiscard):
+            if arista_route.next_hop_ip is None:
+                return []
+            return [("nhip", 1.0)]
+
+        if isinstance(next_hop, NextHopIp):
+            if arista_ip == next_hop.ip:
+                return []
+            if _is_rfc5549_unnumbered_match(arista_route.next_hop_ip, next_hop.ip):
+                return []
+            return [("nhip", 1.0)]
+
+        if isinstance(next_hop, NextHopInterface):
+            cost: CostResult = []
+            if arista_ip != next_hop.ip:
+                if not _is_rfc5549_unnumbered_match(
+                    arista_route.next_hop_ip, next_hop.ip
+                ):
+                    cost.append(("nhip", 1.0))
+            if arista_zone is not None and next_hop.interface:
+                if arista_zone.lower() != next_hop.interface.lower():
+                    cost.append(("nhint", 5.0))
+            return cost
+
+        if isinstance(next_hop, NextHopVtep):
+            if arista_ip == next_hop.vtep:
+                return []
+            return [("nhip", 1.0)]
+
+        raise ValueError("Unsupported next hop " + repr(next_hop))
 
     @staticmethod
     def _compute_bgp_protocol_cost(
@@ -543,15 +540,9 @@ class AristaValidator(VendorValidator):
                 arista_route.origin_protocol, batfish_route.protocol
             )
 
-        if batfish_route.next_hop_ip != arista_route.next_hop_ip:
-            if (
-                arista_route.next_hop_ip is None
-                and batfish_route.next_hop_ip == "AUTO/NONE(-1l)"
-                and batfish_route.next_hop_int == "null_interface"
-            ):
-                pass
-            else:
-                cost.append(("next_hop_ip", 10.0))
+        cost += AristaValidator._compute_evpn_next_hop_cost(
+            arista_route, batfish_route.next_hop
+        )
 
         arista_local_pref = (
             arista_route.local_preference
@@ -568,3 +559,24 @@ class AristaValidator(VendorValidator):
             cost.append(("origin_type", 1.0))
 
         return cost
+
+    @staticmethod
+    def _compute_evpn_next_hop_cost(
+        arista_route: AristaEvpnRoute, next_hop: NextHop
+    ) -> CostResult:
+        if isinstance(next_hop, NextHopDiscard):
+            if arista_route.next_hop_ip is None:
+                return []
+            return [("next_hop_ip", 10.0)]
+
+        if isinstance(next_hop, (NextHopIp, NextHopInterface)):
+            if arista_route.next_hop_ip == next_hop.ip:
+                return []
+            return [("next_hop_ip", 10.0)]
+
+        if isinstance(next_hop, NextHopVtep):
+            if arista_route.next_hop_ip == next_hop.vtep:
+                return []
+            return [("next_hop_ip", 10.0)]
+
+        raise ValueError("Unsupported next hop " + repr(next_hop))

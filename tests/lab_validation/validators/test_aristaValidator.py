@@ -242,8 +242,6 @@ def test_diff_bgp_routes_cost() -> None:
         vrf="vrf",
         network="1.1.1.0/24",
         next_hop=NextHopInterface(interface="iface", ip="2.2.2.2"),
-        next_hop_ip="2.2.2.2",
-        next_hop_int="iface",
         protocol="bgp",
         metric=0,
         communities=(),
@@ -380,8 +378,6 @@ def test_validate_bgp_rib_routes_local() -> None:
             vrf="vrf",
             network="1.1.1.0/24",
             next_hop=NextHopDiscard(),
-            next_hop_ip="AUTO/NONE(-1l)",
-            next_hop_int="null_interface",
             protocol="bgp",
             metric=0,
             communities=(),
@@ -550,8 +546,6 @@ def test_validate_evpn_rib_routes_equal() -> None:
         vrf="vrf",
         network="1.1.1.0/24",
         next_hop=NextHopInterface(interface="iface", ip="2.2.2.2"),
-        next_hop_ip="2.2.2.2",
-        next_hop_int="iface",
         protocol="ibgp",
         metric=0,
         communities=(),
@@ -596,7 +590,10 @@ def test_validate_evpn_rib_routes_equal() -> None:
 
     # next hop ip mismatch
     assert AristaValidator._diff_evpn_routes_cost(
-        arista_route, attr.evolve(batfish_route, next_hop_ip="3.3.3.3")
+        arista_route,
+        attr.evolve(
+            batfish_route, next_hop=NextHopInterface(interface="iface", ip="3.3.3.3")
+        ),
     ) == [("next_hop_ip", 10.0)]
 
     # local preference mismatch
@@ -633,9 +630,7 @@ def test_diff_evpn_routes_cost_special_nhip_cases() -> None:
     batfish_route = EvpnRibRoute(
         vrf="vrf",
         network="1.1.1.0/24",
-        next_hop_ip="AUTO/NONE(-1l)",
         next_hop=NextHopDiscard(),
-        next_hop_int="null_interface",
         protocol="ibgp",
         metric=0,
         communities=(),
@@ -647,18 +642,18 @@ def test_diff_evpn_routes_cost_special_nhip_cases() -> None:
         route_distinguisher="rd",
     )
 
-    # Both routes have no NHIP
+    # Both routes have no NHIP (Arista None, Batfish NextHopDiscard)
     assert AristaValidator._diff_evpn_routes_cost(arista_route, batfish_route) == []
 
-    # If Arista route has a NHIP or Batfish route has a NHIP or next hop interface, no match
+    # Arista has NHIP but Batfish is NextHopDiscard
     assert AristaValidator._diff_evpn_routes_cost(
         attr.evolve(arista_route, next_hop_ip="2.2.2.2"), batfish_route
     ) == [("next_hop_ip", 10.0)]
+
+    # Batfish has a real next hop IP but Arista has None
     assert AristaValidator._diff_evpn_routes_cost(
-        arista_route, attr.evolve(batfish_route, next_hop_ip="2.2.2.2")
-    ) == [("next_hop_ip", 10.0)]
-    assert AristaValidator._diff_evpn_routes_cost(
-        arista_route, attr.evolve(batfish_route, next_hop_int="eth1")
+        arista_route,
+        attr.evolve(batfish_route, next_hop=NextHopIp(ip="2.2.2.2")),
     ) == [("next_hop_ip", 10.0)]
 
 
@@ -681,8 +676,6 @@ def test_diff_evpn_routes_cost_special_localpref_cases() -> None:
         vrf="vrf",
         network="1.1.1.0/24",
         next_hop=NextHopInterface(interface="iface", ip="2.2.2.2"),
-        next_hop_ip="2.2.2.2",
-        next_hop_int="iface",
         protocol="ibgp",
         metric=0,
         communities=(),
@@ -766,8 +759,6 @@ def test_diff_bgp_routes_cost_rfc5549_unnumbered() -> None:
         vrf="default",
         network="10.0.0.1/32",
         next_hop=NextHopInterface(interface="Ethernet1", ip="169.254.0.1"),
-        next_hop_ip=None,
-        next_hop_int="Ethernet1",
         protocol="bgp",
         metric=0,
         communities=(),
@@ -786,7 +777,6 @@ def test_diff_bgp_routes_cost_rfc5549_unnumbered() -> None:
     batfish_route_et2 = attr.evolve(
         batfish_route_et1,
         next_hop=NextHopInterface(interface="Ethernet2", ip="169.254.0.1"),
-        next_hop_int="Ethernet2",
     )
     assert AristaValidator._diff_bgp_routes_cost(arista_route, batfish_route_et2) == [
         ("nhint", 5.0)

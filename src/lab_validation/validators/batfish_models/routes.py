@@ -63,8 +63,6 @@ class BgpRibRoute:
     vrf: str = attr.ib(kw_only=True)
     network: str = attr.ib(kw_only=True, converter=normalized_network)
     next_hop: NextHop
-    next_hop_ip: str | None = attr.ib(kw_only=True)
-    next_hop_int: str = attr.ib(kw_only=True)
     protocol: str = attr.ib(kw_only=True)
     as_path: Sequence[int | Sequence[int]] = attr.ib(
         converter=convert_as_path, kw_only=True
@@ -86,8 +84,6 @@ class EvpnRibRoute:
     network: str = attr.ib(converter=normalized_network)
     route_distinguisher: str
     next_hop: NextHop
-    next_hop_ip: str
-    next_hop_int: str
     protocol: str
     as_path: Sequence[int | Sequence[int]] = attr.ib(converter=convert_as_path)
     metric: int = attr.ib(converter=int)

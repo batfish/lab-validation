@@ -2,11 +2,11 @@ entries:
   - hostname: ".*"
     test_name: test_evpn_rib_routes
     skip:
-      reason: https://github.com/batfish/lab-validation/issues/11; wrong local preferences, likely related to https://github.com/batfish/lab-validation/issues/8
+      reason: wrong local preferences, likely related to https://github.com/batfish/lab-validation/issues/8; VTEP next hop IP divergence, https://github.com/batfish/lab-validation/issues/10; locally-originated path attribute divergence, https://github.com/batfish/lab-validation/issues/152
   - hostname: ".*"
     test_name: test_bgp_rib_routes
     skip:
-      reason: https://github.com/batfish/lab-validation/issues/11; locally-originated path attribute divergence, https://github.com/batfish/lab-validation/issues/152; Missing VTEP next hop show data, https://github.com/batfish/lab-validation/issues/10
+      reason: locally-originated path attribute divergence, https://github.com/batfish/lab-validation/issues/152; Missing VTEP next hop show data, https://github.com/batfish/lab-validation/issues/10
   - hostname: "DC1-(LEAF|SVC).B"
     test_name: test_main_rib_routes
     skip:
