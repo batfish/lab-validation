@@ -1,0 +1,52 @@
+! Command: show running-config
+! device: spine (cEOSLab, EOS-4.36.0.1F-47401373.43601F (engineering build))
+!
+no aaa root
+!
+username admin privilege 15 role network-admin secret sha512 $6$FRDBVJqyP5dFQaTQ$eqiOY/F5uEAskHevM3/7iPX3NrvvFuWNnsPNl57JZCwin976KfpZoGpBAs3gM92fa56DbTyrA0dEL/n7OKomf.
+!
+no service interface inactive port-id allocation disabled
+!
+service routing protocols model multi-agent
+!
+hostname spine
+!
+spanning-tree mode mstp
+!
+system l1
+   unsupported speed action error
+   unsupported error-correction action error
+!
+aaa authorization exec default local
+!
+interface Ethernet1
+   no switchport
+   ip address unnumbered Loopback0
+   ip ospf dead-interval 4
+   ip ospf hello-interval 1
+   ip ospf network point-to-point
+   ip ospf area 0.0.0.0
+!
+interface Ethernet2
+   no switchport
+   ip address unnumbered Loopback0
+   ip ospf dead-interval 4
+   ip ospf hello-interval 1
+   ip ospf network point-to-point
+   ip ospf area 0.0.0.0
+!
+interface Loopback0
+   ip address 10.0.0.1/32
+   ip ospf area 0.0.0.0
+!
+interface Management0
+   ip address 172.20.20.4/24
+   ipv6 address 3fff:172:20:20::4/64
+!
+ip routing
+!
+router ospf 1
+   router-id 10.0.0.1
+   max-lsa 12000
+!
+end

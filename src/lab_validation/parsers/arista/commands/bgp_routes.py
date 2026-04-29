@@ -25,7 +25,8 @@ WEIGHT = "weight"
 def parse_show_ip_bgp_vrf_all_json(text: str) -> Sequence[AristaBgpRoute]:
     json_obj = json.loads(text)
     routes: list[AristaBgpRoute] = []
-    assert VRFS in json_obj
+    if VRFS not in json_obj:
+        return routes
     for vrf_name in json_obj[VRFS]:
         if BGP_ROUTE_ENTRIES in json_obj[VRFS][vrf_name]:
             routes += _get_bgp_routes(
