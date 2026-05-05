@@ -1,0 +1,5 @@
+set system host-name accepts-bgp-allow
+set routing-options autonomous-system 65000
+set protocols bgp group TEST type external
+set protocols bgp group TEST peer-as 65001
+set protocols bgp group TEST allow 192.168.1.111/24

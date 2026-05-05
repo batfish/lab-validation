@@ -1,0 +1,233 @@
+# Junos commit check validation: tests whether Junos rejects unnormalized
+# prefixes (host bits set) in various configuration contexts.
+#
+# Methodology: for each grammar rule that accepts ip_prefix or
+# ip_prefix_default_32, we test whether Junos rejects 192.168.1.111/24
+# (host bits set) at commit time. We also confirm the normalized form
+# 192.168.1.0/24 is accepted.
+#
+# Platform: vJunos-router (VMX). Security-hierarchy checks (NAT, zones,
+# address-books) require vSRX which is not currently available — those are
+# noted as TODO at the bottom of this file.
+#
+# Reference: batfish/batfish#9928
+#
+# Results summary (vJunos 25.4R1.12):
+#   REJECTS host bits: static route, aggregate route, generate route,
+#     OSPF area-range, firewall from address, firewall next-ip
+#   ACCEPTS host bits: prefix-list, route-filter, route-filter through,
+#     SNMP client-list, BGP allow, interface address, VGA tracking route
+#   REJECTS host bits (but requires extra config to test): condition
+#     if-route-exists, MPLS LSP install
+
+checks:
+  # ==========================================================================
+  # Category 1: Route definitions — Junos REJECTS host bits
+  # ==========================================================================
+
+  # --- static route (ros_route4) ---
+  - type: commit_check_rejects
+    node: dut
+    config_lines:
+      - "set routing-options static route 192.168.1.111/24 reject"
+    description: "static route with host bits set"
+
+  - type: commit_check_accepts
+    node: dut
+    config_lines:
+      - "set routing-options static route 192.168.1.0/24 reject"
+    description: "static route with valid prefix"
+
+  # --- aggregate route (roa_route) ---
+  - type: commit_check_rejects
+    node: dut
+    config_lines:
+      - "set routing-options aggregate route 192.168.1.111/24"
+    description: "aggregate route with host bits set"
+
+  - type: commit_check_accepts
+    node: dut
+    config_lines:
+      - "set routing-options aggregate route 192.168.1.0/24"
+    description: "aggregate route with valid prefix"
+
+  # --- generate route (rog_route) ---
+  - type: commit_check_rejects
+    node: dut
+    config_lines:
+      - "set routing-options generate route 192.168.1.111/24"
+    description: "generate route with host bits set"
+
+  - type: commit_check_accepts
+    node: dut
+    config_lines:
+      - "set routing-options generate route 192.168.1.0/24"
+    description: "generate route with valid prefix"
+
+  # ==========================================================================
+  # Category 2: OSPF area-range — Junos REJECTS host bits
+  # ==========================================================================
+
+  - type: commit_check_rejects
+    node: dut
+    config_lines:
+      - "set protocols ospf area 0.0.0.0 area-range 192.168.1.111/24"
+    description: "OSPF area-range with host bits set"
+
+  - type: commit_check_accepts
+    node: dut
+    config_lines:
+      - "set protocols ospf area 0.0.0.0 area-range 192.168.1.0/24"
+    description: "OSPF area-range with valid prefix"
+
+  # ==========================================================================
+  # Category 3: Firewall filter — Junos REJECTS host bits
+  # ==========================================================================
+
+  # --- from destination-address (fftfa_address_mask_prefix) ---
+  - type: commit_check_rejects
+    node: dut
+    config_lines:
+      - "set firewall filter TEST term T from destination-address 192.168.1.111/24"
+      - "set firewall filter TEST term T then accept"
+    description: "firewall destination-address with host bits set"
+
+  - type: commit_check_accepts
+    node: dut
+    config_lines:
+      - "set firewall filter TEST term T from destination-address 192.168.1.0/24"
+      - "set firewall filter TEST term T then accept"
+    description: "firewall destination-address with valid prefix"
+
+  # --- then next-ip (fftt_next_ip) ---
+  - type: commit_check_rejects
+    node: dut
+    config_lines:
+      - "set firewall filter TEST term T then next-ip 192.168.1.111/24"
+    description: "firewall next-ip with host bits set"
+
+  - type: commit_check_accepts
+    node: dut
+    config_lines:
+      - "set firewall filter TEST term T then next-ip 192.168.1.0/24"
+    description: "firewall next-ip with valid prefix"
+
+  # ==========================================================================
+  # Category 4: MPLS LSP install — Junos ACCEPTS host bits
+  # ==========================================================================
+
+  - type: commit_check_accepts
+    node: dut
+    config_lines:
+      - "set protocols mpls label-switched-path TEST to 2.2.2.2"
+      - "set protocols mpls label-switched-path TEST install 192.168.1.111/24"
+      - "set protocols mpls interface ge-0/0/0.0"
+    description: "MPLS LSP install with host bits (accepted by Junos)"
+
+  # ==========================================================================
+  # Category 5: Condition if-route-exists — Junos REJECTS host bits
+  # (requires table name to avoid unrelated missing-table error)
+  # ==========================================================================
+
+  - type: commit_check_rejects
+    node: dut
+    config_lines:
+      - "set policy-options condition TEST if-route-exists 192.168.1.111/24 table inet.0"
+    description: "condition if-route-exists with host bits set"
+
+  - type: commit_check_accepts
+    node: dut
+    config_lines:
+      - "set policy-options condition TEST if-route-exists 192.168.1.0/24 table inet.0"
+    description: "condition if-route-exists with valid prefix"
+
+  # ==========================================================================
+  # Category 6: Policy prefix-list — Junos ACCEPTS host bits
+  # ==========================================================================
+
+  - type: commit_check_accepts
+    node: dut
+    config_lines:
+      - "set policy-options prefix-list TEST 192.168.1.111/24"
+    description: "prefix-list entry with host bits (accepted by Junos)"
+
+  - type: commit_check_accepts
+    node: dut
+    config_lines:
+      - "set policy-options prefix-list TEST 192.168.1.0/24"
+    description: "prefix-list entry with valid prefix"
+
+  # ==========================================================================
+  # Category 7: Policy route-filter — Junos ACCEPTS host bits
+  # ==========================================================================
+
+  - type: commit_check_accepts
+    node: dut
+    config_lines:
+      - "set policy-options policy-statement TEST term T from route-filter 192.168.1.111/24 exact"
+    description: "route-filter with host bits (accepted by Junos)"
+
+  - type: commit_check_accepts
+    node: dut
+    config_lines:
+      - "set policy-options policy-statement TEST term T from route-filter 10.0.0.0/8 through 192.168.1.111/24"
+    description: "route-filter through with host bits (accepted by Junos)"
+
+  # ==========================================================================
+  # Category 8: SNMP client-list — Junos ACCEPTS host bits
+  # ==========================================================================
+
+  - type: commit_check_accepts
+    node: dut
+    config_lines:
+      - "set snmp client-list TEST 192.168.1.111/24"
+    description: "SNMP client-list with host bits (accepted by Junos)"
+
+  # ==========================================================================
+  # Category 9: BGP allow — Junos ACCEPTS host bits
+  # ==========================================================================
+
+  - type: commit_check_accepts
+    node: dut
+    config_lines:
+      - "set protocols bgp group TEST type external"
+      - "set protocols bgp group TEST peer-as 65001"
+      - "set protocols bgp group TEST allow 192.168.1.111/24"
+    description: "BGP allow with host bits (accepted by Junos)"
+
+  # ==========================================================================
+  # Category 10: Interface address — Junos ACCEPTS host bits (expected)
+  # ==========================================================================
+
+  - type: commit_check_accepts
+    node: dut
+    config_lines:
+      - "set interfaces ge-0/0/1 unit 0 family inet address 192.168.1.111/24"
+    description: "interface address with host bits (valid for interfaces)"
+
+  # ==========================================================================
+  # Category 11: Interface VGA tracking route — Junos ACCEPTS host bits
+  # ==========================================================================
+
+  - type: commit_check_accepts
+    node: dut
+    config_lines:
+      - "set interfaces ge-0/0/0 unit 0 family inet address 10.0.0.1/30 virtual-gateway-address-tracking route 192.168.1.111/24 routing-instance default priority-cost 100"
+    description: "interface VGA tracking route with host bits (accepted by Junos)"
+
+# ==========================================================================
+# TODO: Security hierarchy checks (require vSRX image)
+#
+# These grammar rules use ip_prefix in the security hierarchy, which is
+# only available on SRX platforms. vJunos-router (VMX) does not support
+# the security hierarchy, so these cannot be tested with current infra.
+#
+# When a vSRX image becomes available, add checks for:
+#   - NAT pool address (natp_address): security nat source pool <p> address <prefix>
+#   - NAT pool address range: security nat source pool <p> address <from> to <to>
+#   - NAT rule match destination-address (rsrm_destination_address)
+#   - NAT rule match source-address (rsrm_source_address)
+#   - Static NAT then prefix (rsrtstp_prefix)
+#   - Global address-book entry (sead_address)
+#   - Zone address-book entry (sezsa_address)
+# ==========================================================================
