@@ -258,6 +258,89 @@ def _arista_check_bgp_peer(node: NodeInfo, neighbor: str) -> CheckResult:
 
 
 # ---------------------------------------------------------------------------
+# Junos commit check validation
+# ---------------------------------------------------------------------------
+
+
+def _junos_commit_check(node: NodeInfo, config_lines: list[str]) -> tuple[bool, str]:
+    """Load config lines on a Junos device and run 'commit check'.
+
+    Returns (success, output) where success is True if commit check passes.
+    Always rolls back after the check so the device stays clean.
+    """
+    from lab_builder.device import connect
+
+    conn = connect(node)
+    try:
+        conn.config_mode()
+        for line in config_lines:
+            stripped = line.strip()
+            if not stripped or stripped.startswith("#"):
+                continue
+            conn.send_command_timing(stripped)
+        output: str = conn.send_command_timing("commit check")
+        conn.send_command_timing("rollback 0")
+        conn.exit_config_mode()
+
+        success = "configuration check succeeds" in output.lower()
+        return success, output.strip()
+    except Exception as e:
+        try:
+            conn.send_command_timing("rollback 0")
+            conn.exit_config_mode()
+        except Exception:
+            pass
+        return False, f"exception: {e}"
+    finally:
+        conn.disconnect()
+
+
+def _check_commit_rejects(
+    node: NodeInfo, config_lines: list[str], expected_error: str | None
+) -> CheckResult:
+    """Verify that Junos rejects the given config lines at commit check."""
+    success, output = _junos_commit_check(node, config_lines)
+    if success:
+        return CheckResult(
+            "commit_check_rejects",
+            node.name,
+            False,
+            f"expected rejection but commit check succeeded: {output}",
+        )
+    if expected_error and expected_error.lower() not in output.lower():
+        return CheckResult(
+            "commit_check_rejects",
+            node.name,
+            False,
+            f"rejected but error text '{expected_error}' not found in: {output}",
+        )
+    return CheckResult(
+        "commit_check_rejects",
+        node.name,
+        True,
+        f"correctly rejected: {output[:120]}",
+    )
+
+
+def _check_commit_accepts(node: NodeInfo, config_lines: list[str]) -> CheckResult:
+    """Verify that Junos accepts the given config lines at commit check."""
+    success, output = _junos_commit_check(node, config_lines)
+    if success:
+        return CheckResult(
+            "commit_check_accepts",
+            node.name,
+            True,
+            "commit check succeeded",
+        )
+    return CheckResult(
+        "commit_check_accepts",
+        node.name,
+        False,
+        f"expected acceptance but commit check failed: {output}",
+    )
+
+
+# ---------------------------------------------------------------------------
 # Dispatch
 # ---------------------------------------------------------------------------
 
@@ -287,6 +370,12 @@ CHECK_FUNCTIONS = {
     ),
     "bgp_peer_established": lambda node, spec: check_bgp_peer_established(
         node, spec["neighbor"]
+    ),
+    "commit_check_rejects": lambda node, spec: _check_commit_rejects(
+        node, spec["config_lines"], spec.get("expected_error")
+    ),
+    "commit_check_accepts": lambda node, spec: _check_commit_accepts(
+        node, spec["config_lines"]
     ),
 }
 

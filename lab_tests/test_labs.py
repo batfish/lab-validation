@@ -445,6 +445,94 @@ def test_vi_model(bf: Session, snapshot: str) -> None:
     bf.q.viModel().answer()
 
 
+@pytest.fixture(scope="module")
+def parse_warning_spec(pytestconfig: Config) -> dict | None:
+    """Load parse_warnings.yaml if present."""
+    import yaml
+
+    lab = pytestconfig.getoption(LAB_NAME_CONFIG_OPTION)
+    warnings_path = snapshot_path(lab) / "validation" / "parse_warnings.yaml"
+    if not warnings_path.exists():
+        return None
+    with open(warnings_path) as f:
+        return yaml.safe_load(f)
+
+
+@pytest.fixture(scope="module")
+def host_fatal_details(
+    bf: Session, snapshot: str, parse_warning_spec: dict | None
+) -> dict[str, list[str]]:
+    """Map hostname -> list of fatal red flag warning detail strings."""
+    if parse_warning_spec is None:
+        return {}
+
+    bf.set_snapshot(snapshot)
+    issues = bf.q.initIssues().answer().frame()
+
+    fatal_rows = issues[
+        (issues["Type"] == "Parse warning (redflag)")
+        & (issues["Details"].str.startswith("FATAL:"))
+    ]
+
+    result: dict[str, list[str]] = {}
+    for _, row in fatal_rows.iterrows():
+        nodes = row.get("Nodes")
+        source_lines = row.get("Source_Lines")
+        if nodes:
+            for node in nodes:
+                result.setdefault(node, []).append(row["Details"])
+        elif source_lines:
+            for file_lines in source_lines:
+                filename = (
+                    file_lines.filename
+                    if hasattr(file_lines, "filename")
+                    else str(file_lines)
+                )
+                parts = filename.split("/")
+                if len(parts) >= 2 and parts[0] == "configs":
+                    result.setdefault(parts[1], []).append(row["Details"])
+    return result
+
+
+def test_parse_warnings(
+    hostname: str,
+    vendor: Vendor,
+    parse_warning_spec: dict | None,
+    host_fatal_details: dict[str, list[str]],
+) -> None:
+    """Tests that Batfish produces (or does not produce) fatal red flag warnings.
+
+    Driven by validation/parse_warnings.yaml. Each host is tested individually
+    so failures can be sickbayed per-host.
+    """
+    if parse_warning_spec is None:
+        pytest.skip("no validation/parse_warnings.yaml")
+        return
+
+    expects_fatal = {
+        e["host"]: e["contains"]
+        for e in parse_warning_spec.get("expects_fatal_warning", [])
+    }
+    expects_no_fatal = set(parse_warning_spec.get("expects_no_fatal_warning", []))
+
+    if hostname in expects_fatal:
+        contains = expects_fatal[hostname]
+        details = host_fatal_details.get(hostname, [])
+        if not any(contains in d for d in details):
+            raise ValidationError(
+                f"expected fatal warning containing '{contains}' for '{hostname}' "
+                f"but got: {details}"
+            )
+    elif hostname in expects_no_fatal:
+        if hostname in host_fatal_details:
+            raise ValidationError(
+                f"unexpected fatal warning for '{hostname}': "
+                f"{host_fatal_details[hostname]}"
+            )
+    else:
+        pytest.skip(f"'{hostname}' not in parse_warnings.yaml")
+
+
 # TODO: Re-enable when reachability verification logic is ported from Batfish
 # def test_reachability_verifier(bf: Session, snapshot: str) -> None:
 #     """Tests that the Reachability Verifier finds no bugs."""

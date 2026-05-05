@@ -1,0 +1,14 @@
+# Junos commit check validation lab: tests which config syntax Junos
+# rejects at commit time (prefix normalization, etc.)
+#
+# Single node — no links needed. We just need a running Junos to SSH into
+# and test commit checks against.
+
+name: junos-commit-check
+
+topology:
+  nodes:
+    dut:
+      kind: juniper_vjunosrouter
+      image: vrnetlab/juniper_vjunos-router:25.4R1.12
+      startup-config: configs/dut.cfg

@@ -1,0 +1,38 @@
+# Expected parse warning assertions for this snapshot.
+#
+# Each entry specifies a host and whether Batfish should produce a fatal
+# red flag warning ("Parse warning (redflag)" with "FATAL:" prefix in the
+# Details column of initIssues output).
+#
+# For expects_fatal_warning, 'contains' specifies text that must appear in
+# the warning Details, ensuring the warning is about the specific config
+# line and not some unrelated issue.
+#
+# These assertions validate that Batfish correctly models Junos commit-time
+# prefix normalization checks (batfish/batfish#9928).
+
+expects_fatal_warning:
+  # Junos rejects unnormalized prefixes in these contexts
+  - host: rejects-static
+    contains: "192.168.1.111/24"
+  - host: rejects-aggregate
+    contains: "192.168.1.111/24"
+  - host: rejects-generate
+    contains: "192.168.1.111/24"
+  - host: rejects-ospf-area-range
+    contains: "192.168.1.111/24"
+  - host: rejects-firewall-address
+    contains: "192.168.1.111/24"
+  - host: rejects-firewall-next-ip
+    contains: "192.168.1.111/24"
+  - host: rejects-condition
+    contains: "192.168.1.111/24"
+
+expects_no_fatal_warning:
+  # Junos accepts unnormalized prefixes in these contexts
+  - accepts-prefix-list
+  - accepts-route-filter
+  - accepts-snmp
+  - accepts-bgp-allow
+  - accepts-interface
+  - accepts-mpls-install
