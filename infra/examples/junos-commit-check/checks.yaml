@@ -95,6 +95,96 @@ checks:
       - "set policy-options condition TEST if-route-exists table inet.0"
     description: "condition if-route-exists with valid prefix"
 
+  # --- Contexts where Junos REJECTS host bits (IPv6) ---
+
+  - type: commit_check_rejects
+    node: dut
+    config_lines:
+      - "set routing-options rib inet6.0 static route 2001:db8::1/32 reject"
+    description: "IPv6 static route with host bits set"
+
+  - type: commit_check_accepts
+    node: dut
+    config_lines:
+      - "set routing-options rib inet6.0 static route 2001:db8::/32 reject"
+    description: "IPv6 static route with valid prefix"
+
+  - type: commit_check_rejects
+    node: dut
+    config_lines:
+      - "set routing-options rib inet6.0 aggregate route 2001:db8::1/32"
+    description: "IPv6 aggregate route with host bits set"
+
+  - type: commit_check_accepts
+    node: dut
+    config_lines:
+      - "set routing-options rib inet6.0 aggregate route 2001:db8::/32"
+    description: "IPv6 aggregate route with valid prefix"
+
+  - type: commit_check_rejects
+    node: dut
+    config_lines:
+      - "set routing-options rib inet6.0 generate route 2001:db8::1/32"
+    description: "IPv6 generate route with host bits set"
+
+  - type: commit_check_accepts
+    node: dut
+    config_lines:
+      - "set routing-options rib inet6.0 generate route 2001:db8::/32"
+    description: "IPv6 generate route with valid prefix"
+
+  - type: commit_check_rejects
+    node: dut
+    config_lines:
+      - "set protocols ospf3 area 0.0.0.0 area-range 2001:db8::1/32"
+    description: "OSPFv3 area-range with host bits set"
+
+  - type: commit_check_accepts
+    node: dut
+    config_lines:
+      - "set protocols ospf3 area 0.0.0.0 area-range 2001:db8::/32"
+    description: "OSPFv3 area-range with valid prefix"
+
+  - type: commit_check_rejects
+    node: dut
+    config_lines:
+      - "set firewall family inet6 filter TEST term T from destination-address 2001:db8::1/32"
+      - "set firewall family inet6 filter TEST term T then accept"
+    description: "firewall inet6 destination-address with host bits set"
+
+  - type: commit_check_accepts
+    node: dut
+    config_lines:
+      - "set firewall family inet6 filter TEST term T from destination-address 2001:db8::/32"
+      - "set firewall family inet6 filter TEST term T then accept"
+    description: "firewall inet6 destination-address with valid prefix"
+
+  - type: commit_check_rejects
+    node: dut
+    config_lines:
+      - "set firewall family inet6 filter TEST term T then next-ip6 2001:db8::1/32"
+    description: "firewall next-ip6 with host bits set"
+
+  - type: commit_check_accepts
+    node: dut
+    config_lines:
+      - "set firewall family inet6 filter TEST term T then next-ip6 2001:db8::/32"
+    description: "firewall next-ip6 with valid prefix"
+
+  - type: commit_check_rejects
+    node: dut
+    config_lines:
+      - "set policy-options condition TEST if-route-exists 2001:db8::1/32"
+      - "set policy-options condition TEST if-route-exists table inet6.0"
+    description: "condition if-route-exists IPv6 with host bits set"
+
+  - type: commit_check_accepts
+    node: dut
+    config_lines:
+      - "set policy-options condition TEST if-route-exists 2001:db8::/32"
+      - "set policy-options condition TEST if-route-exists table inet6.0"
+    description: "condition if-route-exists IPv6 with valid prefix"
+
   # --- Contexts where Junos ACCEPTS host bits ---
 
   - type: commit_check_accepts
@@ -149,6 +239,34 @@ checks:
       - "set interfaces ge-0/0/0 unit 0 family inet address 10.0.0.1/30 vrrp-group 1 virtual-address 10.0.0.2"
       - "set interfaces ge-0/0/0 unit 0 family inet address 10.0.0.1/30 vrrp-group 1 track route 192.168.1.111/24 routing-instance default priority-cost 100"
     description: "VRRP track route with host bits (accepted)"
+
+  # --- Contexts where Junos ACCEPTS host bits (IPv6) ---
+
+  - type: commit_check_accepts
+    node: dut
+    config_lines:
+      - "set policy-options prefix-list TEST 2001:db8::1/32"
+    description: "prefix-list with IPv6 host bits (accepted)"
+
+  - type: commit_check_accepts
+    node: dut
+    config_lines:
+      - "set policy-options policy-statement TEST term T from route-filter 2001:db8::1/32 exact"
+    description: "route-filter with IPv6 host bits (accepted)"
+
+  - type: commit_check_accepts
+    node: dut
+    config_lines:
+      - "set interfaces ge-0/0/0 unit 0 family inet6 address 2001:db8::1/32"
+    description: "interface inet6 address with host bits (accepted)"
+
+  - type: commit_check_accepts
+    node: dut
+    config_lines:
+      - "set protocols bgp group TEST type external"
+      - "set protocols bgp group TEST peer-as 65001"
+      - "set protocols bgp group TEST allow 2001:db8::1/32"
+    description: "BGP allow with IPv6 host bits (accepted)"
 
 # TODO: Security hierarchy checks (require vSRX image)
 #   - security nat source pool <p> address <prefix>

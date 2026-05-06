@@ -12,7 +12,7 @@
 # prefix normalization checks (batfish/batfish#9928).
 
 expects_fatal_warning:
-  # Junos rejects unnormalized prefixes in these contexts
+  # Junos rejects unnormalized prefixes in these contexts (IPv4)
   - host: rejects-static
     contains: "192.168.1.111/24"
   - host: rejects-aggregate
@@ -27,12 +27,32 @@ expects_fatal_warning:
     contains: "192.168.1.111/24"
   - host: rejects-condition
     contains: "192.168.1.111/24"
+  # Junos rejects unnormalized prefixes in these contexts (IPv6)
+  - host: rejects-static-v6
+    contains: "2001:db8::1/32"
+  - host: rejects-aggregate-v6
+    contains: "2001:db8::1/32"
+  - host: rejects-generate-v6
+    contains: "2001:db8::1/32"
+  - host: rejects-ospf3-area-range
+    contains: "2001:db8::1/32"
+  - host: rejects-firewall6-address
+    contains: "2001:db8::1/32"
+  - host: rejects-firewall6-next-ip6
+    contains: "2001:db8::1/32"
+  - host: rejects-condition-v6
+    contains: "2001:db8::1/32"
 
 expects_no_fatal_warning:
-  # Junos accepts unnormalized prefixes in these contexts
+  # Junos accepts unnormalized prefixes in these contexts (IPv4)
   - accepts-prefix-list
   - accepts-route-filter
   - accepts-snmp
   - accepts-bgp-allow
   - accepts-interface
   - accepts-mpls-install
+  # Junos accepts unnormalized prefixes in these contexts (IPv6)
+  - accepts-prefix-list-v6
+  - accepts-route-filter-v6
+  - accepts-interface-v6
+  - accepts-bgp-allow-v6

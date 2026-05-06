@@ -1,0 +1,3 @@
+set system host-name rejects-firewall6-address
+set firewall family inet6 filter TEST term T from destination-address 2001:db8::1/32
+set firewall family inet6 filter TEST term T then accept
