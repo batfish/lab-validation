@@ -17,7 +17,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Send Slack notification on failure
-        uses: slackapi/slack-github-action@v3.0.2
+        uses: slackapi/slack-github-action@v3.0.3
         with:
           webhook: ${{ secrets.LAB_VALIDATION_SLACK_WEBHOOK_URL }}
           webhook-type: incoming-webhook
