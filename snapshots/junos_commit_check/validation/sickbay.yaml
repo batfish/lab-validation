@@ -26,32 +26,3 @@ entries:
     skip:
       skip_type: dont_run
       reason: "commit check lab: configs are parse-warning test fixtures, not full devices"
-  # parse_warnings: Batfish does not yet flag unnormalized prefixes in these contexts
-  - hostname: rejects-static
-    test_name: test_parse_warnings
-    skip:
-      reason: "Batfish does not yet flag unnormalized static route prefixes (batfish/batfish#9928)"
-  - hostname: rejects-aggregate
-    test_name: test_parse_warnings
-    skip:
-      reason: "Batfish does not yet flag unnormalized aggregate route prefixes (batfish/batfish#9928)"
-  - hostname: rejects-generate
-    test_name: test_parse_warnings
-    skip:
-      reason: "Batfish does not yet flag unnormalized generate route prefixes (batfish/batfish#9928)"
-  - hostname: rejects-ospf-area-range
-    test_name: test_parse_warnings
-    skip:
-      reason: "Batfish does not yet flag unnormalized OSPF area-range prefixes (batfish/batfish#9928)"
-  - hostname: rejects-firewall-address
-    test_name: test_parse_warnings
-    skip:
-      reason: "Batfish does not yet flag unnormalized firewall address prefixes (batfish/batfish#9928)"
-  - hostname: rejects-firewall-next-ip
-    test_name: test_parse_warnings
-    skip:
-      reason: "Batfish does not yet flag unnormalized firewall next-ip prefixes (batfish/batfish#9928)"
-  - hostname: rejects-condition
-    test_name: test_parse_warnings
-    skip:
-      reason: "Batfish does not yet flag unnormalized condition if-route-exists prefixes (batfish/batfish#9928)"

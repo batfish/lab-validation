@@ -84,13 +84,15 @@ checks:
   - type: commit_check_rejects
     node: dut
     config_lines:
-      - "set policy-options condition TEST if-route-exists 192.168.1.111/24 table inet.0"
+      - "set policy-options condition TEST if-route-exists 192.168.1.111/24"
+      - "set policy-options condition TEST if-route-exists table inet.0"
     description: "condition if-route-exists with host bits set"
 
   - type: commit_check_accepts
     node: dut
     config_lines:
-      - "set policy-options condition TEST if-route-exists 192.168.1.0/24 table inet.0"
+      - "set policy-options condition TEST if-route-exists 192.168.1.0/24"
+      - "set policy-options condition TEST if-route-exists table inet.0"
     description: "condition if-route-exists with valid prefix"
 
   # --- Contexts where Junos ACCEPTS host bits ---
