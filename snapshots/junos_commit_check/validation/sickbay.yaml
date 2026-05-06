@@ -26,3 +26,29 @@ entries:
     skip:
       skip_type: dont_run
       reason: "commit check lab: configs are parse-warning test fixtures, not full devices"
+  # IPv6 prefix normalization not yet implemented in Batfish
+  - hostname: rejects-static-v6
+    test_name: test_parse_warnings
+    skip:
+      skip_type: xfail
+      reason: "https://github.com/batfish/batfish/issues/9934"
+  - hostname: rejects-aggregate-v6
+    test_name: test_parse_warnings
+    skip:
+      skip_type: xfail
+      reason: "https://github.com/batfish/batfish/issues/9934"
+  - hostname: rejects-generate-v6
+    test_name: test_parse_warnings
+    skip:
+      skip_type: xfail
+      reason: "https://github.com/batfish/batfish/issues/9934"
+  - hostname: rejects-ospf3-area-range
+    test_name: test_parse_warnings
+    skip:
+      skip_type: xfail
+      reason: "https://github.com/batfish/batfish/issues/9934"
+  - hostname: rejects-condition-v6
+    test_name: test_parse_warnings
+    skip:
+      skip_type: xfail
+      reason: "https://github.com/batfish/batfish/issues/9934"

@@ -17,9 +17,10 @@ normalization and which do not.
 
 ## Methodology
 
-Single vJunos-router node. For each grammar rule that accepts `ip_prefix`
-or `ip_prefix_default_32`, we attempt to commit `192.168.1.111/24` (host
-bits set) via `commit check`. The device either rejects it or accepts it.
+Single vJunos-router node. For each grammar rule that accepts a prefix,
+we attempt to commit a prefix with host bits set via `commit check`. The
+device either rejects it or accepts it. IPv4 uses `192.168.1.111/24`;
+IPv6 uses `2001:db8::1/32`.
 
 The `checks.yaml` uses two check types:
 
@@ -34,12 +35,12 @@ Each check loads config lines, runs `commit check`, and rolls back.
 # On EC2 with containerlab + vJunos image:
 sudo containerlab deploy -t topology.clab.yml
 # Wait for health (~5 min)
-python3 run_commit_checks.py checks.yaml 172.20.20.2 admin "admin@123"
+python -m lab_builder validate topology.clab.yml --checks checks.yaml
 ```
 
 ## Results (vJunos 25.4R1.12)
 
-**Rejects host bits:**
+### IPv4: rejects host bits
 
 - `routing-options static route`
 - `routing-options aggregate route`
@@ -49,7 +50,7 @@ python3 run_commit_checks.py checks.yaml 172.20.20.2 admin "admin@123"
 - `firewall filter X term T then next-ip`
 - `policy-options condition X if-route-exists`
 
-**Accepts host bits:**
+### IPv4: accepts host bits
 
 - `policy-options prefix-list`
 - `policy-options policy-statement X from route-filter`
@@ -59,7 +60,30 @@ python3 run_commit_checks.py checks.yaml 172.20.20.2 admin "admin@123"
 - `interfaces X unit Y family inet address`
 - `interfaces X unit Y family inet address A vrrp-group N track route`
 
-**Not tested (requires vSRX):**
+### IPv6: rejects host bits
+
+- `routing-options rib inet6.0 static route`
+- `routing-options rib inet6.0 aggregate route`
+- `routing-options rib inet6.0 generate route`
+- `protocols ospf3 area X area-range`
+- `policy-options condition X if-route-exists` (table inet6.0)
+
+### IPv6: accepts host bits
+
+- `firewall family inet6 filter X term T from destination-address`
+- `firewall family inet6 filter X term T then next-ip6`
+- `policy-options prefix-list`
+- `policy-options policy-statement X from route-filter`
+- `interfaces X unit Y family inet6 address`
+- `protocols bgp group X allow`
+
+### Notable IPv4/IPv6 asymmetry
+
+Junos rejects host bits in IPv4 `firewall filter` (destination-address
+and next-ip) but accepts them in `firewall family inet6 filter`
+(destination-address and next-ip6).
+
+### Not tested (requires vSRX)
 
 - `security nat` (pool address, match address, static-nat prefix)
 - `security address-book`

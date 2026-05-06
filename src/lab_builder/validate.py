@@ -262,10 +262,15 @@ def _arista_check_bgp_peer(node: NodeInfo, neighbor: str) -> CheckResult:
 # ---------------------------------------------------------------------------
 
 
-def _junos_commit_check(node: NodeInfo, config_lines: list[str]) -> tuple[bool, str]:
+def _junos_commit_check(
+    node: NodeInfo, config_lines: list[str]
+) -> tuple[bool | None, str]:
     """Load config lines on a Junos device and run 'commit check'.
 
-    Returns (success, output) where success is True if commit check passes.
+    Returns (result, output) where result is:
+      True  - commit check succeeded
+      False - commit check was rejected (definitive failure output)
+      None  - indeterminate (exception, timeout, or empty output)
     Always rolls back after the check so the device stays clean.
     """
     from lab_builder.device import connect
@@ -278,19 +283,28 @@ def _junos_commit_check(node: NodeInfo, config_lines: list[str]) -> tuple[bool, 
             if not stripped or stripped.startswith("#"):
                 continue
             conn.send_command_timing(stripped)
-        output: str = conn.send_command_timing("commit check")
+        output: str = conn.send_command(
+            "commit check", expect_string=r"#", read_timeout=30
+        )
         conn.send_command_timing("rollback 0")
         conn.exit_config_mode()
 
-        success = "configuration check succeeds" in output.lower()
-        return success, output.strip()
+        stripped_output = output.strip()
+        if "configuration check succeeds" in output.lower():
+            return True, stripped_output
+        elif "error" in output.lower() or "failed" in output.lower():
+            return False, stripped_output
+        elif not stripped_output:
+            return None, "empty output from commit check"
+        else:
+            return None, f"indeterminate output: {stripped_output}"
     except Exception as e:
         try:
             conn.send_command_timing("rollback 0")
             conn.exit_config_mode()
         except Exception:
             pass
-        return False, f"exception: {e}"
+        return None, f"exception: {e}"
     finally:
         conn.disconnect()
 
@@ -299,8 +313,15 @@ def _check_commit_rejects(
     node: NodeInfo, config_lines: list[str], expected_error: str | None
 ) -> CheckResult:
     """Verify that Junos rejects the given config lines at commit check."""
-    success, output = _junos_commit_check(node, config_lines)
-    if success:
+    result, output = _junos_commit_check(node, config_lines)
+    if result is None:
+        return CheckResult(
+            "commit_check_rejects",
+            node.name,
+            False,
+            f"indeterminate result: {output}",
+        )
+    if result:
         return CheckResult(
             "commit_check_rejects",
             node.name,
@@ -324,8 +345,15 @@ def _check_commit_rejects(
 
 def _check_commit_accepts(node: NodeInfo, config_lines: list[str]) -> CheckResult:
     """Verify that Junos accepts the given config lines at commit check."""
-    success, output = _junos_commit_check(node, config_lines)
-    if success:
+    result, output = _junos_commit_check(node, config_lines)
+    if result is None:
+        return CheckResult(
+            "commit_check_accepts",
+            node.name,
+            False,
+            f"indeterminate result: {output}",
+        )
+    if result:
         return CheckResult(
             "commit_check_accepts",
             node.name,
