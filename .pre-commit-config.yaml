@@ -23,6 +23,17 @@ repos:
       - id: prettier
         types_or: [markdown, yaml]
         exclude: ^snapshots/.*/show/
+  # Block deprecated pyparsing camelCase API. Each name in pyparsing 3.x is
+  # decorated with replaced_by_pep8(); the snake_case form must be used
+  # instead. See pyparsing/core.py for the authoritative list.
+  - repo: local
+    hooks:
+      - id: no-deprecated-pyparsing-camelcase
+        name: no deprecated pyparsing camelCase API
+        language: pygrep
+        types: [python]
+        entry: '\b(addCondition|addParseAction|canParseNext|conditionAsParseAction|convertToDate|convertToDatetime|convertToFloat|convertToInteger|countedArray|delimitedList|dictOf|disableMemoization|downcaseTokens|enableLeftRecursion|enablePackrat|ignoreWhitespace|infixNotation|inlineLiteralsUsing|leaveWhitespace|makeHTMLTags|makeXMLTags|markInputline|matchOnlyAtCol|matchPreviousExpr|matchPreviousLiteral|nestedExpr|nullDebugAction|oneOf|originalTextFor|parseFile|parseString|parseWithTabs|removeQuotes|replaceHTMLEntity|replaceWith|resetCache|runTests|scanString|searchString|setBreak|setDebug|setDebugActions|setDefaultKeywordChars|setDefaultWhitespaceChars|setFailAction|setName|setParseAction|setResultsName|setWhitespaceChars|stripHTMLTags|tokenMap|traceParseAction|transformString|tryParse|upcaseTokens|withAttribute|withClass)\b'
+
   - repo: https://github.com/pre-commit/mirrors-mypy
     rev: v1.18.1
     hooks:

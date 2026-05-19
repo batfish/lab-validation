@@ -6,7 +6,7 @@ from pyparsing import (
     ParserElement,
     SkipTo,
     Word,
-    oneOf,
+    one_of,
     printables,
     stringEnd,
 )
@@ -40,7 +40,7 @@ def _get_iface_line() -> ParserElement:
     ]
     return (
         Combine(
-            oneOf(["Ethernet", "loopback", "mgmt", "port-channel", "vasi", "Vlan"])
+            one_of(["Ethernet", "loopback", "mgmt", "port-channel", "vasi", "Vlan"])
             + Word(printables)
         ).set_results_name("name")
         + "is"
