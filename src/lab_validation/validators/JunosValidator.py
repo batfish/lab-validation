@@ -47,6 +47,7 @@ from .vendor_validator import VendorValidator
 
 class JunosValidator(VendorValidator):
     SHOW_ROUTE_FILENAME = "show_route_|_display_json.txt"
+    SHOW_BGP_ROUTE_DETAIL_FILENAME = "show_route_protocol_bgp_detail_|_display_json.txt"
     SHOW_BGP_ROUTE_FILENAME = "show_route_protocol_bgp_|_display_json.txt"
     SHOW_INTERFACE_FILENAME = "show_interfaces_|_display_json.txt"
 
@@ -321,16 +322,19 @@ class JunosValidator(VendorValidator):
         return failures
 
     def _parse_bgp_routes(self) -> Sequence[JunosBgpRoute]:
-        show_route_path = path.join(
-            self.device_path, JunosValidator.SHOW_BGP_ROUTE_FILENAME
-        )
-
-        if not path.isfile(show_route_path):
-            return []
-
-        with open(show_route_path) as fp:
-            routes_text = fp.read()
-        return parse_show_route_protocol_bgp_display_json(routes_text)
+        # Prefer the detail-form file (includes BGP communities) when present;
+        # fall back to the brief-form file for snapshots collected before the
+        # collector was switched to "show route protocol bgp detail".
+        for filename in (
+            JunosValidator.SHOW_BGP_ROUTE_DETAIL_FILENAME,
+            JunosValidator.SHOW_BGP_ROUTE_FILENAME,
+        ):
+            show_route_path = path.join(self.device_path, filename)
+            if path.isfile(show_route_path):
+                with open(show_route_path) as fp:
+                    routes_text = fp.read()
+                return parse_show_route_protocol_bgp_display_json(routes_text)
+        return []
 
     def _parse_interface(self) -> Sequence[JunosInterface]:
         show_interface_path = path.join(
@@ -349,11 +353,12 @@ class JunosValidator(VendorValidator):
         real_routes: Sequence[JunosBgpRoute],
         batfish_routes: Sequence[BgpRibRoute],
     ) -> dict[Any, Any]:
-        matched_routes = match_pairs(
-            real_routes,
-            batfish_routes,
-            _bgp_routes_cost,
-        )
+        compare_communities = _snapshot_has_communities(real_routes)
+
+        def cost_fn(real: JunosBgpRoute, bf: BgpRibRoute) -> CostResult:
+            return _bgp_routes_cost(real, bf, compare_communities=compare_communities)
+
+        matched_routes = match_pairs(real_routes, batfish_routes, cost_fn)
         # Don't report inactive device routes as missing from Batfish.
         # Inactive means BGP-best but lost to a lower-admin-distance protocol
         # in the main RIB — Batfish may or may not have them.
@@ -366,8 +371,57 @@ class JunosValidator(VendorValidator):
         )
 
 
+# Junos prints a few well-known communities symbolically; Batfish may emit
+# them as their numeric form. Map both sides to a canonical string.
+_WELL_KNOWN_COMMUNITY_MAP: dict[str, str] = {
+    "no-export": "65535:65281",
+    "no-advertise": "65535:65282",
+    "no-export-subconfed": "65535:65283",
+    "no-peer": "65535:65284",
+}
+
+
+def _canonicalize_community(s: str) -> str:
+    """Return canonical form of a single community string.
+
+    Accepts either the Junos symbolic name or the numeric form for the
+    well-known communities listed in ``_WELL_KNOWN_COMMUNITY_MAP``. Other
+    forms (standard ``ASN:value``, ``target:..``, ``origin:..``,
+    ``large:..``) are returned verbatim because Junos and Batfish print
+    them identically.
+    """
+    if s in _WELL_KNOWN_COMMUNITY_MAP:
+        return _WELL_KNOWN_COMMUNITY_MAP[s]
+    if s in _WELL_KNOWN_COMMUNITY_MAP.values():
+        return s
+    # Loud-fail on unknown symbolic names so a future contributor adds the
+    # mapping rather than silently ignoring the mismatch.
+    if s and not s[0].isdigit() and ":" not in s:
+        raise ValueError(
+            f"Unrecognized symbolic community {s!r}; add it to "
+            f"_WELL_KNOWN_COMMUNITY_MAP in junosValidator.py"
+        )
+    return s
+
+
+def _canonicalize_communities(communities: Sequence[str]) -> frozenset[str]:
+    return frozenset(_canonicalize_community(c) for c in communities)
+
+
+def _snapshot_has_communities(real_routes: Sequence[JunosBgpRoute]) -> bool:
+    """Return true iff any route in the snapshot carries communities.
+
+    Snapshots collected with ``show route protocol bgp | display json`` (the
+    pre-detail collector) never have communities. Treat such snapshots as
+    not-comparable for communities so they keep validating cleanly.
+    """
+    return any(r.communities for r in real_routes)
+
+
 def _bgp_routes_cost(
-    real_route: JunosBgpRoute, batfish_route: BgpRibRoute
+    real_route: JunosBgpRoute,
+    batfish_route: BgpRibRoute,
+    compare_communities: bool = True,
 ) -> CostResult:
     if real_route.network != batfish_route.network:
         return [("network", math.inf)]
@@ -399,6 +453,10 @@ def _bgp_routes_cost(
     valid_origin_pairs = {("I", "igp"), ("E", "egp"), ("?", "incomplete")}
     if (real_route.origin_type, batfish_route.origin_type) not in valid_origin_pairs:
         cost.append(("origin_type", 1.0))
+    if compare_communities and _canonicalize_communities(
+        real_route.communities
+    ) != _canonicalize_communities(batfish_route.communities):
+        cost.append(("communities", 1.0))
 
     return cost
 

@@ -41,7 +41,7 @@ VJUNOS_ROUTER = VendorProfile(
         "show route instance | display json",
         "show interfaces | display json",
         "show route | display json",
-        "show route protocol bgp | display json",
+        "show route protocol bgp detail | display json",
         "show version | display json",
         "show bgp neighbor | display json",
         "show ospf neighbor | display json",

@@ -327,17 +327,17 @@ Run on EC2 as `PYTHONPATH=src python3 -m lab_builder <command>`:
 
 ### Juniper (vJunos)
 
-| Command                                   | Goes to           | Purpose              |
-| ----------------------------------------- | ----------------- | -------------------- |
-| `show configuration \| display set`       | `configs/<node>/` | Device config        |
-| `show route \| display json`              | `show/<node>/`    | Main routing table   |
-| `show route protocol bgp \| display json` | `show/<node>/`    | BGP routes           |
-| `show interfaces \| display json`         | `show/<node>/`    | Interface properties |
-| `show route instance \| display json`     | `show/<node>/`    | VRF info             |
-| `show version \| display json`            | `show/<node>/`    | Software version     |
-| `show bgp neighbor \| display json`       | `show/<node>/`    | BGP peer status      |
-| `show ospf neighbor \| display json`      | `show/<node>/`    | OSPF status          |
-| `show isis adjacency \| display json`     | `show/<node>/`    | ISIS status          |
+| Command                                          | Goes to           | Purpose                        |
+| ------------------------------------------------ | ----------------- | ------------------------------ |
+| `show configuration \| display set`              | `configs/<node>/` | Device config                  |
+| `show route \| display json`                     | `show/<node>/`    | Main routing table             |
+| `show route protocol bgp detail \| display json` | `show/<node>/`    | BGP routes (incl. communities) |
+| `show interfaces \| display json`                | `show/<node>/`    | Interface properties           |
+| `show route instance \| display json`            | `show/<node>/`    | VRF info                       |
+| `show version \| display json`                   | `show/<node>/`    | Software version               |
+| `show bgp neighbor \| display json`              | `show/<node>/`    | BGP peer status                |
+| `show ospf neighbor \| display json`             | `show/<node>/`    | OSPF status                    |
+| `show isis adjacency \| display json`            | `show/<node>/`    | ISIS status                    |
 
 ### Arista (cEOS)
 

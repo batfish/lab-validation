@@ -24,9 +24,12 @@ from lab_validation.validators.batfish_models.routes import (
 from lab_validation.validators.batfish_models.runtime_data import InterfaceRuntimeData
 from lab_validation.validators.JunosValidator import (
     JunosValidator,
+    _bgp_routes_cost,
+    _canonicalize_community,
     _compute_nexthop_cost,
     _compute_protocol_cost,
     _routes_cost,
+    _snapshot_has_communities,
     filter_route,
 )
 
@@ -566,6 +569,196 @@ def test_compare_all_bgp_routes_extra() -> None:
     failures = JunosValidator("")._compare_all_bgp_routes(expected_routes, bf_routes)
     assert len(failures) == 1
     assert "No_match_found_on_the_left" in next(iter(failures.values()))
+
+
+def test_canonicalize_community_well_known() -> None:
+    assert _canonicalize_community("no-export") == "65535:65281"
+    assert _canonicalize_community("no-advertise") == "65535:65282"
+    assert _canonicalize_community("no-export-subconfed") == "65535:65283"
+    # Numeric form already canonical.
+    assert _canonicalize_community("65535:65281") == "65535:65281"
+
+
+def test_canonicalize_community_passthrough() -> None:
+    # Standard, extended, and large communities pass through unchanged.
+    assert _canonicalize_community("65001:100") == "65001:100"
+    assert _canonicalize_community("target:65001:200") == "target:65001:200"
+    assert _canonicalize_community("origin:65001:300") == "origin:65001:300"
+    assert _canonicalize_community("large:65001:1:1") == "large:65001:1:1"
+
+
+def test_canonicalize_community_unknown_symbolic_raises() -> None:
+    import pytest
+
+    with pytest.raises(ValueError, match="Unrecognized symbolic community"):
+        _canonicalize_community("frobnicate")
+
+
+def test_snapshot_has_communities() -> None:
+    base = JunosBgpRoute(
+        vrf="vrf",
+        network="1.1.1.0/24",
+        is_active=True,
+        next_hop_ip="2.2.2.2",
+        next_hop_int="iface",
+        preference=170,
+        metric=0,
+        origin_protocol="bgp",
+        local_preference=100,
+        as_path=(1,),
+        origin_type="I",
+    )
+    assert not _snapshot_has_communities([])
+    assert not _snapshot_has_communities([base])
+    assert _snapshot_has_communities([attr.evolve(base, communities=("65001:100",))])
+
+
+def test_compare_all_bgp_routes_mismatch_communities() -> None:
+    expected_routes = [
+        JunosBgpRoute(
+            vrf="vrf",
+            network="1.1.1.0/24",
+            is_active=True,
+            next_hop_ip="2.2.2.2",
+            next_hop_int="iface",
+            preference=170,
+            metric=0,
+            origin_protocol="bgp",
+            local_preference=100,
+            as_path=(1,),
+            origin_type="I",
+            communities=("65001:100", "65001:200"),
+        )
+    ]
+    bf_routes = [
+        BgpRibRoute(
+            weight=0,
+            vrf="vrf",
+            network="1.1.1.0/24",
+            next_hop=NextHopInterface(interface="iface", ip="2.2.2.2"),
+            protocol="bgp",
+            metric=0,
+            communities=("65001:100",),
+            local_preference=100,
+            as_path="1",
+            origin_protocol="bgp",
+            origin_type="igp",
+            tag=0,
+        )
+    ]
+    failures = JunosValidator("")._compare_all_bgp_routes(expected_routes, bf_routes)
+    assert len(failures) == 1
+    value = next(iter(failures.values()))
+    assert "'communities'" in value
+
+
+def test_compare_all_bgp_routes_communities_well_known_match() -> None:
+    # Junos prints "no-export" symbolically; Batfish emits the numeric form.
+    # Canonicalization should make them equal.
+    expected_routes = [
+        JunosBgpRoute(
+            vrf="vrf",
+            network="1.1.1.0/24",
+            is_active=True,
+            next_hop_ip="2.2.2.2",
+            next_hop_int="iface",
+            preference=170,
+            metric=0,
+            origin_protocol="bgp",
+            local_preference=100,
+            as_path=(1,),
+            origin_type="I",
+            communities=("no-export",),
+        )
+    ]
+    bf_routes = [
+        BgpRibRoute(
+            weight=0,
+            vrf="vrf",
+            network="1.1.1.0/24",
+            next_hop=NextHopInterface(interface="iface", ip="2.2.2.2"),
+            protocol="bgp",
+            metric=0,
+            communities=("65535:65281",),
+            local_preference=100,
+            as_path="1",
+            origin_protocol="bgp",
+            origin_type="igp",
+            tag=0,
+        )
+    ]
+    failures = JunosValidator("")._compare_all_bgp_routes(expected_routes, bf_routes)
+    assert failures == {}
+
+
+def test_compare_all_bgp_routes_skips_communities_on_brief_snapshot() -> None:
+    # When no real route has communities (brief-form snapshot), Batfish-side
+    # communities should not produce a failure.
+    expected_routes = [
+        JunosBgpRoute(
+            vrf="vrf",
+            network="1.1.1.0/24",
+            is_active=True,
+            next_hop_ip="2.2.2.2",
+            next_hop_int="iface",
+            preference=170,
+            metric=0,
+            origin_protocol="bgp",
+            local_preference=100,
+            as_path=(1,),
+            origin_type="I",
+        )
+    ]
+    bf_routes = [
+        BgpRibRoute(
+            weight=0,
+            vrf="vrf",
+            network="1.1.1.0/24",
+            next_hop=NextHopInterface(interface="iface", ip="2.2.2.2"),
+            protocol="bgp",
+            metric=0,
+            communities=("65001:100",),
+            local_preference=100,
+            as_path="1",
+            origin_protocol="bgp",
+            origin_type="igp",
+            tag=0,
+        )
+    ]
+    failures = JunosValidator("")._compare_all_bgp_routes(expected_routes, bf_routes)
+    assert failures == {}
+
+
+def test_bgp_routes_cost_communities_order_invariant() -> None:
+    real = JunosBgpRoute(
+        vrf="vrf",
+        network="1.1.1.0/24",
+        is_active=True,
+        next_hop_ip="2.2.2.2",
+        next_hop_int="iface",
+        preference=170,
+        metric=0,
+        origin_protocol="bgp",
+        local_preference=100,
+        as_path=(1,),
+        origin_type="I",
+        communities=("65001:100", "65001:200"),
+    )
+    bf = BgpRibRoute(
+        weight=0,
+        vrf="vrf",
+        network="1.1.1.0/24",
+        next_hop=NextHopInterface(interface="iface", ip="2.2.2.2"),
+        protocol="bgp",
+        metric=0,
+        communities=("65001:200", "65001:100"),
+        local_preference=100,
+        as_path="1",
+        origin_protocol="bgp",
+        origin_type="igp",
+        tag=0,
+    )
+    assert _bgp_routes_cost(real, bf, compare_communities=True) == []
 
 
 def test_compare_all_bgp_routes_missing() -> None:
