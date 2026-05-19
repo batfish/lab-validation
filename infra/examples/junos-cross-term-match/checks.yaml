@@ -1,0 +1,34 @@
+# Validation checks for the Junos cross-term match lab.
+# Confirms BGP up and all 4 prefixes imported on dut.
+# The cross-term visibility result is read from communities on each route.
+
+checks:
+  - type: bgp_peer_established
+    node: sender
+    neighbor: 10.0.12.1
+    description: "sender -> dut eBGP"
+  - type: bgp_peer_established
+    node: dut
+    neighbor: 10.0.12.0
+    description: "dut -> sender eBGP"
+
+  - type: route_exists
+    node: dut
+    table: inet.0
+    prefix: 10.30.1.0/24
+    description: "community-case route present on dut"
+  - type: route_exists
+    node: dut
+    table: inet.0
+    prefix: 10.30.2.0/24
+    description: "localpref-case route present on dut"
+  - type: route_exists
+    node: dut
+    table: inet.0
+    prefix: 10.30.3.0/24
+    description: "as-path-case route present on dut"
+  - type: route_exists
+    node: dut
+    table: inet.0
+    prefix: 10.30.4.0/24
+    description: "control route present on dut"

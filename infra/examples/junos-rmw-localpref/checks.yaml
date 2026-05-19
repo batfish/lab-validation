@@ -1,0 +1,48 @@
+# Validation checks for the Junos RMW local-preference lab.
+# Run after health-check, before collection:
+#   lab_builder validate topology.clab.yml --checks checks.yaml
+#
+# These checks confirm the lab is healthy enough to collect (BGP up,
+# all 6 prefixes imported on dut). The actual RMW semantics are read
+# off `show route ... extensive | display json` — see README.
+
+checks:
+  - type: bgp_peer_established
+    node: sender
+    neighbor: 10.0.12.1
+    description: "sender -> dut eBGP"
+  - type: bgp_peer_established
+    node: dut
+    neighbor: 10.0.12.0
+    description: "dut -> sender eBGP"
+
+  - type: route_exists
+    node: dut
+    table: inet.0
+    prefix: 10.20.0.0/24
+    description: "baseline route present on dut"
+  - type: route_exists
+    node: dut
+    table: inet.0
+    prefix: 10.20.1.0/24
+    description: "two-adds route present on dut"
+  - type: route_exists
+    node: dut
+    table: inet.0
+    prefix: 10.20.2.0/24
+    description: "set-then-add route present on dut"
+  - type: route_exists
+    node: dut
+    table: inet.0
+    prefix: 10.20.3.0/24
+    description: "set-then-subtract route present on dut"
+  - type: route_exists
+    node: dut
+    table: inet.0
+    prefix: 10.20.4.0/24
+    description: "metric-set-add route present on dut"
+  - type: route_exists
+    node: dut
+    table: inet.0
+    prefix: 10.20.5.0/24
+    description: "double-prepend route present on dut"
