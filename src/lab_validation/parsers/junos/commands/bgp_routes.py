@@ -25,6 +25,9 @@ TABLE_NAME = "table-name"
 TO = "to"
 VIA = "via"
 AS_PATH = "as-path"
+COMMUNITIES = "communities"
+COMMUNITY = "community"
+RT_PREFIX_LENGTH = "rt-prefix-length"
 
 
 def parse_show_route_protocol_bgp_display_json(text: str) -> Sequence[JunosBgpRoute]:
@@ -49,7 +52,11 @@ def _get_routes(vrf: str, route_json_obj: list[Any]) -> list[JunosBgpRoute]:
     for route in route_json_obj:
         assert RT_DESTINATION in route
         assert len(route[RT_DESTINATION]) == 1
+        # Brief form puts the full prefix in rt-destination (e.g. "10.10.0.0/24");
+        # detail form splits it into rt-destination ("10.10.0.0") and rt-prefix-length ("24").
         network = route[RT_DESTINATION][0][DATA]
+        if "/" not in network and RT_PREFIX_LENGTH in route:
+            network = f"{network}/{route[RT_PREFIX_LENGTH][0][DATA]}"
         for entry in route[RT_ENTRY]:
             assert ACTIVE_TAG in entry
             assert PROTOCOL_NAME in entry and len(entry[PROTOCOL_NAME]) == 1
@@ -65,6 +72,11 @@ def _get_routes(vrf: str, route_json_obj: list[Any]) -> list[JunosBgpRoute]:
             metric = entry.get(MED, [{}])[0].get(DATA, None)
             as_path_str = entry[AS_PATH][0][DATA]
             local_pref = entry[LOCAL_PREFERENCE][0][DATA]
+            communities = tuple(
+                c[DATA]
+                for c in entry.get(COMMUNITIES, [{}])[0].get(COMMUNITY, [])
+                if c.get(DATA)
+            )
 
             for nh in entry[NH]:
                 assert TO not in nh or len(nh[TO]) == 1
@@ -86,6 +98,7 @@ def _get_routes(vrf: str, route_json_obj: list[Any]) -> list[JunosBgpRoute]:
                         local_preference=local_pref,
                         as_path=as_path,
                         origin_type=origin_type,
+                        communities=communities,
                     )
                 )
     return bgp_routes
@@ -93,6 +106,11 @@ def _get_routes(vrf: str, route_json_obj: list[Any]) -> list[JunosBgpRoute]:
 
 def _get_as_path(as_path_str: str) -> tuple[Sequence[int], str]:
     """Extract the AS Path from a string containing both AS Path and origin type."""
+    # `show route protocol bgp detail | display json` prefixes the value with
+    # "AS path: " (e.g., "AS path: 65001 I"); strip it so we only parse the
+    # numeric path plus origin tag.
+    if as_path_str.startswith("AS path:"):
+        as_path_str = as_path_str[len("AS path:") :].strip()
     split = as_path_str.split()
     as_path_list, origin_type = split[:-1], split[-1]
     assert origin_type in {"I", "E", "?"}

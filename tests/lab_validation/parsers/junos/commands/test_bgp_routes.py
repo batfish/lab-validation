@@ -345,11 +345,86 @@ def test_parse_show_route_protocol_bgp_display_json() -> None:
     ]
 
 
+def test_parse_show_route_protocol_bgp_detail_with_communities() -> None:
+    # `show route protocol bgp detail | display json` differs from the brief
+    # form in three places this test covers:
+    #   1. rt-destination is bare ("10.10.10.0") and rt-prefix-length is its
+    #      own field instead of the "10.10.10.0/24" combined string.
+    #   2. as-path data is prefixed with "AS path: ".
+    #   3. The communities array is present.
+    text = """
+    {
+    "route-information" : [
+    {
+        "attributes" : {"xmlns" : "http://xml.juniper.net/junos/25.4R0/junos-routing"},
+        "route-table" : [
+        {
+            "table-name" : [{"data" : "inet.0"}],
+            "rt" : [
+            {
+                "attributes" : {"junos:style" : "detail"},
+                "rt-destination" : [{"data" : "10.10.10.0"}],
+                "rt-prefix-length" : [{"data" : "24"}],
+                "rt-entry" : [
+                {
+                    "active-tag" : [{"data" : "*"}],
+                    "protocol-name" : [{"data" : "BGP"}],
+                    "preference" : [{"data" : "170"}],
+                    "med" : [{"data" : "0"}],
+                    "local-preference" : [{"data" : "100"}],
+                    "as-path" : [{"data" : "AS path: 1 I"}],
+                    "communities" : [
+                    {
+                        "community" : [
+                            {"data" : "65001:100"},
+                            {"data" : "target:65001:200"},
+                            {"data" : "no-export"}
+                        ]
+                    }
+                    ],
+                    "nh" : [
+                    {
+                        "to" : [{"data" : "10.10.50.1"}],
+                        "via" : [{"data" : "xe-0/0/0.0"}]
+                    }
+                    ]
+                }
+                ]
+            }
+            ]
+        }
+        ]
+    }
+    ]
+}
+"""
+    routes = parse_show_route_protocol_bgp_display_json(text)
+    assert routes == [
+        JunosBgpRoute(
+            network="10.10.10.0/24",
+            vrf="default",
+            preference=170,
+            origin_protocol="BGP",
+            next_hop_ip="10.10.50.1",
+            next_hop_int="xe-0/0/0.0",
+            metric=0,
+            local_preference=100,
+            as_path=(1,),
+            origin_type="I",
+            is_active=True,
+            communities=("65001:100", "target:65001:200", "no-export"),
+        ),
+    ]
+
+
 def test_get_as_path() -> None:
     assert _get_as_path("I") == ((), "I")
     assert _get_as_path("1 2 I") == ((1, 2), "I")
     assert _get_as_path("1 2 E") == ((1, 2), "E")
     assert _get_as_path("1 2 ?") == ((1, 2), "?")
+    # `detail | display json` prefixes the AS path with "AS path: ".
+    assert _get_as_path("AS path: 65001 I") == ((65001,), "I")
+    assert _get_as_path("AS path: I") == ((), "I")
 
 
 def test_convert_active() -> None:
