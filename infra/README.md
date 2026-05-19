@@ -84,11 +84,14 @@ Create a containerlab topology YAML file and Junos configs. Configs must be
 in **curly-brace format** (not `set` format) because vrnetlab concatenates
 them with its init.conf and loads them as a config disk.
 
-See `infra/examples/` for working examples:
+For working examples, the build inputs (topology, startup configs,
+checks) live alongside each snapshot at `snapshots/<lab>/source/`. A
+few starting points:
 
-- `two-router-ebgp.clab.yml` — minimal 2-router Junos eBGP lab
-- `ceos-ebgp/topology.clab.yml` — minimal 2-router Arista cEOS eBGP lab
-- `evpn-type5/topology.clab.yml` — 4-node EVPN Type 5 fabric (Junos)
+- `infra/examples/two-router-ebgp/` — minimal 2-router Junos eBGP
+  template (no matching snapshot; reference only)
+- `snapshots/eos_ceos_ebgp/source/` — minimal 2-router Arista cEOS eBGP lab
+- `snapshots/junos_evpn_type5/source/` — 4-node EVPN Type 5 fabric (Junos)
 
 **Interface mapping**: containerlab `ethN` maps to vendor interfaces:
 
@@ -159,7 +162,7 @@ ssh -i $KEY ubuntu@$IP \
 
 This runs topology-specific checks (interface state, route existence, BGP
 peer status) and exits non-zero if any check fails. See the `checks.yaml`
-format in `infra/examples/evpn-type5/checks.yaml` for an example.
+format in `snapshots/junos_evpn_type5/source/checks.yaml` for an example.
 
 If no `checks.yaml` exists, manually verify the lab state by connecting to
 each node and checking:
@@ -262,34 +265,34 @@ and re-run `collect` + `build-snapshot`.
 
 ### Adding or editing `checks.yaml`
 
-`checks.yaml` lives alongside the topology in `infra/examples/<lab>/`
+`checks.yaml` lives alongside the topology in `snapshots/<lab>/source/`
 and defines preconditions the lab must satisfy before collection
 (interfaces up, specific routes learned, BGP peers Established). To
 add or iterate on one:
 
-1. Write `infra/examples/<lab>/checks.yaml` (see
-   `infra/examples/evpn-type5/checks.yaml` for the schema).
+1. Write `snapshots/<lab>/source/checks.yaml` (see
+   `snapshots/junos_evpn_type5/source/checks.yaml` for the schema).
 2. Upload to the EC2 box alongside the topology and run:
    ```bash
    ssh -i $KEY ubuntu@$IP \
        'cd ~/lab && PYTHONPATH=src python3 -m lab_builder validate mylab/topology.clab.yml --checks mylab/checks.yaml'
    ```
 3. Adjust checks until everything passes against the deployed lab,
-   then commit the final version to `infra/examples/<lab>/`.
+   then commit the final version to `snapshots/<lab>/source/`.
 
 ## What to check in
 
 Only commit artifacts that were actually produced by (or fed into)
-the lab process:
+the lab process. Build inputs and collected outputs both live under
+`snapshots/<lab>/`:
 
-- `infra/examples/<lab>/` — the inputs used to build the lab:
+- `snapshots/<lab>/source/` — the inputs used to build the lab:
   `topology.clab.yml`, startup `configs/*.cfg`, and `checks.yaml`
   (if any). These must match what was last deployed to produce the
   snapshot.
-- `snapshots/<lab>/` — the outputs collected from the running lab:
-  `configs/<node>/`, `show/<node>/`, `show/host_nos.txt`, plus hand-
-  authored `batfish/layer1_topology.json` and `validation/sickbay.yaml`
-  as needed.
+- `snapshots/<lab>/configs/`, `show/`, `batfish/`, `validation/` —
+  the outputs collected from the running lab plus hand-authored
+  `batfish/layer1_topology.json` and `validation/sickbay.yaml`.
 
 Do not commit files you did not exercise end-to-end. If `checks.yaml`
 was never run against the lab, don't check it in yet — run it first.
@@ -360,7 +363,13 @@ The output matches the lab-validation framework's expected layout:
 
 ```
 snapshots/<name>/
-├── configs/
+├── source/                   # build inputs (hand-authored)
+│   ├── topology.clab.yml
+│   ├── configs/              # startup configs in vendor source format
+│   │   └── <node>.cfg
+│   ├── checks.yaml           # optional preconditions
+│   └── README.md             # optional lab notes
+├── configs/                  # collected from running device
 │   ├── <node1>/
 │   │   └── show_configuration_|_display_set.txt
 │   └── <node2>/
