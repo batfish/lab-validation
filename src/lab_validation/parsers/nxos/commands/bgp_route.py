@@ -15,7 +15,7 @@ from pyparsing import (
     Word,
     ZeroOrMore,
     alphanums,
-    oneOf,
+    one_of,
     stringEnd,
 )
 
@@ -106,7 +106,7 @@ def _vrf_af_routes() -> ParserElement:
 
 def _get_record() -> ParserElement:
     route_status = Combine(
-        oneOf(["*", "s", " "]) + oneOf([">", "|", " "])
+        one_of(["*", "s", " "]) + one_of([">", "|", " "])
     ).set_results_name("status")
     path_type = MatchFirst(
         [Literal("e"), Literal("l"), Literal("i"), Literal("a"), Literal("r")]
