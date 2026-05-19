@@ -1,0 +1,38 @@
+# Junos read-modify-write local-preference lab.
+#
+# Question: when a Junos route policy contains compound arithmetic actions on
+# `local-preference` (e.g., `local-preference 300; local-preference add 50`),
+# does each later action see the running value, or does it read the original
+# attribute? This is the "Suspicious Omission" called out in
+# working/intermediateAttributes.md (read-modify-write semantics).
+#
+# Topology:
+#   sender (AS 65001) --[ge-0/0/0]--[ge-0/0/0]-- dut (AS 65002)
+#     lo0: 1.1.1.1/32                              lo0: 2.2.2.2/32
+#     link: 10.0.12.0/31                           link: 10.0.12.1/31
+#
+# sender: originates 10.20.0-5.0/24 via static; advertises all to dut.
+#
+# dut: imports from sender via a policy whose terms each apply a different
+#      compound local-preference manipulation. Resulting Localpref on each
+#      route in inet.0 is what we measure.
+#
+# No collector is needed — local-preference is non-transitive across eBGP,
+# and the question is purely about how Junos resolves chained writes.
+
+name: junos-rmw-localpref
+
+topology:
+  nodes:
+    sender:
+      kind: juniper_vjunosrouter
+      image: vrnetlab/juniper_vjunos-router:25.4R1.12
+      startup-config: configs/sender.cfg
+    dut:
+      kind: juniper_vjunosrouter
+      image: vrnetlab/juniper_vjunos-router:25.4R1.12
+      startup-config: configs/dut.cfg
+
+  links:
+    # sender ge-0/0/0 (eth1) <-> dut ge-0/0/0 (eth1)
+    - endpoints: ["sender:eth1", "dut:eth1"]

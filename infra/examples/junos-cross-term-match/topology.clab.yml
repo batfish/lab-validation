@@ -1,0 +1,38 @@
+# Junos cross-term match lab.
+#
+# Question: within a single policy-statement, when an earlier term writes
+# to a route attribute (community, local-preference, AS-path) and the term
+# does NOT terminate (no accept/reject), can a later term `from`-match on
+# that updated attribute? Or do later terms always see the original value
+# of the attribute?
+#
+# This is the Junos analog of the FRR/Cumulus/Quagga "always-on intermediate
+# attributes" use case: those vendors set ReadIntermediate so that route-map
+# entries see updates from prior entries. The question for Junos is empirical.
+#
+# Topology:
+#   sender (AS 65001) --[ge-0/0/0]--[ge-0/0/0]-- dut (AS 65002)
+#     lo0: 1.1.1.1/32                             lo0: 2.2.2.2/32
+#     link: 10.0.12.0/31                          link: 10.0.12.1/31
+#
+# sender: originates 10.30.0-4.0/24 via static, advertises all to dut
+#         with no community / vanilla AS-path / default localpref.
+#
+# dut: imports from sender via a single policy whose terms test cross-term
+#      visibility of writes. Each prefix exercises a different scenario.
+
+name: junos-cross-term-match
+
+topology:
+  nodes:
+    sender:
+      kind: juniper_vjunosrouter
+      image: vrnetlab/juniper_vjunos-router:25.4R1.12
+      startup-config: configs/sender.cfg
+    dut:
+      kind: juniper_vjunosrouter
+      image: vrnetlab/juniper_vjunos-router:25.4R1.12
+      startup-config: configs/dut.cfg
+
+  links:
+    - endpoints: ["sender:eth1", "dut:eth1"]

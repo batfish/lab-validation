@@ -1,0 +1,40 @@
+set version 25.4R1.12
+set system host-name dut
+set system root-authentication encrypted-password "$6$JPcRv3dI$E57Xd9Klp3WS50LQGjS9fjLdCy9e.GFzpIhGkZQo6oIB9kSwSJzlPYfLnnakYKsYhB/WBEjgo.emAtPPt6v5B0"
+set system login user admin uid 2000
+set system login user admin class super-user
+set system login user admin authentication encrypted-password "$6$YoDBaCjq$1TTpj/F9XaMU1cI2JzQ7aFr1P9YuVrfeEfNRUJAs.GVED1JZA4z8vP8EYe6qNLHvLBz0YX0.E5p24fe7oXD4u1"
+set system services netconf ssh
+set system services ssh root-login allow
+set system management-instance
+set chassis fpc 0 pic 0 number-of-ports 12
+set interfaces ge-0/0/0 description "link to sender"
+set interfaces ge-0/0/0 unit 0 family inet address 10.0.12.1/31
+set interfaces fxp0 unit 0 family inet address 10.0.0.15/24
+set interfaces fxp0 unit 0 family inet6 address 2001:db8::2/64
+set interfaces lo0 unit 0 family inet address 2.2.2.2/32
+set policy-options policy-statement RMW-IMPORT term BASELINE from route-filter 10.20.0.0/24 exact
+set policy-options policy-statement RMW-IMPORT term BASELINE then accept
+set policy-options policy-statement RMW-IMPORT term TWO-ADDS from route-filter 10.20.1.0/24 exact
+set policy-options policy-statement RMW-IMPORT term TWO-ADDS then local-preference add 50
+set policy-options policy-statement RMW-IMPORT term TWO-ADDS then accept
+set policy-options policy-statement RMW-IMPORT term SET-THEN-ADD from route-filter 10.20.2.0/24 exact
+set policy-options policy-statement RMW-IMPORT term SET-THEN-ADD then local-preference add 50
+set policy-options policy-statement RMW-IMPORT term SET-THEN-ADD then accept
+set policy-options policy-statement RMW-IMPORT term SET-THEN-SUBTRACT from route-filter 10.20.3.0/24 exact
+set policy-options policy-statement RMW-IMPORT term SET-THEN-SUBTRACT then local-preference subtract 50
+set policy-options policy-statement RMW-IMPORT term SET-THEN-SUBTRACT then accept
+set policy-options policy-statement RMW-IMPORT term METRIC-SET-ADD from route-filter 10.20.4.0/24 exact
+set policy-options policy-statement RMW-IMPORT term METRIC-SET-ADD then metric add 50
+set policy-options policy-statement RMW-IMPORT term METRIC-SET-ADD then accept
+set policy-options policy-statement RMW-IMPORT term DOUBLE-PREPEND from route-filter 10.20.5.0/24 exact
+set policy-options policy-statement RMW-IMPORT term DOUBLE-PREPEND then as-path-prepend "65002 65002"
+set policy-options policy-statement RMW-IMPORT term DOUBLE-PREPEND then accept
+set policy-options policy-statement RMW-IMPORT term REJECT-OTHER then reject
+set routing-instances mgmt_junos routing-options rib mgmt_junos.inet6.0 static route ::/0 next-hop 2001:db8::1
+set routing-instances mgmt_junos routing-options static route 0.0.0.0/0 next-hop 10.0.0.2
+set routing-options router-id 2.2.2.2
+set routing-options autonomous-system 65002
+set protocols bgp group FROM-SENDER type external
+set protocols bgp group FROM-SENDER peer-as 65001
+set protocols bgp group FROM-SENDER neighbor 10.0.12.0 import RMW-IMPORT
