@@ -459,19 +459,16 @@ def parse_warning_spec(pytestconfig: Config) -> dict | None:
 
 
 @pytest.fixture(scope="module")
-def host_fatal_details(
-    bf: Session, snapshot: str, parse_warning_spec: dict | None
-) -> dict[str, list[str]]:
+def host_fatal_details(bf: Session, snapshot: str) -> dict[str, list[str]]:
     """Map hostname -> list of fatal red flag warning detail strings."""
-    if parse_warning_spec is None:
-        return {}
-
     bf.set_snapshot(snapshot)
     issues = bf.q.initIssues().answer().frame()
 
-    fatal_rows = issues[
-        (issues["Type"] == "Parse warning (redflag)")
-        & (issues["Details"].str.startswith("FATAL:"))
+    parse_warnings = issues[issues["Type"] == "Parse warning (redflag)"]
+    if parse_warnings.empty:
+        return {}
+    fatal_rows = parse_warnings[
+        parse_warnings["Details"].astype(str).str.startswith("FATAL:")
     ]
 
     result: dict[str, list[str]] = {}
@@ -502,18 +499,16 @@ def test_parse_warnings(
 ) -> None:
     """Tests that Batfish produces (or does not produce) fatal red flag warnings.
 
-    Driven by validation/parse_warnings.yaml. Each host is tested individually
-    so failures can be sickbayed per-host.
+    By default every host is asserted to produce zero FATAL parse warnings.
+    Snapshots that intentionally exhibit FATAL warnings (e.g., snapshots that
+    exist to verify parser rejection) opt in via validation/parse_warnings.yaml
+    using ``expects_fatal_warning`` entries. Snapshots with known-failing hosts
+    suppress them via validation/sickbay.yaml.
     """
-    if parse_warning_spec is None:
-        pytest.skip("no validation/parse_warnings.yaml")
-        return
-
+    spec = parse_warning_spec or {}
     expects_fatal = {
-        e["host"]: e["contains"]
-        for e in parse_warning_spec.get("expects_fatal_warning", [])
+        e["host"]: e["contains"] for e in spec.get("expects_fatal_warning", [])
     }
-    expects_no_fatal = set(parse_warning_spec.get("expects_no_fatal_warning", []))
 
     if hostname in expects_fatal:
         contains = expects_fatal[hostname]
@@ -523,14 +518,12 @@ def test_parse_warnings(
                 f"expected fatal warning containing '{contains}' for '{hostname}' "
                 f"but got: {details}"
             )
-    elif hostname in expects_no_fatal:
-        if hostname in host_fatal_details:
-            raise ValidationError(
-                f"unexpected fatal warning for '{hostname}': "
-                f"{host_fatal_details[hostname]}"
-            )
-    else:
-        pytest.skip(f"'{hostname}' not in parse_warnings.yaml")
+        return
+
+    if hostname in host_fatal_details:
+        raise ValidationError(
+            f"unexpected fatal warning for '{hostname}': {host_fatal_details[hostname]}"
+        )
 
 
 # TODO: Re-enable when reachability verification logic is ported from Batfish

@@ -375,8 +375,21 @@ snapshots/<name>/
 │   └── <node2>/
 │       └── ...
 └── validation/               # optional
-    └── sickbay.yaml          # expected failure entries
+    ├── sickbay.yaml          # expected failure entries
+    └── parse_warnings.yaml   # parser-rejection assertions (see below)
 ```
+
+### `validation/parse_warnings.yaml` (optional)
+
+When absent, every host is asserted to produce zero FATAL parse warnings
+(`Parse warning (redflag)` rows whose `Details` start with `FATAL:`). To
+assert that a host _should_ produce a FATAL warning — e.g., a snapshot
+that exists to verify parser rejection like
+`snapshots/junos_commit_check/` — add an `expects_fatal_warning` entry
+naming the host and a `contains` substring that must appear in the
+warning details. To suppress a known FATAL warning on a host, sickbay
+the `test_parse_warnings` test for that host in
+`validation/sickbay.yaml`.
 
 ## EC2 Instance Details
 
