@@ -114,12 +114,34 @@ ARISTA_CEOS = VendorProfile(
     boot_timeout_seconds=300,
 )
 
+CISCO_N9KV = VendorProfile(
+    name="nx",
+    containerlab_kind="cisco_n9kv",
+    default_username="admin",
+    default_password="admin",
+    netmiko_device_type="cisco_nxos",
+    interface_prefix="Ethernet1/",
+    interface_offset=1,  # eth1 -> Ethernet1/1, eth2 -> Ethernet1/2, ...
+    show_commands=[
+        "show running-config",
+        "show interface",
+        "show ip route vrf all",
+        "show ip bgp vrf all",
+        "show ip bgp all neighbor",
+        "show version",
+        "show vrf",
+    ],
+    config_command="show running-config",
+    boot_timeout_seconds=900,
+)
+
 VENDOR_PROFILES: dict[str, VendorProfile] = {
     "juniper_vjunosrouter": VJUNOS_ROUTER,
     "juniper_vjunosswitch": VJUNOS_SWITCH,
     "juniper_vjunosevolved": VJUNOS_EVOLVED,
     "juniper_crpd": CRPD,
     "arista_ceos": ARISTA_CEOS,
+    "cisco_n9kv": CISCO_N9KV,
 }
 
 

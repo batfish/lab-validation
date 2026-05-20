@@ -74,7 +74,7 @@ def _get_mtu_bw_line() -> ParserElement:
         + "bytes,"
         + "BW"
         + dec.set_results_name("bw")
-        + "Kbit,"
+        + MatchFirst([Literal("Kbit,"), Literal("Kbit ,")])
         + to_eol
     )
 

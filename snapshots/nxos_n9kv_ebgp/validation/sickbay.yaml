@@ -1,0 +1,13 @@
+entries:
+  - hostname: ".*"
+    test_name: test_main_rib_routes
+    skip:
+      reason: >-
+        Management VRF default route (0.0.0.0/0) injected by vrnetlab at boot
+        is not in startup config, so Batfish does not model it.
+  - hostname: r2
+    test_name: test_interface_properties
+    skip:
+      reason: >-
+        mgmt0 bandwidth reported as 65535000000 on r2 (virtual max) vs 1Gbps
+        in Batfish — vrnetlab artifact on n9kv management interface.

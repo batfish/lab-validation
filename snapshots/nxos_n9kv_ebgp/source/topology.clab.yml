@@ -1,0 +1,24 @@
+# Two-router eBGP lab using Cisco NX-OS (n9kv).
+#
+# Topology:
+#   r1 (AS 65001) ---[Ethernet1/1]---[Ethernet1/1]--- r2 (AS 65002)
+#     Loopback0: 1.1.1.1/32                            Loopback0: 2.2.2.2/32
+#     link: 10.0.0.0/31                                link: 10.0.0.1/31
+#
+# After convergence, each router should have the other's loopback via eBGP.
+
+name: nxos-ebgp
+
+topology:
+  nodes:
+    r1:
+      kind: cisco_n9kv
+      image: vrnetlab/cisco_n9kv:10.3.9.M
+      startup-config: configs/r1.cfg
+    r2:
+      kind: cisco_n9kv
+      image: vrnetlab/cisco_n9kv:10.3.9.M
+      startup-config: configs/r2.cfg
+
+  links:
+    - endpoints: ["r1:eth1", "r2:eth1"]
