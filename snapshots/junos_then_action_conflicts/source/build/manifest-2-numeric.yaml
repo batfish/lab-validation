@@ -1,0 +1,296 @@
+section: "2-numeric"
+notes: |
+  Numeric attributes with arithmetic forms (§2 of the lab plan).
+
+  For metric expression: uses "metric expression <base> multiplier <M> offset <O>" syntax.
+  Example: "metric expression metric multiplier 2 offset 5" evaluates to (metric * 2) + 5.
+
+  For metric igp: uses "metric igp <offset>" syntax with optional offset.
+  Example: "metric igp" (bare) or "metric igp 10" (with offset).
+
+  All tests use X=200, Y=50 as distinguishable values per the lab plan.
+stubs: [] # No stubs needed for numeric attributes
+terms:
+  # ========== local-preference (10 rows) ==========
+  - term_id: 1001
+    prefix: "10.50.50.0/24"
+    name: "LP-SET-DIFF"
+    description: "local-preference set X; set Y"
+    actions:
+      - "local-preference 200"
+      - "local-preference 50"
+
+  - term_id: 1002
+    prefix: "10.50.51.0/24"
+    name: "LP-SET-SAME"
+    description: "local-preference set X; set X (dedup baseline)"
+    actions:
+      - "local-preference 200"
+      - "local-preference 200"
+
+  - term_id: 1003
+    prefix: "10.50.52.0/24"
+    name: "LP-SET-ADD"
+    description: "local-preference set X; add Y"
+    actions:
+      - "local-preference 200"
+      - "local-preference add 50"
+
+  - term_id: 1004
+    prefix: "10.50.53.0/24"
+    name: "LP-ADD-SET"
+    description: "local-preference add Y; set X (twin)"
+    actions:
+      - "local-preference add 50"
+      - "local-preference 200"
+
+  - term_id: 1005
+    prefix: "10.50.54.0/24"
+    name: "LP-SET-SUBTRACT"
+    description: "local-preference set X; subtract Y"
+    actions:
+      - "local-preference 200"
+      - "local-preference subtract 50"
+
+  - term_id: 1006
+    prefix: "10.50.55.0/24"
+    name: "LP-SUBTRACT-SET"
+    description: "local-preference subtract Y; set X (twin)"
+    actions:
+      - "local-preference subtract 50"
+      - "local-preference 200"
+
+  - term_id: 1007
+    prefix: "10.50.56.0/24"
+    name: "LP-ADD-DIFF"
+    description: "local-preference add X; add Y (different)"
+    actions:
+      - "local-preference add 200"
+      - "local-preference add 50"
+
+  - term_id: 1008
+    prefix: "10.50.57.0/24"
+    name: "LP-ADD-SAME"
+    description: "local-preference add X; add X (dedup)"
+    actions:
+      - "local-preference add 200"
+      - "local-preference add 200"
+
+  - term_id: 1009
+    prefix: "10.50.58.0/24"
+    name: "LP-SUBTRACT-DIFF"
+    description: "local-preference subtract X; subtract Y"
+    actions:
+      - "local-preference subtract 200"
+      - "local-preference subtract 50"
+
+  - term_id: 1010
+    prefix: "10.50.59.0/24"
+    name: "LP-ADD-SUBTRACT"
+    description: "local-preference add X; subtract Y"
+    actions:
+      - "local-preference add 200"
+      - "local-preference subtract 50"
+
+  # ========== metric (10 common + 5 extra = 15 rows) ==========
+  - term_id: 1011
+    prefix: "10.50.60.0/24"
+    name: "MED-SET-DIFF"
+    description: "metric set X; set Y"
+    actions:
+      - "metric 200"
+      - "metric 50"
+
+  - term_id: 1012
+    prefix: "10.50.61.0/24"
+    name: "MED-SET-SAME"
+    description: "metric set X; set X (dedup baseline)"
+    actions:
+      - "metric 200"
+      - "metric 200"
+
+  - term_id: 1013
+    prefix: "10.50.62.0/24"
+    name: "MED-SET-ADD"
+    description: "metric set X; add Y"
+    actions:
+      - "metric 200"
+      - "metric add 50"
+
+  - term_id: 1014
+    prefix: "10.50.63.0/24"
+    name: "MED-ADD-SET"
+    description: "metric add Y; set X (twin)"
+    actions:
+      - "metric add 50"
+      - "metric 200"
+
+  - term_id: 1015
+    prefix: "10.50.64.0/24"
+    name: "MED-SET-SUBTRACT"
+    description: "metric set X; subtract Y"
+    actions:
+      - "metric 200"
+      - "metric subtract 50"
+
+  - term_id: 1016
+    prefix: "10.50.65.0/24"
+    name: "MED-SUBTRACT-SET"
+    description: "metric subtract Y; set X (twin)"
+    actions:
+      - "metric subtract 50"
+      - "metric 200"
+
+  - term_id: 1017
+    prefix: "10.50.66.0/24"
+    name: "MED-ADD-DIFF"
+    description: "metric add X; add Y (different)"
+    actions:
+      - "metric add 200"
+      - "metric add 50"
+
+  - term_id: 1018
+    prefix: "10.50.67.0/24"
+    name: "MED-ADD-SAME"
+    description: "metric add X; add X (dedup)"
+    actions:
+      - "metric add 200"
+      - "metric add 200"
+
+  - term_id: 1019
+    prefix: "10.50.68.0/24"
+    name: "MED-SUBTRACT-DIFF"
+    description: "metric subtract X; subtract Y"
+    actions:
+      - "metric subtract 200"
+      - "metric subtract 50"
+
+  - term_id: 1020
+    prefix: "10.50.69.0/24"
+    name: "MED-ADD-SUBTRACT"
+    description: "metric add X; subtract Y"
+    actions:
+      - "metric add 200"
+      - "metric subtract 50"
+
+  # metric-only: expression form (5 rows)
+  - term_id: 1021
+    prefix: "10.50.70.0/24"
+    name: "MED-SET-EXPRESSION"
+    description: "metric set X; expression Y"
+    actions:
+      - "metric 200"
+      - "metric expression metric multiplier 2 offset 5"
+
+  - term_id: 1022
+    prefix: "10.50.71.0/24"
+    name: "MED-EXPRESSION-SET"
+    description: "metric expression Y; set X (twin)"
+    actions:
+      - "metric expression metric multiplier 2 offset 5"
+      - "metric 200"
+
+  - term_id: 1023
+    prefix: "10.50.72.0/24"
+    name: "MED-SET-IGP"
+    description: "metric set X; igp"
+    actions:
+      - "metric 200"
+      - "metric igp"
+
+  - term_id: 1024
+    prefix: "10.50.73.0/24"
+    name: "MED-IGP-SET"
+    description: "metric igp; set X (twin)"
+    actions:
+      - "metric igp"
+      - "metric 200"
+
+  - term_id: 1025
+    prefix: "10.50.74.0/24"
+    name: "MED-EXPRESSION-IGP"
+    description: "metric expression Y; igp"
+    actions:
+      - "metric expression metric multiplier 2 offset 5"
+      - "metric igp"
+
+  # ========== metric2 (10 rows) ==========
+  - term_id: 1026
+    prefix: "10.50.75.0/24"
+    name: "M2-SET-DIFF"
+    description: "metric2 set X; set Y"
+    actions:
+      - "metric2 200"
+      - "metric2 50"
+
+  - term_id: 1027
+    prefix: "10.50.76.0/24"
+    name: "M2-SET-SAME"
+    description: "metric2 set X; set X (dedup baseline)"
+    actions:
+      - "metric2 200"
+      - "metric2 200"
+
+  - term_id: 1028
+    prefix: "10.50.77.0/24"
+    name: "M2-SET-ADD"
+    description: "metric2 set X; add Y"
+    actions:
+      - "metric2 200"
+      - "metric2 add 50"
+
+  - term_id: 1029
+    prefix: "10.50.78.0/24"
+    name: "M2-ADD-SET"
+    description: "metric2 add Y; set X (twin)"
+    actions:
+      - "metric2 add 50"
+      - "metric2 200"
+
+  - term_id: 1030
+    prefix: "10.50.79.0/24"
+    name: "M2-SET-SUBTRACT"
+    description: "metric2 set X; subtract Y"
+    actions:
+      - "metric2 200"
+      - "metric2 subtract 50"
+
+  - term_id: 1031
+    prefix: "10.50.80.0/24"
+    name: "M2-SUBTRACT-SET"
+    description: "metric2 subtract Y; set X (twin)"
+    actions:
+      - "metric2 subtract 50"
+      - "metric2 200"
+
+  - term_id: 1032
+    prefix: "10.50.81.0/24"
+    name: "M2-ADD-DIFF"
+    description: "metric2 add X; add Y (different)"
+    actions:
+      - "metric2 add 200"
+      - "metric2 add 50"
+
+  - term_id: 1033
+    prefix: "10.50.82.0/24"
+    name: "M2-ADD-SAME"
+    description: "metric2 add X; add X (dedup)"
+    actions:
+      - "metric2 add 200"
+      - "metric2 add 200"
+
+  - term_id: 1034
+    prefix: "10.50.83.0/24"
+    name: "M2-SUBTRACT-DIFF"
+    description: "metric2 subtract X; subtract Y"
+    actions:
+      - "metric2 subtract 200"
+      - "metric2 subtract 50"
+
+  - term_id: 1035
+    prefix: "10.50.84.0/24"
+    name: "M2-ADD-SUBTRACT"
+    description: "metric2 add X; subtract Y"
+    actions:
+      - "metric2 add 200"
+      - "metric2 subtract 50"

@@ -1,0 +1,162 @@
+section: "4-community"
+notes: |
+  Community manipulation conflict shapes. Each prefix is pre-tagged by sender
+  with both the marker community 65001:<term-id> AND an input payload of test
+  communities to exercise the conflict semantics.
+
+  Community definitions (declared in dut policy-options):
+    RED = 65001:1001
+    BLUE = 65001:1002
+    GREEN = 65001:1003
+    YELLOW = 65001:1004
+
+  The input_communities field specifies what sender pre-tags (beyond the marker).
+  Dut term actions operate on top of that input payload; output communities on
+  collector reveal the post-conflict semantics.
+
+stubs:
+  # Community member declarations for dut policy-options
+  - "policy-options { community RED { members 65001:1001; } }"
+  - "policy-options { community BLUE { members 65001:1002; } }"
+  - "policy-options { community GREEN { members 65001:1003; } }"
+  - "policy-options { community YELLOW { members 65001:1004; } }"
+
+terms:
+  - term_id: 3001
+    prefix: "10.50.130.0/24"
+    name: "ADD-RED-ADD-BLUE"
+    description: "community add RED; community add BLUE"
+    input_communities: []
+    actions:
+      - "community add RED"
+      - "community add BLUE"
+
+  - term_id: 3002
+    prefix: "10.50.131.0/24"
+    name: "ADD-RED-ADD-RED"
+    description: "community add RED; community add RED (dedup test)"
+    input_communities: []
+    actions:
+      - "community add RED"
+      - "community add RED"
+
+  - term_id: 3003
+    prefix: "10.50.132.0/24"
+    name: "DELETE-RED-DELETE-BLUE"
+    description: "community delete RED; community delete BLUE"
+    input_communities: ["RED", "BLUE"]
+    actions:
+      - "community delete RED"
+      - "community delete BLUE"
+
+  - term_id: 3004
+    prefix: "10.50.133.0/24"
+    name: "SET-RED-ADD-BLUE"
+    description: "community set RED; community add BLUE"
+    input_communities: ["GREEN"]
+    actions:
+      - "community set RED"
+      - "community add BLUE"
+
+  - term_id: 3005
+    prefix: "10.50.134.0/24"
+    name: "ADD-RED-SET-BLUE"
+    description: "community add RED; community set BLUE (does set wipe the prior add?)"
+    input_communities: ["GREEN"]
+    actions:
+      - "community add RED"
+      - "community set BLUE"
+
+  - term_id: 3006
+    prefix: "10.50.135.0/24"
+    name: "SET-RED-SET-BLUE"
+    description: "community set RED; community set BLUE (does second set replace first?)"
+    input_communities: ["GREEN"]
+    actions:
+      - "community set RED"
+      - "community set BLUE"
+
+  - term_id: 3007
+    prefix: "10.50.136.0/24"
+    name: "ADD-RED-DELETE-RED"
+    description: "community add RED; community delete RED (added then removed)"
+    input_communities: []
+    actions:
+      - "community add RED"
+      - "community delete RED"
+
+  - term_id: 3008
+    prefix: "10.50.137.0/24"
+    name: "DELETE-RED-ADD-RED"
+    description: "community delete RED; community add RED (removed then re-added)"
+    input_communities: ["RED"]
+    actions:
+      - "community delete RED"
+      - "community add RED"
+
+  - term_id: 3009
+    prefix: "10.50.138.0/24"
+    name: "ADD-RED-DELETE-BLUE"
+    description: "community add RED; community delete BLUE (independent operations)"
+    input_communities: []
+    actions:
+      - "community add RED"
+      - "community delete BLUE"
+
+  - term_id: 3010
+    prefix: "10.50.139.0/24"
+    name: "SET-RED-DELETE-RED"
+    description: "community set RED; community delete RED (set then delete what was just set)"
+    input_communities: ["GREEN"]
+    actions:
+      - "community set RED"
+      - "community delete RED"
+
+  # Bracketed-multi-set rows below are written here as the desugared
+  # equivalent (two separate `community set` lines) because Junos's
+  # bracketed multi-value syntax `community set [ A B ]` cannot be
+  # delivered reliably through netmiko/SSH (the `[` triggers CLI
+  # multi-value entry mode which collides with line-paste). The
+  # post-commit observation is identical: Junos stores `set [ A B ]`
+  # as two lines `community set A; community set B`. The desugar row
+  # below (3014) verifies that empirically.
+
+  - term_id: 3011
+    prefix: "10.50.140.0/24"
+    name: "SET-RED-BLUE-DELETE-RED"
+    description: "community set RED; community set BLUE; community delete RED (multi-set as two-set then delete one)"
+    input_communities: ["GREEN"]
+    actions:
+      - "community set RED"
+      - "community set BLUE"
+      - "community delete RED"
+
+  - term_id: 3012
+    prefix: "10.50.141.0/24"
+    name: "SET-RED-BLUE-ADD-GREEN"
+    description: "community set RED; community set BLUE; community add GREEN (multi-set as two-set then add)"
+    input_communities: ["YELLOW"]
+    actions:
+      - "community set RED"
+      - "community set BLUE"
+      - "community add GREEN"
+
+  - term_id: 3013
+    prefix: "10.50.142.0/24"
+    name: "SET-RED-BLUE-SET-GREEN-YELLOW"
+    description: "community set RED; community set BLUE; community set GREEN; community set YELLOW (two multi-sets desugared)"
+    input_communities: []
+    actions:
+      - "community set RED"
+      - "community set BLUE"
+      - "community set GREEN"
+      - "community set YELLOW"
+
+  - term_id: 3014
+    prefix: "10.50.143.0/24"
+    name: "SET-RED-BLUE-DESUGAR-VERIFICATION"
+    description: "community set RED; community set BLUE (two consecutive sets — does Junos collapse to one or keep both?)"
+    input_communities: []
+    actions:
+      - "community set RED"
+      - "community set BLUE"

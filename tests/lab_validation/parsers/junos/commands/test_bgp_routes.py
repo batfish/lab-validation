@@ -417,6 +417,113 @@ def test_parse_show_route_protocol_bgp_detail_with_communities() -> None:
     ]
 
 
+def test_parse_nhh_discard_route() -> None:
+    """Routes with next-hop discard/reject have nhh instead of nh."""
+    text = """
+    {
+    "route-information" : [
+    {
+        "route-table" : [
+        {
+            "table-name" : [{ "data" : "inet.0" }],
+            "destination-count" : [{ "data" : "1" }],
+            "total-route-count" : [{ "data" : "1" }],
+            "active-route-count" : [{ "data" : "1" }],
+            "holddown-route-count" : [{ "data" : "0" }],
+            "hidden-route-count" : [{ "data" : "0" }],
+            "rt" : [
+            {
+                "attributes" : {"junos:style" : "detail"},
+                "rt-destination" : [{ "data" : "10.50.21.0" }],
+                "rt-prefix-length" : [{ "data" : "24" }],
+                "rt-entry-count" : [{ "data" : "1", "attributes" : {"junos:format" : "1 entry"} }],
+                "rt-entry" : [
+                {
+                    "active-tag" : [{ "data" : "*" }],
+                    "protocol-name" : [{ "data" : "BGP" }],
+                    "preference" : [{ "data" : "170" }],
+                    "local-preference" : [{ "data" : "100" }],
+                    "as-path" : [{ "data" : "AS path: 65001 I" }],
+                    "nhh" : [
+                    {
+                        "attributes" : {"junos:indent" : "16"},
+                        "nh-type" : [{ "data" : "Discard" }],
+                        "nh-index" : [{ "data" : "0" }],
+                        "nh-address" : [{ "data" : "0x91b9114" }],
+                        "nh-reference-count" : [{ "data" : "2" }],
+                        "nh-kernel-id" : [{ "data" : "0" }]
+                    }
+                    ]
+                }
+                ]
+            }
+            ]
+        }
+        ]
+    }
+    ]
+    }
+    """
+    routes = parse_show_route_protocol_bgp_display_json(text)
+    assert len(routes) == 1
+    r = routes[0]
+    assert r.network == "10.50.21.0/24"
+    assert r.next_hop_ip == "discard"
+    assert r.next_hop_int == "discard"
+    assert r.as_path == (65001,)
+    assert r.is_active is True
+
+
+def test_parse_metric_from_detail_form() -> None:
+    """`show route protocol bgp detail | display json` puts MED in the
+    `metric` key. The brief form puts it in `med`. Parser must read both."""
+    text = """
+    {
+    "route-information" : [
+    {
+        "route-table" : [
+        {
+            "table-name" : [{ "data" : "inet.0" }],
+            "destination-count" : [{ "data" : "1" }],
+            "total-route-count" : [{ "data" : "1" }],
+            "active-route-count" : [{ "data" : "1" }],
+            "holddown-route-count" : [{ "data" : "0" }],
+            "hidden-route-count" : [{ "data" : "0" }],
+            "rt" : [
+            {
+                "attributes" : {"junos:style" : "detail"},
+                "rt-destination" : [{ "data" : "10.50.61.0" }],
+                "rt-prefix-length" : [{ "data" : "24" }],
+                "rt-entry-count" : [{ "data" : "1", "attributes" : {"junos:format" : "1 entry"} }],
+                "rt-entry" : [
+                {
+                    "active-tag" : [{ "data" : "*" }],
+                    "protocol-name" : [{ "data" : "BGP" }],
+                    "preference" : [{ "data" : "170" }],
+                    "metric" : [{ "data" : "200" }],
+                    "local-preference" : [{ "data" : "100" }],
+                    "as-path" : [{ "data" : "AS path: 65001 I" }],
+                    "nh" : [
+                    {
+                        "to" : [{ "data" : "10.0.12.0" }],
+                        "via" : [{ "data" : "ge-0/0/0.0" }]
+                    }
+                    ]
+                }
+                ]
+            }
+            ]
+        }
+        ]
+    }
+    ]
+    }
+    """
+    routes = parse_show_route_protocol_bgp_display_json(text)
+    assert len(routes) == 1
+    assert routes[0].metric == 200
+
+
 def test_get_as_path() -> None:
     assert _get_as_path("I") == ((), "I")
     assert _get_as_path("1 2 I") == ((1, 2), "I")

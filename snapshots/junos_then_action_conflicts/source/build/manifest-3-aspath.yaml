@@ -1,0 +1,83 @@
+section: "3-aspath"
+notes: ""
+stubs: []
+terms:
+  - term_id: 2001
+    prefix: "10.50.100.0/24"
+    name: "PREPEND-DIFF"
+    description: "as-path-prepend X; as-path-prepend Y (different ASNs)"
+    actions:
+      - 'as-path-prepend "65010"'
+      - 'as-path-prepend "65020"'
+
+  - term_id: 2002
+    prefix: "10.50.101.0/24"
+    name: "PREPEND-SAME"
+    description: "as-path-prepend X; as-path-prepend X (identical)"
+    actions:
+      - 'as-path-prepend "65010"'
+      - 'as-path-prepend "65010"'
+
+  - term_id: 2003
+    prefix: "10.50.102.0/24"
+    name: "PREPEND-MULTI-SINGLE"
+    description: "as-path-prepend multi-ASN; as-path-prepend single"
+    actions:
+      - 'as-path-prepend "65010 65020"'
+      - 'as-path-prepend "65030"'
+
+  - term_id: 2004
+    prefix: "10.50.103.0/24"
+    name: "PREPEND-EXPAND-DIFF"
+    description: "as-path-prepend X; as-path-expand Y"
+    actions:
+      - 'as-path-prepend "65010"'
+      - 'as-path-expand "65020"'
+
+  - term_id: 2005
+    prefix: "10.50.104.0/24"
+    name: "EXPAND-PREPEND-DIFF"
+    description: "as-path-expand Y; as-path-prepend X"
+    actions:
+      - 'as-path-expand "65020"'
+      - 'as-path-prepend "65010"'
+
+  - term_id: 2006
+    prefix: "10.50.105.0/24"
+    name: "EXPAND-EXPAND-DIFF"
+    description: "as-path-expand X; as-path-expand Y (different ASNs)"
+    actions:
+      - 'as-path-expand "65010"'
+      - 'as-path-expand "65020"'
+
+  - term_id: 2007
+    prefix: "10.50.106.0/24"
+    name: "EXPAND-EXPAND-SAME"
+    description: "as-path-expand X; as-path-expand X (identical)"
+    actions:
+      - 'as-path-expand "65010"'
+      - 'as-path-expand "65010"'
+
+  - term_id: 2008
+    prefix: "10.50.107.0/24"
+    name: "EXPAND-LAST-AS-PREPEND"
+    description: "as-path-expand last-as count N; as-path-prepend X"
+    actions:
+      - "as-path-expand last-as count 2"
+      - 'as-path-prepend "65010"'
+
+  - term_id: 2009
+    prefix: "10.50.108.0/24"
+    name: "PREPEND-EXPAND-LAST-AS"
+    description: "as-path-prepend X; as-path-expand last-as count N"
+    actions:
+      - 'as-path-prepend "65010"'
+      - "as-path-expand last-as count 2"
+
+  - term_id: 2010
+    prefix: "10.50.109.0/24"
+    name: "EXPAND-LAST-AS-TWICE"
+    description: "as-path-expand last-as count M; as-path-expand last-as count N"
+    actions:
+      - "as-path-expand last-as count 2"
+      - "as-path-expand last-as count 3"

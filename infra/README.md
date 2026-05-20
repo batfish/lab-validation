@@ -238,6 +238,32 @@ For each test failure, determine the cause:
 - **Expected difference**: management interfaces, pseudo-interfaces, etc. that
   Batfish intentionally doesn't model. Update the validator's exclusion logic.
 
+## Convergence Expectations
+
+Once a vJunos node is booted and SSH-reachable, routing protocol
+convergence and config operations are fast:
+
+- **BGP convergence** after config push: < 30 seconds for small labs
+  (2-4 nodes, < 200 prefixes).
+- **`commit check`**: < 5 seconds for any reasonable policy.
+- **`commit`**: < 15 seconds for labs of this size.
+- **Health-check after deploy**: SSH comes up ~3-5 min after
+  `containerlab deploy`; BGP converges within seconds of SSH.
+
+If a command hasn't completed within 2× its expected time, something
+is wrong — investigate rather than retry with a longer timeout.
+
+### Operational principles
+
+- **Verify the tool works before looping.** Run the check command once
+  interactively before wrapping it in a polling loop. If it fails on
+  the first try, fix the command — don't blindly retry.
+- **Prefer bulk operations.** Push 100 config lines via `load set
+terminal` (< 5 seconds) rather than per-line `send_command_timing`
+  (minutes). Use binary search to isolate failures in a batch.
+- **No absurd timeouts.** A 60-minute timeout on a command expected to
+  finish in 10 seconds masks bugs. Set timeouts at 2× expected runtime.
+
 ## Iterating on a Lab
 
 To modify configs without full redeploy (saves 5-10 min boot time):
@@ -253,6 +279,27 @@ ssh -i $KEY ubuntu@$IP \
 ```
 
 Then re-download and re-validate locally.
+
+### Pushing config to running Junos devices
+
+When pushing config to a running vJunos device programmatically:
+
+- **Use `load set terminal`** + paste all lines + `^D`. This is fast
+  even for hundreds of lines. Do NOT push lines one at a time via
+  netmiko's `send_command_timing` (~2s/line overhead).
+- **Binary search on commit failure** — if bulk `commit check` fails,
+  bisect the config into halves and re-check each. Isolates rejections
+  in O(log N) commits instead of O(N).
+- **Bracket syntax `[ A B ]`** cannot be reliably delivered through
+  netmiko/SSH interactive sessions (`[` triggers Junos CLI multi-value
+  entry mode). Use the desugared equivalent: two separate `set` lines
+  (e.g., `community set A` + `community set B`). Junos stores them
+  identically — `show configuration | display set` always emits the
+  desugared form.
+- **Large configs as startup**: if a config is too large or complex for
+  interactive push, use it as the containerlab `startup-config`. If
+  commit fails at boot, SSH never comes up — use a minimal startup
+  config and push terms post-boot.
 
 **Always re-collect after changing the lab.** The snapshot's
 `configs/<node>/show_running-config.txt` and every file under

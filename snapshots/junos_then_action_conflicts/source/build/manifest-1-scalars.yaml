@@ -1,0 +1,308 @@
+section: "1-scalars"
+notes: |
+  Covers scalar absolute attributes (single value, no arithmetic form).
+  15 base attributes × 2 patterns (dedup/diff) + 4 next-hop special forms + 1 aigp variant = 35 terms.
+
+  Stubs declared:
+  - forwarding-class: FC1, FC2
+  - cos-next-hop-map: NHM1, NHM2
+  - tunnel-attribute: TA1, TA2
+  - source-class: SC1, SC2
+
+stubs:
+  - "class-of-service { forwarding-classes { queue 0 fc1; queue 1 fc2; } }"
+  - "class-of-service { forwarding-classes { class fc1 queue-num 0; class fc2 queue-num 1; } }"
+  - "class-of-service { cos-next-hop-map nhm1 { forwarding-class fc1 { next-hop-map { 1 2; } } } }"
+  - "class-of-service { cos-next-hop-map nhm2 { forwarding-class fc2 { next-hop-map { 1 3; } } } }"
+  - "policy-options { tunnel-attribute ta1 { remote-end-point 1.1.1.1; } }"
+  - "policy-options { tunnel-attribute ta2 { remote-end-point 2.2.2.2; } }"
+  - "policy-options { source-class sc1; }"
+  - "policy-options { source-class sc2; }"
+
+terms:
+  - term_id: 1
+    prefix: "10.50.1.0/24"
+    name: "ORIGIN-DEDUP"
+    description: "origin set X; set X (dedup)"
+    actions:
+      - "origin igp"
+      - "origin igp"
+
+  - term_id: 2
+    prefix: "10.50.2.0/24"
+    name: "ORIGIN-DIFF"
+    description: "origin set X; set Y"
+    actions:
+      - "origin igp"
+      - "origin egp"
+
+  - term_id: 3
+    prefix: "10.50.3.0/24"
+    name: "PREFERENCE-DEDUP"
+    description: "preference set X; set X (dedup)"
+    actions:
+      - "preference 100"
+      - "preference 100"
+
+  - term_id: 4
+    prefix: "10.50.4.0/24"
+    name: "PREFERENCE-DIFF"
+    description: "preference set X; set Y"
+    actions:
+      - "preference 100"
+      - "preference 200"
+
+  - term_id: 5
+    prefix: "10.50.5.0/24"
+    name: "FORWARDING-CLASS-DEDUP"
+    description: "forwarding-class set X; set X (dedup)"
+    actions:
+      - "forwarding-class fc1"
+      - "forwarding-class fc1"
+
+  - term_id: 6
+    prefix: "10.50.6.0/24"
+    name: "FORWARDING-CLASS-DIFF"
+    description: "forwarding-class set X; set Y"
+    actions:
+      - "forwarding-class fc1"
+      - "forwarding-class fc2"
+
+  - term_id: 7
+    prefix: "10.50.7.0/24"
+    name: "TAG-DEDUP"
+    description: "tag set X; set X (dedup)"
+    actions:
+      - "tag 100"
+      - "tag 100"
+
+  - term_id: 8
+    prefix: "10.50.8.0/24"
+    name: "TAG-DIFF"
+    description: "tag set X; set Y"
+    actions:
+      - "tag 100"
+      - "tag 200"
+
+  - term_id: 9
+    prefix: "10.50.9.0/24"
+    name: "TAG2-DEDUP"
+    description: "tag2 set X; set X (dedup)"
+    actions:
+      - "tag2 100"
+      - "tag2 100"
+
+  - term_id: 10
+    prefix: "10.50.10.0/24"
+    name: "TAG2-DIFF"
+    description: "tag2 set X; set Y"
+    actions:
+      - "tag2 100"
+      - "tag2 200"
+
+  - term_id: 11
+    prefix: "10.50.11.0/24"
+    name: "COLOR-DEDUP"
+    description: "color set X; set X (dedup)"
+    actions:
+      - "color 100"
+      - "color 100"
+
+  - term_id: 12
+    prefix: "10.50.12.0/24"
+    name: "COLOR-DIFF"
+    description: "color set X; set Y"
+    actions:
+      - "color 100"
+      - "color 200"
+
+  - term_id: 13
+    prefix: "10.50.13.0/24"
+    name: "COLOR2-DEDUP"
+    description: "color2 set X; set X (dedup)"
+    actions:
+      - "color2 100"
+      - "color2 100"
+
+  - term_id: 14
+    prefix: "10.50.14.0/24"
+    name: "COLOR2-DIFF"
+    description: "color2 set X; set Y"
+    actions:
+      - "color2 100"
+      - "color2 200"
+
+  - term_id: 15
+    prefix: "10.50.15.0/24"
+    name: "PRIORITY-DEDUP"
+    description: "priority set X; set X (dedup)"
+    actions:
+      - "priority high"
+      - "priority high"
+
+  - term_id: 16
+    prefix: "10.50.16.0/24"
+    name: "PRIORITY-DIFF"
+    description: "priority set X; set Y"
+    actions:
+      - "priority high"
+      - "priority low"
+
+  - term_id: 17
+    prefix: "10.50.17.0/24"
+    name: "NEXT-HOP-IP-DEDUP"
+    description: "next-hop IP; IP (same, dedup)"
+    actions:
+      - "next-hop 192.0.2.1"
+      - "next-hop 192.0.2.1"
+
+  - term_id: 18
+    prefix: "10.50.18.0/24"
+    name: "NEXT-HOP-IP-DIFF"
+    description: "next-hop IP; IP (different)"
+    actions:
+      - "next-hop 192.0.2.1"
+      - "next-hop 192.0.2.2"
+
+  - term_id: 19
+    prefix: "10.50.19.0/24"
+    name: "NEXT-HOP-SELF-VS-IP"
+    description: "next-hop self vs IP"
+    actions:
+      - "next-hop self"
+      - "next-hop 192.0.2.1"
+
+  - term_id: 20
+    prefix: "10.50.20.0/24"
+    name: "NEXT-HOP-SELF-VS-PEER"
+    description: "next-hop self vs peer-address"
+    actions:
+      - "next-hop self"
+      - "next-hop peer-address"
+
+  - term_id: 21
+    prefix: "10.50.21.0/24"
+    name: "NEXT-HOP-REJECT-VS-DISCARD"
+    description: "next-hop reject vs discard"
+    actions:
+      - "next-hop reject"
+      - "next-hop discard"
+
+  - term_id: 22
+    prefix: "10.50.22.0/24"
+    name: "SOURCE-CLASS-DEDUP"
+    description: "source-class set X; set X (dedup)"
+    actions:
+      - "source-class sc1"
+      - "source-class sc1"
+
+  - term_id: 23
+    prefix: "10.50.23.0/24"
+    name: "SOURCE-CLASS-DIFF"
+    description: "source-class set X; set Y"
+    actions:
+      - "source-class sc1"
+      - "source-class sc2"
+
+  - term_id: 24
+    prefix: "10.50.24.0/24"
+    name: "BGP-OUTPUT-QUEUE-PRIORITY-DEDUP"
+    description: "bgp-output-queue-priority set X; set X (dedup)"
+    actions:
+      - "bgp-output-queue-priority 5"
+      - "bgp-output-queue-priority 5"
+
+  - term_id: 25
+    prefix: "10.50.25.0/24"
+    name: "BGP-OUTPUT-QUEUE-PRIORITY-DIFF"
+    description: "bgp-output-queue-priority set X; set Y"
+    actions:
+      - "bgp-output-queue-priority 5"
+      - "bgp-output-queue-priority 10"
+
+  - term_id: 26
+    prefix: "10.50.26.0/24"
+    name: "COS-NEXT-HOP-MAP-DEDUP"
+    description: "cos-next-hop-map set X; set X (dedup)"
+    actions:
+      - "cos-next-hop-map nhm1"
+      - "cos-next-hop-map nhm1"
+
+  - term_id: 27
+    prefix: "10.50.27.0/24"
+    name: "COS-NEXT-HOP-MAP-DIFF"
+    description: "cos-next-hop-map set X; set Y"
+    actions:
+      - "cos-next-hop-map nhm1"
+      - "cos-next-hop-map nhm2"
+
+  - term_id: 28
+    prefix: "10.50.28.0/24"
+    name: "TUNNEL-ATTRIBUTE-DEDUP"
+    description: "tunnel-attribute set X; set X (dedup)"
+    actions:
+      - "tunnel-attribute set ta1"
+      - "tunnel-attribute set ta1"
+
+  - term_id: 29
+    prefix: "10.50.29.0/24"
+    name: "TUNNEL-ATTRIBUTE-DIFF"
+    description: "tunnel-attribute set X; set Y"
+    actions:
+      - "tunnel-attribute set ta1"
+      - "tunnel-attribute set ta2"
+
+  - term_id: 30
+    prefix: "10.50.30.0/24"
+    name: "EXTERNAL-DEDUP"
+    description: "external type X; type X (dedup)"
+    actions:
+      - "external type 1"
+      - "external type 1"
+
+  - term_id: 31
+    prefix: "10.50.31.0/24"
+    name: "EXTERNAL-DIFF"
+    description: "external type X; type Y"
+    actions:
+      - "external type 1"
+      - "external type 2"
+
+  # AIGP-ORIGINATE requires `next-hop` in the same `then` block
+  # (Junos commit-time constraint). Each term sets next-hop self alongside.
+
+  - term_id: 32
+    prefix: "10.50.32.0/24"
+    name: "AIGP-ORIGINATE-DEDUP"
+    description: "aigp-originate; aigp-originate (bare, dedup) — with next-hop"
+    actions:
+      - "next-hop self"
+      - "aigp-originate"
+      - "aigp-originate"
+
+  - term_id: 33
+    prefix: "10.50.33.0/24"
+    name: "AIGP-ORIGINATE-BARE-VS-DISTANCE"
+    description: "aigp-originate (bare) vs aigp-originate distance N — with next-hop"
+    actions:
+      - "next-hop self"
+      - "aigp-originate"
+      - "aigp-originate distance 50"
+
+  - term_id: 34
+    prefix: "10.50.34.0/24"
+    name: "AIGP-ORIGINATE-DISTANCE-DEDUP"
+    description: "aigp-originate distance X; distance X (dedup) — with next-hop"
+    actions:
+      - "next-hop self"
+      - "aigp-originate distance 50"
+      - "aigp-originate distance 50"
+
+  - term_id: 35
+    prefix: "10.50.35.0/24"
+    name: "AIGP-ORIGINATE-DISTANCE-DIFF"
+    description: "aigp-originate distance X; distance Y — with next-hop"
+    actions:
+      - "next-hop self"
+      - "aigp-originate distance 50"
+      - "aigp-originate distance 100"
