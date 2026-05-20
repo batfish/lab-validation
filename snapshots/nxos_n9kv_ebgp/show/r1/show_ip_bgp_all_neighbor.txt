@@ -1,0 +1,72 @@
+BGP neighbor is 10.0.0.1, remote AS 65002, ebgp link, Peer index 3
+  BGP version 4, remote router ID 2.2.2.2
+  Neighbor previous state = OpenConfirm
+  BGP state = Established, up for 00:06:49
+  Neighbor vrf: default
+  Peer is directly attached, interface Ethernet1/1
+  Last read 00:00:48, hold time = 180, keepalive interval is 60 seconds
+  Last written 00:00:48, keepalive timer expiry due 00:00:11
+  Received 13 messages, 0 notifications, 0 bytes in queue
+  Sent 12 messages, 0 notifications, 0(0) bytes in queue
+  Enhanced error processing: On
+    0 discarded attributes
+  Connections established 1, dropped 0
+  Last update recd 00:06:48, Last update sent  = 00:06:48 
+   Last reset by us never, due to No error
+  Last error length sent: 0
+  Reset error value sent: 0
+  Reset error sent major: 0 minor: 0
+  Notification data sent:
+  Last reset by peer never, due to No error
+  Last error length received: 0
+  Reset error value received 0
+  Reset error received major: 0 minor: 0
+  Notification data received:
+
+  Neighbor capabilities:
+  Dynamic capability: advertised (mp, refresh, gr) received (mp, refresh, gr)
+  Dynamic capability (old): advertised received
+  Route refresh capability (new): advertised received 
+  Route refresh capability (old): advertised received 
+  4-Byte AS capability: advertised received 
+  Address family IPv4 Unicast: advertised received 
+  Graceful Restart capability: advertised received
+
+  Graceful Restart Parameters:
+  Address families advertised to peer:
+    IPv4 Unicast  
+  Address families received from peer:
+    IPv4 Unicast  
+  Forwarding state preserved by peer for:
+  Restart time advertised to peer: 120 seconds
+  Stale time for routes advertised by peer: 300 seconds
+  Restart time advertised by peer: 120 seconds
+  Extended Next Hop Encoding Capability: advertised received
+  Receive IPv6 next hop encoding Capability for AF:
+    IPv4 Unicast  VPNv4 Unicast  
+
+  Message statistics:
+                              Sent               Rcvd
+  Opens:                         1                  1  
+  Notifications:                 0                  0  
+  Updates:                       2                  2  
+  Keepalives:                    8                  8  
+  Route Refresh:                 0                  0  
+  Capability:                    2                  2  
+  Total:                        12                 13  
+  Total bytes:                 274                274  
+  Bytes in queue:                0                  0  
+
+  For address family: IPv4 Unicast
+  BGP table version 4, neighbor version 4
+  1 accepted prefixes (1 paths), consuming 288 bytes of memory
+  0 received prefixes treated as withdrawn
+  1 sent prefixes (1 paths)
+  Last End-of-RIB received 00:00:01 after session start
+  Last End-of-RIB sent 00:00:01 after session start
+  First convergence 00:00:01 after session start with 1 routes sent
+
+  Local host: 10.0.0.0, Local port: 56948
+  Foreign host: 10.0.0.1, Foreign port: 179
+  fd = 80
+

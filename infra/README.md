@@ -95,13 +95,13 @@ few starting points:
 
 **Interface mapping**: containerlab `ethN` maps to vendor interfaces:
 
-| containerlab | Junos (vJunos-router) | Arista (cEOS) |
-| ------------ | --------------------- | ------------- |
-| eth0         | management (auto)     | Management0   |
-| eth1         | ge-0/0/0              | Ethernet1     |
-| eth2         | ge-0/0/1              | Ethernet2     |
-| eth3         | ge-0/0/2              | Ethernet3     |
-| ethN         | ge-0/0/(N-1)          | EthernetN     |
+| containerlab | Junos (vJunos-router) | Arista (cEOS) | NX-OS (N9Kv) |
+| ------------ | --------------------- | ------------- | ------------ |
+| eth0         | management (auto)     | Management0   | mgmt0        |
+| eth1         | ge-0/0/0              | Ethernet1     | Ethernet1/1  |
+| eth2         | ge-0/0/1              | Ethernet2     | Ethernet1/2  |
+| eth3         | ge-0/0/2              | Ethernet3     | Ethernet1/3  |
+| ethN         | ge-0/0/(N-1)          | EthernetN     | Ethernet1/N  |
 
 ### Step 2: Launch EC2 and Upload
 
@@ -357,6 +357,18 @@ Run on EC2 as `PYTHONPATH=src python3 -m lab_builder <command>`:
 | `show ip ospf neighbor \| json`         | `show/<node>/`    | OSPF status          |
 | `show isis neighbors \| json`           | `show/<node>/`    | ISIS status          |
 
+### Cisco NX-OS (N9Kv)
+
+| Command                    | Goes to           | Purpose              |
+| -------------------------- | ----------------- | -------------------- |
+| `show running-config`      | `configs/<node>/` | Device config        |
+| `show interface`           | `show/<node>/`    | Interface properties |
+| `show ip route vrf all`    | `show/<node>/`    | Main routing table   |
+| `show ip bgp vrf all`      | `show/<node>/`    | BGP routes           |
+| `show ip bgp all neighbor` | `show/<node>/`    | BGP peer details     |
+| `show version`             | `show/<node>/`    | Software version     |
+| `show vrf`                 | `show/<node>/`    | VRF info             |
+
 ## Snapshot Directory Structure
 
 The output matches the lab-validation framework's expected layout:
@@ -474,6 +486,7 @@ the large Juniper VM images and reducing bootstrap time from ~5 min to
 | `juniper_vjunosevolved` | Junos Evolved (PTX) | admin / admin@123 | ~15 min   | Yes          |
 | `juniper_crpd`          | Junos cRPD          | root / clab123    | ~1 min    | No           |
 | `arista_ceos`           | Arista EOS          | admin / admin     | ~1 min    | No           |
+| `cisco_n9kv`            | Cisco NX-OS (N9Kv)  | admin / admin     | 5-10 min  | Yes          |
 
 **Junos platform selection**: vJunos-router (MX) does NOT support `family
 ethernet-switching`, VLANs with IRBs, or EVPN bridge domains. Labs that use
@@ -483,6 +496,10 @@ pure IP routing (underlay, L3VPN, route reflectors, CE devices).
 **Arista cEOS**: Container-native EOS image. No KVM required, boots in
 under a minute. Startup configs use standard EOS CLI format. cEOS-64
 (64-bit) is required for containerlab.
+
+**Cisco NX-OS (N9Kv)**: Nexus 9000v virtual switch image running NX-OS.
+Requires KVM (vrnetlab-based). Startup configs use standard NX-OS CLI
+format. Interface mapping: eth1 → Ethernet1/1, eth2 → Ethernet1/2, etc.
 
 ## Troubleshooting
 

@@ -224,6 +224,44 @@ Ethernet1/16 is down (SFP not inserted)
     assert interface.mode == "access"
 
 
+def test_parse_record_bw_space_before_comma() -> None:
+    """n9kv 10.3.x outputs 'BW <num> Kbit ,' (space before comma)."""
+    input_text = """mgmt0 is up
+admin state is up,
+  Hardware: Ethernet, address: 0c00.e7c9.9400 (bia 0c00.e7c9.9400)
+  Internet Address is 10.0.0.15/24
+  MTU 1500 bytes, BW 1000000 Kbit , DLY 10 usec
+  reliability 255/255, txload 1/255, rxload 1/255
+  Encapsulation ARPA, medium is broadcast
+  full-duplex, 1000 Mb/s
+    """
+    interface = interface_block().parse_string(input_text)
+    assert interface.name == "mgmt0"
+    assert interface.admin_state == "up"
+    assert interface.line_state == "up"
+    assert interface.mtu == 1500
+    assert interface.bw == 1000000
+
+
+def test_parse_record_n9kv_ethernet() -> None:
+    """n9kv 10.3.x Ethernet interface with 'Kbit ,' format."""
+    input_text = """Ethernet1/1 is up
+admin state is up, Dedicated Interface
+  Hardware: 100/1000/10000 Ethernet, address: 0cc9.9400.1b08 (bia 0cc9.9400.0101)
+  Internet Address is 10.0.0.0/31
+  MTU 1500 bytes, BW 1000000 Kbit , DLY 10 usec
+  reliability 255/255, txload 1/255, rxload 1/255
+  Encapsulation ARPA, medium is broadcast
+  full-duplex, 1000 Mb/s
+    """
+    interface = interface_block().parse_string(input_text)
+    assert interface.name == "Ethernet1/1"
+    assert interface.admin_state == "up"
+    assert interface.line_state == "up"
+    assert interface.mtu == 1500
+    assert interface.bw == 1000000
+
+
 def test_get_admin_state() -> None:
     admin_state = None
     port_status_reason = "(Administratively down)"

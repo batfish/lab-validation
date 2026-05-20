@@ -1,0 +1,36 @@
+IP Route Table for VRF "default"
+'*' denotes best ucast next-hop
+'**' denotes best mcast next-hop
+'[x/y]' denotes [preference/metric]
+'%<string>' in via output denotes VRF <string>
+
+1.1.1.1/32, ubest/mbest: 1/0
+    *via 10.0.0.0, [20/0], 00:06:53, bgp-65002, external, tag 65001
+2.2.2.2/32, ubest/mbest: 2/0, attached
+    *via 2.2.2.2, Lo0, [0/0], 00:07:18, local
+    *via 2.2.2.2, Lo0, [0/0], 00:07:18, direct
+10.0.0.0/31, ubest/mbest: 1/0, attached
+    *via 10.0.0.1, Eth1/1, [0/0], 00:07:17, direct
+10.0.0.1/32, ubest/mbest: 1/0, attached
+    *via 10.0.0.1, Eth1/1, [0/0], 00:07:17, local
+
+IP Route Table for VRF "management"
+'*' denotes best ucast next-hop
+'**' denotes best mcast next-hop
+'[x/y]' denotes [preference/metric]
+'%<string>' in via output denotes VRF <string>
+
+0.0.0.0/0, ubest/mbest: 1/0
+    *via 10.0.0.2, [1/0], 00:07:25, static
+10.0.0.0/24, ubest/mbest: 1/0, attached
+    *via 10.0.0.15, mgmt0, [0/0], 00:07:26, direct
+10.0.0.15/32, ubest/mbest: 1/0, attached
+    *via 10.0.0.15, mgmt0, [0/0], 00:07:26, local
+
+IP Route Table for VRF "egress-loadbalance-resolution-"
+'*' denotes best ucast next-hop
+'**' denotes best mcast next-hop
+'[x/y]' denotes [preference/metric]
+'%<string>' in via output denotes VRF <string>
+
+

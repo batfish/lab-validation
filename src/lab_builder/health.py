@@ -188,6 +188,62 @@ def _arista_check_isis(node: NodeInfo) -> bool | None:
 
 
 # ---------------------------------------------------------------------------
+# NX-OS health checks
+# ---------------------------------------------------------------------------
+
+
+def _nxos_check_bgp(node: NodeInfo) -> bool | None:
+    """Check if all BGP neighbors are Established via 'show ip bgp summary'."""
+    try:
+        output = run_command(node, "show ip bgp summary", timeout=10)
+    except Exception:
+        return False
+
+    # NX-OS text output: lines with neighbor IPs have state in last column.
+    # If numeric, it's a prefix count (Established). Otherwise it's a state name.
+    found_any = False
+    for line in output.splitlines():
+        parts = line.split()
+        if not parts:
+            continue
+        # Neighbor lines start with an IP address
+        first = parts[0]
+        if not all(c.isdigit() or c == "." for c in first) or first.count(".") != 3:
+            continue
+        found_any = True
+        state = parts[-1]
+        # A numeric last field means prefix count -> Established
+        if not state.isdigit():
+            return False
+
+    return True if found_any else None
+
+
+def _nxos_check_ospf(node: NodeInfo) -> bool | None:
+    """Check if all OSPF neighbors are FULL via 'show ip ospf neighbors'."""
+    try:
+        output = run_command(node, "show ip ospf neighbors", timeout=10)
+    except Exception:
+        return False
+
+    found_any = False
+    for line in output.splitlines():
+        parts = line.split()
+        if not parts:
+            continue
+        first = parts[0]
+        if not all(c.isdigit() or c == "." for c in first) or first.count(".") != 3:
+            continue
+        found_any = True
+        # State field is typically column index 2 (e.g., "FULL/  -" or "FULL/DR")
+        state_col = parts[2] if len(parts) > 2 else ""
+        if not state_col.upper().startswith("FULL"):
+            return False
+
+    return True if found_any else None
+
+
+# ---------------------------------------------------------------------------
 # Dispatch by vendor
 # ---------------------------------------------------------------------------
 
@@ -195,23 +251,29 @@ def _arista_check_isis(node: NodeInfo) -> bool | None:
 def check_bgp_established(node: NodeInfo) -> bool | None:
     if node.profile.name == "arista":
         return _arista_check_bgp(node)
+    if node.profile.name == "nx":
+        return _nxos_check_bgp(node)
     return _junos_check_bgp(node)
 
 
 def check_ospf_full(node: NodeInfo) -> bool | None:
     if node.profile.name == "arista":
         return _arista_check_ospf(node)
+    if node.profile.name == "nx":
+        return _nxos_check_ospf(node)
     return _junos_check_ospf(node)
 
 
 def check_isis_up(node: NodeInfo) -> bool | None:
     if node.profile.name == "arista":
         return _arista_check_isis(node)
+    if node.profile.name == "nx":
+        return None
     return _junos_check_isis(node)
 
 
 def check_platform_warnings(node: NodeInfo) -> list[str]:
-    if node.profile.name == "arista":
+    if node.profile.name in ("arista", "nx"):
         return []
     return _junos_check_platform_warnings(node)
 
