@@ -1,0 +1,44 @@
+# Junos `then`-action conflict matrix lab.
+#
+# Empirically characterizes Junos commit-time collapse of same-attribute
+# duplicate `then` actions inside a single `policy-statement` term.
+# Systematizes the surprise found in junos_rmw_localpref (set + add on
+# the same attribute → set silently dropped) into one fixture covering
+# all 33 popst_* rules, plus same-family orderings for as-path-prepend
+# / as-path-expand and community add/delete/set.
+#
+# Topology:
+#   sender (AS 65001) -[ge-0/0/0]-[ge-0/0/0]- dut (AS 65002) -[ge-0/0/1]-[ge-0/0/0]- collector (AS 65003)
+#     lo0 1.1.1.1/32                            lo0 2.2.2.2/32                              lo0 3.3.3.3/32
+#     link 10.0.12.0/31                         link 10.0.12.1/31  10.0.23.0/31              link 10.0.23.1/31
+#
+# - sender: originates ~108 /24 test prefixes via static, exports to dut
+#   tagged with per-term marker community 65001:<term-id> (and §4
+#   conflict-shape input payloads where required).
+# - dut: imports from sender via a single policy-statement IMPORT whose
+#   ~108 terms each test one same-attribute conflict shape, then exports
+#   pass-through to collector.
+# - collector: applies a transparent IMPORT-ALL policy so every marker
+#   community propagates intact, used as the observation point for §5
+#   flow-control terms.
+
+name: junos-then-action-conflicts
+
+topology:
+  nodes:
+    sender:
+      kind: juniper_vjunosrouter
+      image: vrnetlab/juniper_vjunos-router:25.4R1.12
+      startup-config: configs/sender.cfg
+    dut:
+      kind: juniper_vjunosrouter
+      image: vrnetlab/juniper_vjunos-router:25.4R1.12
+      startup-config: configs/dut.cfg
+    collector:
+      kind: juniper_vjunosrouter
+      image: vrnetlab/juniper_vjunos-router:25.4R1.12
+      startup-config: configs/collector.cfg
+
+  links:
+    - endpoints: ["sender:eth1", "dut:eth1"]
+    - endpoints: ["dut:eth2", "collector:eth1"]

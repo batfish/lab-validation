@@ -1,20 +1,11 @@
 # Junos Read-Modify-Write Local-Preference Lab
 
-When a single Junos `then` block contains multiple arithmetic actions on
-the same attribute, does each later action see the running (in-progress)
-value, or does it always read the original attribute? This is the
-"Suspicious Omission" raised in
-`working/intermediateAttributes.md` for read-modify-write operations.
-
-## Hypothesis
-
-Junos composes within-term actions sequentially — i.e., later actions
-read the value left by earlier actions. The TRP (Targeted Route Policy)
-implementation in Batfish, on platforms where `useOutputAttributes` is
-false and intermediate attributes are not enabled, instead reads the
-_original_ attribute for each action. If that hypothesis is right, this
-lab will show a divergence between Junos and the current Batfish model
-for any policy that chains arithmetic operations.
+When a Junos `then` block contains both a `set` and an arithmetic
+(`add`/`subtract`) action on the same attribute, what does the device
+actually do? The original framing of this lab — "does a later action
+read the running value or the original?" — turns out to be the wrong
+question. Junos resolves the conflict at config time, not at policy
+evaluation time.
 
 ## Topology
 
@@ -43,103 +34,98 @@ AS-path `65001`).
 | 10.20.4.0/24 | `METRIC-SET-ADD`    | `metric 200; metric add 50;`                          |
 | 10.20.5.0/24 | `DOUBLE-PREPEND`    | `as-path-prepend "65002 65002";`                      |
 
-## What to Observe
-
-For each prefix, run on `dut`:
-
-```
-show route 10.20.X.0/24 extensive | display json
-```
-
-and read off `local-preference`, `metric`, and `as-path`. The expected
-values under each interpretation are:
-
-| Prefix       | If sequential RMW (Junos hypothesis) | If read-original each time                         |
-| ------------ | ------------------------------------ | -------------------------------------------------- |
-| 10.20.0.0/24 | localpref=100                        | localpref=100                                      |
-| 10.20.1.0/24 | localpref=200                        | localpref=150                                      |
-| 10.20.2.0/24 | localpref=350                        | localpref=150                                      |
-| 10.20.3.0/24 | localpref=250                        | localpref=50                                       |
-| 10.20.4.0/24 | metric=250                           | metric=50                                          |
-| 10.20.5.0/24 | as-path `65002 65002 65001`          | as-path `65002 65002 65001` (same — single action) |
-
-The `DOUBLE-PREPEND` row is included as a baseline: a multi-ASN
-`as-path-prepend` is a single action (one read, one write), so both
-interpretations agree. It is here to confirm that prepend itself
-behaves as expected before we read into divergent results elsewhere.
-
-If the actual values match the sequential-RMW column, that is empirical
-evidence that Batfish should chain reads for these compound actions on
-Junos (or, equivalently, set `useOutputAttributes` for Junos so that
-output and intermediate become the same store).
-
 ## Running
 
 ```
 lab_builder validate topology.clab.yml --checks checks.yaml
 ```
 
-The checks confirm BGP comes up and all 6 routes land in `inet.0` on
-`dut`. The substantive results live in `show route extensive` output;
-see Results below for what was observed.
-
 ## Results
 
 Deployed 2026-05-19 on vJunos-router 25.4R1.12 (containerlab on EC2).
-All 8 checks passed. Substantive observations from
-`show route <prefix> extensive | display json` on `dut`:
+All 8 checks passed.
 
-| Prefix       | Compound action(s)                                    | localpref | metric | AS path                                            |
-| ------------ | ----------------------------------------------------- | --------- | ------ | -------------------------------------------------- |
-| 10.20.0.0/24 | (none — baseline)                                     | 100       | —      | 65001 I                                            |
-| 10.20.1.0/24 | `local-preference add 50; local-preference add 50;`   | **150**   | —      | 65001 I                                            |
-| 10.20.2.0/24 | `local-preference 300; local-preference add 50;`      | **150**   | —      | 65001 I                                            |
-| 10.20.3.0/24 | `local-preference 300; local-preference subtract 50;` | **50**    | —      | 65001 I                                            |
-| 10.20.4.0/24 | `metric 200; metric add 50;`                          | 100       | **50** | 65001 I                                            |
-| 10.20.5.0/24 | `as-path-prepend "65002 65002";`                      | 100       | —      | 65002 65002 65001 I (Looped: 65002 — still active) |
+### What Junos kept after commit
 
-### Interpretation
+The first thing to notice is the diff between the configured policy
+(`infra/examples/junos-rmw-localpref/configs/dut.cfg`) and what the
+device's `show configuration | display set` actually retained
+(`snapshots/junos_rmw_localpref/configs/dut/show_configuration_|_display_set.txt`).
+For each term that combined a `set` with an arithmetic action, the
+`set` is gone:
 
-Junos exhibits **read-original-each-action** semantics for the
-arithmetic and set actions in this lab. Concretely:
+| Term                | Configured                                            | Retained after commit           |
+| ------------------- | ----------------------------------------------------- | ------------------------------- |
+| `BASELINE`          | (accept only)                                         | (accept only)                   |
+| `TWO-ADDS`          | `local-preference add 50; local-preference add 50;`   | `local-preference add 50`       |
+| `SET-THEN-ADD`      | `local-preference 300; local-preference add 50;`      | `local-preference add 50`       |
+| `SET-THEN-SUBTRACT` | `local-preference 300; local-preference subtract 50;` | `local-preference subtract 50`  |
+| `METRIC-SET-ADD`    | `metric 200; metric add 50;`                          | `metric add 50`                 |
+| `DOUBLE-PREPEND`    | `as-path-prepend "65002 65002";`                      | `as-path-prepend "65002 65002"` |
 
-- `add 50; add 50` produced **150**, not 200 — each `add` reads the
-  original local-pref (100) rather than chaining off the running value.
-- `set 300; add 50` produced **150**, not 350 — even when an explicit
-  `set` writes 300, the later `add 50` still reads the _original_ 100
-  and the result is 150 (effectively, the later write wins because it
-  is also based on the original input).
-- `set 300; subtract 50` produced **50**, not 250 — same shape as above.
-- `metric 200; metric add 50` produced **50**, not 250 — same behavior
-  on MED.
+`TWO-ADDS` collapses two identical statements into one (standard
+Junos config dedup). The other three rows are the substantive
+observation: when an `add`/`subtract` action and a plain `set` action
+target the same attribute in the same `then` block, **Junos silently
+drops the `set` at commit time and keeps only the arithmetic
+action**. The configured `local-preference 300` and `metric 200`
+never make it into the running config; the policy evaluator never
+sees them.
 
-The multi-ASN `as-path-prepend "65002 65002"` worked as a single action,
-producing `65002 65002 65001`. (Junos flagged the loop but kept the
+### Resulting BGP attributes
+
+With those configs in place, observations from `show route <prefix>
+extensive | display json` on `dut`:
+
+| Prefix       | Effective action  | localpref | metric | AS path                                            |
+| ------------ | ----------------- | --------- | ------ | -------------------------------------------------- |
+| 10.20.0.0/24 | (none)            | 100       | —      | 65001 I                                            |
+| 10.20.1.0/24 | `add 50`          | **150**   | —      | 65001 I                                            |
+| 10.20.2.0/24 | `add 50`          | **150**   | —      | 65001 I                                            |
+| 10.20.3.0/24 | `subtract 50`     | **50**    | —      | 65001 I                                            |
+| 10.20.4.0/24 | `metric add 50`   | 100       | **50** | 65001 I                                            |
+| 10.20.5.0/24 | `as-path-prepend` | 100       | —      | 65002 65002 65001 I (Looped: 65002 — still active) |
+
+Each result is exactly what you'd expect from applying the _retained_
+action to the original attribute value (localpref=100, metric=0).
+There's no compound semantics to investigate at policy-evaluation
+time, because the conflicting actions never coexist by the time the
+policy runs.
+
+### Implication for the original question
+
+The "Suspicious Omission" framing in
+`working/intermediateAttributes.md` asked whether Junos chains reads
+across compound `set`/`add` actions or reads the original each time.
+This lab's answer: **the question is moot for Junos**. The device's
+config system enforces that the two action types can't coexist on the
+same attribute in the same `then` block — only the arithmetic action
+survives — so there is no runtime semantics to disagree about.
+
+(Whether the IOS-side bug Todd identified for compound writes still
+exists is a separate question; that's a different vendor with a
+different config syntax that does not have this commit-time
+collapsing behavior.)
+
+### Multi-ASN as-path-prepend
+
+The `DOUBLE-PREPEND` term is unaffected by the collapse — it has only
+one action, `as-path-prepend "65002 65002"`. The prepend produced
+`65002 65002 65001` as expected. (Junos flagged the loop but kept the
 route active since the prepend was self-applied at import.)
-
-This empirical result aligns with the current Batfish TRP behavior for
-platforms where `useOutputAttributes` is false and intermediate
-attributes are _not_ enabled — i.e., the Junos conversion's current
-default. So for these specific within-`then` compound writes, the
-"Suspicious Omission" raised in `working/intermediateAttributes.md`
-is **not actually a bug for Junos** (whatever it is for IOS, where
-the same hypothesis was confirmed).
-
-The absolute values match the read-original column in this README's
-hypothesis table. There is no divergence between Junos and the
-existing Batfish model for this case — Batfish's modeling appears
-correct for Junos here.
 
 ### Batfish triage
 
 `pytest lab_tests/test_labs.py --labname=junos_rmw_localpref` against
 local Batfish: **13 passed, 0 skipped, no sickbay**. The BGP-rib-routes
 test compares Batfish-predicted local_preference / MED / as-path
-against the device's actual values per prefix; all match. So Batfish's
-Junos conversion already produces the same 150 / 50 / 150 / 50 that the
-device produces — there is no modeling discrepancy to file for this
-case.
+against the device's actual values per prefix; all match. Batfish
+parses the `display set` output, which is post-commit, so it never
+sees the dropped `set` statements either — both Batfish and the
+device agree because they're operating on the same retained config.
 
 ### Companion data
 
-- Snapshot: `snapshots/junos_rmw_localpref/`
+- Source policy: `infra/examples/junos-rmw-localpref/configs/dut.cfg`
+- Retained-config snapshot:
+  `snapshots/junos_rmw_localpref/configs/dut/show_configuration_|_display_set.txt`

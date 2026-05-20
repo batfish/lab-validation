@@ -1,0 +1,383 @@
+set version 25.4R1.12
+set system host-name dut
+set system root-authentication encrypted-password "$6$CrdRFP15$7W58vZhHzexFHVT5APq/Rz1Y2ZXa8XjFAXK/b20PS6XLBqhQims8axDFnPCG23gljJsMon97YVa1O15lUpscx0"
+set system login user admin uid 2000
+set system login user admin class super-user
+set system login user admin authentication encrypted-password "$6$/FWRYxy7$ulMEKzZQ.dNdweDi8//4/i0oytp8F4ysSOhzFfaimfI28Y8ZvK1eBWP2qXuJlNDvVQujyIL/g//q/mo2WScQS."
+set system services netconf ssh
+set system services ssh root-login allow
+set system management-instance
+set chassis fpc 0 pic 0 number-of-ports 12
+set interfaces ge-0/0/0 description "link to sender"
+set interfaces ge-0/0/0 unit 0 family inet address 10.0.12.1/31
+set interfaces ge-0/0/1 description "link to collector"
+set interfaces ge-0/0/1 unit 0 family inet address 10.0.23.0/31
+set interfaces fxp0 unit 0 family inet address 10.0.0.15/24
+set interfaces fxp0 unit 0 family inet6 address 2001:db8::2/64
+set interfaces lo0 unit 0 family inet address 2.2.2.2/32
+set policy-options policy-statement EXPORT-ALL then accept
+set policy-options policy-statement IMPORT term ORIGIN-DEDUP from route-filter 10.50.1.0/24 exact
+set policy-options policy-statement IMPORT term ORIGIN-DEDUP then origin igp
+set policy-options policy-statement IMPORT term ORIGIN-DEDUP then accept
+set policy-options policy-statement IMPORT term ORIGIN-DIFF from route-filter 10.50.2.0/24 exact
+set policy-options policy-statement IMPORT term ORIGIN-DIFF then origin egp
+set policy-options policy-statement IMPORT term ORIGIN-DIFF then accept
+set policy-options policy-statement IMPORT term PREFERENCE-DEDUP from route-filter 10.50.3.0/24 exact
+set policy-options policy-statement IMPORT term PREFERENCE-DEDUP then preference 100
+set policy-options policy-statement IMPORT term PREFERENCE-DEDUP then accept
+set policy-options policy-statement IMPORT term PREFERENCE-DIFF from route-filter 10.50.4.0/24 exact
+set policy-options policy-statement IMPORT term PREFERENCE-DIFF then preference 200
+set policy-options policy-statement IMPORT term PREFERENCE-DIFF then accept
+set policy-options policy-statement IMPORT term FORWARDING-CLASS-DEDUP from route-filter 10.50.5.0/24 exact
+set policy-options policy-statement IMPORT term FORWARDING-CLASS-DEDUP then forwarding-class fc1
+set policy-options policy-statement IMPORT term FORWARDING-CLASS-DEDUP then accept
+set policy-options policy-statement IMPORT term FORWARDING-CLASS-DIFF from route-filter 10.50.6.0/24 exact
+set policy-options policy-statement IMPORT term FORWARDING-CLASS-DIFF then forwarding-class fc2
+set policy-options policy-statement IMPORT term FORWARDING-CLASS-DIFF then accept
+set policy-options policy-statement IMPORT term TAG-DEDUP from route-filter 10.50.7.0/24 exact
+set policy-options policy-statement IMPORT term TAG-DEDUP then tag 100
+set policy-options policy-statement IMPORT term TAG-DEDUP then accept
+set policy-options policy-statement IMPORT term TAG-DIFF from route-filter 10.50.8.0/24 exact
+set policy-options policy-statement IMPORT term TAG-DIFF then tag 200
+set policy-options policy-statement IMPORT term TAG-DIFF then accept
+set policy-options policy-statement IMPORT term TAG2-DEDUP from route-filter 10.50.9.0/24 exact
+set policy-options policy-statement IMPORT term TAG2-DEDUP then tag2 100
+set policy-options policy-statement IMPORT term TAG2-DEDUP then accept
+set policy-options policy-statement IMPORT term TAG2-DIFF from route-filter 10.50.10.0/24 exact
+set policy-options policy-statement IMPORT term TAG2-DIFF then tag2 200
+set policy-options policy-statement IMPORT term TAG2-DIFF then accept
+set policy-options policy-statement IMPORT term COLOR-DEDUP from route-filter 10.50.11.0/24 exact
+set policy-options policy-statement IMPORT term COLOR-DEDUP then color 100
+set policy-options policy-statement IMPORT term COLOR-DEDUP then accept
+set policy-options policy-statement IMPORT term COLOR-DIFF from route-filter 10.50.12.0/24 exact
+set policy-options policy-statement IMPORT term COLOR-DIFF then color 200
+set policy-options policy-statement IMPORT term COLOR-DIFF then accept
+set policy-options policy-statement IMPORT term COLOR2-DEDUP from route-filter 10.50.13.0/24 exact
+set policy-options policy-statement IMPORT term COLOR2-DEDUP then color2 100
+set policy-options policy-statement IMPORT term COLOR2-DEDUP then accept
+set policy-options policy-statement IMPORT term COLOR2-DIFF from route-filter 10.50.14.0/24 exact
+set policy-options policy-statement IMPORT term COLOR2-DIFF then color2 200
+set policy-options policy-statement IMPORT term COLOR2-DIFF then accept
+set policy-options policy-statement IMPORT term PRIORITY-DEDUP from route-filter 10.50.15.0/24 exact
+set policy-options policy-statement IMPORT term PRIORITY-DEDUP then priority high
+set policy-options policy-statement IMPORT term PRIORITY-DEDUP then accept
+set policy-options policy-statement IMPORT term PRIORITY-DIFF from route-filter 10.50.16.0/24 exact
+set policy-options policy-statement IMPORT term PRIORITY-DIFF then priority low
+set policy-options policy-statement IMPORT term PRIORITY-DIFF then accept
+set policy-options policy-statement IMPORT term NEXT-HOP-IP-DEDUP from route-filter 10.50.17.0/24 exact
+set policy-options policy-statement IMPORT term NEXT-HOP-IP-DEDUP then next-hop 192.0.2.1
+set policy-options policy-statement IMPORT term NEXT-HOP-IP-DEDUP then accept
+set policy-options policy-statement IMPORT term NEXT-HOP-IP-DIFF from route-filter 10.50.18.0/24 exact
+set policy-options policy-statement IMPORT term NEXT-HOP-IP-DIFF then next-hop 192.0.2.2
+set policy-options policy-statement IMPORT term NEXT-HOP-IP-DIFF then accept
+set policy-options policy-statement IMPORT term NEXT-HOP-SELF-VS-IP from route-filter 10.50.19.0/24 exact
+set policy-options policy-statement IMPORT term NEXT-HOP-SELF-VS-IP then next-hop 192.0.2.1
+set policy-options policy-statement IMPORT term NEXT-HOP-SELF-VS-IP then accept
+set policy-options policy-statement IMPORT term NEXT-HOP-SELF-VS-PEER from route-filter 10.50.20.0/24 exact
+set policy-options policy-statement IMPORT term NEXT-HOP-SELF-VS-PEER then next-hop peer-address
+set policy-options policy-statement IMPORT term NEXT-HOP-SELF-VS-PEER then accept
+set policy-options policy-statement IMPORT term NEXT-HOP-REJECT-VS-DISCARD from route-filter 10.50.21.0/24 exact
+set policy-options policy-statement IMPORT term NEXT-HOP-REJECT-VS-DISCARD then next-hop discard
+set policy-options policy-statement IMPORT term NEXT-HOP-REJECT-VS-DISCARD then accept
+set policy-options policy-statement IMPORT term SOURCE-CLASS-DEDUP from route-filter 10.50.22.0/24 exact
+set policy-options policy-statement IMPORT term SOURCE-CLASS-DEDUP then source-class sc1
+set policy-options policy-statement IMPORT term SOURCE-CLASS-DEDUP then accept
+set policy-options policy-statement IMPORT term SOURCE-CLASS-DIFF from route-filter 10.50.23.0/24 exact
+set policy-options policy-statement IMPORT term SOURCE-CLASS-DIFF then source-class sc2
+set policy-options policy-statement IMPORT term SOURCE-CLASS-DIFF then accept
+set policy-options policy-statement IMPORT term BGP-OUTPUT-QUEUE-PRIORITY-DEDUP from route-filter 10.50.24.0/24 exact
+set policy-options policy-statement IMPORT term BGP-OUTPUT-QUEUE-PRIORITY-DEDUP then accept
+set policy-options policy-statement IMPORT term BGP-OUTPUT-QUEUE-PRIORITY-DIFF from route-filter 10.50.25.0/24 exact
+set policy-options policy-statement IMPORT term BGP-OUTPUT-QUEUE-PRIORITY-DIFF then accept
+set policy-options policy-statement IMPORT term TUNNEL-ATTRIBUTE-DEDUP from route-filter 10.50.28.0/24 exact
+set policy-options policy-statement IMPORT term TUNNEL-ATTRIBUTE-DEDUP then tunnel-attribute set ta1
+set policy-options policy-statement IMPORT term TUNNEL-ATTRIBUTE-DEDUP then accept
+set policy-options policy-statement IMPORT term TUNNEL-ATTRIBUTE-DIFF from route-filter 10.50.29.0/24 exact
+set policy-options policy-statement IMPORT term TUNNEL-ATTRIBUTE-DIFF then tunnel-attribute set ta1
+set policy-options policy-statement IMPORT term TUNNEL-ATTRIBUTE-DIFF then tunnel-attribute set ta2
+set policy-options policy-statement IMPORT term TUNNEL-ATTRIBUTE-DIFF then accept
+set policy-options policy-statement IMPORT term EXTERNAL-DEDUP from route-filter 10.50.30.0/24 exact
+set policy-options policy-statement IMPORT term EXTERNAL-DEDUP then external type 1
+set policy-options policy-statement IMPORT term EXTERNAL-DEDUP then accept
+set policy-options policy-statement IMPORT term EXTERNAL-DIFF from route-filter 10.50.31.0/24 exact
+set policy-options policy-statement IMPORT term EXTERNAL-DIFF then external type 2
+set policy-options policy-statement IMPORT term EXTERNAL-DIFF then accept
+set policy-options policy-statement IMPORT term LP-SET-DIFF from route-filter 10.50.50.0/24 exact
+set policy-options policy-statement IMPORT term LP-SET-DIFF then local-preference 50
+set policy-options policy-statement IMPORT term LP-SET-DIFF then accept
+set policy-options policy-statement IMPORT term LP-SET-SAME from route-filter 10.50.51.0/24 exact
+set policy-options policy-statement IMPORT term LP-SET-SAME then local-preference 200
+set policy-options policy-statement IMPORT term LP-SET-SAME then accept
+set policy-options policy-statement IMPORT term LP-SET-ADD from route-filter 10.50.52.0/24 exact
+set policy-options policy-statement IMPORT term LP-SET-ADD then local-preference add 50
+set policy-options policy-statement IMPORT term LP-SET-ADD then accept
+set policy-options policy-statement IMPORT term LP-ADD-SET from route-filter 10.50.53.0/24 exact
+set policy-options policy-statement IMPORT term LP-ADD-SET then local-preference 200
+set policy-options policy-statement IMPORT term LP-ADD-SET then accept
+set policy-options policy-statement IMPORT term LP-SET-SUBTRACT from route-filter 10.50.54.0/24 exact
+set policy-options policy-statement IMPORT term LP-SET-SUBTRACT then local-preference subtract 50
+set policy-options policy-statement IMPORT term LP-SET-SUBTRACT then accept
+set policy-options policy-statement IMPORT term LP-SUBTRACT-SET from route-filter 10.50.55.0/24 exact
+set policy-options policy-statement IMPORT term LP-SUBTRACT-SET then local-preference 200
+set policy-options policy-statement IMPORT term LP-SUBTRACT-SET then accept
+set policy-options policy-statement IMPORT term LP-ADD-DIFF from route-filter 10.50.56.0/24 exact
+set policy-options policy-statement IMPORT term LP-ADD-DIFF then local-preference add 50
+set policy-options policy-statement IMPORT term LP-ADD-DIFF then accept
+set policy-options policy-statement IMPORT term LP-ADD-SAME from route-filter 10.50.57.0/24 exact
+set policy-options policy-statement IMPORT term LP-ADD-SAME then local-preference add 200
+set policy-options policy-statement IMPORT term LP-ADD-SAME then accept
+set policy-options policy-statement IMPORT term LP-SUBTRACT-DIFF from route-filter 10.50.58.0/24 exact
+set policy-options policy-statement IMPORT term LP-SUBTRACT-DIFF then local-preference subtract 50
+set policy-options policy-statement IMPORT term LP-SUBTRACT-DIFF then accept
+set policy-options policy-statement IMPORT term LP-ADD-SUBTRACT from route-filter 10.50.59.0/24 exact
+set policy-options policy-statement IMPORT term LP-ADD-SUBTRACT then local-preference subtract 50
+set policy-options policy-statement IMPORT term LP-ADD-SUBTRACT then accept
+set policy-options policy-statement IMPORT term MED-SET-DIFF from route-filter 10.50.60.0/24 exact
+set policy-options policy-statement IMPORT term MED-SET-DIFF then metric 50
+set policy-options policy-statement IMPORT term MED-SET-DIFF then accept
+set policy-options policy-statement IMPORT term MED-SET-SAME from route-filter 10.50.61.0/24 exact
+set policy-options policy-statement IMPORT term MED-SET-SAME then metric 200
+set policy-options policy-statement IMPORT term MED-SET-SAME then accept
+set policy-options policy-statement IMPORT term MED-SET-ADD from route-filter 10.50.62.0/24 exact
+set policy-options policy-statement IMPORT term MED-SET-ADD then metric add 50
+set policy-options policy-statement IMPORT term MED-SET-ADD then accept
+set policy-options policy-statement IMPORT term MED-ADD-SET from route-filter 10.50.63.0/24 exact
+set policy-options policy-statement IMPORT term MED-ADD-SET then metric 200
+set policy-options policy-statement IMPORT term MED-ADD-SET then accept
+set policy-options policy-statement IMPORT term MED-SET-SUBTRACT from route-filter 10.50.64.0/24 exact
+set policy-options policy-statement IMPORT term MED-SET-SUBTRACT then metric subtract 50
+set policy-options policy-statement IMPORT term MED-SET-SUBTRACT then accept
+set policy-options policy-statement IMPORT term MED-SUBTRACT-SET from route-filter 10.50.65.0/24 exact
+set policy-options policy-statement IMPORT term MED-SUBTRACT-SET then metric 200
+set policy-options policy-statement IMPORT term MED-SUBTRACT-SET then accept
+set policy-options policy-statement IMPORT term MED-ADD-DIFF from route-filter 10.50.66.0/24 exact
+set policy-options policy-statement IMPORT term MED-ADD-DIFF then metric add 50
+set policy-options policy-statement IMPORT term MED-ADD-DIFF then accept
+set policy-options policy-statement IMPORT term MED-ADD-SAME from route-filter 10.50.67.0/24 exact
+set policy-options policy-statement IMPORT term MED-ADD-SAME then metric add 200
+set policy-options policy-statement IMPORT term MED-ADD-SAME then accept
+set policy-options policy-statement IMPORT term MED-SUBTRACT-DIFF from route-filter 10.50.68.0/24 exact
+set policy-options policy-statement IMPORT term MED-SUBTRACT-DIFF then metric subtract 50
+set policy-options policy-statement IMPORT term MED-SUBTRACT-DIFF then accept
+set policy-options policy-statement IMPORT term MED-ADD-SUBTRACT from route-filter 10.50.69.0/24 exact
+set policy-options policy-statement IMPORT term MED-ADD-SUBTRACT then metric subtract 50
+set policy-options policy-statement IMPORT term MED-ADD-SUBTRACT then accept
+set policy-options policy-statement IMPORT term MED-SET-EXPRESSION from route-filter 10.50.70.0/24 exact
+set policy-options policy-statement IMPORT term MED-SET-EXPRESSION then metric expression metric multiplier 2
+set policy-options policy-statement IMPORT term MED-SET-EXPRESSION then metric expression metric offset 5
+set policy-options policy-statement IMPORT term MED-SET-EXPRESSION then accept
+set policy-options policy-statement IMPORT term MED-EXPRESSION-SET from route-filter 10.50.71.0/24 exact
+set policy-options policy-statement IMPORT term MED-EXPRESSION-SET then metric 200
+set policy-options policy-statement IMPORT term MED-EXPRESSION-SET then accept
+set policy-options policy-statement IMPORT term MED-SET-IGP from route-filter 10.50.72.0/24 exact
+set policy-options policy-statement IMPORT term MED-SET-IGP then metric igp
+set policy-options policy-statement IMPORT term MED-SET-IGP then accept
+set policy-options policy-statement IMPORT term MED-IGP-SET from route-filter 10.50.73.0/24 exact
+set policy-options policy-statement IMPORT term MED-IGP-SET then metric 200
+set policy-options policy-statement IMPORT term MED-IGP-SET then accept
+set policy-options policy-statement IMPORT term MED-EXPRESSION-IGP from route-filter 10.50.74.0/24 exact
+set policy-options policy-statement IMPORT term MED-EXPRESSION-IGP then metric igp
+set policy-options policy-statement IMPORT term MED-EXPRESSION-IGP then accept
+set policy-options policy-statement IMPORT term M2-SET-DIFF from route-filter 10.50.75.0/24 exact
+set policy-options policy-statement IMPORT term M2-SET-DIFF then metric2 50
+set policy-options policy-statement IMPORT term M2-SET-DIFF then accept
+set policy-options policy-statement IMPORT term M2-SET-SAME from route-filter 10.50.76.0/24 exact
+set policy-options policy-statement IMPORT term M2-SET-SAME then metric2 200
+set policy-options policy-statement IMPORT term M2-SET-SAME then accept
+set policy-options policy-statement IMPORT term M2-SET-ADD from route-filter 10.50.77.0/24 exact
+set policy-options policy-statement IMPORT term M2-SET-ADD then metric2 add 50
+set policy-options policy-statement IMPORT term M2-SET-ADD then accept
+set policy-options policy-statement IMPORT term M2-ADD-SET from route-filter 10.50.78.0/24 exact
+set policy-options policy-statement IMPORT term M2-ADD-SET then metric2 200
+set policy-options policy-statement IMPORT term M2-ADD-SET then accept
+set policy-options policy-statement IMPORT term M2-SET-SUBTRACT from route-filter 10.50.79.0/24 exact
+set policy-options policy-statement IMPORT term M2-SET-SUBTRACT then metric2 subtract 50
+set policy-options policy-statement IMPORT term M2-SET-SUBTRACT then accept
+set policy-options policy-statement IMPORT term M2-SUBTRACT-SET from route-filter 10.50.80.0/24 exact
+set policy-options policy-statement IMPORT term M2-SUBTRACT-SET then metric2 200
+set policy-options policy-statement IMPORT term M2-SUBTRACT-SET then accept
+set policy-options policy-statement IMPORT term M2-ADD-DIFF from route-filter 10.50.81.0/24 exact
+set policy-options policy-statement IMPORT term M2-ADD-DIFF then metric2 add 50
+set policy-options policy-statement IMPORT term M2-ADD-DIFF then accept
+set policy-options policy-statement IMPORT term M2-ADD-SAME from route-filter 10.50.82.0/24 exact
+set policy-options policy-statement IMPORT term M2-ADD-SAME then metric2 add 200
+set policy-options policy-statement IMPORT term M2-ADD-SAME then accept
+set policy-options policy-statement IMPORT term M2-SUBTRACT-DIFF from route-filter 10.50.83.0/24 exact
+set policy-options policy-statement IMPORT term M2-SUBTRACT-DIFF then metric2 subtract 50
+set policy-options policy-statement IMPORT term M2-SUBTRACT-DIFF then accept
+set policy-options policy-statement IMPORT term M2-ADD-SUBTRACT from route-filter 10.50.84.0/24 exact
+set policy-options policy-statement IMPORT term M2-ADD-SUBTRACT then metric2 subtract 50
+set policy-options policy-statement IMPORT term M2-ADD-SUBTRACT then accept
+set policy-options policy-statement IMPORT term PREPEND-DIFF from route-filter 10.50.100.0/24 exact
+set policy-options policy-statement IMPORT term PREPEND-DIFF then as-path-prepend 65020
+set policy-options policy-statement IMPORT term PREPEND-DIFF then accept
+set policy-options policy-statement IMPORT term PREPEND-SAME from route-filter 10.50.101.0/24 exact
+set policy-options policy-statement IMPORT term PREPEND-SAME then as-path-prepend 65010
+set policy-options policy-statement IMPORT term PREPEND-SAME then accept
+set policy-options policy-statement IMPORT term PREPEND-MULTI-SINGLE from route-filter 10.50.102.0/24 exact
+set policy-options policy-statement IMPORT term PREPEND-MULTI-SINGLE then as-path-prepend 65030
+set policy-options policy-statement IMPORT term PREPEND-MULTI-SINGLE then accept
+set policy-options policy-statement IMPORT term PREPEND-EXPAND-DIFF from route-filter 10.50.103.0/24 exact
+set policy-options policy-statement IMPORT term PREPEND-EXPAND-DIFF then as-path-prepend 65010
+set policy-options policy-statement IMPORT term PREPEND-EXPAND-DIFF then as-path-expand 65020
+set policy-options policy-statement IMPORT term PREPEND-EXPAND-DIFF then accept
+set policy-options policy-statement IMPORT term EXPAND-PREPEND-DIFF from route-filter 10.50.104.0/24 exact
+set policy-options policy-statement IMPORT term EXPAND-PREPEND-DIFF then as-path-prepend 65010
+set policy-options policy-statement IMPORT term EXPAND-PREPEND-DIFF then as-path-expand 65020
+set policy-options policy-statement IMPORT term EXPAND-PREPEND-DIFF then accept
+set policy-options policy-statement IMPORT term EXPAND-EXPAND-DIFF from route-filter 10.50.105.0/24 exact
+set policy-options policy-statement IMPORT term EXPAND-EXPAND-DIFF then as-path-expand 65020
+set policy-options policy-statement IMPORT term EXPAND-EXPAND-DIFF then accept
+set policy-options policy-statement IMPORT term EXPAND-EXPAND-SAME from route-filter 10.50.106.0/24 exact
+set policy-options policy-statement IMPORT term EXPAND-EXPAND-SAME then as-path-expand 65010
+set policy-options policy-statement IMPORT term EXPAND-EXPAND-SAME then accept
+set policy-options policy-statement IMPORT term EXPAND-LAST-AS-PREPEND from route-filter 10.50.107.0/24 exact
+set policy-options policy-statement IMPORT term EXPAND-LAST-AS-PREPEND then as-path-prepend 65010
+set policy-options policy-statement IMPORT term EXPAND-LAST-AS-PREPEND then as-path-expand last-as count 2
+set policy-options policy-statement IMPORT term EXPAND-LAST-AS-PREPEND then accept
+set policy-options policy-statement IMPORT term PREPEND-EXPAND-LAST-AS from route-filter 10.50.108.0/24 exact
+set policy-options policy-statement IMPORT term PREPEND-EXPAND-LAST-AS then as-path-prepend 65010
+set policy-options policy-statement IMPORT term PREPEND-EXPAND-LAST-AS then as-path-expand last-as count 2
+set policy-options policy-statement IMPORT term PREPEND-EXPAND-LAST-AS then accept
+set policy-options policy-statement IMPORT term EXPAND-LAST-AS-TWICE from route-filter 10.50.109.0/24 exact
+set policy-options policy-statement IMPORT term EXPAND-LAST-AS-TWICE then as-path-expand last-as count 3
+set policy-options policy-statement IMPORT term EXPAND-LAST-AS-TWICE then accept
+set policy-options policy-statement IMPORT term ADD-RED-ADD-BLUE from route-filter 10.50.130.0/24 exact
+set policy-options policy-statement IMPORT term ADD-RED-ADD-BLUE then community add RED
+set policy-options policy-statement IMPORT term ADD-RED-ADD-BLUE then community add BLUE
+set policy-options policy-statement IMPORT term ADD-RED-ADD-BLUE then accept
+set policy-options policy-statement IMPORT term ADD-RED-ADD-RED from route-filter 10.50.131.0/24 exact
+set policy-options policy-statement IMPORT term ADD-RED-ADD-RED then community add RED
+set policy-options policy-statement IMPORT term ADD-RED-ADD-RED then accept
+set policy-options policy-statement IMPORT term DELETE-RED-DELETE-BLUE from route-filter 10.50.132.0/24 exact
+set policy-options policy-statement IMPORT term DELETE-RED-DELETE-BLUE then community delete RED
+set policy-options policy-statement IMPORT term DELETE-RED-DELETE-BLUE then community delete BLUE
+set policy-options policy-statement IMPORT term DELETE-RED-DELETE-BLUE then accept
+set policy-options policy-statement IMPORT term SET-RED-ADD-BLUE from route-filter 10.50.133.0/24 exact
+set policy-options policy-statement IMPORT term SET-RED-ADD-BLUE then community set RED
+set policy-options policy-statement IMPORT term SET-RED-ADD-BLUE then community add BLUE
+set policy-options policy-statement IMPORT term SET-RED-ADD-BLUE then accept
+set policy-options policy-statement IMPORT term ADD-RED-SET-BLUE from route-filter 10.50.134.0/24 exact
+set policy-options policy-statement IMPORT term ADD-RED-SET-BLUE then community add RED
+set policy-options policy-statement IMPORT term ADD-RED-SET-BLUE then community set BLUE
+set policy-options policy-statement IMPORT term ADD-RED-SET-BLUE then accept
+set policy-options policy-statement IMPORT term SET-RED-SET-BLUE from route-filter 10.50.135.0/24 exact
+set policy-options policy-statement IMPORT term SET-RED-SET-BLUE then community set RED
+set policy-options policy-statement IMPORT term SET-RED-SET-BLUE then community set BLUE
+set policy-options policy-statement IMPORT term SET-RED-SET-BLUE then accept
+set policy-options policy-statement IMPORT term ADD-RED-DELETE-RED from route-filter 10.50.136.0/24 exact
+set policy-options policy-statement IMPORT term ADD-RED-DELETE-RED then community add RED
+set policy-options policy-statement IMPORT term ADD-RED-DELETE-RED then community delete RED
+set policy-options policy-statement IMPORT term ADD-RED-DELETE-RED then accept
+set policy-options policy-statement IMPORT term DELETE-RED-ADD-RED from route-filter 10.50.137.0/24 exact
+set policy-options policy-statement IMPORT term DELETE-RED-ADD-RED then community delete RED
+set policy-options policy-statement IMPORT term DELETE-RED-ADD-RED then community add RED
+set policy-options policy-statement IMPORT term DELETE-RED-ADD-RED then accept
+set policy-options policy-statement IMPORT term ADD-RED-DELETE-BLUE from route-filter 10.50.138.0/24 exact
+set policy-options policy-statement IMPORT term ADD-RED-DELETE-BLUE then community add RED
+set policy-options policy-statement IMPORT term ADD-RED-DELETE-BLUE then community delete BLUE
+set policy-options policy-statement IMPORT term ADD-RED-DELETE-BLUE then accept
+set policy-options policy-statement IMPORT term SET-RED-DELETE-RED from route-filter 10.50.139.0/24 exact
+set policy-options policy-statement IMPORT term SET-RED-DELETE-RED then community set RED
+set policy-options policy-statement IMPORT term SET-RED-DELETE-RED then community delete RED
+set policy-options policy-statement IMPORT term SET-RED-DELETE-RED then accept
+set policy-options policy-statement IMPORT term SET-RED-BLUE-DELETE-RED from route-filter 10.50.140.0/24 exact
+set policy-options policy-statement IMPORT term SET-RED-BLUE-DELETE-RED then community set RED
+set policy-options policy-statement IMPORT term SET-RED-BLUE-DELETE-RED then community set BLUE
+set policy-options policy-statement IMPORT term SET-RED-BLUE-DELETE-RED then community delete RED
+set policy-options policy-statement IMPORT term SET-RED-BLUE-DELETE-RED then accept
+set policy-options policy-statement IMPORT term SET-RED-BLUE-ADD-GREEN from route-filter 10.50.141.0/24 exact
+set policy-options policy-statement IMPORT term SET-RED-BLUE-ADD-GREEN then community set RED
+set policy-options policy-statement IMPORT term SET-RED-BLUE-ADD-GREEN then community set BLUE
+set policy-options policy-statement IMPORT term SET-RED-BLUE-ADD-GREEN then community add GREEN
+set policy-options policy-statement IMPORT term SET-RED-BLUE-ADD-GREEN then accept
+set policy-options policy-statement IMPORT term SET-RED-BLUE-SET-GREEN-YELLOW from route-filter 10.50.142.0/24 exact
+set policy-options policy-statement IMPORT term SET-RED-BLUE-SET-GREEN-YELLOW then community set RED
+set policy-options policy-statement IMPORT term SET-RED-BLUE-SET-GREEN-YELLOW then community set BLUE
+set policy-options policy-statement IMPORT term SET-RED-BLUE-SET-GREEN-YELLOW then community set GREEN
+set policy-options policy-statement IMPORT term SET-RED-BLUE-SET-GREEN-YELLOW then community set YELLOW
+set policy-options policy-statement IMPORT term SET-RED-BLUE-SET-GREEN-YELLOW then accept
+set policy-options policy-statement IMPORT term SET-RED-BLUE-DESUGAR-VERIFICATION from route-filter 10.50.143.0/24 exact
+set policy-options policy-statement IMPORT term SET-RED-BLUE-DESUGAR-VERIFICATION then community set RED
+set policy-options policy-statement IMPORT term SET-RED-BLUE-DESUGAR-VERIFICATION then community set BLUE
+set policy-options policy-statement IMPORT term SET-RED-BLUE-DESUGAR-VERIFICATION then accept
+set policy-options policy-statement IMPORT term FC-ACCEPT-THEN-REJECT from route-filter 10.50.160.0/24 exact
+set policy-options policy-statement IMPORT term FC-ACCEPT-THEN-REJECT then community add MARK-A
+set policy-options policy-statement IMPORT term FC-ACCEPT-THEN-REJECT then community add MARK-B
+set policy-options policy-statement IMPORT term FC-ACCEPT-THEN-REJECT then reject
+set policy-options policy-statement IMPORT term FC-REJECT-THEN-ACCEPT from route-filter 10.50.161.0/24 exact
+set policy-options policy-statement IMPORT term FC-REJECT-THEN-ACCEPT then community add MARK-A
+set policy-options policy-statement IMPORT term FC-REJECT-THEN-ACCEPT then community add MARK-B
+set policy-options policy-statement IMPORT term FC-REJECT-THEN-ACCEPT then accept
+set policy-options policy-statement IMPORT term FC-ACCEPT-THEN-NEXT-TERM from route-filter 10.50.162.0/24 exact
+set policy-options policy-statement IMPORT term FC-ACCEPT-THEN-NEXT-TERM then community add MARK-A
+set policy-options policy-statement IMPORT term FC-ACCEPT-THEN-NEXT-TERM then community add MARK-B
+set policy-options policy-statement IMPORT term FC-ACCEPT-THEN-NEXT-TERM then next term
+set policy-options policy-statement IMPORT term FC-ACCEPT-THEN-NEXT-TERM then accept
+set policy-options policy-statement IMPORT term FC-NEXT-TERM-THEN-ACCEPT from route-filter 10.50.163.0/24 exact
+set policy-options policy-statement IMPORT term FC-NEXT-TERM-THEN-ACCEPT then community add MARK-A
+set policy-options policy-statement IMPORT term FC-NEXT-TERM-THEN-ACCEPT then community add MARK-B
+set policy-options policy-statement IMPORT term FC-NEXT-TERM-THEN-ACCEPT then next term
+set policy-options policy-statement IMPORT term FC-NEXT-TERM-THEN-ACCEPT then accept
+set policy-options policy-statement IMPORT term FC-ACCEPT-THEN-NEXT-POLICY from route-filter 10.50.164.0/24 exact
+set policy-options policy-statement IMPORT term FC-ACCEPT-THEN-NEXT-POLICY then community add MARK-A
+set policy-options policy-statement IMPORT term FC-ACCEPT-THEN-NEXT-POLICY then community add MARK-B
+set policy-options policy-statement IMPORT term FC-ACCEPT-THEN-NEXT-POLICY then next policy
+set policy-options policy-statement IMPORT term FC-ACCEPT-THEN-NEXT-POLICY then accept
+set policy-options policy-statement IMPORT term FC-DEFAULT-ACTION-ACCEPT-THEN-ACCEPT from route-filter 10.50.165.0/24 exact
+set policy-options policy-statement IMPORT term FC-DEFAULT-ACTION-ACCEPT-THEN-ACCEPT then community add MARK-A
+set policy-options policy-statement IMPORT term FC-DEFAULT-ACTION-ACCEPT-THEN-ACCEPT then community add MARK-B
+set policy-options policy-statement IMPORT term FC-DEFAULT-ACTION-ACCEPT-THEN-ACCEPT then default-action accept
+set policy-options policy-statement IMPORT term FC-DEFAULT-ACTION-ACCEPT-THEN-ACCEPT then accept
+set policy-options policy-statement IMPORT term FC-ACCEPT-THEN-DEFAULT-ACTION-REJECT from route-filter 10.50.166.0/24 exact
+set policy-options policy-statement IMPORT term FC-ACCEPT-THEN-DEFAULT-ACTION-REJECT then community add MARK-A
+set policy-options policy-statement IMPORT term FC-ACCEPT-THEN-DEFAULT-ACTION-REJECT then community add MARK-B
+set policy-options policy-statement IMPORT term FC-ACCEPT-THEN-DEFAULT-ACTION-REJECT then default-action reject
+set policy-options policy-statement IMPORT term FC-ACCEPT-THEN-DEFAULT-ACTION-REJECT then accept
+set policy-options policy-statement IMPORT term FC-REJECT-THEN-DEFAULT-ACTION-ACCEPT from route-filter 10.50.167.0/24 exact
+set policy-options policy-statement IMPORT term FC-REJECT-THEN-DEFAULT-ACTION-ACCEPT then community add MARK-A
+set policy-options policy-statement IMPORT term FC-REJECT-THEN-DEFAULT-ACTION-ACCEPT then community add MARK-B
+set policy-options policy-statement IMPORT term FC-REJECT-THEN-DEFAULT-ACTION-ACCEPT then default-action accept
+set policy-options policy-statement IMPORT term FC-REJECT-THEN-DEFAULT-ACTION-ACCEPT then reject
+set policy-options policy-statement IMPORT term FC-ACCEPT-THEN-SIDE-EFFECT from route-filter 10.50.168.0/24 exact
+set policy-options policy-statement IMPORT term FC-ACCEPT-THEN-SIDE-EFFECT then community add MARK-A
+set policy-options policy-statement IMPORT term FC-ACCEPT-THEN-SIDE-EFFECT then community add MARK-B
+set policy-options policy-statement IMPORT term FC-ACCEPT-THEN-SIDE-EFFECT then accept
+set policy-options policy-statement IMPORT term FC-TWO-SIDE-EFFECTS-THEN-ACCEPT from route-filter 10.50.169.0/24 exact
+set policy-options policy-statement IMPORT term FC-TWO-SIDE-EFFECTS-THEN-ACCEPT then community add MARK-A
+set policy-options policy-statement IMPORT term FC-TWO-SIDE-EFFECTS-THEN-ACCEPT then community add MARK-B
+set policy-options policy-statement IMPORT term FC-TWO-SIDE-EFFECTS-THEN-ACCEPT then accept
+set policy-options policy-statement IMPORT term FWD-LOAD-BALANCE-DUPLICATE-DIFF from route-filter 10.50.180.0/24 exact
+set policy-options policy-statement IMPORT term FWD-LOAD-BALANCE-DUPLICATE-DIFF then load-balance consistent-hash
+set policy-options policy-statement IMPORT term FWD-LOAD-BALANCE-DUPLICATE-DIFF then accept
+set policy-options policy-statement IMPORT term FWD-MULTIPATH-RESOLVE-DUPLICATE from route-filter 10.50.181.0/24 exact
+set policy-options policy-statement IMPORT term FWD-MULTIPATH-RESOLVE-DUPLICATE then accept
+set policy-options policy-statement IMPORT term FWD-MULTIPATH-RESOLVE-DUPLICATE then multipath-resolve
+set policy-options policy-statement IMPORT term SANITY-CROSS-ATTRIBUTE from route-filter 10.50.250.0/24 exact
+set policy-options policy-statement IMPORT term SANITY-CROSS-ATTRIBUTE then metric 100
+set policy-options policy-statement IMPORT term SANITY-CROSS-ATTRIBUTE then local-preference 200
+set policy-options policy-statement IMPORT term SANITY-CROSS-ATTRIBUTE then community add RED
+set policy-options policy-statement IMPORT term SANITY-CROSS-ATTRIBUTE then accept
+set policy-options policy-statement IMPORT term REJECT-OTHER then reject
+set policy-options tunnel-attribute ta1 tunnel-type ipip
+set policy-options tunnel-attribute ta1 remote-end-point 1.1.1.1
+set policy-options tunnel-attribute ta2 tunnel-type ipip
+set policy-options tunnel-attribute ta2 remote-end-point 2.2.2.2
+set policy-options community BLUE members 65001:1002
+set policy-options community GREEN members 65001:1003
+set policy-options community MARK-A members 65001:9100
+set policy-options community MARK-B members 65001:9101
+set policy-options community RED members 65001:1001
+set policy-options community YELLOW members 65001:1004
+set class-of-service forwarding-classes class fc1 queue-num 0
+set class-of-service forwarding-classes class fc2 queue-num 1
+set routing-instances mgmt_junos routing-options rib mgmt_junos.inet6.0 static route ::/0 next-hop 2001:db8::1
+set routing-instances mgmt_junos routing-options static route 0.0.0.0/0 next-hop 10.0.0.2
+set routing-options router-id 2.2.2.2
+set routing-options autonomous-system 65002
+set protocols bgp group FROM-SENDER type external
+set protocols bgp group FROM-SENDER peer-as 65001
+set protocols bgp group FROM-SENDER neighbor 10.0.12.0 import IMPORT
+set protocols bgp group TO-COLLECTOR type external
+set protocols bgp group TO-COLLECTOR peer-as 65003
+set protocols bgp group TO-COLLECTOR neighbor 10.0.23.1 export EXPORT-ALL
