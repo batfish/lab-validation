@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Per-term commit-check iterator for junos-then-action-conflicts.
 
-Runs on the EC2 host. For each of the 108 dut terms (and 108 sender
+Runs on the EC2 host. For each of the 112 dut terms (and 112 sender
 TAG-N terms, plus per-prefix static routes), pushes the term's set-
 form lines, runs `commit check`, and records:
 
@@ -21,7 +21,7 @@ The expected workflow on EC2 is:
   3. Run:  python3 push-terms.py apply-dut
        -> pushes only the accepts to dut and commits.
   4. Run:  python3 push-terms.py apply-sender
-       -> pushes the 108 sender terms (all should accept since they
+       -> pushes the 112 sender terms (all should accept since they
           only reference the marker community, which is benign).
   5. Validate, collect, build snapshot.
 """
@@ -210,7 +210,7 @@ def _bulk_commit_check(
     Junos commit-check error messages identify the offending hierarchy
     line. If the failed lines reference a `term <NAME>` we can map back
     to term_index by name. Bulk-push is fast (~30s for ~600 lines)
-    versus per-term (~10s × 108 = 18 min).
+    versus per-term (~10s × 112 = 18 min).
     """
     for line in all_lines:
         line = line.strip()
@@ -257,8 +257,8 @@ def probe_dut() -> None:
     """Bulk-push every term to dut. Binary-search any rejection.
 
     Strategy:
-      1. Push all 108 terms' set lines in one shot.
-      2. Run `commit check`. If it succeeds, all 108 accept.
+      1. Push all 112 terms' set lines in one shot.
+      2. Run `commit check`. If it succeeds, all 112 accept.
       3. If it fails, binary-search: split candidate set in half, push
          each half from a clean state, repeat until each rejected term
          is isolated. Bulk-success on the surviving subset becomes the

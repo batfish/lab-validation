@@ -13,7 +13,7 @@ sender (AS 65001) --- dut (AS 65002) --- collector (AS 65003)
        10.0.12.0      10.0.12.1  10.0.23.0      10.0.23.1
 ```
 
-Sender originates 108 `/24` test prefixes, each tagged with a unique
+Sender originates 112 `/24` test prefixes, each tagged with a unique
 marker community `65001:<term-id>`. Dut's import policy has one term
 per conflict shape. Collector observes what propagates (§5 flow-control
 terms).
@@ -60,10 +60,12 @@ sequentially in source order (see below).
 For any attribute family where Junos's data model holds at most one
 value per route — origin, preference, tag, color, priority, next-hop
 (IP form), source-class, external, local-preference, metric, metric2,
-load-balance, install-nexthop, and the same-family `as-path-prepend×2`
-or `as-path-expand×2` — when two actions in the same `then` target the
-same attribute, the **last action wins** at commit time and the prior
-is silently dropped. Identical duplicates collapse to one (dedup).
+load-balance, install-nexthop, the same-family `as-path-prepend×2`
+or `as-path-expand×2`, and the named-disposition family containing
+both `next term` and `next policy` — when two actions in the same
+`then` target the same attribute, the **last action wins** at commit
+time and the prior is silently dropped. Identical duplicates collapse
+to one (dedup).
 
 Within numeric attributes (lp/metric/metric2), this absorbs every
 combination of `set`/`add`/`subtract` and the metric-only `expression`
@@ -109,9 +111,20 @@ both commit time and runtime:
    `accept; community add X` retains as `community add X; accept`.
 2. **Same-family last-wins among bare terminators.** `accept; reject`
    keeps `reject` only; `reject; accept` keeps `accept` only (§5
-   rows 4001, 4002). Different-family pairings (e.g.,
-   `default-action accept; bare reject`) keep both lines in retained
-   config.
+   rows 4001, 4002).
+3. **`next term` and `next policy` are the same family.** A `then`
+   block holds at most one of them: dedup collapses `next term;
+next term` to one `next term`, and `next policy; next policy` to
+   one `next policy` (rows 4011, 4012). When both forms appear in
+   the same `then`, last-wins applies — `next term; next policy`
+   retains `next policy`, and `next policy; next term` retains
+   `next term` (rows 4013, 4014). The retained line, not the
+   author's first line, is what runs.
+4. **Different-family pairings.** `default-action accept` paired with
+   a bare `accept`/`reject` keeps both lines in retained config; the
+   bare terminator wins at runtime. `next term`/`next policy` paired
+   with a bare `accept`/`reject` keeps both lines as well; the
+   `next term`/`next policy` wins at runtime.
 
 **Runtime ordering** observable from §5's collector RIB:
 
@@ -120,6 +133,12 @@ both commit time and runtime:
 - `next term` beats bare `accept` regardless of source order — both
   lines exist in retained config but the route falls through (rows
   4003, 4004 do not propagate to collector).
+- `next term` (alone or as the surviving NT/NP collapse) jumps to the
+  next term, where `REJECT-OTHER` drops the route — no propagation
+  to collector (rows 4011, 4014).
+- `next policy` (alone or as the surviving NT/NP collapse) returns
+  the route to BGP processing; with no further policies, the route
+  is accepted and propagates to collector (rows 4012, 4013).
 - `default-action *` is overridden by any bare terminator in the same
   `then`. `accept; default-action reject` → route propagates (accept
   fires, default-action reject is a no-op when a terminator already
@@ -281,6 +300,10 @@ next-hop-map NAME { ... }` to be defined (not the more obvious
 | 4008 | 10.50.167.0 | FC-REJECT-THEN-DEFAULT-ACTION-ACCEPT | community add MARK-A; reject; community add MARK-B; default-action accept | community add MARK-A; community add MARK-B; default-action accept; reject | partial collapse |
 | 4009 | 10.50.168.0 | FC-ACCEPT-THEN-SIDE-EFFECT           | community add MARK-A; accept; community add MARK-B                        | community add MARK-A; community add MARK-B; accept                        | all retained     |
 | 4010 | 10.50.169.0 | FC-TWO-SIDE-EFFECTS-THEN-ACCEPT      | community add MARK-A; community add MARK-B; accept                        | community add MARK-A; community add MARK-B; accept                        | all retained     |
+| 4011 | 10.50.170.0 | FC-NEXT-TERM-DEDUP                   | community add MARK-A; next term; community add MARK-B; next term          | community add MARK-A; community add MARK-B; next term                     | dedup            |
+| 4012 | 10.50.171.0 | FC-NEXT-POLICY-DEDUP                 | community add MARK-A; next policy; community add MARK-B; next policy      | community add MARK-A; community add MARK-B; next policy                   | dedup            |
+| 4013 | 10.50.172.0 | FC-NEXT-TERM-THEN-NEXT-POLICY        | community add MARK-A; next term; community add MARK-B; next policy        | community add MARK-A; community add MARK-B; next policy                   | last-wins        |
+| 4014 | 10.50.173.0 | FC-NEXT-POLICY-THEN-NEXT-TERM        | community add MARK-A; next policy; community add MARK-B; next term        | community add MARK-A; community add MARK-B; next term                     | last-wins        |
 
 ### §6
 
@@ -300,8 +323,11 @@ next-hop-map NAME { ... }` to be defined (not the more obvious
 
 - **Source configs (post-push, full)**:
   `source/configs/{dut,sender,collector}.cfg` — what the lab device
-  actually loaded, with the 7 commit-rejected terms preserved as
-  `/* COMMIT-REJECTED */` comment blocks.
+  actually loaded. Any commit-rejected terms would be preserved as
+  `/* COMMIT-REJECTED */` comment blocks (none on the current
+  vJunos-router build; the BGP-OUTPUT-QUEUE-PRIORITY actions are
+  dropped at load time, not commit time, so the term itself commits
+  with only its `accept` surviving).
 - **Bootstrap configs (minimal)**:
   `source/build/bootstrap/{dut,sender,collector}.cfg` — what
   containerlab boots with. The full IMPORT/EXPORT terms are pushed

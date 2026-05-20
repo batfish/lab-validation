@@ -12,11 +12,11 @@
 #     lo0 1.1.1.1/32                            lo0 2.2.2.2/32                              lo0 3.3.3.3/32
 #     link 10.0.12.0/31                         link 10.0.12.1/31  10.0.23.0/31              link 10.0.23.1/31
 #
-# - sender: originates ~108 /24 test prefixes via static, exports to dut
+# - sender: originates ~112 /24 test prefixes via static, exports to dut
 #   tagged with per-term marker community 65001:<term-id> (and §4
 #   conflict-shape input payloads where required).
 # - dut: imports from sender via a single policy-statement IMPORT whose
-#   ~108 terms each test one same-attribute conflict shape, then exports
+#   ~112 terms each test one same-attribute conflict shape, then exports
 #   pass-through to collector.
 # - collector: applies a transparent IMPORT-ALL policy so every marker
 #   community propagates intact, used as the observation point for §5

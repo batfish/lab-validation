@@ -114,6 +114,50 @@ terms:
       - "community add MARK-B"
       - "accept"
 
+  - term_id: 4011
+    prefix: "10.50.170.0/24"
+    name: "FC-NEXT-TERM-DEDUP"
+    description: "next term; next term; with mark interleaving (same-family dedup baseline)"
+    section: "5"
+    actions:
+      - "community add MARK-A"
+      - "next term"
+      - "community add MARK-B"
+      - "next term"
+
+  - term_id: 4012
+    prefix: "10.50.171.0/24"
+    name: "FC-NEXT-POLICY-DEDUP"
+    description: "next policy; next policy; with mark interleaving (same-family dedup baseline)"
+    section: "5"
+    actions:
+      - "community add MARK-A"
+      - "next policy"
+      - "community add MARK-B"
+      - "next policy"
+
+  - term_id: 4013
+    prefix: "10.50.172.0/24"
+    name: "FC-NEXT-TERM-THEN-NEXT-POLICY"
+    description: "next term; next policy; with mark interleaving - which terminator wins?"
+    section: "5"
+    actions:
+      - "community add MARK-A"
+      - "next term"
+      - "community add MARK-B"
+      - "next policy"
+
+  - term_id: 4014
+    prefix: "10.50.173.0/24"
+    name: "FC-NEXT-POLICY-THEN-NEXT-TERM"
+    description: "next policy; next term; with mark interleaving - which terminator wins?"
+    section: "5"
+    actions:
+      - "community add MARK-A"
+      - "next policy"
+      - "community add MARK-B"
+      - "next term"
+
   # §6 Forwarding-only (3 terms)
   - term_id: 5001
     prefix: "10.50.180.0/24"
