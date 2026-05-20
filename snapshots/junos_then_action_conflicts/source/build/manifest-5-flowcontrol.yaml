@@ -1,0 +1,158 @@
+section: "5-flowcontrol"
+notes: "Flow-control terms include their own MARK-A/MARK-B interleaving. §6 forwarding-only and §7 sanity included in same file."
+stubs:
+  - "policy-options { community MARK-A { members 65001:9100; } }"
+  - "policy-options { community MARK-B { members 65001:9101; } }"
+  - "policy-options { community RED { members 65001:1001; } }"
+terms:
+  # §5 Flow-control (10 terms)
+  - term_id: 4001
+    prefix: "10.50.160.0/24"
+    name: "FC-ACCEPT-THEN-REJECT"
+    description: "accept; reject; with mark interleaving"
+    section: "5"
+    actions:
+      - "community add MARK-A"
+      - "accept"
+      - "community add MARK-B"
+      - "reject"
+
+  - term_id: 4002
+    prefix: "10.50.161.0/24"
+    name: "FC-REJECT-THEN-ACCEPT"
+    description: "reject; accept; with mark interleaving"
+    section: "5"
+    actions:
+      - "community add MARK-A"
+      - "reject"
+      - "community add MARK-B"
+      - "accept"
+
+  - term_id: 4003
+    prefix: "10.50.162.0/24"
+    name: "FC-ACCEPT-THEN-NEXT-TERM"
+    description: "accept; next-term; with mark interleaving"
+    section: "5"
+    actions:
+      - "community add MARK-A"
+      - "accept"
+      - "community add MARK-B"
+      - "next term"
+
+  - term_id: 4004
+    prefix: "10.50.163.0/24"
+    name: "FC-NEXT-TERM-THEN-ACCEPT"
+    description: "next-term; accept; with mark interleaving"
+    section: "5"
+    actions:
+      - "community add MARK-A"
+      - "next term"
+      - "community add MARK-B"
+      - "accept"
+
+  - term_id: 4005
+    prefix: "10.50.164.0/24"
+    name: "FC-ACCEPT-THEN-NEXT-POLICY"
+    description: "accept; next-policy; with mark interleaving"
+    section: "5"
+    actions:
+      - "community add MARK-A"
+      - "accept"
+      - "community add MARK-B"
+      - "next policy"
+
+  - term_id: 4006
+    prefix: "10.50.165.0/24"
+    name: "FC-DEFAULT-ACTION-ACCEPT-THEN-ACCEPT"
+    description: "default-action accept; accept; with mark interleaving"
+    section: "5"
+    actions:
+      - "community add MARK-A"
+      - "default-action accept"
+      - "community add MARK-B"
+      - "accept"
+
+  - term_id: 4007
+    prefix: "10.50.166.0/24"
+    name: "FC-ACCEPT-THEN-DEFAULT-ACTION-REJECT"
+    description: "accept; default-action reject; with mark interleaving"
+    section: "5"
+    actions:
+      - "community add MARK-A"
+      - "accept"
+      - "community add MARK-B"
+      - "default-action reject"
+
+  - term_id: 4008
+    prefix: "10.50.167.0/24"
+    name: "FC-REJECT-THEN-DEFAULT-ACTION-ACCEPT"
+    description: "reject; default-action accept; with mark interleaving"
+    section: "5"
+    actions:
+      - "community add MARK-A"
+      - "reject"
+      - "community add MARK-B"
+      - "default-action accept"
+
+  - term_id: 4009
+    prefix: "10.50.168.0/24"
+    name: "FC-ACCEPT-THEN-SIDE-EFFECT"
+    description: "Side-effect interleaved with terminator: accept then community add - does MARK-B survive?"
+    section: "5"
+    actions:
+      - "community add MARK-A"
+      - "accept"
+      - "community add MARK-B"
+
+  - term_id: 4010
+    prefix: "10.50.169.0/24"
+    name: "FC-TWO-SIDE-EFFECTS-THEN-ACCEPT"
+    description: "Two side-effects + terminator (sanity baseline) - both should survive"
+    section: "5"
+    actions:
+      - "community add MARK-A"
+      - "community add MARK-B"
+      - "accept"
+
+  # §6 Forwarding-only (3 terms)
+  - term_id: 5001
+    prefix: "10.50.180.0/24"
+    name: "FWD-LOAD-BALANCE-DUPLICATE-DIFF"
+    description: "load-balance per-packet; load-balance consistent-hash;"
+    section: "6"
+    actions:
+      - "load-balance per-packet"
+      - "load-balance consistent-hash"
+      - "accept"
+
+  - term_id: 5002
+    prefix: "10.50.181.0/24"
+    name: "FWD-MULTIPATH-RESOLVE-DUPLICATE"
+    description: "multipath-resolve; multipath-resolve;"
+    section: "6"
+    actions:
+      - "multipath-resolve"
+      - "multipath-resolve"
+      - "accept"
+
+  - term_id: 5003
+    prefix: "10.50.182.0/24"
+    name: "FWD-INSTALL-NEXTHOP-DIFF"
+    description: "install-nexthop lsp X; install-nexthop lsp Y;"
+    section: "6"
+    actions:
+      - "install-nexthop lsp lsp-foo"
+      - "install-nexthop lsp lsp-bar"
+      - "accept"
+
+  # §7 Sanity (1 term)
+  - term_id: 9001
+    prefix: "10.50.250.0/24"
+    name: "SANITY-CROSS-ATTRIBUTE"
+    description: "Kitchen-sink term: local-preference 200; metric 100; community add RED; accept;"
+    section: "7"
+    actions:
+      - "local-preference 200"
+      - "metric 100"
+      - "community add RED"
+      - "accept"

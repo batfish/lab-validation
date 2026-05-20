@@ -1,0 +1,24 @@
+{
+    "edges": [
+        {
+            "node1": {
+                "hostname": "sender",
+                "interfaceName": "ge-0/0/0"
+            },
+            "node2": {
+                "hostname": "dut",
+                "interfaceName": "ge-0/0/0"
+            }
+        },
+        {
+            "node1": {
+                "hostname": "dut",
+                "interfaceName": "ge-0/0/1"
+            },
+            "node2": {
+                "hostname": "collector",
+                "interfaceName": "ge-0/0/0"
+            }
+        }
+    ]
+}

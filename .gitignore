@@ -9,6 +9,10 @@ __pycache__/
 # Distribution / packaging
 .Python
 build/
+# Per-lab build inputs (manifests, scripts, bootstrap configs) under
+# snapshots/<lab>/source/build/ are NOT Python build artifacts.
+!snapshots/*/source/build/
+!snapshots/*/source/build/**
 develop-eggs/
 dist/
 downloads/
@@ -144,7 +148,7 @@ networks/
 
 # Working directory for temporary scripts and analysis
 working/
-CLAUDE.md
+CLAUDE.local.md
 .claude/
 
 # VM images (large, user-provided, not distributed)

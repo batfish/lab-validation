@@ -1,0 +1,22 @@
+entries:
+  # bgp_rib mismatches
+  - hostname: dut
+    test_name: test_bgp_rib_routes
+    skip:
+      reason: "https://github.com/batfish/lab-validation/issues/183 (metric expression: 10.50.70); https://github.com/batfish/lab-validation/issues/189 (next-hop self in import: 10.50.32-35)"
+
+  - hostname: collector
+    test_name: test_bgp_rib_routes
+    skip:
+      reason: "https://github.com/batfish/lab-validation/issues/189 (next-hop self in import: 10.50.32-35)"
+
+  # main_rib mismatches
+  - hostname: dut
+    test_name: test_main_rib_routes
+    skip:
+      reason: "https://github.com/batfish/lab-validation/issues/183 (metric expression: 10.50.70); https://github.com/batfish/lab-validation/issues/189 (next-hop self in import: 10.50.32-35)"
+
+  - hostname: collector
+    test_name: test_main_rib_routes
+    skip:
+      reason: https://github.com/batfish/lab-validation/issues/189

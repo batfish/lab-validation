@@ -1,0 +1,81 @@
+# Validation checks for the junos-then-action-conflicts lab.
+#
+# Run after health-check, before collection:
+#   lab_builder validate topology.clab.yml --checks checks.yaml
+#
+# Strategy: BGP up everywhere; one route_exists per family to confirm
+# end-to-end propagation. Per-term observation lives in the README
+# (constructed from the collected snapshot).
+#
+# If any conflict shape is rejected at commit time, that case moves to a
+# `commit_check_rejects` entry below and the corresponding term gets
+# commented out in dut.cfg with a /* COMMIT-REJECTED ... */ block.
+
+checks:
+  # ---------------- BGP sessions ----------------
+  - type: bgp_peer_established
+    node: sender
+    neighbor: 10.0.12.1
+    description: "sender -> dut eBGP"
+  - type: bgp_peer_established
+    node: dut
+    neighbor: 10.0.12.0
+    description: "dut -> sender eBGP"
+  - type: bgp_peer_established
+    node: dut
+    neighbor: 10.0.23.1
+    description: "dut -> collector eBGP"
+  - type: bgp_peer_established
+    node: collector
+    neighbor: 10.0.23.0
+    description: "collector -> dut eBGP"
+
+  # ---------------- One propagation check per family ----------------
+  # §1 scalars
+  - type: route_exists
+    node: dut
+    table: inet.0
+    prefix: 10.50.1.0/24
+    description: "§1 first scalar prefix imported on dut"
+  - type: route_exists
+    node: collector
+    table: inet.0
+    prefix: 10.50.1.0/24
+    description: "§1 first scalar prefix propagated to collector"
+  # §2 numeric (lp/metric/metric2)
+  - type: route_exists
+    node: dut
+    table: inet.0
+    prefix: 10.50.50.0/24
+    description: "§2 first numeric prefix imported on dut"
+  # §3 as-path
+  - type: route_exists
+    node: dut
+    table: inet.0
+    prefix: 10.50.100.0/24
+    description: "§3 first as-path prefix imported on dut"
+  # §4 communities
+  - type: route_exists
+    node: dut
+    table: inet.0
+    prefix: 10.50.130.0/24
+    description: "§4 first community prefix imported on dut"
+  # §5 flow-control: collector must observe at least the baseline that
+  # accepts (10.50.169.0 = TWO-SIDE-EFFECTS-THEN-ACCEPT).
+  - type: route_exists
+    node: collector
+    table: inet.0
+    prefix: 10.50.169.0/24
+    description: "§5 baseline accept-only flow-control reaches collector"
+  # §6 forwarding-only
+  - type: route_exists
+    node: dut
+    table: inet.0
+    prefix: 10.50.180.0/24
+    description: "§6 first forwarding-only prefix imported on dut"
+  # §7 sanity
+  - type: route_exists
+    node: dut
+    table: inet.0
+    prefix: 10.50.250.0/24
+    description: "§7 cross-attribute sanity prefix imported on dut"
