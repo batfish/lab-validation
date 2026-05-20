@@ -98,82 +98,120 @@ apt-get install -y sshpass jq
 # --- Load network OS images ---
 echo "--- Loading network OS images ---"
 
+# Map a docker-tarball or qcow2 filename to (image_tag, image_grep, vrnetlab_dest).
+# Sets globals: image_tag, image_grep, dest. Returns 0 on match, 1 on unknown.
+classify_image() {
+    local name="$1"
+    case "${name}" in
+        vJunos-router-*|vjunos-router-*)
+            image_tag="vjunos-router"
+            image_grep="junos"
+            dest="/home/ubuntu/vrnetlab/juniper/vjunosrouter" ;;
+        vJunosEvolved-*|vjunosevolved-*)
+            image_tag="vjunos-evolved"
+            image_grep="junos"
+            dest="/home/ubuntu/vrnetlab/juniper/vjunosevolved" ;;
+        vJunos-switch-*|vjunosswitch-*)
+            image_tag="vjunos-switch"
+            image_grep="junos"
+            dest="/home/ubuntu/vrnetlab/juniper/vjunosswitch" ;;
+        nexus9300v*|nexus9500v*|nxosv*|n9kv*|*nxos*)
+            image_tag="nxos"
+            image_grep="n9kv|nxos"
+            dest="/home/ubuntu/vrnetlab/cisco/n9kv" ;;
+        *veos*|*arista*)
+            image_tag="veos"
+            image_grep="veos"
+            dest="" ;;
+        *)
+            return 1 ;;
+    esac
+    return 0
+}
+
+# Strategy 1: load any pre-built Docker tarballs that match the filter.
 DOCKER_TARBALLS=$(aws s3 ls "s3://${BUCKET_NAME}/docker-images/" 2>/dev/null \
     | awk '{print $4}' | grep '\.tar\.gz$' || true)
 
-if [[ -n "${DOCKER_TARBALLS}" ]]; then
-    # Strategy 1: Load pre-built Docker images
-    for tarball in ${DOCKER_TARBALLS}; do
-        # Derive image tag from tarball name for filtering
-        case "${tarball}" in
-            vjunos-router*) image_tag="vjunos-router" ;;
-            vjunos-switch*) image_tag="vjunos-switch" ;;
-            vjunos*evolved*) image_tag="vjunos-evolved" ;;
-            *veos*|*arista*) image_tag="veos" ;;
-            *) image_tag="unknown" ;;
-        esac
-        if ! image_wanted "${image_tag}"; then
-            echo "Skipping ${tarball} (not in filter: ${IMAGE_FILTER})"
-            continue
-        fi
-        echo "Loading Docker image: ${tarball}"
-        aws s3 cp "s3://${BUCKET_NAME}/docker-images/${tarball}" - | gunzip | docker load
-    done
-else
-    echo "No pre-built Docker images found. Checking for raw qcow2 images..."
+LOADED_TAGS=""
+for tarball in ${DOCKER_TARBALLS}; do
+    if ! classify_image "${tarball}"; then
+        echo "Skipping unknown docker-images/ tarball: ${tarball}"
+        continue
+    fi
+    if ! image_wanted "${image_tag}"; then
+        echo "Skipping ${tarball} (not in filter: ${IMAGE_FILTER})"
+        continue
+    fi
+    echo "Loading Docker image: ${tarball}"
+    aws s3 cp "s3://${BUCKET_NAME}/docker-images/${tarball}" - | gunzip | docker load
+    LOADED_TAGS="${LOADED_TAGS},${image_tag}"
+done
 
-    RAW_IMAGES=$(aws s3 ls "s3://${BUCKET_NAME}/images/" 2>/dev/null \
-        | awk '{print $4}' | grep '\.qcow2$' || true)
+# Strategy 2: for any wanted image lacking a pre-built tarball, build from qcow2.
+RAW_IMAGES=$(aws s3 ls "s3://${BUCKET_NAME}/images/" 2>/dev/null \
+    | awk '{print $4}' | grep '\.qcow2$' || true)
 
-    if [[ -n "${RAW_IMAGES}" ]]; then
-        # Strategy 2: Build from qcow2
+VRNETLAB_CLONED=false
+for qcow2 in ${RAW_IMAGES}; do
+    if ! classify_image "${qcow2}"; then
+        echo "Skipping unknown images/ qcow2: ${qcow2}"
+        continue
+    fi
+    if ! image_wanted "${image_tag}"; then
+        continue
+    fi
+    if [[ ",${LOADED_TAGS}," == *",${image_tag},"* ]]; then
+        echo "Skipping qcow2 build for ${qcow2}: ${image_tag} already loaded from docker-images/"
+        continue
+    fi
+
+    echo "Processing qcow2: ${qcow2}"
+    if [[ "${VRNETLAB_CLONED}" == false ]]; then
         echo "Cloning vrnetlab..."
         sudo -u ubuntu git clone https://github.com/hellt/vrnetlab.git /home/ubuntu/vrnetlab
-
-        for qcow2 in ${RAW_IMAGES}; do
-            echo "Processing: ${qcow2}"
-
-            case "${qcow2}" in
-                vJunos-router-*|vjunos-router-*)
-                    image_tag="vjunos-router"
-                    dest="/home/ubuntu/vrnetlab/juniper/vjunosrouter" ;;
-                vJunosEvolved-*|vjunosevolved-*)
-                    image_tag="vjunos-evolved"
-                    dest="/home/ubuntu/vrnetlab/juniper/vjunosevolved" ;;
-                vJunos-switch-*|vjunosswitch-*)
-                    image_tag="vjunos-switch"
-                    dest="/home/ubuntu/vrnetlab/juniper/vjunosswitch" ;;
-                *)
-                    echo "  Unknown image type: ${qcow2}, skipping"
-                    continue ;;
-            esac
-            if ! image_wanted "${image_tag}"; then
-                echo "  Skipping ${qcow2} (not in filter: ${IMAGE_FILTER})"
-                continue
-            fi
-
-            echo "  Downloading from S3..."
-            aws s3 cp "s3://${BUCKET_NAME}/images/${qcow2}" "${dest}/"
-
-            echo "  Building vrnetlab container..."
-            if (cd "${dest}" && make); then
-                # Upload the built image to S3 for next time
-                IMAGE_NAME=$(docker images --format '{{.Repository}}:{{.Tag}}' \
-                    | grep -i junos | head -1)
-                if [[ -n "${IMAGE_NAME}" ]]; then
-                    TARBALL_NAME=$(echo "${IMAGE_NAME}" | sed 's|.*/||; s|:|_|; s|juniper_||')
-                    echo "  Saving and uploading Docker image to S3..."
-                    docker save "${IMAGE_NAME}" | gzip \
-                        | aws s3 cp - "s3://${BUCKET_NAME}/docker-images/${TARBALL_NAME}.tar.gz"
-                    echo "  Uploaded: docker-images/${TARBALL_NAME}.tar.gz"
-                fi
-            else
-                echo "  WARNING: vrnetlab build failed for ${qcow2}"
-            fi
-        done
-    else
-        echo "No images found in S3. Upload images with upload-image.sh."
+        VRNETLAB_CLONED=true
     fi
+
+    mkdir -p "${dest}"
+
+    # vrnetlab's Cisco n9kv Makefile expects qcow2 named n9kv-<version>.qcow2
+    # so the resulting docker tag is vrnetlab/cisco_n9kv:<version>.
+    # Rename Cisco's nexus9300v64.<version>.qcow2 accordingly.
+    staged_name="${qcow2}"
+    if [[ "${image_tag}" == "nxos" ]]; then
+        staged_name=$(echo "${qcow2}" \
+            | sed -E 's/^nexus9[35]00v(64)?(-lite)?\.(.+)\.qcow2$/n9kv-\3.qcow2/')
+    fi
+
+    echo "  Downloading from S3 as ${staged_name}..."
+    aws s3 cp "s3://${BUCKET_NAME}/images/${qcow2}" "${dest}/${staged_name}"
+
+    echo "  Building vrnetlab container..."
+    if (cd "${dest}" && make); then
+        IMAGE_NAME=$(docker images --format '{{.Repository}}:{{.Tag}}' \
+            | { grep -iE "${image_grep}" || true; } | head -1)
+        if [[ -n "${IMAGE_NAME}" ]]; then
+            TARBALL_NAME=$(echo "${IMAGE_NAME}" \
+                | sed 's|.*/||; s|:|_|; s|juniper_||; s|cisco_||')
+            echo "  Saving and uploading ${IMAGE_NAME} to s3://${BUCKET_NAME}/docker-images/${TARBALL_NAME}.tar.gz..."
+            if docker save "${IMAGE_NAME}" | gzip \
+                    | aws s3 cp - "s3://${BUCKET_NAME}/docker-images/${TARBALL_NAME}.tar.gz"; then
+                echo "  Uploaded: docker-images/${TARBALL_NAME}.tar.gz"
+            else
+                echo "  WARNING: failed to upload ${IMAGE_NAME} to S3 (image is loaded locally; future launches will rebuild from qcow2)"
+            fi
+        else
+            echo "  WARNING: build succeeded but no docker image matched '${image_grep}'"
+        fi
+        LOADED_TAGS="${LOADED_TAGS},${image_tag}"
+    else
+        echo "  WARNING: vrnetlab build failed for ${qcow2}"
+    fi
+done
+
+if [[ -z "${DOCKER_TARBALLS}" && -z "${RAW_IMAGES}" ]]; then
+    echo "No images found in S3. Upload images with upload-image.sh."
 fi
 
 # --- Load pre-built container images (e.g., Arista cEOS) ---

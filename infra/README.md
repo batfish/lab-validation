@@ -426,7 +426,7 @@ For spot pricing (~70% cheaper), add `--spot`.
 --timeout-hours N      Auto-terminate after N hours (default: 4)
 --spot                 Request spot instance
 --images FILTER        Comma-separated list of images to load (default: all)
-                       Available: ceos, vjunos-router, vjunos-switch, vjunos-evolved
+                       Available: ceos, vjunos-router, vjunos-switch, vjunos-evolved, nxos
 ```
 
 For example, `--images ceos` loads only the Arista cEOS image, skipping
