@@ -1,9 +1,9 @@
 set version 25.4R1.12
 set system host-name dut
-set system root-authentication encrypted-password "$6$bnzmSlSK$wX4DmWSSCcmTQqVrwRwDid8c6EtRfV55M6USV71zaTfc3PvkvNdJfb3B6Wk.KS5kmIjlp8C/Bkkt9QGL74HDn1"
+set system root-authentication encrypted-password "$6$vwpCs/Us$u.QipSxB/PtgHjOt2OFcmAwzVn/ag7Eais1jpaM5038Ys.H18zW3dHNSx/MPyQW1HSyZnAO0vG.Wh01.Z6GpX0"
 set system login user admin uid 2000
 set system login user admin class super-user
-set system login user admin authentication encrypted-password "$6$dDOoC83.$1mGTdbqzHOFejDP0Mmzri4lvEj2IQw7J4ORDWTdHgPZlChJVZw/Ul80PNiNmIXTnUVr3xdSJjjHhnfGQZxsKY/"
+set system login user admin authentication encrypted-password "$6$yse7ioXf$rGF6bBoSnRlNVhuQkNfIzF7Mthbr8eBjLWJGvjzz2Ud9hOFo45d4oxLBbZuGxtRT9qBvDMv5jz1obzFf94ASg0"
 set system services netconf ssh
 set system services ssh root-login allow
 set system management-instance
@@ -369,6 +369,22 @@ set policy-options policy-statement IMPORT term FC-TWO-SIDE-EFFECTS-THEN-ACCEPT 
 set policy-options policy-statement IMPORT term FC-TWO-SIDE-EFFECTS-THEN-ACCEPT then community add MARK-A
 set policy-options policy-statement IMPORT term FC-TWO-SIDE-EFFECTS-THEN-ACCEPT then community add MARK-B
 set policy-options policy-statement IMPORT term FC-TWO-SIDE-EFFECTS-THEN-ACCEPT then accept
+set policy-options policy-statement IMPORT term FC-NEXT-TERM-DEDUP from route-filter 10.50.170.0/24 exact
+set policy-options policy-statement IMPORT term FC-NEXT-TERM-DEDUP then community add MARK-A
+set policy-options policy-statement IMPORT term FC-NEXT-TERM-DEDUP then community add MARK-B
+set policy-options policy-statement IMPORT term FC-NEXT-TERM-DEDUP then next term
+set policy-options policy-statement IMPORT term FC-NEXT-POLICY-DEDUP from route-filter 10.50.171.0/24 exact
+set policy-options policy-statement IMPORT term FC-NEXT-POLICY-DEDUP then community add MARK-A
+set policy-options policy-statement IMPORT term FC-NEXT-POLICY-DEDUP then community add MARK-B
+set policy-options policy-statement IMPORT term FC-NEXT-POLICY-DEDUP then next policy
+set policy-options policy-statement IMPORT term FC-NEXT-TERM-THEN-NEXT-POLICY from route-filter 10.50.172.0/24 exact
+set policy-options policy-statement IMPORT term FC-NEXT-TERM-THEN-NEXT-POLICY then community add MARK-A
+set policy-options policy-statement IMPORT term FC-NEXT-TERM-THEN-NEXT-POLICY then community add MARK-B
+set policy-options policy-statement IMPORT term FC-NEXT-TERM-THEN-NEXT-POLICY then next policy
+set policy-options policy-statement IMPORT term FC-NEXT-POLICY-THEN-NEXT-TERM from route-filter 10.50.173.0/24 exact
+set policy-options policy-statement IMPORT term FC-NEXT-POLICY-THEN-NEXT-TERM then community add MARK-A
+set policy-options policy-statement IMPORT term FC-NEXT-POLICY-THEN-NEXT-TERM then community add MARK-B
+set policy-options policy-statement IMPORT term FC-NEXT-POLICY-THEN-NEXT-TERM then next term
 set policy-options policy-statement IMPORT term FWD-LOAD-BALANCE-DUPLICATE-DIFF from route-filter 10.50.180.0/24 exact
 set policy-options policy-statement IMPORT term FWD-LOAD-BALANCE-DUPLICATE-DIFF then load-balance consistent-hash
 set policy-options policy-statement IMPORT term FWD-LOAD-BALANCE-DUPLICATE-DIFF then accept

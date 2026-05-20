@@ -972,6 +972,50 @@ terms:
       - accept
     input_communities: []
     description: Two side-effects + terminator (sanity baseline) - both should survive
+  - term_id: 4011
+    section: "5"
+    prefix: 10.50.170.0/24
+    name: FC-NEXT-TERM-DEDUP
+    actions:
+      - community add MARK-A
+      - next term
+      - community add MARK-B
+      - next term
+    input_communities: []
+    description: next term; next term; with mark interleaving (same-family dedup baseline)
+  - term_id: 4012
+    section: "5"
+    prefix: 10.50.171.0/24
+    name: FC-NEXT-POLICY-DEDUP
+    actions:
+      - community add MARK-A
+      - next policy
+      - community add MARK-B
+      - next policy
+    input_communities: []
+    description: next policy; next policy; with mark interleaving (same-family dedup baseline)
+  - term_id: 4013
+    section: "5"
+    prefix: 10.50.172.0/24
+    name: FC-NEXT-TERM-THEN-NEXT-POLICY
+    actions:
+      - community add MARK-A
+      - next term
+      - community add MARK-B
+      - next policy
+    input_communities: []
+    description: next term; next policy; with mark interleaving - which terminator wins?
+  - term_id: 4014
+    section: "5"
+    prefix: 10.50.173.0/24
+    name: FC-NEXT-POLICY-THEN-NEXT-TERM
+    actions:
+      - community add MARK-A
+      - next policy
+      - community add MARK-B
+      - next term
+    input_communities: []
+    description: next policy; next term; with mark interleaving - which terminator wins?
   - term_id: 5001
     section: "6"
     prefix: 10.50.180.0/24
