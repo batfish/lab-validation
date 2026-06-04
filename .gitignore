@@ -156,3 +156,11 @@ CLAUDE.local.md
 *.vmdk
 *.ova
 *.tar.xz
+
+# infra/images/ holds user-provided vendor assets (VM/container images and
+# license files) that must never be committed. Allowlist approach: ignore
+# everything in the directory except the placeholder that keeps it in git.
+# Anything new -- an image, or any license file whatever its name -- is
+# ignored by default.
+infra/images/*
+!infra/images/.gitkeep

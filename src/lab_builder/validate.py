@@ -373,21 +373,124 @@ def _check_commit_accepts(node: NodeInfo, config_lines: list[str]) -> CheckResul
 # ---------------------------------------------------------------------------
 
 
+# ---------------------------------------------------------------------------
+# Nokia SR OS checks
+#
+# Text-based parsing of standard SR OS show commands. Conservative and
+# verified against a running SR-SIM at lab build time; command syntax/output
+# may need adjustment on the real device.
+# ---------------------------------------------------------------------------
+
+
+def _sros_check_interface_up(node: NodeInfo, interface: str) -> CheckResult:
+    """Check that an SR OS router interface is operationally up.
+
+    'show router interface "<name>"' lists Adm and Opr columns per interface.
+    """
+    try:
+        output = run_command(node, f'show router interface "{interface}"')
+    except Exception as e:
+        return CheckResult("interface_up", node.name, False, f"command failed: {e}")
+
+    for line in output.splitlines():
+        if interface in line:
+            lowered = line.lower()
+            if "up" in lowered and "down" not in lowered:
+                return CheckResult("interface_up", node.name, True, f"{interface}: up")
+            return CheckResult(
+                "interface_up", node.name, False, f"{interface}: {line.strip()}"
+            )
+    return CheckResult(
+        "interface_up", node.name, False, f"{interface}: not found in output"
+    )
+
+
+def _sros_check_route_exists(node: NodeInfo, table: str, prefix: str) -> CheckResult:
+    """Check that a route to a prefix exists in the SR OS route table.
+
+    The *table* argument is accepted for signature parity; SR OS selects the
+    routing instance via the command (base router here).
+    """
+    try:
+        output = run_command(node, f"show router route-table {prefix}")
+    except Exception as e:
+        return CheckResult("route_exists", node.name, False, f"command failed: {e}")
+
+    network = prefix.split("/")[0]
+    if network in output:
+        return CheckResult(
+            "route_exists", node.name, True, f"{prefix} in {table}: found"
+        )
+    return CheckResult(
+        "route_exists", node.name, False, f"{prefix} in {table}: not found"
+    )
+
+
+def _sros_check_bgp_peer(node: NodeInfo, neighbor: str) -> CheckResult:
+    """Check that a specific BGP peer is Established via 'show router bgp summary'.
+
+    SR OS prints each neighbor across two lines: the peer address on its own
+    line, then a line with ``<AS> <PktRcvd> <InQ> <Up/Down> <State|Rcv/Act/Sent>``.
+    An established peer shows the ``Rcv/Act/Sent`` prefix counts (e.g. ``1/1/1``)
+    in the state column; a non-established peer shows a state word (``Active``,
+    ``Connect``, etc.).
+    """
+    try:
+        output = run_command(node, "show router bgp summary")
+    except Exception as e:
+        return CheckResult(
+            "bgp_peer_established", node.name, False, f"command failed: {e}"
+        )
+
+    lines = output.splitlines()
+    for i, line in enumerate(lines):
+        if line.strip() != neighbor:
+            continue
+        # The state is on the following non-empty line, last token before any
+        # "(AddrFamily)" suffix.
+        for follow in lines[i + 1 :]:
+            tokens = follow.split()
+            if not tokens:
+                continue
+            # Drop a trailing "(IPv4)"-style address-family marker.
+            if tokens[-1].startswith("(") and len(tokens) > 1:
+                tokens = tokens[:-1]
+            state = tokens[-1]
+            # Established peers show Rcv/Act/Sent counts like "1/1/1".
+            if "/" in state and all(p.isdigit() for p in state.split("/")):
+                return CheckResult(
+                    "bgp_peer_established", node.name, True, f"{neighbor}: Established"
+                )
+            return CheckResult(
+                "bgp_peer_established", node.name, False, f"{neighbor}: {state}"
+            )
+        break
+    return CheckResult(
+        "bgp_peer_established", node.name, False, f"{neighbor}: peer not found"
+    )
+
+
 def check_interface_up(node: NodeInfo, interface: str) -> CheckResult:
     if node.profile.name == "arista":
         return _arista_check_interface_up(node, interface)
+    if node.profile.name == "sros":
+        return _sros_check_interface_up(node, interface)
     return _junos_check_interface_up(node, interface)
 
 
 def check_route_exists(node: NodeInfo, table: str, prefix: str) -> CheckResult:
     if node.profile.name == "arista":
         return _arista_check_route_exists(node, table, prefix)
+    if node.profile.name == "sros":
+        return _sros_check_route_exists(node, table, prefix)
     return _junos_check_route_exists(node, table, prefix)
 
 
 def check_bgp_peer_established(node: NodeInfo, neighbor: str) -> CheckResult:
     if node.profile.name == "arista":
         return _arista_check_bgp_peer(node, neighbor)
+    if node.profile.name == "sros":
+        return _sros_check_bgp_peer(node, neighbor)
     return _junos_check_bgp_peer(node, neighbor)
 
 

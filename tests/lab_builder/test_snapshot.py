@@ -7,7 +7,7 @@ from pathlib import Path
 
 import pytest
 
-from lab_builder.config import ARISTA_CEOS, VJUNOS_ROUTER
+from lab_builder.config import ARISTA_CEOS, NOKIA_SRSIM, VJUNOS_ROUTER
 from lab_builder.models import NodeInfo
 from lab_builder.snapshot import _eth_to_vendor_interface, _generate_layer1_topology
 
@@ -29,6 +29,16 @@ def junos_node() -> NodeInfo:
     )
 
 
+@pytest.fixture()
+def sros_node() -> NodeInfo:
+    return NodeInfo(
+        name="r2",
+        kind="nokia_srsim",
+        profile=NOKIA_SRSIM,
+        management_ip="1.2.3.6",
+    )
+
+
 class TestEthToVendorInterface:
     def test_arista_eth1(self, arista_node: NodeInfo) -> None:
         assert _eth_to_vendor_interface("eth1", arista_node) == "Ethernet1"
@@ -41,6 +51,17 @@ class TestEthToVendorInterface:
 
     def test_junos_eth3(self, junos_node: NodeInfo) -> None:
         assert _eth_to_vendor_interface("eth3", junos_node) == "ge-0/0/2"
+
+    def test_sros_connector_port(self, sros_node: NodeInfo) -> None:
+        # e1-1-c1-1 -> SR OS port 1/1/c1/1 (card1, mda1, connector1, port1)
+        assert _eth_to_vendor_interface("e1-1-c1-1", sros_node) == "1/1/c1/1"
+
+    def test_sros_card_mda_port(self, sros_node: NodeInfo) -> None:
+        # e1-2-3 -> SR OS port 1/2/3 (card1, mda2, port3)
+        assert _eth_to_vendor_interface("e1-2-3", sros_node) == "1/2/3"
+
+    def test_sros_second_card(self, sros_node: NodeInfo) -> None:
+        assert _eth_to_vendor_interface("e2-2-c3-4", sros_node) == "2/2/c3/4"
 
     def test_passthrough(self, arista_node: NodeInfo) -> None:
         assert _eth_to_vendor_interface("Loopback0", arista_node) == "Loopback0"
@@ -105,6 +126,33 @@ topology:
         assert l1["edges"][0]["node2"]["interfaceName"] == "ge-0/0/0"
         assert l1["edges"][1]["node1"]["interfaceName"] == "Ethernet2"
         assert l1["edges"][1]["node2"]["interfaceName"] == "ge-0/0/1"
+
+    def test_sros_arista_mixed(
+        self, tmp_path: Path, arista_node: NodeInfo, sros_node: NodeInfo
+    ) -> None:
+        topo = tmp_path / "topology.clab.yml"
+        topo.write_text(
+            """
+name: test
+topology:
+  nodes:
+    r1:
+      kind: arista_ceos
+    r2:
+      kind: nokia_srsim
+  links:
+    - endpoints: ["r1:eth1", "r2:e1-1-c1-1"]
+"""
+        )
+        snapshot_dir = tmp_path / "snapshot"
+        snapshot_dir.mkdir()
+        _generate_layer1_topology(topo, [arista_node, sros_node], snapshot_dir)
+
+        l1 = json.loads((snapshot_dir / "batfish" / "layer1_topology.json").read_text())
+        assert len(l1["edges"]) == 1
+        edge = l1["edges"][0]
+        assert edge["node1"] == {"hostname": "r1", "interfaceName": "Ethernet1"}
+        assert edge["node2"] == {"hostname": "r2", "interfaceName": "1/1/c1/1"}
 
     def test_no_links(self, tmp_path: Path, arista_node: NodeInfo) -> None:
         topo = tmp_path / "topology.clab.yml"
