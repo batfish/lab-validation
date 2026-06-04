@@ -1,0 +1,28 @@
+# Preconditions for the SR-SIM + cEOS eBGP lab. Run with:
+#   python -m lab_builder validate topology.clab.yml --checks checks.yaml
+#
+# Verifies the eBGP session is up and each router learned the other's
+# loopback before collecting data.
+
+checks:
+  # r1 (SR-SIM) side
+  - type: bgp_peer_established
+    node: r1
+    neighbor: 10.0.0.1
+    description: r1 eBGP to r2 established
+  - type: route_exists
+    node: r1
+    table: Base
+    prefix: 2.2.2.2/32
+    description: r1 learned r2 loopback via eBGP
+
+  # r2 (cEOS) side
+  - type: bgp_peer_established
+    node: r2
+    neighbor: 10.0.0.0
+    description: r2 eBGP to r1 established
+  - type: route_exists
+    node: r2
+    table: default
+    prefix: 1.1.1.1/32
+    description: r2 learned r1 system address via eBGP

@@ -114,6 +114,37 @@ ARISTA_CEOS = VendorProfile(
     boot_timeout_seconds=300,
 )
 
+# Nokia SR-SIM is a native container (loaded via `docker load`), not a
+# VM-in-container. A simple 2-node lab uses the integrated model with the
+# default SR-1 chassis (single container per node). Datapath ports are named
+# L/M/c/P on SR OS; containerlab link endpoints encode this as eL-M-cC-P
+# (see _eth_to_vendor_interface), so this profile does not use the
+# prefix+offset interface model. SR-SIM will not boot without a license
+# mounted at /nokia/license/license.txt (provided via the clab `license:` key).
+NOKIA_SRSIM = VendorProfile(
+    name="sros",
+    containerlab_kind="nokia_srsim",
+    default_username="admin",
+    default_password="admin",
+    netmiko_device_type="nokia_sros",
+    interface_prefix="",  # unused; SR OS ports are mapped from eL-M-cC-P
+    interface_offset=0,
+    # SR OS MD-CLI does not support Junos-style "| display json"; these are the
+    # plain-text show commands, verified against a running SR-SIM.
+    show_commands=[
+        "admin show configuration",
+        "show router interface",
+        "show router route-table",
+        "show router bgp summary",
+        "show router bgp routes",
+        "show version",
+        "show router ospf neighbor",
+        "show router isis adjacency",
+    ],
+    config_command="admin show configuration",
+    boot_timeout_seconds=600,
+)
+
 CISCO_N9KV = VendorProfile(
     name="nx",
     containerlab_kind="cisco_n9kv",
@@ -142,6 +173,7 @@ VENDOR_PROFILES: dict[str, VendorProfile] = {
     "juniper_crpd": CRPD,
     "arista_ceos": ARISTA_CEOS,
     "cisco_n9kv": CISCO_N9KV,
+    "nokia_srsim": NOKIA_SRSIM,
 }
 
 
