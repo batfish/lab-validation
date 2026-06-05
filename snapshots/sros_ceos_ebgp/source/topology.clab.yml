@@ -1,0 +1,42 @@
+# Two-router eBGP lab: Nokia SR-SIM (SR OS) + Arista cEOS.
+#
+# This is step one of adding Nokia SR OS support to Batfish. Batfish cannot
+# yet model SR OS, so this lab is NOT validated against Batfish. Its purpose
+# is to capture SR OS "source of truth" operational data (configs + show
+# outputs) as the future validation target.
+#
+# Topology:
+#   r1 (SR-SIM, AS 65001) ---[1/1/c1/1]---[Ethernet1]--- r2 (cEOS, AS 65002)
+#     system/Loopback: 1.1.1.1/32                         Loopback0: 2.2.2.2/32
+#     link: 10.0.0.0/31                                   link: 10.0.0.1/31
+#
+# After convergence each router should learn the other's loopback via eBGP.
+#
+# REQUIRES A LICENSE: SR-SIM will not boot without a valid Nokia license
+# mounted at /nokia/license/license.txt. Containerlab provides it via the
+# `license:` key below. Set the path to the license file on the EC2 host.
+
+name: srsim-ceos-ebgp
+
+topology:
+  kinds:
+    nokia_srsim:
+      # SR-SIM ships as a tagged OCI image; loaded via `docker load`.
+      image: localhost/nokia/srsim:26.3.R1
+      # Path to the Nokia-provided license on the host running containerlab.
+      license: /home/ubuntu/srsim-license.txt
+    arista_ceos:
+      image: ceos:4.36.0.1F
+
+  nodes:
+    r1:
+      kind: nokia_srsim
+      type: SR-1 # integrated model, single container
+      startup-config: configs/r1.cfg
+    r2:
+      kind: arista_ceos
+      startup-config: configs/r2.cfg
+
+  links:
+    # SR OS datapath endpoint e1-1-c1-1 == SR OS port 1/1/c1/1.
+    - endpoints: ["r1:e1-1-c1-1", "r2:eth1"]

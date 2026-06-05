@@ -32,6 +32,7 @@ from lab_validation.validators import (
     NxosValidator,
     PanosValidator,
     SonicValidator,
+    SrosValidator,
     Vendor,
 )
 from lab_validation.validators.batfish_models.runtime_data import SnapshotRuntimeData
@@ -52,6 +53,7 @@ vendor_validators: dict[Vendor, Callable[[Path], VendorValidator]] = {
     Vendor.CUMULUS: CumulusFrrValidator,
     Vendor.FORTIGATE: FortiosValidator,
     Vendor.JUNOS: JunosValidator,
+    Vendor.NOKIA_SROS: SrosValidator,
     Vendor.PALOALTO: PanosValidator,
     Vendor.SONIC: SonicValidator,
 }
@@ -307,6 +309,7 @@ def test_configuration_format(
         Vendor.CUMULUS: {"CUMULUS_CONCATENATED"},
         Vendor.FORTIGATE: {"FORTIOS"},
         Vendor.JUNOS: {"FLAT_JUNIPER", "JUNIPER", "JUNIPER_SWITCH"},
+        Vendor.NOKIA_SROS: {"NOKIA_SROS"},
         Vendor.PALOALTO: {"PALO_ALTO"},
         Vendor.SONIC: {"SONIC"},
         Vendor.UBUNTU: {"HOST"},

@@ -13,6 +13,7 @@ from .JunosValidator import JunosValidator
 from .NxosValidator import NxosValidator
 from .PanosValidator import PanosValidator
 from .SonicValidator import SonicValidator
+from .SrosValidator import SrosValidator
 
 
 class Vendor(enum.Enum):
@@ -29,6 +30,7 @@ class Vendor(enum.Enum):
     CUMULUS = "cumulus"
     FORTIGATE = "fortios"
     JUNOS = "junos"
+    NOKIA_SROS = "sros"
     PALOALTO = "panos"
     SONIC = "sonic"
     UBUNTU = "ubuntu"
@@ -49,5 +51,6 @@ __all__ = [
     "NxosValidator",
     "PanosValidator",
     "SonicValidator",
+    "SrosValidator",
     "Vendor",
 ]
