@@ -131,27 +131,33 @@ NOKIA_SRSIM = VendorProfile(
     interface_prefix="",  # unused; SR OS ports are mapped from eL-M-cC-P
     interface_offset=0,
     # SR OS exposes operational data in a separate "state" tree, navigable like config
-    # (MD-CLI User Guide §3.3). We capture it via `info /state ...`, which returns the
-    # indented MD-CLI brace-structured form -- the same key/value tree shape as the
-    # config, so the P7 validator parses it structurally instead of pyparsing show
-    # tables. We ALSO capture the legacy plain-text `show router ...` for human reading.
+    # (MD-CLI User Guide §3.3). The `info` command renders it; the `json` MODIFIER emits
+    # indented JSON IETF format keyed by the nokia-state YANG modules -- the SR OS analog
+    # of Junos `show | display json`. The validator deserializes that JSON against the
+    # state YANG (no pyparsing of show tables). We ALSO keep a few plain-text `show ...`
+    # outputs for human cross-reading.
     #
-    # IMPORTANT (verified on SR-SIM 26.3.R1, 2026-06-05): this simulator image does NOT
-    # support `json`/`| json`/`display json` output ("MGMT_CORE #2201: Unknown element
-    # 'json'") -- that option needs modules SR-SIM omits. So state is brace text, not
-    # JSON. List nodes (interface, neighbor) require a `*` wildcard to dump all entries;
+    # JSON word order matters: modifiers come BEFORE the path -- `info json /state ...`
+    # (cf. guide `info detail /state system`). Our earlier "SR-SIM has no JSON" finding
+    # was a syntax bug: we put `json` AFTER the path (`info /state ... json`), which SR OS
+    # parsed as a bogus element name and rejected with "MGMT_CORE #2201: Unknown element
+    # 'json'". CONFIRMED LIVE on SR-SIM 26.3.R1 (2026-06-05 re-collect): all 7 state paths
+    # return valid JSON keyed by the nokia-state YANG. Only `show` cannot pipe to json on
+    # SR OS; JSON is an `info`-family feature. (26.3.R1 MD-CLI Quick Reference, Table 4.)
+    #
+    # List nodes (interface, neighbor) require a `*` wildcard to dump all entries;
     # container nodes (system, route-table, bgp rib) take no key. ospf/isis return empty
-    # when not configured (no error). Paths confirmed against the running SR-SIM.
+    # when not configured.
     show_commands=[
         "admin show configuration",  # config: MD-CLI brace form (parsed by Batfish)
-        # Structured state (MD-CLI brace text) -- machine-parsed by the validator:
-        "info /state system",
-        'info /state router "Base" interface *',
-        'info /state router "Base" route-table',
-        'info /state router "Base" bgp neighbor *',
-        'info /state router "Base" bgp rib',
-        'info /state router "Base" ospf *',
-        'info /state router "Base" isis *',
+        # Structured state as JSON (nokia-state YANG) -- machine-parsed by the validator:
+        "info json /state system",
+        'info json /state router "Base" interface *',
+        'info json /state router "Base" route-table',
+        'info json /state router "Base" bgp neighbor *',
+        'info json /state router "Base" bgp rib',
+        'info json /state router "Base" ospf *',
+        'info json /state router "Base" isis *',
         # Plain-text (human-readable, cross-check):
         "show version",
         "show router interface",
@@ -218,8 +224,8 @@ def command_to_filename(command: str) -> str:
     part of the established Junos/EOS filename convention).
 
     Examples:
-        "show route | display json"               -> "show_route_|_display_json.txt"
-        'info /state router "Base" interface *'   -> "info_state_router_Base_interface.txt"
+        "show route | display json"                  -> "show_route_|_display_json.txt"
+        'info json /state router "Base" interface *' -> "info_json_state_router_Base_interface.txt"
     """
     cleaned = command.replace('"', "").replace("*", "")
     return re.sub(r"[ /]+", "_", cleaned).strip("_") + ".txt"

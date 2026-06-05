@@ -6,9 +6,9 @@ repos:
     hooks:
       - id: check-yaml
       - id: end-of-file-fixer
-        exclude: ^snapshots/.*/(?:configs|show)/
+        exclude: ^(?:snapshots/.*|infra/examples/.*/collected-snapshot)/(?:configs|show)/
       - id: trailing-whitespace
-        exclude: ^snapshots/.*/(?:configs|show)/
+        exclude: ^(?:snapshots/.*|infra/examples/.*/collected-snapshot)/(?:configs|show)/
 
   - repo: https://github.com/astral-sh/ruff-pre-commit
     rev: v0.13.0
@@ -22,7 +22,7 @@ repos:
     hooks:
       - id: prettier
         types_or: [markdown, yaml]
-        exclude: ^snapshots/.*/show/
+        exclude: ^(?:snapshots/.*|infra/examples/.*/collected-snapshot)/show/
   # Block deprecated pyparsing camelCase API. Each name in pyparsing 3.x is
   # decorated with replaced_by_pep8(); the snake_case form must be used
   # instead. See pyparsing/core.py for the authoritative list.

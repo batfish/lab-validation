@@ -425,19 +425,24 @@ Run on EC2 as `PYTHONPATH=src python3 -m lab_builder <command>`:
 
 ### Nokia SR OS (SR-SIM)
 
-SR OS runs MD-CLI and does not support Junos-style `| display json`; these are
-plain-text outputs.
+SR OS runs MD-CLI. It does NOT support Junos-style `show … | display json`, but it
+DOES emit JSON from the **`info`** family: `info json <path>` (json modifier BEFORE the
+path) renders config or operational state as JSON keyed by the YANG modules. Automation
+reads the operational `state` branch with `info json /state …` — the SR OS analog of
+`show | display json`. (Confirmed live on SR-SIM 26.3.R1, 2026-06-05; 26.3.R1 MD-CLI
+Quick Reference, Table 4.) A few plain-text `show router …` are also captured for humans.
 
-| Command                      | Goes to           | Purpose              |
-| ---------------------------- | ----------------- | -------------------- |
-| `admin show configuration`   | `configs/<node>/` | Device config        |
-| `show router interface`      | `show/<node>/`    | Interface properties |
-| `show router route-table`    | `show/<node>/`    | Main routing table   |
-| `show router bgp summary`    | `show/<node>/`    | BGP peer status      |
-| `show router bgp routes`     | `show/<node>/`    | BGP routes           |
-| `show version`               | `show/<node>/`    | Software version     |
-| `show router ospf neighbor`  | `show/<node>/`    | OSPF status          |
-| `show router isis adjacency` | `show/<node>/`    | ISIS status          |
+| Command                                         | Goes to           | Purpose                   |
+| ----------------------------------------------- | ----------------- | ------------------------- |
+| `admin show configuration`                      | `configs/<node>/` | Device config (MD-CLI)    |
+| `info json /state system`                       | `show/<node>/`    | System state (JSON)       |
+| `info json /state router "Base" interface *`    | `show/<node>/`    | Interface state (JSON)    |
+| `info json /state router "Base" route-table`    | `show/<node>/`    | Main routing table (JSON) |
+| `info json /state router "Base" bgp neighbor *` | `show/<node>/`    | BGP peer state (JSON)     |
+| `info json /state router "Base" bgp rib`        | `show/<node>/`    | BGP RIB (JSON)            |
+| `info json /state router "Base" ospf *`         | `show/<node>/`    | OSPF state (JSON)         |
+| `info json /state router "Base" isis *`         | `show/<node>/`    | ISIS state (JSON)         |
+| `show version` + `show router …`                | `show/<node>/`    | Plain-text cross-check    |
 
 ## Snapshot Directory Structure
 
