@@ -73,6 +73,13 @@ auto-discovered by the lab-validation CI, which would try to validate the
 modeling lands, this data becomes the validation target and can move into
 `snapshots/`.
 
+SR OS operational state is captured as **JSON** via `info json /state …` (the
+`json` modifier precedes the path), keyed by the `nokia-state` YANG modules —
+the SR OS analog of Junos `show | display json`. So `show/r1/info_json_state_*`
+are JSON and a future `SrosValidator` can deserialize them directly rather than
+parse text. (`show` commands cannot pipe to json on SR OS; JSON is an `info`
+feature. A few plain-text `show router …` outputs are kept for human reading.)
+
 ## Verified behavior (SR OS 26.3.R1, containerlab 0.76.0)
 
 This lab was deployed end-to-end on EC2 with a valid license. Confirmed:

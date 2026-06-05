@@ -247,11 +247,13 @@ def _nxos_check_ospf(node: NodeInfo) -> bool | None:
 # ---------------------------------------------------------------------------
 # Nokia SR OS health checks
 #
-# SR OS MD-CLI does not support "| display json"; these parse the text output
-# of the standard show commands. The BGP summary format is verified against a
-# running SR-SIM; OSPF/ISIS parsing follows the documented column formats and
-# is refined when a lab exercises those protocols. On unexpected output the
-# checks return False (not converged), keeping the poller waiting.
+# SR OS "show" commands cannot pipe to json (JSON is an `info`-family feature:
+# `info json /state ...`). These convergence checks just parse the text output
+# of the standard show commands, which is sufficient for a yes/no "converged?"
+# poll. The BGP summary format is verified against a running SR-SIM; OSPF/ISIS
+# parsing follows the documented column formats and is refined when a lab
+# exercises those protocols. On unexpected output the checks return False (not
+# converged), keeping the poller waiting.
 # ---------------------------------------------------------------------------
 
 _IPV4_RE = re.compile(r"^\d{1,3}(\.\d{1,3}){3}$")
