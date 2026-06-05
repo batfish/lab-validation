@@ -220,6 +220,7 @@ def interface_properties(bf, snapshot) -> TableAnswer:
         "Allowed_VLANs",
         "Bandwidth",
         "Description",
+        "Interface_Type",
         "MTU",
         "Native_VLAN",
         "Speed",

@@ -337,6 +337,20 @@ def test_compare_all_interfaces_match() -> None:
     assert SrosValidator._compare_all_interfaces(sros, batfish) == {}
 
 
+def test_compare_all_interfaces_skips_physical_ports() -> None:
+    # Batfish models the L3 router-interface "to-r2" plus its synthetic PHYSICAL port
+    # "1/1/c1/1" (the Layer-1 endpoint). The device interface-state tree lists only the
+    # L3 interface, so the PHYSICAL port must be ignored, not flagged as "extra".
+    sros = [_sros_iface(name="to-r2", primary_address="10.0.0.0")]
+    batfish = [
+        _iface_props(
+            name="to-r2", all_prefixes=["10.0.0.0/31"], interface_type="LOGICAL"
+        ),
+        _iface_props(name="1/1/c1/1", all_prefixes=[], interface_type="PHYSICAL"),
+    ]
+    assert SrosValidator._compare_all_interfaces(sros, batfish) == {}
+
+
 def test_compare_all_interfaces_extra_in_batfish() -> None:
     # Batfish has an interface the device does not report.
     diffs = SrosValidator._compare_all_interfaces(

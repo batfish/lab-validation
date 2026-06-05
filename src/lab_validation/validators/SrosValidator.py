@@ -90,7 +90,18 @@ class SrosValidator(VendorValidator):
         batfish_interfaces: Sequence[InterfaceProperties],
     ) -> dict[Any, Any]:
         diffs: dict[Any, Any] = {}
-        batfish_index = {i.name.lower(): i for i in batfish_interfaces}
+        # Batfish models each SR OS L3 router-interface (e.g. "to-r2") as a LOGICAL
+        # interface bound to a distinct PHYSICAL port interface (e.g. "1/1/c1/1"), so
+        # that a Layer-1 topology naming the port drives the L3 adjacency. Those
+        # synthetic port interfaces are L1 hardware and do not appear in the device's
+        # `info json /state router "Base" interface` tree (which lists only L3 router
+        # interfaces); they live in the separate `/state port` tree. Compare only the
+        # L3 interfaces here, so the port interfaces are not flagged as "extra".
+        batfish_index = {
+            i.name.lower(): i
+            for i in batfish_interfaces
+            if i.interface_type != "PHYSICAL"
+        }
         real_index = {i.name.lower(): i for i in sros_interfaces}
         for name in batfish_index.keys() - real_index.keys():
             diffs[name] = f"Extra interface in Batfish: {batfish_index[name]}"
