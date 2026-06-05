@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import re
 from dataclasses import dataclass, field
 
 
@@ -129,15 +130,34 @@ NOKIA_SRSIM = VendorProfile(
     netmiko_device_type="nokia_sros",
     interface_prefix="",  # unused; SR OS ports are mapped from eL-M-cC-P
     interface_offset=0,
-    # SR OS MD-CLI does not support Junos-style "| display json"; these are the
-    # plain-text show commands, verified against a running SR-SIM.
+    # SR OS exposes operational data in a separate "state" tree, navigable like config
+    # (MD-CLI User Guide §3.3). We capture it via `info /state ...`, which returns the
+    # indented MD-CLI brace-structured form -- the same key/value tree shape as the
+    # config, so the P7 validator parses it structurally instead of pyparsing show
+    # tables. We ALSO capture the legacy plain-text `show router ...` for human reading.
+    #
+    # IMPORTANT (verified on SR-SIM 26.3.R1, 2026-06-05): this simulator image does NOT
+    # support `json`/`| json`/`display json` output ("MGMT_CORE #2201: Unknown element
+    # 'json'") -- that option needs modules SR-SIM omits. So state is brace text, not
+    # JSON. List nodes (interface, neighbor) require a `*` wildcard to dump all entries;
+    # container nodes (system, route-table, bgp rib) take no key. ospf/isis return empty
+    # when not configured (no error). Paths confirmed against the running SR-SIM.
     show_commands=[
-        "admin show configuration",
+        "admin show configuration",  # config: MD-CLI brace form (parsed by Batfish)
+        # Structured state (MD-CLI brace text) -- machine-parsed by the validator:
+        "info /state system",
+        'info /state router "Base" interface *',
+        'info /state router "Base" route-table',
+        'info /state router "Base" bgp neighbor *',
+        'info /state router "Base" bgp rib',
+        'info /state router "Base" ospf *',
+        'info /state router "Base" isis *',
+        # Plain-text (human-readable, cross-check):
+        "show version",
         "show router interface",
         "show router route-table",
         "show router bgp summary",
         "show router bgp routes",
-        "show version",
         "show router ospf neighbor",
         "show router isis adjacency",
     ],
@@ -191,6 +211,15 @@ def get_profile(containerlab_kind: str) -> VendorProfile:
 def command_to_filename(command: str) -> str:
     """Convert a show command to the filename convention used by lab-validation.
 
-    Example: "show route | display json" -> "show_route_|_display_json.txt"
+    Spaces and path slashes collapse to underscores (so SR OS state paths like
+    "info /state router bgp neighbor" do not create spurious subdirectories). Shell-
+    unfriendly characters from SR OS MD-CLI paths -- double quotes around list keys and
+    the "*" list-wildcard -- are stripped. The "|" of piped commands is preserved (it is
+    part of the established Junos/EOS filename convention).
+
+    Examples:
+        "show route | display json"               -> "show_route_|_display_json.txt"
+        'info /state router "Base" interface *'   -> "info_state_router_Base_interface.txt"
     """
-    return command.replace(" ", "_") + ".txt"
+    cleaned = command.replace('"', "").replace("*", "")
+    return re.sub(r"[ /]+", "_", cleaned).strip("_") + ".txt"
