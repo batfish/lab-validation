@@ -223,25 +223,45 @@ CONTAINER_TARBALLS=$(aws s3 ls "s3://${BUCKET_NAME}/images/" 2>/dev/null \
 if [[ -n "${CONTAINER_TARBALLS}" ]]; then
     for tarball in ${CONTAINER_TARBALLS}; do
         echo "Processing container image: ${tarball}"
-        # Extract image name and tag from filename, e.g.:
-        #   cEOS64-lab-4.36.0.1F.tar.xz -> ceos:4.36.0.1F
+        # Extract image name, tag, and load method from filename.
+        #   cEOS64-lab-4.36.0.1F.tar.xz -> ceos:4.36.0.1F   (filesystem import)
+        #   srsim*.tar.xz               -> Nokia SR-SIM      (docker load)
+        # cEOS ships as a root filesystem (docker import); SR-SIM ships as a
+        # tagged OCI image (docker load restores localhost/nokia/srsim:<ver>).
         base="${tarball%.tar.xz}"
+        method="import"
+        filter_tag=""
         case "${base}" in
             cEOS64-lab-*|cEOS-lab-*)
                 version="${base#*-lab-}"
                 tag="ceos:${version}"
+                filter_tag="ceos"
+                method="import"
+                ;;
+            srsim*|*srsim*)
+                # docker load restores the tag embedded in the image
+                # (localhost/nokia/srsim:<version>); no tag to compute here.
+                tag=""
+                filter_tag="srsim"
+                method="load"
                 ;;
             *)
                 echo "  Unknown container image: ${tarball}, skipping"
                 continue
                 ;;
         esac
-        if ! image_wanted "ceos"; then
+        if ! image_wanted "${filter_tag}"; then
             echo "  Skipping ${tarball} (not in filter: ${IMAGE_FILTER})"
             continue
         fi
 
-        if docker image inspect "${tag}" &>/dev/null; then
+        if [[ "${method}" == "load" ]]; then
+            echo "  Loading Docker image from ${tarball}..."
+            aws s3 cp "s3://${BUCKET_NAME}/images/${tarball}" "/tmp/${tarball}"
+            # xz-compressed; docker load handles the decompression.
+            docker load -i "/tmp/${tarball}"
+            rm -f "/tmp/${tarball}"
+        elif docker image inspect "${tag}" &>/dev/null; then
             echo "  Already loaded: ${tag}"
         else
             echo "  Importing as ${tag}..."

@@ -84,17 +84,32 @@ def build_snapshot(
     return snapshot_dir
 
 
-def _eth_to_vendor_interface(eth_name: str, profile: NodeInfo) -> str:
-    """Convert containerlab ethN name to vendor interface name.
+def _sros_endpoint_to_port(endpoint: str) -> str:
+    """Convert a Nokia SR OS containerlab endpoint to its SR OS port name.
 
-    eth1 maps to <prefix><offset>, eth2 to <prefix><offset+1>, etc.
+    SR-SIM datapath endpoints encode the SR OS port directly: the leading
+    ``e`` is dropped and each ``-`` becomes ``/`` (install guide, Datapath
+    interfaces). For example ``e1-1-c1-1`` -> ``1/1/c1/1`` and ``e1-2-3`` ->
+    ``1/2/3``.
     """
+    return endpoint[1:].replace("-", "/")
+
+
+def _eth_to_vendor_interface(eth_name: str, node: NodeInfo) -> str:
+    """Convert a containerlab link endpoint name to a vendor interface name.
+
+    Most vendors use ``ethN`` endpoints that map to ``<prefix><offset+N-1>``.
+    Nokia SR OS instead encodes the port in the endpoint itself (eL-M-cC-P).
+    """
+    if node.profile.name == "sros":
+        return _sros_endpoint_to_port(eth_name)
+
     match = re.match(r"eth(\d+)", eth_name)
     if not match:
         return eth_name
     eth_num = int(match.group(1))
-    vendor_num = eth_num - 1 + profile.profile.interface_offset
-    prefix = profile.profile.interface_prefix
+    vendor_num = eth_num - 1 + node.profile.interface_offset
+    prefix = node.profile.interface_prefix
     return f"{prefix}{vendor_num}"
 
 

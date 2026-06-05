@@ -1,8 +1,9 @@
 # Lab Creation Infrastructure
 
 Tools for creating new lab-validation snapshots using
-[containerlab](https://containerlab.dev/) on AWS EC2 with Juniper
-vJunos and Arista cEOS images.
+[containerlab](https://containerlab.dev/) on AWS EC2. Supported network OSes
+include Juniper vJunos, Arista cEOS, Cisco NX-OS (N9Kv), and Nokia SR OS
+(SR-SIM) — see the Supported Vendor Profiles table below.
 
 ## Overview
 
@@ -102,6 +103,12 @@ few starting points:
 | eth2         | ge-0/0/1              | Ethernet2     | Ethernet1/2  |
 | eth3         | ge-0/0/2              | Ethernet3     | Ethernet1/3  |
 | ethN         | ge-0/0/(N-1)          | EthernetN     | Ethernet1/N  |
+
+**Nokia SR OS (SR-SIM)** does not use `ethN` endpoints. Its containerlab link
+endpoints encode the SR OS port directly: drop the leading `e` and replace
+each `-` with `/`. For example `e1-1-c1-1` → port `1/1/c1/1` (card 1, MDA 1,
+connector 1, port 1) and `e1-2-3` → `1/2/3`. The port must also be provisioned
+and broken out in the startup config; see `examples/srsim-ceos-ebgp/`.
 
 ### Step 2: Launch EC2 and Upload
 
@@ -416,6 +423,22 @@ Run on EC2 as `PYTHONPATH=src python3 -m lab_builder <command>`:
 | `show version`             | `show/<node>/`    | Software version     |
 | `show vrf`                 | `show/<node>/`    | VRF info             |
 
+### Nokia SR OS (SR-SIM)
+
+SR OS runs MD-CLI and does not support Junos-style `| display json`; these are
+plain-text outputs.
+
+| Command                      | Goes to           | Purpose              |
+| ---------------------------- | ----------------- | -------------------- |
+| `admin show configuration`   | `configs/<node>/` | Device config        |
+| `show router interface`      | `show/<node>/`    | Interface properties |
+| `show router route-table`    | `show/<node>/`    | Main routing table   |
+| `show router bgp summary`    | `show/<node>/`    | BGP peer status      |
+| `show router bgp routes`     | `show/<node>/`    | BGP routes           |
+| `show version`               | `show/<node>/`    | Software version     |
+| `show router ospf neighbor`  | `show/<node>/`    | OSPF status          |
+| `show router isis adjacency` | `show/<node>/`    | ISIS status          |
+
 ## Snapshot Directory Structure
 
 The output matches the lab-validation framework's expected layout:
@@ -534,6 +557,10 @@ the large Juniper VM images and reducing bootstrap time from ~5 min to
 | `juniper_crpd`          | Junos cRPD          | root / clab123    | ~1 min    | No           |
 | `arista_ceos`           | Arista EOS          | admin / admin     | ~1 min    | No           |
 | `cisco_n9kv`            | Cisco NX-OS (N9Kv)  | admin / admin     | 5-10 min  | Yes          |
+| `nokia_srsim`           | Nokia SR OS (SR-1)  | admin / admin     | ~2 min    | No\*         |
+
+\* SR-SIM is a native container, but the install guide specifies Intel x86
+and will not boot on ARM. Our default m8i instances satisfy this.
 
 **Junos platform selection**: vJunos-router (MX) does NOT support `family
 ethernet-switching`, VLANs with IRBs, or EVPN bridge domains. Labs that use
@@ -547,6 +574,17 @@ under a minute. Startup configs use standard EOS CLI format. cEOS-64
 **Cisco NX-OS (N9Kv)**: Nexus 9000v virtual switch image running NX-OS.
 Requires KVM (vrnetlab-based). Startup configs use standard NX-OS CLI
 format. Interface mapping: eth1 → Ethernet1/1, eth2 → Ethernet1/2, etc.
+
+**Nokia SR OS (SR-SIM)**: Native container loaded from `srsim.tar.xz` via
+`docker load` (image tag `localhost/nokia/srsim:<version>`). Requires a Nokia
+license mounted at `/nokia/license/license.txt`; in containerlab this is the
+`license:` key under the `nokia_srsim` kind, and SR-SIM will not boot without
+a valid one (license rejection happens inside the container, not at deploy).
+Datapath interface mapping differs from other vendors: the containerlab link
+endpoint encodes the SR OS port directly (`e1-1-c1-1` → port `1/1/c1/1`).
+Batfish does not yet model SR OS, so SR OS labs capture source-of-truth data
+rather than being validated against Batfish. See
+`examples/srsim-ceos-ebgp/`.
 
 ## Troubleshooting
 
