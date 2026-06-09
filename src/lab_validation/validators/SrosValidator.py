@@ -280,6 +280,14 @@ class SrosValidator(VendorValidator):
         if sros_route.as_path != list(batfish_route.as_path):
             cost.append(("as_path", 1.0))
 
+        # Communities on the learned route. SR OS carries them on the route's
+        # attr-set; compare as sets against Batfish's communities. (On the current
+        # labs both sides are empty for learned routes — the communities r1 *sets*
+        # appear on the advertised rib-out routes, validated cross-vendor by the
+        # cEOS oracle and, on the SR OS side, parseable via parse_bgp_rib_out_json.)
+        if set(sros_route.communities) != set(batfish_route.communities):
+            cost.append(("communities", 1.0))
+
         return cost
 
     @staticmethod

@@ -11,6 +11,7 @@ from pathlib import Path
 from lab_validation.parsers.sros.commands.bgp_routes import (
     _parse_as_path,
     parse_bgp_rib_json,
+    parse_bgp_rib_out_json,
 )
 from lab_validation.parsers.sros.commands.interfaces import parse_interface_state_json
 from lab_validation.parsers.sros.commands.routes import parse_route_table_json
@@ -184,6 +185,37 @@ def test_parse_bgp_rib_full_model() -> None:
             best=True,
         ),
     ]
+
+
+def test_parse_bgp_rib_out_carries_advertised_attributes() -> None:
+    """The advertised (rib-out-post) routes carry the export-policy-set attributes
+    — community, MED, prepended AS-path — joined from their attr-sets.
+
+    Uses the L5 policy lab where r1 sets community 65001:100 / MED 50 / prepend on
+    its system prefix and MED 200 on its loopback. This confirms communities and
+    advanced BGP attributes ARE present in the SR OS bgp-rib state (on the rib-out
+    view), not just observable via the cEOS peer.
+    """
+    bgp_rib = (
+        Path(__file__).resolve().parents[4]
+        / "snapshots"
+        / "sros_bgp_policy"
+        / "show"
+        / "r1"
+        / "info_json_state_router_Base_bgp_rib.txt"
+    ).read_text()
+    advertised = {r.network: r for r in parse_bgp_rib_out_json(bgp_rib, "default")}
+
+    system = advertised["1.1.1.1/32"]
+    assert system.communities == ("65001:100",)
+    assert system.med == 50
+    assert list(system.as_path) == [65001, 65001, 65001]
+    assert system.rib_view == "rib-out-post"
+
+    lo = advertised["192.168.1.1/32"]
+    assert lo.communities == ()
+    assert lo.med == 200
+    assert list(lo.as_path) == [65001]
 
 
 def test_parse_bgp_rib_med_join() -> None:

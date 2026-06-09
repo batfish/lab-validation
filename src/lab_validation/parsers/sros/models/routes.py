@@ -30,10 +30,16 @@ class SrosIpRoute:
 
 @attr.s(frozen=True, auto_attribs=True, kw_only=True)
 class SrosBgpRoute:
-    """One best route from the BGP local RIB (``info json /state router "Base"
-    bgp rib``), with attributes joined in from the rib's attribute-set table.
+    """One route from a BGP RIB view (``info json /state router "Base" bgp rib``),
+    with path attributes joined in from the rib's attribute-set table.
 
-    ``owner`` is ``local`` (locally originated) or ``bgp`` (learned from a peer).
+    The bgp-rib state has several views, each with its own attr-sets: ``local-rib``
+    (the local RIB), ``rib-in-pre``/``rib-in-post`` (received from a peer, before/
+    after import policy), and ``rib-out-post`` (advertised to a peer, after export
+    policy). ``rib_view`` records which view this route came from. ``owner`` is
+    ``local`` (locally originated) or ``bgp`` (learned). ``communities`` are the
+    standard communities on the attr-set; extended/large communities and other
+    advanced attributes are available in the same attr-set and can be added here.
     """
 
     network: str = attr.ib(converter=normalized_network)
@@ -44,6 +50,9 @@ class SrosBgpRoute:
     origin_type: str
     med: int | None = attr.ib(converter=optional_int_converter)
     as_path: Sequence[int]
-    used: bool
-    valid: bool
-    best: bool
+    communities: Sequence[str] = ()
+    used: bool = False
+    valid: bool = False
+    best: bool = False
+    # Which RIB view this route came from: "local-rib", "rib-in-post", "rib-out-post", etc.
+    rib_view: str = "local-rib"
