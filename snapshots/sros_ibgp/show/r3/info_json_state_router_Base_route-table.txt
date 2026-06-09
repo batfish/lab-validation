@@ -1,0 +1,396 @@
+{
+    "nokia-state:unicast": {
+        "ipv4": {
+            "statistics": {
+                "aggregate": {
+                    "active-routes": 0,
+                    "available-routes": 0
+                },
+                "arp-nd": {
+                    "active-routes": 0,
+                    "available-routes": 0
+                },
+                "bgp": {
+                    "active-routes": 1,
+                    "available-routes": 1
+                },
+                "bgp-backup": {
+                    "active-routes": 0,
+                    "available-routes": 0
+                },
+                "bgp-label": {
+                    "active-routes": 0,
+                    "available-routes": 0
+                },
+                "dhcp-client": {
+                    "active-routes": 0,
+                    "available-routes": 0
+                },
+                "direct": {
+                    "active-routes": 2,
+                    "available-routes": 2
+                },
+                "esm-bcast": {
+                    "active-routes": 0,
+                    "available-routes": 0
+                },
+                "host": {
+                    "active-routes": 0,
+                    "available-routes": 1
+                },
+                "isis": {
+                    "active-routes": 0,
+                    "available-routes": 0
+                },
+                "isis-lfa": {
+                    "active-routes": 0,
+                    "available-routes": 0
+                },
+                "ldp": {
+                    "active-routes": 0,
+                    "available-routes": 0
+                },
+                "managed": {
+                    "active-routes": 0,
+                    "available-routes": 0
+                },
+                "nat": {
+                    "active-routes": 0,
+                    "available-routes": 0
+                },
+                "ospf": {
+                    "active-routes": 0,
+                    "available-routes": 0
+                },
+                "ospf-lfa": {
+                    "active-routes": 0,
+                    "available-routes": 0
+                },
+                "ospfv3": {
+                    "active-routes": 0,
+                    "available-routes": 0
+                },
+                "ospfv3-lfa": {
+                    "active-routes": 0,
+                    "available-routes": 0
+                },
+                "periodic": {
+                    "active-routes": 0,
+                    "available-routes": 0
+                },
+                "rib-api": {
+                    "active-routes": 0,
+                    "available-routes": 0
+                },
+                "rip": {
+                    "active-routes": 0,
+                    "available-routes": 0
+                },
+                "static": {
+                    "active-routes": 0,
+                    "available-routes": 0
+                },
+                "sub-mgmt": {
+                    "active-routes": 0,
+                    "available-routes": 0
+                },
+                "video": {
+                    "active-routes": 0,
+                    "available-routes": 0
+                },
+                "vpn-leak": {
+                    "active-routes": 0,
+                    "available-routes": 0
+                }
+            },
+            "route": [
+                {
+                    "ipv4-prefix": "1.1.1.1\/32",
+                    "age": 225,
+                    "instance": 0,
+                    "flags": "",
+                    "preference": 170,
+                    "protocol": "bgp",
+                    "nexthop": [
+                        {
+                            "nexthop-index": 0,
+                            "flags": "nh-is-indirect",
+                            "metric": 0,
+                            "nexthop-ip": "10.0.1.0",
+                            "resolving-nexthop": [
+                                {
+                                    "resolving-nexthop-index": 0,
+                                    "flags": "",
+                                    "if-index": 2,
+                                    "if-vrtr-id": 1,
+                                    "metric": 0,
+                                    "nexthop-ip": "10.0.1.0"
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "ipv4-prefix": "3.3.3.3\/32",
+                    "age": 380,
+                    "instance": 0,
+                    "flags": "",
+                    "preference": 0,
+                    "protocol": "local",
+                    "nexthop": [
+                        {
+                            "nexthop-index": 0,
+                            "flags": "",
+                            "if-index": 1,
+                            "if-vrtr-id": 1,
+                            "metric": 0
+                        }
+                    ]
+                },
+                {
+                    "ipv4-prefix": "10.0.1.0\/31",
+                    "age": 367,
+                    "instance": 0,
+                    "flags": "",
+                    "preference": 0,
+                    "protocol": "local",
+                    "nexthop": [
+                        {
+                            "nexthop-index": 0,
+                            "flags": "",
+                            "if-index": 2,
+                            "if-vrtr-id": 1,
+                            "metric": 0
+                        }
+                    ]
+                }
+            ]
+        },
+        "ipv6": {
+            "statistics": {
+                "aggregate": {
+                    "active-routes": 0,
+                    "available-routes": 0
+                },
+                "arp-nd": {
+                    "active-routes": 0,
+                    "available-routes": 0
+                },
+                "bgp": {
+                    "active-routes": 0,
+                    "available-routes": 0
+                },
+                "bgp-backup": {
+                    "active-routes": 0,
+                    "available-routes": 0
+                },
+                "bgp-label": {
+                    "active-routes": 0,
+                    "available-routes": 0
+                },
+                "dhcp-client": {
+                    "active-routes": 0,
+                    "available-routes": 0
+                },
+                "dhcpv6-bh": {
+                    "active-routes": 0,
+                    "available-routes": 0
+                },
+                "dhcpv6-na": {
+                    "active-routes": 0,
+                    "available-routes": 0
+                },
+                "dhcpv6-pd": {
+                    "active-routes": 0,
+                    "available-routes": 0
+                },
+                "dhcpv6-ta": {
+                    "active-routes": 0,
+                    "available-routes": 0
+                },
+                "direct": {
+                    "active-routes": 0,
+                    "available-routes": 0
+                },
+                "host": {
+                    "active-routes": 0,
+                    "available-routes": 0
+                },
+                "isis": {
+                    "active-routes": 0,
+                    "available-routes": 0
+                },
+                "isis-lfa": {
+                    "active-routes": 0,
+                    "available-routes": 0
+                },
+                "ldp": {
+                    "active-routes": 0,
+                    "available-routes": 0
+                },
+                "managed": {
+                    "active-routes": 0,
+                    "available-routes": 0
+                },
+                "nat": {
+                    "active-routes": 0,
+                    "available-routes": 0
+                },
+                "nd-ra": {
+                    "active-routes": 0,
+                    "available-routes": 0
+                },
+                "ospfv3": {
+                    "active-routes": 0,
+                    "available-routes": 0
+                },
+                "ospfv3-lfa": {
+                    "active-routes": 0,
+                    "available-routes": 0
+                },
+                "periodic": {
+                    "active-routes": 0,
+                    "available-routes": 0
+                },
+                "rib-api": {
+                    "active-routes": 0,
+                    "available-routes": 0
+                },
+                "rip": {
+                    "active-routes": 0,
+                    "available-routes": 0
+                },
+                "static": {
+                    "active-routes": 0,
+                    "available-routes": 0
+                },
+                "srv6": {
+                    "active-routes": 0,
+                    "available-routes": 0
+                },
+                "srv6-policy": {
+                    "active-routes": 0,
+                    "available-routes": 0
+                },
+                "sub-mgmt": {
+                    "active-routes": 0,
+                    "available-routes": 0
+                },
+                "video": {
+                    "active-routes": 0,
+                    "available-routes": 0
+                },
+                "vpn-leak": {
+                    "active-routes": 0,
+                    "available-routes": 0
+                }
+            }
+        }
+    },
+    "nokia-state:multicast": {
+        "ipv4": {
+            "statistics": {
+                "bgp": {
+                    "active-routes": 0,
+                    "available-routes": 0
+                },
+                "direct": {
+                    "active-routes": 2,
+                    "available-routes": 2
+                },
+                "host": {
+                    "active-routes": 0,
+                    "available-routes": 1
+                },
+                "isis": {
+                    "active-routes": 0,
+                    "available-routes": 0
+                },
+                "ospf": {
+                    "active-routes": 0,
+                    "available-routes": 0
+                },
+                "ospfv3": {
+                    "active-routes": 0,
+                    "available-routes": 0
+                },
+                "static": {
+                    "active-routes": 0,
+                    "available-routes": 0
+                },
+                "video": {
+                    "active-routes": 0,
+                    "available-routes": 0
+                }
+            },
+            "route": [
+                {
+                    "ipv4-prefix": "3.3.3.3\/32",
+                    "age": 380,
+                    "instance": 0,
+                    "flags": "",
+                    "preference": 0,
+                    "protocol": "local",
+                    "nexthop": [
+                        {
+                            "nexthop-index": 0,
+                            "flags": "",
+                            "if-index": 1,
+                            "if-vrtr-id": 1,
+                            "metric": 0
+                        }
+                    ]
+                },
+                {
+                    "ipv4-prefix": "10.0.1.0\/31",
+                    "age": 367,
+                    "instance": 0,
+                    "flags": "",
+                    "preference": 0,
+                    "protocol": "local",
+                    "nexthop": [
+                        {
+                            "nexthop-index": 0,
+                            "flags": "",
+                            "if-index": 2,
+                            "if-vrtr-id": 1,
+                            "metric": 0
+                        }
+                    ]
+                }
+            ]
+        },
+        "ipv6": {
+            "statistics": {
+                "bgp": {
+                    "active-routes": 0,
+                    "available-routes": 0
+                },
+                "direct": {
+                    "active-routes": 0,
+                    "available-routes": 0
+                },
+                "host": {
+                    "active-routes": 0,
+                    "available-routes": 0
+                },
+                "isis": {
+                    "active-routes": 0,
+                    "available-routes": 0
+                },
+                "ospfv3": {
+                    "active-routes": 0,
+                    "available-routes": 0
+                },
+                "static": {
+                    "active-routes": 0,
+                    "available-routes": 0
+                },
+                "video": {
+                    "active-routes": 0,
+                    "available-routes": 0
+                }
+            }
+        }
+    }
+}

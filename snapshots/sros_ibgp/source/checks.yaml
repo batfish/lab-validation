@@ -1,0 +1,43 @@
+# Preconditions for the L3 iBGP lab. Run with:
+#   python -m lab_builder validate topology.clab.yml --checks checks.yaml
+#
+# Verifies both the r1<->r2 eBGP and r1<->r3 iBGP sessions are up and routes
+# propagated before collecting data.
+
+checks:
+  # r1 (SR-SIM) side
+  - type: bgp_peer_established
+    node: r1
+    neighbor: 10.0.0.1
+    description: r1 eBGP to r2 established
+  - type: bgp_peer_established
+    node: r1
+    neighbor: 10.0.1.1
+    description: r1 iBGP to r3 established
+  - type: route_exists
+    node: r1
+    table: Base
+    prefix: 3.3.3.3/32
+    description: r1 learned r3 system via iBGP (default-accept)
+
+  # r3 (SR-SIM) side
+  - type: bgp_peer_established
+    node: r3
+    neighbor: 10.0.1.0
+    description: r3 iBGP to r1 established
+  - type: route_exists
+    node: r3
+    table: Base
+    prefix: 1.1.1.1/32
+    description: r3 learned r1 system via iBGP
+
+  # r2 (cEOS) side
+  - type: bgp_peer_established
+    node: r2
+    neighbor: 10.0.0.0
+    description: r2 eBGP to r1 established
+  - type: route_exists
+    node: r2
+    table: default
+    prefix: 1.1.1.1/32
+    description: r2 learned r1 system address via eBGP

@@ -40,13 +40,16 @@ from .vendor_validator import VendorValidator
 # SR OS "Base" router instance == Batfish default VRF.
 _BASE_VRF = "default"
 
-# SR OS route-table owner string -> Batfish main-RIB protocol string.
+# SR OS route-table protocol string -> the set of Batfish main-RIB protocol
+# strings that are an acceptable match. SR OS reports every BGP-learned route
+# (eBGP or iBGP) as protocol "bgp" in its route-table, whereas Batfish
+# distinguishes "bgp" (eBGP) from "ibgp", so SR OS "bgp" matches either.
 _PROTOCOL_MAP = {
-    "local": "connected",
-    "bgp": "bgp",
-    "static": "static",
-    "isis": "isis",
-    "ospf": "ospf",
+    "local": {"connected"},
+    "bgp": {"bgp", "ibgp"},
+    "static": {"static"},
+    "isis": {"isis"},
+    "ospf": {"ospf"},
 }
 
 
@@ -185,8 +188,8 @@ class SrosValidator(VendorValidator):
 
     @staticmethod
     def _protocol_cost(sros_protocol: str, batfish_protocol: str) -> CostResult:
-        mapped = _PROTOCOL_MAP.get(sros_protocol, sros_protocol)
-        if mapped == batfish_protocol:
+        accepted = _PROTOCOL_MAP.get(sros_protocol, {sros_protocol})
+        if batfish_protocol in accepted:
             return []
         return [("protocol", math.inf)]
 

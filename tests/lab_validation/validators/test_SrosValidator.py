@@ -108,6 +108,9 @@ def _sros_bgp_route(**kwargs) -> SrosBgpRoute:
 def test_protocol_cost() -> None:
     assert SrosValidator._protocol_cost("local", "connected") == []
     assert SrosValidator._protocol_cost("bgp", "bgp") == []
+    # SR OS reports both eBGP and iBGP learned routes as "bgp"; Batfish labels an
+    # iBGP-learned main-RIB route "ibgp", so SR OS "bgp" must match either.
+    assert SrosValidator._protocol_cost("bgp", "ibgp") == []
     assert SrosValidator._protocol_cost("static", "static") == []
     assert SrosValidator._protocol_cost("isis", "isis") == []
     # Incompatible protocols never pair.
