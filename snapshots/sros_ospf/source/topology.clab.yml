@@ -1,0 +1,36 @@
+# L2 — OSPF single area: two Nokia SR-SIM routers.
+#
+# Climbs the SR-OS ladder rung L2 (P8-LADDER.md): r1 and r3 (both SR-OS) run
+# OSPF in area 0 over a point-to-point link, each advertising its system
+# loopback. First greenfield IGP rung — exercises OspfProcess/area/interface
+# conversion and OSPF route validation in the main RIB.
+#
+# Topology:
+#   r1 (SR-SIM)  system 1.1.1.1/32  [1/1/c1/1] 10.0.1.0/31
+#       |  OSPF area 0 (point-to-point)
+#   r3 (SR-SIM)  system 3.3.3.3/32  [1/1/c1/1] 10.0.1.1/31
+#
+# After convergence each router learns the other's system /32 via OSPF.
+#
+# REQUIRES A LICENSE at /nokia/license/license.txt (the `license:` key below).
+
+name: srsim-ospf
+
+topology:
+  kinds:
+    nokia_srsim:
+      image: localhost/nokia/srsim:26.3.R1
+      license: /home/ubuntu/srsim-license.txt
+
+  nodes:
+    r1:
+      kind: nokia_srsim
+      type: SR-1
+      startup-config: configs/r1.cfg
+    r3:
+      kind: nokia_srsim
+      type: SR-1
+      startup-config: configs/r3.cfg
+
+  links:
+    - endpoints: ["r1:e1-1-c1-1", "r3:e1-1-c1-1"]

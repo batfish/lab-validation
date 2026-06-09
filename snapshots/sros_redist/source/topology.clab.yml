@@ -1,0 +1,36 @@
+# L6 — Redistribution: Nokia SR-SIM (SR OS) + Arista cEOS.
+#
+# Climbs the SR-OS ladder rung L6 (P8-LADDER.md): r1 has a static route and an
+# eBGP export policy that redistributes static routes into BGP (from protocol
+# name [static]). The cEOS oracle (r2) validates that the redistributed static
+# prefix appears in r2's BGP table with the right origin/as-path.
+#
+# Topology:
+#   r1 (SR-SIM, AS 65001) ---[1/1/c1/1]---[Ethernet1]--- r2 (cEOS, AS 65002)
+#     system 1.1.1.1/32                                   Loopback0 2.2.2.2/32
+#     static 192.0.2.0/24 -> 10.0.0.1 (next-hop, redistributed into BGP)
+#     link 10.0.0.0/31                                    link 10.0.0.1/31
+#
+# REQUIRES A LICENSE at /nokia/license/license.txt (the `license:` key below).
+
+name: srsim-ceos-redist
+
+topology:
+  kinds:
+    nokia_srsim:
+      image: localhost/nokia/srsim:26.3.R1
+      license: /home/ubuntu/srsim-license.txt
+    arista_ceos:
+      image: ceos:4.36.0.1F
+
+  nodes:
+    r1:
+      kind: nokia_srsim
+      type: SR-1
+      startup-config: configs/r1.cfg
+    r2:
+      kind: arista_ceos
+      startup-config: configs/r2.cfg
+
+  links:
+    - endpoints: ["r1:e1-1-c1-1", "r2:eth1"]

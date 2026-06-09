@@ -1,0 +1,24 @@
+# L7 — Multi-VRF (VPRN): single Nokia SR-SIM.
+#
+# Climbs the SR-OS ladder rung L7 (P8-LADDER.md): r1 has the Base router plus a
+# VPRN service "red" with its own loopback interface in a separate VRF. Validates
+# VRF separation — the VPRN's 172.16.0.1/32 is in the "red" VRF, not in Base, and
+# Base's routes are not in red.
+#
+# Single-node lab: VRF separation is observable on one device (no peer needed).
+#
+# REQUIRES A LICENSE at /nokia/license/license.txt (the `license:` key below).
+
+name: srsim-vprn
+
+topology:
+  kinds:
+    nokia_srsim:
+      image: localhost/nokia/srsim:26.3.R1
+      license: /home/ubuntu/srsim-license.txt
+
+  nodes:
+    r1:
+      kind: nokia_srsim
+      type: SR-1
+      startup-config: configs/r1.cfg

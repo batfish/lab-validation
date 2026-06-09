@@ -158,6 +158,12 @@ NOKIA_SRSIM = VendorProfile(
         'info json /state router "Base" bgp rib',
         'info json /state router "Base" ospf *',
         'info json /state router "Base" isis *',
+        # VPRN (multi-VRF) state: a non-Base router instance is a `service vprn`, whose
+        # state lives under `/state service vprn "<name>" ...` (same nokia-state schema as
+        # the Base route-table/interface trees). Captures the "red" VPRN used by the L7 lab;
+        # returns empty when no such VPRN is configured.
+        'info json /state service vprn "red" route-table',
+        'info json /state service vprn "red" interface *',
         # Plain-text (human-readable, cross-check):
         "show version",
         "show router interface",

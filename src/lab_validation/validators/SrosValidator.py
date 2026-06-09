@@ -288,12 +288,44 @@ class SrosValidator(VendorValidator):
     def _parse_interfaces(self) -> Sequence[SrosInterface]:
         path = self.device_path / self.INTERFACE_FILENAME
         assert path.is_file(), f"missing interface state file: {path}"
-        return parse_interface_state_json(path.read_text())
+        interfaces: list[SrosInterface] = list(
+            parse_interface_state_json(path.read_text())
+        )
+        # VPRN (multi-VRF) interfaces, if collected: a file named
+        # info_json_state_service_vprn_<name>_interface.txt holds the VPRN's L3
+        # interfaces (same schema as Base). Batfish models them as interfaces in
+        # the VPRN's VRF; interface comparison is by name, so include them so the
+        # VPRN interfaces are validated, not flagged as extra Batfish interfaces.
+        for vprn_path in sorted(
+            self.device_path.glob("info_json_state_service_vprn_*_interface.txt")
+        ):
+            interfaces.extend(parse_interface_state_json(vprn_path.read_text()))
+        return interfaces
 
     def _parse_routes(self) -> Sequence[SrosIpRoute]:
         path = self.device_path / self.ROUTE_TABLE_FILENAME
         assert path.is_file(), f"missing route-table state file: {path}"
-        return parse_route_table_json(path.read_text(), _BASE_VRF)
+        routes: list[SrosIpRoute] = list(
+            parse_route_table_json(path.read_text(), _BASE_VRF)
+        )
+        # VPRN (multi-VRF) route-tables, if collected: a file named
+        # info_json_state_service_vprn_<name>_route-table.txt holds the VPRN's
+        # routes (same nokia-state schema as Base). The VPRN's Batfish VRF is the
+        # service-name, so tag these routes with <name> to compare against the
+        # corresponding Batfish VRF — proving VRF separation, not just Base.
+        for vprn_path in sorted(
+            self.device_path.glob("info_json_state_service_vprn_*_route-table.txt")
+        ):
+            vrf = self._vprn_name_from_filename(vprn_path.name)
+            routes.extend(parse_route_table_json(vprn_path.read_text(), vrf))
+        return routes
+
+    @staticmethod
+    def _vprn_name_from_filename(filename: str) -> str:
+        """Extract the VPRN service-name from its route-table state filename."""
+        prefix = "info_json_state_service_vprn_"
+        suffix = "_route-table.txt"
+        return filename[len(prefix) : -len(suffix)]
 
     def _parse_bgp_routes(self) -> Sequence[SrosBgpRoute]:
         path = self.device_path / self.BGP_RIB_FILENAME

@@ -1,0 +1,48 @@
+# L4 — BGP route reflection: three Nokia SR-SIM routers in AS 65001.
+#
+# Climbs the SR-OS ladder rung L4 (P8-LADDER.md): r1 is a route reflector with
+# two iBGP clients (r2, r3) in one cluster. The clients peer only with r1; they
+# learn each other's system loopback via reflection through r1, even though they
+# have no direct iBGP session.
+#
+# Topology:
+#   r2 (SR-SIM)  system 2.2.2.2/32  [1/1/c1/1] 10.0.0.1/31
+#       |  iBGP (client)
+#   r1 (SR-SIM, RR)  system 1.1.1.1/32  cluster-id 1.1.1.1
+#       |  [1/1/c1/1] 10.0.0.0/31     [1/1/c2/1] 10.0.1.0/31
+#       |  iBGP (client)
+#   r3 (SR-SIM)  system 3.3.3.3/32  [1/1/c1/1] 10.0.1.1/31
+#
+# After convergence: r2 learns 3.3.3.3/32 and r3 learns 2.2.2.2/32, both
+# reflected by r1. r1's client group sets next-hop-self so the reflected routes
+# carry r1's address as next-hop — the clients have no IGP underlay, so without
+# it they would receive the reflected route but mark it invalid (unresolvable
+# originator next-hop) and not install it. (Confirmed on the live lab.)
+#
+# REQUIRES A LICENSE at /nokia/license/license.txt (the `license:` key below).
+
+name: srsim-rr
+
+topology:
+  kinds:
+    nokia_srsim:
+      image: localhost/nokia/srsim:26.3.R1
+      license: /home/ubuntu/srsim-license.txt
+
+  nodes:
+    r1:
+      kind: nokia_srsim
+      type: SR-1
+      startup-config: configs/r1.cfg
+    r2:
+      kind: nokia_srsim
+      type: SR-1
+      startup-config: configs/r2.cfg
+    r3:
+      kind: nokia_srsim
+      type: SR-1
+      startup-config: configs/r3.cfg
+
+  links:
+    - endpoints: ["r1:e1-1-c1-1", "r2:e1-1-c1-1"]
+    - endpoints: ["r1:e1-1-c2-1", "r3:e1-1-c1-1"]

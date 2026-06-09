@@ -19,6 +19,11 @@ def parse_bgp_rib_json(text: str, vrf: str) -> Sequence[SrosBgpRoute]:
     ``label-ipv4`` table is skipped.
     """
     obj = json.loads(text)
+    # When BGP is not configured on the router, `info json /state ... bgp rib`
+    # returns an empty JSON array (no ipv4-unicast/attr-sets objects at all).
+    # That is a valid "no BGP routes" state, not a parse error.
+    if not obj:
+        return []
     assert _IPV4_UNICAST in obj, f"missing '{_IPV4_UNICAST}' in bgp rib"
     attr_sets = _parse_attr_sets(obj.get(_ATTR_SETS, {}))
 
