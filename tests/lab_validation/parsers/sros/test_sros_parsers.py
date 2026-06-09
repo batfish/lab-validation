@@ -37,10 +37,20 @@ def test_parse_interfaces_full_model() -> None:
     )
     assert ifaces == [
         SrosInterface(
-            name="system", oper_up=True, ipv4_up=True, primary_address="1.1.1.1"
+            name="system",
+            oper_up=True,
+            ipv4_up=True,
+            primary_address="1.1.1.1",
+            if_index=1,
+            mtu=1500,
         ),
         SrosInterface(
-            name="to-r2", oper_up=True, ipv4_up=True, primary_address="10.0.0.0"
+            name="to-r2",
+            oper_up=True,
+            ipv4_up=True,
+            primary_address="10.0.0.0",
+            if_index=2,
+            mtu=8922,
         ),
     ]
 
@@ -61,9 +71,15 @@ def test_parse_interfaces_no_ipv4_container() -> None:
 
 
 def test_parse_route_table_full_model() -> None:
-    """Whole-object equality of every route parsed from the captured route-table."""
+    """Whole-object equality of every route parsed from the captured route-table.
+
+    Passes the if-index -> name map (system=1, to-r2=2) so connected-route
+    next-hop interfaces resolve; the learned BGP route keeps its next-hop IP.
+    """
     routes = parse_route_table_json(
-        _read("info_json_state_router_Base_route-table.txt"), "default"
+        _read("info_json_state_router_Base_route-table.txt"),
+        "default",
+        {1: "system", 2: "to-r2"},
     )
     assert routes == [
         SrosIpRoute(
@@ -71,6 +87,7 @@ def test_parse_route_table_full_model() -> None:
             vrf="default",
             protocol="local",
             next_hop_ip=None,
+            next_hop_interface="system",
             preference=0,
             metric=0,
         ),
@@ -79,6 +96,7 @@ def test_parse_route_table_full_model() -> None:
             vrf="default",
             protocol="bgp",
             next_hop_ip="10.0.0.1",
+            next_hop_interface=None,
             preference=170,
             metric=0,
         ),
@@ -87,6 +105,7 @@ def test_parse_route_table_full_model() -> None:
             vrf="default",
             protocol="local",
             next_hop_ip=None,
+            next_hop_interface="to-r2",
             preference=0,
             metric=0,
         ),

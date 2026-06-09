@@ -121,22 +121,44 @@ def test_protocol_cost() -> None:
 
 
 def test_next_hop_cost_local_route() -> None:
-    # A local route (no SR OS next-hop IP) matches a Batfish interface next-hop.
+    # A local/connected route's next-hop is its egress interface (resolved from
+    # if-index): it matches a Batfish NextHopInterface with the SAME name...
     local = SrosIpRoute(
         network="1.1.1.1/32",
         vrf="default",
         protocol="local",
         next_hop_ip=None,
+        next_hop_interface="system",
         preference=0,
         metric=0,
     )
     assert (
         SrosValidator._next_hop_cost(local, NextHopInterface(interface="system")) == []
     )
-    assert SrosValidator._next_hop_cost(local, NextHopDiscard()) == []
-    # ...but mismatches a Batfish IP next-hop.
+    # ...but a different interface name mismatches.
+    assert SrosValidator._next_hop_cost(local, NextHopInterface(interface="to-r2")) == [
+        ("nhint", 1.0)
+    ]
+    # ...and a Batfish IP next-hop mismatches (SR OS reported an interface).
     assert SrosValidator._next_hop_cost(local, NextHopIp(ip="10.0.0.1")) == [
-        ("asymmetric nhip", 5.0)
+        ("nhip", 1.0)
+    ]
+
+
+def test_next_hop_cost_blackhole() -> None:
+    # A blackhole route has neither next-hop IP nor interface; matches discard.
+    bh = SrosIpRoute(
+        network="198.51.100.0/24",
+        vrf="default",
+        protocol="static",
+        next_hop_ip=None,
+        next_hop_interface=None,
+        preference=5,
+        metric=1,
+    )
+    assert SrosValidator._next_hop_cost(bh, NextHopDiscard()) == []
+    assert SrosValidator._next_hop_cost(bh, NextHopIp(ip="10.0.0.1")) == [
+        ("asymmetric discard next hop", 5.0)
     ]
 
 
@@ -154,18 +176,23 @@ def test_next_hop_cost_bgp_route() -> None:
 
 
 def test_next_hop_cost_interface_with_ip() -> None:
-    # Batfish models the next-hop as an interface carrying the resolved IP (e.g. a
-    # resolved BGP next-hop). It matches the SR OS next-hop IP, else costs nhip.
-    route = _sros_route(next_hop_ip="10.0.0.1")
+    # A resolved static/IGP route reports both an egress interface (if-index) and a
+    # next-hop IP; Batfish models it as a NextHopInterface carrying that IP. Both
+    # the interface name and the IP must match.
+    route = _sros_route(next_hop_ip="10.0.0.1", next_hop_interface="to-r2")
     assert (
         SrosValidator._next_hop_cost(
             route, NextHopInterface(interface="to-r2", ip="10.0.0.1")
         )
         == []
     )
+    # wrong IP -> nhip; wrong interface -> nhint.
     assert SrosValidator._next_hop_cost(
         route, NextHopInterface(interface="to-r2", ip="9.9.9.9")
     ) == [("nhip", 1.0)]
+    assert SrosValidator._next_hop_cost(
+        route, NextHopInterface(interface="other", ip="10.0.0.1")
+    ) == [("nhint", 1.0)]
 
 
 def test_diff_routes_cost_vrf_mismatch() -> None:
@@ -263,24 +290,8 @@ def test_diff_bgp_routes_cost_as_path_mismatch() -> None:
     assert SrosValidator._diff_bgp_routes_cost(sros, _bgp_route()) == [("as_path", 1.0)]
 
 
-def test_diff_bgp_routes_cost_local_ignores_next_hop() -> None:
-    # A locally-originated route reports 0.0.0.0 in SR OS; we do not compare its
-    # next-hop against Batfish's own-address next-hop.
-    sros = SrosBgpRoute(
-        network="1.1.1.1/32",
-        vrf="default",
-        owner="local",
-        neighbor="0.0.0.0",
-        next_hop_ip="0.0.0.0",
-        origin_type="igp",
-        med=None,
-        as_path=[],
-        used=True,
-        valid=True,
-        best=True,
-    )
-    local_bgp = _bgp_route(network="1.1.1.1/32", next_hop=NextHopDiscard(), as_path=())
-    assert SrosValidator._diff_bgp_routes_cost(sros, local_bgp) == []
+# (A locally-originated route never reaches _diff_bgp_routes_cost: validate_bgp_rib_routes
+# filters to owner == "bgp" learned routes — see test_validate_bgp_rib_routes_filters_local_rib_artifacts.)
 
 
 # --- interface comparison -------------------------------------------------------
@@ -389,7 +400,11 @@ def test_compare_all_interfaces_case_insensitive() -> None:
 def test_validate_main_rib_routes_all_match() -> None:
     sros = [
         _sros_route(
-            network="1.1.1.1/32", protocol="local", next_hop_ip=None, preference=0
+            network="1.1.1.1/32",
+            protocol="local",
+            next_hop_ip=None,
+            next_hop_interface="system",
+            preference=0,
         ),
         _sros_route(network="2.2.2.2/32", protocol="bgp", next_hop_ip="10.0.0.1"),
     ]

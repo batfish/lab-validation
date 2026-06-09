@@ -195,23 +195,34 @@ class SrosValidator(VendorValidator):
 
     @staticmethod
     def _next_hop_cost(sros_route: SrosIpRoute, next_hop: NextHop) -> CostResult:
-        # A local/connected route has no next-hop IP (next-hop is the interface);
-        # Batfish models it as a NextHopInterface. Treat "SR OS has no nhip" as
-        # compatible with a Batfish interface next-hop.
-        if sros_route.next_hop_ip is None:
-            if isinstance(next_hop, (NextHopInterface, NextHopDiscard)):
+        # SR OS route next-hops come in three shapes, resolved from the route-table
+        # JSON: an egress interface (connected/local; if-index resolved to a name),
+        # a next-hop IP (BGP), or both (resolved static/IGP); a blackhole has
+        # neither. Validate the shape that SR OS reports against Batfish's NextHop.
+        nhip = sros_route.next_hop_ip
+        nhif = sros_route.next_hop_interface
+
+        # Blackhole / discard: no IP and no interface.
+        if nhip is None and nhif is None:
+            if isinstance(next_hop, NextHopDiscard):
                 return []
-            # Batfish has an IP next-hop where SR OS reports none.
-            return [("asymmetric nhip", 5.0)]
+            return [("asymmetric discard next hop", 5.0)]
+
+        cost: CostResult = []
         if isinstance(next_hop, NextHopIp):
-            if sros_route.next_hop_ip == next_hop.ip:
-                return []
-            return [("nhip", 1.0)]
-        if isinstance(next_hop, NextHopInterface):
-            if next_hop.ip is not None and next_hop.ip == sros_route.next_hop_ip:
-                return []
-            return [("nhip", 1.0)]
-        return [("asymmetric next hop", 5.0)]
+            # Batfish IP next-hop: the IP must match; SR OS should have reported one.
+            if nhip is None or nhip != next_hop.ip:
+                cost.append(("nhip", 1.0))
+        elif isinstance(next_hop, NextHopInterface):
+            # Batfish interface next-hop: the egress interface name must match the
+            # SR OS-resolved interface, and any IP on it must match SR OS's nhip.
+            if nhif is None or nhif != next_hop.interface:
+                cost.append(("nhint", 1.0))
+            if next_hop.ip is not None and nhip is not None and next_hop.ip != nhip:
+                cost.append(("nhip", 1.0))
+        else:
+            cost.append(("asymmetric next hop", 5.0))
+        return cost
 
     # --- BGP RIB ----------------------------------------------------------------
 
@@ -259,12 +270,12 @@ class SrosValidator(VendorValidator):
         ):
             cost.append(("origin_type", 1.0))
 
-        # next-hop: locally-originated routes report 0.0.0.0 in SR OS; Batfish
-        # uses a discard/own next-hop, so only compare for learned routes.
-        if sros_route.owner == "bgp":
-            cost += SrosValidator._bgp_next_hop_cost(
-                sros_route.next_hop_ip, batfish_route.next_hop
-            )
+        # These are learned routes only (validate_bgp_rib_routes filters to
+        # owner == "bgp"), so each has a real peer next-hop IP to compare against
+        # Batfish's BGP next-hop.
+        cost += SrosValidator._bgp_next_hop_cost(
+            sros_route.next_hop_ip, batfish_route.next_hop
+        )
 
         if sros_route.as_path != list(batfish_route.as_path):
             cost.append(("as_path", 1.0))
@@ -305,20 +316,41 @@ class SrosValidator(VendorValidator):
     def _parse_routes(self) -> Sequence[SrosIpRoute]:
         path = self.device_path / self.ROUTE_TABLE_FILENAME
         assert path.is_file(), f"missing route-table state file: {path}"
+        # Build an if-index -> interface-name map from the Base interface state so
+        # route nexthops that reference an egress interface by index resolve to a
+        # name (validated against Batfish's NextHopInterface).
+        base_ifmap = self._if_index_map(
+            parse_interface_state_json(
+                (self.device_path / self.INTERFACE_FILENAME).read_text()
+            )
+        )
         routes: list[SrosIpRoute] = list(
-            parse_route_table_json(path.read_text(), _BASE_VRF)
+            parse_route_table_json(path.read_text(), _BASE_VRF, base_ifmap)
         )
         # VPRN (multi-VRF) route-tables, if collected: a file named
         # info_json_state_service_vprn_<name>_route-table.txt holds the VPRN's
         # routes (same nokia-state schema as Base). The VPRN's Batfish VRF is the
         # service-name, so tag these routes with <name> to compare against the
-        # corresponding Batfish VRF — proving VRF separation, not just Base.
+        # corresponding Batfish VRF — proving VRF separation, not just Base. Use
+        # the matching VPRN interface file for that VPRN's if-index -> name map.
         for vprn_path in sorted(
             self.device_path.glob("info_json_state_service_vprn_*_route-table.txt")
         ):
             vrf = self._vprn_name_from_filename(vprn_path.name)
-            routes.extend(parse_route_table_json(vprn_path.read_text(), vrf))
+            if_path = (
+                self.device_path / f"info_json_state_service_vprn_{vrf}_interface.txt"
+            )
+            ifmap = (
+                self._if_index_map(parse_interface_state_json(if_path.read_text()))
+                if if_path.is_file()
+                else {}
+            )
+            routes.extend(parse_route_table_json(vprn_path.read_text(), vrf, ifmap))
         return routes
+
+    @staticmethod
+    def _if_index_map(interfaces: Sequence[SrosInterface]) -> dict[int, str]:
+        return {i.if_index: i.name for i in interfaces if i.if_index is not None}
 
     @staticmethod
     def _vprn_name_from_filename(filename: str) -> str:

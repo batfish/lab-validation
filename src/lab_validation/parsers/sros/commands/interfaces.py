@@ -21,6 +21,8 @@ def parse_interface_state_json(text: str) -> Sequence[SrosInterface]:
                 oper_up=entry["oper-state"] == "up",
                 ipv4_up=ipv4.get("oper-state") == "up",
                 primary_address=primary.get("oper-address"),
+                if_index=entry.get("if-index"),
+                mtu=entry.get("oper-ip-mtu"),
             )
         )
     return interfaces

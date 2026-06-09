@@ -19,6 +19,11 @@ class SrosIpRoute:
     vrf: str
     protocol: str
     next_hop_ip: str | None
+    # Egress interface name of the next-hop, resolved from the route's nexthop
+    # if-index against the interface state. Present for connected/local routes
+    # and for resolved static/IGP routes (which carry both an if-index and a
+    # nexthop-ip); None for a blackhole or an unresolved next-hop.
+    next_hop_interface: str | None = None
     preference: int | None = attr.ib(converter=optional_int_converter)
     metric: int | None = attr.ib(converter=optional_int_converter)
 

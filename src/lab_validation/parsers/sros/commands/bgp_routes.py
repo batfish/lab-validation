@@ -17,6 +17,12 @@ def parse_bgp_rib_json(text: str, vrf: str) -> Sequence[SrosBgpRoute]:
     origin, next-hop, MED, and AS-path; we join them here. Only the
     ``ipv4-unicast`` AFI/SAFI is modeled (the lab is IPv4-unicast eBGP); the
     ``label-ipv4`` table is skipped.
+
+    Communities are deliberately not parsed here: the SR OS ``bgp rib`` state
+    attr-set tree does not expose a community field (confirmed even on the L5
+    policy lab where r1 sets community 65001:100). Community correctness is
+    validated cross-vendor instead — the cEOS oracle (AristaValidator) checks the
+    communities on the routes it learns from the SR OS peer.
     """
     obj = json.loads(text)
     # When BGP is not configured on the router, `info json /state ... bgp rib`
