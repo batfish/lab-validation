@@ -1,0 +1,18 @@
+# Preconditions for the L8 deliberate-misconfig lab. Run with:
+#   python -m lab_builder validate topology.clab.yml --checks checks.yaml
+#
+# This lab's POINT is a broken eBGP session (AS mismatch). So we do NOT gate on
+# BGP convergence — only on the data-plane interfaces being up, which confirms
+# both nodes booted and the link is healthy and the session-down is due to the
+# AS mismatch, not a dead link. The session-down / missing-route state is the
+# thing we validate against Batfish; it is not a precondition to satisfy.
+
+checks:
+  - type: interface_up
+    node: r1
+    interface: to-r2
+    description: r1 link interface to r2 is up (link healthy; session-down is the misconfig)
+  - type: interface_up
+    node: r2
+    interface: Ethernet1
+    description: r2 link interface to r1 is up

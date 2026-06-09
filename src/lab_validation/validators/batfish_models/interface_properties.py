@@ -21,6 +21,7 @@ class InterfaceProperties:
     allowed_vlans: str | None
     bandwidth: int
     description: str | None
+    interface_type: str | None = None
     native_vlan: int | None = attr.ib(converter=optional_int_converter, default=None)
     mtu: int
     speed: int

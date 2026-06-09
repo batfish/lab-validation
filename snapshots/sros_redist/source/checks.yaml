@@ -1,0 +1,22 @@
+# Preconditions for the L6 redistribution lab. Verifies the eBGP session is up
+# and r2 learned both r1's system prefix and the redistributed static route.
+
+checks:
+  - type: bgp_peer_established
+    node: r1
+    neighbor: 10.0.0.1
+    description: r1 eBGP to r2 established
+  - type: bgp_peer_established
+    node: r2
+    neighbor: 10.0.0.0
+    description: r2 eBGP to r1 established
+  - type: route_exists
+    node: r2
+    table: default
+    prefix: 1.1.1.1/32
+    description: r2 learned r1 system via eBGP
+  - type: route_exists
+    node: r2
+    table: default
+    prefix: 192.0.2.0/24
+    description: r2 learned r1 redistributed static route

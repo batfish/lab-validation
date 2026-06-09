@@ -1,0 +1,48 @@
+# L8 — Deliberate misconfigurations: Nokia SR-SIM (SR OS) + Arista cEOS.
+#
+# Climbs the SR-OS ladder rung L8 (P8-LADDER.md): the eBGP topology, but r1 is
+# deliberately misconfigured with an AS mismatch — r1's ebgp group sets
+# peer-as 65099, but r2 is AS 65002 — so the eBGP session never establishes
+# (the device sits in Connect/Active). r1's import/export reference valid
+# policies, so the only thing keeping the routes from flowing is the dead
+# session.
+#
+# NOTE: the rung was originally specced to also carry an undefined-policy
+# reference, but SR-OS enforces the policy leafref at commit and REJECTS a
+# reference to a non-existent policy-statement (MGMT_CORE #224), aborting the
+# whole startup config. So a committed config cannot contain an undefined
+# policy reference — a finding in itself (Batfish's undefinedReferences for
+# SR-OS policies can only fire on configs that never committed on a device).
+# The AS mismatch is the device-accepted misconfig this lab validates.
+#
+# Expected steady state: eBGP session DOWN both sides; neither router learns the
+# other's loopback. Batfish should predict the same (session NOT_ESTABLISHED /
+# incompatible remote-AS).
+#
+# Because the intended state is a DOWN session, the lab is not health-checked
+# for BGP convergence; the checks.yaml asserts the broken state instead.
+#
+# REQUIRES A LICENSE: SR-SIM will not boot without a valid Nokia license at
+# /nokia/license/license.txt (the `license:` key below).
+
+name: srsim-ceos-misconfig
+
+topology:
+  kinds:
+    nokia_srsim:
+      image: localhost/nokia/srsim:26.3.R1
+      license: /home/ubuntu/srsim-license.txt
+    arista_ceos:
+      image: ceos:4.36.0.1F
+
+  nodes:
+    r1:
+      kind: nokia_srsim
+      type: SR-1
+      startup-config: configs/r1.cfg
+    r2:
+      kind: arista_ceos
+      startup-config: configs/r2.cfg
+
+  links:
+    - endpoints: ["r1:e1-1-c1-1", "r2:eth1"]

@@ -77,6 +77,7 @@ def get_batfish_interfaces(
             allowed_vlans=r["Allowed_VLANs"],
             bandwidth=r["Bandwidth"],
             description=r["Description"],
+            interface_type=r.get("Interface_Type"),
             native_vlan=r["Native_VLAN"],
             mtu=r["MTU"],
             speed=r["Speed"],

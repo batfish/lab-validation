@@ -1,0 +1,39 @@
+# Preconditions for the L1 SR-SIM + cEOS interfaces+static lab. Run with:
+#   python -m lab_builder validate topology.clab.yml --checks checks.yaml
+#
+# Verifies the eBGP session is up, each router learned the other's loopback,
+# and r1's two static routes (next-hop + blackhole) are installed before
+# collecting data.
+
+checks:
+  # r1 (SR-SIM) side
+  - type: bgp_peer_established
+    node: r1
+    neighbor: 10.0.0.1
+    description: r1 eBGP to r2 established
+  - type: route_exists
+    node: r1
+    table: Base
+    prefix: 2.2.2.2/32
+    description: r1 learned r2 loopback via eBGP
+  - type: route_exists
+    node: r1
+    table: Base
+    prefix: 192.0.2.0/24
+    description: r1 static route via next-hop 10.0.0.1 installed
+  - type: route_exists
+    node: r1
+    table: Base
+    prefix: 198.51.100.0/24
+    description: r1 blackhole static route installed
+
+  # r2 (cEOS) side
+  - type: bgp_peer_established
+    node: r2
+    neighbor: 10.0.0.0
+    description: r2 eBGP to r1 established
+  - type: route_exists
+    node: r2
+    table: default
+    prefix: 1.1.1.1/32
+    description: r2 learned r1 system address via eBGP

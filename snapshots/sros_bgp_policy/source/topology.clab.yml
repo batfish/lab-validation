@@ -1,0 +1,43 @@
+# L5 — BGP policy depth: Nokia SR-SIM (SR OS) + Arista cEOS.
+#
+# Climbs the SR-OS ladder rung L5 (P8-LADDER.md): reuses the two-router eBGP
+# topology and gives r1 a richer eBGP export policy that sets community, MED
+# (metric), and an as-path-prepend, plus a `through`-type prefix-list match.
+# The cEOS oracle (r2) validates the attributes that cross the eBGP session
+# (community / MED / as-path) on the routes it learns from r1, and exercises
+# the prefix-list match-type bounds Batfish currently over-approximates.
+#
+# Topology:
+#   r1 (SR-SIM, AS 65001) ---[1/1/c1/1]---[Ethernet1]--- r2 (cEOS, AS 65002)
+#     system: 1.1.1.1/32                                  Loopback0: 2.2.2.2/32
+#     lo1:    192.168.1.1/32
+#     link:   10.0.0.0/31                                 link: 10.0.0.1/31
+#
+# r1 advertises 1.1.1.1/32 with community 65001:100, MED 50, as-path prepended
+# 65001 x2; and 192.168.1.1/32 (matched by the lo-range through prefix-list)
+# with MED 200. r2 learns both with those attributes.
+#
+# REQUIRES A LICENSE: SR-SIM will not boot without a valid Nokia license at
+# /nokia/license/license.txt (the `license:` key below).
+
+name: srsim-ceos-policy
+
+topology:
+  kinds:
+    nokia_srsim:
+      image: localhost/nokia/srsim:26.3.R1
+      license: /home/ubuntu/srsim-license.txt
+    arista_ceos:
+      image: ceos:4.36.0.1F
+
+  nodes:
+    r1:
+      kind: nokia_srsim
+      type: SR-1
+      startup-config: configs/r1.cfg
+    r2:
+      kind: arista_ceos
+      startup-config: configs/r2.cfg
+
+  links:
+    - endpoints: ["r1:e1-1-c1-1", "r2:eth1"]

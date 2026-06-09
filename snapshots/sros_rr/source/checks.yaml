@@ -1,0 +1,22 @@
+# Preconditions for the L4 route-reflection lab. Verifies the RR sessions are up
+# and the clients learned each other's system /32 via reflection.
+
+checks:
+  - type: bgp_peer_established
+    node: r1
+    neighbor: 10.0.0.1
+    description: RR r1 iBGP to client r2 established
+  - type: bgp_peer_established
+    node: r1
+    neighbor: 10.0.1.1
+    description: RR r1 iBGP to client r3 established
+  - type: route_exists
+    node: r2
+    table: Base
+    prefix: 3.3.3.3/32
+    description: client r2 learned r3 system via reflection
+  - type: route_exists
+    node: r3
+    table: Base
+    prefix: 2.2.2.2/32
+    description: client r3 learned r2 system via reflection

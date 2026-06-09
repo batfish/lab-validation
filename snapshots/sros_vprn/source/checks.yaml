@@ -1,0 +1,9 @@
+# Preconditions for the L7 multi-VRF (VPRN) lab. Single node: verifies the VPRN
+# loopback and Base loopback are installed in their respective VRFs.
+
+checks:
+  - type: route_exists
+    node: r1
+    table: Base
+    prefix: 10.10.10.10/32
+    description: Base has its own loopback

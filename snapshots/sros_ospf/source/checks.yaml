@@ -1,0 +1,14 @@
+# Preconditions for the L2 OSPF lab. Verifies OSPF converged and each router
+# learned the other's system /32 before collecting.
+
+checks:
+  - type: route_exists
+    node: r1
+    table: Base
+    prefix: 3.3.3.3/32
+    description: r1 learned r3 system via OSPF
+  - type: route_exists
+    node: r3
+    table: Base
+    prefix: 1.1.1.1/32
+    description: r3 learned r1 system via OSPF
