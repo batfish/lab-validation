@@ -1,0 +1,36 @@
+# Preconditions for the ECMP static-route lab (#9989). Verifies the eBGP session
+# is up over link a, and r1's two static routes are installed before collecting.
+# The ECMP-leg-count assertion (192.0.2.0/24 has 2 next-hops; 198.51.100.0/24
+# has 1) is checked at validation time against the collected route-table JSON,
+# not here.
+
+checks:
+  - type: bgp_peer_established
+    node: r1
+    neighbor: 10.0.0.1
+    description: r1 eBGP to r2 established
+  - type: route_exists
+    node: r1
+    table: Base
+    prefix: 2.2.2.2/32
+    description: r1 learned r2 loopback via eBGP
+  - type: route_exists
+    node: r1
+    table: Base
+    prefix: 192.0.2.0/24
+    description: r1 ECMP static route (equal preference) installed
+  - type: route_exists
+    node: r1
+    table: Base
+    prefix: 198.51.100.0/24
+    description: r1 unequal-preference static route installed (best leg only)
+
+  - type: bgp_peer_established
+    node: r2
+    neighbor: 10.0.0.0
+    description: r2 eBGP to r1 established
+  - type: route_exists
+    node: r2
+    table: default
+    prefix: 1.1.1.1/32
+    description: r2 learned r1 system address via eBGP

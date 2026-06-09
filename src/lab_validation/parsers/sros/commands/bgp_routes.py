@@ -84,17 +84,44 @@ def _parse_attr_sets(attr_sets_obj: dict[str, Any]) -> dict[str, dict[str, Any]]
     return result
 
 
+# SR OS renders the well-known BGP communities by their symbolic names, while
+# Batfish renders them in numeric form. Canonicalize SR OS -> numeric so the two
+# sides compare equal regardless of how each emits them (mirrors the Junos
+# community canonicalization in #178). An unknown symbolic name raises so a
+# contributor adds the mapping rather than masking a real mismatch.
+_WELL_KNOWN_COMMUNITIES = {
+    "no-export": "65535:65281",
+    "no-advertise": "65535:65282",
+    "no-export-subconfed": "65535:65283",
+    "no-peer": "65535:65284",
+}
+
+
+def _canonicalize_community(value: str) -> str:
+    """Map an SR OS symbolic well-known community to its numeric form, else pass through."""
+    if ":" in value:
+        return value
+    canonical = _WELL_KNOWN_COMMUNITIES.get(value)
+    assert canonical is not None, (
+        f"unknown SR OS symbolic community '{value}'; add it to"
+        " _WELL_KNOWN_COMMUNITIES so it compares against Batfish's numeric form"
+    )
+    return canonical
+
+
 def _parse_communities(communities_obj: dict[str, Any] | None) -> Sequence[str]:
     """The standard community values (e.g. ``65001:100``) on an attr-set.
 
     SR OS nests them as ``communities`` -> ``community`` [ {community-value} ].
-    Extended/large/ipv6-extended communities live in sibling containers
-    (``extended-communities`` etc.) and can be added the same way when modeled.
+    Well-known communities are rendered symbolically (e.g. ``no-export``) and are
+    canonicalized to their numeric form to match Batfish. Extended/large/
+    ipv6-extended communities live in sibling containers (``extended-communities``
+    etc.) and can be added the same way when modeled.
     """
     if not communities_obj:
         return ()
     return tuple(
-        c["community-value"]
+        _canonicalize_community(c["community-value"])
         for c in communities_obj.get("community", [])
         if "community-value" in c
     )

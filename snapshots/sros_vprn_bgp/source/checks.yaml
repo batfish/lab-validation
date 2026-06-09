@@ -1,0 +1,26 @@
+# Preconditions for the VPRN L3VPN lab. The framework's SR OS route_exists
+# check only inspects the Base table, so the VPRN "red" RT-import assertion is
+# verified at collection time against the captured
+# info_json_state_service_vprn_red_route-table.txt (it must contain the remote
+# PE's CE loopback). Here we gate on the MP-BGP session and PE-PE loopback
+# reachability, which are the prerequisites for that import.
+
+checks:
+  - type: bgp_peer_established
+    node: pe1
+    neighbor: 2.2.2.2
+    description: pe1 MP-BGP vpn-ipv4 to pe2 established
+  - type: bgp_peer_established
+    node: pe2
+    neighbor: 1.1.1.1
+    description: pe2 MP-BGP vpn-ipv4 to pe1 established
+  - type: route_exists
+    node: pe1
+    table: Base
+    prefix: 2.2.2.2/32
+    description: pe1 reached pe2 system loopback via OSPF (LSP underlay)
+  - type: route_exists
+    node: pe2
+    table: Base
+    prefix: 1.1.1.1/32
+    description: pe2 reached pe1 system loopback via OSPF (LSP underlay)

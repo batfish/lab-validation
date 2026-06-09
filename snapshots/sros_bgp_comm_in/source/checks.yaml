@@ -1,0 +1,29 @@
+# Preconditions for the community-receive lab. Verifies the eBGP session is up
+# and r1 learned all three community-tagged routes from r2. Attribute values
+# (communities/MED/as-path) are asserted at validation time against the
+# captured bgp rib JSON; here we just gate that the routes arrived.
+
+checks:
+  - type: bgp_peer_established
+    node: r1
+    neighbor: 10.0.0.1
+    description: r1 eBGP to r2 established
+  - type: route_exists
+    node: r1
+    table: Base
+    prefix: 2.2.2.2/32
+    description: r1 learned r2 Loopback0 (community 65002:100,65002:200)
+  - type: route_exists
+    node: r1
+    table: Base
+    prefix: 100.64.0.1/32
+    description: r1 learned r2 Loopback1 (community 65002:300, prepend)
+  - type: route_exists
+    node: r1
+    table: Base
+    prefix: 100.64.0.2/32
+    description: r1 learned r2 Loopback2 (community no-export, MED 150)
+  - type: bgp_peer_established
+    node: r2
+    neighbor: 10.0.0.0
+    description: r2 eBGP to r1 established

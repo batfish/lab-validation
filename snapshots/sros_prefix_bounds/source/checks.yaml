@@ -1,0 +1,19 @@
+# Preconditions for the prefix-list to/address-mask bounds lab (#9990).
+# Verifies the eBGP session is up and r1 advertised at least the system route.
+# The discriminating assertion (which 10.10.x / 172.x prefixes r2 learns) is
+# examined at collection/validation time, not gated here.
+
+checks:
+  - type: bgp_peer_established
+    node: r1
+    neighbor: 10.0.0.1
+    description: r1 eBGP to r2 established
+  - type: bgp_peer_established
+    node: r2
+    neighbor: 10.0.0.0
+    description: r2 eBGP to r1 established
+  - type: route_exists
+    node: r2
+    table: default
+    prefix: 1.1.1.1/32
+    description: r2 learned r1 system address via eBGP

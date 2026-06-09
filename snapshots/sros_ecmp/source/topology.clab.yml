@@ -1,0 +1,45 @@
+# ECMP static routes (#9989): Nokia SR-SIM (SR OS) + Arista cEOS.
+#
+# Extends the L1 static-route lab to confirm SR-OS ECMP static-route behavior
+# against device ground truth, settling batfish/batfish#9989 (the model took
+# only the first next-hop and warned). r1 has TWO links to r2 so a static route
+# can have two resolvable next-hops:
+#   - 192.0.2.0/24: two next-hops at EQUAL preference (default 5) -> true ECMP,
+#     both legs install in the RIB.
+#   - 198.51.100.0/24: two next-hops at UNEQUAL preference (50 vs 100) -> only
+#     the lower-preference leg (10.0.0.1, pref 50) installs (preference is the
+#     tiebreaker; confirm on device).
+# `router "Base" ecmp 8` raises the max-ECMP from the default of 1.
+#
+# Topology:
+#   r1 (SR-SIM, AS 65001) ==[1/1/c1/1]==[Ethernet1]== r2 (cEOS, AS 65002)
+#                         ==[1/1/c2/1]==[Ethernet2]==
+#     system: 1.1.1.1/32                              Loopback0: 2.2.2.2/32
+#     link a: 10.0.0.0/31                             link a: 10.0.0.1/31
+#     link b: 10.0.1.0/31                             link b: 10.0.1.1/31
+#
+# REQUIRES A LICENSE: SR-SIM will not boot without a valid Nokia license at
+# /nokia/license/license.txt (the `license:` key below).
+
+name: srsim-ceos-ecmp
+
+topology:
+  kinds:
+    nokia_srsim:
+      image: localhost/nokia/srsim:26.3.R1
+      license: /home/ubuntu/srsim-license.txt
+    arista_ceos:
+      image: ceos:4.36.0.1F
+
+  nodes:
+    r1:
+      kind: nokia_srsim
+      type: SR-1
+      startup-config: configs/r1.cfg
+    r2:
+      kind: arista_ceos
+      startup-config: configs/r2.cfg
+
+  links:
+    - endpoints: ["r1:e1-1-c1-1", "r2:eth1"]
+    - endpoints: ["r1:e1-1-c2-1", "r2:eth2"]

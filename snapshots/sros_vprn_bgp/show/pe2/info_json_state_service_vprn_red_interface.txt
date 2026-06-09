@@ -1,0 +1,175 @@
+{
+    "nokia-state:interface": [
+        {
+            "interface-name": "red-ce",
+            "if-index": 3,
+            "system-if-index": 257,
+            "oper-state": "up",
+            "mcast-net-domain-egr": "not-applicable",
+            "protocol": "",
+            "oper-ip-mtu": 1500,
+            "creation-origin": "manual",
+            "last-oper-change": "2026-06-09T21:25:00.3+00:00",
+            "ipv4": {
+                "oper-state": "up",
+                "icmp": {
+                    "statistics": {
+                        "icmp-in-msgs": 0,
+                        "icmp-in-errors": 0,
+                        "icmp-in-dest-unreachables": 0,
+                        "icmp-in-redirects": 0,
+                        "icmp-in-echos": 0,
+                        "icmp-in-echo-replies": 0,
+                        "icmp-in-time-exceeds": 0,
+                        "icmp-in-src-quenches": 0,
+                        "icmp-in-timestamps": 0,
+                        "icmp-in-timestamp-replies": 0,
+                        "icmp-in-address-masks": 0,
+                        "icmp-in-address-mask-replies": 0,
+                        "icmp-in-parm-problems": 0,
+                        "icmp-out-msgs": 0,
+                        "icmp-out-errors": 0,
+                        "icmp-out-dest-unreachables": 0,
+                        "icmp-out-redirects": 0,
+                        "icmp-out-echos": 0,
+                        "icmp-out-echo-replies": 0,
+                        "icmp-out-time-exceeds": 0,
+                        "icmp-out-src-quenches": 0,
+                        "icmp-out-timestamps": 0,
+                        "icmp-out-timestamp-replies": 0,
+                        "icmp-out-address-masks": 0,
+                        "icmp-out-address-mask-replies": 0,
+                        "icmp-out-parm-problems": 0,
+                        "icmp-out-discards": 0
+                    }
+                },
+                "primary": {
+                    "oper-address": "172.16.2.1",
+                    "creation-origin": "manual"
+                },
+                "dhcp": {
+                    "lease-populate": {
+                        "current-lease-states": 0
+                    },
+                    "statistics": {
+                        "total-rx-packets": {
+                            "received": 0,
+                            "malformed": 0,
+                            "untrusted": 0
+                        },
+                        "total-tx-packets": {
+                            "transmitted": 0
+                        },
+                        "client-packets": {
+                            "dropped": 0,
+                            "relayed": 0,
+                            "snooped": 0,
+                            "proxied": {
+                                "radius": 0,
+                                "lease-split": 0
+                            }
+                        },
+                        "server-packets": {
+                            "dropped": 0,
+                            "relayed": 0,
+                            "snooped": 0
+                        },
+                        "spoofed-packets": {
+                            "release": 0,
+                            "force-renews": 0
+                        }
+                    }
+                },
+                "statistics": {
+                    "out-packets": "0",
+                    "out-octets": "0",
+                    "out-discard-packets": "0",
+                    "out-discard-octets": "0",
+                    "in-packets": "0",
+                    "in-octets": "0",
+                    "urpf-check-fail-packets": "0",
+                    "urpf-check-fail-octets": "0",
+                    "out-discard-dbcast-packets": "0",
+                    "out-discard-dbcast-octets": "0",
+                    "in-ip-helper-redirects-packets": "0",
+                    "in-ip-helper-redirects-octets": "0"
+                }
+            },
+            "ipv6": {
+                "oper-state": "down",
+                "down-reason": "protocol-down",
+                "icmp6": {
+                    "statistics": {
+                        "icmp6-in-msgs": 0,
+                        "icmp6-in-errors": 0,
+                        "icmp6-in-dest-unreachables": 0,
+                        "icmp6-in-admin-prohibs": 0,
+                        "icmp6-in-time-exceeds": 0,
+                        "icmp6-in-parm-problems": 0,
+                        "icmp6-in-pkt-too-bigs": 0,
+                        "icmp6-in-echos": 0,
+                        "icmp6-in-echo-replies": 0,
+                        "icmp6-in-rtr-solicits": 0,
+                        "icmp6-in-rtr-advertisements": 0,
+                        "icmp6-in-nbr-solicits": 0,
+                        "icmp6-in-nbr-advertisements": 0,
+                        "icmp6-in-redirects": 0,
+                        "icmp6-in-grp-memb-queries": 0,
+                        "icmp6-in-grp-memb-repsonses": 0,
+                        "icmp6-in-grp-memb-reductions": 0,
+                        "icmp6-out-msgs": 0,
+                        "icmp6-out-errors": 0,
+                        "icmp6-out-dest-unreachables": 0,
+                        "icmp6-out-admin-prohibs": 0,
+                        "icmp6-out-time-exceeds": 0,
+                        "icmp6-out-parm-problems": 0,
+                        "icmp6-out-pkt-too-bigs": 0,
+                        "icmp6-out-echos": 0,
+                        "icmp6-out-echo-replies": 0,
+                        "icmp6-out-rtr-solicits": 0,
+                        "icmp6-out-rtr-advertisements": 0,
+                        "icmp6-out-nbr-solicits": 0,
+                        "icmp6-out-nbr-advertisements": 0,
+                        "icmp6-out-redirects": 0,
+                        "icmp6-out-grp-memb-queries": 0,
+                        "icmp6-out-grp-memb-responses": 0,
+                        "icmp6-out-grp-memb-reductions": 0,
+                        "icmp6-out-discards": 0
+                    }
+                },
+                "dhcp6": {
+                    "relay": {
+                        "oper-state": "down",
+                        "current-lease-states": 0,
+                        "server-lease-states": 0
+                    },
+                    "server": {
+                        "current-server-lease-states": 0
+                    }
+                },
+                "statistics": {
+                    "out-packets": "0",
+                    "out-octets": "0",
+                    "out-discard-packets": "0",
+                    "out-discard-octets": "0",
+                    "in-packets": "0",
+                    "in-octets": "0",
+                    "urpf-check-fail-packets": "0",
+                    "urpf-check-fail-octets": "0"
+                }
+            },
+            "statistics": {
+                "ip": {
+                    "out-packets": "0",
+                    "out-octets": "0",
+                    "out-discard-packets": "0",
+                    "out-discard-octets": "0",
+                    "in-packets": "0",
+                    "in-octets": "0",
+                    "urpf-check-fail-packets": "0",
+                    "urpf-check-fail-octets": "0"
+                }
+            }
+        }
+    ]
+}

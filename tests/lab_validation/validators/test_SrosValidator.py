@@ -240,17 +240,38 @@ def test_diff_routes_cost_network_mismatch() -> None:
 
 
 def test_diff_routes_cost_admin_and_metric() -> None:
+    # A non-BGP route (static): both admin (preference) and metric are compared.
+    sros = SrosIpRoute(
+        network="2.2.2.2/32",
+        vrf="default",
+        protocol="static",
+        next_hop_ip="10.0.0.1",
+        preference=99,
+        metric=5,
+    )
+    cost = SrosValidator._diff_routes_cost(
+        sros, _main_route(protocol="static", admin=170, metric=0)
+    )
+    assert ("admin", 2.0) in cost
+    assert ("metric", 1.0) in cost
+
+
+def test_diff_routes_cost_bgp_metric_skipped() -> None:
+    # For a BGP route the main-RIB metric differs by design (Batfish carries the
+    # BGP MED into the main-RIB metric; the SR OS route-table reports the IGP
+    # cost to the next-hop), so the main-RIB metric is NOT compared — the MED is
+    # validated on the BGP RIB instead. The admin distance is still compared.
     sros = SrosIpRoute(
         network="2.2.2.2/32",
         vrf="default",
         protocol="bgp",
         next_hop_ip="10.0.0.1",
-        preference=99,
-        metric=5,
+        preference=170,
+        metric=0,
     )
-    cost = SrosValidator._diff_routes_cost(sros, _main_route(admin=170, metric=0))
-    assert ("admin", 2.0) in cost
-    assert ("metric", 1.0) in cost
+    cost = SrosValidator._diff_routes_cost(sros, _main_route(admin=170, metric=50))
+    assert ("metric", 1.0) not in cost
+    assert cost == []
 
 
 # --- BGP RIB cost ---------------------------------------------------------------
