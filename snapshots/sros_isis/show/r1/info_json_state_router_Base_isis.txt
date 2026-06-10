@@ -1,0 +1,586 @@
+{
+    "nokia-state:isis": [
+        {
+            "isis-instance": 0,
+            "oper-system-id": "0100.1000.0001",
+            "oper-router-id": "1.1.1.1",
+            "oper-ipv6-te-router-id": "::",
+            "db-export-igp-asn": 0,
+            "oper-state": "up",
+            "last-enabled-time": "2026-06-09T21:18:44.2+00:00",
+            "last-spf": "2026-06-09T21:19:07.3+00:00",
+            "version": "1",
+            "l1-state": "off",
+            "l2-state": "on",
+            "spf-hold-time": 1,
+            "loopfree-alternate": {
+                "statistics": {
+                    "lfa": {
+                        "runs": 0,
+                        "partial": {
+                            "runs": 0
+                        }
+                    },
+                    "remote-lfa": {
+                        "runs": 0
+                    },
+                    "ti-lfa": {
+                        "runs": 0
+                    }
+                }
+            },
+            "statistics": {
+                "lsp-regenerations": 4,
+                "initiated-purges": 0,
+                "corrupted-lsps": 0,
+                "lsp-l1-db-overloads": 0,
+                "lsp-l2-db-overloads": 0,
+                "manual-address-dropped-from-areas": 0,
+                "attempt-to-exceed-max-sequence-numbers": 0,
+                "sequence-number-skips": 0,
+                "own-lsp-purges": 0,
+                "id-field-length-mismatches": 0,
+                "max-area-address-mismatches": 0,
+                "authentication-failures": 0,
+                "partition-changes": 0,
+                "sid": {
+                    "srgb-errors": 0,
+                    "duplicated-errors": 0
+                },
+                "spf": {
+                    "runs": 3,
+                    "time": "2026-06-09T21:19:06.3+00:00",
+                    "partial": {
+                        "runs": 1,
+                        "time": "2026-06-09T21:19:06.4+00:00"
+                    }
+                },
+                "cspf": {
+                    "requests": 0,
+                    "dropped-requests": 0,
+                    "paths-found": 0,
+                    "paths-not-found": 0
+                },
+                "lsp": {
+                    "received": 2,
+                    "dropped": 1,
+                    "sent": 1,
+                    "retransmitted": 0
+                },
+                "iih": {
+                    "received": 23,
+                    "dropped": 0,
+                    "sent": 25,
+                    "retransmitted": 0
+                },
+                "csnp": {
+                    "received": 23,
+                    "dropped": 0,
+                    "sent": 23,
+                    "retransmitted": 0
+                },
+                "psnp": {
+                    "received": 1,
+                    "dropped": 0,
+                    "sent": 1,
+                    "retransmitted": 0
+                },
+                "unknown": {
+                    "received": 0,
+                    "dropped": 0,
+                    "sent": 0,
+                    "retransmitted": 0
+                }
+            },
+            "multi-part-tlv": {
+                "statistics": {
+                    "tlv": [
+                        {
+                            "tlv-type": 22,
+                            "level-number": "2",
+                            "mp-tlv-truncated": 0,
+                            "mp-tlv-originated": 0
+                        },
+                        {
+                            "tlv-type": 138,
+                            "level-number": "2",
+                            "mp-tlv-truncated": 0,
+                            "mp-tlv-originated": 0
+                        },
+                        {
+                            "tlv-type": 222,
+                            "level-number": "2",
+                            "mp-tlv-truncated": 0,
+                            "mp-tlv-originated": 0
+                        },
+                        {
+                            "tlv-type": 238,
+                            "level-number": "2",
+                            "mp-tlv-truncated": 0,
+                            "mp-tlv-originated": 0
+                        }
+                    ]
+                }
+            },
+            "interface": [
+                {
+                    "interface-name": "system",
+                    "oper-state": "up",
+                    "mtu": 1500,
+                    "circuit-index": 1,
+                    "oper-type": "point-to-point",
+                    "ber-state": "none",
+                    "te-metric": "none",
+                    "te-state": "down",
+                    "point-to-point-circuit-id": "0x01001000000100",
+                    "up-time": 217,
+                    "measured-delay": 0,
+                    "statistics": {
+                        "initialization-failures": 0,
+                        "adjacency-state-change": 0,
+                        "adjacency-rejection": 0,
+                        "control-pdu-sent": 0,
+                        "control-pdu-received": 0,
+                        "control-pdu-id-length-mismatch-received": 0,
+                        "max-area-address-mismatches": 0,
+                        "area-address-mismatches": 0,
+                        "auth-type-fails": 0,
+                        "auth-fails": 0,
+                        "lan-dis-changes": 0,
+                        "end-x-install-failures": 0,
+                        "adj-number": 0
+                    },
+                    "ldp-sync": {
+                        "state": "down",
+                        "max-metric": false,
+                        "timer-state": "disabled"
+                    },
+                    "level": [
+                        {
+                            "level-number": "1",
+                            "adjacencies-number": 0,
+                            "designated-intermediate-system": "0100.1000.0001",
+                            "lsp-transmit-queue-count": 0,
+                            "circuit-id": "0x01001000000100",
+                            "oper-metric": {
+                                "ipv4-unicast": "none",
+                                "ipv6-unicast": "none",
+                                "ipv4-multicast": "none",
+                                "ipv6-multicast": "none"
+                            },
+                            "statistics": {
+                                "designated-intermediate-system-changes": 0,
+                                "packets": [
+                                    {
+                                        "direction": "sending",
+                                        "hello": 0,
+                                        "lsp": 0,
+                                        "csnp": 0,
+                                        "psnp": 0
+                                    },
+                                    {
+                                        "direction": "receiving",
+                                        "hello": 0,
+                                        "lsp": 0,
+                                        "csnp": 0,
+                                        "psnp": 0
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "level-number": "2",
+                            "adjacencies-number": 0,
+                            "designated-intermediate-system": "0100.1000.0001",
+                            "lsp-transmit-queue-count": 0,
+                            "circuit-id": "0x01001000000100",
+                            "oper-metric": {
+                                "ipv4-unicast": "none",
+                                "ipv6-unicast": "none",
+                                "ipv4-multicast": "none",
+                                "ipv6-multicast": "none"
+                            },
+                            "statistics": {
+                                "designated-intermediate-system-changes": 0,
+                                "packets": [
+                                    {
+                                        "direction": "sending",
+                                        "hello": 0,
+                                        "lsp": 0,
+                                        "csnp": 0,
+                                        "psnp": 0
+                                    },
+                                    {
+                                        "direction": "receiving",
+                                        "hello": 0,
+                                        "lsp": 0,
+                                        "csnp": 0,
+                                        "psnp": 0
+                                    }
+                                ]
+                            }
+                        }
+                    ]
+                },
+                {
+                    "interface-name": "to-r3",
+                    "oper-state": "up",
+                    "mtu": 8922,
+                    "circuit-index": 2,
+                    "oper-type": "point-to-point",
+                    "ber-state": "none",
+                    "te-metric": "none",
+                    "te-state": "down",
+                    "point-to-point-circuit-id": "0x01001000000100",
+                    "up-time": 204,
+                    "measured-delay": 0,
+                    "statistics": {
+                        "initialization-failures": 0,
+                        "adjacency-state-change": 2,
+                        "adjacency-rejection": 0,
+                        "control-pdu-sent": 25,
+                        "control-pdu-received": 23,
+                        "control-pdu-id-length-mismatch-received": 0,
+                        "max-area-address-mismatches": 0,
+                        "area-address-mismatches": 0,
+                        "auth-type-fails": 0,
+                        "auth-fails": 0,
+                        "lan-dis-changes": 0,
+                        "end-x-install-failures": 0,
+                        "adj-number": 1
+                    },
+                    "ldp-sync": {
+                        "state": "down",
+                        "max-metric": false,
+                        "timer-state": "disabled"
+                    },
+                    "level": [
+                        {
+                            "level-number": "1",
+                            "adjacencies-number": 0,
+                            "designated-intermediate-system": "0100.1000.0001",
+                            "lsp-transmit-queue-count": 0,
+                            "circuit-id": "0x01001000000100",
+                            "oper-metric": {
+                                "ipv4-unicast": 10,
+                                "ipv6-unicast": 10,
+                                "ipv4-multicast": 10,
+                                "ipv6-multicast": 10
+                            },
+                            "statistics": {
+                                "designated-intermediate-system-changes": 0,
+                                "packets": [
+                                    {
+                                        "direction": "sending",
+                                        "hello": 0,
+                                        "lsp": 0,
+                                        "csnp": 0,
+                                        "psnp": 0
+                                    },
+                                    {
+                                        "direction": "receiving",
+                                        "hello": 0,
+                                        "lsp": 0,
+                                        "csnp": 0,
+                                        "psnp": 0
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "level-number": "2",
+                            "adjacencies-number": 1,
+                            "designated-intermediate-system": "0100.1000.0001",
+                            "lsp-transmit-queue-count": 0,
+                            "circuit-id": "0x01001000000100",
+                            "oper-metric": {
+                                "ipv4-unicast": 10,
+                                "ipv6-unicast": 10,
+                                "ipv4-multicast": 10,
+                                "ipv6-multicast": 10
+                            },
+                            "statistics": {
+                                "designated-intermediate-system-changes": 0,
+                                "packets": [
+                                    {
+                                        "direction": "sending",
+                                        "hello": 25,
+                                        "lsp": 1,
+                                        "csnp": 23,
+                                        "psnp": 1
+                                    },
+                                    {
+                                        "direction": "receiving",
+                                        "hello": 23,
+                                        "lsp": 2,
+                                        "csnp": 23,
+                                        "psnp": 1
+                                    }
+                                ]
+                            }
+                        }
+                    ],
+                    "adjacency": [
+                        {
+                            "adjacency-index": 1,
+                            "oper-state": "up",
+                            "usage": "level2",
+                            "hold-timer": 27,
+                            "uptime": 195,
+                            "expires-in": 21,
+                            "level": "level2",
+                            "restart": {
+                                "support": false,
+                                "status": "not-helping",
+                                "suppressed": false,
+                                "num-restarts": 0
+                            },
+                            "neighbor": {
+                                "snpa-address": "0xaac1ab150bb7",
+                                "system-type": "l2-is",
+                                "system-id": "0x010010000003",
+                                "priority": 0,
+                                "ipv4": "10.0.1.1",
+                                "ipv6": "::"
+                            },
+                            "multi-topology": {
+                                "enabled": false,
+                                "id0": {
+                                    "enabled": true,
+                                    "bfd-required": false,
+                                    "bfd-usable": false
+                                },
+                                "id2": {
+                                    "enabled": false,
+                                    "bfd-required": false,
+                                    "bfd-usable": false
+                                },
+                                "id3": {
+                                    "enabled": false,
+                                    "bfd-required": false,
+                                    "bfd-usable": false
+                                },
+                                "id4": {
+                                    "enabled": false,
+                                    "bfd-required": false,
+                                    "bfd-usable": false
+                                }
+                            },
+                            "area-address": [
+                                {
+                                    "area-address": "49.0001"
+                                }
+                            ],
+                            "supported-protocol": [
+                                {
+                                    "protocol": "ip"
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ],
+            "level": [
+                {
+                    "level-number": "1",
+                    "oper-lsp-mtu-size": 1492,
+                    "total-exported-routes": 0,
+                    "lsps": 0,
+                    "max-oper-lsp-mtu-size": 8919,
+                    "overload": {
+                        "status": "not-in-overload"
+                    }
+                },
+                {
+                    "level-number": "2",
+                    "oper-lsp-mtu-size": 1492,
+                    "total-exported-routes": 0,
+                    "lsps": 2,
+                    "max-oper-lsp-mtu-size": 8919,
+                    "overload": {
+                        "status": "not-in-overload"
+                    }
+                }
+            ],
+            "database": [
+                {
+                    "level-number": "2",
+                    "lsp-id": "0100.1000.0001.00-00",
+                    "seq": 4,
+                    "checksum": 40582,
+                    "zero-rtl": false,
+                    "lifetime-remain": 1005,
+                    "version": 1,
+                    "pkt-type": 20,
+                    "pkt-version": 1,
+                    "attributes": 3,
+                    "max-area": 3,
+                    "alloc-len": 1492,
+                    "system-id": "0100.1000.0001",
+                    "system-id-len": 0,
+                    "used-len": 144,
+                    "value": "0x831b010014010003009004b00100100000010000000000049e86030104034900018101cc8905535253494d860401010101020c000a8080800100100000030080180a8080800a000100fffffffe0080808001010101ffffffff84080a0001000101010116170100100000030000000a0c06040a00010008040a00010187120000000a1f0a000100000000002001010101"
+                },
+                {
+                    "level-number": "2",
+                    "lsp-id": "0100.1000.0003.00-00",
+                    "seq": 4,
+                    "checksum": 17346,
+                    "zero-rtl": false,
+                    "lifetime-remain": 1004,
+                    "version": 1,
+                    "pkt-type": 20,
+                    "pkt-version": 1,
+                    "attributes": 3,
+                    "max-area": 3,
+                    "alloc-len": 144,
+                    "system-id": "0100.1000.0003",
+                    "system-id-len": 0,
+                    "used-len": 144,
+                    "value": "0x831b010014010003009004b001001000000300000000000443c2030104034900018101cc8905535253494d860403030303020c000a8080800100100000010080180a8080800a000100fffffffe0080808003030303ffffffff84080a0001010303030316170100100000010000000a0c06040a00010108040a00010087120000000a1f0a000100000000002003030303"
+                }
+            ],
+            "hostname": [
+                {
+                    "system-id": "0100.1000.0001",
+                    "host-name": "SRSIM"
+                },
+                {
+                    "system-id": "0100.1000.0003",
+                    "host-name": "SRSIM"
+                }
+            ],
+            "route": [
+                {
+                    "multi-topology-id": 0,
+                    "destination": "1.1.1.1\/32",
+                    "level": "2",
+                    "status": "active",
+                    "metric": 0,
+                    "type": "internal",
+                    "tag": 0,
+                    "algorithm": 0,
+                    "next-hop": [
+                        {
+                            "ecmp-index": 1,
+                            "next-hop-ip": "0.0.0.0",
+                            "next-hop-type": "regular",
+                            "next-hop-owner": "unknown",
+                            "spf-version": 2,
+                            "next-hop-system-id": "0100.1000.0001",
+                            "rtm-status": "success"
+                        }
+                    ]
+                },
+                {
+                    "multi-topology-id": 0,
+                    "destination": "3.3.3.3\/32",
+                    "level": "2",
+                    "status": "active",
+                    "metric": 10,
+                    "type": "internal",
+                    "tag": 0,
+                    "algorithm": 0,
+                    "next-hop": [
+                        {
+                            "ecmp-index": 1,
+                            "next-hop-ip": "10.0.1.1",
+                            "next-hop-type": "regular",
+                            "next-hop-owner": "unknown",
+                            "spf-version": 4,
+                            "next-hop-system-id": "0100.1000.0003",
+                            "rtm-status": "success"
+                        }
+                    ]
+                },
+                {
+                    "multi-topology-id": 0,
+                    "destination": "10.0.1.0\/31",
+                    "level": "2",
+                    "status": "active",
+                    "metric": 10,
+                    "type": "internal",
+                    "tag": 0,
+                    "algorithm": 0,
+                    "next-hop": [
+                        {
+                            "ecmp-index": 1,
+                            "next-hop-ip": "0.0.0.0",
+                            "next-hop-type": "regular",
+                            "next-hop-owner": "unknown",
+                            "spf-version": 4,
+                            "next-hop-system-id": "0100.1000.0001",
+                            "rtm-status": "success"
+                        }
+                    ]
+                }
+            ],
+            "spf-log": [
+                {
+                    "time-stamp": 153,
+                    "duration": 1,
+                    "l1-nodes": 0,
+                    "l2-nodes": 1,
+                    "trigger-lsp-id": "0000.0000.0000.00-00",
+                    "event-count": 4,
+                    "type": "regular",
+                    "trigger-reason": "reach admin-tag-changed"
+                },
+                {
+                    "time-stamp": 255,
+                    "duration": 0,
+                    "l1-nodes": 0,
+                    "l2-nodes": 1,
+                    "trigger-lsp-id": "0100.1000.0001.00-00",
+                    "event-count": 1,
+                    "type": "regular",
+                    "trigger-reason": "lsp-changed"
+                },
+                {
+                    "time-stamp": 1466,
+                    "duration": 0,
+                    "l1-nodes": 0,
+                    "l2-nodes": 0,
+                    "trigger-lsp-id": "0100.1000.0001.00-00",
+                    "event-count": 1,
+                    "type": "partial-spf",
+                    "trigger-reason": "lsp-changed"
+                },
+                {
+                    "time-stamp": 2369,
+                    "duration": 0,
+                    "l1-nodes": 0,
+                    "l2-nodes": 2,
+                    "trigger-lsp-id": "0100.1000.0003.00-00",
+                    "event-count": 2,
+                    "type": "regular",
+                    "trigger-reason": "new-adjacency lsp-changed"
+                }
+            ],
+            "received-area-address": [
+                {
+                    "area-address": "49.0001"
+                }
+            ],
+            "topology": [
+                {
+                    "level-number": "2",
+                    "multi-topology-id": 0,
+                    "path-id": "0x01001000000300",
+                    "metric": 10,
+                    "route-type": "spf",
+                    "lfa": {
+                        "type": "none"
+                    },
+                    "next-hop": [
+                        {
+                            "ecmp-index": 1,
+                            "interface": "to-r3",
+                            "next-hop-system-id": "0100.1000.0003"
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

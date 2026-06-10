@@ -1,0 +1,41 @@
+# BGP communities + complex attributes (received side): SR-SIM + cEOS.
+#
+# Validates that SR OS correctly receives and stores BGP path attributes —
+# standard communities, MED, and AS-path — from an eBGP peer, and that Batfish's
+# computed BGP RIB for r1 matches the device's. The existing policy labs only
+# had r1 *setting* attributes on export (rib-out, which Batfish's BGP RIB
+# question does not surface per-neighbor); here the cEOS oracle (r2) advertises
+# three loopbacks each tagged differently, so r1's received local-rib carries
+# non-empty communities/MED/as-path to compare on BOTH sides:
+#   2.2.2.2/32    community 65002:100,65002:200   MED 50
+#   100.64.0.1/32 community 65002:300             AS-path prepend 65002 x2
+#   100.64.0.2/32 community no-export             MED 150
+# r1 imports all (import-all), so every attribute survives into its BGP RIB.
+#
+#   r1 (SR-SIM, AS 65001) ---[1/1/c1/1]---[Ethernet1]--- r2 (cEOS, AS 65002)
+#     system: 1.1.1.1/32                                  Loopback0/1/2
+#     link:   10.0.0.0/31                                 link: 10.0.0.1/31
+#
+# REQUIRES A LICENSE: SR-SIM needs a Nokia license at /nokia/license/license.txt.
+
+name: srsim-ceos-comm-in
+
+topology:
+  kinds:
+    nokia_srsim:
+      image: localhost/nokia/srsim:26.3.R1
+      license: /home/ubuntu/srsim-license.txt
+    arista_ceos:
+      image: ceos:4.36.0.1F
+
+  nodes:
+    r1:
+      kind: nokia_srsim
+      type: SR-1
+      startup-config: configs/r1.cfg
+    r2:
+      kind: arista_ceos
+      startup-config: configs/r2.cfg
+
+  links:
+    - endpoints: ["r1:e1-1-c1-1", "r2:eth1"]

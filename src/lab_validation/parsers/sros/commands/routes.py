@@ -26,38 +26,61 @@ def parse_route_table_json(
     tagged static or redistributed route) and a lab exercises it.
     """
     obj = json.loads(text)
+    # An empty object ({}) is the valid response for an instance with no route
+    # table — e.g. the vprn "red" state path probed on every SR OS collection
+    # when no such VPRN is configured — and yields no routes.
+    if not obj:
+        return []
     assert _UNICAST in obj, f"missing '{_UNICAST}' in route-table state"
     ipv4 = obj[_UNICAST].get("ipv4", {})
     routes: list[SrosIpRoute] = []
     for entry in ipv4.get("route", []):
-        routes.append(_parse_route(entry, vrf, if_index_to_name or {}))
+        routes.extend(_parse_routes(entry, vrf, if_index_to_name or {}))
     return routes
 
 
-def _parse_route(
+def _parse_routes(
     entry: dict[str, Any], vrf: str, if_index_to_name: dict[int, str]
-) -> SrosIpRoute:
-    # A route has one or more next-hops; SR OS does not ECMP in this lab, so the
-    # first next-hop carries the metric and (for non-local routes) the next-hop IP.
-    # The nexthop may carry an IP (BGP), an egress if-index (connected/local), or
-    # both (resolved static/IGP); a blackhole carries neither.
+) -> Sequence[SrosIpRoute]:
+    """One SrosIpRoute per installed next-hop.
+
+    A route has one or more next-hops; multiple equal-cost next-hops are an ECMP
+    route, which Batfish represents as one route per next-hop, so emit one
+    SrosIpRoute per next-hop to compare like-for-like. The nexthop may carry an
+    IP (BGP), an egress if-index (connected/local), or both (resolved
+    static/IGP); a blackhole carries neither, yielding a single route with no
+    next-hop.
+    """
+    prefix = entry["ipv4-prefix"]
+    protocol = entry["protocol"]
+    preference = entry.get("preference")
     nexthops = entry.get("nexthop", [])
-    next_hop_ip = None
-    next_hop_interface = None
-    metric = None
-    if nexthops:
-        nh = nexthops[0]
-        next_hop_ip = nh.get("nexthop-ip")
-        metric = nh.get("metric")
+    if not nexthops:
+        return [
+            SrosIpRoute(
+                network=prefix,
+                vrf=vrf,
+                protocol=protocol,
+                next_hop_ip=None,
+                next_hop_interface=None,
+                preference=preference,
+                metric=None,
+            )
+        ]
+    routes: list[SrosIpRoute] = []
+    for nh in nexthops:
         if_index = nh.get("if-index")
-        if if_index is not None:
-            next_hop_interface = if_index_to_name.get(if_index)
-    return SrosIpRoute(
-        network=entry["ipv4-prefix"],
-        vrf=vrf,
-        protocol=entry["protocol"],
-        next_hop_ip=next_hop_ip,
-        next_hop_interface=next_hop_interface,
-        preference=entry.get("preference"),
-        metric=metric,
-    )
+        routes.append(
+            SrosIpRoute(
+                network=prefix,
+                vrf=vrf,
+                protocol=protocol,
+                next_hop_ip=nh.get("nexthop-ip"),
+                next_hop_interface=(
+                    if_index_to_name.get(if_index) if if_index is not None else None
+                ),
+                preference=preference,
+                metric=nh.get("metric"),
+            )
+        )
+    return routes

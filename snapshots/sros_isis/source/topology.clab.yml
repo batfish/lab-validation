@@ -1,0 +1,38 @@
+# ISIS single-area (L2): two Nokia SR-SIM (SR OS) routers.
+#
+# New ladder rung: IS-IS, the one IGP captured in state but not yet modeled in
+# Batfish (the FromProtocol enum aside). Mirrors the sros_ospf lab's two-SR-SIM
+# design (avoids cross-vendor IGP config quirks; reuses the `info json /state
+# router "Base" isis *` capture). r1 and r3 form an L2 adjacency over a
+# point-to-point link and advertise their system loopbacks into IS-IS.
+#
+#   r1 (SR-SIM) ---[1/1/c1/1]---[1/1/c1/1]--- r3 (SR-SIM)
+#     system: 1.1.1.1/32                        system: 3.3.3.3/32
+#     system-id 0100.1000.0001                  system-id 0100.1000.0003
+#     area 49.0001, level-2                     area 49.0001, level-2
+#     link: 10.0.1.0/31                          link: 10.0.1.1/31
+#
+# After convergence each router learns the other's system address via IS-IS L2.
+#
+# REQUIRES A LICENSE: SR-SIM needs a Nokia license at /nokia/license/license.txt.
+
+name: srsim-isis
+
+topology:
+  kinds:
+    nokia_srsim:
+      image: localhost/nokia/srsim:26.3.R1
+      license: /home/ubuntu/srsim-license.txt
+
+  nodes:
+    r1:
+      kind: nokia_srsim
+      type: SR-1
+      startup-config: configs/r1.cfg
+    r3:
+      kind: nokia_srsim
+      type: SR-1
+      startup-config: configs/r3.cfg
+
+  links:
+    - endpoints: ["r1:e1-1-c1-1", "r3:e1-1-c1-1"]

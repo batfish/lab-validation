@@ -48,8 +48,10 @@ _PROTOCOL_MAP = {
     "local": {"connected"},
     "bgp": {"bgp", "ibgp"},
     "static": {"static"},
-    "isis": {"isis"},
-    "ospf": {"ospf"},
+    # SR OS reports a single "isis" owner in the route-table; Batfish labels IS-IS
+    # routes by level (isisL1/isisL2, and isisEL1/isisEL2 for externals).
+    "isis": {"isis", "isisL1", "isisL2", "isisEL1", "isisEL2"},
+    "ospf": {"ospf", "ospfIA", "ospfE1", "ospfE2"},
 }
 
 
@@ -180,9 +182,17 @@ class SrosValidator(VendorValidator):
         ):
             cost.append(("admin", 2.0))
 
-        sros_metric = 0 if sros_route.metric is None else sros_route.metric
-        if sros_metric != batfish_route.metric:
-            cost.append(("metric", 1.0))
+        # Metric: for BGP routes the two sides model the main-RIB metric
+        # differently — Batfish carries the BGP MED into the main-RIB metric,
+        # while the SR OS route-table reports the IGP cost to the BGP next-hop
+        # (0 for a directly-connected peer). The MED itself is validated on the
+        # BGP RIB (see _diff_bgp_routes_cost), so skip the main-RIB metric
+        # comparison for BGP routes rather than flag this known representation
+        # gap. For non-BGP routes (connected/static/IGP) the metric is compared.
+        if batfish_route.protocol not in ("bgp", "ibgp"):
+            sros_metric = 0 if sros_route.metric is None else sros_route.metric
+            if sros_metric != batfish_route.metric:
+                cost.append(("metric", 1.0))
 
         return cost
 

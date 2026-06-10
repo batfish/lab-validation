@@ -1,0 +1,70 @@
+! Command: show running-config
+! device: r2 (cEOSLab, EOS-4.36.0.1F-47401373.43601F (engineering build))
+!
+no aaa root
+!
+username admin privilege 15 role network-admin secret sha512 $6$Pku49bGZ6m.3.jn.$8DCzhZgpK7perTHs6hsotba3mvxpsuUzYJpU6hpq7IV6v9NzUZErYoHtocyJ.C5X7ed2jLMaapwJKBmcpyE.Q1
+!
+no service interface inactive port-id allocation disabled
+!
+service routing protocols model multi-agent
+!
+hostname r2
+!
+spanning-tree mode mstp
+!
+system l1
+   unsupported speed action error
+   unsupported error-correction action error
+!
+aaa authorization exec default local
+!
+interface Ethernet1
+   no switchport
+   ip address 10.0.0.1/31
+!
+interface Loopback0
+   ip address 2.2.2.2/32
+!
+interface Loopback1
+   ip address 100.64.0.1/32
+!
+interface Loopback2
+   ip address 100.64.0.2/32
+!
+interface Management0
+   ip address 172.20.20.3/24
+   ipv6 address 3fff:172:20:20::3/64
+!
+ip routing
+!
+ip prefix-list PL_LO0 seq 10 permit 2.2.2.2/32
+ip prefix-list PL_LO1 seq 10 permit 100.64.0.1/32
+ip prefix-list PL_LO2 seq 10 permit 100.64.0.2/32
+ip community-list CL_STD permit 65002:100 65002:200
+!
+route-map RM_OUT permit 10
+   match ip address prefix-list PL_LO0
+   set community 65002:100 65002:200
+   set metric 50
+!
+route-map RM_OUT permit 20
+   match ip address prefix-list PL_LO1
+   set as-path prepend 65002 65002
+   set community 65002:300
+!
+route-map RM_OUT permit 30
+   match ip address prefix-list PL_LO2
+   set community no-export
+   set metric 150
+!
+router bgp 65002
+   router-id 2.2.2.2
+   neighbor 10.0.0.0 remote-as 65001
+   neighbor 10.0.0.0 route-map RM_OUT out
+   neighbor 10.0.0.0 send-community
+   network 2.2.2.2/32
+   network 100.64.0.1/32
+   network 100.64.0.2/32
+!
+end

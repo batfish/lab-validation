@@ -1,0 +1,15 @@
+# The VPRN "red" RT-imported routes (PE-to-PE MP-BGP vpn-ipv4 L3VPN) are not
+# reproducible by the Batfish VI dataplane: there is no VPNv4 address family and
+# cross-VRF leaking is intra-node only. SR-OS extracts the bgp-ipvpn RD +
+# vrf-target and converts the RD onto the VRF, but the inter-PE imported route
+# (e.g. pe1 VPRN red learning 172.16.2.1/32) is absent from the computed main
+# RIB. Tracked in https://github.com/batfish/batfish/issues/9991.
+entries:
+  - hostname: pe1
+    test_name: test_main_rib_routes
+    skip:
+      reason: https://github.com/batfish/batfish/issues/9991
+  - hostname: pe2
+    test_name: test_main_rib_routes
+    skip:
+      reason: https://github.com/batfish/batfish/issues/9991

@@ -1,0 +1,20 @@
+
+===============================================================================
+Route Table (Router: Base)
+===============================================================================
+Dest Prefix[Flags]                            Type    Proto     Age        Pref
+      Next Hop[Interface Name]                                    Metric   
+-------------------------------------------------------------------------------
+1.1.1.1/32                                    Remote  OSPF      00h05m16s  10
+       10.0.0.0                                                     1
+2.2.2.2/32                                    Local   Local     00h05m41s  0
+       system                                                       0
+10.0.0.0/31                                   Local   Local     00h05m27s  0
+       to-pe1                                                       0
+-------------------------------------------------------------------------------
+No. of Routes: 3
+Flags: n = Number of times nexthop is repeated
+       B = BGP backup route available
+       L = LFA nexthop available
+       S = Sticky ECMP requested
+===============================================================================

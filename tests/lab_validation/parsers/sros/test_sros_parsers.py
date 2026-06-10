@@ -8,8 +8,11 @@ flattening, optional/empty containers).
 
 from pathlib import Path
 
+import pytest
+
 from lab_validation.parsers.sros.commands.bgp_routes import (
     _parse_as_path,
+    _parse_communities,
     parse_bgp_rib_json,
     parse_bgp_rib_out_json,
 )
@@ -134,6 +137,51 @@ def test_parse_route_table_ipv6_skipped() -> None:
             metric=7,
         )
     ]
+
+
+def test_parse_route_table_ecmp_one_route_per_nexthop() -> None:
+    """An ECMP route (multiple next-hops) yields one SrosIpRoute per next-hop, so it
+    compares like-for-like against Batfish's per-next-hop ECMP routes."""
+    text = """{
+      "nokia-state:unicast": {
+        "ipv4": {"route": [
+          {"ipv4-prefix": "192.0.2.0/24", "protocol": "static", "preference": 5,
+           "nexthop": [
+             {"nexthop-ip": "10.0.0.1", "metric": 1},
+             {"nexthop-ip": "10.0.1.1", "metric": 1}
+           ]}
+        ]}
+      }
+    }"""
+    assert parse_route_table_json(text, "default") == [
+        SrosIpRoute(
+            network="192.0.2.0/24",
+            vrf="default",
+            protocol="static",
+            next_hop_ip="10.0.0.1",
+            preference=5,
+            metric=1,
+        ),
+        SrosIpRoute(
+            network="192.0.2.0/24",
+            vrf="default",
+            protocol="static",
+            next_hop_ip="10.0.1.1",
+            preference=5,
+            metric=1,
+        ),
+    ]
+
+
+def test_parse_route_table_empty_object_is_no_routes() -> None:
+    """An empty object ({}) — the response for an unconfigured VPRN state path —
+    yields no routes rather than crashing on a missing top-level key."""
+    assert parse_route_table_json("{}", "red") == []
+
+
+def test_parse_interfaces_empty_object_is_no_interfaces() -> None:
+    """An empty interface state object ({}) yields no interfaces, not a crash."""
+    assert parse_interface_state_json("{}") == []
 
 
 # --- BGP RIB --------------------------------------------------------------------
@@ -289,3 +337,24 @@ def test_parse_as_path_multi_segment() -> None:
     assert _parse_as_path(as_path) == [65001, 65002, 65003]
     assert _parse_as_path(None) == []
     assert _parse_as_path({}) == []
+
+
+def test_parse_communities_canonicalizes_well_known() -> None:
+    """SR OS renders well-known communities symbolically; they are canonicalized to
+    the numeric form Batfish uses, while AS:N communities pass through unchanged."""
+    obj = {
+        "community": [
+            {"community-value": "65001:100"},
+            {"community-value": "no-export"},
+            {"community-value": "no-advertise"},
+        ]
+    }
+    assert _parse_communities(obj) == ("65001:100", "65535:65281", "65535:65282")
+    assert _parse_communities(None) == ()
+
+
+def test_parse_communities_unknown_symbolic_raises() -> None:
+    """An unrecognized symbolic community raises (so a contributor adds the mapping)
+    rather than silently passing a value that cannot match Batfish's numeric form."""
+    with pytest.raises(AssertionError, match="unknown SR OS symbolic community"):
+        _parse_communities({"community": [{"community-value": "bogus-well-known"}]})

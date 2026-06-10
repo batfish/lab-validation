@@ -1,0 +1,44 @@
+# VPRN L3VPN with full RD/RT (MP-BGP vpn-ipv4): two Nokia SR-SIM PEs.
+#
+# Heaviest ladder rung: a real MPLS L3VPN between two SR-OS PEs, validating
+# route-distinguisher + route-target (vrf-target) import/export end to end —
+# the part of multi-VRF that the L7 loopback-only VPRN lab did not exercise.
+#
+# Underlay (router "Base"): OSPF area 0 for PE-PE loopback reachability, LDP
+# for MPLS transport, and an iBGP session between system loopbacks carrying the
+# vpn-ipv4 (VPN-IPv4 / L3VPN) address family.
+# Overlay: each PE has VPRN "red" with a CE-facing loopback, RD 65000:1/65000:2,
+# and a shared vrf-target target:65000:1, so each PE imports the other's "red"
+# routes. auto-bind-tunnel resolves the VPN next-hop over the LDP tunnel.
+#
+#   pe1 (SR-SIM)            ---[1/1/c1/1]---[1/1/c1/1]---            pe2 (SR-SIM)
+#     system: 1.1.1.1/32                                     system: 2.2.2.2/32
+#     VPRN red: 172.16.1.1/32  RD 65000:1                    VPRN red: 172.16.2.1/32  RD 65000:2
+#     link: 10.0.0.0/31                                       link: 10.0.0.1/31
+#
+# After convergence, pe1's VPRN "red" RIB holds 172.16.2.1/32 (learned via
+# MP-BGP from pe2, imported by RT target:65000:1) and vice versa — proving RD
+# uniqueness + RT-based import and per-VRF separation from the Base table.
+#
+# REQUIRES A LICENSE: SR-SIM needs a Nokia license at /nokia/license/license.txt.
+
+name: srsim-vprn-l3vpn
+
+topology:
+  kinds:
+    nokia_srsim:
+      image: localhost/nokia/srsim:26.3.R1
+      license: /home/ubuntu/srsim-license.txt
+
+  nodes:
+    pe1:
+      kind: nokia_srsim
+      type: SR-1
+      startup-config: configs/pe1.cfg
+    pe2:
+      kind: nokia_srsim
+      type: SR-1
+      startup-config: configs/pe2.cfg
+
+  links:
+    - endpoints: ["pe1:e1-1-c1-1", "pe2:e1-1-c1-1"]

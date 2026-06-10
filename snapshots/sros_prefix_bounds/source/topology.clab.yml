@@ -1,0 +1,45 @@
+# prefix-list to / address-mask bounds (#9990): Nokia SR-SIM + Arista cEOS.
+#
+# Settles batfish/batfish#9990 by capturing the device's actual match semantics
+# for the two prefix-list match types Batfish currently over-approximates:
+#   - `type to`   with a to-prefix list
+#   - `type address-mask` with a mask-pattern
+# r1 has a set of blackhole static routes spanning the candidate space, and an
+# eBGP export policy that accepts (and community-tags) the ones matching the
+# `to-test` / `mask-test` prefix-lists. Because the implicit eBGP export default
+# is reject, the EXACT set of prefixes r2 learns reveals which routes each
+# match type accepts — the ground truth Batfish's conversion must reproduce.
+#
+#   to-test:   prefix 10.10.0.0/16 type to { to-prefix 10.10.4.0/24 }
+#     candidates: 10.10.0.0/16, 10.10.2.0/24, 10.10.4.0/24, 10.10.8.0/24
+#   mask-test: prefix 172.16.0.0/16 type address-mask { mask-pattern 255.255.0.0 }
+#     candidates: 172.16.5.0/24, 172.17.5.0/24
+#
+# Topology:
+#   r1 (SR-SIM, AS 65001) ---[1/1/c1/1]---[Ethernet1]--- r2 (cEOS, AS 65002)
+#     system: 1.1.1.1/32                                  Loopback0: 2.2.2.2/32
+#     link:   10.0.0.0/31                                 link: 10.0.0.1/31
+#
+# REQUIRES A LICENSE: SR-SIM needs a Nokia license at /nokia/license/license.txt.
+
+name: srsim-ceos-prefix-bounds
+
+topology:
+  kinds:
+    nokia_srsim:
+      image: localhost/nokia/srsim:26.3.R1
+      license: /home/ubuntu/srsim-license.txt
+    arista_ceos:
+      image: ceos:4.36.0.1F
+
+  nodes:
+    r1:
+      kind: nokia_srsim
+      type: SR-1
+      startup-config: configs/r1.cfg
+    r2:
+      kind: arista_ceos
+      startup-config: configs/r2.cfg
+
+  links:
+    - endpoints: ["r1:e1-1-c1-1", "r2:eth1"]
