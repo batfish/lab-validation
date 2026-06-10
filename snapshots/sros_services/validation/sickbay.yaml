@@ -1,0 +1,47 @@
+# Two distinct, documented Batfish-vs-device gaps, each keyed to an issue.
+#
+# 1. IGP ECMP (all six nodes' main RIB can be affected; here p1/p2/pe2/pe4).
+#    SR OS installs a single best path per prefix by default (`ecmp 1`), so its
+#    route-table reports one next-hop for an equidistant prefix. Batfish has no
+#    per-IGP ECMP limit and installs every equal-cost leg (OSPF/IS-IS have no VI
+#    ECMP knob), so it holds the device's chosen next-hop plus extra legs, which
+#    test_main_rib_routes flags as Batfish-only routes. We sickbay these rather
+#    than weaken the cost matcher globally (which would also hide a real "right
+#    path + wrong extra legs" miscomputation).
+#    Tracked: https://github.com/batfish/lab-validation/issues/200
+#
+# 2. Service overlay (pe1/pe3, which run the routed VPRN/IES services). Their
+#    RIBs carry bgp-vpn (MPLS L3VPN vpn-ipv4) routes — no VPNv4 AF / inter-PE
+#    import in the VI dataplane (https://github.com/batfish/batfish/issues/9991)
+#    — and IES interface + SR-ISIS-tunnel static routes that are not modeled
+#    (https://github.com/batfish/batfish/issues/9996). pe1/pe3 also exhibit the
+#    ECMP gap, but #9991/#9996 already cover their whole-test sickbay.
+#
+# The underlay control plane (interfaces, OSPF/IS-IS adjacencies, the iBGP mesh,
+# config-format) validates on all six nodes; only the main-RIB route comparison
+# is sickbay'd, and only for the reasons above.
+entries:
+  - hostname: p1
+    test_name: test_main_rib_routes
+    skip:
+      reason: https://github.com/batfish/lab-validation/issues/200
+  - hostname: p2
+    test_name: test_main_rib_routes
+    skip:
+      reason: https://github.com/batfish/lab-validation/issues/200
+  - hostname: pe2
+    test_name: test_main_rib_routes
+    skip:
+      reason: https://github.com/batfish/lab-validation/issues/200
+  - hostname: pe4
+    test_name: test_main_rib_routes
+    skip:
+      reason: https://github.com/batfish/lab-validation/issues/200
+  - hostname: pe1
+    test_name: test_main_rib_routes
+    skip:
+      reason: https://github.com/batfish/batfish/issues/9991
+  - hostname: pe3
+    test_name: test_main_rib_routes
+    skip:
+      reason: https://github.com/batfish/batfish/issues/9991

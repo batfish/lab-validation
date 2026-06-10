@@ -1,0 +1,1496 @@
+{
+    "nokia-state:isis": [
+        {
+            "isis-instance": 0,
+            "oper-system-id": "0100.1001.0002",
+            "oper-router-id": "10.10.10.2",
+            "oper-ipv6-te-router-id": "::",
+            "db-export-igp-asn": 0,
+            "oper-state": "up",
+            "last-enabled-time": "2026-06-10T20:43:36.0+00:00",
+            "last-spf": "2026-06-10T20:44:01.3+00:00",
+            "version": "1",
+            "l1-state": "on",
+            "l2-state": "on",
+            "spf-hold-time": 1,
+            "loopfree-alternate": {
+                "statistics": {
+                    "lfa": {
+                        "runs": 0,
+                        "partial": {
+                            "runs": 0
+                        }
+                    },
+                    "remote-lfa": {
+                        "runs": 0
+                    },
+                    "ti-lfa": {
+                        "runs": 0
+                    }
+                }
+            },
+            "statistics": {
+                "lsp-regenerations": 8,
+                "initiated-purges": 0,
+                "corrupted-lsps": 0,
+                "lsp-l1-db-overloads": 0,
+                "lsp-l2-db-overloads": 0,
+                "manual-address-dropped-from-areas": 0,
+                "attempt-to-exceed-max-sequence-numbers": 0,
+                "sequence-number-skips": 0,
+                "own-lsp-purges": 0,
+                "id-field-length-mismatches": 0,
+                "max-area-address-mismatches": 0,
+                "authentication-failures": 0,
+                "partition-changes": 0,
+                "sid": {
+                    "srgb-errors": 0,
+                    "duplicated-errors": 0
+                },
+                "spf": {
+                    "runs": 4,
+                    "time": "2026-06-10T20:44:00.3+00:00",
+                    "partial": {
+                        "runs": 1,
+                        "time": "2026-06-10T20:44:01.3+00:00"
+                    }
+                },
+                "cspf": {
+                    "requests": 0,
+                    "dropped-requests": 0,
+                    "paths-found": 0,
+                    "paths-not-found": 0
+                },
+                "lsp": {
+                    "received": 23,
+                    "dropped": 1,
+                    "sent": 18,
+                    "retransmitted": 0
+                },
+                "iih": {
+                    "received": 243,
+                    "dropped": 0,
+                    "sent": 245,
+                    "retransmitted": 0
+                },
+                "csnp": {
+                    "received": 248,
+                    "dropped": 0,
+                    "sent": 249,
+                    "retransmitted": 0
+                },
+                "psnp": {
+                    "received": 10,
+                    "dropped": 0,
+                    "sent": 14,
+                    "retransmitted": 0
+                },
+                "unknown": {
+                    "received": 0,
+                    "dropped": 0,
+                    "sent": 0,
+                    "retransmitted": 0
+                }
+            },
+            "multi-part-tlv": {
+                "statistics": {
+                    "tlv": [
+                        {
+                            "tlv-type": 22,
+                            "level-number": "1",
+                            "mp-tlv-truncated": 0,
+                            "mp-tlv-originated": 0
+                        },
+                        {
+                            "tlv-type": 22,
+                            "level-number": "2",
+                            "mp-tlv-truncated": 0,
+                            "mp-tlv-originated": 0
+                        },
+                        {
+                            "tlv-type": 138,
+                            "level-number": "1",
+                            "mp-tlv-truncated": 0,
+                            "mp-tlv-originated": 0
+                        },
+                        {
+                            "tlv-type": 138,
+                            "level-number": "2",
+                            "mp-tlv-truncated": 0,
+                            "mp-tlv-originated": 0
+                        },
+                        {
+                            "tlv-type": 222,
+                            "level-number": "1",
+                            "mp-tlv-truncated": 0,
+                            "mp-tlv-originated": 0
+                        },
+                        {
+                            "tlv-type": 222,
+                            "level-number": "2",
+                            "mp-tlv-truncated": 0,
+                            "mp-tlv-originated": 0
+                        },
+                        {
+                            "tlv-type": 238,
+                            "level-number": "1",
+                            "mp-tlv-truncated": 0,
+                            "mp-tlv-originated": 0
+                        },
+                        {
+                            "tlv-type": 238,
+                            "level-number": "2",
+                            "mp-tlv-truncated": 0,
+                            "mp-tlv-originated": 0
+                        }
+                    ]
+                }
+            },
+            "interface": [
+                {
+                    "interface-name": "system",
+                    "oper-state": "up",
+                    "mtu": 1500,
+                    "circuit-index": 1,
+                    "oper-type": "point-to-point",
+                    "ber-state": "none",
+                    "te-metric": "none",
+                    "te-state": "up",
+                    "point-to-point-circuit-id": "0x01001001000200",
+                    "up-time": 1097,
+                    "measured-delay": 0,
+                    "statistics": {
+                        "initialization-failures": 0,
+                        "adjacency-state-change": 0,
+                        "adjacency-rejection": 0,
+                        "control-pdu-sent": 0,
+                        "control-pdu-received": 0,
+                        "control-pdu-id-length-mismatch-received": 0,
+                        "max-area-address-mismatches": 0,
+                        "area-address-mismatches": 0,
+                        "auth-type-fails": 0,
+                        "auth-fails": 0,
+                        "lan-dis-changes": 0,
+                        "end-x-install-failures": 0,
+                        "adj-number": 0
+                    },
+                    "ldp-sync": {
+                        "state": "down",
+                        "max-metric": false,
+                        "timer-state": "disabled"
+                    },
+                    "level": [
+                        {
+                            "level-number": "1",
+                            "adjacencies-number": 0,
+                            "designated-intermediate-system": "0100.1001.0002",
+                            "lsp-transmit-queue-count": 0,
+                            "circuit-id": "0x01001001000200",
+                            "oper-metric": {
+                                "ipv4-unicast": "none",
+                                "ipv6-unicast": "none",
+                                "ipv4-multicast": "none",
+                                "ipv6-multicast": "none"
+                            },
+                            "statistics": {
+                                "designated-intermediate-system-changes": 0,
+                                "packets": [
+                                    {
+                                        "direction": "sending",
+                                        "hello": 0,
+                                        "lsp": 0,
+                                        "csnp": 0,
+                                        "psnp": 0
+                                    },
+                                    {
+                                        "direction": "receiving",
+                                        "hello": 0,
+                                        "lsp": 0,
+                                        "csnp": 0,
+                                        "psnp": 0
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "level-number": "2",
+                            "adjacencies-number": 0,
+                            "designated-intermediate-system": "0100.1001.0002",
+                            "lsp-transmit-queue-count": 0,
+                            "circuit-id": "0x01001001000200",
+                            "oper-metric": {
+                                "ipv4-unicast": "none",
+                                "ipv6-unicast": "none",
+                                "ipv4-multicast": "none",
+                                "ipv6-multicast": "none"
+                            },
+                            "statistics": {
+                                "designated-intermediate-system-changes": 0,
+                                "packets": [
+                                    {
+                                        "direction": "sending",
+                                        "hello": 0,
+                                        "lsp": 0,
+                                        "csnp": 0,
+                                        "psnp": 0
+                                    },
+                                    {
+                                        "direction": "receiving",
+                                        "hello": 0,
+                                        "lsp": 0,
+                                        "csnp": 0,
+                                        "psnp": 0
+                                    }
+                                ]
+                            }
+                        }
+                    ]
+                },
+                {
+                    "interface-name": "To-P1",
+                    "oper-state": "up",
+                    "mtu": 8922,
+                    "circuit-index": 2,
+                    "oper-type": "point-to-point",
+                    "ber-state": "none",
+                    "te-metric": "none",
+                    "te-state": "up",
+                    "point-to-point-circuit-id": "0x01001001000200",
+                    "up-time": 1083,
+                    "measured-delay": 0,
+                    "statistics": {
+                        "initialization-failures": 0,
+                        "adjacency-state-change": 2,
+                        "adjacency-rejection": 0,
+                        "control-pdu-sent": 122,
+                        "control-pdu-received": 122,
+                        "control-pdu-id-length-mismatch-received": 0,
+                        "max-area-address-mismatches": 0,
+                        "area-address-mismatches": 0,
+                        "auth-type-fails": 0,
+                        "auth-fails": 0,
+                        "lan-dis-changes": 0,
+                        "end-x-install-failures": 0,
+                        "adj-number": 1
+                    },
+                    "ldp-sync": {
+                        "state": "down",
+                        "max-metric": false,
+                        "timer-state": "disabled"
+                    },
+                    "level": [
+                        {
+                            "level-number": "1",
+                            "adjacencies-number": 0,
+                            "designated-intermediate-system": "0100.1001.0002",
+                            "lsp-transmit-queue-count": 0,
+                            "circuit-id": "0x01001001000200",
+                            "oper-metric": {
+                                "ipv4-unicast": 10,
+                                "ipv6-unicast": 10,
+                                "ipv4-multicast": 10,
+                                "ipv6-multicast": 10
+                            },
+                            "statistics": {
+                                "designated-intermediate-system-changes": 0,
+                                "packets": [
+                                    {
+                                        "direction": "sending",
+                                        "hello": 0,
+                                        "lsp": 0,
+                                        "csnp": 0,
+                                        "psnp": 0
+                                    },
+                                    {
+                                        "direction": "receiving",
+                                        "hello": 0,
+                                        "lsp": 0,
+                                        "csnp": 0,
+                                        "psnp": 0
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "level-number": "2",
+                            "adjacencies-number": 1,
+                            "designated-intermediate-system": "0100.1001.0002",
+                            "lsp-transmit-queue-count": 0,
+                            "circuit-id": "0x01001001000200",
+                            "oper-metric": {
+                                "ipv4-unicast": 100,
+                                "ipv6-unicast": 10,
+                                "ipv4-multicast": 10,
+                                "ipv6-multicast": 10
+                            },
+                            "statistics": {
+                                "designated-intermediate-system-changes": 0,
+                                "packets": [
+                                    {
+                                        "direction": "sending",
+                                        "hello": 122,
+                                        "lsp": 9,
+                                        "csnp": 125,
+                                        "psnp": 7
+                                    },
+                                    {
+                                        "direction": "receiving",
+                                        "hello": 122,
+                                        "lsp": 12,
+                                        "csnp": 125,
+                                        "psnp": 5
+                                    }
+                                ]
+                            }
+                        }
+                    ],
+                    "adjacency": [
+                        {
+                            "adjacency-index": 1,
+                            "oper-state": "up",
+                            "usage": "level2",
+                            "hold-timer": 27,
+                            "uptime": 1074,
+                            "expires-in": 24,
+                            "level": "level2",
+                            "restart": {
+                                "support": false,
+                                "status": "not-helping",
+                                "suppressed": false,
+                                "num-restarts": 0
+                            },
+                            "neighbor": {
+                                "snpa-address": "0xaac1ab383a34",
+                                "system-type": "l2-is",
+                                "system-id": "0x010010010010",
+                                "priority": 0,
+                                "ipv4": "172.16.10.11",
+                                "ipv6": "::"
+                            },
+                            "multi-topology": {
+                                "enabled": false,
+                                "id0": {
+                                    "enabled": true,
+                                    "bfd-required": false,
+                                    "bfd-usable": false
+                                },
+                                "id2": {
+                                    "enabled": false,
+                                    "bfd-required": false,
+                                    "bfd-usable": false
+                                },
+                                "id3": {
+                                    "enabled": false,
+                                    "bfd-required": false,
+                                    "bfd-usable": false
+                                },
+                                "id4": {
+                                    "enabled": false,
+                                    "bfd-required": false,
+                                    "bfd-usable": false
+                                }
+                            },
+                            "sr-ipv4": {
+                                "sid-type": "mpls-label",
+                                "sid-value": 524282,
+                                "sid-protected": false,
+                                "sid-hold-timer": 0,
+                                "sid-retry-timer": 0,
+                                "pgid": 2,
+                                "mtu": 8922,
+                                "mtu-sr": 8918,
+                                "sr-lfa-info": {
+                                    "backup-path-ip": "0.0.0.0",
+                                    "backup-lfa-type": "lfa",
+                                    "backup-lfa-protection-type": "not-applicable",
+                                    "backup-num-nodes": 0
+                                }
+                            },
+                            "sr-ipv6": {
+                                "sr-lfa-info": {
+                                    "backup-path-ip": "::",
+                                    "backup-lfa-type": "lfa",
+                                    "backup-lfa-protection-type": "not-applicable",
+                                    "backup-num-nodes": 0
+                                }
+                            },
+                            "area-address": [
+                                {
+                                    "area-address": "49.0000"
+                                }
+                            ],
+                            "supported-protocol": [
+                                {
+                                    "protocol": "ip"
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "interface-name": "To-P2",
+                    "oper-state": "up",
+                    "mtu": 8922,
+                    "circuit-index": 3,
+                    "oper-type": "point-to-point",
+                    "ber-state": "none",
+                    "te-metric": "none",
+                    "te-state": "up",
+                    "point-to-point-circuit-id": "0x01001001000200",
+                    "up-time": 1083,
+                    "measured-delay": 0,
+                    "statistics": {
+                        "initialization-failures": 0,
+                        "adjacency-state-change": 2,
+                        "adjacency-rejection": 0,
+                        "control-pdu-sent": 123,
+                        "control-pdu-received": 121,
+                        "control-pdu-id-length-mismatch-received": 0,
+                        "max-area-address-mismatches": 0,
+                        "area-address-mismatches": 0,
+                        "auth-type-fails": 0,
+                        "auth-fails": 0,
+                        "lan-dis-changes": 0,
+                        "end-x-install-failures": 0,
+                        "adj-number": 1
+                    },
+                    "ldp-sync": {
+                        "state": "down",
+                        "max-metric": false,
+                        "timer-state": "disabled"
+                    },
+                    "level": [
+                        {
+                            "level-number": "1",
+                            "adjacencies-number": 0,
+                            "designated-intermediate-system": "0100.1001.0002",
+                            "lsp-transmit-queue-count": 0,
+                            "circuit-id": "0x01001001000200",
+                            "oper-metric": {
+                                "ipv4-unicast": 10,
+                                "ipv6-unicast": 10,
+                                "ipv4-multicast": 10,
+                                "ipv6-multicast": 10
+                            },
+                            "statistics": {
+                                "designated-intermediate-system-changes": 0,
+                                "packets": [
+                                    {
+                                        "direction": "sending",
+                                        "hello": 0,
+                                        "lsp": 0,
+                                        "csnp": 0,
+                                        "psnp": 0
+                                    },
+                                    {
+                                        "direction": "receiving",
+                                        "hello": 0,
+                                        "lsp": 0,
+                                        "csnp": 0,
+                                        "psnp": 0
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "level-number": "2",
+                            "adjacencies-number": 1,
+                            "designated-intermediate-system": "0100.1001.0002",
+                            "lsp-transmit-queue-count": 0,
+                            "circuit-id": "0x01001001000200",
+                            "oper-metric": {
+                                "ipv4-unicast": 100,
+                                "ipv6-unicast": 10,
+                                "ipv4-multicast": 10,
+                                "ipv6-multicast": 10
+                            },
+                            "statistics": {
+                                "designated-intermediate-system-changes": 0,
+                                "packets": [
+                                    {
+                                        "direction": "sending",
+                                        "hello": 123,
+                                        "lsp": 9,
+                                        "csnp": 124,
+                                        "psnp": 7
+                                    },
+                                    {
+                                        "direction": "receiving",
+                                        "hello": 121,
+                                        "lsp": 11,
+                                        "csnp": 123,
+                                        "psnp": 5
+                                    }
+                                ]
+                            }
+                        }
+                    ],
+                    "adjacency": [
+                        {
+                            "adjacency-index": 1,
+                            "oper-state": "up",
+                            "usage": "level2",
+                            "hold-timer": 27,
+                            "uptime": 1074,
+                            "expires-in": 24,
+                            "level": "level2",
+                            "restart": {
+                                "support": false,
+                                "status": "not-helping",
+                                "suppressed": false,
+                                "num-restarts": 0
+                            },
+                            "neighbor": {
+                                "snpa-address": "0xaac1abb5553a",
+                                "system-type": "l2-is",
+                                "system-id": "0x010010010020",
+                                "priority": 0,
+                                "ipv4": "172.16.10.3",
+                                "ipv6": "::"
+                            },
+                            "multi-topology": {
+                                "enabled": false,
+                                "id0": {
+                                    "enabled": true,
+                                    "bfd-required": false,
+                                    "bfd-usable": false
+                                },
+                                "id2": {
+                                    "enabled": false,
+                                    "bfd-required": false,
+                                    "bfd-usable": false
+                                },
+                                "id3": {
+                                    "enabled": false,
+                                    "bfd-required": false,
+                                    "bfd-usable": false
+                                },
+                                "id4": {
+                                    "enabled": false,
+                                    "bfd-required": false,
+                                    "bfd-usable": false
+                                }
+                            },
+                            "sr-ipv4": {
+                                "sid-type": "mpls-label",
+                                "sid-value": 524283,
+                                "sid-protected": false,
+                                "sid-hold-timer": 0,
+                                "sid-retry-timer": 0,
+                                "pgid": 1,
+                                "mtu": 8922,
+                                "mtu-sr": 8918,
+                                "sr-lfa-info": {
+                                    "backup-path-ip": "0.0.0.0",
+                                    "backup-lfa-type": "lfa",
+                                    "backup-lfa-protection-type": "not-applicable",
+                                    "backup-num-nodes": 0
+                                }
+                            },
+                            "sr-ipv6": {
+                                "sr-lfa-info": {
+                                    "backup-path-ip": "::",
+                                    "backup-lfa-type": "lfa",
+                                    "backup-lfa-protection-type": "not-applicable",
+                                    "backup-num-nodes": 0
+                                }
+                            },
+                            "area-address": [
+                                {
+                                    "area-address": "49.0000"
+                                }
+                            ],
+                            "supported-protocol": [
+                                {
+                                    "protocol": "ip"
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ],
+            "level": [
+                {
+                    "level-number": "1",
+                    "oper-lsp-mtu-size": 1492,
+                    "total-exported-routes": 0,
+                    "lsps": 1,
+                    "max-oper-lsp-mtu-size": 9775,
+                    "overload": {
+                        "status": "not-in-overload"
+                    }
+                },
+                {
+                    "level-number": "2",
+                    "oper-lsp-mtu-size": 1492,
+                    "total-exported-routes": 0,
+                    "lsps": 6,
+                    "max-oper-lsp-mtu-size": 8919,
+                    "overload": {
+                        "status": "not-in-overload"
+                    }
+                }
+            ],
+            "database": [
+                {
+                    "level-number": "1",
+                    "lsp-id": "0100.1001.0002.00-00",
+                    "seq": 2,
+                    "checksum": 1161,
+                    "zero-rtl": false,
+                    "lifetime-remain": 713,
+                    "version": 1,
+                    "pkt-type": 18,
+                    "pkt-version": 1,
+                    "attributes": 3,
+                    "max-area": 3,
+                    "alloc-len": 1492,
+                    "system-id": "0100.1001.0002",
+                    "system-id-len": 0,
+                    "used-len": 108,
+                    "value": "0x831b010012010003006c04b00100100100020000000000020489030104034900008101cc8905535253494d86040a0a0a02f21c0a0a0a02000101e80209c00003e901030052081301001704010c020f84040a0a0a02871500000000600a0a0a020b0401300306600000000002"
+                },
+                {
+                    "level-number": "2",
+                    "lsp-id": "0100.1001.0001.00-00",
+                    "seq": 6,
+                    "checksum": 48626,
+                    "zero-rtl": false,
+                    "lifetime-remain": 724,
+                    "version": 1,
+                    "pkt-type": 20,
+                    "pkt-version": 1,
+                    "attributes": 3,
+                    "max-area": 3,
+                    "alloc-len": 312,
+                    "system-id": "0100.1001.0001",
+                    "system-id-len": 0,
+                    "used-len": 312,
+                    "value": "0x831b010014010003013804b0010010010001000000000006bdf2030104034900008101cc8905535253494d86040a0a0a01f21c0a0a0a01000101e80209c00003e901030052081301001704010c020f840cac100a000a0a0a01ac100a081657010010010020000000644c0604ac100a080804ac100a090904503a43b70a04503a43b70b20503a43b7503a43b7503a43b7503a43b7503a43b7503a43b7503a43b7503a43b703040000000012030000641f05300007fffb1657010010010010000000644c0604ac100a000804ac100a010904503a43b70a04503a43b70b20503a43b7503a43b7503a43b7503a43b7503a43b7503a43b7503a43b7503a43b703040000000012030000641f05300007fff98727000000641fac100a0000000000600a0a0a010b0401300306600000000001000000641fac100a08"
+                },
+                {
+                    "level-number": "2",
+                    "lsp-id": "0100.1001.0002.00-00",
+                    "seq": 6,
+                    "checksum": 39423,
+                    "zero-rtl": false,
+                    "lifetime-remain": 779,
+                    "version": 1,
+                    "pkt-type": 20,
+                    "pkt-version": 1,
+                    "attributes": 3,
+                    "max-area": 3,
+                    "alloc-len": 1492,
+                    "system-id": "0100.1001.0002",
+                    "system-id-len": 0,
+                    "used-len": 312,
+                    "value": "0x831b010014010003013804b001001001000200000000000699ff030104034900008101cc8905535253494d86040a0a0a02f21c0a0a0a02000101e80209c00003e901030052081301001704010c020f840c0a0a0a02ac100a02ac100a0a1657010010010020000000644c0604ac100a020804ac100a030904503a43b70a04503a43b70b20503a43b7503a43b7503a43b7503a43b7503a43b7503a43b7503a43b7503a43b703040000000012030000641f05300007fffb1657010010010010000000644c0604ac100a0a0804ac100a0b0904503a43b70a04503a43b70b20503a43b7503a43b7503a43b7503a43b7503a43b7503a43b7503a43b7503a43b703040000000012030000641f05300007fffa872700000000600a0a0a020b0401300306600000000002000000641fac100a02000000641fac100a0a"
+                },
+                {
+                    "level-number": "2",
+                    "lsp-id": "0100.1001.0003.00-00",
+                    "seq": 6,
+                    "checksum": 23591,
+                    "zero-rtl": false,
+                    "lifetime-remain": 776,
+                    "version": 1,
+                    "pkt-type": 20,
+                    "pkt-version": 1,
+                    "attributes": 3,
+                    "max-area": 3,
+                    "alloc-len": 312,
+                    "system-id": "0100.1001.0003",
+                    "system-id-len": 0,
+                    "used-len": 312,
+                    "value": "0x831b010014010003013804b00100100100030000000000065c27030104034900008101cc8905535253494d86040a0a0a03f21c0a0a0a03000101e80209c00003e901030052081301001704010c020f840c0a0a0a03ac100a05ac100a0c1657010010010020000000644c0604ac100a0c0804ac100a0d0904503a43b70a04503a43b70b20503a43b7503a43b7503a43b7503a43b7503a43b7503a43b7503a43b7503a43b703040000000012030000641f05300007fffb1657010010010010000000644c0604ac100a050804ac100a040904503a43b70a04503a43b70b20503a43b7503a43b7503a43b7503a43b7503a43b7503a43b7503a43b7503a43b703040000000012030000641f05300007fff9872700000000600a0a0a030b0401300306600000000003000000641fac100a04000000641fac100a0c"
+                },
+                {
+                    "level-number": "2",
+                    "lsp-id": "0100.1001.0004.00-00",
+                    "seq": 5,
+                    "checksum": 46576,
+                    "zero-rtl": false,
+                    "lifetime-remain": 740,
+                    "version": 1,
+                    "pkt-type": 20,
+                    "pkt-version": 1,
+                    "attributes": 3,
+                    "max-area": 3,
+                    "alloc-len": 378,
+                    "system-id": "0100.1001.0004",
+                    "system-id-len": 0,
+                    "used-len": 378,
+                    "value": "0x831b010014010003017a04b0010010010004000000000005b5f0030104034900008101cc8905535253494d86040a0a0a04f21c0a0a0a04000101e80209c00003e901030052081301001704010c020f020c003f80808001001001001000020c003f808080010010010020008024008080800a0a0a04ffffffff3f808080ac100a06fffffffe3f808080ac100a0efffffffe840c0a0a0a04ac100a07ac100a0e16570100100100100000003f4c0604ac100a0e0804ac100a0f0904503a43b70a04503a43b70b20503a43b7503a43b7503a43b7503a43b7503a43b7503a43b7503a43b7503a43b703040000000012030000641f05300007fffb16570100100100200000003f4c0604ac100a070804ac100a060904503a43b70a04503a43b70b20503a43b7503a43b7503a43b7503a43b7503a43b7503a43b7503a43b7503a43b703040000000012030000641f05300007fffa872700000000600a0a0a040b04013003066000000000040000003f1fac100a060000003f1fac100a0e"
+                },
+                {
+                    "level-number": "2",
+                    "lsp-id": "0100.1001.0010.00-00",
+                    "seq": 6,
+                    "checksum": 56529,
+                    "zero-rtl": false,
+                    "lifetime-remain": 733,
+                    "version": 1,
+                    "pkt-type": 20,
+                    "pkt-version": 1,
+                    "attributes": 3,
+                    "max-area": 3,
+                    "alloc-len": 516,
+                    "system-id": "0100.1001.0010",
+                    "system-id-len": 0,
+                    "used-len": 516,
+                    "value": "0x831b010014010003020404b0010010010010000000000006dcd1030104034900008101cc8905535253494d86040a0a0a0af21c0a0a0a0a000101e80209c00003e901030052081301001704010c020f8414ac100a01ac100a040a0a0a0aac100a0bac100a0f1657010010010004000000644c0604ac100a0f0804ac100a0e0904503a43b70a04503a43b70b20503a43b7503a43b7503a43b7503a43b7503a43b7503a43b7503a43b7503a43b703040000000012030000641f05300007fffe1657010010010002000000644c0604ac100a0b0804ac100a0a0904503a43b70a04503a43b70b20503a43b7503a43b7503a43b7503a43b7503a43b7503a43b7503a43b7503a43b703040000000012030000641f05300007fffd1657010010010003000000644c0604ac100a040804ac100a050904503a43b70a04503a43b70b20503a43b7503a43b7503a43b7503a43b7503a43b7503a43b7503a43b7503a43b703040000000012030000641f05300007fffc1657010010010001000000644c0604ac100a010804ac100a000904503a43b70a04503a43b70b20503a43b7503a43b7503a43b7503a43b7503a43b7503a43b7503a43b7503a43b703040000000012030000641f05300007fffb8739000000641fac100a00000000641fac100a0400000000600a0a0a0a0b040130030660000000000a000000641fac100a0a000000641fac100a0e"
+                },
+                {
+                    "level-number": "2",
+                    "lsp-id": "0100.1001.0020.00-00",
+                    "seq": 5,
+                    "checksum": 17968,
+                    "zero-rtl": false,
+                    "lifetime-remain": 718,
+                    "version": 1,
+                    "pkt-type": 20,
+                    "pkt-version": 1,
+                    "attributes": 3,
+                    "max-area": 3,
+                    "alloc-len": 516,
+                    "system-id": "0100.1001.0020",
+                    "system-id-len": 0,
+                    "used-len": 516,
+                    "value": "0x831b010014010003020404b00100100100200000000000054630030104034900008101cc8905535253494d86040a0a0a14f21c0a0a0a14000101e80209c00003e901030052081301001704010c020f8414ac100a03ac100a06ac100a09ac100a0d0a0a0a141657010010010001000000644c0604ac100a090804ac100a080904503a43b70a04503a43b70b20503a43b7503a43b7503a43b7503a43b7503a43b7503a43b7503a43b7503a43b703040000000012030000641f05300007fffe1657010010010003000000644c0604ac100a0d0804ac100a0c0904503a43b70a04503a43b70b20503a43b7503a43b7503a43b7503a43b7503a43b7503a43b7503a43b7503a43b703040000000012030000641f05300007fffd1657010010010002000000644c0604ac100a030804ac100a020904503a43b70a04503a43b70b20503a43b7503a43b7503a43b7503a43b7503a43b7503a43b7503a43b7503a43b703040000000012030000641f05300007fffc1657010010010004000000644c0604ac100a060804ac100a070904503a43b70a04503a43b70b20503a43b7503a43b7503a43b7503a43b7503a43b7503a43b7503a43b7503a43b703040000000012030000641f05300007fffb8739000000641fac100a02000000641fac100a06000000641fac100a08000000641fac100a0c00000000600a0a0a140b040130030660000000000b"
+                }
+            ],
+            "capabilities": [
+                {
+                    "level-number": "1",
+                    "lsp-id": "0100.1001.0002.00-00",
+                    "tlv-buffer": "0x831b010012010003006c04b0010010010002000000000002048903010403",
+                    "router-id": "10.10.10.2",
+                    "s-flag": false,
+                    "d-flag": false
+                },
+                {
+                    "level-number": "2",
+                    "lsp-id": "0100.1001.0001.00-00",
+                    "tlv-buffer": "0x831b010014010003013804b0010010010001000000000006bdf203010403",
+                    "router-id": "10.10.10.1",
+                    "s-flag": false,
+                    "d-flag": false
+                },
+                {
+                    "level-number": "2",
+                    "lsp-id": "0100.1001.0002.00-00",
+                    "tlv-buffer": "0x831b010014010003013804b001001001000200000000000699ff03010403",
+                    "router-id": "10.10.10.2",
+                    "s-flag": false,
+                    "d-flag": false
+                },
+                {
+                    "level-number": "2",
+                    "lsp-id": "0100.1001.0003.00-00",
+                    "tlv-buffer": "0x831b010014010003013804b00100100100030000000000065c2703010403",
+                    "router-id": "10.10.10.3",
+                    "s-flag": false,
+                    "d-flag": false
+                },
+                {
+                    "level-number": "2",
+                    "lsp-id": "0100.1001.0004.00-00",
+                    "tlv-buffer": "0x831b010014010003017a04b0010010010004000000000005b5f003010403",
+                    "router-id": "10.10.10.4",
+                    "s-flag": false,
+                    "d-flag": false
+                },
+                {
+                    "level-number": "2",
+                    "lsp-id": "0100.1001.0010.00-00",
+                    "tlv-buffer": "0x831b010014010003020404b0010010010010000000000006dcd103010403",
+                    "router-id": "10.10.10.10",
+                    "s-flag": false,
+                    "d-flag": false
+                },
+                {
+                    "level-number": "2",
+                    "lsp-id": "0100.1001.0020.00-00",
+                    "tlv-buffer": "0x831b010014010003020404b0010010010020000000000005463003010403",
+                    "router-id": "10.10.10.20",
+                    "s-flag": false,
+                    "d-flag": false
+                }
+            ],
+            "hostname": [
+                {
+                    "system-id": "0100.1001.0001",
+                    "host-name": "SRSIM"
+                },
+                {
+                    "system-id": "0100.1001.0002",
+                    "host-name": "SRSIM"
+                },
+                {
+                    "system-id": "0100.1001.0003",
+                    "host-name": "SRSIM"
+                },
+                {
+                    "system-id": "0100.1001.0004",
+                    "host-name": "SRSIM"
+                },
+                {
+                    "system-id": "0100.1001.0010",
+                    "host-name": "SRSIM"
+                },
+                {
+                    "system-id": "0100.1001.0020",
+                    "host-name": "SRSIM"
+                }
+            ],
+            "route": [
+                {
+                    "multi-topology-id": 0,
+                    "destination": "10.10.10.1\/32",
+                    "level": "2",
+                    "status": "active",
+                    "metric": 200,
+                    "type": "internal",
+                    "tag": 0,
+                    "algorithm": 0,
+                    "prefix-sid": {
+                        "label": 1,
+                        "flags": "bit-n bit-p"
+                    },
+                    "next-hop": [
+                        {
+                            "ecmp-index": 1,
+                            "next-hop-ip": "172.16.10.11",
+                            "next-hop-type": "regular",
+                            "next-hop-owner": "unknown",
+                            "spf-version": 5,
+                            "next-hop-system-id": "0100.1001.0010",
+                            "rtm-status": "success"
+                        }
+                    ]
+                },
+                {
+                    "multi-topology-id": 0,
+                    "destination": "10.10.10.2\/32",
+                    "level": "1",
+                    "status": "active",
+                    "metric": 0,
+                    "type": "internal",
+                    "tag": 0,
+                    "algorithm": 0,
+                    "prefix-sid": {
+                        "label": 2,
+                        "flags": "bit-n bit-p"
+                    },
+                    "next-hop": [
+                        {
+                            "ecmp-index": 1,
+                            "next-hop-ip": "0.0.0.0",
+                            "next-hop-type": "regular",
+                            "next-hop-owner": "unknown",
+                            "spf-version": 2,
+                            "next-hop-system-id": "0100.1001.0002",
+                            "rtm-status": "success"
+                        }
+                    ]
+                },
+                {
+                    "multi-topology-id": 0,
+                    "destination": "10.10.10.3\/32",
+                    "level": "2",
+                    "status": "active",
+                    "metric": 200,
+                    "type": "internal",
+                    "tag": 0,
+                    "algorithm": 0,
+                    "prefix-sid": {
+                        "label": 3,
+                        "flags": "bit-n bit-p"
+                    },
+                    "next-hop": [
+                        {
+                            "ecmp-index": 1,
+                            "next-hop-ip": "172.16.10.11",
+                            "next-hop-type": "regular",
+                            "next-hop-owner": "unknown",
+                            "spf-version": 5,
+                            "next-hop-system-id": "0100.1001.0010",
+                            "rtm-status": "success"
+                        }
+                    ]
+                },
+                {
+                    "multi-topology-id": 0,
+                    "destination": "10.10.10.4\/32",
+                    "level": "2",
+                    "status": "active",
+                    "metric": 200,
+                    "type": "internal",
+                    "tag": 0,
+                    "algorithm": 0,
+                    "prefix-sid": {
+                        "label": 4,
+                        "flags": "bit-n bit-p"
+                    },
+                    "next-hop": [
+                        {
+                            "ecmp-index": 1,
+                            "next-hop-ip": "172.16.10.11",
+                            "next-hop-type": "regular",
+                            "next-hop-owner": "unknown",
+                            "spf-version": 5,
+                            "next-hop-system-id": "0100.1001.0010",
+                            "rtm-status": "success"
+                        }
+                    ]
+                },
+                {
+                    "multi-topology-id": 0,
+                    "destination": "10.10.10.10\/32",
+                    "level": "2",
+                    "status": "active",
+                    "metric": 100,
+                    "type": "internal",
+                    "tag": 0,
+                    "algorithm": 0,
+                    "prefix-sid": {
+                        "label": 10,
+                        "flags": "bit-n bit-p"
+                    },
+                    "next-hop": [
+                        {
+                            "ecmp-index": 1,
+                            "next-hop-ip": "172.16.10.11",
+                            "next-hop-type": "regular",
+                            "next-hop-owner": "unknown",
+                            "spf-version": 5,
+                            "next-hop-system-id": "0100.1001.0010",
+                            "rtm-status": "success"
+                        }
+                    ]
+                },
+                {
+                    "multi-topology-id": 0,
+                    "destination": "10.10.10.20\/32",
+                    "level": "2",
+                    "status": "active",
+                    "metric": 100,
+                    "type": "internal",
+                    "tag": 0,
+                    "algorithm": 0,
+                    "prefix-sid": {
+                        "label": 11,
+                        "flags": "bit-n bit-p"
+                    },
+                    "next-hop": [
+                        {
+                            "ecmp-index": 1,
+                            "next-hop-ip": "172.16.10.3",
+                            "next-hop-type": "regular",
+                            "next-hop-owner": "unknown",
+                            "spf-version": 4,
+                            "next-hop-system-id": "0100.1001.0020",
+                            "rtm-status": "success"
+                        }
+                    ]
+                },
+                {
+                    "multi-topology-id": 0,
+                    "destination": "172.16.10.0\/31",
+                    "level": "2",
+                    "status": "active",
+                    "metric": 200,
+                    "type": "internal",
+                    "tag": 0,
+                    "algorithm": 0,
+                    "next-hop": [
+                        {
+                            "ecmp-index": 1,
+                            "next-hop-ip": "172.16.10.11",
+                            "next-hop-type": "regular",
+                            "next-hop-owner": "unknown",
+                            "spf-version": 5,
+                            "next-hop-system-id": "0100.1001.0010",
+                            "rtm-status": "success"
+                        }
+                    ]
+                },
+                {
+                    "multi-topology-id": 0,
+                    "destination": "172.16.10.2\/31",
+                    "level": "2",
+                    "status": "active",
+                    "metric": 100,
+                    "type": "internal",
+                    "tag": 0,
+                    "algorithm": 0,
+                    "next-hop": [
+                        {
+                            "ecmp-index": 1,
+                            "next-hop-ip": "0.0.0.0",
+                            "next-hop-type": "regular",
+                            "next-hop-owner": "unknown",
+                            "spf-version": 4,
+                            "next-hop-system-id": "0100.1001.0002",
+                            "rtm-status": "success"
+                        }
+                    ]
+                },
+                {
+                    "multi-topology-id": 0,
+                    "destination": "172.16.10.4\/31",
+                    "level": "2",
+                    "status": "active",
+                    "metric": 200,
+                    "type": "internal",
+                    "tag": 0,
+                    "algorithm": 0,
+                    "next-hop": [
+                        {
+                            "ecmp-index": 1,
+                            "next-hop-ip": "172.16.10.11",
+                            "next-hop-type": "regular",
+                            "next-hop-owner": "unknown",
+                            "spf-version": 5,
+                            "next-hop-system-id": "0100.1001.0010",
+                            "rtm-status": "success"
+                        }
+                    ]
+                },
+                {
+                    "multi-topology-id": 0,
+                    "destination": "172.16.10.6\/31",
+                    "level": "2",
+                    "status": "active",
+                    "metric": 200,
+                    "type": "internal",
+                    "tag": 0,
+                    "algorithm": 0,
+                    "next-hop": [
+                        {
+                            "ecmp-index": 1,
+                            "next-hop-ip": "172.16.10.3",
+                            "next-hop-type": "regular",
+                            "next-hop-owner": "unknown",
+                            "spf-version": 4,
+                            "next-hop-system-id": "0100.1001.0020",
+                            "rtm-status": "success"
+                        }
+                    ]
+                },
+                {
+                    "multi-topology-id": 0,
+                    "destination": "172.16.10.8\/31",
+                    "level": "2",
+                    "status": "active",
+                    "metric": 200,
+                    "type": "internal",
+                    "tag": 0,
+                    "algorithm": 0,
+                    "next-hop": [
+                        {
+                            "ecmp-index": 1,
+                            "next-hop-ip": "172.16.10.3",
+                            "next-hop-type": "regular",
+                            "next-hop-owner": "unknown",
+                            "spf-version": 4,
+                            "next-hop-system-id": "0100.1001.0020",
+                            "rtm-status": "success"
+                        }
+                    ]
+                },
+                {
+                    "multi-topology-id": 0,
+                    "destination": "172.16.10.10\/31",
+                    "level": "2",
+                    "status": "active",
+                    "metric": 100,
+                    "type": "internal",
+                    "tag": 0,
+                    "algorithm": 0,
+                    "next-hop": [
+                        {
+                            "ecmp-index": 1,
+                            "next-hop-ip": "0.0.0.0",
+                            "next-hop-type": "regular",
+                            "next-hop-owner": "unknown",
+                            "spf-version": 4,
+                            "next-hop-system-id": "0100.1001.0002",
+                            "rtm-status": "success"
+                        }
+                    ]
+                },
+                {
+                    "multi-topology-id": 0,
+                    "destination": "172.16.10.12\/31",
+                    "level": "2",
+                    "status": "active",
+                    "metric": 200,
+                    "type": "internal",
+                    "tag": 0,
+                    "algorithm": 0,
+                    "next-hop": [
+                        {
+                            "ecmp-index": 1,
+                            "next-hop-ip": "172.16.10.3",
+                            "next-hop-type": "regular",
+                            "next-hop-owner": "unknown",
+                            "spf-version": 4,
+                            "next-hop-system-id": "0100.1001.0020",
+                            "rtm-status": "success"
+                        }
+                    ]
+                },
+                {
+                    "multi-topology-id": 0,
+                    "destination": "172.16.10.14\/31",
+                    "level": "2",
+                    "status": "active",
+                    "metric": 200,
+                    "type": "internal",
+                    "tag": 0,
+                    "algorithm": 0,
+                    "next-hop": [
+                        {
+                            "ecmp-index": 1,
+                            "next-hop-ip": "172.16.10.11",
+                            "next-hop-type": "regular",
+                            "next-hop-owner": "unknown",
+                            "spf-version": 5,
+                            "next-hop-system-id": "0100.1001.0010",
+                            "rtm-status": "success"
+                        }
+                    ]
+                }
+            ],
+            "spf-log": [
+                {
+                    "time-stamp": 164,
+                    "duration": 0,
+                    "l1-nodes": 1,
+                    "l2-nodes": 1,
+                    "trigger-lsp-id": "0100.1001.0002.00-00",
+                    "event-count": 10,
+                    "type": "regular",
+                    "trigger-reason": "new-area reach lsp-changed admin-tag-changed tunnel-changed"
+                },
+                {
+                    "time-stamp": 368,
+                    "duration": 0,
+                    "l1-nodes": 0,
+                    "l2-nodes": 1,
+                    "trigger-lsp-id": "0100.1001.0002.00-00",
+                    "event-count": 1,
+                    "type": "regular",
+                    "trigger-reason": "lsp-changed"
+                },
+                {
+                    "time-stamp": 1606,
+                    "duration": 0,
+                    "l1-nodes": 0,
+                    "l2-nodes": 0,
+                    "trigger-lsp-id": "0100.1001.0002.00-00",
+                    "event-count": 1,
+                    "type": "partial-spf",
+                    "trigger-reason": "lsp-changed"
+                },
+                {
+                    "time-stamp": 2496,
+                    "duration": 0,
+                    "l1-nodes": 0,
+                    "l2-nodes": 6,
+                    "trigger-lsp-id": "0100.1001.0002.00-00",
+                    "event-count": 8,
+                    "type": "regular",
+                    "trigger-reason": "new-adjacency new-lsp lsp-changed"
+                },
+                {
+                    "time-stamp": 2598,
+                    "duration": 0,
+                    "l1-nodes": 0,
+                    "l2-nodes": 6,
+                    "trigger-lsp-id": "0100.1001.0010.00-00",
+                    "event-count": 2,
+                    "type": "regular",
+                    "trigger-reason": "lsp-changed"
+                }
+            ],
+            "received-area-address": [
+                {
+                    "area-address": "49.0000"
+                }
+            ],
+            "topology": [
+                {
+                    "level-number": "2",
+                    "multi-topology-id": 0,
+                    "path-id": "0x01001001000100",
+                    "metric": 200,
+                    "route-type": "spf",
+                    "lfa": {
+                        "type": "none"
+                    },
+                    "next-hop": [
+                        {
+                            "ecmp-index": 1,
+                            "interface": "To-P1",
+                            "next-hop-system-id": "0100.1001.0010"
+                        }
+                    ]
+                },
+                {
+                    "level-number": "2",
+                    "multi-topology-id": 0,
+                    "path-id": "0x01001001000300",
+                    "metric": 200,
+                    "route-type": "spf",
+                    "lfa": {
+                        "type": "none"
+                    },
+                    "next-hop": [
+                        {
+                            "ecmp-index": 1,
+                            "interface": "To-P1",
+                            "next-hop-system-id": "0100.1001.0010"
+                        }
+                    ]
+                },
+                {
+                    "level-number": "2",
+                    "multi-topology-id": 0,
+                    "path-id": "0x01001001000400",
+                    "metric": 200,
+                    "route-type": "spf",
+                    "lfa": {
+                        "type": "none"
+                    },
+                    "next-hop": [
+                        {
+                            "ecmp-index": 1,
+                            "interface": "To-P1",
+                            "next-hop-system-id": "0100.1001.0010"
+                        }
+                    ]
+                },
+                {
+                    "level-number": "2",
+                    "multi-topology-id": 0,
+                    "path-id": "0x01001001001000",
+                    "metric": 100,
+                    "route-type": "spf",
+                    "lfa": {
+                        "type": "none"
+                    },
+                    "next-hop": [
+                        {
+                            "ecmp-index": 1,
+                            "interface": "To-P1",
+                            "next-hop-system-id": "0100.1001.0010"
+                        }
+                    ]
+                },
+                {
+                    "level-number": "2",
+                    "multi-topology-id": 0,
+                    "path-id": "0x01001001002000",
+                    "metric": 100,
+                    "route-type": "spf",
+                    "lfa": {
+                        "type": "none"
+                    },
+                    "next-hop": [
+                        {
+                            "ecmp-index": 1,
+                            "interface": "To-P2",
+                            "next-hop-system-id": "0100.1001.0020"
+                        }
+                    ]
+                }
+            ],
+            "prefix-sid": [
+                {
+                    "multi-topology-id": 0,
+                    "destination": "10.10.10.1\/32",
+                    "advertising-system-id": "0100.1001.0001",
+                    "level-number": "2",
+                    "label": 1,
+                    "flags": "bit-n bit-p",
+                    "algorithm": 0,
+                    "type": "internal",
+                    "srms": false,
+                    "shared-sid": false
+                },
+                {
+                    "multi-topology-id": 0,
+                    "destination": "10.10.10.2\/32",
+                    "advertising-system-id": "0100.1001.0002",
+                    "level-number": "1",
+                    "label": 2,
+                    "flags": "bit-n bit-p",
+                    "algorithm": 0,
+                    "type": "internal",
+                    "srms": false,
+                    "shared-sid": false
+                },
+                {
+                    "multi-topology-id": 0,
+                    "destination": "10.10.10.2\/32",
+                    "advertising-system-id": "0100.1001.0002",
+                    "level-number": "2",
+                    "label": 2,
+                    "flags": "bit-n bit-p",
+                    "algorithm": 0,
+                    "type": "internal",
+                    "srms": false,
+                    "shared-sid": false
+                },
+                {
+                    "multi-topology-id": 0,
+                    "destination": "10.10.10.3\/32",
+                    "advertising-system-id": "0100.1001.0003",
+                    "level-number": "2",
+                    "label": 3,
+                    "flags": "bit-n bit-p",
+                    "algorithm": 0,
+                    "type": "internal",
+                    "srms": false,
+                    "shared-sid": false
+                },
+                {
+                    "multi-topology-id": 0,
+                    "destination": "10.10.10.4\/32",
+                    "advertising-system-id": "0100.1001.0004",
+                    "level-number": "2",
+                    "label": 4,
+                    "flags": "bit-n bit-p",
+                    "algorithm": 0,
+                    "type": "internal",
+                    "srms": false,
+                    "shared-sid": false
+                },
+                {
+                    "multi-topology-id": 0,
+                    "destination": "10.10.10.10\/32",
+                    "advertising-system-id": "0100.1001.0010",
+                    "level-number": "2",
+                    "label": 10,
+                    "flags": "bit-n bit-p",
+                    "algorithm": 0,
+                    "type": "internal",
+                    "srms": false,
+                    "shared-sid": false
+                },
+                {
+                    "multi-topology-id": 0,
+                    "destination": "10.10.10.20\/32",
+                    "advertising-system-id": "0100.1001.0020",
+                    "level-number": "2",
+                    "label": 11,
+                    "flags": "bit-n bit-p",
+                    "algorithm": 0,
+                    "type": "internal",
+                    "srms": false,
+                    "shared-sid": false
+                }
+            ],
+            "sid-statistics": [
+                {
+                    "label": 21001,
+                    "type": "node",
+                    "prefix": "10.10.10.1\/32",
+                    "algorithm": 0,
+                    "egress": {
+                        "oper-state": "disabled"
+                    },
+                    "ingress": {
+                        "oper-state": "disabled"
+                    }
+                },
+                {
+                    "label": 21002,
+                    "type": "node",
+                    "prefix": "10.10.10.2\/32",
+                    "algorithm": 0,
+                    "egress": {
+                        "oper-state": "disabled"
+                    },
+                    "ingress": {
+                        "oper-state": "disabled"
+                    }
+                },
+                {
+                    "label": 21003,
+                    "type": "node",
+                    "prefix": "10.10.10.3\/32",
+                    "algorithm": 0,
+                    "egress": {
+                        "oper-state": "disabled"
+                    },
+                    "ingress": {
+                        "oper-state": "disabled"
+                    }
+                },
+                {
+                    "label": 21004,
+                    "type": "node",
+                    "prefix": "10.10.10.4\/32",
+                    "algorithm": 0,
+                    "egress": {
+                        "oper-state": "disabled"
+                    },
+                    "ingress": {
+                        "oper-state": "disabled"
+                    }
+                },
+                {
+                    "label": 21010,
+                    "type": "node",
+                    "prefix": "10.10.10.10\/32",
+                    "algorithm": 0,
+                    "egress": {
+                        "oper-state": "disabled"
+                    },
+                    "ingress": {
+                        "oper-state": "disabled"
+                    }
+                },
+                {
+                    "label": 21011,
+                    "type": "node",
+                    "prefix": "10.10.10.20\/32",
+                    "algorithm": 0,
+                    "egress": {
+                        "oper-state": "disabled"
+                    },
+                    "ingress": {
+                        "oper-state": "disabled"
+                    }
+                },
+                {
+                    "label": 524282,
+                    "type": "adjacency",
+                    "prefix": "172.16.10.11\/32",
+                    "interface": "To-P1",
+                    "egress": {
+                        "oper-state": "disabled"
+                    },
+                    "ingress": {
+                        "oper-state": "disabled"
+                    }
+                },
+                {
+                    "label": 524283,
+                    "type": "adjacency",
+                    "prefix": "172.16.10.3\/32",
+                    "interface": "To-P2",
+                    "egress": {
+                        "oper-state": "disabled"
+                    },
+                    "ingress": {
+                        "oper-state": "disabled"
+                    }
+                }
+            ]
+        }
+    ]
+}

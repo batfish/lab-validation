@@ -1,0 +1,75 @@
+# Preconditions for the Nokia SR OS service_config_qrg lab. Run with:
+#   python -m lab_builder validate topology.clab.yml --checks checks.yaml
+#
+# This is a single combined topology stacking the full SP service suite on one
+# IGP/MPLS underlay. The checks below verify the *underlay* has converged
+# before collection: every PE has learned the other PEs' and the P routers'
+# system /32 via the IGP (OSPF + IS-IS both run), and the iBGP full mesh among
+# the four PEs (AS 64500, sourced from the system loopbacks) is established.
+#
+# System addresses: pe1=10.10.10.1 pe2=10.10.10.2 pe3=10.10.10.3
+#                   pe4=10.10.10.4 p1=10.10.10.10 p2=10.10.10.20
+#
+# We do NOT check the service overlay (Epipe/VPLS/VPRN/IES/EVPN datapath) here:
+# those depend on MPLS/LDP/RSVP/SR transport and CE-side L2, which Batfish does
+# not model and which the customer-ping verifications in the upstream guide
+# already cover. The underlay convergence is what gates a useful collection.
+
+checks:
+  # --- IGP reachability: each PE reaches every other system /32 ---
+  - type: route_exists
+    node: pe1
+    table: Base
+    prefix: 10.10.10.2/32
+    description: pe1 learned pe2 system via IGP
+  - type: route_exists
+    node: pe1
+    table: Base
+    prefix: 10.10.10.3/32
+    description: pe1 learned pe3 system via IGP
+  - type: route_exists
+    node: pe1
+    table: Base
+    prefix: 10.10.10.4/32
+    description: pe1 learned pe4 system via IGP
+  - type: route_exists
+    node: pe1
+    table: Base
+    prefix: 10.10.10.10/32
+    description: pe1 learned p1 system via IGP
+  - type: route_exists
+    node: pe1
+    table: Base
+    prefix: 10.10.10.20/32
+    description: pe1 learned p2 system via IGP
+  - type: route_exists
+    node: pe3
+    table: Base
+    prefix: 10.10.10.1/32
+    description: pe3 learned pe1 system via IGP
+
+  # --- iBGP full mesh among the PEs (AS 64500) established ---
+  - type: bgp_peer_established
+    node: pe1
+    neighbor: 10.10.10.2
+    description: pe1<->pe2 iBGP established
+  - type: bgp_peer_established
+    node: pe1
+    neighbor: 10.10.10.3
+    description: pe1<->pe3 iBGP established
+  - type: bgp_peer_established
+    node: pe1
+    neighbor: 10.10.10.4
+    description: pe1<->pe4 iBGP established
+  - type: bgp_peer_established
+    node: pe3
+    neighbor: 10.10.10.1
+    description: pe3<->pe1 iBGP established (carries vpn-ipv4)
+  - type: bgp_peer_established
+    node: pe2
+    neighbor: 10.10.10.1
+    description: pe2<->pe1 iBGP established
+  - type: bgp_peer_established
+    node: pe4
+    neighbor: 10.10.10.1
+    description: pe4<->pe1 iBGP established

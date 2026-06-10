@@ -1,0 +1,181 @@
+# Nokia SR OS Service Configuration Quick Reference lab.
+#
+# Source: https://github.com/nokia/sros-docs-lab (service_config_qrg), the lab
+# behind Nokia's "SR OS Service Configuration Quick Reference Guide". A single
+# combined topology that stacks the full SP service suite on one IGP/MPLS
+# underlay:
+#   - underlay:  OSPF + IS-IS (SR), LDP, RSVP-TE, MPLS, segment-routing
+#   - services:  Epipe, VPLS, VPRN (L3VPN), IES, EVPN-VPWS, EVPN-MPLS multihoming
+#
+# Topology: 4 PE + 2 P (all SR-SIM) + 4 Linux CE (network-multitool).
+#   PE1/PE3 run the routed services (VPRN/IES/Epipe/VPWS); PE1-4 run EVPN-MPLS.
+#   P1/P2 are pure underlay (IGP/MPLS/SR) transit.
+#
+# Batfish models the SR-OS *underlay* (interfaces, OSPF, IS-IS, BGP sessions,
+# static routes, VPRN->VRF, policy). The service overlay (MPLS/LDP/RSVP/SR
+# tunnels, L2 services, IES, EVPN, vpn-ipv4/evpn families) is not yet in the
+# Batfish VI model; those constructs must parse cleanly and are sickbay'd.
+#
+# Adapted from the upstream Nokia clab for our infra:
+#   - image pinned to our loaded 26.3.R1 (upstream targets 25.7.R1)
+#   - license path -> the EC2 host path our infra mounts
+#   - dropped `prefix: ""` so container names are clab-sros-services-<node>
+#     (the lab_builder node-name parser strips that prefix)
+#   - SR OS datapath link endpoints kept in upstream slash form (pe1:1/1/c1/1)
+#
+# REQUIRES A LICENSE: SR-SIM will not boot without a valid Nokia license
+# mounted at /nokia/license/license.txt (clab `license:` key).
+
+name: sros-services
+
+mgmt:
+  network: sros-lab-mgmt
+  ipv4-subnet: 172.10.10.0/24
+  ipv6-subnet: 2001:172:10:10::/64
+
+topology:
+  defaults:
+    kind: nokia_srsim
+  kinds:
+    nokia_srsim:
+      type: sr-1
+      image: localhost/nokia/srsim:26.3.R1
+      license: /home/ubuntu/srsim-license.txt
+      env:
+        NOKIA_SROS_MDA_1: me12-100gb-qsfp28
+    linux:
+      image: ghcr.io/srl-labs/network-multitool
+  nodes:
+    pe1:
+      startup-config: configs/pe1.cfg
+      mgmt-ipv4: 172.10.10.2
+      mgmt-ipv6: 2001:172:10:10::2
+    pe2:
+      startup-config: configs/pe2.cfg
+      mgmt-ipv4: 172.10.10.3
+      mgmt-ipv6: 2001:172:10:10::3
+    pe3:
+      startup-config: configs/pe3.cfg
+      mgmt-ipv4: 172.10.10.4
+      mgmt-ipv6: 2001:172:10:10::4
+    pe4:
+      startup-config: configs/pe4.cfg
+      mgmt-ipv4: 172.10.10.5
+      mgmt-ipv6: 2001:172:10:10::5
+    p1:
+      startup-config: configs/p1.cfg
+      mgmt-ipv4: 172.10.10.6
+      mgmt-ipv6: 2001:172:10:10::6
+    p2:
+      startup-config: configs/p2.cfg
+      mgmt-ipv4: 172.10.10.7
+      mgmt-ipv6: 2001:172:10:10::7
+    cea:
+      kind: linux
+      mgmt-ipv4: 172.10.10.10
+      mgmt-ipv6: 2001:172:10:10::10
+      exec:
+        - ip link add name eth1.100 link eth1 type vlan id 100
+        - ip addr add 192.168.10.1/24 dev eth1.100
+        - ip link set dev eth1.100 address aa:c1:ab:00:01:01
+        - ip link set dev eth1.100 up
+        - ip link add name eth1.200 link eth1 type vlan id 200
+        - ip addr add 192.168.20.1/24 dev eth1.200
+        - ip link set dev eth1.200 address aa:c2:ab:00:02:02
+        - ip link set dev eth1.200 up
+        - ip link add name eth1.300 link eth1 type vlan id 300
+        - ip addr add 192.168.30.1/24 dev eth1.300
+        - ip link set dev eth1.300 address aa:c3:ab:00:03:03
+        - ip link set dev eth1.300 up
+        - ip route add 192.168.31.0/24 via 192.168.30.254
+        - ip link add name eth1.400 link eth1 type vlan id 400
+        - ip addr add 192.168.40.1/24 dev eth1.400
+        - ip link set dev eth1.400 address aa:c4:ab:00:04:04
+        - ip link set dev eth1.400 up
+        - ip route add 192.168.41.0/24 via 192.168.40.254
+        - ip link add name eth1.500 link eth1 type vlan id 500
+        - ip addr add 192.168.50.1/24 dev eth1.500
+        - ip link set dev eth1.500 address aa:c5:ab:00:05:05
+        - ip link set dev eth1.500 up
+        - ip route add 192.168.51.0/24 via 192.168.50.254
+        - ip link add name eth1.600 link eth1 type vlan id 600
+        - ip addr add 192.168.60.1/24 dev eth1.600
+        - ip link set dev eth1.600 address aa:c6:ab:00:06:06
+        - ip link set dev eth1.600 up
+      image: ghcr.io/srl-labs/network-multitool
+    ceb:
+      kind: linux
+      mgmt-ipv4: 172.10.10.11
+      mgmt-ipv6: 2001:172:10:10::11
+      exec:
+        - ip link add bond0 type bond mode balance-rr
+        - ip link set eth1 down
+        - ip link set eth1 master bond0
+        - ip link set eth2 down
+        - ip link set eth2 master bond0
+        - ip link set bond0 up
+        - ip address add 192.168.60.1/24 dev bond0
+      image: ghcr.io/srl-labs/network-multitool
+    cez:
+      kind: linux
+      mgmt-ipv4: 172.10.10.12
+      mgmt-ipv6: 2001:172:10:10::12
+      exec:
+        - ip link add name eth1.100 link eth1 type vlan id 100
+        - ip addr add 192.168.10.2/24 dev eth1.100
+        - ip link set dev eth1.100 address ac:c1:ab:00:01:01
+        - ip link set dev eth1.100 up
+        - ip link add name eth1.200 link eth1 type vlan id 200
+        - ip addr add 192.168.20.2/24 dev eth1.200
+        - ip link set dev eth1.200 address ac:c2:ab:00:02:02
+        - ip link set dev eth1.200 up
+        - ip link add name eth1.300 link eth1 type vlan id 300
+        - ip addr add 192.168.31.1/24 dev eth1.300
+        - ip link set dev eth1.300 address ac:c3:ab:00:03:03
+        - ip link set dev eth1.300 up
+        - ip route add 192.168.30.0/24 via 192.168.31.254
+        - ip link add name eth1.400 link eth1 type vlan id 400
+        - ip addr add 192.168.41.1/24 dev eth1.400
+        - ip link set dev eth1.400 address ac:c4:ab:00:04:04
+        - ip link set dev eth1.400 up
+        - ip route add 192.168.40.0/24 via 192.168.41.254
+        - ip link add name eth1.500 link eth1 type vlan id 500
+        - ip addr add 192.168.51.1/24 dev eth1.500
+        - ip link set dev eth1.500 address ac:c5:ab:00:05:05
+        - ip link set dev eth1.500 up
+        - ip route add 192.168.50.0/24 via 192.168.51.254
+        - ip link add name eth1.600 link eth1 type vlan id 600
+        - ip addr add 192.168.60.2/24 dev eth1.600
+        - ip link set dev eth1.600 address ac:c6:ab:00:06:06
+        - ip link set dev eth1.600 up
+      image: ghcr.io/srl-labs/network-multitool
+    cey:
+      kind: linux
+      mgmt-ipv4: 172.10.10.13
+      mgmt-ipv6: 2001:172:10:10::13
+      exec:
+        - ip link add bond0 type bond mode balance-rr
+        - ip link set eth1 down
+        - ip link set eth1 master bond0
+        - ip link set eth2 down
+        - ip link set eth2 master bond0
+        - ip link set bond0 up
+        - ip address add 192.168.60.2/24 dev bond0
+      image: ghcr.io/srl-labs/network-multitool
+  links:
+    # pe-p links
+    - endpoints: [pe1:1/1/c1/1, p1:1/1/c1/1]
+    - endpoints: [pe2:1/1/c1/1, p2:1/1/c1/1]
+    - endpoints: [pe1:1/1/c2/1, p2:1/1/c2/1]
+    - endpoints: [pe2:1/1/c2/1, p1:1/1/c2/1]
+    - endpoints: [pe3:1/1/c3/1, p1:1/1/c3/1]
+    - endpoints: [pe4:1/1/c3/1, p2:1/1/c3/1]
+    - endpoints: [pe3:1/1/c4/1, p2:1/1/c4/1]
+    - endpoints: [pe4:1/1/c4/1, p1:1/1/c4/1]
+    # pe-ce links
+    - endpoints: [cea:eth1, pe1:1/1/c10/1]
+    - endpoints: [cez:eth1, pe3:1/1/c10/1]
+    - endpoints: [ceb:eth1, pe1:1/1/c11/1]
+    - endpoints: [ceb:eth2, pe2:1/1/c11/1]
+    - endpoints: [cey:eth1, pe3:1/1/c11/1]
+    - endpoints: [cey:eth2, pe4:1/1/c11/1]
