@@ -1,0 +1,39 @@
+# Aggregate routes + LAG bandwidth: two Nokia SR-SIM routers.
+#
+#  - Aggregate routes: r1 has two blackhole more-specifics (10.100.1.0/24,
+#    10.100.2.0/24) under an aggregate 10.100.0.0/16 (summary-only). r1's eBGP
+#    export accepts the aggregate + system; r3 learns ONLY the /16 aggregate,
+#    not the /24 contributors.
+#  - LAG bandwidth: the r1<->r3 interface binds a LAG (lag-1) of two member
+#    ports each side (1/1/c1/1 + 1/1/c2/1), LACP active. Two SR-SIMs (not a cEOS
+#    Port-Channel) so the bundle forms reliably. Exercises Batfish's
+#    bandwidth-sum post-processing (LAG bandwidth = sum of member ports).
+#
+#   r1 (SR-SIM, AS 65001) ==[lag-1: 1/1/c1/1 + 1/1/c2/1]== r3 (SR-SIM, AS 65002)
+#     system: 1.1.1.1/32                                   system: 3.3.3.3/32
+#     lag-1:  10.0.0.0/31                                  lag-1: 10.0.0.1/31
+#     aggregate 10.100.0.0/16 (summary-only) over 2x /24 blackholes
+#
+# REQUIRES A LICENSE: SR-SIM needs a Nokia license at /nokia/license/license.txt.
+
+name: srsim-aggregate
+
+topology:
+  kinds:
+    nokia_srsim:
+      image: localhost/nokia/srsim:26.3.R1
+      license: /home/ubuntu/srsim-license.txt
+
+  nodes:
+    r1:
+      kind: nokia_srsim
+      type: SR-1
+      startup-config: configs/r1.cfg
+    r3:
+      kind: nokia_srsim
+      type: SR-1
+      startup-config: configs/r3.cfg
+
+  links:
+    - endpoints: ["r1:e1-1-c1-1", "r3:e1-1-c1-1"]
+    - endpoints: ["r1:e1-1-c2-1", "r3:e1-1-c2-1"]

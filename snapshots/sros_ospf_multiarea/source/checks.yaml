@@ -1,0 +1,21 @@
+# Preconditions for multi-area OSPF. r1 is an ABR (area 0.0.0.0 to r2, area
+# 0.0.0.1 to r3); each backbone/area-1 router learns the other's system as an
+# OSPF inter-area route through the ABR. Route type (IA) is asserted at
+# validation time.
+
+checks:
+  - type: route_exists
+    node: r2
+    table: Base
+    prefix: 3.3.3.3/32
+    description: r2 learned r3 system via OSPF inter-area (through ABR r1)
+  - type: route_exists
+    node: r3
+    table: Base
+    prefix: 2.2.2.2/32
+    description: r3 learned r2 system via OSPF inter-area (through ABR r1)
+  - type: route_exists
+    node: r2
+    table: Base
+    prefix: 10.0.1.0/31
+    description: r2 learned the area-1 transit link via inter-area

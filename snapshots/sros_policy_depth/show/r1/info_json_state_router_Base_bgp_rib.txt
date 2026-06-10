@@ -1,0 +1,580 @@
+{
+    "nokia-state:ipv4-unicast": {
+        "local-rib": {
+            "routes": [
+                {
+                    "prefix": "1.1.1.1\/32",
+                    "neighbor": "0.0.0.0",
+                    "owner": "local",
+                    "router-instance-origin": 1,
+                    "path-id": "0",
+                    "attr-id": "3",
+                    "peer-router-id": "0.0.0.0",
+                    "last-modified-date": "2026-06-10T02:46:26.4+00:00",
+                    "used-route": true,
+                    "valid-route": true,
+                    "best-route": true,
+                    "backup-route": false,
+                    "group-best": false,
+                    "sticky-ecmp": false,
+                    "stale-route": false,
+                    "unused-weight-only": false,
+                    "long-live-gr-stale": false,
+                    "rtm-install-disabled": false,
+                    "origin-validation-state": "not-found",
+                    "rib-priority": "normal",
+                    "leakable-route": false,
+                    "leaked-route": false,
+                    "in-rtm": false,
+                    "invalid-reason": {
+                        "rejected-route": false,
+                        "as-loop": false,
+                        "next-hop-unresolved": false,
+                        "cluster-loop": false,
+                        "d-path-loop": false
+                    }
+                },
+                {
+                    "prefix": "2.2.2.2\/32",
+                    "neighbor": "10.0.0.1",
+                    "owner": "bgp",
+                    "router-instance-origin": 1,
+                    "path-id": "0",
+                    "attr-id": "10",
+                    "peer-router-id": "2.2.2.2",
+                    "last-modified-date": "2026-06-10T02:46:43.2+00:00",
+                    "used-route": true,
+                    "valid-route": true,
+                    "best-route": true,
+                    "backup-route": false,
+                    "group-best": false,
+                    "sticky-ecmp": false,
+                    "stale-route": false,
+                    "unused-weight-only": false,
+                    "long-live-gr-stale": false,
+                    "rtm-install-disabled": false,
+                    "origin-validation-state": "not-found",
+                    "rib-priority": "normal",
+                    "leakable-route": false,
+                    "leaked-route": false,
+                    "in-rtm": true,
+                    "invalid-reason": {
+                        "rejected-route": false,
+                        "as-loop": false,
+                        "next-hop-unresolved": false,
+                        "cluster-loop": false,
+                        "d-path-loop": false
+                    }
+                },
+                {
+                    "prefix": "10.0.0.0\/31",
+                    "neighbor": "0.0.0.0",
+                    "owner": "local",
+                    "router-instance-origin": 1,
+                    "path-id": "0",
+                    "attr-id": "8",
+                    "peer-router-id": "0.0.0.0",
+                    "last-modified-date": "2026-06-10T02:46:39.6+00:00",
+                    "used-route": true,
+                    "valid-route": true,
+                    "best-route": true,
+                    "backup-route": false,
+                    "group-best": false,
+                    "sticky-ecmp": false,
+                    "stale-route": false,
+                    "unused-weight-only": false,
+                    "long-live-gr-stale": false,
+                    "rtm-install-disabled": false,
+                    "origin-validation-state": "not-found",
+                    "rib-priority": "normal",
+                    "leakable-route": false,
+                    "leaked-route": false,
+                    "in-rtm": false,
+                    "invalid-reason": {
+                        "rejected-route": false,
+                        "as-loop": false,
+                        "next-hop-unresolved": false,
+                        "cluster-loop": false,
+                        "d-path-loop": false
+                    }
+                },
+                {
+                    "prefix": "100.64.0.1\/32",
+                    "neighbor": "10.0.0.1",
+                    "owner": "bgp",
+                    "router-instance-origin": 1,
+                    "path-id": "0",
+                    "attr-id": "11",
+                    "peer-router-id": "2.2.2.2",
+                    "last-modified-date": "2026-06-10T02:46:43.2+00:00",
+                    "used-route": true,
+                    "valid-route": true,
+                    "best-route": true,
+                    "backup-route": false,
+                    "group-best": false,
+                    "sticky-ecmp": false,
+                    "stale-route": false,
+                    "unused-weight-only": false,
+                    "long-live-gr-stale": false,
+                    "rtm-install-disabled": false,
+                    "origin-validation-state": "not-found",
+                    "rib-priority": "normal",
+                    "leakable-route": false,
+                    "leaked-route": false,
+                    "in-rtm": true,
+                    "invalid-reason": {
+                        "rejected-route": false,
+                        "as-loop": false,
+                        "next-hop-unresolved": false,
+                        "cluster-loop": false,
+                        "d-path-loop": false
+                    }
+                },
+                {
+                    "prefix": "100.64.0.2\/32",
+                    "neighbor": "10.0.0.1",
+                    "owner": "bgp",
+                    "router-instance-origin": 1,
+                    "path-id": "0",
+                    "attr-id": "13",
+                    "peer-router-id": "2.2.2.2",
+                    "last-modified-date": "2026-06-10T02:46:43.2+00:00",
+                    "used-route": true,
+                    "valid-route": true,
+                    "best-route": true,
+                    "backup-route": false,
+                    "group-best": false,
+                    "sticky-ecmp": false,
+                    "stale-route": false,
+                    "unused-weight-only": false,
+                    "long-live-gr-stale": false,
+                    "rtm-install-disabled": false,
+                    "origin-validation-state": "not-found",
+                    "rib-priority": "normal",
+                    "leakable-route": false,
+                    "leaked-route": false,
+                    "in-rtm": true,
+                    "invalid-reason": {
+                        "rejected-route": false,
+                        "as-loop": false,
+                        "next-hop-unresolved": false,
+                        "cluster-loop": false,
+                        "d-path-loop": false
+                    }
+                }
+            ]
+        },
+        "rib-in-out": {
+            "rib-in-pre": {
+                "routes": [
+                    {
+                        "prefix": "2.2.2.2\/32",
+                        "neighbor": "10.0.0.1",
+                        "router-instance-origin": 1,
+                        "path-id": "0",
+                        "attr-id": "9",
+                        "peer-router-id": "2.2.2.2"
+                    },
+                    {
+                        "prefix": "100.64.0.1\/32",
+                        "neighbor": "10.0.0.1",
+                        "router-instance-origin": 1,
+                        "path-id": "0",
+                        "attr-id": "11",
+                        "peer-router-id": "2.2.2.2"
+                    },
+                    {
+                        "prefix": "100.64.0.2\/32",
+                        "neighbor": "10.0.0.1",
+                        "router-instance-origin": 1,
+                        "path-id": "0",
+                        "attr-id": "12",
+                        "peer-router-id": "2.2.2.2"
+                    }
+                ]
+            },
+            "rib-in-post": {
+                "routes": [
+                    {
+                        "prefix": "2.2.2.2\/32",
+                        "neighbor": "10.0.0.1",
+                        "router-instance-origin": 1,
+                        "path-id": "0",
+                        "attr-id": "10",
+                        "peer-router-id": "2.2.2.2",
+                        "last-modified-date": "2026-06-10T02:46:43.2+00:00",
+                        "used-route": true,
+                        "valid-route": true,
+                        "best-route": true,
+                        "backup-route": false,
+                        "group-best": false,
+                        "sticky-ecmp": false,
+                        "stale-route": false,
+                        "unused-weight-only": false,
+                        "long-live-gr-stale": false,
+                        "rtm-install-disabled": false,
+                        "origin-validation-state": "not-found",
+                        "rib-priority": "normal",
+                        "leakable-route": false,
+                        "leaked-route": false,
+                        "in-rtm": true,
+                        "invalid-reason": {
+                            "rejected-route": false,
+                            "as-loop": false,
+                            "next-hop-unresolved": false,
+                            "cluster-loop": false,
+                            "d-path-loop": false
+                        }
+                    },
+                    {
+                        "prefix": "100.64.0.1\/32",
+                        "neighbor": "10.0.0.1",
+                        "router-instance-origin": 1,
+                        "path-id": "0",
+                        "attr-id": "11",
+                        "peer-router-id": "2.2.2.2",
+                        "last-modified-date": "2026-06-10T02:46:43.2+00:00",
+                        "used-route": true,
+                        "valid-route": true,
+                        "best-route": true,
+                        "backup-route": false,
+                        "group-best": false,
+                        "sticky-ecmp": false,
+                        "stale-route": false,
+                        "unused-weight-only": false,
+                        "long-live-gr-stale": false,
+                        "rtm-install-disabled": false,
+                        "origin-validation-state": "not-found",
+                        "rib-priority": "normal",
+                        "leakable-route": false,
+                        "leaked-route": false,
+                        "in-rtm": true,
+                        "invalid-reason": {
+                            "rejected-route": false,
+                            "as-loop": false,
+                            "next-hop-unresolved": false,
+                            "cluster-loop": false,
+                            "d-path-loop": false
+                        }
+                    },
+                    {
+                        "prefix": "100.64.0.2\/32",
+                        "neighbor": "10.0.0.1",
+                        "router-instance-origin": 1,
+                        "path-id": "0",
+                        "attr-id": "13",
+                        "peer-router-id": "2.2.2.2",
+                        "last-modified-date": "2026-06-10T02:46:43.2+00:00",
+                        "used-route": true,
+                        "valid-route": true,
+                        "best-route": true,
+                        "backup-route": false,
+                        "group-best": false,
+                        "sticky-ecmp": false,
+                        "stale-route": false,
+                        "unused-weight-only": false,
+                        "long-live-gr-stale": false,
+                        "rtm-install-disabled": false,
+                        "origin-validation-state": "not-found",
+                        "rib-priority": "normal",
+                        "leakable-route": false,
+                        "leaked-route": false,
+                        "in-rtm": true,
+                        "invalid-reason": {
+                            "rejected-route": false,
+                            "as-loop": false,
+                            "next-hop-unresolved": false,
+                            "cluster-loop": false,
+                            "d-path-loop": false
+                        }
+                    }
+                ]
+            },
+            "rib-out-post": {
+                "routes": [
+                    {
+                        "prefix": "1.1.1.1\/32",
+                        "neighbor": "10.0.0.1",
+                        "path-id": "0",
+                        "attr-id": "14",
+                        "peer-router-id": "2.2.2.2",
+                        "next-hop": "10.0.0.0"
+                    }
+                ]
+            }
+        }
+    },
+    "nokia-state:label-ipv4": {
+        "local-rib": {
+            "routes": [
+                {
+                    "prefix": "1.1.1.1\/32",
+                    "neighbor": "0.0.0.0",
+                    "owner": "local",
+                    "router-instance-origin": 1,
+                    "path-id": "0",
+                    "attr-id": "5",
+                    "peer-router-id": "0.0.0.0",
+                    "last-modified-date": "2026-06-10T02:46:26.4+00:00",
+                    "used-route": true,
+                    "valid-route": true,
+                    "best-route": true,
+                    "backup-route": false,
+                    "group-best": false,
+                    "sticky-ecmp": false,
+                    "stale-route": false,
+                    "unused-weight-only": false,
+                    "long-live-gr-stale": false,
+                    "rtm-install-disabled": false,
+                    "origin-validation-state": "not-found",
+                    "rib-priority": "normal",
+                    "leakable-route": false,
+                    "leaked-route": false,
+                    "conflict-sid": false,
+                    "in-rtm": false,
+                    "in-ttm": false,
+                    "invalid-reason": {
+                        "rejected-route": false,
+                        "as-loop": false,
+                        "next-hop-unresolved": false,
+                        "cluster-loop": false,
+                        "d-path-loop": false
+                    }
+                },
+                {
+                    "prefix": "10.0.0.0\/31",
+                    "neighbor": "0.0.0.0",
+                    "owner": "local",
+                    "router-instance-origin": 1,
+                    "path-id": "0",
+                    "attr-id": "7",
+                    "peer-router-id": "0.0.0.0",
+                    "last-modified-date": "2026-06-10T02:46:39.6+00:00",
+                    "used-route": true,
+                    "valid-route": true,
+                    "best-route": true,
+                    "backup-route": false,
+                    "group-best": false,
+                    "sticky-ecmp": false,
+                    "stale-route": false,
+                    "unused-weight-only": false,
+                    "long-live-gr-stale": false,
+                    "rtm-install-disabled": false,
+                    "origin-validation-state": "not-found",
+                    "rib-priority": "normal",
+                    "leakable-route": false,
+                    "leaked-route": false,
+                    "conflict-sid": false,
+                    "in-rtm": false,
+                    "in-ttm": false,
+                    "invalid-reason": {
+                        "rejected-route": false,
+                        "as-loop": false,
+                        "next-hop-unresolved": false,
+                        "cluster-loop": false,
+                        "d-path-loop": false
+                    }
+                }
+            ]
+        }
+    },
+    "nokia-state:attr-sets": {
+        "attr-set": [
+            {
+                "route-type": "rib-in",
+                "index": "2",
+                "origin": "incomplete",
+                "next-hop": "0.0.0.0",
+                "med": 0
+            },
+            {
+                "route-type": "rib-in",
+                "index": "3",
+                "origin": "igp",
+                "next-hop": "0.0.0.0"
+            },
+            {
+                "route-type": "rib-in",
+                "index": "4",
+                "origin": "igp",
+                "next-hop": "0.0.0.0"
+            },
+            {
+                "route-type": "rib-in",
+                "index": "5",
+                "origin": "igp",
+                "next-hop": "0.0.0.0"
+            },
+            {
+                "route-type": "rib-in",
+                "index": "6",
+                "origin": "igp",
+                "next-hop": "0.0.0.0"
+            },
+            {
+                "route-type": "rib-in",
+                "index": "7",
+                "origin": "igp",
+                "next-hop": "0.0.0.0"
+            },
+            {
+                "route-type": "rib-in",
+                "index": "8",
+                "origin": "igp",
+                "next-hop": "0.0.0.0"
+            },
+            {
+                "route-type": "rib-in",
+                "index": "9",
+                "origin": "igp",
+                "next-hop": "10.0.0.1",
+                "as-path": {
+                    "segment": [
+                        {
+                            "segment-index": 1,
+                            "type": "as-sequence",
+                            "as-numbers": [
+                                {
+                                    "as-number-index": 1,
+                                    "as-number": 65002
+                                }
+                            ]
+                        }
+                    ]
+                },
+                "communities": {
+                    "community": [
+                        {
+                            "community-index": 1,
+                            "community-value": "65002:100"
+                        }
+                    ]
+                }
+            },
+            {
+                "route-type": "rib-in",
+                "index": "10",
+                "origin": "igp",
+                "next-hop": "10.0.0.1",
+                "local-pref": 250,
+                "as-path": {
+                    "segment": [
+                        {
+                            "segment-index": 1,
+                            "type": "as-sequence",
+                            "as-numbers": [
+                                {
+                                    "as-number-index": 1,
+                                    "as-number": 65002
+                                }
+                            ]
+                        }
+                    ]
+                },
+                "communities": {
+                    "community": [
+                        {
+                            "community-index": 1,
+                            "community-value": "65001:777"
+                        },
+                        {
+                            "community-index": 2,
+                            "community-value": "65002:100"
+                        }
+                    ]
+                }
+            },
+            {
+                "route-type": "rib-in",
+                "index": "11",
+                "origin": "igp",
+                "next-hop": "10.0.0.1",
+                "as-path": {
+                    "segment": [
+                        {
+                            "segment-index": 1,
+                            "type": "as-sequence",
+                            "as-numbers": [
+                                {
+                                    "as-number-index": 1,
+                                    "as-number": 65002
+                                },
+                                {
+                                    "as-number-index": 2,
+                                    "as-number": 65003
+                                }
+                            ]
+                        }
+                    ]
+                }
+            },
+            {
+                "route-type": "rib-in",
+                "index": "12",
+                "origin": "igp",
+                "next-hop": "10.0.0.1",
+                "as-path": {
+                    "segment": [
+                        {
+                            "segment-index": 1,
+                            "type": "as-sequence",
+                            "as-numbers": [
+                                {
+                                    "as-number-index": 1,
+                                    "as-number": 65002
+                                }
+                            ]
+                        }
+                    ]
+                }
+            },
+            {
+                "route-type": "rib-in",
+                "index": "13",
+                "origin": "igp",
+                "next-hop": "10.0.0.1",
+                "as-path": {
+                    "segment": [
+                        {
+                            "segment-index": 1,
+                            "type": "as-sequence",
+                            "as-numbers": [
+                                {
+                                    "as-number-index": 1,
+                                    "as-number": 65002
+                                }
+                            ]
+                        }
+                    ]
+                },
+                "communities": {
+                    "community": [
+                        {
+                            "community-index": 1,
+                            "community-value": "65001:777"
+                        }
+                    ]
+                }
+            },
+            {
+                "route-type": "rib-out",
+                "index": "14",
+                "origin": "igp",
+                "as-path": {
+                    "segment": [
+                        {
+                            "segment-index": 1,
+                            "type": "as-sequence",
+                            "as-numbers": [
+                                {
+                                    "as-number-index": 1,
+                                    "as-number": 65001
+                                }
+                            ]
+                        }
+                    ]
+                }
+            }
+        ]
+    }
+}

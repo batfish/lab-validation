@@ -1,0 +1,29 @@
+# Preconditions for the comprehensive import-policy lab. All three routes must be
+# learned by r1 (the policy accepts all three); the resulting attributes
+# (local-pref, communities, metric, origin) are asserted at validation time
+# against the bgp rib JSON.
+
+checks:
+  - type: bgp_peer_established
+    node: r1
+    neighbor: 10.0.0.1
+    description: r1 eBGP to r2 established
+  - type: route_exists
+    node: r1
+    table: Base
+    prefix: 2.2.2.2/32
+    description: r1 learned 2.2.2.2/32 (entry 10 from-community)
+  - type: route_exists
+    node: r1
+    table: Base
+    prefix: 100.64.0.1/32
+    description: r1 learned 100.64.0.1/32 (entry 20 from-as-path)
+  - type: route_exists
+    node: r1
+    table: Base
+    prefix: 100.64.0.2/32
+    description: r1 learned 100.64.0.2/32 (entry 30 next-entry -> 40)
+  - type: bgp_peer_established
+    node: r2
+    neighbor: 10.0.0.0
+    description: r2 eBGP to r1 established

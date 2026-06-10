@@ -294,6 +294,13 @@ def test_diff_bgp_routes_cost_learned_match() -> None:
     assert SrosValidator._diff_bgp_routes_cost(sros, _bgp_route()) == []
 
 
+def test_bgp_next_hop_cost_discard_aggregate() -> None:
+    # An aggregate advertised into BGP has an explicit 0.0.0.0 next-hop on SR OS; Batfish
+    # models the aggregate as a discard route. They match (the None case is covered by
+    # test_bgp_next_hop_cost_local_origin_discard).
+    assert SrosValidator._bgp_next_hop_cost("0.0.0.0", NextHopDiscard()) == []
+
+
 def test_diff_bgp_routes_cost_as_path_mismatch() -> None:
     sros = SrosBgpRoute(
         network="2.2.2.2/32",
@@ -382,6 +389,22 @@ def test_compare_all_interfaces_skips_physical_ports() -> None:
             name="to-r2", all_prefixes=["10.0.0.0/31"], interface_type="LOGICAL"
         ),
         _iface_props(name="1/1/c1/1", all_prefixes=[], interface_type="PHYSICAL"),
+    ]
+    assert SrosValidator._compare_all_interfaces(sros, batfish) == {}
+
+
+def test_compare_all_interfaces_skips_aggregated_lag() -> None:
+    # When the L3 interface binds a LAG, Batfish models the AGGREGATED "lag-1" plus its
+    # PHYSICAL member ports. The device interface-state tree lists only the L3 interface
+    # ("to-r2"), so both the AGGREGATED LAG and the PHYSICAL members must be ignored.
+    sros = [_sros_iface(name="to-r2", primary_address="10.0.0.0")]
+    batfish = [
+        _iface_props(
+            name="to-r2", all_prefixes=["10.0.0.0/31"], interface_type="LOGICAL"
+        ),
+        _iface_props(name="lag-1", all_prefixes=[], interface_type="AGGREGATED"),
+        _iface_props(name="1/1/c1/1", all_prefixes=[], interface_type="PHYSICAL"),
+        _iface_props(name="1/1/c2/1", all_prefixes=[], interface_type="PHYSICAL"),
     ]
     assert SrosValidator._compare_all_interfaces(sros, batfish) == {}
 
