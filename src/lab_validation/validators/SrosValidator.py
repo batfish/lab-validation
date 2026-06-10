@@ -100,12 +100,14 @@ class SrosValidator(VendorValidator):
         # that a Layer-1 topology naming the port drives the L3 adjacency. Those
         # synthetic port interfaces are L1 hardware and do not appear in the device's
         # `info json /state router "Base" interface` tree (which lists only L3 router
-        # interfaces); they live in the separate `/state port` tree. Compare only the
-        # L3 interfaces here, so the port interfaces are not flagged as "extra".
+        # interfaces); they live in the separate `/state port` tree. An AGGREGATED
+        # interface (a LAG, e.g. "lag-1") is likewise an L1/bundle construct in the
+        # `/state lag` tree, not a router interface. Compare only the L3 interfaces
+        # here, so the port/LAG interfaces are not flagged as "extra".
         batfish_index = {
             i.name.lower(): i
             for i in batfish_interfaces
-            if i.interface_type != "PHYSICAL"
+            if i.interface_type not in ("PHYSICAL", "AGGREGATED")
         }
         real_index = {i.name.lower(): i for i in sros_interfaces}
         for name in batfish_index.keys() - real_index.keys():
@@ -304,6 +306,13 @@ class SrosValidator(VendorValidator):
     def _bgp_next_hop_cost(
         sros_next_hop_ip: str | None, next_hop: NextHop
     ) -> CostResult:
+        if isinstance(next_hop, NextHopDiscard):
+            # A locally-originated route advertised into BGP (e.g. an aggregate) carries a
+            # 0.0.0.0 next-hop on SR OS; Batfish models the aggregate as a discard route. Treat
+            # these as a match.
+            if sros_next_hop_ip in (None, "0.0.0.0"):
+                return []
+            return [("asymmetric next hop", 5.0)]
         if isinstance(next_hop, NextHopIp):
             if sros_next_hop_ip == next_hop.ip:
                 return []

@@ -1,0 +1,23 @@
+# Preconditions for the aggregate + LAG lab. The eBGP session runs over the LAG;
+# establishment proves the LAG bundled. r3 must learn the /16 aggregate; the
+# absence of the /24 contributors (summary-only) is asserted at validation time.
+
+checks:
+  - type: bgp_peer_established
+    node: r1
+    neighbor: 10.0.0.1
+    description: r1 eBGP to r3 established over the LAG
+  - type: bgp_peer_established
+    node: r3
+    neighbor: 10.0.0.0
+    description: r3 eBGP to r1 established over the LAG
+  - type: route_exists
+    node: r3
+    table: Base
+    prefix: 10.100.0.0/16
+    description: r3 learned the aggregate from r1
+  - type: route_exists
+    node: r3
+    table: Base
+    prefix: 1.1.1.1/32
+    description: r3 learned r1 system address

@@ -1,0 +1,39 @@
+# Comprehensive BGP import policy: SR-SIM (SR OS) + Arista cEOS.
+#
+# The cEOS oracle (r2) advertises three loopbacks differently so r1's rich import
+# policy ("import-rich") exercises a breadth of from-matches and action set-clauses,
+# each validated on r1's resulting BGP RIB (and cross-checked by what r2 sent):
+#   2.2.2.2/32    community 65002:100  -> entry 10: from community -> accept,
+#                                         local-preference 250, community add 65001:777
+#   100.64.0.1/32 as-path prepend 65003 -> entry 20: from as-path -> accept,
+#                                         metric add 33, origin igp
+#   100.64.0.2/32 (no tag)             -> entry 30 from prefix-list -> next-entry,
+#                                         then entry 40 -> accept + community add 65001:777
+#                                         (exercises next-entry chaining)
+# default-action accept catches anything else. Corner cases (entry order/first-match,
+# default-action, next-entry chaining, from community/as-path/prefix-list AND/OR) are
+# confirmed on the device.
+#
+# REQUIRES A LICENSE: SR-SIM needs a Nokia license at /nokia/license/license.txt.
+
+name: srsim-ceos-policy-depth
+
+topology:
+  kinds:
+    nokia_srsim:
+      image: localhost/nokia/srsim:26.3.R1
+      license: /home/ubuntu/srsim-license.txt
+    arista_ceos:
+      image: ceos:4.36.0.1F
+
+  nodes:
+    r1:
+      kind: nokia_srsim
+      type: SR-1
+      startup-config: configs/r1.cfg
+    r2:
+      kind: arista_ceos
+      startup-config: configs/r2.cfg
+
+  links:
+    - endpoints: ["r1:e1-1-c1-1", "r2:eth1"]

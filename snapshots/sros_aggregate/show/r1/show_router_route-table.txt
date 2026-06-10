@@ -1,0 +1,27 @@
+
+===============================================================================
+Route Table (Router: Base)
+===============================================================================
+Dest Prefix[Flags]                            Type    Proto     Age        Pref
+      Next Hop[Interface Name]                                    Metric   
+-------------------------------------------------------------------------------
+1.1.1.1/32                                    Local   Local     00h04m37s  0
+       system                                                       0
+3.3.3.3/32                                    Remote  BGP       00h02m37s  170
+       10.0.0.1                                                     0
+10.0.0.0/31                                   Local   Local     00h04m23s  0
+       to-r2                                                        0
+10.100.0.0/16                                 Blackh* Aggr      00h04m37s  130
+       Black Hole                                                   0
+10.100.1.0/24                                 Blackh* Static    00h04m37s  5
+       Black Hole                                                   1
+10.100.2.0/24                                 Blackh* Static    00h04m37s  5
+       Black Hole                                                   1
+-------------------------------------------------------------------------------
+No. of Routes: 6
+Flags: n = Number of times nexthop is repeated
+       B = BGP backup route available
+       L = LFA nexthop available
+       S = Sticky ECMP requested
+===============================================================================
+* indicates that the corresponding row element may have been truncated.

@@ -1,0 +1,38 @@
+# Multi-area OSPF + external E1/E2: three Nokia SR-SIM routers.
+#
+#   r3 (area 0.0.0.1) ---[1/1/c1/1]---[1/1/c2/1] r1 (ABR) [1/1/c1/1]---[1/1/c1/1] r2 (area 0.0.0.0)
+#     system 3.3.3.3/32                            system 1.1.1.1/32                system 2.2.2.2/32
+#     link 10.0.1.1/31                              area1 link 10.0.1.0/31           area0 link 10.0.0.1/31
+#                                                   area0 link 10.0.0.0/31
+#
+# r1 is an Area Border Router: area 0.0.0.0 toward r2 (backbone) and area 0.0.0.1
+# toward r3. So r2 learns r3's system (3.3.3.3/32) and the area-1 link as OSPF
+# inter-area (IA) routes via the ABR, and vice versa.
+#
+# REQUIRES A LICENSE: SR-SIM needs a Nokia license at /nokia/license/license.txt.
+
+name: srsim-ospf-multiarea
+
+topology:
+  kinds:
+    nokia_srsim:
+      image: localhost/nokia/srsim:26.3.R1
+      license: /home/ubuntu/srsim-license.txt
+
+  nodes:
+    r1:
+      kind: nokia_srsim
+      type: SR-1
+      startup-config: configs/r1.cfg
+    r2:
+      kind: nokia_srsim
+      type: SR-1
+      startup-config: configs/r2.cfg
+    r3:
+      kind: nokia_srsim
+      type: SR-1
+      startup-config: configs/r3.cfg
+
+  links:
+    - endpoints: ["r1:e1-1-c1-1", "r2:e1-1-c1-1"]
+    - endpoints: ["r1:e1-1-c2-1", "r3:e1-1-c1-1"]
