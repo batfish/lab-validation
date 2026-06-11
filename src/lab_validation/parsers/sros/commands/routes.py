@@ -27,8 +27,8 @@ def parse_route_table_json(
     """
     obj = json.loads(text)
     # An empty object ({}) is the valid response for an instance with no route
-    # table — e.g. the vprn "red" state path probed on every SR OS collection
-    # when no such VPRN is configured — and yields no routes.
+    # table (e.g. a VPRN whose route-table state path returns nothing) and
+    # yields no routes.
     if not obj:
         return []
     assert _UNICAST in obj, f"missing '{_UNICAST}' in route-table state"

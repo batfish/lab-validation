@@ -11,8 +11,8 @@ def parse_interface_state_json(text: str) -> Sequence[SrosInterface]:
     """Parse ``info json /state router "Base" interface`` into SrosInterfaces.
 
     An empty object (``{}``) is the valid response for an instance with no
-    interfaces — e.g. the ``vprn "red"`` state path probed on every SR OS
-    collection when no such VPRN is configured — and yields no interfaces.
+    interfaces (e.g. a VPRN whose interface state path returns nothing) and
+    yields no interfaces.
     """
     obj = json.loads(text)
     if not obj:

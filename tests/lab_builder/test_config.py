@@ -44,6 +44,32 @@ class TestCommandToFilename:
 
 
 class TestNokiaSrsimProfile:
+    def test_no_hardcoded_vprn_name_in_show_commands(self) -> None:
+        # VPRN state is collected dynamically (the names are discovered from the
+        # device), so no specific VPRN name -- formerly the literal "red" -- may
+        # be baked into the static command list.
+        for cmd in NOKIA_SRSIM.show_commands:
+            assert "service vprn" not in cmd, cmd
+
+    def test_vprn_discovery_group_is_wired(self) -> None:
+        groups = NOKIA_SRSIM.dynamic_command_groups
+        assert len(groups) == 1
+        group = groups[0]
+        # Discovery enumerates names from the state tree's vprn list.
+        assert group.discovery_command.startswith("info json /state service vprn *")
+        assert group.discovery_json_key == "nokia-state:vprn"
+        assert group.name_field == "service-name"
+        # Each template has a single {name} slot and targets the per-VPRN state
+        # paths the SrosValidator consumes.
+        templates = group.command_templates
+        assert any("route-table" in t for t in templates)
+        assert any("interface *" in t for t in templates)
+        for t in templates:
+            assert t.count("{name}") == 1, t
+            assert t.format(name="RED").startswith(
+                'info json /state service vprn "RED" '
+            )
+
     def test_state_commands_use_info_json_with_modifier_before_path(self) -> None:
         # SR OS JSON output is `info json /state ...` -- the `json` modifier comes
         # BEFORE the path. Putting it AFTER (`info /state ... json`) makes SR OS parse

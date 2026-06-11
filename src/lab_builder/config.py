@@ -7,6 +7,36 @@ from dataclasses import dataclass, field
 
 
 @dataclass(frozen=True)
+class DynamicCommandGroup:
+    """A two-phase, device-driven command expansion for the collector.
+
+    Some operational state lives under a per-instance subtree whose instance
+    names are not known until the device is queried (e.g. SR OS service VPRNs:
+    each VPRN's route-table/interface state is at ``/state service vprn
+    "<name>" ...``, and the set of ``<name>`` depends on the running config).
+    Hardcoding the names means a lab whose VPRN is not literally the expected
+    name is silently never collected.
+
+    A DynamicCommandGroup runs ``discovery_command`` once, reads the list of
+    instance names out of its JSON, then expands each of ``command_templates``
+    (a ``{name}`` placeholder per discovered name) into a concrete command the
+    collector runs like any other. This mirrors the dynamic per-VRF handling
+    other vendors get for free from their ``... vrf all`` commands; SR OS has
+    no ``vrf all`` form for these state paths, so the collector discovers the
+    names itself.
+    """
+
+    # Command whose JSON output enumerates the instances (run once).
+    discovery_command: str
+    # Top-level JSON key holding the list of instance objects.
+    discovery_json_key: str
+    # Field in each instance object that holds the instance name.
+    name_field: str
+    # Per-instance command templates; "{name}" is replaced with each name.
+    command_templates: list[str]
+
+
+@dataclass(frozen=True)
 class VendorProfile:
     """Configuration for a specific network OS in containerlab."""
 
@@ -20,6 +50,10 @@ class VendorProfile:
     interface_prefix: str
     interface_offset: int  # eth1 maps to <prefix>0/0/<offset>
     show_commands: list[str] = field(default_factory=list)
+    # Device-driven command expansion run after show_commands (see
+    # DynamicCommandGroup). Empty for vendors whose per-instance state is
+    # reachable with a single wildcard/"vrf all" command.
+    dynamic_command_groups: list[DynamicCommandGroup] = field(default_factory=list)
     config_command: str = ""
     boot_timeout_seconds: int = 600
 
@@ -158,12 +192,9 @@ NOKIA_SRSIM = VendorProfile(
         'info json /state router "Base" bgp rib',
         'info json /state router "Base" ospf *',
         'info json /state router "Base" isis *',
-        # VPRN (multi-VRF) state: a non-Base router instance is a `service vprn`, whose
-        # state lives under `/state service vprn "<name>" ...` (same nokia-state schema as
-        # the Base route-table/interface trees). Captures the "red" VPRN used by the L7 lab;
-        # returns empty when no such VPRN is configured.
-        'info json /state service vprn "red" route-table',
-        'info json /state service vprn "red" interface *',
+        # VPRN (multi-VRF) state is collected dynamically -- see
+        # dynamic_command_groups below -- because the VPRN names are not known
+        # until the device is queried.
         # Plain-text (human-readable, cross-check):
         "show version",
         "show router interface",
@@ -172,6 +203,32 @@ NOKIA_SRSIM = VendorProfile(
         "show router bgp routes",
         "show router ospf neighbor",
         "show router isis adjacency",
+    ],
+    # VPRN (multi-VRF) state. A non-Base router instance is a `service vprn`
+    # whose state lives under `/state service vprn "<name>" ...` (same
+    # nokia-state schema as the Base route-table/interface trees). Unlike the
+    # `vrf all` form other vendors expose, SR OS has no single command that
+    # dumps every VPRN's route-table unwrapped, so the collector first
+    # enumerates the VPRN names (the `oper-service-id` wildcard returns just
+    # name + id per VPRN -- a small payload) and then collects each VPRN's
+    # route-table and interface state under the same per-VPRN filename the
+    # SrosValidator already discovers by glob. A device with no VPRN yields no
+    # names and therefore no files (vs. the old hardcoded `"red"` probe that
+    # wrote an empty `{}` on every node). CONFIRMED LIVE on SR-SIM 26.3.R1
+    # (2026-06-11): the discovery wildcard returns
+    # {"nokia-state:vprn": [{"service-name": "RED", "oper-service-id": 100}, ...]}
+    # and the per-VPRN paths return the unwrapped nokia-state:unicast /
+    # nokia-state:interface shapes the parsers expect.
+    dynamic_command_groups=[
+        DynamicCommandGroup(
+            discovery_command="info json /state service vprn * oper-service-id",
+            discovery_json_key="nokia-state:vprn",
+            name_field="service-name",
+            command_templates=[
+                'info json /state service vprn "{name}" route-table',
+                'info json /state service vprn "{name}" interface *',
+            ],
+        ),
     ],
     config_command="admin show configuration",
     boot_timeout_seconds=600,
