@@ -1,0 +1,3759 @@
+{
+    "nokia-state:oper-name": "SRSIM",
+    "nokia-state:base-mac-address": "1c:e6:05:00:00:00",
+    "nokia-state:platform": "7750 SR-1",
+    "nokia-state:chassis-topology": "standalone",
+    "nokia-state:temperature-status": "ok",
+    "nokia-state:fp-generation-fp2": false,
+    "nokia-state:fp-generation-fp3": false,
+    "nokia-state:fp-generation-fp4": true,
+    "nokia-state:fp-generation-fp5": false,
+    "nokia-state:system-profile": "profile-a",
+    "nokia-state:active-cpm-slot": "A",
+    "nokia-state:up-time": "893780",
+    "nokia-state:current-time": "2026-06-10T20:58:28.9+00:00",
+    "nokia-state:reboot-required": false,
+    "nokia-state:reboot-required-reason": "",
+    "nokia-state:boot-good-exec-status": "not-run",
+    "nokia-state:boot-bad-exec-status": "not-run",
+    "nokia-state:grpc": {
+        "oper-state": "down",
+        "oper-down-reason": "admin-down",
+        "supported-services": {
+            "gnmi-version": "0.8.0",
+            "gnoi-cert-mgmt-version": "0.1.0",
+            "gnoi-file-version": "0.1.0",
+            "gnoi-system-version": "1.2.0",
+            "rib-api-version": "1.2.0"
+        }
+    },
+    "nokia-state:management-interface": {
+        "configuration-oper-mode": "model-driven",
+        "last-mode-switch": "2026-06-10T20:43:35.4+00:00",
+        "last-mode-switch-duration": 22,
+        "oper-schema-path": "cf3:\\yang.tim",
+        "commit-management": {
+            "python-scripts": {
+                "next-commit": "scripts-will-execute",
+                "statistics": {
+                    "pre-commit-python-script-runs": 0,
+                    "pre-commit-python-script-failures": 0,
+                    "post-commit-python-script-runs": 0,
+                    "post-commit-python-script-failures": 0
+                }
+            }
+        },
+        "cli": {
+            "classic-cli": {
+                "rollback": {
+                    "save": {
+                        "last-save-result": "none"
+                    },
+                    "revert": {
+                        "last-revert-index": 0,
+                        "revert-in-progress": false,
+                        "last-revert-initiated-user": "",
+                        "last-revert-result": "none"
+                    },
+                    "delete": {
+                        "last-delete-result": "none"
+                    },
+                    "rescue": {
+                        "rescue-file-saved": false,
+                        "save": {
+                            "last-save-result": "none"
+                        },
+                        "revert": {
+                            "rescue-in-progress": false,
+                            "last-revert-initiated-user": "",
+                            "last-revert-result": "none"
+                        },
+                        "delete": {
+                            "last-delete-result": "none"
+                        }
+                    }
+                }
+            }
+        },
+        "netconf": {
+            "listen": {
+                "oper-state": "down",
+                "oper-down-reason": "admin-down",
+                "statistics": {
+                    "requests": 0,
+                    "get-requests": 0,
+                    "get-config-requests": 0,
+                    "edit-config-requests": 0,
+                    "close-requests": 0,
+                    "kill-requests": 0,
+                    "responses": 0,
+                    "error-responses": 0,
+                    "copy-config-requests": 0,
+                    "del-config-requests": 0,
+                    "validate-requests": 0,
+                    "failed-edit-cfg-reqs": 0,
+                    "failed-lock-reqs": 0,
+                    "lock-requests": 0,
+                    "unlock-requests": 0,
+                    "commit-requests": 0,
+                    "discard-requests": 0,
+                    "create-subscription-requests": 0,
+                    "get-schema-requests": 0,
+                    "get-data-requests": 0,
+                    "action-requests": 0,
+                    "in-bad-hellos": 0,
+                    "dropped-sessions": 0,
+                    "last-oper-change": "1970-01-01T00:00:00.0+00:00"
+                }
+            }
+        },
+        "snmp": {
+            "engine-boots": 1,
+            "oper-state": "down",
+            "statistics": {
+                "in-packets": 0,
+                "in-gets": 0,
+                "in-getnexts": 0,
+                "in-getbulks": 0,
+                "in-sets": 0,
+                "out-packets": 0,
+                "out-get-responses": 0,
+                "out-traps": 0,
+                "variables-requested": 0,
+                "variables-sets": 0,
+                "failed-sets": 0
+            },
+            "streaming": {
+                "dump-table-requests": 0,
+                "get-many-requests": 0,
+                "responses": 0
+            }
+        },
+        "configuration-region": [
+            {
+                "region-name": "configure",
+                "datastore": [
+                    {
+                        "ds-name": "running",
+                        "changes-since-last-save": false,
+                        "locked": false
+                    },
+                    {
+                        "ds-name": "candidate",
+                        "locked": false
+                    }
+                ],
+                "commit-history": {
+                    "commit-id": [
+                        {
+                            "id": 1,
+                            "timestamp": "2026-06-10T20:43:35.8+00:00",
+                            "user": "system",
+                            "type": "md-cli",
+                            "from": "console",
+                            "log": "System booted version B-26.3.R1."
+                        }
+                    ]
+                }
+            },
+            {
+                "region-name": "li",
+                "datastore": [
+                    {
+                        "ds-name": "running",
+                        "changes-since-last-save": false,
+                        "locked": false
+                    },
+                    {
+                        "ds-name": "candidate",
+                        "locked": false
+                    }
+                ]
+            },
+            {
+                "region-name": "bof",
+                "datastore": [
+                    {
+                        "ds-name": "running",
+                        "changes-since-last-save": false,
+                        "locked": false
+                    },
+                    {
+                        "ds-name": "candidate",
+                        "locked": false
+                    }
+                ],
+                "commit-history": {
+                    "commit-id": [
+                        {
+                            "id": 1,
+                            "timestamp": "2026-06-10T20:43:35.8+00:00",
+                            "user": "system",
+                            "type": "md-cli",
+                            "from": "console",
+                            "log": "System booted version B-26.3.R1."
+                        }
+                    ]
+                }
+            },
+            {
+                "region-name": "debug",
+                "datastore": [
+                    {
+                        "ds-name": "running",
+                        "changes-since-last-save": false,
+                        "locked": false
+                    },
+                    {
+                        "ds-name": "candidate",
+                        "locked": false
+                    }
+                ]
+            }
+        ]
+    },
+    "nokia-state:thresholds": {
+        "rmon": {
+            "hc-alarm-capabilities": "hc-alarm-creation hc-alarm-nv-storage"
+        }
+    },
+    "nokia-state:lldp": {
+        "chassis-id": "1C:E6:05:00:00:00",
+        "chassis-id-subtype": "mac-address",
+        "system-name": "SRSIM",
+        "system-description": "TiMOS-B-26.3.R1 both\/x86_64 Nokia 7750 SR-1 Copyright (c) 2000-2026 Nokia.\\nAll rights reserved. All use subject to applicable license agreements.\\nBuilt on Wed Mar 11 20:17:13 UTC 2026 by builder in \/builds\/263B\/R1\/panos\\n",
+        "capabilities-supported": "bridge router",
+        "capabilities-enabled": "bridge router",
+        "dest-mac": [
+            {
+                "mac-type": "nearest-bridge",
+                "mac-address": "01:80:c2:00:00:0e"
+            },
+            {
+                "mac-type": "nearest-non-tpmr",
+                "mac-address": "01:80:c2:00:00:03"
+            },
+            {
+                "mac-type": "nearest-customer",
+                "mac-address": "01:80:c2:00:00:00"
+            }
+        ],
+        "mgmt-address": [
+            {
+                "mgmt-address-subtype": "ipv4",
+                "mgmt-address": "10.10.10.20",
+                "interface-subtype": "if-index",
+                "interface-id": 1,
+                "object-identifier": "1.3.6.1.4.1.6527.1.3.15"
+            },
+            {
+                "mgmt-address-subtype": "ipv4",
+                "mgmt-address": "172.10.10.7",
+                "interface-subtype": "unknown",
+                "interface-id": 0,
+                "object-identifier": "1.3.6.1.4.1.6527.1.3.15"
+            },
+            {
+                "mgmt-address-subtype": "ipv6",
+                "mgmt-address": "2001:172:10:10::7",
+                "interface-subtype": "unknown",
+                "interface-id": 0,
+                "object-identifier": "1.3.6.1.4.1.6527.1.3.15"
+            }
+        ],
+        "statistics": {
+            "remote": {
+                "last-changed": "2026-06-10T20:43:35.2+00:00",
+                "inserts": 0,
+                "deletes": 0,
+                "drops": 0,
+                "ageouts": 0
+            }
+        }
+    },
+    "nokia-state:l2tp": {
+        "max-tunnels": 16383,
+        "max-sessions": 131071,
+        "max-sessions-per-tunnel": 32767
+    },
+    "nokia-state:limits": {
+        "slots": 2,
+        "operational-slots": 2,
+        "ports": 12,
+        "physical-ports": 4,
+        "power-supplies": 1,
+        "fan-trays": 4,
+        "fans": 8
+    },
+    "nokia-state:led-states": {
+        "critical": "off",
+        "major": "off",
+        "minor": "off",
+        "alarm": "not-applicable"
+    },
+    "nokia-state:connections": {
+        "tcp-connection": [
+            {
+                "local-ip-address": "0.0.0.0",
+                "local-port": 22,
+                "remote-ip-address": "0.0.0.0",
+                "remote-port": 0,
+                "router-instance": "all",
+                "rx-queue-depth": 0,
+                "tx-queue-depth": 0,
+                "tcp-state": "listen",
+                "oper-maximum-segment-size": 1024,
+                "received-maxseg-option": 0
+            },
+            {
+                "local-ip-address": "0.0.0.0",
+                "local-port": 6068,
+                "remote-ip-address": "0.0.0.0",
+                "remote-port": 0,
+                "router-instance": "all",
+                "rx-queue-depth": 0,
+                "tx-queue-depth": 0,
+                "tcp-state": "listen",
+                "oper-maximum-segment-size": 1024,
+                "received-maxseg-option": 0
+            },
+            {
+                "local-ip-address": "0.0.0.0",
+                "local-port": 47806,
+                "remote-ip-address": "0.0.0.0",
+                "remote-port": 0,
+                "router-instance": "all",
+                "rx-queue-depth": 0,
+                "tx-queue-depth": 0,
+                "tcp-state": "listen",
+                "oper-maximum-segment-size": 1024,
+                "received-maxseg-option": 0
+            },
+            {
+                "local-ip-address": "::",
+                "local-port": 22,
+                "remote-ip-address": "::",
+                "remote-port": 0,
+                "router-instance": "all",
+                "rx-queue-depth": 0,
+                "tx-queue-depth": 0,
+                "tcp-state": "listen",
+                "oper-maximum-segment-size": 1024,
+                "received-maxseg-option": 0
+            },
+            {
+                "local-ip-address": "::",
+                "local-port": 47806,
+                "remote-ip-address": "::",
+                "remote-port": 0,
+                "router-instance": "all",
+                "rx-queue-depth": 0,
+                "tx-queue-depth": 0,
+                "tcp-state": "listen",
+                "oper-maximum-segment-size": 1024,
+                "received-maxseg-option": 0
+            },
+            {
+                "local-ip-address": "10.10.10.20",
+                "local-port": 646,
+                "remote-ip-address": "0.0.0.0",
+                "remote-port": 0,
+                "router-instance": "Base",
+                "rx-queue-depth": 0,
+                "tx-queue-depth": 0,
+                "tcp-state": "listen",
+                "oper-maximum-segment-size": 1024,
+                "received-maxseg-option": 0
+            },
+            {
+                "local-ip-address": "10.10.10.20",
+                "local-port": 51153,
+                "remote-ip-address": "10.10.10.1",
+                "remote-port": 646,
+                "router-instance": "Base",
+                "rx-queue-depth": 0,
+                "tx-queue-depth": 0,
+                "tcp-state": "establish",
+                "oper-maximum-segment-size": 1024,
+                "received-maxseg-option": 1024
+            },
+            {
+                "local-ip-address": "10.10.10.20",
+                "local-port": 51154,
+                "remote-ip-address": "10.10.10.3",
+                "remote-port": 646,
+                "router-instance": "Base",
+                "rx-queue-depth": 0,
+                "tx-queue-depth": 0,
+                "tcp-state": "establish",
+                "oper-maximum-segment-size": 1024,
+                "received-maxseg-option": 1024
+            },
+            {
+                "local-ip-address": "10.10.10.20",
+                "local-port": 51155,
+                "remote-ip-address": "10.10.10.2",
+                "remote-port": 646,
+                "router-instance": "Base",
+                "rx-queue-depth": 0,
+                "tx-queue-depth": 0,
+                "tcp-state": "establish",
+                "oper-maximum-segment-size": 1024,
+                "received-maxseg-option": 1024
+            },
+            {
+                "local-ip-address": "10.10.10.20",
+                "local-port": 51156,
+                "remote-ip-address": "10.10.10.4",
+                "remote-port": 646,
+                "router-instance": "Base",
+                "rx-queue-depth": 0,
+                "tx-queue-depth": 0,
+                "tcp-state": "establish",
+                "oper-maximum-segment-size": 1024,
+                "received-maxseg-option": 1024
+            },
+            {
+                "local-ip-address": "0.0.0.0",
+                "local-port": 4199,
+                "remote-ip-address": "0.0.0.0",
+                "remote-port": 0,
+                "router-instance": "management",
+                "rx-queue-depth": 0,
+                "tx-queue-depth": 0,
+                "tcp-state": "listen",
+                "oper-maximum-segment-size": 8896,
+                "received-maxseg-option": 0
+            },
+            {
+                "local-ip-address": "127.0.0.1",
+                "local-port": 51213,
+                "remote-ip-address": "127.0.0.1",
+                "remote-port": 51214,
+                "router-instance": "management",
+                "rx-queue-depth": 0,
+                "tx-queue-depth": 0,
+                "tcp-state": "establish",
+                "oper-maximum-segment-size": 8192,
+                "received-maxseg-option": 10180
+            },
+            {
+                "local-ip-address": "127.0.0.1",
+                "local-port": 51214,
+                "remote-ip-address": "127.0.0.1",
+                "remote-port": 51213,
+                "router-instance": "management",
+                "rx-queue-depth": 0,
+                "tx-queue-depth": 0,
+                "tcp-state": "establish",
+                "oper-maximum-segment-size": 8192,
+                "received-maxseg-option": 10180
+            },
+            {
+                "local-ip-address": "127.0.0.1",
+                "local-port": 51215,
+                "remote-ip-address": "127.0.0.1",
+                "remote-port": 51216,
+                "router-instance": "management",
+                "rx-queue-depth": 0,
+                "tx-queue-depth": 0,
+                "tcp-state": "establish",
+                "oper-maximum-segment-size": 8192,
+                "received-maxseg-option": 10180
+            },
+            {
+                "local-ip-address": "127.0.0.1",
+                "local-port": 51216,
+                "remote-ip-address": "127.0.0.1",
+                "remote-port": 51215,
+                "router-instance": "management",
+                "rx-queue-depth": 2,
+                "tx-queue-depth": 0,
+                "tcp-state": "establish",
+                "oper-maximum-segment-size": 8192,
+                "received-maxseg-option": 10180
+            },
+            {
+                "local-ip-address": "127.1.0.2",
+                "local-port": 21,
+                "remote-ip-address": "0.0.0.0",
+                "remote-port": 0,
+                "router-instance": "management",
+                "rx-queue-depth": 0,
+                "tx-queue-depth": 0,
+                "tcp-state": "listen",
+                "oper-maximum-segment-size": 1024,
+                "received-maxseg-option": 0
+            },
+            {
+                "local-ip-address": "127.1.0.2",
+                "local-port": 21059,
+                "remote-ip-address": "0.0.0.0",
+                "remote-port": 0,
+                "router-instance": "management",
+                "rx-queue-depth": 0,
+                "tx-queue-depth": 0,
+                "tcp-state": "listen",
+                "oper-maximum-segment-size": 1024,
+                "received-maxseg-option": 0
+            },
+            {
+                "local-ip-address": "172.10.10.7",
+                "local-port": 22,
+                "remote-ip-address": "0.0.0.0",
+                "remote-port": 0,
+                "router-instance": "management",
+                "rx-queue-depth": 0,
+                "tx-queue-depth": 0,
+                "tcp-state": "listen",
+                "oper-maximum-segment-size": 1024,
+                "received-maxseg-option": 0
+            },
+            {
+                "local-ip-address": "172.10.10.7",
+                "local-port": 22,
+                "remote-ip-address": "172.10.10.1",
+                "remote-port": 53160,
+                "router-instance": "management",
+                "rx-queue-depth": 0,
+                "tx-queue-depth": 96,
+                "tcp-state": "establish",
+                "oper-maximum-segment-size": 1460,
+                "received-maxseg-option": 1460
+            },
+            {
+                "local-ip-address": "::",
+                "local-port": 4199,
+                "remote-ip-address": "::",
+                "remote-port": 0,
+                "router-instance": "management",
+                "rx-queue-depth": 0,
+                "tx-queue-depth": 0,
+                "tcp-state": "listen",
+                "oper-maximum-segment-size": 8876,
+                "received-maxseg-option": 0
+            },
+            {
+                "local-ip-address": "2001:172:10:10::7",
+                "local-port": 22,
+                "remote-ip-address": "::",
+                "remote-port": 0,
+                "router-instance": "management",
+                "rx-queue-depth": 0,
+                "tx-queue-depth": 0,
+                "tcp-state": "listen",
+                "oper-maximum-segment-size": 1024,
+                "received-maxseg-option": 0
+            }
+        ],
+        "statistics": {
+            "tcp": {
+                "ack-for-unsent-data": 0,
+                "ack-only-packets": 3022,
+                "ack-only-packets-delayed": 218,
+                "acks": 4037,
+                "completely-duplicate-packet": 13,
+                "connections-accept": 45,
+                "connections-closed": 100,
+                "connections-dropped": 61,
+                "packets-dropped-by-md5": 0,
+                "packets-dropped-by-enhanced-auth": 0,
+                "packets-dropped-by-tcp-ao": 0,
+                "connections-dropped-by-full-queue": 0,
+                "connections-dropped-by-keepalive": 0,
+                "connections-dropped-by-rexmit-timeout": 0,
+                "connections-request": 34,
+                "connections-established": 79,
+                "control-packets": 89,
+                "data-packet": 8119,
+                "data-packet-retransmitted": 0,
+                "discarded-because-packet-too-short": 0,
+                "discarded-for-bad-checksum": 0,
+                "discarded-for-bad-header-offset-field": 0,
+                "duplicate-acks": 5,
+                "embryonic-connections-dropped": 0,
+                "keepalive-probes-sent": 0,
+                "keepalive-timeouts": 0,
+                "out-of-order-packets": 0,
+                "packet-of-data-after-window": 0,
+                "packet-sent": 11245,
+                "packet-with-some-dup-data": 0,
+                "packets-received": 10142,
+                "packets-received-in-sequence": 6109,
+                "packets-recieved-after-close": 0,
+                "path-mtu-discovery-backoff": 0,
+                "pcb-cache-lookups-failed": 25,
+                "persist-timeouts": 0,
+                "retransmit-timeouts": 2,
+                "segments-attempts": 3851,
+                "segments-updated-rtt": 4069,
+                "urg-only-packet": 0,
+                "window-probe": 0,
+                "window-probe-packet": 0,
+                "window-update-packet": 15,
+                "window-update-rcv-packet": 0
+            }
+        }
+    },
+    "nokia-state:cpu": [
+        {
+            "sample-period": 1,
+            "bfd": {
+                "cpu-time": 2750,
+                "time-used": "2750",
+                "cpu-usage": "0.13",
+                "capacity-usage": "0.14"
+            },
+            "bgp": {
+                "cpu-time": 83,
+                "time-used": "83",
+                "cpu-usage": "0.0",
+                "capacity-usage": "0.0"
+            },
+            "bgp-pe-ce": {
+                "cpu-time": 0,
+                "time-used": "0",
+                "cpu-usage": "0.0",
+                "capacity-usage": "0.0"
+            },
+            "bier": {
+                "cpu-time": 0,
+                "time-used": "0",
+                "cpu-usage": "0.0",
+                "capacity-usage": "0.0"
+            },
+            "calltrace": {
+                "cpu-time": 1239,
+                "time-used": "1239",
+                "cpu-usage": "0.06",
+                "capacity-usage": "0.12"
+            },
+            "cflowd": {
+                "cpu-time": 36,
+                "time-used": "36",
+                "cpu-usage": "0.0",
+                "capacity-usage": "0.0"
+            },
+            "cards-and-ports": {
+                "cpu-time": 2176,
+                "time-used": "2176",
+                "cpu-usage": "0.1",
+                "capacity-usage": "0.08"
+            },
+            "dhcp-server": {
+                "cpu-time": 7,
+                "time-used": "7",
+                "cpu-usage": "0.0",
+                "capacity-usage": "0.0"
+            },
+            "eth-cfm": {
+                "cpu-time": 1476,
+                "time-used": "1476",
+                "cpu-usage": "0.07",
+                "capacity-usage": "0.07"
+            },
+            "icc": {
+                "cpu-time": 231,
+                "time-used": "231",
+                "cpu-usage": "0.01",
+                "capacity-usage": "0.01"
+            },
+            "igmp-mld": {
+                "cpu-time": 175,
+                "time-used": "175",
+                "cpu-usage": "0.0",
+                "capacity-usage": "0.01"
+            },
+            "imsi-db-appl": {
+                "cpu-time": 59,
+                "time-used": "59",
+                "cpu-usage": "0.0",
+                "capacity-usage": "0.0"
+            },
+            "ip-stack": {
+                "cpu-time": 3380,
+                "time-used": "3380",
+                "cpu-usage": "0.16",
+                "capacity-usage": "0.08"
+            },
+            "is-is": {
+                "cpu-time": 1291,
+                "time-used": "1291",
+                "cpu-usage": "0.06",
+                "capacity-usage": "0.11"
+            },
+            "isa": {
+                "cpu-time": 2535,
+                "time-used": "2535",
+                "cpu-usage": "0.12",
+                "capacity-usage": "0.06"
+            },
+            "ldp": {
+                "cpu-time": 1047,
+                "time-used": "1047",
+                "cpu-usage": "0.05",
+                "capacity-usage": "0.07"
+            },
+            "logging": {
+                "cpu-time": 127,
+                "time-used": "127",
+                "cpu-usage": "0.0",
+                "capacity-usage": "0.0"
+            },
+            "mbuf": {
+                "cpu-time": 0,
+                "time-used": "0",
+                "cpu-usage": "0.0",
+                "capacity-usage": "0.0"
+            },
+            "mcs": {
+                "cpu-time": 54,
+                "time-used": "54",
+                "cpu-usage": "0.0",
+                "capacity-usage": "0.0"
+            },
+            "mpls-rsvp": {
+                "cpu-time": 1416,
+                "time-used": "1416",
+                "cpu-usage": "0.07",
+                "capacity-usage": "0.08"
+            },
+            "mscp": {
+                "cpu-time": 0,
+                "time-used": "0",
+                "cpu-usage": "0.0",
+                "capacity-usage": "0.0"
+            },
+            "msdp": {
+                "cpu-time": 0,
+                "time-used": "0",
+                "cpu-usage": "0.0",
+                "capacity-usage": "0.0"
+            },
+            "management": {
+                "cpu-time": 11988,
+                "time-used": "11988",
+                "cpu-usage": "0.59",
+                "capacity-usage": "0.99"
+            },
+            "oam": {
+                "cpu-time": 3691,
+                "time-used": "3691",
+                "cpu-usage": "0.18",
+                "capacity-usage": "0.11"
+            },
+            "ospf": {
+                "cpu-time": 2916,
+                "time-used": "2916",
+                "cpu-usage": "0.14",
+                "capacity-usage": "0.07"
+            },
+            "sdn-protocols": {
+                "cpu-time": 69,
+                "time-used": "69",
+                "cpu-usage": "0.0",
+                "capacity-usage": "0.0"
+            },
+            "pim-l2mcast": {
+                "cpu-time": 9,
+                "time-used": "9",
+                "cpu-usage": "0.0",
+                "capacity-usage": "0.0"
+            },
+            "pki": {
+                "cpu-time": 44,
+                "time-used": "44",
+                "cpu-usage": "0.0",
+                "capacity-usage": "0.0"
+            },
+            "ptp": {
+                "cpu-time": 14,
+                "time-used": "14",
+                "cpu-usage": "0.0",
+                "capacity-usage": "0.0"
+            },
+            "rip": {
+                "cpu-time": 0,
+                "time-used": "0",
+                "cpu-usage": "0.0",
+                "capacity-usage": "0.0"
+            },
+            "rtm-policies": {
+                "cpu-time": 0,
+                "time-used": "0",
+                "cpu-usage": "0.0",
+                "capacity-usage": "0.0"
+            },
+            "redundancy": {
+                "cpu-time": 0,
+                "time-used": "0",
+                "cpu-usage": "0.0",
+                "capacity-usage": "0.0"
+            },
+            "sim": {
+                "cpu-time": 6272,
+                "time-used": "6272",
+                "cpu-usage": "0.31",
+                "capacity-usage": "0.56"
+            },
+            "snmp-daemon": {
+                "cpu-time": 0,
+                "time-used": "0",
+                "cpu-usage": "0.0",
+                "capacity-usage": "0.0"
+            },
+            "security": {
+                "cpu-time": 0,
+                "time-used": "0",
+                "cpu-usage": "0.0",
+                "capacity-usage": "0.0"
+            },
+            "services": {
+                "cpu-time": 2417,
+                "time-used": "2417",
+                "cpu-usage": "0.12",
+                "capacity-usage": "0.17"
+            },
+            "stats": {
+                "cpu-time": 0,
+                "time-used": "0",
+                "cpu-usage": "0.0",
+                "capacity-usage": "0.0"
+            },
+            "stats-extended": {
+                "cpu-time": 0,
+                "time-used": "0",
+                "cpu-usage": "0.0",
+                "capacity-usage": "0.0"
+            },
+            "subscriber-mgmt": {
+                "cpu-time": 1546,
+                "time-used": "1546",
+                "cpu-usage": "0.07",
+                "capacity-usage": "0.02"
+            },
+            "system": {
+                "cpu-time": 14112,
+                "time-used": "14112",
+                "cpu-usage": "0.7",
+                "capacity-usage": "0.41"
+            },
+            "traffic-eng": {
+                "cpu-time": 0,
+                "time-used": "0",
+                "cpu-usage": "0.0",
+                "capacity-usage": "0.0"
+            },
+            "tree-sid": {
+                "cpu-time": 0,
+                "time-used": "0",
+                "cpu-usage": "0.0",
+                "capacity-usage": "0.0"
+            },
+            "vrrp": {
+                "cpu-time": 339,
+                "time-used": "339",
+                "cpu-usage": "0.01",
+                "capacity-usage": "0.01"
+            },
+            "web-redirect": {
+                "cpu-time": 146,
+                "time-used": "146",
+                "cpu-usage": "0.0",
+                "capacity-usage": "0.01"
+            },
+            "agg-shapers-algorithm": {
+                "cpu-time": 126,
+                "time-used": "126",
+                "cpu-usage": "0.0",
+                "capacity-usage": "0.01"
+            },
+            "agg-schedulers-algorithm": {
+                "cpu-time": 114,
+                "time-used": "114",
+                "cpu-usage": "0.0",
+                "capacity-usage": "0.01"
+            },
+            "dcpu-control": {
+                "cpu-time": 149,
+                "time-used": "149",
+                "cpu-usage": "0.0",
+                "capacity-usage": "0.01"
+            },
+            "hpol-algorithm": {
+                "cpu-time": 131,
+                "time-used": "131",
+                "cpu-usage": "0.0",
+                "capacity-usage": "0.01"
+            },
+            "hpol-statistics": {
+                "cpu-time": 119,
+                "time-used": "119",
+                "cpu-usage": "0.0",
+                "capacity-usage": "0.01"
+            },
+            "hqos-algorithm": {
+                "cpu-time": 150,
+                "time-used": "150",
+                "cpu-usage": "0.0",
+                "capacity-usage": "0.01"
+            },
+            "hqos-statistics": {
+                "cpu-time": 100,
+                "time-used": "100",
+                "cpu-usage": "0.0",
+                "capacity-usage": "0.01"
+            },
+            "iom": {
+                "cpu-time": 8668,
+                "time-used": "8668",
+                "cpu-usage": "0.43",
+                "capacity-usage": "0.32"
+            },
+            "summary": {
+                "total": {
+                    "cpu-time": 2000000,
+                    "time-used": "2000000",
+                    "cpu-usage": "100.0"
+                },
+                "idle": {
+                    "cpu-time": 1928798,
+                    "time-used": "1928798",
+                    "cpu-usage": "96.43"
+                },
+                "usage": {
+                    "cpu-time": 71202,
+                    "time-used": "71202",
+                    "cpu-usage": "3.56"
+                },
+                "busiest-core-utilization": {
+                    "cpu-time": 0,
+                    "time-used": "0",
+                    "cpu-usage": "0.0"
+                }
+            }
+        },
+        {
+            "sample-period": 60,
+            "bfd": {
+                "cpu-time": 176679,
+                "time-used": "176679",
+                "cpu-usage": "0.14",
+                "capacity-usage": "0.14"
+            },
+            "bgp": {
+                "cpu-time": 6691,
+                "time-used": "6691",
+                "cpu-usage": "0.0",
+                "capacity-usage": "0.01"
+            },
+            "bgp-pe-ce": {
+                "cpu-time": 0,
+                "time-used": "0",
+                "cpu-usage": "0.0",
+                "capacity-usage": "0.0"
+            },
+            "bier": {
+                "cpu-time": 0,
+                "time-used": "0",
+                "cpu-usage": "0.0",
+                "capacity-usage": "0.0"
+            },
+            "calltrace": {
+                "cpu-time": 74841,
+                "time-used": "74841",
+                "cpu-usage": "0.06",
+                "capacity-usage": "0.12"
+            },
+            "cflowd": {
+                "cpu-time": 2329,
+                "time-used": "2329",
+                "cpu-usage": "0.0",
+                "capacity-usage": "0.0"
+            },
+            "cards-and-ports": {
+                "cpu-time": 132169,
+                "time-used": "132169",
+                "cpu-usage": "0.11",
+                "capacity-usage": "0.08"
+            },
+            "dhcp-server": {
+                "cpu-time": 482,
+                "time-used": "482",
+                "cpu-usage": "0.0",
+                "capacity-usage": "0.0"
+            },
+            "eth-cfm": {
+                "cpu-time": 89930,
+                "time-used": "89930",
+                "cpu-usage": "0.07",
+                "capacity-usage": "0.08"
+            },
+            "icc": {
+                "cpu-time": 14044,
+                "time-used": "14044",
+                "cpu-usage": "0.01",
+                "capacity-usage": "0.01"
+            },
+            "igmp-mld": {
+                "cpu-time": 10606,
+                "time-used": "10606",
+                "cpu-usage": "0.0",
+                "capacity-usage": "0.01"
+            },
+            "imsi-db-appl": {
+                "cpu-time": 3013,
+                "time-used": "3013",
+                "cpu-usage": "0.0",
+                "capacity-usage": "0.0"
+            },
+            "ip-stack": {
+                "cpu-time": 212487,
+                "time-used": "212487",
+                "cpu-usage": "0.17",
+                "capacity-usage": "0.1"
+            },
+            "is-is": {
+                "cpu-time": 71334,
+                "time-used": "71334",
+                "cpu-usage": "0.05",
+                "capacity-usage": "0.09"
+            },
+            "isa": {
+                "cpu-time": 154141,
+                "time-used": "154141",
+                "cpu-usage": "0.12",
+                "capacity-usage": "0.07"
+            },
+            "ldp": {
+                "cpu-time": 59083,
+                "time-used": "59083",
+                "cpu-usage": "0.04",
+                "capacity-usage": "0.07"
+            },
+            "logging": {
+                "cpu-time": 7098,
+                "time-used": "7098",
+                "cpu-usage": "0.0",
+                "capacity-usage": "0.0"
+            },
+            "mbuf": {
+                "cpu-time": 0,
+                "time-used": "0",
+                "cpu-usage": "0.0",
+                "capacity-usage": "0.0"
+            },
+            "mcs": {
+                "cpu-time": 3886,
+                "time-used": "3886",
+                "cpu-usage": "0.0",
+                "capacity-usage": "0.0"
+            },
+            "mpls-rsvp": {
+                "cpu-time": 89119,
+                "time-used": "89119",
+                "cpu-usage": "0.07",
+                "capacity-usage": "0.09"
+            },
+            "mscp": {
+                "cpu-time": 0,
+                "time-used": "0",
+                "cpu-usage": "0.0",
+                "capacity-usage": "0.0"
+            },
+            "msdp": {
+                "cpu-time": 0,
+                "time-used": "0",
+                "cpu-usage": "0.0",
+                "capacity-usage": "0.0"
+            },
+            "management": {
+                "cpu-time": 862073,
+                "time-used": "862073",
+                "cpu-usage": "0.71",
+                "capacity-usage": "1.11"
+            },
+            "oam": {
+                "cpu-time": 211652,
+                "time-used": "211652",
+                "cpu-usage": "0.17",
+                "capacity-usage": "0.1"
+            },
+            "ospf": {
+                "cpu-time": 175886,
+                "time-used": "175886",
+                "cpu-usage": "0.14",
+                "capacity-usage": "0.07"
+            },
+            "sdn-protocols": {
+                "cpu-time": 3793,
+                "time-used": "3793",
+                "cpu-usage": "0.0",
+                "capacity-usage": "0.0"
+            },
+            "pim-l2mcast": {
+                "cpu-time": 510,
+                "time-used": "510",
+                "cpu-usage": "0.0",
+                "capacity-usage": "0.0"
+            },
+            "pki": {
+                "cpu-time": 2309,
+                "time-used": "2309",
+                "cpu-usage": "0.0",
+                "capacity-usage": "0.0"
+            },
+            "ptp": {
+                "cpu-time": 984,
+                "time-used": "984",
+                "cpu-usage": "0.0",
+                "capacity-usage": "0.0"
+            },
+            "rip": {
+                "cpu-time": 0,
+                "time-used": "0",
+                "cpu-usage": "0.0",
+                "capacity-usage": "0.0"
+            },
+            "rtm-policies": {
+                "cpu-time": 0,
+                "time-used": "0",
+                "cpu-usage": "0.0",
+                "capacity-usage": "0.0"
+            },
+            "redundancy": {
+                "cpu-time": 0,
+                "time-used": "0",
+                "cpu-usage": "0.0",
+                "capacity-usage": "0.0"
+            },
+            "sim": {
+                "cpu-time": 369331,
+                "time-used": "369331",
+                "cpu-usage": "0.3",
+                "capacity-usage": "0.54"
+            },
+            "snmp-daemon": {
+                "cpu-time": 0,
+                "time-used": "0",
+                "cpu-usage": "0.0",
+                "capacity-usage": "0.0"
+            },
+            "security": {
+                "cpu-time": 0,
+                "time-used": "0",
+                "cpu-usage": "0.0",
+                "capacity-usage": "0.0"
+            },
+            "services": {
+                "cpu-time": 144753,
+                "time-used": "144753",
+                "cpu-usage": "0.12",
+                "capacity-usage": "0.17"
+            },
+            "stats": {
+                "cpu-time": 69,
+                "time-used": "69",
+                "cpu-usage": "0.0",
+                "capacity-usage": "0.0"
+            },
+            "stats-extended": {
+                "cpu-time": 0,
+                "time-used": "0",
+                "cpu-usage": "0.0",
+                "capacity-usage": "0.0"
+            },
+            "subscriber-mgmt": {
+                "cpu-time": 87902,
+                "time-used": "87902",
+                "cpu-usage": "0.07",
+                "capacity-usage": "0.02"
+            },
+            "system": {
+                "cpu-time": 893161,
+                "time-used": "893161",
+                "cpu-usage": "0.74",
+                "capacity-usage": "0.46"
+            },
+            "traffic-eng": {
+                "cpu-time": 0,
+                "time-used": "0",
+                "cpu-usage": "0.0",
+                "capacity-usage": "0.0"
+            },
+            "tree-sid": {
+                "cpu-time": 0,
+                "time-used": "0",
+                "cpu-usage": "0.0",
+                "capacity-usage": "0.0"
+            },
+            "vrrp": {
+                "cpu-time": 19274,
+                "time-used": "19274",
+                "cpu-usage": "0.01",
+                "capacity-usage": "0.01"
+            },
+            "web-redirect": {
+                "cpu-time": 9455,
+                "time-used": "9455",
+                "cpu-usage": "0.0",
+                "capacity-usage": "0.01"
+            },
+            "agg-shapers-algorithm": {
+                "cpu-time": 7565,
+                "time-used": "7565",
+                "cpu-usage": "0.0",
+                "capacity-usage": "0.01"
+            },
+            "agg-schedulers-algorithm": {
+                "cpu-time": 7603,
+                "time-used": "7603",
+                "cpu-usage": "0.0",
+                "capacity-usage": "0.01"
+            },
+            "dcpu-control": {
+                "cpu-time": 7472,
+                "time-used": "7472",
+                "cpu-usage": "0.0",
+                "capacity-usage": "0.01"
+            },
+            "hpol-algorithm": {
+                "cpu-time": 7563,
+                "time-used": "7563",
+                "cpu-usage": "0.0",
+                "capacity-usage": "0.01"
+            },
+            "hpol-statistics": {
+                "cpu-time": 7448,
+                "time-used": "7448",
+                "cpu-usage": "0.0",
+                "capacity-usage": "0.01"
+            },
+            "hqos-algorithm": {
+                "cpu-time": 7805,
+                "time-used": "7805",
+                "cpu-usage": "0.0",
+                "capacity-usage": "0.01"
+            },
+            "hqos-statistics": {
+                "cpu-time": 5719,
+                "time-used": "5719",
+                "cpu-usage": "0.0",
+                "capacity-usage": "0.0"
+            },
+            "iom": {
+                "cpu-time": 521073,
+                "time-used": "521073",
+                "cpu-usage": "0.43",
+                "capacity-usage": "0.32"
+            },
+            "summary": {
+                "total": {
+                    "cpu-time": 120000000,
+                    "time-used": "120000000",
+                    "cpu-usage": "100.0"
+                },
+                "idle": {
+                    "cpu-time": 115538668,
+                    "time-used": "115538668",
+                    "cpu-usage": "96.28"
+                },
+                "usage": {
+                    "cpu-time": 4461332,
+                    "time-used": "4461332",
+                    "cpu-usage": "3.71"
+                },
+                "busiest-core-utilization": {
+                    "cpu-time": 0,
+                    "time-used": "0",
+                    "cpu-usage": "0.0"
+                }
+            }
+        },
+        {
+            "sample-period": 300,
+            "bfd": {
+                "cpu-time": 862409,
+                "time-used": "862409",
+                "cpu-usage": "0.14",
+                "capacity-usage": "0.14"
+            },
+            "bgp": {
+                "cpu-time": 33156,
+                "time-used": "33156",
+                "cpu-usage": "0.0",
+                "capacity-usage": "0.01"
+            },
+            "bgp-pe-ce": {
+                "cpu-time": 0,
+                "time-used": "0",
+                "cpu-usage": "0.0",
+                "capacity-usage": "0.0"
+            },
+            "bier": {
+                "cpu-time": 0,
+                "time-used": "0",
+                "cpu-usage": "0.0",
+                "capacity-usage": "0.0"
+            },
+            "calltrace": {
+                "cpu-time": 371889,
+                "time-used": "371889",
+                "cpu-usage": "0.06",
+                "capacity-usage": "0.12"
+            },
+            "cflowd": {
+                "cpu-time": 11964,
+                "time-used": "11964",
+                "cpu-usage": "0.0",
+                "capacity-usage": "0.0"
+            },
+            "cards-and-ports": {
+                "cpu-time": 654651,
+                "time-used": "654651",
+                "cpu-usage": "0.1",
+                "capacity-usage": "0.08"
+            },
+            "dhcp-server": {
+                "cpu-time": 2414,
+                "time-used": "2414",
+                "cpu-usage": "0.0",
+                "capacity-usage": "0.0"
+            },
+            "eth-cfm": {
+                "cpu-time": 437965,
+                "time-used": "437965",
+                "cpu-usage": "0.07",
+                "capacity-usage": "0.07"
+            },
+            "icc": {
+                "cpu-time": 71959,
+                "time-used": "71959",
+                "cpu-usage": "0.01",
+                "capacity-usage": "0.01"
+            },
+            "igmp-mld": {
+                "cpu-time": 52171,
+                "time-used": "52171",
+                "cpu-usage": "0.0",
+                "capacity-usage": "0.01"
+            },
+            "imsi-db-appl": {
+                "cpu-time": 14699,
+                "time-used": "14699",
+                "cpu-usage": "0.0",
+                "capacity-usage": "0.0"
+            },
+            "ip-stack": {
+                "cpu-time": 1025111,
+                "time-used": "1025111",
+                "cpu-usage": "0.17",
+                "capacity-usage": "0.09"
+            },
+            "is-is": {
+                "cpu-time": 359067,
+                "time-used": "359067",
+                "cpu-usage": "0.05",
+                "capacity-usage": "0.1"
+            },
+            "isa": {
+                "cpu-time": 770129,
+                "time-used": "770129",
+                "cpu-usage": "0.12",
+                "capacity-usage": "0.07"
+            },
+            "ldp": {
+                "cpu-time": 293120,
+                "time-used": "293120",
+                "cpu-usage": "0.04",
+                "capacity-usage": "0.07"
+            },
+            "logging": {
+                "cpu-time": 35755,
+                "time-used": "35755",
+                "cpu-usage": "0.0",
+                "capacity-usage": "0.0"
+            },
+            "mbuf": {
+                "cpu-time": 0,
+                "time-used": "0",
+                "cpu-usage": "0.0",
+                "capacity-usage": "0.0"
+            },
+            "mcs": {
+                "cpu-time": 19706,
+                "time-used": "19706",
+                "cpu-usage": "0.0",
+                "capacity-usage": "0.0"
+            },
+            "mpls-rsvp": {
+                "cpu-time": 443796,
+                "time-used": "443796",
+                "cpu-usage": "0.07",
+                "capacity-usage": "0.08"
+            },
+            "mscp": {
+                "cpu-time": 0,
+                "time-used": "0",
+                "cpu-usage": "0.0",
+                "capacity-usage": "0.0"
+            },
+            "msdp": {
+                "cpu-time": 0,
+                "time-used": "0",
+                "cpu-usage": "0.0",
+                "capacity-usage": "0.0"
+            },
+            "management": {
+                "cpu-time": 3678238,
+                "time-used": "3678238",
+                "cpu-usage": "0.61",
+                "capacity-usage": "0.99"
+            },
+            "oam": {
+                "cpu-time": 1040365,
+                "time-used": "1040365",
+                "cpu-usage": "0.17",
+                "capacity-usage": "0.1"
+            },
+            "ospf": {
+                "cpu-time": 879150,
+                "time-used": "879150",
+                "cpu-usage": "0.14",
+                "capacity-usage": "0.07"
+            },
+            "sdn-protocols": {
+                "cpu-time": 18897,
+                "time-used": "18897",
+                "cpu-usage": "0.0",
+                "capacity-usage": "0.0"
+            },
+            "pim-l2mcast": {
+                "cpu-time": 2510,
+                "time-used": "2510",
+                "cpu-usage": "0.0",
+                "capacity-usage": "0.0"
+            },
+            "pki": {
+                "cpu-time": 11233,
+                "time-used": "11233",
+                "cpu-usage": "0.0",
+                "capacity-usage": "0.0"
+            },
+            "ptp": {
+                "cpu-time": 4889,
+                "time-used": "4889",
+                "cpu-usage": "0.0",
+                "capacity-usage": "0.0"
+            },
+            "rip": {
+                "cpu-time": 0,
+                "time-used": "0",
+                "cpu-usage": "0.0",
+                "capacity-usage": "0.0"
+            },
+            "rtm-policies": {
+                "cpu-time": 0,
+                "time-used": "0",
+                "cpu-usage": "0.0",
+                "capacity-usage": "0.0"
+            },
+            "redundancy": {
+                "cpu-time": 0,
+                "time-used": "0",
+                "cpu-usage": "0.0",
+                "capacity-usage": "0.0"
+            },
+            "sim": {
+                "cpu-time": 1852715,
+                "time-used": "1852715",
+                "cpu-usage": "0.3",
+                "capacity-usage": "0.54"
+            },
+            "snmp-daemon": {
+                "cpu-time": 0,
+                "time-used": "0",
+                "cpu-usage": "0.0",
+                "capacity-usage": "0.0"
+            },
+            "security": {
+                "cpu-time": 0,
+                "time-used": "0",
+                "cpu-usage": "0.0",
+                "capacity-usage": "0.0"
+            },
+            "services": {
+                "cpu-time": 723012,
+                "time-used": "723012",
+                "cpu-usage": "0.12",
+                "capacity-usage": "0.17"
+            },
+            "stats": {
+                "cpu-time": 374,
+                "time-used": "374",
+                "cpu-usage": "0.0",
+                "capacity-usage": "0.0"
+            },
+            "stats-extended": {
+                "cpu-time": 0,
+                "time-used": "0",
+                "cpu-usage": "0.0",
+                "capacity-usage": "0.0"
+            },
+            "subscriber-mgmt": {
+                "cpu-time": 430604,
+                "time-used": "430604",
+                "cpu-usage": "0.07",
+                "capacity-usage": "0.02"
+            },
+            "system": {
+                "cpu-time": 4295458,
+                "time-used": "4295458",
+                "cpu-usage": "0.71",
+                "capacity-usage": "0.43"
+            },
+            "traffic-eng": {
+                "cpu-time": 0,
+                "time-used": "0",
+                "cpu-usage": "0.0",
+                "capacity-usage": "0.0"
+            },
+            "tree-sid": {
+                "cpu-time": 0,
+                "time-used": "0",
+                "cpu-usage": "0.0",
+                "capacity-usage": "0.0"
+            },
+            "vrrp": {
+                "cpu-time": 97208,
+                "time-used": "97208",
+                "cpu-usage": "0.01",
+                "capacity-usage": "0.01"
+            },
+            "web-redirect": {
+                "cpu-time": 44790,
+                "time-used": "44790",
+                "cpu-usage": "0.0",
+                "capacity-usage": "0.01"
+            },
+            "agg-shapers-algorithm": {
+                "cpu-time": 37618,
+                "time-used": "37618",
+                "cpu-usage": "0.0",
+                "capacity-usage": "0.01"
+            },
+            "agg-schedulers-algorithm": {
+                "cpu-time": 38168,
+                "time-used": "38168",
+                "cpu-usage": "0.0",
+                "capacity-usage": "0.01"
+            },
+            "dcpu-control": {
+                "cpu-time": 37453,
+                "time-used": "37453",
+                "cpu-usage": "0.0",
+                "capacity-usage": "0.01"
+            },
+            "hpol-algorithm": {
+                "cpu-time": 37426,
+                "time-used": "37426",
+                "cpu-usage": "0.0",
+                "capacity-usage": "0.01"
+            },
+            "hpol-statistics": {
+                "cpu-time": 37615,
+                "time-used": "37615",
+                "cpu-usage": "0.0",
+                "capacity-usage": "0.01"
+            },
+            "hqos-algorithm": {
+                "cpu-time": 38701,
+                "time-used": "38701",
+                "cpu-usage": "0.0",
+                "capacity-usage": "0.01"
+            },
+            "hqos-statistics": {
+                "cpu-time": 29146,
+                "time-used": "29146",
+                "cpu-usage": "0.0",
+                "capacity-usage": "0.0"
+            },
+            "iom": {
+                "cpu-time": 2557641,
+                "time-used": "2557641",
+                "cpu-usage": "0.42",
+                "capacity-usage": "0.32"
+            },
+            "summary": {
+                "total": {
+                    "cpu-time": 600000000,
+                    "time-used": "600000000",
+                    "cpu-usage": "100.0"
+                },
+                "idle": {
+                    "cpu-time": 578646828,
+                    "time-used": "578646828",
+                    "cpu-usage": "96.44"
+                },
+                "usage": {
+                    "cpu-time": 21353172,
+                    "time-used": "21353172",
+                    "cpu-usage": "3.55"
+                },
+                "busiest-core-utilization": {
+                    "cpu-time": 0,
+                    "time-used": "0",
+                    "cpu-usage": "0.0"
+                }
+            }
+        }
+    ],
+    "nokia-state:memory-pools": {
+        "bfd": {
+            "current-size": "10493232",
+            "max-so-far": "10493232",
+            "in-use": "9508384"
+        },
+        "bgp": {
+            "current-size": "6291504",
+            "max-so-far": "6291504",
+            "in-use": "5228480"
+        },
+        "bier": {
+            "current-size": "1048576",
+            "max-so-far": "1048576",
+            "in-use": "592608"
+        },
+        "calltrace": {
+            "current-size": "4721024",
+            "max-so-far": "5769648",
+            "in-use": "4152288"
+        },
+        "cflowd": {
+            "current-size": "2097152",
+            "max-so-far": "2097152",
+            "in-use": "37344"
+        },
+        "cards-and-ports": {
+            "current-size": "65141280",
+            "max-so-far": "65665568",
+            "in-use": "61386448"
+        },
+        "dhcp-server": {
+            "current-size": "1048576",
+            "max-so-far": "1048576",
+            "in-use": "127360"
+        },
+        "eth-cfm": {
+            "current-size": "8388608",
+            "max-so-far": "8388608",
+            "in-use": "7385440"
+        },
+        "icc": {
+            "max-allowed": "37748736",
+            "current-size": "2097152",
+            "max-so-far": "3145728",
+            "in-use": "1093232"
+        },
+        "igmp-mld": {
+            "current-size": "2097152",
+            "max-so-far": "2097152",
+            "in-use": "1166304"
+        },
+        "imsi-db-appl": {
+            "current-size": "3145792",
+            "max-so-far": "3145792",
+            "in-use": "2789472"
+        },
+        "ip-stack": {
+            "current-size": "60163200",
+            "max-so-far": "60163200",
+            "in-use": "56543728"
+        },
+        "is-is": {
+            "current-size": "22995392",
+            "max-so-far": "22995392",
+            "in-use": "21168128"
+        },
+        "isa": {
+            "current-size": "5767168",
+            "max-so-far": "5767168",
+            "in-use": "3080848"
+        },
+        "ldp": {
+            "current-size": "28277056",
+            "max-so-far": "28277056",
+            "in-use": "27374832"
+        },
+        "logging": {
+            "max-allowed": "348127232",
+            "current-size": "57954352",
+            "max-so-far": "57954352",
+            "in-use": "54667008"
+        },
+        "mbuf": {
+            "max-allowed": "536870912",
+            "current-size": "13866448",
+            "max-so-far": "13866448",
+            "in-use": "13306368"
+        },
+        "mcs": {
+            "current-size": "2097152",
+            "max-so-far": "2097152",
+            "in-use": "137584"
+        },
+        "mpls-rsvp": {
+            "current-size": "52680624",
+            "max-so-far": "52680624",
+            "in-use": "47918352"
+        },
+        "mscp": {
+            "current-size": "4194368",
+            "max-so-far": "4194368",
+            "in-use": "3126768"
+        },
+        "msdp": {
+            "current-size": "1048576",
+            "max-so-far": "1048576",
+            "in-use": "128"
+        },
+        "management": {
+            "current-size": "21952512",
+            "max-so-far": "21952512",
+            "in-use": "19196992"
+        },
+        "oam": {
+            "current-size": "14597200",
+            "max-so-far": "14597200",
+            "in-use": "14226544"
+        },
+        "ospf": {
+            "current-size": "13762784",
+            "max-so-far": "14811360",
+            "in-use": "12121744"
+        },
+        "sdn-protocols": {
+            "current-size": "4456448",
+            "max-so-far": "4456448",
+            "in-use": "2079376"
+        },
+        "pim-l2mcast": {
+            "current-size": "9437184",
+            "max-so-far": "9437184",
+            "in-use": "7259232"
+        },
+        "pki": {
+            "current-size": "3145728",
+            "max-so-far": "3145728",
+            "in-use": "1176000"
+        },
+        "ptp": {
+            "current-size": "1048576",
+            "max-so-far": "1048576",
+            "in-use": "190400"
+        },
+        "rip": {
+            "current-size": "1048576",
+            "max-so-far": "1048576",
+            "in-use": "90048"
+        },
+        "rtm-policies": {
+            "current-size": "32293216",
+            "max-so-far": "32293216",
+            "in-use": "30100544"
+        },
+        "redundancy": {
+            "current-size": "1048576",
+            "max-so-far": "1048576",
+            "in-use": "497984"
+        },
+        "sim": {
+            "current-size": "3145728",
+            "max-so-far": "3145728",
+            "in-use": "2687888"
+        },
+        "security": {
+            "current-size": "262144",
+            "max-so-far": "262144",
+            "in-use": "32848"
+        },
+        "services": {
+            "current-size": "96764704",
+            "max-so-far": "96764704",
+            "in-use": "92992976"
+        },
+        "stats": {
+            "current-size": "3146048",
+            "max-so-far": "3146048",
+            "in-use": "2248784"
+        },
+        "subscriber-mgmt": {
+            "current-size": "35127456",
+            "max-so-far": "35127456",
+            "in-use": "24189936"
+        },
+        "system": {
+            "current-size": "301572032",
+            "max-so-far": "301572032",
+            "in-use": "292883648"
+        },
+        "traffic-eng": {
+            "current-size": "2097152",
+            "max-so-far": "2097152",
+            "in-use": "1332896"
+        },
+        "tree-sid": {
+            "current-size": "0",
+            "max-so-far": "0",
+            "in-use": "0"
+        },
+        "vrrp": {
+            "current-size": "1048576",
+            "max-so-far": "1048576",
+            "in-use": "452928"
+        },
+        "web-redirect": {
+            "max-allowed": "67108864",
+            "current-size": "1048576",
+            "max-so-far": "1048576",
+            "in-use": "247536"
+        },
+        "iom": {
+            "current-size": "1159921744",
+            "max-so-far": "1159921744",
+            "in-use": "1155471072"
+        },
+        "summary": {
+            "current-total-size": "2062539344",
+            "total-in-use": "1980270480",
+            "available-memory": "53228769280"
+        }
+    },
+    "nokia-state:version": {
+        "version-number": "B-26.3.R1",
+        "version-string": "TiMOS-B-26.3.R1 both\/x86_64 Nokia 7750 SR-1 Copyright (c) 2000-2026 Nokia.\\nAll rights reserved. All use subject to applicable license agreements.\\nBuilt on Wed Mar 11 20:17:13 UTC 2026 by builder in \/builds\/263B\/R1\/panos"
+    },
+    "nokia-state:statistics": {
+        "ip-tunnel": {
+            "number-of-tunnels": {
+                "current": {
+                    "gre": "0",
+                    "ip": "0",
+                    "l2tpv3": "0",
+                    "start-time": "2026-06-10T20:58:29.0+00:00"
+                }
+            }
+        },
+        "ipsec": {
+            "number-of-tunnels": {
+                "current": {
+                    "static-lan-to-lan": "0",
+                    "dynamic-lan-to-lan": "0",
+                    "remote-access": "0",
+                    "total": "0",
+                    "start-time": "2026-06-10T20:58:29.0+00:00"
+                }
+            },
+            "tunnel-setup-rate": {
+                "current": {
+                    "static-lan-to-lan": "0.0",
+                    "total": "0.0",
+                    "dynamic-lan-to-lan": "0.0",
+                    "remote-access": "0.0",
+                    "start-time": "2026-06-10T20:43:34.0+00:00",
+                    "sampling-duration": 894
+                }
+            }
+        }
+    },
+    "nokia-state:mpls-resource-usage": {
+        "nhlfe": {
+            "total": 262125,
+            "allocated": 15,
+            "free": 262110,
+            "by-owner": [
+                {
+                    "owner": "rsvp",
+                    "allocated": 1
+                },
+                {
+                    "owner": "ldp",
+                    "allocated": 5
+                },
+                {
+                    "owner": "bgp",
+                    "allocated": 0
+                },
+                {
+                    "owner": "mpls-tp",
+                    "allocated": 0
+                },
+                {
+                    "owner": "static-service",
+                    "allocated": 0
+                },
+                {
+                    "owner": "sr-mpls",
+                    "allocated": 9
+                },
+                {
+                    "owner": "bier",
+                    "allocated": 0
+                },
+                {
+                    "owner": "tree-sid",
+                    "allocated": 0
+                },
+                {
+                    "owner": "reserved-blk",
+                    "allocated": 0
+                }
+            ]
+        },
+        "ltn": {
+            "total": 131071,
+            "allocated": 14,
+            "free": 131057,
+            "by-owner": [
+                {
+                    "owner": "rsvp",
+                    "allocated": 0
+                },
+                {
+                    "owner": "ldp",
+                    "allocated": 5
+                },
+                {
+                    "owner": "bgp",
+                    "allocated": 0
+                },
+                {
+                    "owner": "mpls-tp",
+                    "allocated": 0
+                },
+                {
+                    "owner": "static-service",
+                    "allocated": 0
+                },
+                {
+                    "owner": "sr-mpls",
+                    "allocated": 9
+                },
+                {
+                    "owner": "bier",
+                    "allocated": 0
+                },
+                {
+                    "owner": "tree-sid",
+                    "allocated": 0
+                },
+                {
+                    "owner": "reserved-blk",
+                    "allocated": 0
+                }
+            ]
+        },
+        "label": {
+            "total": 524256,
+            "allocated": 1011,
+            "free": 523245,
+            "by-owner": [
+                {
+                    "owner": "rsvp",
+                    "allocated": 0
+                },
+                {
+                    "owner": "ldp",
+                    "allocated": 6
+                },
+                {
+                    "owner": "bgp",
+                    "allocated": 0
+                },
+                {
+                    "owner": "mpls-tp",
+                    "allocated": 0
+                },
+                {
+                    "owner": "static-service",
+                    "allocated": 0
+                },
+                {
+                    "owner": "sr-mpls",
+                    "allocated": 1005
+                },
+                {
+                    "owner": "bier",
+                    "allocated": 0
+                },
+                {
+                    "owner": "tree-sid",
+                    "allocated": 0
+                },
+                {
+                    "owner": "reserved-blk",
+                    "allocated": 0
+                }
+            ]
+        }
+    },
+    "nokia-state:resource-usage": {
+        "sap-ingress-qos-policies": {
+            "total": 3071,
+            "allocated": 1,
+            "free": 3070
+        },
+        "sap-egress-qos-policies": {
+            "total": 3071,
+            "allocated": 1,
+            "free": 3070
+        },
+        "ingress-queue-group-templates": {
+            "total": 2047,
+            "allocated": 4,
+            "free": 2043
+        },
+        "egress-queue-group-templates": {
+            "total": 2047,
+            "allocated": 5,
+            "free": 2042
+        },
+        "egress-port-queue-group-instances": {
+            "total": 163839,
+            "allocated": 0,
+            "free": 163839
+        },
+        "ingress-fp-queue-group-instances": {
+            "total": 16383,
+            "allocated": 0,
+            "free": 16383
+        },
+        "egress-port-vport": {
+            "total": 40959,
+            "allocated": 0,
+            "free": 40959
+        },
+        "fast-depth-monitored-queues": {
+            "total": 50000,
+            "allocated": 0,
+            "free": 50000
+        },
+        "dynamic-services-next-hop-entries": {
+            "total": 511999,
+            "allocated": 0,
+            "free": 511999
+        },
+        "ipsec-next-hop-entries": {
+            "total": 262143,
+            "allocated": 0,
+            "free": 262143
+        },
+        "subscriber-next-hop-entries": {
+            "total": 393216,
+            "allocated": 0,
+            "free": 393216
+        },
+        "video": {
+            "rtcp": {
+                "in-use": false,
+                "session": 0
+            },
+            "perfect-stream": {
+                "in-use": false,
+                "channel": 0
+            }
+        },
+        "sap": {
+            "total": 524287,
+            "allocated": 0,
+            "free": 524287,
+            "cpipe": {
+                "allocated": 0
+            },
+            "epipe": {
+                "allocated": 0
+            },
+            "ipipe": {
+                "allocated": 0
+            },
+            "ies": {
+                "allocated": 0
+            },
+            "mirror": {
+                "allocated": 0
+            },
+            "vpls": {
+                "allocated": 0
+            },
+            "vprn": {
+                "allocated": 0
+            }
+        },
+        "service": {
+            "cpipe": {
+                "allocated": 0
+            },
+            "epipe": {
+                "allocated": 0
+            },
+            "ipipe": {
+                "allocated": 0
+            },
+            "ies": {
+                "allocated": 1
+            },
+            "mirror": {
+                "allocated": 0
+            },
+            "vpls": {
+                "allocated": 0
+            },
+            "vprn": {
+                "allocated": 0
+            }
+        },
+        "egress-packet-re-injection-resources": {
+            "total": 255,
+            "allocated": 0,
+            "free": 255,
+            "mirror": {
+                "allocated": 0
+            },
+            "radius": {
+                "allocated": 0
+            },
+            "sat-traffic-generator": {
+                "total": 128,
+                "free": 128,
+                "allocated": 0
+            },
+            "reserved": {
+                "allocated": 0
+            }
+        },
+        "subscriber-management": {
+            "wlan-gw": {
+                "in-use": false
+            },
+            "lns": {
+                "in-use": false,
+                "sessions-peak": 0,
+                "tunnels-peak": 0,
+                "hosts-peak": 0
+            }
+        }
+    },
+    "nokia-state:last-reboot": {
+        "reason": "other"
+    },
+    "nokia-state:bootup": {
+        "bof-source": "cf3:",
+        "image-source": "primary",
+        "config-source": "unknown",
+        "last-booted-config-file": "",
+        "last-boot-config-header": "# Copyright 2025 Nokia # Licensed under the BSD 3-Clause License. # SPDX-License-Identifier: BSD-3-Clause",
+        "last-boot-index-header": "# Copyright 2025 Nokia # Licensed under the BSD 3-Clause License. # SPDX-License-Identifier: BSD-3-Clause",
+        "config-status": "config-ok",
+        "persist-status": "persist-ok",
+        "persist-index": true
+    },
+    "nokia-state:central-frequency-clock": {
+        "cpm": [
+            {
+                "cpm-slot": "A",
+                "clock-state": "master-freerun",
+                "quality-level": "st3",
+                "current-frequency-offset": 0,
+                "selector-b": "no-reference",
+                "current-frequency-offset-ppb": 0,
+                "bits-input-a": {
+                    "input-state": "disabled",
+                    "alarms": ["loss-of-signal"],
+                    "qualified-for-use": false,
+                    "selected-for-use": false,
+                    "rx-quality-level": "failed"
+                },
+                "reference-1": {
+                    "input-state": "disabled",
+                    "qualified-for-use": false,
+                    "selected-for-use": false,
+                    "rx-quality-level": "unused"
+                },
+                "reference-2": {
+                    "input-state": "disabled",
+                    "qualified-for-use": false,
+                    "selected-for-use": false,
+                    "rx-quality-level": "unused"
+                },
+                "synce-a": {
+                    "input-state": "disabled",
+                    "qualified-for-use": true,
+                    "selected-for-use": false,
+                    "rx-quality-level": "unused"
+                },
+                "ptp": {
+                    "input-state": "disabled",
+                    "alarms": ["loss-of-signal"],
+                    "qualified-for-use": false,
+                    "selected-for-use": false,
+                    "rx-quality-level": "failed"
+                },
+                "bits-output-a": {
+                    "output-source": "no-reference",
+                    "tx-quality-level": "unused",
+                    "squelched": false
+                }
+            }
+        ]
+    },
+    "nokia-state:licensing": {
+        "uuid": "ec2b98e6-0076-b631-eae3-18db54ab4226",
+        "product": "SROS Application License",
+        "state": "licensed",
+        "reboot-pending": false,
+        "active-license": {
+            "description": "Standard",
+            "name": "NOKIA USA - IPD",
+            "product": "SR-SIM",
+            "version": "*",
+            "issue-date-time": "2026-06-04T00:00:00.0+00:00",
+            "start-date-time": "2026-06-04T00:00:00.0+00:00",
+            "end-date-time": "2027-06-03T23:59:59.0+00:00"
+        },
+        "available-license": [
+            {
+                "index": 1,
+                "description": "Standard",
+                "uuid": "00000000-0000-0000-0000-000000000000",
+                "name": "NOKIA USA - IPD",
+                "product": "SR-SIM",
+                "version": "*",
+                "issue-date-time": "2026-06-04T00:00:00.0+00:00",
+                "start-date-time": "2026-06-04T00:00:00.0+00:00",
+                "end-date-time": "2027-06-03T23:59:59.0+00:00"
+            }
+        ],
+        "licensed-feature": [
+            {
+                "group": "system",
+                "name": "MPLS-TP",
+                "description": "Routing",
+                "type": "rtu",
+                "allocated": 0,
+                "present": false,
+                "state": "valid",
+                "max-24hr": 0,
+                "date-time-24hr": "1970-01-01T00:00:00.0+00:00",
+                "max-current": 0
+            },
+            {
+                "group": "system",
+                "name": "Regional TLI",
+                "description": "Lawful Intercept",
+                "type": "rtu",
+                "allocated": 0,
+                "present": false,
+                "state": "valid",
+                "max-24hr": 0,
+                "date-time-24hr": "1970-01-01T00:00:00.0+00:00",
+                "max-current": 0
+            },
+            {
+                "group": "system",
+                "name": "LI Source Port",
+                "description": "Lawful Intercept",
+                "type": "rtu",
+                "allocated": 0,
+                "present": false,
+                "state": "valid",
+                "max-24hr": 0,
+                "date-time-24hr": "1970-01-01T00:00:00.0+00:00",
+                "max-current": 0
+            },
+            {
+                "group": "system",
+                "name": "Lawful Intercept",
+                "description": "System Feature",
+                "type": "rtu",
+                "allocated": 0,
+                "present": false,
+                "state": "valid",
+                "max-24hr": 0,
+                "date-time-24hr": "1970-01-01T00:00:00.0+00:00",
+                "max-current": 0
+            },
+            {
+                "group": "nsp",
+                "name": "NRC-F",
+                "description": "NSP_RTU",
+                "type": "rtu",
+                "allocated": 0,
+                "present": false,
+                "state": "boot",
+                "max-24hr": 0,
+                "date-time-24hr": "1970-01-01T00:00:00.0+00:00",
+                "max-current": 0
+            },
+            {
+                "group": "nsp",
+                "name": "NRC-P",
+                "description": "NSP_RTU",
+                "type": "rtu",
+                "allocated": 0,
+                "present": false,
+                "state": "boot",
+                "max-24hr": 0,
+                "date-time-24hr": "1970-01-01T00:00:00.0+00:00",
+                "max-current": 0
+            },
+            {
+                "group": "nsp",
+                "name": "BGP-LS",
+                "description": "NSP_RTU",
+                "type": "rtu",
+                "allocated": 0,
+                "present": false,
+                "state": "boot",
+                "max-24hr": 0,
+                "date-time-24hr": "1970-01-01T00:00:00.0+00:00",
+                "max-current": 0
+            },
+            {
+                "group": "nsp",
+                "name": "BMP Station",
+                "description": "NSP_RTU",
+                "type": "rtu",
+                "allocated": 0,
+                "present": false,
+                "state": "boot",
+                "max-24hr": 0,
+                "date-time-24hr": "1970-01-01T00:00:00.0+00:00",
+                "max-current": 0
+            },
+            {
+                "group": "nsp",
+                "name": "Route Origination",
+                "description": "NSP_RTU",
+                "type": "rtu",
+                "allocated": 0,
+                "present": false,
+                "state": "boot",
+                "max-24hr": 0,
+                "date-time-24hr": "1970-01-01T00:00:00.0+00:00",
+                "max-current": 0
+            },
+            {
+                "group": "iom",
+                "name": "cr-er",
+                "description": "Upgrade SR-1 from CR to ER",
+                "type": "pool",
+                "pool-size": 0,
+                "allocated": 0,
+                "present": false,
+                "state": "valid",
+                "max-24hr": 0,
+                "date-time-24hr": "1970-01-01T00:00:00.0+00:00",
+                "max-current": 0
+            },
+            {
+                "group": "iom",
+                "name": "er-he",
+                "description": "Upgrade SR-1 from ER to HE",
+                "type": "pool",
+                "pool-size": 0,
+                "allocated": 0,
+                "present": false,
+                "state": "valid",
+                "max-24hr": 0,
+                "date-time-24hr": "1970-01-01T00:00:00.0+00:00",
+                "max-current": 0
+            },
+            {
+                "group": "ports",
+                "name": "7x50 SR\/XRS Port 1GE",
+                "description": "7x50 SR\/XRS Port 1GE",
+                "type": "monitored",
+                "allocated": 0,
+                "present": false,
+                "state": "unknown",
+                "max-24hr": 0,
+                "date-time-24hr": "1970-01-01T00:00:00.0+00:00",
+                "max-current": 0
+            },
+            {
+                "group": "ports",
+                "name": "7x50 SR\/XRS Port 10GE",
+                "description": "7x50 SR\/XRS Port 10GE",
+                "type": "monitored",
+                "allocated": 0,
+                "present": false,
+                "state": "unknown",
+                "max-24hr": 0,
+                "date-time-24hr": "1970-01-01T00:00:00.0+00:00",
+                "max-current": 0
+            },
+            {
+                "group": "ports",
+                "name": "7x50 SR\/XRS Port 25GE",
+                "description": "7x50 SR\/XRS Port 25GE",
+                "type": "monitored",
+                "allocated": 0,
+                "present": false,
+                "state": "unknown",
+                "max-24hr": 0,
+                "date-time-24hr": "1970-01-01T00:00:00.0+00:00",
+                "max-current": 0
+            },
+            {
+                "group": "ports",
+                "name": "7x50 SR\/XRS Port 40GE",
+                "description": "7x50 SR\/XRS Port 40GE",
+                "type": "monitored",
+                "allocated": 0,
+                "present": false,
+                "state": "unknown",
+                "max-24hr": 0,
+                "date-time-24hr": "1970-01-01T00:00:00.0+00:00",
+                "max-current": 0
+            },
+            {
+                "group": "ports",
+                "name": "7x50 SR\/XRS Port 50GE",
+                "description": "7x50 SR\/XRS Port 50GE",
+                "type": "monitored",
+                "allocated": 0,
+                "present": false,
+                "state": "unknown",
+                "max-24hr": 0,
+                "date-time-24hr": "1970-01-01T00:00:00.0+00:00",
+                "max-current": 0
+            },
+            {
+                "group": "ports",
+                "name": "7x50 SR\/XRS Port 100GE",
+                "description": "7x50 SR\/XRS Port 100GE",
+                "type": "monitored",
+                "allocated": 4,
+                "present": false,
+                "state": "unknown",
+                "max-24hr": 0,
+                "date-time-24hr": "1970-01-01T00:00:00.0+00:00",
+                "max-current": 4
+            },
+            {
+                "group": "ports",
+                "name": "7x50 SR\/XRS Port 400GE",
+                "description": "7x50 SR\/XRS Port 400GE",
+                "type": "monitored",
+                "allocated": 0,
+                "present": false,
+                "state": "unknown",
+                "max-24hr": 0,
+                "date-time-24hr": "1970-01-01T00:00:00.0+00:00",
+                "max-current": 0
+            },
+            {
+                "group": "ports",
+                "name": "7x50 SR\/XRS Port 800GE",
+                "description": "7x50 SR\/XRS Port 800GE",
+                "type": "monitored",
+                "allocated": 0,
+                "present": false,
+                "state": "unknown",
+                "max-24hr": 0,
+                "date-time-24hr": "1970-01-01T00:00:00.0+00:00",
+                "max-current": 0
+            }
+        ]
+    },
+    "nokia-state:ptp": {
+        "instance": [
+            {
+                "instance-id": "A",
+                "oper-state": "down",
+                "default-ds": {
+                    "two-step-flag": false,
+                    "clock-identity": "0x1ce605fffe000000",
+                    "clock-quality": {
+                        "clock-class": 255,
+                        "clock-accuracy": 254,
+                        "offset-scaled-log-variance": 65535
+                    }
+                },
+                "current-ds": {
+                    "steps-removed": 0
+                },
+                "time-properties-ds": {
+                    "current-utc-offset-valid": false,
+                    "current-utc-offset": 0,
+                    "leap59": false,
+                    "leap61": false,
+                    "time-traceable": false,
+                    "frequency-traceable": false,
+                    "ptp-timescale": false,
+                    "time-source": "internal-oscillator",
+                    "time": "2026-06-10T20:59:06.0+00:00"
+                },
+                "parent-ds": {
+                    "grandmaster-identity": "0x1ce605fffe000000",
+                    "grandmaster-priority1": 128,
+                    "grandmaster-priority2": 128,
+                    "grandmaster-clock-quality": {
+                        "clock-class": 255,
+                        "clock-accuracy": 254,
+                        "offset-scaled-log-variance": 65535
+                    },
+                    "parent-port-identity": {
+                        "clock-identity": "0x1ce605fffe000000",
+                        "port-number": 0
+                    },
+                    "transport-address": {
+                        "local-clock-is-parent-clock": true
+                    }
+                },
+                "statistics": [
+                    {
+                        "direction": "rx",
+                        "announce": "0",
+                        "sync": "0",
+                        "follow-up": "0",
+                        "delay-request": "0",
+                        "delay-response": "0",
+                        "signalling": "0",
+                        "other-message": "0",
+                        "event-timestamp-at-port": "0",
+                        "event-timestamp-at-cpm": "0",
+                        "peer-delay-request": "0",
+                        "peer-delay-response": "0",
+                        "peer-delay-response-follow-up": "0",
+                        "discards": {
+                            "bad-domain": "0",
+                            "alternate-master": "0",
+                            "out-of-sequence": "0",
+                            "other": "0",
+                            "id-in-path-trace-tlv": "0",
+                            "steps-removed-exceeded": "0",
+                            "peer-disabled": "0",
+                            "ptsf-unusable": "0"
+                        },
+                        "announce-tlv": [
+                            {
+                                "tlv-type": "alternate-time-offset-indicator",
+                                "count": "0"
+                            },
+                            {
+                                "tlv-type": "other",
+                                "count": "0"
+                            }
+                        ],
+                        "signalling-tlv": [
+                            {
+                                "tlv-type": "request",
+                                "message-type": "announce",
+                                "count": "0"
+                            },
+                            {
+                                "tlv-type": "request",
+                                "message-type": "sync",
+                                "count": "0"
+                            },
+                            {
+                                "tlv-type": "request",
+                                "message-type": "delay-response",
+                                "count": "0"
+                            },
+                            {
+                                "tlv-type": "grant",
+                                "message-type": "announce",
+                                "count": "0"
+                            },
+                            {
+                                "tlv-type": "grant",
+                                "message-type": "sync",
+                                "count": "0"
+                            },
+                            {
+                                "tlv-type": "grant",
+                                "message-type": "delay-response",
+                                "count": "0"
+                            },
+                            {
+                                "tlv-type": "reject",
+                                "message-type": "announce",
+                                "count": "0"
+                            },
+                            {
+                                "tlv-type": "reject",
+                                "message-type": "sync",
+                                "count": "0"
+                            },
+                            {
+                                "tlv-type": "reject",
+                                "message-type": "delay-response",
+                                "count": "0"
+                            },
+                            {
+                                "tlv-type": "cancel",
+                                "message-type": "announce",
+                                "count": "0"
+                            },
+                            {
+                                "tlv-type": "cancel",
+                                "message-type": "sync",
+                                "count": "0"
+                            },
+                            {
+                                "tlv-type": "cancel",
+                                "message-type": "delay-response",
+                                "count": "0"
+                            },
+                            {
+                                "tlv-type": "ack-cancel",
+                                "message-type": "announce",
+                                "count": "0"
+                            },
+                            {
+                                "tlv-type": "ack-cancel",
+                                "message-type": "sync",
+                                "count": "0"
+                            },
+                            {
+                                "tlv-type": "ack-cancel",
+                                "message-type": "delay-response",
+                                "count": "0"
+                            },
+                            {
+                                "tlv-type": "other",
+                                "message-type": "other",
+                                "count": "0"
+                            }
+                        ],
+                        "unicast-message-rates": {
+                            "announce": "0",
+                            "sync": "0",
+                            "follow-up": "0",
+                            "delay-request": "0",
+                            "delay-response": "0",
+                            "other": "0"
+                        },
+                        "multicast-message-rates": {
+                            "announce": "0",
+                            "sync": "0",
+                            "follow-up": "0",
+                            "delay-request": "0",
+                            "delay-response": "0",
+                            "other": "0",
+                            "peer-delay-request": "0",
+                            "peer-delay-response": "0",
+                            "peer-delay-response-follow-up": "0"
+                        }
+                    },
+                    {
+                        "direction": "tx",
+                        "announce": "0",
+                        "sync": "0",
+                        "follow-up": "0",
+                        "delay-request": "0",
+                        "delay-response": "0",
+                        "signalling": "0",
+                        "other-message": "0",
+                        "event-timestamp-at-port": "0",
+                        "event-timestamp-at-cpm": "0",
+                        "peer-delay-request": "0",
+                        "peer-delay-response": "0",
+                        "peer-delay-response-follow-up": "0",
+                        "announce-tlv": [
+                            {
+                                "tlv-type": "alternate-time-offset-indicator",
+                                "count": "0"
+                            },
+                            {
+                                "tlv-type": "other",
+                                "count": "0"
+                            }
+                        ],
+                        "signalling-tlv": [
+                            {
+                                "tlv-type": "request",
+                                "message-type": "announce",
+                                "count": "0"
+                            },
+                            {
+                                "tlv-type": "request",
+                                "message-type": "sync",
+                                "count": "0"
+                            },
+                            {
+                                "tlv-type": "request",
+                                "message-type": "delay-response",
+                                "count": "0"
+                            },
+                            {
+                                "tlv-type": "grant",
+                                "message-type": "announce",
+                                "count": "0"
+                            },
+                            {
+                                "tlv-type": "grant",
+                                "message-type": "sync",
+                                "count": "0"
+                            },
+                            {
+                                "tlv-type": "grant",
+                                "message-type": "delay-response",
+                                "count": "0"
+                            },
+                            {
+                                "tlv-type": "reject",
+                                "message-type": "announce",
+                                "count": "0"
+                            },
+                            {
+                                "tlv-type": "reject",
+                                "message-type": "sync",
+                                "count": "0"
+                            },
+                            {
+                                "tlv-type": "reject",
+                                "message-type": "delay-response",
+                                "count": "0"
+                            },
+                            {
+                                "tlv-type": "cancel",
+                                "message-type": "announce",
+                                "count": "0"
+                            },
+                            {
+                                "tlv-type": "cancel",
+                                "message-type": "sync",
+                                "count": "0"
+                            },
+                            {
+                                "tlv-type": "cancel",
+                                "message-type": "delay-response",
+                                "count": "0"
+                            },
+                            {
+                                "tlv-type": "ack-cancel",
+                                "message-type": "announce",
+                                "count": "0"
+                            },
+                            {
+                                "tlv-type": "ack-cancel",
+                                "message-type": "sync",
+                                "count": "0"
+                            },
+                            {
+                                "tlv-type": "ack-cancel",
+                                "message-type": "delay-response",
+                                "count": "0"
+                            },
+                            {
+                                "tlv-type": "other",
+                                "message-type": "other",
+                                "count": "0"
+                            }
+                        ],
+                        "unicast-message-rates": {
+                            "announce": "0",
+                            "sync": "0",
+                            "follow-up": "0",
+                            "delay-request": "0",
+                            "delay-response": "0"
+                        },
+                        "multicast-message-rates": {
+                            "announce": "0",
+                            "sync": "0",
+                            "follow-up": "0",
+                            "delay-request": "0",
+                            "delay-response": "0",
+                            "peer-delay-request": "0",
+                            "peer-delay-response": "0",
+                            "peer-delay-response-follow-up": "0"
+                        }
+                    }
+                ],
+                "router": [
+                    {
+                        "router-name": "Base",
+                        "oper-state": "down"
+                    }
+                ],
+                "events": {
+                    "sync-packet-loss": 0,
+                    "sync-excessive-packet-loss-freq": 0,
+                    "delay-packet-loss": 0,
+                    "delay-excessive-packet-loss-freq": 0
+                },
+                "performance-monitoring": {
+                    "record": [
+                        {
+                            "index": 0,
+                            "measurement-valid": false,
+                            "period-complete": false,
+                            "start-time": "2026-06-10T20:45:00.0+00:00",
+                            "duration": 900
+                        },
+                        {
+                            "index": 1,
+                            "measurement-valid": false,
+                            "period-complete": false,
+                            "start-time": "2026-06-10T20:30:00.0+00:00",
+                            "duration": 900
+                        },
+                        {
+                            "index": 2,
+                            "measurement-valid": false,
+                            "period-complete": false,
+                            "start-time": "2026-06-10T20:15:00.0+00:00",
+                            "duration": 900
+                        },
+                        {
+                            "index": 3,
+                            "measurement-valid": false,
+                            "period-complete": false,
+                            "start-time": "2026-06-10T20:00:00.0+00:00",
+                            "duration": 900
+                        },
+                        {
+                            "index": 4,
+                            "measurement-valid": false,
+                            "period-complete": false,
+                            "start-time": "2026-06-10T19:45:00.0+00:00",
+                            "duration": 900
+                        },
+                        {
+                            "index": 5,
+                            "measurement-valid": false,
+                            "period-complete": false,
+                            "start-time": "2026-06-10T19:30:00.0+00:00",
+                            "duration": 900
+                        },
+                        {
+                            "index": 6,
+                            "measurement-valid": false,
+                            "period-complete": false,
+                            "start-time": "2026-06-10T19:15:00.0+00:00",
+                            "duration": 900
+                        },
+                        {
+                            "index": 7,
+                            "measurement-valid": false,
+                            "period-complete": false,
+                            "start-time": "2026-06-10T19:00:00.0+00:00",
+                            "duration": 900
+                        },
+                        {
+                            "index": 8,
+                            "measurement-valid": false,
+                            "period-complete": false,
+                            "start-time": "2026-06-10T18:45:00.0+00:00",
+                            "duration": 900
+                        },
+                        {
+                            "index": 9,
+                            "measurement-valid": false,
+                            "period-complete": false,
+                            "start-time": "2026-06-10T18:30:00.0+00:00",
+                            "duration": 900
+                        },
+                        {
+                            "index": 10,
+                            "measurement-valid": false,
+                            "period-complete": false,
+                            "start-time": "2026-06-10T18:15:00.0+00:00",
+                            "duration": 900
+                        },
+                        {
+                            "index": 11,
+                            "measurement-valid": false,
+                            "period-complete": false,
+                            "start-time": "2026-06-10T18:00:00.0+00:00",
+                            "duration": 900
+                        },
+                        {
+                            "index": 12,
+                            "measurement-valid": false,
+                            "period-complete": false,
+                            "start-time": "2026-06-10T17:45:00.0+00:00",
+                            "duration": 900
+                        },
+                        {
+                            "index": 13,
+                            "measurement-valid": false,
+                            "period-complete": false,
+                            "start-time": "2026-06-10T17:30:00.0+00:00",
+                            "duration": 900
+                        },
+                        {
+                            "index": 14,
+                            "measurement-valid": false,
+                            "period-complete": false,
+                            "start-time": "2026-06-10T17:15:00.0+00:00",
+                            "duration": 900
+                        },
+                        {
+                            "index": 15,
+                            "measurement-valid": false,
+                            "period-complete": false,
+                            "start-time": "2026-06-10T17:00:00.0+00:00",
+                            "duration": 900
+                        },
+                        {
+                            "index": 16,
+                            "measurement-valid": false,
+                            "period-complete": false,
+                            "start-time": "2026-06-10T16:45:00.0+00:00",
+                            "duration": 900
+                        },
+                        {
+                            "index": 17,
+                            "measurement-valid": false,
+                            "period-complete": false,
+                            "start-time": "2026-06-10T16:30:00.0+00:00",
+                            "duration": 900
+                        },
+                        {
+                            "index": 18,
+                            "measurement-valid": false,
+                            "period-complete": false,
+                            "start-time": "2026-06-10T16:15:00.0+00:00",
+                            "duration": 900
+                        },
+                        {
+                            "index": 19,
+                            "measurement-valid": false,
+                            "period-complete": false,
+                            "start-time": "2026-06-10T16:00:00.0+00:00",
+                            "duration": 900
+                        },
+                        {
+                            "index": 20,
+                            "measurement-valid": false,
+                            "period-complete": false,
+                            "start-time": "2026-06-10T15:45:00.0+00:00",
+                            "duration": 900
+                        },
+                        {
+                            "index": 21,
+                            "measurement-valid": false,
+                            "period-complete": false,
+                            "start-time": "2026-06-10T15:30:00.0+00:00",
+                            "duration": 900
+                        },
+                        {
+                            "index": 22,
+                            "measurement-valid": false,
+                            "period-complete": false,
+                            "start-time": "2026-06-10T15:15:00.0+00:00",
+                            "duration": 900
+                        },
+                        {
+                            "index": 23,
+                            "measurement-valid": false,
+                            "period-complete": false,
+                            "start-time": "2026-06-10T15:00:00.0+00:00",
+                            "duration": 900
+                        },
+                        {
+                            "index": 24,
+                            "measurement-valid": false,
+                            "period-complete": false,
+                            "start-time": "2026-06-10T14:45:00.0+00:00",
+                            "duration": 900
+                        },
+                        {
+                            "index": 25,
+                            "measurement-valid": false,
+                            "period-complete": false,
+                            "start-time": "2026-06-10T14:30:00.0+00:00",
+                            "duration": 900
+                        },
+                        {
+                            "index": 26,
+                            "measurement-valid": false,
+                            "period-complete": false,
+                            "start-time": "2026-06-10T14:15:00.0+00:00",
+                            "duration": 900
+                        },
+                        {
+                            "index": 27,
+                            "measurement-valid": false,
+                            "period-complete": false,
+                            "start-time": "2026-06-10T14:00:00.0+00:00",
+                            "duration": 900
+                        },
+                        {
+                            "index": 28,
+                            "measurement-valid": false,
+                            "period-complete": false,
+                            "start-time": "2026-06-10T13:45:00.0+00:00",
+                            "duration": 900
+                        },
+                        {
+                            "index": 29,
+                            "measurement-valid": false,
+                            "period-complete": false,
+                            "start-time": "2026-06-10T13:30:00.0+00:00",
+                            "duration": 900
+                        },
+                        {
+                            "index": 30,
+                            "measurement-valid": false,
+                            "period-complete": false,
+                            "start-time": "2026-06-10T13:15:00.0+00:00",
+                            "duration": 900
+                        },
+                        {
+                            "index": 31,
+                            "measurement-valid": false,
+                            "period-complete": false,
+                            "start-time": "2026-06-10T13:00:00.0+00:00",
+                            "duration": 900
+                        },
+                        {
+                            "index": 32,
+                            "measurement-valid": false,
+                            "period-complete": false,
+                            "start-time": "2026-06-10T12:45:00.0+00:00",
+                            "duration": 900
+                        },
+                        {
+                            "index": 33,
+                            "measurement-valid": false,
+                            "period-complete": false,
+                            "start-time": "2026-06-10T12:30:00.0+00:00",
+                            "duration": 900
+                        },
+                        {
+                            "index": 34,
+                            "measurement-valid": false,
+                            "period-complete": false,
+                            "start-time": "2026-06-10T12:15:00.0+00:00",
+                            "duration": 900
+                        },
+                        {
+                            "index": 35,
+                            "measurement-valid": false,
+                            "period-complete": false,
+                            "start-time": "2026-06-10T12:00:00.0+00:00",
+                            "duration": 900
+                        },
+                        {
+                            "index": 36,
+                            "measurement-valid": false,
+                            "period-complete": false,
+                            "start-time": "2026-06-10T11:45:00.0+00:00",
+                            "duration": 900
+                        },
+                        {
+                            "index": 37,
+                            "measurement-valid": false,
+                            "period-complete": false,
+                            "start-time": "2026-06-10T11:30:00.0+00:00",
+                            "duration": 900
+                        },
+                        {
+                            "index": 38,
+                            "measurement-valid": false,
+                            "period-complete": false,
+                            "start-time": "2026-06-10T11:15:00.0+00:00",
+                            "duration": 900
+                        },
+                        {
+                            "index": 39,
+                            "measurement-valid": false,
+                            "period-complete": false,
+                            "start-time": "2026-06-10T11:00:00.0+00:00",
+                            "duration": 900
+                        },
+                        {
+                            "index": 40,
+                            "measurement-valid": false,
+                            "period-complete": false,
+                            "start-time": "2026-06-10T10:45:00.0+00:00",
+                            "duration": 900
+                        },
+                        {
+                            "index": 41,
+                            "measurement-valid": false,
+                            "period-complete": false,
+                            "start-time": "2026-06-10T10:30:00.0+00:00",
+                            "duration": 900
+                        },
+                        {
+                            "index": 42,
+                            "measurement-valid": false,
+                            "period-complete": false,
+                            "start-time": "2026-06-10T10:15:00.0+00:00",
+                            "duration": 900
+                        },
+                        {
+                            "index": 43,
+                            "measurement-valid": false,
+                            "period-complete": false,
+                            "start-time": "2026-06-10T10:00:00.0+00:00",
+                            "duration": 900
+                        },
+                        {
+                            "index": 44,
+                            "measurement-valid": false,
+                            "period-complete": false,
+                            "start-time": "2026-06-10T09:45:00.0+00:00",
+                            "duration": 900
+                        },
+                        {
+                            "index": 45,
+                            "measurement-valid": false,
+                            "period-complete": false,
+                            "start-time": "2026-06-10T09:30:00.0+00:00",
+                            "duration": 900
+                        },
+                        {
+                            "index": 46,
+                            "measurement-valid": false,
+                            "period-complete": false,
+                            "start-time": "2026-06-10T09:15:00.0+00:00",
+                            "duration": 900
+                        },
+                        {
+                            "index": 47,
+                            "measurement-valid": false,
+                            "period-complete": false,
+                            "start-time": "2026-06-10T09:00:00.0+00:00",
+                            "duration": 900
+                        },
+                        {
+                            "index": 48,
+                            "measurement-valid": false,
+                            "period-complete": false,
+                            "start-time": "2026-06-10T08:45:00.0+00:00",
+                            "duration": 900
+                        },
+                        {
+                            "index": 49,
+                            "measurement-valid": false,
+                            "period-complete": false,
+                            "start-time": "2026-06-10T08:30:00.0+00:00",
+                            "duration": 900
+                        },
+                        {
+                            "index": 50,
+                            "measurement-valid": false,
+                            "period-complete": false,
+                            "start-time": "2026-06-10T08:15:00.0+00:00",
+                            "duration": 900
+                        },
+                        {
+                            "index": 51,
+                            "measurement-valid": false,
+                            "period-complete": false,
+                            "start-time": "2026-06-10T08:00:00.0+00:00",
+                            "duration": 900
+                        },
+                        {
+                            "index": 52,
+                            "measurement-valid": false,
+                            "period-complete": false,
+                            "start-time": "2026-06-10T07:45:00.0+00:00",
+                            "duration": 900
+                        },
+                        {
+                            "index": 53,
+                            "measurement-valid": false,
+                            "period-complete": false,
+                            "start-time": "2026-06-10T07:30:00.0+00:00",
+                            "duration": 900
+                        },
+                        {
+                            "index": 54,
+                            "measurement-valid": false,
+                            "period-complete": false,
+                            "start-time": "2026-06-10T07:15:00.0+00:00",
+                            "duration": 900
+                        },
+                        {
+                            "index": 55,
+                            "measurement-valid": false,
+                            "period-complete": false,
+                            "start-time": "2026-06-10T07:00:00.0+00:00",
+                            "duration": 900
+                        },
+                        {
+                            "index": 56,
+                            "measurement-valid": false,
+                            "period-complete": false,
+                            "start-time": "2026-06-10T06:45:00.0+00:00",
+                            "duration": 900
+                        },
+                        {
+                            "index": 57,
+                            "measurement-valid": false,
+                            "period-complete": false,
+                            "start-time": "2026-06-10T06:30:00.0+00:00",
+                            "duration": 900
+                        },
+                        {
+                            "index": 58,
+                            "measurement-valid": false,
+                            "period-complete": false,
+                            "start-time": "2026-06-10T06:15:00.0+00:00",
+                            "duration": 900
+                        },
+                        {
+                            "index": 59,
+                            "measurement-valid": false,
+                            "period-complete": false,
+                            "start-time": "2026-06-10T06:00:00.0+00:00",
+                            "duration": 900
+                        },
+                        {
+                            "index": 60,
+                            "measurement-valid": false,
+                            "period-complete": false,
+                            "start-time": "2026-06-10T05:45:00.0+00:00",
+                            "duration": 900
+                        },
+                        {
+                            "index": 61,
+                            "measurement-valid": false,
+                            "period-complete": false,
+                            "start-time": "2026-06-10T05:30:00.0+00:00",
+                            "duration": 900
+                        },
+                        {
+                            "index": 62,
+                            "measurement-valid": false,
+                            "period-complete": false,
+                            "start-time": "2026-06-10T05:15:00.0+00:00",
+                            "duration": 900
+                        },
+                        {
+                            "index": 63,
+                            "measurement-valid": false,
+                            "period-complete": false,
+                            "start-time": "2026-06-10T05:00:00.0+00:00",
+                            "duration": 900
+                        },
+                        {
+                            "index": 64,
+                            "measurement-valid": false,
+                            "period-complete": false,
+                            "start-time": "2026-06-10T04:45:00.0+00:00",
+                            "duration": 900
+                        },
+                        {
+                            "index": 65,
+                            "measurement-valid": false,
+                            "period-complete": false,
+                            "start-time": "2026-06-10T04:30:00.0+00:00",
+                            "duration": 900
+                        },
+                        {
+                            "index": 66,
+                            "measurement-valid": false,
+                            "period-complete": false,
+                            "start-time": "2026-06-10T04:15:00.0+00:00",
+                            "duration": 900
+                        },
+                        {
+                            "index": 67,
+                            "measurement-valid": false,
+                            "period-complete": false,
+                            "start-time": "2026-06-10T04:00:00.0+00:00",
+                            "duration": 900
+                        },
+                        {
+                            "index": 68,
+                            "measurement-valid": false,
+                            "period-complete": false,
+                            "start-time": "2026-06-10T03:45:00.0+00:00",
+                            "duration": 900
+                        },
+                        {
+                            "index": 69,
+                            "measurement-valid": false,
+                            "period-complete": false,
+                            "start-time": "2026-06-10T03:30:00.0+00:00",
+                            "duration": 900
+                        },
+                        {
+                            "index": 70,
+                            "measurement-valid": false,
+                            "period-complete": false,
+                            "start-time": "2026-06-10T03:15:00.0+00:00",
+                            "duration": 900
+                        },
+                        {
+                            "index": 71,
+                            "measurement-valid": false,
+                            "period-complete": false,
+                            "start-time": "2026-06-10T03:00:00.0+00:00",
+                            "duration": 900
+                        },
+                        {
+                            "index": 72,
+                            "measurement-valid": false,
+                            "period-complete": false,
+                            "start-time": "2026-06-10T02:45:00.0+00:00",
+                            "duration": 900
+                        },
+                        {
+                            "index": 73,
+                            "measurement-valid": false,
+                            "period-complete": false,
+                            "start-time": "2026-06-10T02:30:00.0+00:00",
+                            "duration": 900
+                        },
+                        {
+                            "index": 74,
+                            "measurement-valid": false,
+                            "period-complete": false,
+                            "start-time": "2026-06-10T02:15:00.0+00:00",
+                            "duration": 900
+                        },
+                        {
+                            "index": 75,
+                            "measurement-valid": false,
+                            "period-complete": false,
+                            "start-time": "2026-06-10T02:00:00.0+00:00",
+                            "duration": 900
+                        },
+                        {
+                            "index": 76,
+                            "measurement-valid": false,
+                            "period-complete": false,
+                            "start-time": "2026-06-10T01:45:00.0+00:00",
+                            "duration": 900
+                        },
+                        {
+                            "index": 77,
+                            "measurement-valid": false,
+                            "period-complete": false,
+                            "start-time": "2026-06-10T01:30:00.0+00:00",
+                            "duration": 900
+                        },
+                        {
+                            "index": 78,
+                            "measurement-valid": false,
+                            "period-complete": false,
+                            "start-time": "2026-06-10T01:15:00.0+00:00",
+                            "duration": 900
+                        },
+                        {
+                            "index": 79,
+                            "measurement-valid": false,
+                            "period-complete": false,
+                            "start-time": "2026-06-10T01:00:00.0+00:00",
+                            "duration": 900
+                        },
+                        {
+                            "index": 80,
+                            "measurement-valid": false,
+                            "period-complete": false,
+                            "start-time": "2026-06-10T00:45:00.0+00:00",
+                            "duration": 900
+                        },
+                        {
+                            "index": 81,
+                            "measurement-valid": false,
+                            "period-complete": false,
+                            "start-time": "2026-06-10T00:30:00.0+00:00",
+                            "duration": 900
+                        },
+                        {
+                            "index": 82,
+                            "measurement-valid": false,
+                            "period-complete": false,
+                            "start-time": "2026-06-10T00:15:00.0+00:00",
+                            "duration": 900
+                        },
+                        {
+                            "index": 83,
+                            "measurement-valid": false,
+                            "period-complete": false,
+                            "start-time": "2026-06-10T00:00:00.0+00:00",
+                            "duration": 900
+                        },
+                        {
+                            "index": 84,
+                            "measurement-valid": false,
+                            "period-complete": false,
+                            "start-time": "2026-06-09T23:45:00.0+00:00",
+                            "duration": 900
+                        },
+                        {
+                            "index": 85,
+                            "measurement-valid": false,
+                            "period-complete": false,
+                            "start-time": "2026-06-09T23:30:00.0+00:00",
+                            "duration": 900
+                        },
+                        {
+                            "index": 86,
+                            "measurement-valid": false,
+                            "period-complete": false,
+                            "start-time": "2026-06-09T23:15:00.0+00:00",
+                            "duration": 900
+                        },
+                        {
+                            "index": 87,
+                            "measurement-valid": false,
+                            "period-complete": false,
+                            "start-time": "2026-06-09T23:00:00.0+00:00",
+                            "duration": 900
+                        },
+                        {
+                            "index": 88,
+                            "measurement-valid": false,
+                            "period-complete": false,
+                            "start-time": "2026-06-09T22:45:00.0+00:00",
+                            "duration": 900
+                        },
+                        {
+                            "index": 89,
+                            "measurement-valid": false,
+                            "period-complete": false,
+                            "start-time": "2026-06-09T22:30:00.0+00:00",
+                            "duration": 900
+                        },
+                        {
+                            "index": 90,
+                            "measurement-valid": false,
+                            "period-complete": false,
+                            "start-time": "2026-06-09T22:15:00.0+00:00",
+                            "duration": 900
+                        },
+                        {
+                            "index": 91,
+                            "measurement-valid": false,
+                            "period-complete": false,
+                            "start-time": "2026-06-09T22:00:00.0+00:00",
+                            "duration": 900
+                        },
+                        {
+                            "index": 92,
+                            "measurement-valid": false,
+                            "period-complete": false,
+                            "start-time": "2026-06-09T21:45:00.0+00:00",
+                            "duration": 900
+                        },
+                        {
+                            "index": 93,
+                            "measurement-valid": false,
+                            "period-complete": false,
+                            "start-time": "2026-06-09T21:30:00.0+00:00",
+                            "duration": 900
+                        },
+                        {
+                            "index": 94,
+                            "measurement-valid": false,
+                            "period-complete": false,
+                            "start-time": "2026-06-09T21:15:00.0+00:00",
+                            "duration": 900
+                        },
+                        {
+                            "index": 95,
+                            "measurement-valid": false,
+                            "period-complete": false,
+                            "start-time": "2026-06-09T21:00:00.0+00:00",
+                            "duration": 900
+                        },
+                        {
+                            "index": 96,
+                            "measurement-valid": false,
+                            "period-complete": false,
+                            "start-time": "2026-06-09T20:45:00.0+00:00",
+                            "duration": 900
+                        },
+                        {
+                            "index": 97,
+                            "measurement-valid": false,
+                            "period-complete": false,
+                            "start-time": "2026-06-10T00:00:00.0+00:00",
+                            "duration": 86400
+                        },
+                        {
+                            "index": 98,
+                            "measurement-valid": false,
+                            "period-complete": false,
+                            "start-time": "2026-06-09T00:00:00.0+00:00",
+                            "duration": 86400
+                        },
+                        {
+                            "index": 501,
+                            "measurement-valid": false,
+                            "period-complete": false,
+                            "start-time": "2026-06-10T20:58:00.0+00:00",
+                            "duration": 60
+                        },
+                        {
+                            "index": 502,
+                            "measurement-valid": false,
+                            "period-complete": false,
+                            "start-time": "2026-06-10T20:57:00.0+00:00",
+                            "duration": 60
+                        },
+                        {
+                            "index": 503,
+                            "measurement-valid": false,
+                            "period-complete": false,
+                            "start-time": "2026-06-10T20:56:00.0+00:00",
+                            "duration": 60
+                        },
+                        {
+                            "index": 504,
+                            "measurement-valid": false,
+                            "period-complete": false,
+                            "start-time": "2026-06-10T20:55:00.0+00:00",
+                            "duration": 60
+                        },
+                        {
+                            "index": 505,
+                            "measurement-valid": false,
+                            "period-complete": false,
+                            "start-time": "2026-06-10T20:54:00.0+00:00",
+                            "duration": 60
+                        },
+                        {
+                            "index": 506,
+                            "measurement-valid": false,
+                            "period-complete": false,
+                            "start-time": "2026-06-10T20:53:00.0+00:00",
+                            "duration": 60
+                        },
+                        {
+                            "index": 507,
+                            "measurement-valid": false,
+                            "period-complete": false,
+                            "start-time": "2026-06-10T20:52:00.0+00:00",
+                            "duration": 60
+                        },
+                        {
+                            "index": 508,
+                            "measurement-valid": false,
+                            "period-complete": false,
+                            "start-time": "2026-06-10T20:51:00.0+00:00",
+                            "duration": 60
+                        },
+                        {
+                            "index": 509,
+                            "measurement-valid": false,
+                            "period-complete": false,
+                            "start-time": "2026-06-10T20:50:00.0+00:00",
+                            "duration": 60
+                        },
+                        {
+                            "index": 510,
+                            "measurement-valid": false,
+                            "period-complete": false,
+                            "start-time": "2026-06-10T20:49:00.0+00:00",
+                            "duration": 60
+                        },
+                        {
+                            "index": 511,
+                            "measurement-valid": false,
+                            "period-complete": false,
+                            "start-time": "2026-06-10T20:48:00.0+00:00",
+                            "duration": 60
+                        },
+                        {
+                            "index": 512,
+                            "measurement-valid": false,
+                            "period-complete": false,
+                            "start-time": "2026-06-10T20:47:00.0+00:00",
+                            "duration": 60
+                        },
+                        {
+                            "index": 513,
+                            "measurement-valid": false,
+                            "period-complete": false,
+                            "start-time": "2026-06-10T20:46:00.0+00:00",
+                            "duration": 60
+                        },
+                        {
+                            "index": 514,
+                            "measurement-valid": false,
+                            "period-complete": false,
+                            "start-time": "2026-06-10T20:45:00.0+00:00",
+                            "duration": 60
+                        },
+                        {
+                            "index": 515,
+                            "measurement-valid": false,
+                            "period-complete": false,
+                            "start-time": "2026-06-10T20:44:00.0+00:00",
+                            "duration": 60
+                        },
+                        {
+                            "index": 516,
+                            "measurement-valid": false,
+                            "period-complete": false,
+                            "start-time": "2026-06-10T20:43:00.0+00:00",
+                            "duration": 60
+                        }
+                    ]
+                }
+            }
+        ]
+    },
+    "nokia-state:security": {
+        "telnet-server-oper-state": "down",
+        "ftp-server-oper-state": "down",
+        "telnet6-server-oper-state": "down",
+        "management": {
+            "global": {
+                "telnet": {
+                    "oper-state": "down"
+                },
+                "telnet6": {
+                    "oper-state": "down"
+                },
+                "ftp": {
+                    "oper-state": "down"
+                },
+                "ssh": {
+                    "oper-state": "up"
+                },
+                "netconf": {
+                    "oper-state": "down"
+                },
+                "grpc": {
+                    "oper-state": "down"
+                }
+            },
+            "router-instance": [
+                {
+                    "router": "Base",
+                    "allow-telnet": true,
+                    "allow-telnet6": true,
+                    "allow-ftp": true,
+                    "allow-ssh": true,
+                    "allow-netconf": true,
+                    "allow-grpc": true
+                }
+            ]
+        },
+        "storage-encryption": {
+            "primary-secret": {
+                "present": true
+            }
+        },
+        "aaa": {
+            "remote-servers": {
+                "radius": {
+                    "oper-state": "down"
+                },
+                "ldap": {
+                    "oper-state": "down"
+                },
+                "tacplus": {
+                    "oper-state": "down"
+                },
+                "statistics": {
+                    "authentication": {
+                        "local": {
+                            "accepted-logins": 15,
+                            "rejected-logins": 0
+                        }
+                    }
+                }
+            }
+        },
+        "cpm-filter": {
+            "ip-filter": {
+                "cam-entries": 0
+            },
+            "ipv6-filter": {
+                "cam-entries": 0
+            },
+            "overload": {
+                "ip-mac": "operational",
+                "ipv6": "operational"
+            }
+        },
+        "pki": {
+            "statistics": {
+                "authentication": {
+                    "failed": 0,
+                    "passed": 0,
+                    "attempted": 0
+                }
+            }
+        },
+        "ssh": {
+            "server-oper-state": "up",
+            "host-fingerprint-v2-rsa-md5": "22:d5:ab:82:62:d8:24:52:92:6b:2f:20:61:81:9e:f9",
+            "host-fingerprint-v2-rsa-sha256": "myrbANqwCv6QqrZlCrSc8SdFaTo9QkDS0IoGkhX0z3Y",
+            "host-fingerprint-v2-ecdsa-sha2-nistp256-md5": "ff:59:87:2c:ec:96:f6:60:c9:94:97:25:62:8f:ea:47",
+            "host-fingerprint-v2-ecdsa-sha2-nistp256-sha256": "QZ0AZ0v\/ZgfmSLbS0GIK\/2YNLDsiBQmPUKuMcrJCBLE",
+            "host-fingerprint-v2-ecdsa-sha2-nistp521-md5": "1c:66:37:8a:44:b2:d6:42:4e:e6:24:45:ce:3a:bd:36",
+            "host-fingerprint-v2-ecdsa-sha2-nistp521-sha256": "xJNi56UFcWBXq6qfjh7O6crr8MLv4B6eeYkEU\/jfuMo",
+            "server-public-key-rsa": "AAAAB3NzaC1yc2EAAAADAQABAAABAQC6jqRqL6aFjtVtY8sGDIFiWDqdXBR2e2IOLK++UUNB4IgJeahed3SHae1p3ys9XJVKGQjljkqgLTRa5cQZoaZLn2OgakxYeUEz2GksENMQeRgn+9UX6Ml6MdpEw2Fcs028bFg\/cGg8\/EPjQWfbnuyNQ07F3PmR4pOXMdStuG91UGU7Xgcg2Fsz9rWiFGNdmI79scmXRlt9y\/i4IzMq49b9XjEI3Ob5n9PMtfrEXrYJ9zas2njTzY2K+\/JaJIq2cKbK7U62I9jQdau9lH2BNZSV33QC74M9mxyYu6BjgG0SDWU6uC2eEnChP0bLjfWKEm3cH1WzMLWfVmrpCXzXbTUn",
+            "server-public-key-ecdsa-sha2-nistp256": "AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBKaUyscVoluXO8yiE12pntIn6kS35tFf4clwt89RV5+\/\/ByrwJkgfqqYO2UGFvwt+Qs6H5qqmVzw3YBL9tSIdwo=",
+            "server-public-key-ecdsa-sha2-nistp521": "AAAAE2VjZHNhLXNoYTItbmlzdHA1MjEAAAAIbmlzdHA1MjEAAACFBAHjdrFziFOBLW7NF7MijkYIin7tWFuJghnf3n64EA2WMHJAHhUu0Of2l7ksgzrOtpPEG0+o8Nas2rfXKsvIaFWpdwDcY2a8oHWMjWYOJIAVWQAqxzkEVe5F9+KzX7b\/eEsXKX8W83xFH9fm7PHX7l6QuH4mXSLpUBje22kdmg096om6ZQ==",
+            "server-cipher-list-v2-state": ["aes256-ctr", "aes192-ctr", "aes128-ctr", "aes128-cbc", "3des-cbc", "aes192-cbc", "aes256-cbc"],
+            "server-mac-list-v2-state": ["hmac-sha2-512", "hmac-sha2-256", "hmac-sha1", "hmac-sha1-96", "hmac-md5", "hmac-md5-96"],
+            "server-kex-list-v2-state": ["ecdh-sha2-nistp521", "ecdh-sha2-nistp384", "ecdh-sha2-nistp256", "diffie-hellman-group16-sha512", "diffie-hellman-group14-sha256", "diffie-hellman-group14-sha1", "diffie-hellman-group-exchange-sha1", "diffie-hellman-group1-sha1"],
+            "server-host-key-list-v2-state": ["ecdsa-sha2-nistp521", "ecdsa-sha2-nistp256", "rsa-sha2-512", "rsa-sha2-256", "ssh-rsa"],
+            "client-cipher-list-v2-state": ["aes256-ctr", "aes192-ctr", "aes128-ctr", "aes128-cbc", "3des-cbc", "aes192-cbc", "aes256-cbc"],
+            "client-mac-list-v2-state": ["hmac-sha2-512", "hmac-sha2-256", "hmac-sha1", "hmac-sha1-96", "hmac-md5", "hmac-md5-96"],
+            "client-kex-list-v2-state": ["ecdh-sha2-nistp521", "ecdh-sha2-nistp384", "ecdh-sha2-nistp256", "diffie-hellman-group16-sha512", "diffie-hellman-group14-sha256", "diffie-hellman-group14-sha1", "diffie-hellman-group-exchange-sha1", "diffie-hellman-group1-sha1"],
+            "client-host-key-list-v2-state": ["ecdsa-sha2-nistp521", "ecdsa-sha2-nistp384", "ecdsa-sha2-nistp256", "rsa-sha2-512", "rsa-sha2-256", "ssh-ed25519", "ssh-rsa"],
+            "connections": {
+                "connection": [
+                    {
+                        "connection-id": 21,
+                        "connection-ip": "172.10.10.1",
+                        "version": 2,
+                        "cipher": "aes128-ctr",
+                        "mac": "hmac-sha2-256",
+                        "kex": "ecdh-sha2-nistp256",
+                        "host-key": "ecdsa-sha2-nistp256",
+                        "user": "admin",
+                        "router-instance": "management",
+                        "key-re-exchange": {
+                            "minutes": 60,
+                            "mbytes": 1024
+                        },
+                        "channel": [
+                            {
+                                "channel-id": 0,
+                                "session-id": 21,
+                                "server": "cli"
+                            }
+                        ]
+                    }
+                ]
+            },
+            "client-known-hosts": {
+                "user": [
+                    {
+                        "user-name": "SYSTEM"
+                    }
+                ]
+            }
+        },
+        "user-params": {
+            "local-user": {
+                "user": [
+                    {
+                        "user-name": "admin",
+                        "attempted-logins": 15,
+                        "failed-logins": 0,
+                        "locked-out": false,
+                        "password-changed-time": "2026-06-10T20:43:35.0+00:00"
+                    }
+                ]
+            }
+        }
+    },
+    "nokia-state:time": {
+        "current-active-time-zone": "UTC",
+        "daylight-saving-time-active": false,
+        "offset-from-utc": "0:00",
+        "sntp": {
+            "oper-state": "down"
+        }
+    }
+}

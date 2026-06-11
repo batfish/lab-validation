@@ -1,0 +1,634 @@
+{
+    "nokia-state:unicast": {
+        "ipv4": {
+            "statistics": {
+                "aggregate": {
+                    "active-routes": 0,
+                    "available-routes": 0
+                },
+                "arp-nd": {
+                    "active-routes": 0,
+                    "available-routes": 0
+                },
+                "bgp": {
+                    "active-routes": 0,
+                    "available-routes": 0
+                },
+                "bgp-backup": {
+                    "active-routes": 0,
+                    "available-routes": 0
+                },
+                "bgp-label": {
+                    "active-routes": 0,
+                    "available-routes": 0
+                },
+                "dhcp-client": {
+                    "active-routes": 0,
+                    "available-routes": 0
+                },
+                "direct": {
+                    "active-routes": 5,
+                    "available-routes": 5
+                },
+                "esm-bcast": {
+                    "active-routes": 0,
+                    "available-routes": 0
+                },
+                "host": {
+                    "active-routes": 0,
+                    "available-routes": 4
+                },
+                "isis": {
+                    "active-routes": 0,
+                    "available-routes": 9
+                },
+                "isis-lfa": {
+                    "active-routes": 0,
+                    "available-routes": 0
+                },
+                "ldp": {
+                    "active-routes": 0,
+                    "available-routes": 0
+                },
+                "managed": {
+                    "active-routes": 0,
+                    "available-routes": 0
+                },
+                "nat": {
+                    "active-routes": 0,
+                    "available-routes": 0
+                },
+                "ospf": {
+                    "active-routes": 9,
+                    "available-routes": 9
+                },
+                "ospf-lfa": {
+                    "active-routes": 0,
+                    "available-routes": 0
+                },
+                "ospfv3": {
+                    "active-routes": 0,
+                    "available-routes": 0
+                },
+                "ospfv3-lfa": {
+                    "active-routes": 0,
+                    "available-routes": 0
+                },
+                "periodic": {
+                    "active-routes": 0,
+                    "available-routes": 0
+                },
+                "rib-api": {
+                    "active-routes": 0,
+                    "available-routes": 0
+                },
+                "rip": {
+                    "active-routes": 0,
+                    "available-routes": 0
+                },
+                "static": {
+                    "active-routes": 0,
+                    "available-routes": 0
+                },
+                "sub-mgmt": {
+                    "active-routes": 0,
+                    "available-routes": 0
+                },
+                "video": {
+                    "active-routes": 0,
+                    "available-routes": 0
+                },
+                "vpn-leak": {
+                    "active-routes": 0,
+                    "available-routes": 0
+                }
+            },
+            "route": [
+                {
+                    "ipv4-prefix": "10.10.10.1\/32",
+                    "age": 872,
+                    "instance": 0,
+                    "flags": "",
+                    "preference": 10,
+                    "protocol": "ospf",
+                    "nexthop": [
+                        {
+                            "nexthop-index": 0,
+                            "flags": "",
+                            "if-index": 2,
+                            "if-vrtr-id": 1,
+                            "metric": 1,
+                            "nexthop-ip": "172.16.10.8"
+                        }
+                    ]
+                },
+                {
+                    "ipv4-prefix": "10.10.10.2\/32",
+                    "age": 877,
+                    "instance": 0,
+                    "flags": "",
+                    "preference": 10,
+                    "protocol": "ospf",
+                    "nexthop": [
+                        {
+                            "nexthop-index": 0,
+                            "flags": "",
+                            "if-index": 3,
+                            "if-vrtr-id": 1,
+                            "metric": 1,
+                            "nexthop-ip": "172.16.10.2"
+                        }
+                    ]
+                },
+                {
+                    "ipv4-prefix": "10.10.10.3\/32",
+                    "age": 872,
+                    "instance": 0,
+                    "flags": "",
+                    "preference": 10,
+                    "protocol": "ospf",
+                    "nexthop": [
+                        {
+                            "nexthop-index": 0,
+                            "flags": "",
+                            "if-index": 4,
+                            "if-vrtr-id": 1,
+                            "metric": 1,
+                            "nexthop-ip": "172.16.10.12"
+                        }
+                    ]
+                },
+                {
+                    "ipv4-prefix": "10.10.10.4\/32",
+                    "age": 872,
+                    "instance": 0,
+                    "flags": "",
+                    "preference": 10,
+                    "protocol": "ospf",
+                    "nexthop": [
+                        {
+                            "nexthop-index": 0,
+                            "flags": "",
+                            "if-index": 5,
+                            "if-vrtr-id": 1,
+                            "metric": 1,
+                            "nexthop-ip": "172.16.10.7"
+                        }
+                    ]
+                },
+                {
+                    "ipv4-prefix": "10.10.10.10\/32",
+                    "age": 872,
+                    "instance": 0,
+                    "flags": "",
+                    "preference": 10,
+                    "protocol": "ospf",
+                    "nexthop": [
+                        {
+                            "nexthop-index": 0,
+                            "flags": "",
+                            "if-index": 3,
+                            "if-vrtr-id": 1,
+                            "metric": 2,
+                            "nexthop-ip": "172.16.10.2"
+                        }
+                    ]
+                },
+                {
+                    "ipv4-prefix": "10.10.10.20\/32",
+                    "age": 903,
+                    "instance": 0,
+                    "flags": "",
+                    "preference": 0,
+                    "protocol": "local",
+                    "nexthop": [
+                        {
+                            "nexthop-index": 0,
+                            "flags": "",
+                            "if-index": 1,
+                            "if-vrtr-id": 1,
+                            "metric": 0
+                        }
+                    ]
+                },
+                {
+                    "ipv4-prefix": "172.16.10.0\/31",
+                    "age": 872,
+                    "instance": 0,
+                    "flags": "",
+                    "preference": 10,
+                    "protocol": "ospf",
+                    "nexthop": [
+                        {
+                            "nexthop-index": 0,
+                            "flags": "",
+                            "if-index": 3,
+                            "if-vrtr-id": 1,
+                            "metric": 3,
+                            "nexthop-ip": "172.16.10.2"
+                        }
+                    ]
+                },
+                {
+                    "ipv4-prefix": "172.16.10.2\/31",
+                    "age": 889,
+                    "instance": 0,
+                    "flags": "",
+                    "preference": 0,
+                    "protocol": "local",
+                    "nexthop": [
+                        {
+                            "nexthop-index": 0,
+                            "flags": "",
+                            "if-index": 3,
+                            "if-vrtr-id": 1,
+                            "metric": 0
+                        }
+                    ]
+                },
+                {
+                    "ipv4-prefix": "172.16.10.4\/31",
+                    "age": 872,
+                    "instance": 0,
+                    "flags": "",
+                    "preference": 10,
+                    "protocol": "ospf",
+                    "nexthop": [
+                        {
+                            "nexthop-index": 0,
+                            "flags": "",
+                            "if-index": 4,
+                            "if-vrtr-id": 1,
+                            "metric": 2,
+                            "nexthop-ip": "172.16.10.12"
+                        }
+                    ]
+                },
+                {
+                    "ipv4-prefix": "172.16.10.6\/31",
+                    "age": 889,
+                    "instance": 0,
+                    "flags": "",
+                    "preference": 0,
+                    "protocol": "local",
+                    "nexthop": [
+                        {
+                            "nexthop-index": 0,
+                            "flags": "",
+                            "if-index": 5,
+                            "if-vrtr-id": 1,
+                            "metric": 0
+                        }
+                    ]
+                },
+                {
+                    "ipv4-prefix": "172.16.10.8\/31",
+                    "age": 889,
+                    "instance": 0,
+                    "flags": "",
+                    "preference": 0,
+                    "protocol": "local",
+                    "nexthop": [
+                        {
+                            "nexthop-index": 0,
+                            "flags": "",
+                            "if-index": 2,
+                            "if-vrtr-id": 1,
+                            "metric": 0
+                        }
+                    ]
+                },
+                {
+                    "ipv4-prefix": "172.16.10.10\/31",
+                    "age": 877,
+                    "instance": 0,
+                    "flags": "",
+                    "preference": 10,
+                    "protocol": "ospf",
+                    "nexthop": [
+                        {
+                            "nexthop-index": 0,
+                            "flags": "",
+                            "if-index": 3,
+                            "if-vrtr-id": 1,
+                            "metric": 2,
+                            "nexthop-ip": "172.16.10.2"
+                        }
+                    ]
+                },
+                {
+                    "ipv4-prefix": "172.16.10.12\/31",
+                    "age": 889,
+                    "instance": 0,
+                    "flags": "",
+                    "preference": 0,
+                    "protocol": "local",
+                    "nexthop": [
+                        {
+                            "nexthop-index": 0,
+                            "flags": "",
+                            "if-index": 4,
+                            "if-vrtr-id": 1,
+                            "metric": 0
+                        }
+                    ]
+                },
+                {
+                    "ipv4-prefix": "172.16.10.14\/31",
+                    "age": 872,
+                    "instance": 0,
+                    "flags": "",
+                    "preference": 10,
+                    "protocol": "ospf",
+                    "nexthop": [
+                        {
+                            "nexthop-index": 0,
+                            "flags": "",
+                            "if-index": 5,
+                            "if-vrtr-id": 1,
+                            "metric": 2,
+                            "nexthop-ip": "172.16.10.7"
+                        }
+                    ]
+                }
+            ]
+        },
+        "ipv6": {
+            "statistics": {
+                "aggregate": {
+                    "active-routes": 0,
+                    "available-routes": 0
+                },
+                "arp-nd": {
+                    "active-routes": 0,
+                    "available-routes": 0
+                },
+                "bgp": {
+                    "active-routes": 0,
+                    "available-routes": 0
+                },
+                "bgp-backup": {
+                    "active-routes": 0,
+                    "available-routes": 0
+                },
+                "bgp-label": {
+                    "active-routes": 0,
+                    "available-routes": 0
+                },
+                "dhcp-client": {
+                    "active-routes": 0,
+                    "available-routes": 0
+                },
+                "dhcpv6-bh": {
+                    "active-routes": 0,
+                    "available-routes": 0
+                },
+                "dhcpv6-na": {
+                    "active-routes": 0,
+                    "available-routes": 0
+                },
+                "dhcpv6-pd": {
+                    "active-routes": 0,
+                    "available-routes": 0
+                },
+                "dhcpv6-ta": {
+                    "active-routes": 0,
+                    "available-routes": 0
+                },
+                "direct": {
+                    "active-routes": 0,
+                    "available-routes": 0
+                },
+                "host": {
+                    "active-routes": 0,
+                    "available-routes": 0
+                },
+                "isis": {
+                    "active-routes": 0,
+                    "available-routes": 0
+                },
+                "isis-lfa": {
+                    "active-routes": 0,
+                    "available-routes": 0
+                },
+                "ldp": {
+                    "active-routes": 0,
+                    "available-routes": 0
+                },
+                "managed": {
+                    "active-routes": 0,
+                    "available-routes": 0
+                },
+                "nat": {
+                    "active-routes": 0,
+                    "available-routes": 0
+                },
+                "nd-ra": {
+                    "active-routes": 0,
+                    "available-routes": 0
+                },
+                "ospfv3": {
+                    "active-routes": 0,
+                    "available-routes": 0
+                },
+                "ospfv3-lfa": {
+                    "active-routes": 0,
+                    "available-routes": 0
+                },
+                "periodic": {
+                    "active-routes": 0,
+                    "available-routes": 0
+                },
+                "rib-api": {
+                    "active-routes": 0,
+                    "available-routes": 0
+                },
+                "rip": {
+                    "active-routes": 0,
+                    "available-routes": 0
+                },
+                "static": {
+                    "active-routes": 0,
+                    "available-routes": 0
+                },
+                "srv6": {
+                    "active-routes": 0,
+                    "available-routes": 0
+                },
+                "srv6-policy": {
+                    "active-routes": 0,
+                    "available-routes": 0
+                },
+                "sub-mgmt": {
+                    "active-routes": 0,
+                    "available-routes": 0
+                },
+                "video": {
+                    "active-routes": 0,
+                    "available-routes": 0
+                },
+                "vpn-leak": {
+                    "active-routes": 0,
+                    "available-routes": 0
+                }
+            }
+        }
+    },
+    "nokia-state:multicast": {
+        "ipv4": {
+            "statistics": {
+                "bgp": {
+                    "active-routes": 0,
+                    "available-routes": 0
+                },
+                "direct": {
+                    "active-routes": 5,
+                    "available-routes": 5
+                },
+                "host": {
+                    "active-routes": 0,
+                    "available-routes": 4
+                },
+                "isis": {
+                    "active-routes": 0,
+                    "available-routes": 0
+                },
+                "ospf": {
+                    "active-routes": 0,
+                    "available-routes": 0
+                },
+                "ospfv3": {
+                    "active-routes": 0,
+                    "available-routes": 0
+                },
+                "static": {
+                    "active-routes": 0,
+                    "available-routes": 0
+                },
+                "video": {
+                    "active-routes": 0,
+                    "available-routes": 0
+                }
+            },
+            "route": [
+                {
+                    "ipv4-prefix": "10.10.10.20\/32",
+                    "age": 903,
+                    "instance": 0,
+                    "flags": "",
+                    "preference": 0,
+                    "protocol": "local",
+                    "nexthop": [
+                        {
+                            "nexthop-index": 0,
+                            "flags": "",
+                            "if-index": 1,
+                            "if-vrtr-id": 1,
+                            "metric": 0
+                        }
+                    ]
+                },
+                {
+                    "ipv4-prefix": "172.16.10.2\/31",
+                    "age": 889,
+                    "instance": 0,
+                    "flags": "",
+                    "preference": 0,
+                    "protocol": "local",
+                    "nexthop": [
+                        {
+                            "nexthop-index": 0,
+                            "flags": "",
+                            "if-index": 3,
+                            "if-vrtr-id": 1,
+                            "metric": 0
+                        }
+                    ]
+                },
+                {
+                    "ipv4-prefix": "172.16.10.6\/31",
+                    "age": 889,
+                    "instance": 0,
+                    "flags": "",
+                    "preference": 0,
+                    "protocol": "local",
+                    "nexthop": [
+                        {
+                            "nexthop-index": 0,
+                            "flags": "",
+                            "if-index": 5,
+                            "if-vrtr-id": 1,
+                            "metric": 0
+                        }
+                    ]
+                },
+                {
+                    "ipv4-prefix": "172.16.10.8\/31",
+                    "age": 889,
+                    "instance": 0,
+                    "flags": "",
+                    "preference": 0,
+                    "protocol": "local",
+                    "nexthop": [
+                        {
+                            "nexthop-index": 0,
+                            "flags": "",
+                            "if-index": 2,
+                            "if-vrtr-id": 1,
+                            "metric": 0
+                        }
+                    ]
+                },
+                {
+                    "ipv4-prefix": "172.16.10.12\/31",
+                    "age": 889,
+                    "instance": 0,
+                    "flags": "",
+                    "preference": 0,
+                    "protocol": "local",
+                    "nexthop": [
+                        {
+                            "nexthop-index": 0,
+                            "flags": "",
+                            "if-index": 4,
+                            "if-vrtr-id": 1,
+                            "metric": 0
+                        }
+                    ]
+                }
+            ]
+        },
+        "ipv6": {
+            "statistics": {
+                "bgp": {
+                    "active-routes": 0,
+                    "available-routes": 0
+                },
+                "direct": {
+                    "active-routes": 0,
+                    "available-routes": 0
+                },
+                "host": {
+                    "active-routes": 0,
+                    "available-routes": 0
+                },
+                "isis": {
+                    "active-routes": 0,
+                    "available-routes": 0
+                },
+                "ospfv3": {
+                    "active-routes": 0,
+                    "available-routes": 0
+                },
+                "static": {
+                    "active-routes": 0,
+                    "available-routes": 0
+                },
+                "video": {
+                    "active-routes": 0,
+                    "available-routes": 0
+                }
+            }
+        }
+    }
+}

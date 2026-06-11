@@ -1,0 +1,42 @@
+
+===============================================================================
+Route Table (Router: Base)
+===============================================================================
+Dest Prefix[Flags]                            Type    Proto     Age        Pref
+      Next Hop[Interface Name]                                    Metric   
+-------------------------------------------------------------------------------
+10.10.10.1/32                                 Remote  OSPF      00h15m18s  10
+       172.16.10.8                                                  1
+10.10.10.2/32                                 Remote  OSPF      00h15m23s  10
+       172.16.10.2                                                  1
+10.10.10.3/32                                 Remote  OSPF      00h15m18s  10
+       172.16.10.12                                                 1
+10.10.10.4/32                                 Remote  OSPF      00h15m18s  10
+       172.16.10.7                                                  1
+10.10.10.10/32                                Remote  OSPF      00h15m18s  10
+       172.16.10.2                                                  2
+10.10.10.20/32                                Local   Local     00h15m49s  0
+       system                                                       0
+172.16.10.0/31                                Remote  OSPF      00h15m18s  10
+       172.16.10.2                                                  3
+172.16.10.2/31                                Local   Local     00h15m35s  0
+       To-PE2                                                       0
+172.16.10.4/31                                Remote  OSPF      00h15m18s  10
+       172.16.10.12                                                 2
+172.16.10.6/31                                Local   Local     00h15m35s  0
+       To-PE4                                                       0
+172.16.10.8/31                                Local   Local     00h15m35s  0
+       To-PE1                                                       0
+172.16.10.10/31                               Remote  OSPF      00h15m23s  10
+       172.16.10.2                                                  2
+172.16.10.12/31                               Local   Local     00h15m35s  0
+       To-PE3                                                       0
+172.16.10.14/31                               Remote  OSPF      00h15m18s  10
+       172.16.10.7                                                  2
+-------------------------------------------------------------------------------
+No. of Routes: 14
+Flags: n = Number of times nexthop is repeated
+       B = BGP backup route available
+       L = LFA nexthop available
+       S = Sticky ECMP requested
+===============================================================================

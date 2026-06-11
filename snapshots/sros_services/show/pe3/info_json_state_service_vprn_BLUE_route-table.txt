@@ -1,0 +1,503 @@
+{
+    "nokia-state:unicast": {
+        "ipv4": {
+            "statistics": {
+                "aggregate": {
+                    "active-routes": 0,
+                    "available-routes": 0
+                },
+                "arp-nd": {
+                    "active-routes": 0,
+                    "available-routes": 0
+                },
+                "bgp": {
+                    "active-routes": 0,
+                    "available-routes": 0
+                },
+                "bgp-backup": {
+                    "active-routes": 0,
+                    "available-routes": 0
+                },
+                "bgp-label": {
+                    "active-routes": 0,
+                    "available-routes": 0
+                },
+                "bgp-vpn": {
+                    "active-routes": 6,
+                    "available-routes": 6
+                },
+                "bgp-vpn-backup": {
+                    "active-routes": 0,
+                    "available-routes": 0
+                },
+                "dhcp-client": {
+                    "active-routes": 0,
+                    "available-routes": 0
+                },
+                "direct": {
+                    "active-routes": 1,
+                    "available-routes": 1
+                },
+                "esm-bcast": {
+                    "active-routes": 0,
+                    "available-routes": 0
+                },
+                "evpn-iff": {
+                    "active-routes": 0,
+                    "available-routes": 0
+                },
+                "evpn-ifl": {
+                    "active-routes": 0,
+                    "available-routes": 0
+                },
+                "evpn-ifl-backup": {
+                    "active-routes": 0,
+                    "available-routes": 0
+                },
+                "evpn-ifl-host": {
+                    "active-routes": 0,
+                    "available-routes": 0
+                },
+                "host": {
+                    "active-routes": 0,
+                    "available-routes": 1
+                },
+                "ipsec": {
+                    "active-routes": 0,
+                    "available-routes": 0
+                },
+                "isis": {
+                    "active-routes": 0,
+                    "available-routes": 0
+                },
+                "isis-lfa": {
+                    "active-routes": 0,
+                    "available-routes": 0
+                },
+                "managed": {
+                    "active-routes": 0,
+                    "available-routes": 0
+                },
+                "nat": {
+                    "active-routes": 0,
+                    "available-routes": 0
+                },
+                "ospf": {
+                    "active-routes": 0,
+                    "available-routes": 0
+                },
+                "ospf-lfa": {
+                    "active-routes": 0,
+                    "available-routes": 0
+                },
+                "ospfv3": {
+                    "active-routes": 0,
+                    "available-routes": 0
+                },
+                "ospfv3-lfa": {
+                    "active-routes": 0,
+                    "available-routes": 0
+                },
+                "periodic": {
+                    "active-routes": 0,
+                    "available-routes": 0
+                },
+                "rip": {
+                    "active-routes": 0,
+                    "available-routes": 0
+                },
+                "static": {
+                    "active-routes": 0,
+                    "available-routes": 0
+                },
+                "sub-mgmt": {
+                    "active-routes": 0,
+                    "available-routes": 0
+                },
+                "video": {
+                    "active-routes": 0,
+                    "available-routes": 0
+                },
+                "vpn-leak": {
+                    "active-routes": 0,
+                    "available-routes": 0
+                }
+            },
+            "route": [
+                {
+                    "ipv4-prefix": "192.168.30.0\/24",
+                    "age": 1282,
+                    "instance": 0,
+                    "flags": "",
+                    "preference": 170,
+                    "protocol": "bgp-vpn",
+                    "nexthop": [
+                        {
+                            "nexthop-index": 0,
+                            "flags": "nh-is-indirect",
+                            "metric": 0,
+                            "nexthop-ip": "10.10.10.1",
+                            "nexthop-label": 524280,
+                            "vpn-nexthop-index": "16",
+                            "resolving-nexthop": [
+                                {
+                                    "resolving-nexthop-index": 0,
+                                    "flags": "nh-is-tunneled",
+                                    "metric": 200,
+                                    "nexthop-ip": "10.10.10.1",
+                                    "nexthop-tunnel-id": 524294,
+                                    "nexthop-tunnel-type": "isis",
+                                    "nexthop-tunnel-type-instance": 0
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "ipv4-prefix": "192.168.30.254\/32",
+                    "age": 1282,
+                    "instance": 0,
+                    "flags": "",
+                    "preference": 170,
+                    "protocol": "bgp-vpn",
+                    "nexthop": [
+                        {
+                            "nexthop-index": 0,
+                            "flags": "nh-is-indirect",
+                            "metric": 0,
+                            "nexthop-ip": "10.10.10.1",
+                            "nexthop-label": 524280,
+                            "vpn-nexthop-index": "16",
+                            "resolving-nexthop": [
+                                {
+                                    "resolving-nexthop-index": 0,
+                                    "flags": "nh-is-tunneled",
+                                    "metric": 200,
+                                    "nexthop-ip": "10.10.10.1",
+                                    "nexthop-tunnel-id": 524294,
+                                    "nexthop-tunnel-type": "isis",
+                                    "nexthop-tunnel-type-instance": 0
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "ipv4-prefix": "192.168.31.0\/24",
+                    "age": 1327,
+                    "instance": 0,
+                    "flags": "",
+                    "preference": 0,
+                    "protocol": "bgp-vpn",
+                    "nexthop": [
+                        {
+                            "nexthop-index": 0,
+                            "flags": "",
+                            "if-index": 6,
+                            "if-vrtr-id": 3,
+                            "metric": 0
+                        }
+                    ]
+                },
+                {
+                    "ipv4-prefix": "192.168.31.254\/32",
+                    "age": 1327,
+                    "instance": 0,
+                    "flags": "",
+                    "preference": 0,
+                    "protocol": "bgp-vpn",
+                    "nexthop": [
+                        {
+                            "nexthop-index": 0,
+                            "flags": "",
+                            "if-index": 6,
+                            "if-vrtr-id": 3,
+                            "metric": 0
+                        }
+                    ]
+                },
+                {
+                    "ipv4-prefix": "192.168.40.0\/24",
+                    "age": 1282,
+                    "instance": 0,
+                    "flags": "",
+                    "preference": 170,
+                    "protocol": "bgp-vpn",
+                    "nexthop": [
+                        {
+                            "nexthop-index": 0,
+                            "flags": "nh-is-indirect",
+                            "metric": 0,
+                            "nexthop-ip": "10.10.10.1",
+                            "nexthop-label": 524282,
+                            "vpn-nexthop-index": "16",
+                            "resolving-nexthop": [
+                                {
+                                    "resolving-nexthop-index": 0,
+                                    "flags": "nh-is-tunneled",
+                                    "metric": 200,
+                                    "nexthop-ip": "10.10.10.1",
+                                    "nexthop-tunnel-id": 524294,
+                                    "nexthop-tunnel-type": "isis",
+                                    "nexthop-tunnel-type-instance": 0
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "ipv4-prefix": "192.168.40.254\/32",
+                    "age": 1282,
+                    "instance": 0,
+                    "flags": "",
+                    "preference": 170,
+                    "protocol": "bgp-vpn",
+                    "nexthop": [
+                        {
+                            "nexthop-index": 0,
+                            "flags": "nh-is-indirect",
+                            "metric": 0,
+                            "nexthop-ip": "10.10.10.1",
+                            "nexthop-label": 524282,
+                            "vpn-nexthop-index": "16",
+                            "resolving-nexthop": [
+                                {
+                                    "resolving-nexthop-index": 0,
+                                    "flags": "nh-is-tunneled",
+                                    "metric": 200,
+                                    "nexthop-ip": "10.10.10.1",
+                                    "nexthop-tunnel-id": 524294,
+                                    "nexthop-tunnel-type": "isis",
+                                    "nexthop-tunnel-type-instance": 0
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "ipv4-prefix": "192.168.41.0\/24",
+                    "age": 1327,
+                    "instance": 0,
+                    "flags": "",
+                    "preference": 0,
+                    "protocol": "local",
+                    "nexthop": [
+                        {
+                            "nexthop-index": 0,
+                            "flags": "",
+                            "if-index": 5,
+                            "if-vrtr-id": 2,
+                            "metric": 0
+                        }
+                    ]
+                }
+            ]
+        },
+        "ipv6": {
+            "statistics": {
+                "aggregate": {
+                    "active-routes": 0,
+                    "available-routes": 0
+                },
+                "arp-nd": {
+                    "active-routes": 0,
+                    "available-routes": 0
+                },
+                "bgp": {
+                    "active-routes": 0,
+                    "available-routes": 0
+                },
+                "bgp-backup": {
+                    "active-routes": 0,
+                    "available-routes": 0
+                },
+                "bgp-label": {
+                    "active-routes": 0,
+                    "available-routes": 0
+                },
+                "bgp-vpn": {
+                    "active-routes": 0,
+                    "available-routes": 0
+                },
+                "bgp-vpn-backup": {
+                    "active-routes": 0,
+                    "available-routes": 0
+                },
+                "dhcp-client": {
+                    "active-routes": 0,
+                    "available-routes": 0
+                },
+                "dhcpv6-bh": {
+                    "active-routes": 0,
+                    "available-routes": 0
+                },
+                "dhcpv6-na": {
+                    "active-routes": 0,
+                    "available-routes": 0
+                },
+                "dhcpv6-pd": {
+                    "active-routes": 0,
+                    "available-routes": 0
+                },
+                "dhcpv6-ta": {
+                    "active-routes": 0,
+                    "available-routes": 0
+                },
+                "direct": {
+                    "active-routes": 0,
+                    "available-routes": 0
+                },
+                "evpn-iff": {
+                    "active-routes": 0,
+                    "available-routes": 0
+                },
+                "evpn-ifl": {
+                    "active-routes": 0,
+                    "available-routes": 0
+                },
+                "evpn-ifl-backup": {
+                    "active-routes": 0,
+                    "available-routes": 0
+                },
+                "evpn-ifl-host": {
+                    "active-routes": 0,
+                    "available-routes": 0
+                },
+                "host": {
+                    "active-routes": 0,
+                    "available-routes": 0
+                },
+                "ipsec": {
+                    "active-routes": 0,
+                    "available-routes": 0
+                },
+                "isis": {
+                    "active-routes": 0,
+                    "available-routes": 0
+                },
+                "isis-lfa": {
+                    "active-routes": 0,
+                    "available-routes": 0
+                },
+                "managed": {
+                    "active-routes": 0,
+                    "available-routes": 0
+                },
+                "nat": {
+                    "active-routes": 0,
+                    "available-routes": 0
+                },
+                "ospfv3": {
+                    "active-routes": 0,
+                    "available-routes": 0
+                },
+                "ospfv3-lfa": {
+                    "active-routes": 0,
+                    "available-routes": 0
+                },
+                "periodic": {
+                    "active-routes": 0,
+                    "available-routes": 0
+                },
+                "rip": {
+                    "active-routes": 0,
+                    "available-routes": 0
+                },
+                "static": {
+                    "active-routes": 0,
+                    "available-routes": 0
+                },
+                "sub-mgmt": {
+                    "active-routes": 0,
+                    "available-routes": 0
+                },
+                "video": {
+                    "active-routes": 0,
+                    "available-routes": 0
+                },
+                "vpn-leak": {
+                    "active-routes": 0,
+                    "available-routes": 0
+                }
+            }
+        }
+    },
+    "nokia-state:multicast": {
+        "ipv4": {
+            "statistics": {
+                "bgp": {
+                    "active-routes": 0,
+                    "available-routes": 0
+                },
+                "bgp-vpn": {
+                    "active-routes": 1,
+                    "available-routes": 1
+                },
+                "direct": {
+                    "active-routes": 1,
+                    "available-routes": 1
+                },
+                "host": {
+                    "active-routes": 0,
+                    "available-routes": 1
+                },
+                "isis": {
+                    "active-routes": 0,
+                    "available-routes": 0
+                },
+                "ospf": {
+                    "active-routes": 0,
+                    "available-routes": 0
+                },
+                "ospfv3": {
+                    "active-routes": 0,
+                    "available-routes": 0
+                },
+                "static": {
+                    "active-routes": 0,
+                    "available-routes": 0
+                },
+                "video": {
+                    "active-routes": 0,
+                    "available-routes": 0
+                }
+            }
+        },
+        "ipv6": {
+            "statistics": {
+                "bgp": {
+                    "active-routes": 0,
+                    "available-routes": 0
+                },
+                "bgp-vpn": {
+                    "active-routes": 0,
+                    "available-routes": 0
+                },
+                "direct": {
+                    "active-routes": 0,
+                    "available-routes": 0
+                },
+                "host": {
+                    "active-routes": 0,
+                    "available-routes": 0
+                },
+                "isis": {
+                    "active-routes": 0,
+                    "available-routes": 0
+                },
+                "ospfv3": {
+                    "active-routes": 0,
+                    "available-routes": 0
+                },
+                "static": {
+                    "active-routes": 0,
+                    "available-routes": 0
+                },
+                "video": {
+                    "active-routes": 0,
+                    "available-routes": 0
+                }
+            }
+        }
+    }
+}

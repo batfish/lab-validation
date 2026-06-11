@@ -1,0 +1,1137 @@
+{
+    "nokia-state:ospf": [
+        {
+            "ospf-instance": 0,
+            "oper-state": "up",
+            "oper-router-id": "10.10.10.2",
+            "area-border-router": false,
+            "as-border-router": false,
+            "backbone-router": true,
+            "overload-state": "no-overload",
+            "last-overload-enter-code": "none",
+            "last-overload-exit-code": "none",
+            "overflow": false,
+            "stub-router-support": true,
+            "opaque-lsa-support": true,
+            "last-enabled-time": "2026-06-10T20:43:36.0+00:00",
+            "routes-submitted": 0,
+            "total-exported-routes": 0,
+            "ldp-over-rsvp-status": "disabled",
+            "rsvp-shortcut-status": false,
+            "advertise-tunl-link-status": false,
+            "db-asn": 64500,
+            "export-limit": {
+                "state": "below-limits"
+            },
+            "rtr-adv-lsa-limit": {
+                "state": "below-limits",
+                "adv-router-id": "0.0.0.0"
+            },
+            "spf": {
+                "max-spf-run-interval": 0,
+                "min-spf-run-interval": 0,
+                "avg-spf-run-interval": 0,
+                "max-rtm-update-interval": 0,
+                "min-rtm-update-interval": 0,
+                "avg-rtm-update-interval": 0,
+                "last-full-spf": {
+                    "run-time": "2026-06-10T20:44:08.0+00:00",
+                    "total-time": 0,
+                    "intra-spf-time": 0,
+                    "inter-spf-time": 0,
+                    "extern-spf-time": 0,
+                    "rtm-update-time": 0
+                }
+            },
+            "statistics": {
+                "num-times-in-overload": 0,
+                "num-times-in-overflow": 0,
+                "neighbor-count": 2,
+                "virt-nbr-count": 0,
+                "spf": {
+                    "full-spf-runs": 5,
+                    "ext-spf-runs": 0,
+                    "incremental-inter-spf-runs": 0,
+                    "incremental-ext-spf-runs": 0,
+                    "spf-attempts-failed": 0,
+                    "route-adds-failed": 0,
+                    "route-dels-failed": 0,
+                    "route-mods-failed": 0,
+                    "lfa-spf-runs": 0,
+                    "rlfa-runs": 0,
+                    "tilfa-runs": 0,
+                    "cspf-requests": 0,
+                    "cspf-dropped-requests": 0,
+                    "cspf-paths-found": 0,
+                    "cspf-paths-not-found": 0
+                },
+                "lsdb": {
+                    "new-lsas-originated": 4,
+                    "new-lsas-received": 32,
+                    "as-scope-lsa-count": 0,
+                    "as-scope-lsa-cksum-sum": 0,
+                    "as-scope-unk-lsa-count": 0,
+                    "as-scope-unk-lsa-cksum-sum": 0,
+                    "extern-lsa-count": 0,
+                    "extern-lsa-cksum-sum": 0,
+                    "as-lsdb-entries": 0,
+                    "area-lsdb-entries": 28,
+                    "link-lsdb-entries": 0
+                },
+                "sid": {
+                    "srgb-errors": 0,
+                    "duplicated-errors": 0
+                },
+                "packets": {
+                    "tx-total": 247,
+                    "tx-hello": 217,
+                    "tx-db-description": 6,
+                    "tx-ls-request": 1,
+                    "tx-ls-update": 16,
+                    "tx-ls-ack": 7,
+                    "rx-total": 256,
+                    "rx-hello": 215,
+                    "rx-db-description": 4,
+                    "rx-ls-request": 2,
+                    "rx-ls-update": 30,
+                    "rx-ls-ack": 5,
+                    "discarded": 0,
+                    "retransmits": 0,
+                    "tx-failures": 0,
+                    "bad-version": 0,
+                    "bad-network": 0,
+                    "bad-area": 0,
+                    "bad-dest-address": 0,
+                    "bad-neighbors": 0,
+                    "bad-packet-type": 0,
+                    "bad-length": 0,
+                    "bad-hello-interval": 0,
+                    "bad-dead-interval": 0,
+                    "bad-options": 0,
+                    "rx-bad-checksum": 0,
+                    "bad-auth-type": 0,
+                    "auth-failures": 0,
+                    "bad-virtual-link": 0
+                }
+            },
+            "area": [
+                {
+                    "area-id": "0.0.0.0",
+                    "area-bdr-rtr-count": 0,
+                    "as-bdr-rtr-count": 0,
+                    "active-interfaces": 3,
+                    "interface-count": 3,
+                    "virtual-link-count": 0,
+                    "neighbor-count": 2,
+                    "last-spf-run-time": "2026-06-10T20:44:08.0+00:00",
+                    "spf-runs": 5,
+                    "nssa-translator-state": "disabled",
+                    "nssa-translator-events": 0,
+                    "lsa-totals": {
+                        "router-lsa": 6,
+                        "network-lsa": 0,
+                        "network-summary-lsa": 0,
+                        "asbr-summary-lsa": 0,
+                        "nssa-lsa": 0,
+                        "area-opaque-lsa": 22,
+                        "unknown-lsa": 0,
+                        "total": 28,
+                        "total-lsa-cksum-sum": 915436
+                    },
+                    "lsa-filter-totals": {
+                        "export-filtered": 0,
+                        "import-filtered": 0
+                    },
+                    "interface": [
+                        {
+                            "interface-name": "system",
+                            "type": "point-to-point",
+                            "oper-state": "point-to-point",
+                            "last-enabled-time": "2026-06-10T20:43:36.0+00:00",
+                            "oper-mtu": 1500,
+                            "oper-metric": 0,
+                            "neighbor-count": 0,
+                            "dr-id": "0.0.0.0",
+                            "bdr-id": "0.0.0.0",
+                            "link-lsa-count": 0,
+                            "link-lsa-cksum-sum": 0,
+                            "md5transmit-key-id": 0,
+                            "local-ip-address": "10.10.10.2",
+                            "te-metric": 0,
+                            "te-state": "down",
+                            "admin-group": 0,
+                            "measured-delay": 0,
+                            "events": 1,
+                            "last-event-time": "2026-06-10T20:43:36.0+00:00",
+                            "ldp-sync": {
+                                "ldp-sync-state": "down",
+                                "ldp-sync-max-metric": false,
+                                "ldp-sync-timer-state": "disabled",
+                                "ldp-sync-time-left": 0
+                            },
+                            "packets": {
+                                "tx-total": 0,
+                                "tx-hello": 0,
+                                "tx-db-description": 0,
+                                "tx-ls-request": 0,
+                                "tx-ls-update": 0,
+                                "tx-ls-ack": 0,
+                                "rx-total": 0,
+                                "rx-hello": 0,
+                                "rx-db-description": 0,
+                                "rx-ls-request": 0,
+                                "rx-ls-update": 0,
+                                "rx-ls-ack": 0,
+                                "discarded": 0,
+                                "retransmits": 0,
+                                "tx-failures": 0,
+                                "bad-version": 0,
+                                "bad-network": 0,
+                                "bad-area": 0,
+                                "bad-dest-address": 0,
+                                "bad-neighbors": 0,
+                                "bad-packet-type": 0,
+                                "bad-length": 0,
+                                "bad-hello-interval": 0,
+                                "bad-dead-interval": 0,
+                                "bad-options": 0,
+                                "rx-bad-checksum": 0,
+                                "bad-auth-type": 0,
+                                "auth-failures": 0,
+                                "bad-virtual-link": 0
+                            }
+                        },
+                        {
+                            "interface-name": "To-P1",
+                            "type": "point-to-point",
+                            "oper-state": "point-to-point",
+                            "last-enabled-time": "2026-06-10T20:43:50.4+00:00",
+                            "oper-mtu": 8922,
+                            "oper-metric": 1,
+                            "neighbor-count": 1,
+                            "dr-id": "0.0.0.0",
+                            "bdr-id": "0.0.0.0",
+                            "link-lsa-count": 0,
+                            "link-lsa-cksum-sum": 0,
+                            "md5transmit-key-id": 0,
+                            "local-ip-address": "172.16.10.10",
+                            "te-metric": 1,
+                            "te-state": "up",
+                            "admin-group": 0,
+                            "measured-delay": 0,
+                            "events": 1,
+                            "last-event-time": "2026-06-10T20:43:50.4+00:00",
+                            "ldp-sync": {
+                                "ldp-sync-state": "down",
+                                "ldp-sync-max-metric": false,
+                                "ldp-sync-timer-state": "disabled",
+                                "ldp-sync-time-left": 0
+                            },
+                            "packets": {
+                                "tx-total": 120,
+                                "tx-hello": 109,
+                                "tx-db-description": 3,
+                                "tx-ls-request": 0,
+                                "tx-ls-update": 5,
+                                "tx-ls-ack": 3,
+                                "rx-total": 120,
+                                "rx-hello": 107,
+                                "rx-db-description": 2,
+                                "rx-ls-request": 1,
+                                "rx-ls-update": 8,
+                                "rx-ls-ack": 2,
+                                "discarded": 0,
+                                "retransmits": 0,
+                                "tx-failures": 0,
+                                "bad-version": 0,
+                                "bad-network": 0,
+                                "bad-area": 0,
+                                "bad-dest-address": 0,
+                                "bad-neighbors": 0,
+                                "bad-packet-type": 0,
+                                "bad-length": 0,
+                                "bad-hello-interval": 0,
+                                "bad-dead-interval": 0,
+                                "bad-options": 0,
+                                "rx-bad-checksum": 0,
+                                "bad-auth-type": 0,
+                                "auth-failures": 0,
+                                "bad-virtual-link": 0
+                            },
+                            "neighbor-state": [
+                                {
+                                    "router-id": "10.10.10.10",
+                                    "address": "172.16.10.11",
+                                    "priority": 1,
+                                    "bfd-tracking": true,
+                                    "dr-id": "0.0.0.0",
+                                    "bdr-id": "0.0.0.0",
+                                    "bfd-strict-state": "disabled",
+                                    "oper-state": "full",
+                                    "options": 66,
+                                    "hello-suppressed": false,
+                                    "restart-helper-status": "not-helping",
+                                    "up-time": 106700,
+                                    "last-event": "exchange-done",
+                                    "last-event-time": "2026-06-10T20:44:01.3+00:00",
+                                    "dead-time-outstanding": 32,
+                                    "statistics": {
+                                        "events": 4,
+                                        "ls-retrans-q-len": 0,
+                                        "bad-nbr-states": 0,
+                                        "lsa-install-failed": 0,
+                                        "bad-seq-nums": 0,
+                                        "bad-mtu": 0,
+                                        "bad-packets": 0,
+                                        "lsa-not-in-lsdbs": 0,
+                                        "option-mismatches": 0,
+                                        "duplicates": 0,
+                                        "num-restarts": 0
+                                    }
+                                }
+                            ]
+                        },
+                        {
+                            "interface-name": "To-P2",
+                            "type": "point-to-point",
+                            "oper-state": "point-to-point",
+                            "last-enabled-time": "2026-06-10T20:43:50.4+00:00",
+                            "oper-mtu": 8922,
+                            "oper-metric": 1,
+                            "neighbor-count": 1,
+                            "dr-id": "0.0.0.0",
+                            "bdr-id": "0.0.0.0",
+                            "link-lsa-count": 0,
+                            "link-lsa-cksum-sum": 0,
+                            "md5transmit-key-id": 0,
+                            "local-ip-address": "172.16.10.2",
+                            "te-metric": 1,
+                            "te-state": "up",
+                            "admin-group": 0,
+                            "measured-delay": 0,
+                            "events": 1,
+                            "last-event-time": "2026-06-10T20:43:50.4+00:00",
+                            "ldp-sync": {
+                                "ldp-sync-state": "down",
+                                "ldp-sync-max-metric": false,
+                                "ldp-sync-timer-state": "disabled",
+                                "ldp-sync-time-left": 0
+                            },
+                            "packets": {
+                                "tx-total": 127,
+                                "tx-hello": 108,
+                                "tx-db-description": 3,
+                                "tx-ls-request": 1,
+                                "tx-ls-update": 11,
+                                "tx-ls-ack": 4,
+                                "rx-total": 136,
+                                "rx-hello": 108,
+                                "rx-db-description": 2,
+                                "rx-ls-request": 1,
+                                "rx-ls-update": 22,
+                                "rx-ls-ack": 3,
+                                "discarded": 0,
+                                "retransmits": 0,
+                                "tx-failures": 0,
+                                "bad-version": 0,
+                                "bad-network": 0,
+                                "bad-area": 0,
+                                "bad-dest-address": 0,
+                                "bad-neighbors": 0,
+                                "bad-packet-type": 0,
+                                "bad-length": 0,
+                                "bad-hello-interval": 0,
+                                "bad-dead-interval": 0,
+                                "bad-options": 0,
+                                "rx-bad-checksum": 0,
+                                "bad-auth-type": 0,
+                                "auth-failures": 0,
+                                "bad-virtual-link": 0
+                            },
+                            "neighbor-state": [
+                                {
+                                    "router-id": "10.10.10.20",
+                                    "address": "172.16.10.3",
+                                    "priority": 1,
+                                    "bfd-tracking": true,
+                                    "dr-id": "0.0.0.0",
+                                    "bdr-id": "0.0.0.0",
+                                    "bfd-strict-state": "disabled",
+                                    "oper-state": "full",
+                                    "options": 66,
+                                    "hello-suppressed": false,
+                                    "restart-helper-status": "not-helping",
+                                    "up-time": 106700,
+                                    "last-event": "loading-done",
+                                    "last-event-time": "2026-06-10T20:44:01.2+00:00",
+                                    "dead-time-outstanding": 32,
+                                    "statistics": {
+                                        "events": 6,
+                                        "ls-retrans-q-len": 0,
+                                        "bad-nbr-states": 0,
+                                        "lsa-install-failed": 0,
+                                        "bad-seq-nums": 0,
+                                        "bad-mtu": 0,
+                                        "bad-packets": 0,
+                                        "lsa-not-in-lsdbs": 0,
+                                        "option-mismatches": 0,
+                                        "duplicates": 0,
+                                        "num-restarts": 0
+                                    }
+                                }
+                            ]
+                        }
+                    ],
+                    "linkstate-database": [
+                        {
+                            "ls-type": 1,
+                            "adv-rtr-id": "10.10.10.1",
+                            "ls-id": "10.10.10.1",
+                            "sequence-nr": 2147483654,
+                            "age": 1064,
+                            "checksum": 18387,
+                            "known-type": true,
+                            "advertisement": "0x042802010a0a0a010a0a0a018000000647d30054000000050a0a0a01ffffffff030000000a0a0a0aac100a000100000aac100a00fffffffe0300000a0a0a0a14ac100a0801000001ac100a08fffffffe03000001",
+                            "import-filtered": false,
+                            "export-filtered": false
+                        },
+                        {
+                            "ls-type": 1,
+                            "adv-rtr-id": "10.10.10.2",
+                            "ls-id": "10.10.10.2",
+                            "sequence-nr": 2147483654,
+                            "age": 1062,
+                            "checksum": 5899,
+                            "known-type": true,
+                            "advertisement": "0x042602010a0a0a020a0a0a0280000006170b0054000000050a0a0a02ffffffff030000000a0a0a14ac100a0201000001ac100a02fffffffe030000010a0a0a0aac100a0a01000001ac100a0afffffffe03000001",
+                            "import-filtered": false,
+                            "export-filtered": false
+                        },
+                        {
+                            "ls-type": 1,
+                            "adv-rtr-id": "10.10.10.3",
+                            "ls-id": "10.10.10.3",
+                            "sequence-nr": 2147483654,
+                            "age": 1063,
+                            "checksum": 28072,
+                            "known-type": true,
+                            "advertisement": "0x042702010a0a0a030a0a0a03800000066da80054000000050a0a0a03ffffffff030000000a0a0a0aac100a0501000001ac100a04fffffffe030000010a0a0a14ac100a0c01000001ac100a0cfffffffe03000001",
+                            "import-filtered": false,
+                            "export-filtered": false
+                        },
+                        {
+                            "ls-type": 1,
+                            "adv-rtr-id": "10.10.10.4",
+                            "ls-id": "10.10.10.4",
+                            "sequence-nr": 2147483654,
+                            "age": 1064,
+                            "checksum": 51011,
+                            "known-type": true,
+                            "advertisement": "0x042802010a0a0a040a0a0a0480000006c7430054000000050a0a0a04ffffffff030000000a0a0a14ac100a0701000001ac100a06fffffffe030000010a0a0a0aac100a0e01000001ac100a0efffffffe03000001",
+                            "import-filtered": false,
+                            "export-filtered": false
+                        },
+                        {
+                            "ls-type": 1,
+                            "adv-rtr-id": "10.10.10.10",
+                            "ls-id": "10.10.10.10",
+                            "sequence-nr": 2147483656,
+                            "age": 1063,
+                            "checksum": 59514,
+                            "known-type": true,
+                            "advertisement": "0x042702010a0a0a0a0a0a0a0a80000008e87a0084000000090a0a0a0affffffff030000000a0a0a01ac100a0101000001ac100a00fffffffe030000010a0a0a03ac100a0401000001ac100a04fffffffe030000010a0a0a02ac100a0b01000001ac100a0afffffffe030000010a0a0a04ac100a0f01000001ac100a0efffffffe03000001",
+                            "import-filtered": false,
+                            "export-filtered": false
+                        },
+                        {
+                            "ls-type": 1,
+                            "adv-rtr-id": "10.10.10.20",
+                            "ls-id": "10.10.10.20",
+                            "sequence-nr": 2147483656,
+                            "age": 1063,
+                            "checksum": 51834,
+                            "known-type": true,
+                            "advertisement": "0x042702010a0a0a140a0a0a1480000008ca7a0084000000090a0a0a14ffffffff030000000a0a0a02ac100a0301000001ac100a02fffffffe030000010a0a0a04ac100a0601000001ac100a06fffffffe030000010a0a0a01ac100a0901000001ac100a08fffffffe030000010a0a0a03ac100a0d01000001ac100a0cfffffffe03000001",
+                            "import-filtered": false,
+                            "export-filtered": false
+                        },
+                        {
+                            "ls-type": 10,
+                            "adv-rtr-id": "10.10.10.1",
+                            "ls-id": "1.0.0.1",
+                            "sequence-nr": 2147483650,
+                            "age": 1089,
+                            "checksum": 4351,
+                            "known-type": true,
+                            "advertisement": "0x0441020a010000010a0a0a018000000210ff001c000100040a0a0a01",
+                            "import-filtered": false,
+                            "export-filtered": false
+                        },
+                        {
+                            "ls-type": 10,
+                            "adv-rtr-id": "10.10.10.1",
+                            "ls-id": "1.0.0.2",
+                            "sequence-nr": 2147483649,
+                            "age": 1068,
+                            "checksum": 35965,
+                            "known-type": true,
+                            "advertisement": "0x042c020a010000020a0a0a01800000018c7d007c000200640001000101000000000200040a0a0a0a00030004ac100a0000040004ac100a01000500040000000a00060004503a43b700070004503a43b700080020503a43b7503a43b7503a43b7503a43b7503a43b7503a43b7503a43b7503a43b70009000400000000",
+                            "import-filtered": false,
+                            "export-filtered": false
+                        },
+                        {
+                            "ls-type": 10,
+                            "adv-rtr-id": "10.10.10.1",
+                            "ls-id": "1.0.0.3",
+                            "sequence-nr": 2147483649,
+                            "age": 1069,
+                            "checksum": 57622,
+                            "known-type": true,
+                            "advertisement": "0x042d020a010000030a0a0a0180000001e116007c000200640001000101000000000200040a0a0a1400030004ac100a0800040004ac100a09000500040000000100060004503a43b700070004503a43b700080020503a43b7503a43b7503a43b7503a43b7503a43b7503a43b7503a43b7503a43b70009000400000000",
+                            "import-filtered": false,
+                            "export-filtered": false
+                        },
+                        {
+                            "ls-type": 10,
+                            "adv-rtr-id": "10.10.10.2",
+                            "ls-id": "1.0.0.1",
+                            "sequence-nr": 2147483650,
+                            "age": 1086,
+                            "checksum": 5369,
+                            "known-type": true,
+                            "advertisement": "0x043e020a010000010a0a0a028000000214f9001c000100040a0a0a02",
+                            "import-filtered": false,
+                            "export-filtered": false
+                        },
+                        {
+                            "ls-type": 10,
+                            "adv-rtr-id": "10.10.10.2",
+                            "ls-id": "1.0.0.2",
+                            "sequence-nr": 2147483649,
+                            "age": 1067,
+                            "checksum": 37228,
+                            "known-type": true,
+                            "advertisement": "0x042b020a010000020a0a0a0280000001916c007c000200640001000101000000000200040a0a0a0a00030004ac100a0a00040004ac100a0b000500040000000100060004503a43b700070004503a43b700080020503a43b7503a43b7503a43b7503a43b7503a43b7503a43b7503a43b7503a43b70009000400000000",
+                            "import-filtered": false,
+                            "export-filtered": false
+                        },
+                        {
+                            "ls-type": 10,
+                            "adv-rtr-id": "10.10.10.2",
+                            "ls-id": "1.0.0.3",
+                            "sequence-nr": 2147483649,
+                            "age": 1067,
+                            "checksum": 17088,
+                            "known-type": true,
+                            "advertisement": "0x042b020a010000030a0a0a028000000142c0007c000200640001000101000000000200040a0a0a1400030004ac100a0200040004ac100a03000500040000000100060004503a43b700070004503a43b700080020503a43b7503a43b7503a43b7503a43b7503a43b7503a43b7503a43b7503a43b70009000400000000",
+                            "import-filtered": false,
+                            "export-filtered": false
+                        },
+                        {
+                            "ls-type": 10,
+                            "adv-rtr-id": "10.10.10.3",
+                            "ls-id": "1.0.0.1",
+                            "sequence-nr": 2147483650,
+                            "age": 1088,
+                            "checksum": 6387,
+                            "known-type": true,
+                            "advertisement": "0x0440020a010000010a0a0a038000000218f3001c000100040a0a0a03",
+                            "import-filtered": false,
+                            "export-filtered": false
+                        },
+                        {
+                            "ls-type": 10,
+                            "adv-rtr-id": "10.10.10.3",
+                            "ls-id": "1.0.0.2",
+                            "sequence-nr": 2147483649,
+                            "age": 1068,
+                            "checksum": 59679,
+                            "known-type": true,
+                            "advertisement": "0x042c020a010000020a0a0a0380000001e91f007c000200640001000101000000000200040a0a0a0a00030004ac100a0500040004ac100a04000500040000000100060004503a43b700070004503a43b700080020503a43b7503a43b7503a43b7503a43b7503a43b7503a43b7503a43b7503a43b70009000400000000",
+                            "import-filtered": false,
+                            "export-filtered": false
+                        },
+                        {
+                            "ls-type": 10,
+                            "adv-rtr-id": "10.10.10.3",
+                            "ls-id": "1.0.0.3",
+                            "sequence-nr": 2147483649,
+                            "age": 1069,
+                            "checksum": 58887,
+                            "known-type": true,
+                            "advertisement": "0x042d020a010000030a0a0a0380000001e607007c000200640001000101000000000200040a0a0a1400030004ac100a0c00040004ac100a0d000500040000000100060004503a43b700070004503a43b700080020503a43b7503a43b7503a43b7503a43b7503a43b7503a43b7503a43b7503a43b70009000400000000",
+                            "import-filtered": false,
+                            "export-filtered": false
+                        },
+                        {
+                            "ls-type": 10,
+                            "adv-rtr-id": "10.10.10.4",
+                            "ls-id": "1.0.0.1",
+                            "sequence-nr": 2147483650,
+                            "age": 1088,
+                            "checksum": 7405,
+                            "known-type": true,
+                            "advertisement": "0x0440020a010000010a0a0a04800000021ced001c000100040a0a0a04",
+                            "import-filtered": false,
+                            "export-filtered": false
+                        },
+                        {
+                            "ls-type": 10,
+                            "adv-rtr-id": "10.10.10.4",
+                            "ls-id": "1.0.0.2",
+                            "sequence-nr": 2147483649,
+                            "age": 1069,
+                            "checksum": 38493,
+                            "known-type": true,
+                            "advertisement": "0x042d020a010000020a0a0a0480000001965d007c000200640001000101000000000200040a0a0a0a00030004ac100a0e00040004ac100a0f000500040000000100060004503a43b700070004503a43b700080020503a43b7503a43b7503a43b7503a43b7503a43b7503a43b7503a43b7503a43b70009000400000000",
+                            "import-filtered": false,
+                            "export-filtered": false
+                        },
+                        {
+                            "ls-type": 10,
+                            "adv-rtr-id": "10.10.10.4",
+                            "ls-id": "1.0.0.3",
+                            "sequence-nr": 2147483649,
+                            "age": 1069,
+                            "checksum": 16313,
+                            "known-type": true,
+                            "advertisement": "0x042d020a010000030a0a0a04800000013fb9007c000200640001000101000000000200040a0a0a1400030004ac100a0700040004ac100a06000500040000000100060004503a43b700070004503a43b700080020503a43b7503a43b7503a43b7503a43b7503a43b7503a43b7503a43b7503a43b70009000400000000",
+                            "import-filtered": false,
+                            "export-filtered": false
+                        },
+                        {
+                            "ls-type": 10,
+                            "adv-rtr-id": "10.10.10.10",
+                            "ls-id": "1.0.0.1",
+                            "sequence-nr": 2147483650,
+                            "age": 1089,
+                            "checksum": 13513,
+                            "known-type": true,
+                            "advertisement": "0x0441020a010000010a0a0a0a8000000234c9001c000100040a0a0a0a",
+                            "import-filtered": false,
+                            "export-filtered": false
+                        },
+                        {
+                            "ls-type": 10,
+                            "adv-rtr-id": "10.10.10.10",
+                            "ls-id": "1.0.0.2",
+                            "sequence-nr": 2147483649,
+                            "age": 1063,
+                            "checksum": 59179,
+                            "known-type": true,
+                            "advertisement": "0x0427020a010000020a0a0a0a80000001e72b007c000200640001000101000000000200040a0a0a0100030004ac100a0100040004ac100a00000500040000000100060004503a43b700070004503a43b700080020503a43b7503a43b7503a43b7503a43b7503a43b7503a43b7503a43b7503a43b70009000400000000",
+                            "import-filtered": false,
+                            "export-filtered": false
+                        },
+                        {
+                            "ls-type": 10,
+                            "adv-rtr-id": "10.10.10.10",
+                            "ls-id": "1.0.0.3",
+                            "sequence-nr": 2147483649,
+                            "age": 1063,
+                            "checksum": 40542,
+                            "known-type": true,
+                            "advertisement": "0x0427020a010000030a0a0a0a800000019e5e007c000200640001000101000000000200040a0a0a0200030004ac100a0b00040004ac100a0a000500040000000100060004503a43b700070004503a43b700080020503a43b7503a43b7503a43b7503a43b7503a43b7503a43b7503a43b7503a43b70009000400000000",
+                            "import-filtered": false,
+                            "export-filtered": false
+                        },
+                        {
+                            "ls-type": 10,
+                            "adv-rtr-id": "10.10.10.10",
+                            "ls-id": "1.0.0.4",
+                            "sequence-nr": 2147483649,
+                            "age": 1062,
+                            "checksum": 6637,
+                            "known-type": true,
+                            "advertisement": "0x0426020a010000040a0a0a0a8000000119ed007c000200640001000101000000000200040a0a0a0300030004ac100a0400040004ac100a05000500040000000100060004503a43b700070004503a43b700080020503a43b7503a43b7503a43b7503a43b7503a43b7503a43b7503a43b7503a43b70009000400000000",
+                            "import-filtered": false,
+                            "export-filtered": false
+                        },
+                        {
+                            "ls-type": 10,
+                            "adv-rtr-id": "10.10.10.10",
+                            "ls-id": "1.0.0.5",
+                            "sequence-nr": 2147483649,
+                            "age": 1070,
+                            "checksum": 50985,
+                            "known-type": true,
+                            "advertisement": "0x042e020a010000050a0a0a0a80000001c729007c000200640001000101000000000200040a0a0a0400030004ac100a0f00040004ac100a0e000500040000000100060004503a43b700070004503a43b700080020503a43b7503a43b7503a43b7503a43b7503a43b7503a43b7503a43b7503a43b70009000400000000",
+                            "import-filtered": false,
+                            "export-filtered": false
+                        },
+                        {
+                            "ls-type": 10,
+                            "adv-rtr-id": "10.10.10.20",
+                            "ls-id": "1.0.0.1",
+                            "sequence-nr": 2147483650,
+                            "age": 1087,
+                            "checksum": 23693,
+                            "known-type": true,
+                            "advertisement": "0x043f020a010000010a0a0a14800000025c8d001c000100040a0a0a14",
+                            "import-filtered": false,
+                            "export-filtered": false
+                        },
+                        {
+                            "ls-type": 10,
+                            "adv-rtr-id": "10.10.10.20",
+                            "ls-id": "1.0.0.2",
+                            "sequence-nr": 2147483649,
+                            "age": 1068,
+                            "checksum": 52523,
+                            "known-type": true,
+                            "advertisement": "0x042c020a010000020a0a0a1480000001cd2b007c000200640001000101000000000200040a0a0a0100030004ac100a0900040004ac100a08000500040000000100060004503a43b700070004503a43b700080020503a43b7503a43b7503a43b7503a43b7503a43b7503a43b7503a43b7503a43b70009000400000000",
+                            "import-filtered": false,
+                            "export-filtered": false
+                        },
+                        {
+                            "ls-type": 10,
+                            "adv-rtr-id": "10.10.10.20",
+                            "ls-id": "1.0.0.3",
+                            "sequence-nr": 2147483649,
+                            "age": 1068,
+                            "checksum": 16578,
+                            "known-type": true,
+                            "advertisement": "0x042c020a010000030a0a0a148000000140c2007c000200640001000101000000000200040a0a0a0200030004ac100a0300040004ac100a02000500040000000100060004503a43b700070004503a43b700080020503a43b7503a43b7503a43b7503a43b7503a43b7503a43b7503a43b7503a43b70009000400000000",
+                            "import-filtered": false,
+                            "export-filtered": false
+                        },
+                        {
+                            "ls-type": 10,
+                            "adv-rtr-id": "10.10.10.20",
+                            "ls-id": "1.0.0.4",
+                            "sequence-nr": 2147483649,
+                            "age": 1068,
+                            "checksum": 63221,
+                            "known-type": true,
+                            "advertisement": "0x042c020a010000040a0a0a1480000001f6f5007c000200640001000101000000000200040a0a0a0300030004ac100a0d00040004ac100a0c000500040000000100060004503a43b700070004503a43b700080020503a43b7503a43b7503a43b7503a43b7503a43b7503a43b7503a43b7503a43b70009000400000000",
+                            "import-filtered": false,
+                            "export-filtered": false
+                        },
+                        {
+                            "ls-type": 10,
+                            "adv-rtr-id": "10.10.10.20",
+                            "ls-id": "1.0.0.5",
+                            "sequence-nr": 2147483649,
+                            "age": 1068,
+                            "checksum": 29061,
+                            "known-type": true,
+                            "advertisement": "0x042c020a010000050a0a0a14800000017185007c000200640001000101000000000200040a0a0a0400030004ac100a0600040004ac100a07000500040000000100060004503a43b700070004503a43b700080020503a43b7503a43b7503a43b7503a43b7503a43b7503a43b7503a43b7503a43b70009000400000000",
+                            "import-filtered": false,
+                            "export-filtered": false
+                        }
+                    ]
+                }
+            ],
+            "lfa-coverage": [
+                {
+                    "area-id": "0.0.0.0",
+                    "nodes-covered": 0,
+                    "nodes-total": 0,
+                    "nodes-coverage": 0,
+                    "pfx-covered": 0,
+                    "pfx-total": 0,
+                    "pfx-coverage": 0
+                }
+            ],
+            "route": [
+                {
+                    "route-type": "network",
+                    "destination": "10.10.10.1\/32",
+                    "area": "0.0.0.0",
+                    "path-type": "intra-area",
+                    "dest-type": "host",
+                    "rtm-status": "success",
+                    "cost": 2,
+                    "type2-cost": 0,
+                    "next-hop": [
+                        {
+                            "ecmp-index": 1,
+                            "type": "ip",
+                            "ip-address": "172.16.10.11",
+                            "interface": "To-P1",
+                            "area": "0.0.0.0",
+                            "rtm-status": "success"
+                        }
+                    ]
+                },
+                {
+                    "route-type": "network",
+                    "destination": "10.10.10.2\/32",
+                    "area": "0.0.0.0",
+                    "path-type": "intra-area",
+                    "dest-type": "host",
+                    "rtm-status": "failed",
+                    "cost": 0,
+                    "type2-cost": 0,
+                    "next-hop": [
+                        {
+                            "ecmp-index": 1,
+                            "type": "direct",
+                            "interface": "system",
+                            "area": "0.0.0.0",
+                            "rtm-status": "success"
+                        }
+                    ]
+                },
+                {
+                    "route-type": "network",
+                    "destination": "10.10.10.3\/32",
+                    "area": "0.0.0.0",
+                    "path-type": "intra-area",
+                    "dest-type": "host",
+                    "rtm-status": "success",
+                    "cost": 2,
+                    "type2-cost": 0,
+                    "next-hop": [
+                        {
+                            "ecmp-index": 1,
+                            "type": "ip",
+                            "ip-address": "172.16.10.11",
+                            "interface": "To-P1",
+                            "area": "0.0.0.0",
+                            "rtm-status": "success"
+                        }
+                    ]
+                },
+                {
+                    "route-type": "network",
+                    "destination": "10.10.10.4\/32",
+                    "area": "0.0.0.0",
+                    "path-type": "intra-area",
+                    "dest-type": "host",
+                    "rtm-status": "success",
+                    "cost": 2,
+                    "type2-cost": 0,
+                    "next-hop": [
+                        {
+                            "ecmp-index": 1,
+                            "type": "ip",
+                            "ip-address": "172.16.10.11",
+                            "interface": "To-P1",
+                            "area": "0.0.0.0",
+                            "rtm-status": "success"
+                        }
+                    ]
+                },
+                {
+                    "route-type": "network",
+                    "destination": "10.10.10.10\/32",
+                    "area": "0.0.0.0",
+                    "path-type": "intra-area",
+                    "dest-type": "host",
+                    "rtm-status": "success",
+                    "cost": 1,
+                    "type2-cost": 0,
+                    "next-hop": [
+                        {
+                            "ecmp-index": 1,
+                            "type": "ip",
+                            "ip-address": "172.16.10.11",
+                            "interface": "To-P1",
+                            "area": "0.0.0.0",
+                            "rtm-status": "success"
+                        }
+                    ]
+                },
+                {
+                    "route-type": "network",
+                    "destination": "10.10.10.20\/32",
+                    "area": "0.0.0.0",
+                    "path-type": "intra-area",
+                    "dest-type": "host",
+                    "rtm-status": "success",
+                    "cost": 1,
+                    "type2-cost": 0,
+                    "next-hop": [
+                        {
+                            "ecmp-index": 1,
+                            "type": "ip",
+                            "ip-address": "172.16.10.3",
+                            "interface": "To-P2",
+                            "area": "0.0.0.0",
+                            "rtm-status": "success"
+                        }
+                    ]
+                },
+                {
+                    "route-type": "network",
+                    "destination": "172.16.10.0\/31",
+                    "area": "0.0.0.0",
+                    "path-type": "intra-area",
+                    "dest-type": "stub",
+                    "rtm-status": "success",
+                    "cost": 2,
+                    "type2-cost": 0,
+                    "next-hop": [
+                        {
+                            "ecmp-index": 1,
+                            "type": "ip",
+                            "ip-address": "172.16.10.11",
+                            "interface": "To-P1",
+                            "area": "0.0.0.0",
+                            "rtm-status": "success"
+                        }
+                    ]
+                },
+                {
+                    "route-type": "network",
+                    "destination": "172.16.10.2\/31",
+                    "area": "0.0.0.0",
+                    "path-type": "intra-area",
+                    "dest-type": "stub",
+                    "rtm-status": "failed",
+                    "cost": 1,
+                    "type2-cost": 0,
+                    "next-hop": [
+                        {
+                            "ecmp-index": 1,
+                            "type": "direct",
+                            "interface": "To-P2",
+                            "area": "0.0.0.0",
+                            "rtm-status": "success"
+                        }
+                    ]
+                },
+                {
+                    "route-type": "network",
+                    "destination": "172.16.10.4\/31",
+                    "area": "0.0.0.0",
+                    "path-type": "intra-area",
+                    "dest-type": "stub",
+                    "rtm-status": "success",
+                    "cost": 2,
+                    "type2-cost": 0,
+                    "next-hop": [
+                        {
+                            "ecmp-index": 1,
+                            "type": "ip",
+                            "ip-address": "172.16.10.11",
+                            "interface": "To-P1",
+                            "area": "0.0.0.0",
+                            "rtm-status": "success"
+                        }
+                    ]
+                },
+                {
+                    "route-type": "network",
+                    "destination": "172.16.10.6\/31",
+                    "area": "0.0.0.0",
+                    "path-type": "intra-area",
+                    "dest-type": "stub",
+                    "rtm-status": "success",
+                    "cost": 2,
+                    "type2-cost": 0,
+                    "next-hop": [
+                        {
+                            "ecmp-index": 1,
+                            "type": "ip",
+                            "ip-address": "172.16.10.3",
+                            "interface": "To-P2",
+                            "area": "0.0.0.0",
+                            "rtm-status": "success"
+                        }
+                    ]
+                },
+                {
+                    "route-type": "network",
+                    "destination": "172.16.10.8\/31",
+                    "area": "0.0.0.0",
+                    "path-type": "intra-area",
+                    "dest-type": "stub",
+                    "rtm-status": "success",
+                    "cost": 2,
+                    "type2-cost": 0,
+                    "next-hop": [
+                        {
+                            "ecmp-index": 1,
+                            "type": "ip",
+                            "ip-address": "172.16.10.3",
+                            "interface": "To-P2",
+                            "area": "0.0.0.0",
+                            "rtm-status": "success"
+                        }
+                    ]
+                },
+                {
+                    "route-type": "network",
+                    "destination": "172.16.10.10\/31",
+                    "area": "0.0.0.0",
+                    "path-type": "intra-area",
+                    "dest-type": "stub",
+                    "rtm-status": "failed",
+                    "cost": 1,
+                    "type2-cost": 0,
+                    "next-hop": [
+                        {
+                            "ecmp-index": 1,
+                            "type": "direct",
+                            "interface": "To-P1",
+                            "area": "0.0.0.0",
+                            "rtm-status": "success"
+                        }
+                    ]
+                },
+                {
+                    "route-type": "network",
+                    "destination": "172.16.10.12\/31",
+                    "area": "0.0.0.0",
+                    "path-type": "intra-area",
+                    "dest-type": "stub",
+                    "rtm-status": "success",
+                    "cost": 2,
+                    "type2-cost": 0,
+                    "next-hop": [
+                        {
+                            "ecmp-index": 1,
+                            "type": "ip",
+                            "ip-address": "172.16.10.3",
+                            "interface": "To-P2",
+                            "area": "0.0.0.0",
+                            "rtm-status": "success"
+                        }
+                    ]
+                },
+                {
+                    "route-type": "network",
+                    "destination": "172.16.10.14\/31",
+                    "area": "0.0.0.0",
+                    "path-type": "intra-area",
+                    "dest-type": "stub",
+                    "rtm-status": "success",
+                    "cost": 2,
+                    "type2-cost": 0,
+                    "next-hop": [
+                        {
+                            "ecmp-index": 1,
+                            "type": "ip",
+                            "ip-address": "172.16.10.11",
+                            "interface": "To-P1",
+                            "area": "0.0.0.0",
+                            "rtm-status": "success"
+                        }
+                    ]
+                },
+                {
+                    "route-type": "router",
+                    "destination": "10.10.10.1\/32",
+                    "area": "0.0.0.0",
+                    "path-type": "intra-area",
+                    "dest-type": "router",
+                    "rtm-status": "not-reported",
+                    "cost": 2,
+                    "type2-cost": 0,
+                    "next-hop": [
+                        {
+                            "ecmp-index": 1,
+                            "type": "ip",
+                            "ip-address": "172.16.10.11",
+                            "interface": "To-P1",
+                            "area": "0.0.0.0",
+                            "rtm-status": "success"
+                        }
+                    ]
+                },
+                {
+                    "route-type": "router",
+                    "destination": "10.10.10.3\/32",
+                    "area": "0.0.0.0",
+                    "path-type": "intra-area",
+                    "dest-type": "router",
+                    "rtm-status": "not-reported",
+                    "cost": 2,
+                    "type2-cost": 0,
+                    "next-hop": [
+                        {
+                            "ecmp-index": 1,
+                            "type": "ip",
+                            "ip-address": "172.16.10.11",
+                            "interface": "To-P1",
+                            "area": "0.0.0.0",
+                            "rtm-status": "success"
+                        }
+                    ]
+                },
+                {
+                    "route-type": "router",
+                    "destination": "10.10.10.4\/32",
+                    "area": "0.0.0.0",
+                    "path-type": "intra-area",
+                    "dest-type": "router",
+                    "rtm-status": "not-reported",
+                    "cost": 2,
+                    "type2-cost": 0,
+                    "next-hop": [
+                        {
+                            "ecmp-index": 1,
+                            "type": "ip",
+                            "ip-address": "172.16.10.11",
+                            "interface": "To-P1",
+                            "area": "0.0.0.0",
+                            "rtm-status": "success"
+                        }
+                    ]
+                },
+                {
+                    "route-type": "router",
+                    "destination": "10.10.10.10\/32",
+                    "area": "0.0.0.0",
+                    "path-type": "intra-area",
+                    "dest-type": "router",
+                    "rtm-status": "not-reported",
+                    "cost": 1,
+                    "type2-cost": 0,
+                    "next-hop": [
+                        {
+                            "ecmp-index": 1,
+                            "type": "ip",
+                            "ip-address": "172.16.10.11",
+                            "interface": "To-P1",
+                            "area": "0.0.0.0",
+                            "rtm-status": "success"
+                        }
+                    ]
+                },
+                {
+                    "route-type": "router",
+                    "destination": "10.10.10.20\/32",
+                    "area": "0.0.0.0",
+                    "path-type": "intra-area",
+                    "dest-type": "router",
+                    "rtm-status": "not-reported",
+                    "cost": 1,
+                    "type2-cost": 0,
+                    "next-hop": [
+                        {
+                            "ecmp-index": 1,
+                            "type": "ip",
+                            "ip-address": "172.16.10.3",
+                            "interface": "To-P2",
+                            "area": "0.0.0.0",
+                            "rtm-status": "success"
+                        }
+                    ]
+                }
+            ],
+            "hostname": [
+                {
+                    "router-id": "10.10.10.1"
+                },
+                {
+                    "router-id": "10.10.10.2"
+                },
+                {
+                    "router-id": "10.10.10.3"
+                },
+                {
+                    "router-id": "10.10.10.4"
+                },
+                {
+                    "router-id": "10.10.10.10"
+                },
+                {
+                    "router-id": "10.10.10.20"
+                }
+            ]
+        }
+    ]
+}
