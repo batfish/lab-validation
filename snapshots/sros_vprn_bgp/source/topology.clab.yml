@@ -1,8 +1,8 @@
 # VPRN L3VPN with full RD/RT (MP-BGP vpn-ipv4): two Nokia SR-SIM PEs.
 #
-# Heaviest ladder rung: a real MPLS L3VPN between two SR-OS PEs, validating
+# A real MPLS L3VPN between two SR-OS PEs, validating
 # route-distinguisher + route-target (vrf-target) import/export end to end —
-# the part of multi-VRF that the L7 loopback-only VPRN lab did not exercise.
+# the part of multi-VRF that the loopback-only sros_vprn lab did not exercise.
 #
 # Underlay (router "Base"): OSPF area 0 for PE-PE loopback reachability, LDP
 # for MPLS transport, and an iBGP session between system loopbacks carrying the

@@ -1,6 +1,6 @@
-# L7 — Multi-VRF (VPRN): single Nokia SR-SIM.
+# Multi-VRF (VPRN): single Nokia SR-SIM.
 #
-# Climbs the SR-OS ladder rung L7 (P8-LADDER.md): r1 has the Base router plus a
+# r1 has the Base router plus a
 # VPRN service "red" with its own loopback interface in a separate VRF. Validates
 # VRF separation — the VPRN's 172.16.0.1/32 is in the "red" VRF, not in Base, and
 # Base's routes are not in red.

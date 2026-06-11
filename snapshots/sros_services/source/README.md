@@ -36,8 +36,7 @@ All SR-SIM configs are the upstream Nokia startup configs verbatim, with one
 addition: a materialized `system security` block (AAA profiles + SSH cipher
 list). SR-SIM auto-generates SSH defaults whose ciphers modern paramiko
 rejects; configuring any `system security` subtree replaces those defaults, so
-the block is required for SSH collection (and carries the admin user). See
-[WORKLOG] for the cipher-negotiation failure this fixes.
+the block is required for SSH collection (and carries the admin user).
 
 ## Batfish coverage: modeled underlay vs. unmodeled service overlay
 

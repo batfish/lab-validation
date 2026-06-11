@@ -1,13 +1,13 @@
-# L8 — Deliberate misconfigurations: Nokia SR-SIM (SR OS) + Arista cEOS.
+# Deliberate misconfigurations: Nokia SR-SIM (SR OS) + Arista cEOS.
 #
-# Climbs the SR-OS ladder rung L8 (P8-LADDER.md): the eBGP topology, but r1 is
+# The eBGP topology, but r1 is
 # deliberately misconfigured with an AS mismatch — r1's ebgp group sets
 # peer-as 65099, but r2 is AS 65002 — so the eBGP session never establishes
 # (the device sits in Connect/Active). r1's import/export reference valid
 # policies, so the only thing keeping the routes from flowing is the dead
 # session.
 #
-# NOTE: the rung was originally specced to also carry an undefined-policy
+# NOTE: this lab was originally specced to also carry an undefined-policy
 # reference, but SR-OS enforces the policy leafref at commit and REJECTS a
 # reference to a non-existent policy-statement (MGMT_CORE #224), aborting the
 # whole startup config. So a committed config cannot contain an undefined
