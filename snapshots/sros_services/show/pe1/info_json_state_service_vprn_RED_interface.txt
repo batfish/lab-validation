@@ -1,2 +1,497 @@
 {
+    "nokia-state:interface": [
+        {
+            "interface-name": "to-cea",
+            "if-index": 6,
+            "system-if-index": 259,
+            "oper-state": "up",
+            "mcast-net-domain-egr": "not-applicable",
+            "protocol": "",
+            "oper-ip-mtu": 4982,
+            "creation-origin": "manual",
+            "last-oper-change": "2026-06-11T17:13:02.3+00:00",
+            "ipv4": {
+                "oper-state": "up",
+                "icmp": {
+                    "statistics": {
+                        "icmp-in-msgs": 0,
+                        "icmp-in-errors": 0,
+                        "icmp-in-dest-unreachables": 0,
+                        "icmp-in-redirects": 0,
+                        "icmp-in-echos": 0,
+                        "icmp-in-echo-replies": 0,
+                        "icmp-in-time-exceeds": 0,
+                        "icmp-in-src-quenches": 0,
+                        "icmp-in-timestamps": 0,
+                        "icmp-in-timestamp-replies": 0,
+                        "icmp-in-address-masks": 0,
+                        "icmp-in-address-mask-replies": 0,
+                        "icmp-in-parm-problems": 0,
+                        "icmp-out-msgs": 0,
+                        "icmp-out-errors": 0,
+                        "icmp-out-dest-unreachables": 0,
+                        "icmp-out-redirects": 0,
+                        "icmp-out-echos": 0,
+                        "icmp-out-echo-replies": 0,
+                        "icmp-out-time-exceeds": 0,
+                        "icmp-out-src-quenches": 0,
+                        "icmp-out-timestamps": 0,
+                        "icmp-out-timestamp-replies": 0,
+                        "icmp-out-address-masks": 0,
+                        "icmp-out-address-mask-replies": 0,
+                        "icmp-out-parm-problems": 0,
+                        "icmp-out-discards": 0
+                    }
+                },
+                "primary": {
+                    "oper-address": "192.168.30.254",
+                    "creation-origin": "manual"
+                },
+                "dhcp": {
+                    "lease-populate": {
+                        "current-lease-states": 0
+                    },
+                    "statistics": {
+                        "total-rx-packets": {
+                            "received": 0,
+                            "malformed": 0,
+                            "untrusted": 0
+                        },
+                        "total-tx-packets": {
+                            "transmitted": 0
+                        },
+                        "client-packets": {
+                            "dropped": 0,
+                            "relayed": 0,
+                            "snooped": 0,
+                            "proxied": {
+                                "radius": 0,
+                                "lease-split": 0
+                            }
+                        },
+                        "server-packets": {
+                            "dropped": 0,
+                            "relayed": 0,
+                            "snooped": 0
+                        },
+                        "spoofed-packets": {
+                            "release": 0,
+                            "force-renews": 0
+                        }
+                    }
+                },
+                "statistics": {
+                    "out-packets": "0",
+                    "out-octets": "0",
+                    "out-discard-packets": "0",
+                    "out-discard-octets": "0",
+                    "in-packets": "0",
+                    "in-octets": "0",
+                    "urpf-check-fail-packets": "0",
+                    "urpf-check-fail-octets": "0",
+                    "out-discard-dbcast-packets": "0",
+                    "out-discard-dbcast-octets": "0",
+                    "in-ip-helper-redirects-packets": "0",
+                    "in-ip-helper-redirects-octets": "0"
+                }
+            },
+            "sap": [
+                {
+                    "sap-id": "1\/1\/c10\/1:300",
+                    "oper-state": "up",
+                    "oper-flags": "",
+                    "mirror-state": "disabled",
+                    "template-used": "",
+                    "oper-dist-cpu-prot-policy": "_default-access-policy",
+                    "statistics": {
+                        "authentication": {
+                            "discarded-packets": 0,
+                            "success-packets": 0
+                        }
+                    },
+                    "ingress": {
+                        "qos": {
+                            "sap-ingress": {
+                                "forwarding-engine": {
+                                    "statistics": {
+                                        "dropped-packets": "6",
+                                        "dropped-octets": "468",
+                                        "received-valid-packets": "0",
+                                        "received-valid-octets": "0",
+                                        "high-priority-offered-packets": "0",
+                                        "high-priority-offered-octets": "0",
+                                        "low-priority-offered-packets": "0",
+                                        "low-priority-offered-octets": "0",
+                                        "uncolor-offered-packets": "0",
+                                        "uncolor-offered-octets": "0",
+                                        "managed-offered-packets": "0",
+                                        "managed-offered-octets": "0",
+                                        "aggregate-offered-packets": "0",
+                                        "aggregate-offered-octets": "0",
+                                        "last-cleared-time": "2026-06-11T17:12:47.0+00:00"
+                                    }
+                                },
+                                "traffic-manager": {
+                                    "statistics": {
+                                        "cpm-packets": "0",
+                                        "cpm-octets": "0",
+                                        "high-priority-dropped-packets": "0",
+                                        "high-priority-dropped-octets": "0",
+                                        "low-priority-dropped-packets": "0",
+                                        "low-priority-dropped-octets": "0",
+                                        "in-profile-forwarded-packets": "0",
+                                        "in-profile-forwarded-octets": "0",
+                                        "out-profile-forwarded-packets": "0",
+                                        "out-profile-forwarded-octets": "0",
+                                        "aggregate-forwarded-packets": "0",
+                                        "aggregate-forwarded-octets": "0",
+                                        "aggregate-dropped-packets": "0",
+                                        "aggregate-dropped-octets": "0",
+                                        "last-cleared-time": "2026-06-11T17:12:47.0+00:00"
+                                    }
+                                },
+                                "queue": [
+                                    {
+                                        "queue-id": 1,
+                                        "hardware-queue": [
+                                            {
+                                                "source-card": 1,
+                                                "source-fp": 1,
+                                                "source-tap-offset": 1,
+                                                "source-port": "1\/1\/c10\/1",
+                                                "dest-card": 1,
+                                                "dest-fp": 1,
+                                                "dest-tap-offset": 1,
+                                                "adapted-admin-mbs": "12582912",
+                                                "adapted-admin-cbs": 0,
+                                                "operational-mbs": "12582912",
+                                                "depth": "0",
+                                                "operational-cir": "0",
+                                                "operational-fir": "0",
+                                                "operational-pir": "max",
+                                                "exceed-droptail": "9961472",
+                                                "high-droptail": "12582912",
+                                                "high-plus-droptail": "12582912",
+                                                "low-droptail": "11272192",
+                                                "operational-exceed-burst": "max",
+                                                "operational-max-transmit-data-size": "8192",
+                                                "operational-burst-fir": "0",
+                                                "local-parent-rate": "0"
+                                            }
+                                        ],
+                                        "statistics": {
+                                            "unicast-priority": {
+                                                "high-priority-offered-packets": "0",
+                                                "high-priority-offered-octets": "0",
+                                                "low-priority-offered-packets": "0",
+                                                "low-priority-offered-octets": "0",
+                                                "high-priority-dropped-packets": "0",
+                                                "high-priority-dropped-octets": "0",
+                                                "low-priority-dropped-packets": "0",
+                                                "low-priority-dropped-octets": "0",
+                                                "in-profile-forwarded-packets": "0",
+                                                "in-profile-forwarded-octets": "0",
+                                                "out-profile-forwarded-packets": "0",
+                                                "out-profile-forwarded-octets": "0"
+                                            }
+                                        }
+                                    },
+                                    {
+                                        "queue-id": 2,
+                                        "hardware-queue": [
+                                            {
+                                                "source-card": 1,
+                                                "source-fp": 1,
+                                                "source-tap-offset": 1,
+                                                "source-port": "1\/1\/c10\/1",
+                                                "dest-card": 1,
+                                                "dest-fp": 1,
+                                                "dest-tap-offset": 1,
+                                                "adapted-admin-mbs": "65536",
+                                                "adapted-admin-cbs": 16384,
+                                                "operational-mbs": "65536",
+                                                "depth": "0",
+                                                "operational-cir": "100",
+                                                "operational-fir": "0",
+                                                "operational-pir": "100",
+                                                "exceed-droptail": "52224",
+                                                "high-droptail": "65536",
+                                                "high-plus-droptail": "65536",
+                                                "low-droptail": "58880",
+                                                "operational-exceed-burst": "512",
+                                                "operational-max-transmit-data-size": "8192",
+                                                "operational-burst-fir": "0",
+                                                "local-parent-rate": "0"
+                                            }
+                                        ],
+                                        "statistics": {
+                                            "unicast-priority": {
+                                                "high-priority-offered-packets": "0",
+                                                "high-priority-offered-octets": "0",
+                                                "low-priority-offered-packets": "0",
+                                                "low-priority-offered-octets": "0",
+                                                "high-priority-dropped-packets": "0",
+                                                "high-priority-dropped-octets": "0",
+                                                "low-priority-dropped-packets": "0",
+                                                "low-priority-dropped-octets": "0",
+                                                "in-profile-forwarded-packets": "0",
+                                                "in-profile-forwarded-octets": "0",
+                                                "out-profile-forwarded-packets": "0",
+                                                "out-profile-forwarded-octets": "0"
+                                            }
+                                        }
+                                    },
+                                    {
+                                        "queue-id": 11,
+                                        "hardware-queue": [
+                                            {
+                                                "source-card": 1,
+                                                "source-fp": 1,
+                                                "source-tap-offset": 1,
+                                                "source-port": "1\/1\/c10\/1",
+                                                "dest-card": 0,
+                                                "dest-fp": 0,
+                                                "dest-tap-offset": 0,
+                                                "adapted-admin-mbs": "12582912",
+                                                "adapted-admin-cbs": 0,
+                                                "operational-mbs": "12582912",
+                                                "depth": "0",
+                                                "operational-cir": "0",
+                                                "operational-fir": "0",
+                                                "operational-pir": "max",
+                                                "exceed-droptail": "9961472",
+                                                "high-droptail": "12582912",
+                                                "high-plus-droptail": "12582912",
+                                                "low-droptail": "11272192",
+                                                "operational-exceed-burst": "max",
+                                                "operational-max-transmit-data-size": "8192",
+                                                "operational-burst-fir": "0",
+                                                "local-parent-rate": "0"
+                                            }
+                                        ],
+                                        "statistics": {
+                                            "multipoint-priority": {
+                                                "combined-offered-packets": "0",
+                                                "combined-offered-octets": "0",
+                                                "managed-offered-packets": "0",
+                                                "managed-offered-octets": "0",
+                                                "high-priority-dropped-packets": "0",
+                                                "high-priority-dropped-octets": "0",
+                                                "low-priority-dropped-packets": "0",
+                                                "low-priority-dropped-octets": "0",
+                                                "in-profile-forwarded-packets": "0",
+                                                "in-profile-forwarded-octets": "0",
+                                                "out-profile-forwarded-packets": "0",
+                                                "out-profile-forwarded-octets": "0"
+                                            }
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    },
+                    "egress": {
+                        "qos": {
+                            "sap-egress": {
+                                "traffic-manager": {
+                                    "statistics": {
+                                        "in-inplus-profile-dropped-packets": "0",
+                                        "in-inplus-profile-dropped-octets": "0",
+                                        "out-exceed-profile-dropped-packets": "0",
+                                        "out-exceed-profile-dropped-octets": "0",
+                                        "in-inplus-profile-forwarded-packets": "2",
+                                        "in-inplus-profile-forwarded-octets": "136",
+                                        "out-exceed-profile-forwarded-packets": "0",
+                                        "out-exceed-profile-forwarded-octets": "0",
+                                        "aggregate-forwarded-packets": "2",
+                                        "aggregate-forwarded-octets": "136",
+                                        "aggregate-dropped-packets": "0",
+                                        "aggregate-dropped-octets": "0",
+                                        "last-cleared-time": "2026-06-11T17:12:47.0+00:00"
+                                    }
+                                },
+                                "queue": [
+                                    {
+                                        "queue-id": 1,
+                                        "hardware-queue": [
+                                            {
+                                                "source-card": 1,
+                                                "source-fp": 1,
+                                                "source-port": "1\/1\/c10\/1",
+                                                "adapted-admin-mbs": 12582912,
+                                                "exceed-droptail": "9961472",
+                                                "high-droptail": "12582912",
+                                                "high-plus-droptail": "12582912",
+                                                "low-droptail": "11272192",
+                                                "operational-cbs": 0,
+                                                "operational-cir": "0",
+                                                "operational-mbs": 12582912,
+                                                "operational-pir": "max",
+                                                "depth": "0",
+                                                "operational-burst-limit": 4294967295,
+                                                "operational-exceed-burst": "max",
+                                                "operational-max-transmit-data-size": "8192",
+                                                "operational-burst-fir": "0",
+                                                "orphan": false,
+                                                "local-parent-rate": "0",
+                                                "exceed-slope": {
+                                                    "current-probability": 0
+                                                },
+                                                "high-slope": {
+                                                    "current-probability": 0
+                                                },
+                                                "high-plus-slope": {
+                                                    "current-probability": 0
+                                                },
+                                                "low-slope": {
+                                                    "current-probability": 0
+                                                }
+                                            }
+                                        ],
+                                        "statistics": {
+                                            "profile": {
+                                                "in-inplus-profile-forwarded-packets": "2",
+                                                "in-inplus-profile-forwarded-octets": "136",
+                                                "out-exceed-profile-forwarded-packets": "0",
+                                                "out-exceed-profile-forwarded-octets": "0",
+                                                "in-inplus-profile-dropped-packets": "0",
+                                                "in-inplus-profile-dropped-octets": "0",
+                                                "out-exceed-profile-dropped-packets": "0",
+                                                "out-exceed-profile-dropped-octets": "0"
+                                            }
+                                        }
+                                    },
+                                    {
+                                        "queue-id": 3,
+                                        "hardware-queue": [
+                                            {
+                                                "source-card": 1,
+                                                "source-fp": 1,
+                                                "source-port": "1\/1\/c10\/1",
+                                                "adapted-admin-mbs": 65536,
+                                                "exceed-droptail": "52224",
+                                                "high-droptail": "65536",
+                                                "high-plus-droptail": "65536",
+                                                "low-droptail": "58880",
+                                                "operational-cbs": 16384,
+                                                "operational-cir": "100",
+                                                "operational-mbs": 65536,
+                                                "operational-pir": "100",
+                                                "depth": "0",
+                                                "operational-burst-limit": 512,
+                                                "operational-exceed-burst": "512",
+                                                "operational-max-transmit-data-size": "8192",
+                                                "operational-burst-fir": "0",
+                                                "orphan": false,
+                                                "local-parent-rate": "0",
+                                                "exceed-slope": {
+                                                    "current-probability": 0
+                                                },
+                                                "high-slope": {
+                                                    "current-probability": 0
+                                                },
+                                                "high-plus-slope": {
+                                                    "current-probability": 0
+                                                },
+                                                "low-slope": {
+                                                    "current-probability": 0
+                                                }
+                                            }
+                                        ],
+                                        "statistics": {
+                                            "profile": {
+                                                "in-inplus-profile-forwarded-packets": "0",
+                                                "in-inplus-profile-forwarded-octets": "0",
+                                                "out-exceed-profile-forwarded-packets": "0",
+                                                "out-exceed-profile-forwarded-octets": "0",
+                                                "in-inplus-profile-dropped-packets": "0",
+                                                "in-inplus-profile-dropped-octets": "0",
+                                                "out-exceed-profile-dropped-packets": "0",
+                                                "out-exceed-profile-dropped-octets": "0"
+                                            }
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                }
+            ],
+            "ipv6": {
+                "oper-state": "down",
+                "down-reason": "protocol-down",
+                "icmp6": {
+                    "statistics": {
+                        "icmp6-in-msgs": 0,
+                        "icmp6-in-errors": 0,
+                        "icmp6-in-dest-unreachables": 0,
+                        "icmp6-in-admin-prohibs": 0,
+                        "icmp6-in-time-exceeds": 0,
+                        "icmp6-in-parm-problems": 0,
+                        "icmp6-in-pkt-too-bigs": 0,
+                        "icmp6-in-echos": 0,
+                        "icmp6-in-echo-replies": 0,
+                        "icmp6-in-rtr-solicits": 0,
+                        "icmp6-in-rtr-advertisements": 0,
+                        "icmp6-in-nbr-solicits": 0,
+                        "icmp6-in-nbr-advertisements": 0,
+                        "icmp6-in-redirects": 0,
+                        "icmp6-in-grp-memb-queries": 0,
+                        "icmp6-in-grp-memb-repsonses": 0,
+                        "icmp6-in-grp-memb-reductions": 0,
+                        "icmp6-out-msgs": 0,
+                        "icmp6-out-errors": 0,
+                        "icmp6-out-dest-unreachables": 0,
+                        "icmp6-out-admin-prohibs": 0,
+                        "icmp6-out-time-exceeds": 0,
+                        "icmp6-out-parm-problems": 0,
+                        "icmp6-out-pkt-too-bigs": 0,
+                        "icmp6-out-echos": 0,
+                        "icmp6-out-echo-replies": 0,
+                        "icmp6-out-rtr-solicits": 0,
+                        "icmp6-out-rtr-advertisements": 0,
+                        "icmp6-out-nbr-solicits": 0,
+                        "icmp6-out-nbr-advertisements": 0,
+                        "icmp6-out-redirects": 0,
+                        "icmp6-out-grp-memb-queries": 0,
+                        "icmp6-out-grp-memb-responses": 0,
+                        "icmp6-out-grp-memb-reductions": 0,
+                        "icmp6-out-discards": 0
+                    }
+                },
+                "dhcp6": {
+                    "relay": {
+                        "oper-state": "down",
+                        "current-lease-states": 0,
+                        "server-lease-states": 0
+                    },
+                    "server": {
+                        "current-server-lease-states": 0
+                    }
+                },
+                "statistics": {
+                    "out-packets": "0",
+                    "out-octets": "0",
+                    "out-discard-packets": "0",
+                    "out-discard-octets": "0",
+                    "in-packets": "0",
+                    "in-octets": "0",
+                    "urpf-check-fail-packets": "0",
+                    "urpf-check-fail-octets": "0"
+                }
+            },
+            "statistics": {
+                "ip": {
+                    "out-packets": "0",
+                    "out-octets": "0",
+                    "out-discard-packets": "0",
+                    "out-discard-octets": "0",
+                    "in-packets": "0",
+                    "in-octets": "0",
+                    "urpf-check-fail-packets": "0",
+                    "urpf-check-fail-octets": "0"
+                }
+            }
+        }
+    ]
 }

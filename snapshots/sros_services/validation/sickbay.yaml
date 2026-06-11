@@ -17,9 +17,18 @@
 #    (https://github.com/batfish/batfish/issues/9996). pe1/pe3 also exhibit the
 #    ECMP gap, but #9991/#9996 already cover their whole-test sickbay.
 #
+# 3. VPRN interface name reused across VRFs (pe1/pe3). pe1 configures interface
+#    "to-cea" in both the RED and BLUE VPRNs (pe3: "to-cez"); the device has it
+#    in both VRFs with distinct addresses, but Batfish keys interfaces by name
+#    per node and keeps only the first-configured one (BLUE), dropping the RED
+#    instance. So test_interface_properties for pe1/pe3 sees a device interface
+#    Batfish does not model. Tracked:
+#    https://github.com/batfish/lab-validation/issues/203
+#
 # The underlay control plane (interfaces, OSPF/IS-IS adjacencies, the iBGP mesh,
-# config-format) validates on all six nodes; only the main-RIB route comparison
-# is sickbay'd, and only for the reasons above.
+# config-format) validates on all six nodes. On pe1/pe3 the main-RIB route
+# comparison (#9991/#9996) and the interface comparison (#203) are sickbay'd;
+# elsewhere only the main-RIB ECMP gap (#200) is.
 entries:
   - hostname: p1
     test_name: test_main_rib_routes
@@ -45,3 +54,11 @@ entries:
     test_name: test_main_rib_routes
     skip:
       reason: https://github.com/batfish/batfish/issues/9991
+  - hostname: pe1
+    test_name: test_interface_properties
+    skip:
+      reason: https://github.com/batfish/lab-validation/issues/203
+  - hostname: pe3
+    test_name: test_interface_properties
+    skip:
+      reason: https://github.com/batfish/lab-validation/issues/203
