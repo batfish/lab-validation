@@ -55,7 +55,8 @@ warnings** and `fileParseStatus` PASSED.
 | IS-IS (L2, area-address, interface metric, **system-id auto-derived from system IP**) | modeled (system-id derivation added by this lab) |
 | BGP iBGP sessions (group→neighbor inheritance, system-sourced)                        | modeled                                          |
 | Static routes (next-hop, blackhole)                                                   | modeled                                          |
-| `service vprn` → VRF (RED/BLUE), per-VRF interfaces                                   | modeled                                          |
+| `service vprn` → VRF (RED/BLUE)                                                       | modeled                                          |
+| per-VPRN interfaces with a name reused across VRFs                                    | only one VRF's copy modeled (lab-validation#203) |
 | policy-options (policy-statement, community, prefix-list)                             | modeled                                          |
 
 ### Parses but not converted — sickbay'd (the service overlay)
@@ -83,7 +84,8 @@ ground truth (the `info json /state` captures): interfaces, iBGP session state,
 and config-format on all six nodes, plus the main-RIB route comparison where it
 is not sickbay'd.
 
-- **All six nodes' interfaces, BGP sessions, and config-format validate clean.**
+- **BGP sessions and config-format validate clean on all six nodes; interfaces
+  validate clean on the four underlay-only nodes.**
 - **Main-RIB route comparison is sickbay'd on all six nodes**
   (`../validation/sickbay.yaml`), for two distinct documented reasons:
   - **IGP ECMP** (p1/p2/pe2/pe4): SR OS installs a single best path per prefix
@@ -96,3 +98,6 @@ is not sickbay'd.
     their RIBs carry bgp-vpn (MPLS L3VPN) routes (batfish/batfish#9991) and IES
     interface + SR-ISIS-tunnel static routes (batfish/batfish#9996) that the VI
     model does not reproduce.
+- **Interface comparison is sickbay'd on pe1/pe3** (batfish/lab-validation#203):
+  each reuses a VPRN interface name across the RED and BLUE VRFs (`to-cea` /
+  `to-cez`), and Batfish keeps only the first-configured VRF's copy.
