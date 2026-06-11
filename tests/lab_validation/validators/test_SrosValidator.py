@@ -573,6 +573,34 @@ def test_get_runtime_data(tmp_path) -> None:
     assert rt.interfaces["system"].bandwidth is None
 
 
+def _interface_state_json(name: str, address: str) -> str:
+    # Minimal `info json /state ... interface` payload with one L3 interface.
+    return (
+        '{"nokia-state:interface": [{'
+        f'"interface-name": "{name}", "oper-state": "up", "if-index": 5, '
+        f'"ipv4": {{"oper-state": "up", "primary": {{"oper-address": "{address}"}}}}'
+        "}]}"
+    )
+
+
+def test_parse_interfaces_qualifies_reused_vprn_names(tmp_path) -> None:
+    # The same interface name in two VPRNs must yield two distinct, VRF-qualified
+    # interfaces (matching Batfish's <vrf>.<name>), not collapse to one. (#203)
+    (tmp_path / SrosValidator.INTERFACE_FILENAME).write_text(
+        _interface_state_json("system", "10.10.10.1")
+    )
+    (tmp_path / "info_json_state_service_vprn_RED_interface.txt").write_text(
+        _interface_state_json("to-cea", "192.168.30.254")
+    )
+    (tmp_path / "info_json_state_service_vprn_BLUE_interface.txt").write_text(
+        _interface_state_json("to-cea", "192.168.40.254")
+    )
+    by_name = {i.name: i for i in SrosValidator(tmp_path)._parse_interfaces()}
+    assert set(by_name) == {"system", "RED.to-cea", "BLUE.to-cea"}
+    assert by_name["RED.to-cea"].primary_address == "192.168.30.254"
+    assert by_name["BLUE.to-cea"].primary_address == "192.168.40.254"
+
+
 def test_parse_helpers_assert_on_missing_file(tmp_path) -> None:
     # The parse helpers crash (not silently degrade) when a state file is absent.
     v = SrosValidator(tmp_path)
