@@ -18,6 +18,7 @@ from collections.abc import Sequence
 from pathlib import Path
 from typing import AbstractSet, Any
 
+import attr
 from pybatfish.datamodel import (
     NextHop,
     NextHopDiscard,
@@ -332,13 +333,31 @@ class SrosValidator(VendorValidator):
         # VPRN (multi-VRF) interfaces, if collected: a file named
         # info_json_state_service_vprn_<name>_interface.txt holds the VPRN's L3
         # interfaces (same schema as Base). Batfish models them as interfaces in
-        # the VPRN's VRF; interface comparison is by name, so include them so the
-        # VPRN interfaces are validated, not flagged as extra Batfish interfaces.
+        # the VPRN's VRF; include them so the VPRN interfaces are validated, not
+        # flagged as extra Batfish interfaces.
         for vprn_path in sorted(
             self.device_path.glob("info_json_state_service_vprn_*_interface.txt")
         ):
-            interfaces.extend(parse_interface_state_json(vprn_path.read_text()))
+            interfaces.extend(self._parse_vprn_interfaces(vprn_path))
         return interfaces
+
+    @staticmethod
+    def _parse_vprn_interfaces(vprn_path: Path) -> Sequence[SrosInterface]:
+        """Parse a VPRN interface state file, qualifying each name with its VRF.
+
+        SR OS scopes interface names per router instance, so the same name (e.g.
+        ``to-cea``) can appear in two VPRNs. Batfish keys interfaces by name per
+        node, so it models a non-Base (VPRN) interface under the qualified name
+        ``<vrf>.<name>`` (see SrosConversions.viInterfaceName). Mirror that here so
+        the comparison pairs by the same name and reused names are not collapsed.
+        """
+        vrf = SrosValidator._vprn_name_from_filename(
+            vprn_path.name, suffix="_interface.txt"
+        )
+        return [
+            attr.evolve(iface, name=f"{vrf}.{iface.name}")
+            for iface in parse_interface_state_json(vprn_path.read_text())
+        ]
 
     def _parse_routes(self) -> Sequence[SrosIpRoute]:
         path = self.device_path / self.ROUTE_TABLE_FILENAME
@@ -367,8 +386,11 @@ class SrosValidator(VendorValidator):
             if_path = (
                 self.device_path / f"info_json_state_service_vprn_{vrf}_interface.txt"
             )
+            # Resolve VPRN route egress interfaces to their qualified VI names
+            # (<vrf>.<name>), matching Batfish's NextHopInterface (see
+            # _parse_vprn_interfaces).
             ifmap = (
-                self._if_index_map(parse_interface_state_json(if_path.read_text()))
+                self._if_index_map(self._parse_vprn_interfaces(if_path))
                 if if_path.is_file()
                 else {}
             )
@@ -380,10 +402,14 @@ class SrosValidator(VendorValidator):
         return {i.if_index: i.name for i in interfaces if i.if_index is not None}
 
     @staticmethod
-    def _vprn_name_from_filename(filename: str) -> str:
-        """Extract the VPRN service-name from its route-table state filename."""
+    def _vprn_name_from_filename(
+        filename: str, suffix: str = "_route-table.txt"
+    ) -> str:
+        """Extract the VPRN service-name from its per-VPRN state filename."""
         prefix = "info_json_state_service_vprn_"
-        suffix = "_route-table.txt"
+        assert filename.startswith(prefix) and filename.endswith(suffix), (
+            f"unexpected VPRN state filename: {filename}"
+        )
         return filename[len(prefix) : -len(suffix)]
 
     def _parse_bgp_routes(self) -> Sequence[SrosBgpRoute]:
