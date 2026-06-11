@@ -1,7 +1,7 @@
-# L5 — BGP policy depth: Nokia SR-SIM (SR OS) + Arista cEOS.
+# BGP policy depth: Nokia SR-SIM (SR OS) + Arista cEOS.
 #
-# Climbs the SR-OS ladder rung L5 (P8-LADDER.md): reuses the two-router eBGP
-# topology and gives r1 a richer eBGP export policy that sets community, MED
+# Reuses the two-router eBGP topology and gives r1 a richer eBGP export policy
+# that sets community, MED
 # (metric), and an as-path-prepend, plus a `through`-type prefix-list match.
 # The cEOS oracle (r2) validates the attributes that cross the eBGP session
 # (community / MED / as-path) on the routes it learns from r1, and exercises

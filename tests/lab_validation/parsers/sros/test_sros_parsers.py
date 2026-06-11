@@ -239,7 +239,7 @@ def test_parse_bgp_rib_out_carries_advertised_attributes() -> None:
     """The advertised (rib-out-post) routes carry the export-policy-set attributes
     — community, MED, prepended AS-path — joined from their attr-sets.
 
-    Uses the L5 policy lab where r1 sets community 65001:100 / MED 50 / prepend on
+    Uses the BGP-policy lab where r1 sets community 65001:100 / MED 50 / prepend on
     its system prefix and MED 200 on its loopback. This confirms communities and
     advanced BGP attributes ARE present in the SR OS bgp-rib state (on the rib-out
     view), not just observable via the cEOS peer.

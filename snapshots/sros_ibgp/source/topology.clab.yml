@@ -1,7 +1,7 @@
-# L3 — iBGP: Nokia SR-SIM + Arista cEOS + second Nokia SR-SIM.
+# iBGP: Nokia SR-SIM + Arista cEOS + second Nokia SR-SIM.
 #
-# Climbs the SR-OS ladder rung L3 (P8-LADDER.md): adds an iBGP session between
-# two SR-OS routers in AS 65001 (r1 and r3) on top of the r1<->r2 eBGP session.
+# Adds an iBGP session between two SR-OS routers in AS 65001 (r1 and r3) on top
+# of the r1<->r2 eBGP session.
 # Exercises the SR-OS iBGP default-accept path (no import policy on the iBGP
 # group) and type-internal peering, distinct from eBGP default-reject.
 #

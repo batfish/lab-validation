@@ -1,6 +1,6 @@
-# L1 — Interfaces + static routes: Nokia SR-SIM (SR OS) + Arista cEOS.
+# Interfaces + static routes: Nokia SR-SIM (SR OS) + Arista cEOS.
 #
-# Climbs the SR-OS ladder rung L1 (P8-LADDER.md): reuses the two-router eBGP
+# Reuses the two-router eBGP
 # topology and adds, on r1, a loopback interface (lo1) and two static routes
 # (one resolved via next-hop, one blackhole/discard). Validates the SR-OS
 # main-RIB static-route path end to end against device ground truth.

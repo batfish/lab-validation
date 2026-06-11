@@ -7,10 +7,9 @@ keyed by the ``nokia-state`` YANG modules, which is the SR OS analog of Junos
 ``show | display json`` — so, like the Arista validator, this is JSON-driven
 rather than CLI-text parsing.
 
-This is the first SR OS validation slice (P5-V): it covers what Batfish models
-after parse/extract/convert — interfaces, the main RIB, and the BGP RIB. SR OS
-``router "Base"`` is the main routing instance, which maps to Batfish's default
-VRF.
+It covers what Batfish models after parse/extract/convert — interfaces, the
+main RIB, and the BGP RIB. SR OS ``router "Base"`` is the main routing
+instance, which maps to Batfish's default VRF.
 """
 
 import math

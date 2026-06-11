@@ -1,6 +1,6 @@
 # ISIS single-area (L2): two Nokia SR-SIM (SR OS) routers.
 #
-# New ladder rung: IS-IS, the one IGP captured in state but not yet modeled in
+# IS-IS, the one IGP captured in state but not yet modeled in
 # Batfish (the FromProtocol enum aside). Mirrors the sros_ospf lab's two-SR-SIM
 # design (avoids cross-vendor IGP config quirks; reuses the `info json /state
 # router "Base" isis *` capture). r1 and r3 form an L2 adjacency over a

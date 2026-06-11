@@ -1,6 +1,6 @@
-# L4 — BGP route reflection: three Nokia SR-SIM routers in AS 65001.
+# BGP route reflection: three Nokia SR-SIM routers in AS 65001.
 #
-# Climbs the SR-OS ladder rung L4 (P8-LADDER.md): r1 is a route reflector with
+# r1 is a route reflector with
 # two iBGP clients (r2, r3) in one cluster. The clients peer only with r1; they
 # learn each other's system loopback via reflection through r1, even though they
 # have no direct iBGP session.
