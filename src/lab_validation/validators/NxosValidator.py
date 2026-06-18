@@ -410,6 +410,10 @@ class NxosValidator(VendorValidator):
         if nxos_protocol in ospf_sub_types and batfish_protocol in ospf_sub_types:
             return [("ospf subtype", 1.0)]
 
+        isis_sub_types = {"isisL1", "isisL2", "isisEL1", "isisEL2"}
+        if nxos_protocol in isis_sub_types and batfish_protocol in isis_sub_types:
+            return [("isis subtype", 1.0)]
+
         # Protocols are incompatible.
         return [("protocol", math.inf)]
 

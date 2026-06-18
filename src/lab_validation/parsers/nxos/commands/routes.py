@@ -80,6 +80,17 @@ OSPF_EXTENSIONS = {
     "type-2": "ospfE2",
 }
 
+# NX-OS reports the IS-IS level alongside the process tag. Batfish labels
+# IS-IS routes by level (isisL1/isisL2); a route present in both levels or
+# leaked across the L1/L2 boundary is mapped to the level it is installed
+# from (L2 for inter-area, since NX-OS leaks L1->L2 by default).
+ISIS_EXTENSIONS = {
+    "L1": "isisL1",
+    "L2": "isisL2",
+    "L1-L2": "isisL2",
+    "inter-area": "isisL2",
+}
+
 
 def _get_protocol(protocol: ParseResults) -> str:
     if protocol.am:
@@ -97,6 +108,8 @@ def _get_protocol(protocol: ParseResults) -> str:
         return "hmm"
     if protocol.hsrp:
         return "hsrp"
+    if protocol.isis:
+        return ISIS_EXTENSIONS[protocol.extension]
     if protocol.local:
         return "local"
     if protocol.ospf:

@@ -244,6 +244,33 @@ def _nxos_check_ospf(node: NodeInfo) -> bool | None:
     return True if found_any else None
 
 
+def _nxos_check_isis(node: NodeInfo) -> bool | None:
+    """Check if all ISIS adjacencies are UP via 'show isis adjacency'.
+
+    NX-OS prints one row per adjacency; the State column reads ``UP`` when the
+    adjacency is established (other values: ``INIT``, ``DOWN``). Returns None
+    when no IS-IS instance/adjacency is present.
+    """
+    try:
+        output = run_command(node, "show isis adjacency", timeout=10)
+    except Exception:
+        return False
+
+    if "ISIS process" not in output and "IS-IS process" not in output:
+        return None
+
+    found_any = False
+    for line in output.splitlines():
+        tokens = line.split()
+        # Adjacency rows carry a State token; UP means established.
+        if "UP" in (t.upper() for t in tokens):
+            found_any = True
+            continue
+        if any(t.upper() in ("INIT", "DOWN") for t in tokens):
+            return False
+    return True if found_any else None
+
+
 # ---------------------------------------------------------------------------
 # Nokia SR OS health checks
 #
@@ -374,7 +401,7 @@ def check_isis_up(node: NodeInfo) -> bool | None:
     if node.profile.name == "arista":
         return _arista_check_isis(node)
     if node.profile.name == "nx":
-        return None
+        return _nxos_check_isis(node)
     if node.profile.name == "sros":
         return _sros_check_isis(node)
     return _junos_check_isis(node)

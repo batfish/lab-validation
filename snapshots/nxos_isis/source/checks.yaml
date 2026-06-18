@@ -1,0 +1,15 @@
+# Preconditions for the NX-OS IS-IS L2 lab. The framework has no dedicated
+# IS-IS adjacency check, so we assert each router learned the other's loopback
+# via IS-IS — a learned IGP route proves the adjacency formed and SPF ran.
+
+checks:
+  - type: route_exists
+    node: r1
+    table: default
+    prefix: 2.2.2.2/32
+    description: r1 learned r2 loopback via IS-IS
+  - type: route_exists
+    node: r2
+    table: default
+    prefix: 1.1.1.1/32
+    description: r2 learned r1 loopback via IS-IS

@@ -426,6 +426,30 @@ def _sros_check_route_exists(node: NodeInfo, table: str, prefix: str) -> CheckRe
     )
 
 
+def _nxos_check_route_exists(node: NodeInfo, table: str, prefix: str) -> CheckResult:
+    """Check that a route to a prefix exists in an NX-OS routing table.
+
+    The *table* argument is the VRF name (``default`` for the global table).
+    NX-OS ``show ip route <prefix> vrf <vrf>`` prints the matching prefix line
+    when a route is installed and ``Route not found`` otherwise.
+    """
+    try:
+        output = run_command(node, f"show ip route {prefix} vrf {table}")
+    except Exception as e:
+        return CheckResult("route_exists", node.name, False, f"command failed: {e}")
+
+    network = prefix.split("/")[0]
+    # An installed route echoes the prefix; "Route not found" (or an empty
+    # table body) means it is absent.
+    if "Route not found" not in output and network in output:
+        return CheckResult(
+            "route_exists", node.name, True, f"{prefix} in {table}: found"
+        )
+    return CheckResult(
+        "route_exists", node.name, False, f"{prefix} in {table}: not found"
+    )
+
+
 def _sros_check_bgp_peer(node: NodeInfo, neighbor: str) -> CheckResult:
     """Check that a specific BGP peer is Established via 'show router bgp summary'.
 
@@ -481,6 +505,8 @@ def check_interface_up(node: NodeInfo, interface: str) -> CheckResult:
 def check_route_exists(node: NodeInfo, table: str, prefix: str) -> CheckResult:
     if node.profile.name == "arista":
         return _arista_check_route_exists(node, table, prefix)
+    if node.profile.name == "nx":
+        return _nxos_check_route_exists(node, table, prefix)
     if node.profile.name == "sros":
         return _sros_check_route_exists(node, table, prefix)
     return _junos_check_route_exists(node, table, prefix)

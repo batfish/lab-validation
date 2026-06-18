@@ -1,0 +1,30 @@
+# Two-router IS-IS lab using Cisco NX-OS (n9kv).
+#
+# Topology:
+#   r1 ---[Ethernet1/1]---[Ethernet1/1]--- r2
+#     loopback0: 1.1.1.1/32                loopback0: 2.2.2.2/32
+#     link: 10.0.0.0/31                    link: 10.0.0.1/31
+#     net: 49.0001.0000.0000.0011.00       net: 49.0001.0000.0000.0022.00
+#
+# Both routers run a single level-2-only IS-IS instance "UNDERLAY" in area
+# 49.0001. After convergence each router learns the other's loopback via
+# IS-IS (protocol isisL2).
+#
+# This lab exercises NX-OS IS-IS parsing/modeling tracked in
+# batfish/batfish#10003.
+
+name: nxos-isis
+
+topology:
+  nodes:
+    r1:
+      kind: cisco_n9kv
+      image: vrnetlab/cisco_n9kv:10.3.9.M
+      startup-config: configs/r1.cfg
+    r2:
+      kind: cisco_n9kv
+      image: vrnetlab/cisco_n9kv:10.3.9.M
+      startup-config: configs/r2.cfg
+
+  links:
+    - endpoints: ["r1:eth1", "r2:eth1"]
