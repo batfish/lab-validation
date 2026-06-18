@@ -5,6 +5,7 @@
 #
 # Prerequisites:
 #   - AWS CLI v2.34+ configured with valid credentials
+#   - session-manager-plugin installed locally (to SSH over SSM)
 #   - VM images uploaded to S3 via upload-image.sh
 #   - A region that supports M8i instances (most US/EU regions)
 #
@@ -13,7 +14,8 @@
 #
 # The script creates:
 #   - An IAM instance profile with S3 read access (for downloading VM images)
-#   - A security group allowing SSH from your current IP
+#     and the SSM managed policy (so the instance is reachable over Session
+#     Manager — outbound 443 only, no inbound SSH and no security group)
 #   - A key pair (if --key-name not provided)
 #   - An EC2 instance with ec2-setup.sh as user-data
 #   - Auto-termination via scheduled shutdown (InstanceInitiatedShutdownBehavior=terminate)
@@ -32,7 +34,6 @@ KEY_NAME=""
 TIMEOUT_HOURS=4
 USE_SPOT=false
 IMAGE_FILTER="all"
-SECURITY_GROUP_NAME="lab-validation-containerlab"
 
 usage() {
     cat <<EOF
@@ -86,11 +87,16 @@ if [[ -f "${STATE_FILE}" ]]; then
     fi
 fi
 
-REGION=$(aws configure get region 2>/dev/null || echo "")
+# Resolve region from the environment first (the AWS CLI honors these but
+# `aws configure get region` does not), then fall back to the configured
+# profile default.
+REGION="${AWS_REGION:-${AWS_DEFAULT_REGION:-$(aws configure get region 2>/dev/null || echo "")}}"
 if [[ -z "${REGION}" ]]; then
     echo "Error: no AWS region configured. Set AWS_DEFAULT_REGION or run 'aws configure'." >&2
     exit 1
 fi
+# Pin every subsequent `aws` call (and the SSM ProxyCommand we print) to it.
+export AWS_DEFAULT_REGION="${REGION}"
 echo "Region: ${REGION}"
 
 # Derive S3 bucket name from account ID
@@ -138,6 +144,14 @@ if ! aws iam get-role --role-name "${ROLE_NAME}" &>/dev/null; then
         }"
 fi
 
+# Attach the SSM managed policy so the instance registers with Session Manager
+# and is reachable over 443 (no inbound SSH). Idempotent — attaching an
+# already-attached policy is a no-op. Done outside the create-role block so it
+# is also applied to roles created before SSM became the default.
+aws iam attach-role-policy \
+    --role-name "${ROLE_NAME}" \
+    --policy-arn "arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore" >/dev/null
+
 if ! aws iam get-instance-profile --instance-profile-name "${PROFILE_NAME}" &>/dev/null; then
     echo "Creating instance profile: ${PROFILE_NAME}"
     aws iam create-instance-profile --instance-profile-name "${PROFILE_NAME}" > /dev/null
@@ -165,33 +179,9 @@ if [[ -z "${AMI_ID}" || "${AMI_ID}" == "None" ]]; then
 fi
 echo "AMI: ${AMI_ID}"
 
-# Create or reuse security group
-SG_ID=$(aws ec2 describe-security-groups \
-    --filters "Name=group-name,Values=${SECURITY_GROUP_NAME}" \
-    --query 'SecurityGroups[0].GroupId' \
-    --output text 2>/dev/null || echo "None")
-
-if [[ "${SG_ID}" == "None" || -z "${SG_ID}" ]]; then
-    echo "Creating security group..."
-    SG_ID=$(aws ec2 create-security-group \
-        --group-name "${SECURITY_GROUP_NAME}" \
-        --description "SSH access for lab-validation containerlab instances" \
-        --query 'GroupId' \
-        --output text)
-fi
-
-# Update SSH ingress rule with current IP
-MY_IP=$(curl -s https://checkip.amazonaws.com)
-echo "Your IP: ${MY_IP}"
-
-# Revoke existing SSH rules and add current IP
-aws ec2 revoke-security-group-ingress \
-    --group-id "${SG_ID}" \
-    --protocol tcp --port 22 --cidr 0.0.0.0/0 2>/dev/null || true
-aws ec2 authorize-security-group-ingress \
-    --group-id "${SG_ID}" \
-    --protocol tcp --port 22 --cidr "${MY_IP}/32" 2>/dev/null || true
-echo "Security group: ${SG_ID} (SSH from ${MY_IP}/32)"
+# No security group is created: the instance is reached over AWS Systems
+# Manager (Session Manager), which the SSM agent dials out to over 443. There
+# is no inbound SSH, so the instance keeps the VPC default security group.
 
 # Create key pair if needed
 KEY_FILE=""
@@ -237,7 +227,6 @@ RUN_ARGS=(
     --image-id "${AMI_ID}"
     --instance-type "${INSTANCE_TYPE}"
     --key-name "${KEY_NAME}"
-    --security-group-ids "${SG_ID}"
     --user-data "file://${USER_DATA_FILE}"
     --iam-instance-profile "Name=${PROFILE_NAME}"
     --cpu-options "NestedVirtualization=enabled"
@@ -289,7 +278,6 @@ state = {
     'instance_type': '${INSTANCE_TYPE}',
     'key_name': '${KEY_NAME}',
     'key_file': '${KEY_FILE}',
-    'security_group_id': '${SG_ID}',
     'auto_terminate_after': '${EXPIRY}',
     'spot': True if '${USE_SPOT}' == 'true' else False,
 }
@@ -297,7 +285,11 @@ with open('${STATE_FILE}', 'w') as f:
     json.dump(state, f, indent=2)
 "
 
-SSH_CMD="ssh -i ${KEY_FILE} -o StrictHostKeyChecking=no ubuntu@${PUBLIC_IP}"
+# The instance is reached over SSM Session Manager (no inbound SSH). SSH
+# tunnels through an SSM ProxyCommand keyed on the instance-id; scp and the
+# netmiko-based lab_builder steps then work unchanged. Add a one-off host to
+# ~/.ssh/config so plain `ssh lab` / `scp ... lab:` work:
+SSM_PROXY="sh -c \"aws ssm start-session --target %h --document-name AWS-StartSSHSession --parameters portNumber=%p --region ${REGION}\""
 
 echo ""
 echo "============================================"
@@ -309,14 +301,22 @@ echo "Instance type: ${INSTANCE_TYPE}"
 echo "Images:       ${IMAGE_FILTER}"
 echo "Auto-terminate: ${EXPIRY}"
 echo ""
-echo "SSH command:"
-echo "  ${SSH_CMD}"
+echo "Connect via SSM Session Manager (requires the session-manager-plugin)."
+echo "Add this block to ~/.ssh/config, then use 'ssh lab' / 'scp ... lab:':"
 echo ""
-echo "The instance is bootstrapping (installing Docker, containerlab, KVM tools)."
-echo "This takes ~3-5 minutes. Check progress with:"
-echo "  ${SSH_CMD} 'tail -f /var/log/cloud-init-output.log'"
+echo "  Host lab"
+echo "      HostName ${INSTANCE_ID}"
+echo "      User ubuntu"
+echo "      IdentityFile ${KEY_FILE}"
+echo "      StrictHostKeyChecking no"
+echo "      UserKnownHostsFile /dev/null"
+echo "      ProxyCommand ${SSM_PROXY}"
+echo ""
+echo "The SSM agent registers ~30-60s after the instance is running; the"
+echo "instance then bootstraps (~3-5 min). Check progress with:"
+echo "  ssh lab 'tail -f /var/log/cloud-init-output.log'"
 echo ""
 echo "Verify setup is complete:"
-echo "  ${SSH_CMD} 'cat /var/log/ec2-setup-complete'"
+echo "  ssh lab 'cat /var/log/ec2-setup-complete'"
 echo ""
 echo "State saved to: ${STATE_FILE}"
