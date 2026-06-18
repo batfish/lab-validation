@@ -20,7 +20,12 @@ The workflow is designed to be driven by Claude Code or run manually.
 ## Prerequisites
 
 - **AWS CLI v2.34+** with configured credentials (`aws configure` or
-  `AWS_PROFILE` environment variable)
+  `AWS_PROFILE` environment variable). The `NestedVirtualization` CPU option
+  the launch script uses requires **2.34 or newer** — older CLIs fail with
+  `Unknown parameter in CpuOptions`.
+- **[session-manager-plugin](https://docs.aws.amazon.com/systems-manager/latest/userguide/session-manager-working-with-install-plugin.html)**
+  installed locally. Instances are reached over SSM Session Manager (no inbound
+  SSH), and SSH/scp tunnel through it via a `ProxyCommand`.
 - **Juniper vJunos-router qcow2 image** — free download from
   [Juniper vJunos Labs](https://www.juniper.net/us/en/dm/vjunos-labs.html)
   (non-production use, no time limit)
@@ -66,7 +71,7 @@ launch.
 ```bash
 AWS_PROFILE=<profile> ./ec2-launch.sh
 # Wait for setup to complete (~5-10 min)
-ssh -i <key> ubuntu@<ip> 'cat /var/log/ec2-setup-complete'
+ssh lab 'cat /var/log/ec2-setup-complete'   # see "Connecting" below for the `lab` alias
 ```
 
 ### Subsequent Launches
@@ -115,27 +120,44 @@ and broken out in the startup config; see `examples/srsim-ceos-ebgp/`.
 ```bash
 # Launch instance
 AWS_PROFILE=<profile> ./ec2-launch.sh
+```
 
-# Upload topology and configs
-IP=<from launch output>
-KEY=<from launch output>
-ssh -i $KEY ubuntu@$IP 'mkdir -p ~/lab/mylab/configs ~/lab/src'
-scp -i $KEY -r src/lab_builder ubuntu@$IP:~/lab/src/
-scp -i $KEY topology.clab.yml ubuntu@$IP:~/lab/mylab/
-scp -i $KEY configs/*.cfg ubuntu@$IP:~/lab/mylab/configs/
+**Connecting (SSM, no inbound SSH):** the launch script prints a ready-to-use
+`~/.ssh/config` block — paste it in once per launch (the instance-id changes
+each time). It sets up a `lab` host that tunnels SSH through SSM:
+
+```
+Host lab
+    HostName i-0123456789abcdef0      # instance-id from launch output
+    User ubuntu
+    IdentityFile ~/.lab-validation/<key>.pem
+    StrictHostKeyChecking no
+    UserKnownHostsFile /dev/null
+    ProxyCommand sh -c "aws ssm start-session --target %h --document-name AWS-StartSSHSession --parameters portNumber=%p --region <region>"
+```
+
+With that in place, `ssh lab` and `scp ... lab:` work like any host (the
+SSM agent registers ~30-60s after the instance starts). Upload the builder
+and inputs:
+
+```bash
+ssh lab 'mkdir -p ~/lab/mylab/configs ~/lab/src'
+scp -r src/lab_builder lab:~/lab/src/
+scp topology.clab.yml lab:~/lab/mylab/
+scp configs/*.cfg lab:~/lab/mylab/configs/
 ```
 
 ### Step 3: Deploy Topology
 
 ```bash
-ssh -i $KEY ubuntu@$IP \
+ssh lab \
     'cd ~/lab/mylab && sudo containerlab deploy -t topology.clab.yml'
 ```
 
 vJunos-router takes 5-10 minutes to boot. Monitor with:
 
 ```bash
-ssh -i $KEY ubuntu@$IP 'sudo containerlab inspect -t ~/lab/mylab/topology.clab.yml'
+ssh lab 'sudo containerlab inspect -t ~/lab/mylab/topology.clab.yml'
 ```
 
 Wait until all nodes show `(healthy)`.
@@ -145,7 +167,7 @@ Wait until all nodes show `(healthy)`.
 Verify SSH access and routing protocol convergence:
 
 ```bash
-ssh -i $KEY ubuntu@$IP \
+ssh lab \
     'cd ~/lab && PYTHONPATH=src python3 -m lab_builder health-check mylab/topology.clab.yml'
 ```
 
@@ -163,7 +185,7 @@ If the topology has a `checks.yaml` file, run validation checks to verify
 the lab is in the expected state before collecting data:
 
 ```bash
-ssh -i $KEY ubuntu@$IP \
+ssh lab \
     'cd ~/lab && PYTHONPATH=src python3 -m lab_builder validate mylab/topology.clab.yml --checks mylab/checks.yaml'
 ```
 
@@ -198,7 +220,7 @@ pitfalls:
 ### Step 5: Collect Show Commands
 
 ```bash
-ssh -i $KEY ubuntu@$IP \
+ssh lab \
     'cd ~/lab && PYTHONPATH=src python3 -m lab_builder collect mylab/topology.clab.yml --output-dir /tmp/collected'
 ```
 
@@ -208,14 +230,14 @@ Files are named to match the lab-validation parser conventions.
 ### Step 6: Build Snapshot
 
 ```bash
-ssh -i $KEY ubuntu@$IP \
+ssh lab \
     'cd ~/lab && PYTHONPATH=src python3 -m lab_builder build-snapshot mylab/topology.clab.yml --name junos_my_feature --collected-dir /tmp/collected --snapshots-dir /tmp/snapshots'
 ```
 
 ### Step 7: Download Snapshot
 
 ```bash
-scp -i $KEY -r ubuntu@$IP:/tmp/snapshots/junos_my_feature snapshots/
+scp -r lab:/tmp/snapshots/junos_my_feature snapshots/
 ```
 
 ### Step 8: Tear Down
@@ -277,11 +299,11 @@ To modify configs without full redeploy (saves 5-10 min boot time):
 
 ```bash
 # Push new config to a node
-ssh -i $KEY ubuntu@$IP \
+ssh lab \
     'cd ~/lab && PYTHONPATH=src python3 -m lab_builder push-config mylab/topology.clab.yml r1 /path/to/new-config.txt'
 
 # Re-collect just that node
-ssh -i $KEY ubuntu@$IP \
+ssh lab \
     'cd ~/lab && PYTHONPATH=src python3 -m lab_builder recollect mylab/topology.clab.yml r1 --output-dir /tmp/collected'
 ```
 
@@ -328,7 +350,7 @@ add or iterate on one:
    `snapshots/junos_evpn_type5/source/checks.yaml` for the schema).
 2. Upload to the EC2 box alongside the topology and run:
    ```bash
-   ssh -i $KEY ubuntu@$IP \
+   ssh lab \
        'cd ~/lab && PYTHONPATH=src python3 -m lab_builder validate mylab/topology.clab.yml --checks mylab/checks.yaml'
    ```
 3. Adjust checks until everything passes against the deployed lab,
@@ -596,6 +618,22 @@ rather than being validated against Batfish. See
 **SSH connection refused after deploy**: vJunos-router takes 5-10 minutes to
 boot. Wait for `(healthy)` in `containerlab inspect` output before attempting
 SSH.
+
+**`ssh lab` hangs or "TargetNotConnected"**: the SSM agent registers ~30-60s
+after the instance enters `running`. Confirm registration with
+`aws ssm describe-instance-information`. If it never registers, the instance
+has no outbound path to the SSM endpoints (it needs the auto-assigned public
+IP + internet gateway, or VPC endpoints) — check it was launched in a subnet
+with internet egress. `Bad SSM document` / `command not found` means the
+local **session-manager-plugin** is missing (see Prerequisites).
+
+**`ec2-launch.sh` says "no AWS region configured"**: set the region via
+`AWS_REGION`/`AWS_DEFAULT_REGION` (the script now honors both) or
+`aws configure set region <region>`. Use the region where the image S3 bucket
+lives.
+
+**`Unknown parameter in CpuOptions: "NestedVirtualization"`**: the AWS CLI is
+older than 2.34 (see Prerequisites); upgrade it.
 
 **Startup config not applied**: Configs must be in curly-brace format, not
 set format. vrnetlab concatenates the config with its init.conf and mounts
