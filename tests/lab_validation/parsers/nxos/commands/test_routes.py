@@ -128,6 +128,64 @@ def test_evpn_route() -> None:
     ]
 
 
+def test_isis_route() -> None:
+    routes = """IP Route Table for VRF "default"
+        '*' denotes best ucast next-hop
+        '**' denotes best mcast next-hop
+        '[x/y]' denotes [preference/metric]
+        '%<string>' in via output denotes VRF <string>
+
+        2.2.2.2/32, ubest/mbest: 1/0
+            *via 10.0.0.1, Eth1/1, [115/40], 00:01:23, isis-UNDERLAY, L2
+    """
+    records: Sequence[NxosMainRibRoute] = parse_show_ip_route_vrf_all(routes)
+    assert records == [
+        NxosMainRibRoute(
+            vrf="default",
+            network="2.2.2.2/32",
+            protocol="isisL2",
+            next_vrf=None,
+            next_hop_ip="10.0.0.1",
+            next_hop_int="Ethernet1/1",
+            admin=115,
+            metric=40,
+            tag=None,
+            evpn=False,
+            segid=None,
+            tunnelid=None,
+        )
+    ]
+
+
+def test_isis_level1_route() -> None:
+    routes = """IP Route Table for VRF "default"
+        '*' denotes best ucast next-hop
+        '**' denotes best mcast next-hop
+        '[x/y]' denotes [preference/metric]
+        '%<string>' in via output denotes VRF <string>
+
+        3.3.3.3/32, ubest/mbest: 1/0
+            *via 10.0.0.3, Eth1/2, [115/20], 00:00:11, isis-UNDERLAY, L1
+    """
+    records: Sequence[NxosMainRibRoute] = parse_show_ip_route_vrf_all(routes)
+    assert records == [
+        NxosMainRibRoute(
+            vrf="default",
+            network="3.3.3.3/32",
+            protocol="isisL1",
+            next_vrf=None,
+            next_hop_ip="10.0.0.3",
+            next_hop_int="Ethernet1/2",
+            admin=115,
+            metric=20,
+            tag=None,
+            evpn=False,
+            segid=None,
+            tunnelid=None,
+        )
+    ]
+
+
 def test_routes_multiple_vrfs() -> None:
     routes = """IP Route Table for VRF "default"
         '*' denotes best ucast next-hop

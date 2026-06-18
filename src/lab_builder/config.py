@@ -248,6 +248,7 @@ CISCO_N9KV = VendorProfile(
         "show ip route vrf all",
         "show ip bgp vrf all",
         "show ip bgp all neighbor",
+        "show isis adjacency",
         "show version",
         "show vrf",
     ],

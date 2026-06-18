@@ -68,10 +68,22 @@ _ospf = (
         [Literal("inter"), Literal("intra"), Literal("type-1"), Literal("type-2")]
     ).set_results_name("extension")
 )
+# IS-IS routes carry the process tag (e.g. "isis-UNDERLAY") and an
+# intra-/inter-area level marker. NX-OS prints the level as a separate
+# comma-delimited field: "L1", "L2", or "L1-L2" for intra-area, and
+# "inter-area" for routes leaked between levels.
+_isis = (
+    Regex(r"isis-[^\s,]+").set_results_name("process")
+    + ","
+    + MatchFirst(
+        [Literal("L1-L2"), Literal("L1"), Literal("L2"), Literal("inter-area")]
+    ).set_results_name("extension")
+)
 _protocol = MatchFirst(
     [
         _bgp.set_results_name("bgp"),
         _eigrp.set_results_name("eigrp"),
+        _isis.set_results_name("isis"),
         Literal("am").set_results_name("am"),  # adjacency manager
         Literal("direct").set_results_name("direct"),
         Literal("hmm").set_results_name("hmm"),
