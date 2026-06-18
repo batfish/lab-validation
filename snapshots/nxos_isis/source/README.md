@@ -38,20 +38,26 @@ adjacency forms as the default level-1-2 and routes install as `L1` instead of
 
 ## Batfish coverage
 
-Until batfish gains NX-OS IS-IS support, the IS-IS lines produce
-`This syntax is unrecognized` parse warnings and IS-IS is not modeled, so
-Batfish never installs the IS-IS-learned loopback routes. The route-comparison
-test (`test_main_rib_routes`) is therefore sickbay'd to batfish/batfish#10003 in
-`../validation/sickbay.yaml`; the snapshot, parser, and checks are correct now
-so validation flips green once batfish lands the fix.
+Batfish models NX-OS IS-IS as of batfish/batfish#10003: `router isis`,
+`net`, `is-type`, `ip router isis`, `isis circuit-type`, and `isis network
+point-to-point` are parsed and converted, the level-2 adjacency forms over
+the point-to-point link, and each router installs the other's loopback as an
+`isisL2` route (1.1.1.1/32, 2.2.2.2/32) with the NX-OS wide metric (40 per
+transit link, 1 on the originating loopback).
 
 The lab-validation NX-OS route parser was extended in this change to recognize
 `isis-<tag>, L1|L2` next-hop lines (previously the parser raised on any IS-IS
 route).
 
+`test_main_rib_routes` remains sickbay'd, but only for the management VRF
+default route (`0.0.0.0/0 -> 10.0.0.2`): Batfish models mgmt0 as down, so that
+next hop is unresolvable and the route is not installed. This is the same
+vrnetlab management artifact tracked by `nxos_n9kv_ebgp`, unrelated to IS-IS —
+the IS-IS loopback routes themselves match.
+
 ## Validation target
 
 `pytest lab_tests/test_labs.py --labname=nxos_isis` parses the collected
-device data and compares the main RIB against Batfish. Interface and config
-checks validate clean; IS-IS route comparison is sickbay'd pending
-batfish/batfish#10003.
+device data and compares the main RIB against Batfish. The IS-IS loopback
+routes match; interface and config checks validate clean. The management VRF
+default route is sickbay'd (see above).

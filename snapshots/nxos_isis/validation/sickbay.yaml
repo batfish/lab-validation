@@ -3,10 +3,11 @@ entries:
     test_name: test_main_rib_routes
     skip:
       reason: >-
-        Batfish does not yet model IS-IS on NX-OS, so the isisL2 routes the
-        devices learn for each other's loopback (1.1.1.1/32, 2.2.2.2/32) are
-        absent from the Batfish RIB. This lab exists to validate that fix.
-        https://github.com/batfish/batfish/issues/10003
+        Management VRF default route (0.0.0.0/0 -> 10.0.0.2) is unresolvable in
+        Batfish because mgmt0 is modeled as down, so it is not installed. This
+        is unrelated to IS-IS: the isisL2 loopback routes (1.1.1.1/32,
+        2.2.2.2/32) do match. Same vrnetlab management artifact as
+        nxos_n9kv_ebgp.
   - hostname: r1
     test_name: test_interface_properties
     skip:
