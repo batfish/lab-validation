@@ -267,6 +267,54 @@ def test_diff_routes_cost() -> None:
     ) == [("vrf", math.inf)]
 
 
+def test_validate_main_rib_routes_skips_management_vrf() -> None:
+    # A management-VRF route present on only one side must not produce a failure: vrnetlab injects
+    # management routes that are absent from the startup config Batfish parses.
+    nxos_mgmt_route = NxosMainRibRoute(
+        vrf="management",
+        network="0.0.0.0/0",
+        protocol="static",
+        next_vrf=None,
+        next_hop_ip="10.0.0.2",
+        next_hop_int=None,
+        admin=1,
+        metric=0,
+        tag=None,
+        evpn=False,
+        segid=None,
+        tunnelid=None,
+    )
+    batfish_mgmt_route = MainRibRoute(
+        vrf="management",
+        network="10.0.0.0/24",
+        next_hop=NextHopInterface(interface="mgmt0"),
+        protocol="connected",
+        metric=0,
+        admin=0,
+        tag=0,
+    )
+    # Management routes on either side are dropped, so there are no failures.
+    assert (
+        NxosValidator._validate_main_rib_routes([batfish_mgmt_route], [nxos_mgmt_route])
+        == {}
+    )
+
+    # A non-management route still gets validated (and a missing match reported).
+    default_route = MainRibRoute(
+        vrf="default",
+        network="1.1.1.1/32",
+        next_hop=NextHopIp(ip="10.0.0.1"),
+        protocol="isisL2",
+        metric=41,
+        admin=115,
+        tag=None,
+    )
+    assert (
+        NxosValidator._validate_main_rib_routes([default_route], [nxos_mgmt_route])
+        != {}
+    )
+
+
 def test_bgp_equal() -> None:
     bf = BgpRibRoute(
         weight=0,

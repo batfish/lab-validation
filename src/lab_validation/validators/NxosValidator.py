@@ -93,13 +93,17 @@ class NxosValidator(VendorValidator):
     ) -> dict[Any, Any]:
         # Drop mgmt routes and hsrp routes (https://github.com/batfish/lab-validation/issues/59)
         # Drop hmm routes: https://github.com/batfish/lab-validation/issues/61
+        # Drop the management VRF: vrnetlab injects routes (e.g. a default route) and brings mgmt0
+        # up out of band, neither of which is in the startup config Batfish parses.
         validate_routes = [
             r
             for r in nxos_routes
             if r.protocol != "hsrp"
             and r.protocol != "hmm"
+            and r.vrf != "management"
             and (r.next_hop_int is None or not r.next_hop_int.startswith("mgmt"))
         ]
+        batfish_routes = [r for r in batfish_routes if r.vrf != "management"]
 
         matched_routes = match_pairs(
             batfish_routes,
