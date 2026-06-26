@@ -1,0 +1,33 @@
+# Junos extended-community literal lab.
+#
+# Confirms how Junos interprets the generic extended-community literal
+# syntax "members 65000:672277L:36867" seen in the wild:
+#   - 65000   : the two type/subtype octets (0xFD:0xE8)
+#   - 672277L : 4-byte global administrator (the L forces 4 bytes)
+#   - 36867   : 2-byte local administrator
+#
+# Topology:
+#   sender (AS 65001) --[ge-0/0/0]--[ge-0/0/0]-- receiver (AS 65002)
+#     lo0: 1.1.1.1/32                              lo0: 2.2.2.2/32
+#     link: 10.0.12.0/31                           link: 10.0.12.1/31
+#
+# sender originates 10.10.0-3.0/24 and tags each with a different
+# extended community (the mystery literal, plus 4-byte and 2-byte route
+# targets for comparison). receiver shows how each is encoded on the wire.
+
+name: junos-ext-community-literal
+
+topology:
+  nodes:
+    sender:
+      kind: juniper_vjunosrouter
+      image: vrnetlab/juniper_vjunos-router:25.4R1.12
+      startup-config: configs/sender.cfg
+    receiver:
+      kind: juniper_vjunosrouter
+      image: vrnetlab/juniper_vjunos-router:25.4R1.12
+      startup-config: configs/receiver.cfg
+
+  links:
+    # sender ge-0/0/0 (eth1) <-> receiver ge-0/0/0 (eth1)
+    - endpoints: ["sender:eth1", "receiver:eth1"]
