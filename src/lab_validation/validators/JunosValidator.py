@@ -478,6 +478,8 @@ def _routes_cost(
         cost.append(("metric", 1.0))
     if expected_route.admin != batfish_route.admin:
         cost.append(("admin", 1.0))
+    if (expected_route.tag or 0) != (batfish_route.tag or 0):
+        cost.append(("tag", 1.0))
 
     return cost
 

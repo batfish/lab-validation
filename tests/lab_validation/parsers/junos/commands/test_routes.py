@@ -626,6 +626,167 @@ def test_show_route_display_json_static_null() -> None:
     ]
 
 
+def test_show_route_display_json_static_tag() -> None:
+    """Static routes inheriting a defaults block carry tag/preference/metric.
+
+    A static route whose attributes come from `routing-options static
+    defaults { preference; metric; tag; }` reports those values in the
+    rt-entry. The parser must surface the tag.
+    """
+    text = """
+{
+  "route-information": [
+    {
+      "route-table": [
+        {
+          "table-name": [
+            {
+              "data": "inet.0"
+            }
+          ],
+          "rt": [
+            {
+              "rt-destination": [
+                {
+                  "data": "10.200.0.0/24"
+                }
+              ],
+              "rt-entry": [
+                {
+                  "active-tag": [
+                    {
+                      "data": "*"
+                    }
+                  ],
+                  "protocol-name": [
+                    {
+                      "data": "Static"
+                    }
+                  ],
+                  "preference": [
+                    {
+                      "data": "50"
+                    }
+                  ],
+                  "metric": [
+                    {
+                      "data": "100"
+                    }
+                  ],
+                  "rt-tag": [
+                    {
+                      "data": "1000"
+                    }
+                  ],
+                  "nh-type": [
+                    {
+                      "data": "Discard"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
+
+{master:0}
+    """
+
+    routes = parse_show_route_display_json(text)
+    assert routes == [
+        JunosMainRibRoute(
+            vrf="default",
+            network="10.200.0.0/24",
+            protocol="Static",
+            admin=50,
+            metric=100,
+            next_hop_ip=None,
+            next_hop_int=None,
+            nh_type="Discard",
+            active=True,
+            tag=1000,
+        ),
+    ]
+
+
+def test_show_route_display_json_no_tag_is_none() -> None:
+    """Routes with no tag field parse with tag=None."""
+    text = """
+{
+  "route-information": [
+    {
+      "route-table": [
+        {
+          "table-name": [
+            {
+              "data": "inet.0"
+            }
+          ],
+          "rt": [
+            {
+              "rt-destination": [
+                {
+                  "data": "10.0.0.0/24"
+                }
+              ],
+              "rt-entry": [
+                {
+                  "active-tag": [
+                    {
+                      "data": "*"
+                    }
+                  ],
+                  "protocol-name": [
+                    {
+                      "data": "Direct"
+                    }
+                  ],
+                  "preference": [
+                    {
+                      "data": "0"
+                    }
+                  ],
+                  "nh": [
+                    {
+                      "via": [
+                        {
+                          "data": "ge-0/0/0.0"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
+    """
+
+    routes = parse_show_route_display_json(text)
+    assert routes == [
+        JunosMainRibRoute(
+            vrf="default",
+            network="10.0.0.0/24",
+            protocol="Direct",
+            admin=0,
+            metric=None,
+            next_hop_ip=None,
+            next_hop_int="ge-0/0/0.0",
+            nh_type=None,
+            active=True,
+            tag=None,
+        ),
+    ]
+
+
 def test_show_route_display_json_aggregate() -> None:
     text = """
 {
