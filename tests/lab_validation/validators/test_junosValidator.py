@@ -594,11 +594,23 @@ def test_canonicalize_community_well_known() -> None:
 
 
 def test_canonicalize_community_passthrough() -> None:
-    # Standard, extended, and large communities pass through unchanged.
+    # Standard, origin (site-of-origin), and large communities pass through
+    # unchanged; Junos and Batfish print them identically.
     assert _canonicalize_community("65001:100") == "65001:100"
-    assert _canonicalize_community("target:65001:200") == "target:65001:200"
     assert _canonicalize_community("origin:65001:300") == "origin:65001:300"
     assert _canonicalize_community("large:65001:1:1") == "large:65001:1:1"
+
+
+def test_canonicalize_community_route_target() -> None:
+    # Junos prints route targets with the "target" keyword; Batfish prints
+    # them as "(type << 8 | 0x02):GA:LA". A 2-byte-AS global admin uses type
+    # 0x00 -> 2; a 4-byte-AS global admin (L suffix or value > 0xFFFF) uses
+    # type 0x02 -> 514.
+    assert _canonicalize_community("target:65000:36867") == "2:65000:36867"
+    assert _canonicalize_community("target:672277L:36867") == "514:672277L:36867"
+    assert _canonicalize_community("target:65001:200") == "2:65001:200"
+    # A bare 4-byte global admin (no L) is also the 4-byte-AS form.
+    assert _canonicalize_community("target:100000:1") == "514:100000:1"
 
 
 def test_canonicalize_community_unknown_symbolic_raises() -> None:

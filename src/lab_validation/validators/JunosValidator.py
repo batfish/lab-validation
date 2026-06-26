@@ -381,19 +381,50 @@ _WELL_KNOWN_COMMUNITY_MAP: dict[str, str] = {
 }
 
 
+def _canonicalize_route_target(s: str) -> str:
+    """Convert a Junos ``target:GA:LA`` route target to Batfish's numeric form.
+
+    Junos prints route targets with the ``target`` keyword; Batfish prints
+    them as ``(type << 8 | subtype):GA:LA`` where subtype is 0x02 (route
+    target) and the type byte encodes the global-administrator width:
+
+      * 4-byte-AS global admin (``L`` suffix, or a value > 0xFFFF): type
+        0x02 -> ``514:GA:LA`` (e.g. ``target:672277L:36867`` ->
+        ``514:672277L:36867``).
+      * 2-byte-AS global admin (value <= 0xFFFF): type 0x00 -> ``2:GA:LA``
+        (e.g. ``target:65000:36867`` -> ``2:65000:36867``).
+
+    The global-administrator token (including any ``L`` suffix) is preserved
+    verbatim; only the leading ``target`` keyword is rewritten. IP-address
+    global administrators (type 0x01) are not yet handled and raise.
+    """
+    _, ga, la = s.split(":", 2)
+    if "." in ga:
+        raise ValueError(
+            f"IP-address route target {s!r} not yet handled in "
+            "_canonicalize_route_target in JunosValidator.py"
+        )
+    four_byte = ga[-1:].lower() == "l" or int(ga) > 0xFFFF
+    type_subtype = 0x0202 if four_byte else 0x0002
+    return f"{type_subtype}:{ga}:{la}"
+
+
 def _canonicalize_community(s: str) -> str:
     """Return canonical form of a single community string.
 
     Accepts either the Junos symbolic name or the numeric form for the
-    well-known communities listed in ``_WELL_KNOWN_COMMUNITY_MAP``. Other
-    forms (standard ``ASN:value``, ``target:..``, ``origin:..``,
-    ``large:..``) are returned verbatim because Junos and Batfish print
-    them identically.
+    well-known communities listed in ``_WELL_KNOWN_COMMUNITY_MAP``. Junos
+    route targets (``target:GA:LA``) are rewritten to the numeric type-prefix
+    form Batfish emits. Other forms (standard ``ASN:value``, ``origin:..``,
+    ``large:..``) are returned verbatim because Junos and Batfish print them
+    identically.
     """
     if s in _WELL_KNOWN_COMMUNITY_MAP:
         return _WELL_KNOWN_COMMUNITY_MAP[s]
     if s in _WELL_KNOWN_COMMUNITY_MAP.values():
         return s
+    if s.startswith("target:"):
+        return _canonicalize_route_target(s)
     # Loud-fail on unknown symbolic names so a future contributor adds the
     # mapping rather than silently ignoring the mismatch.
     if s and not s[0].isdigit() and ":" not in s:
