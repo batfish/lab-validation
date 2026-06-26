@@ -27,6 +27,7 @@ VIA = "via"
 AS_PATH = "as-path"
 COMMUNITIES = "communities"
 COMMUNITY = "community"
+EXTENDED_COMMUNITY = "extended-community"
 RT_PREFIX_LENGTH = "rt-prefix-length"
 
 
@@ -77,9 +78,14 @@ def _get_routes(vrf: str, route_json_obj: list[Any]) -> list[JunosBgpRoute]:
                 metric = None
             as_path_str = entry[AS_PATH][0][DATA]
             local_pref = entry[LOCAL_PREFERENCE][0][DATA]
+            comms = entry.get(COMMUNITIES, [{}])[0]
+            # Standard communities live under "community"; extended communities
+            # (route targets, site-of-origin, generic type:ga:la literals) live
+            # under "extended-community". Collect both so community comparison
+            # sees the full set rather than silently dropping extended ones.
             communities = tuple(
                 c[DATA]
-                for c in entry.get(COMMUNITIES, [{}])[0].get(COMMUNITY, [])
+                for c in comms.get(COMMUNITY, []) + comms.get(EXTENDED_COMMUNITY, [])
                 if c.get(DATA)
             )
 

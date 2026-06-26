@@ -1,0 +1,22 @@
+set version 25.4R1.12
+set system host-name receiver
+set system root-authentication encrypted-password "$6$X3Zd02lP$hDUk4FZeX19DtmKqYojTO2g.i/sH1yvNNDoLwO35lwC32BjEtweFesoS.vn.DjBTbRmiLKQGWZf7fKd3PmU.J0"
+set system login user admin uid 2000
+set system login user admin class super-user
+set system login user admin authentication encrypted-password "$6$aMJerCyR$quYGWu7c98uamBHN74.k7ct9AwRtwbQQonM4FBkDnsG0ktI0z4MKfu.hyQTRRgA6.tYiCnd6PWwRE9lkFjYrS/"
+set system services netconf ssh
+set system services ssh root-login allow
+set system management-instance
+set chassis fpc 0 pic 0 number-of-ports 12
+set interfaces ge-0/0/0 description "link to sender"
+set interfaces ge-0/0/0 unit 0 family inet address 10.0.12.1/31
+set interfaces fxp0 unit 0 family inet address 10.0.0.15/24
+set interfaces fxp0 unit 0 family inet6 address 2001:db8::2/64
+set interfaces lo0 unit 0 family inet address 2.2.2.2/32
+set routing-instances mgmt_junos routing-options rib mgmt_junos.inet6.0 static route ::/0 next-hop 2001:db8::1
+set routing-instances mgmt_junos routing-options static route 0.0.0.0/0 next-hop 10.0.0.2
+set routing-options router-id 2.2.2.2
+set routing-options autonomous-system 65002
+set protocols bgp group FROM-SENDER type external
+set protocols bgp group FROM-SENDER peer-as 65001
+set protocols bgp group FROM-SENDER neighbor 10.0.12.0

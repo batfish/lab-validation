@@ -351,7 +351,9 @@ def test_parse_show_route_protocol_bgp_detail_with_communities() -> None:
     #   1. rt-destination is bare ("10.10.10.0") and rt-prefix-length is its
     #      own field instead of the "10.10.10.0/24" combined string.
     #   2. as-path data is prefixed with "AS path: ".
-    #   3. The communities array is present.
+    #   3. The communities array is present, carrying standard communities
+    #      under "community" and extended communities (route targets) under
+    #      "extended-community".
     text = """
     {
     "route-information" : [
@@ -377,8 +379,11 @@ def test_parse_show_route_protocol_bgp_detail_with_communities() -> None:
                     {
                         "community" : [
                             {"data" : "65001:100"},
-                            {"data" : "target:65001:200"},
                             {"data" : "no-export"}
+                        ],
+                        "extended-community" : [
+                            {"data" : "target:65001:200"},
+                            {"data" : "target:672277L:36867"}
                         ]
                     }
                     ],
@@ -412,7 +417,15 @@ def test_parse_show_route_protocol_bgp_detail_with_communities() -> None:
             as_path=(1,),
             origin_type="I",
             is_active=True,
-            communities=("65001:100", "target:65001:200", "no-export"),
+            # Standard communities ("community") and extended communities
+            # ("extended-community", e.g. route targets) are both collected;
+            # the device emits route targets only under extended-community.
+            communities=(
+                "65001:100",
+                "no-export",
+                "target:65001:200",
+                "target:672277L:36867",
+            ),
         ),
     ]
 
