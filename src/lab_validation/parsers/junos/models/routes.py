@@ -19,6 +19,7 @@ class JunosMainRibRoute:
     next_hop_int: str | None
     metric: int | None = attr.ib(converter=optional_int_converter)
     nh_type: str | None
+    tag: int | None = attr.ib(default=None, converter=optional_int_converter)
 
 
 @attr.s(frozen=True, auto_attribs=True, kw_only=True)

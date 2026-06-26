@@ -1,0 +1,25 @@
+# Junos static-route `defaults` lab.
+#
+# Single vJunos-router node. The config carries five static{} blocks across
+# three scopes (master inet.0, master inet6.0, RED virtual-router, BLUE
+# virtual-router) to disambiguate how `routing-options static defaults`
+# inheritance is scoped:
+#
+#   - per routing table?     inet.0 (pref 50) vs inet6.0 (pref 60)
+#   - per routing-instance?  master vs RED (no defaults -> sys default 5)
+#                            vs BLUE (own defaults, pref 80)
+#   - per-route override?    10.200.2.0/24 overrides only preference
+#
+# All static routes use `discard` so they install unconditionally and
+# report their inherited preference/metric/tag without needing a peer.
+#
+# Interface mapping: containerlab ethN+1 = Junos ge-0/0/N
+
+name: static-route-defaults
+
+topology:
+  nodes:
+    r1:
+      kind: juniper_vjunosrouter
+      image: vrnetlab/juniper_vjunos-router:25.4R1.12
+      startup-config: configs/r1.cfg

@@ -21,6 +21,7 @@ RT = "rt"
 ROUTE_TABLE = "route-table"
 ROUTE_INFORMATION = "route-information"
 TABLE_NAME = "table-name"
+TAG = "rt-tag"
 TO = "to"
 VIA = "via"
 
@@ -62,6 +63,7 @@ def _get_routes(vrf: str, route_json_obj: list[Any]) -> list[JunosMainRibRoute]:
                 if protocol == BGP
                 else entry.get(METRIC, [{}])[0].get(DATA, None)
             )
+            tag = entry.get(TAG, [{}])[0].get(DATA, None)
 
             nh_type = None
             if NH in entry:
@@ -83,6 +85,7 @@ def _get_routes(vrf: str, route_json_obj: list[Any]) -> list[JunosMainRibRoute]:
                             metric=metric,
                             nh_type=nh_type,
                             active=active,
+                            tag=tag,
                         )
                     )
             else:
@@ -104,6 +107,7 @@ def _get_routes(vrf: str, route_json_obj: list[Any]) -> list[JunosMainRibRoute]:
                         metric=metric,
                         nh_type=nh_type,
                         active=active,
+                        tag=tag,
                     )
                 )
 
