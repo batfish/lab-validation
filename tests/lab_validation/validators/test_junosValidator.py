@@ -83,6 +83,20 @@ def test_routes_cost() -> None:
         ("admin", 1.0)
     ]
 
+    # Wrong tag -> routes are incompatible
+    assert _routes_cost(junos_route, attr.evolve(batfish_route, tag=1000)) == [
+        ("tag", 1.0)
+    ]
+
+    # Matching tag (device tag set, Batfish agrees) -> no cost
+    assert (
+        _routes_cost(
+            attr.evolve(junos_route, tag=1000),
+            attr.evolve(batfish_route, tag=1000),
+        )
+        == []
+    )
+
 
 def test_nexthop_cost_static_routes() -> None:
     """Test next-hop costs for different types of static next-hop routes."""
