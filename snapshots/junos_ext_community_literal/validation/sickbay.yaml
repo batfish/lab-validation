@@ -1,0 +1,12 @@
+entries:
+  # The receiver's 10.10.1.0/24 carries the mystery extended-community
+  # literal (65000:672277L:36867) in Batfish but no community on the real
+  # device. The community's type octet has the transitive bit set, so the
+  # device strips it when advertising across the eBGP boundary; Batfish does
+  # not yet model non-transitive extended-community stripping on eBGP, so it
+  # retains the community. The transitive route targets on the sibling routes
+  # (10.10.2.0/24, 10.10.3.0/24) match on both sides.
+  - hostname: receiver
+    test_name: test_bgp_rib_routes
+    skip:
+      reason: "https://github.com/batfish/batfish/issues/10019 (non-transitive extended community not stripped on eBGP: 10.10.1.0/24)"
