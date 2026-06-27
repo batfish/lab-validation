@@ -1,8 +1,0 @@
-entries:
-  # Batfish does not model the Junos `routing-options static defaults`
-  # block, so static routes that inherit preference/metric/tag from
-  # defaults mismatch the device (preference 5, metric 0, no tag).
-  - hostname: "r1"
-    test_name: test_main_rib_routes
-    skip:
-      reason: https://github.com/batfish/batfish/issues/10017
