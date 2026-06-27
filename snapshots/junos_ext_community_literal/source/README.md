@@ -87,24 +87,13 @@ the Junos `target:GA:LA` form to Batfish's numeric form before
 comparing. Without that canonicalization the receiver's BGP routes
 would mismatch on community form alone.
 
-### Literal parse rejection (batfish/batfish#10018)
+### Non-transitive extended community not stripped on eBGP (batfish/batfish#10019)
 
-`ExtendedCommunity.parse` (flatjuniper) handles the `L` suffix (4-byte
-GA) and splits a bare numeric first field into type/subtype octets.
-But it computes the type via signed-byte arithmetic — `(byte) 0xFD` is
-negative — and `ExtendedCommunity.of` rejects negative types. So a
-`65000:…` literal (any type octet ≥ 0x80) fails literal parsing and
-falls back to a **regex** community member. Initializing this snapshot
-in Batfish yields the convert warning
-
-```
-FATAL: 'MYSTERY' community contains no non-wildcard members in an add action
-```
-
-i.e. the `community add MYSTERY` is dropped because the member was
-parsed as a wildcard regex, not a literal. This does not fail a lab
-test today — the community is stripped at the eBGP boundary on the real
-device, so the receiver's routes carry no community on either side, and
-the FATAL is a _convert_ warning (not caught by `test_parse_warnings`,
-which only checks _parse_ warnings) on the sender. It is a genuine
-parser gap tracked in batfish/batfish#10018.
+The mystery community's type octet has the transitive bit set (`0x40`),
+so the real device strips it when advertising across the eBGP
+boundary — the receiver's `10.10.1.0/24` carries no community. Batfish
+does not yet model non-transitive extended-community stripping on eBGP,
+so it retains `65000:672277L:36867` on the received route. The
+transitive route targets on `10.10.2.0/24` and `10.10.3.0/24` cross
+unchanged on both. `test_bgp_rib_routes[receiver]` is sickbayed to
+batfish/batfish#10019.
