@@ -87,13 +87,12 @@ the Junos `target:GA:LA` form to Batfish's numeric form before
 comparing. Without that canonicalization the receiver's BGP routes
 would mismatch on community form alone.
 
-### Non-transitive extended community not stripped on eBGP (batfish/batfish#10019)
+### Non-transitive extended community stripped on eBGP (batfish/batfish#10019)
 
 The mystery community's type octet has the transitive bit set (`0x40`),
 so the real device strips it when advertising across the eBGP
 boundary — the receiver's `10.10.1.0/24` carries no community. Batfish
-does not yet model non-transitive extended-community stripping on eBGP,
-so it retains `65000:672277L:36867` on the received route. The
-transitive route targets on `10.10.2.0/24` and `10.10.3.0/24` cross
-unchanged on both. `test_bgp_rib_routes[receiver]` is sickbayed to
-batfish/batfish#10019.
+now models this: batfish/batfish#10040 drops non-transitive extended
+communities on true eBGP export, so the received `10.10.1.0/24` carries
+no community, matching the device. The transitive route targets on
+`10.10.2.0/24` and `10.10.3.0/24` cross unchanged on both.
