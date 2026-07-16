@@ -102,10 +102,57 @@ def test_compute_protocol_cost() -> None:
         ("ospf subtype", 1.0)
     ]
 
+    # bgp aggregate
+    assert AristaValidator.compute_protocol_cost("bgpaggregate", "aggregate") == []
+
+    # EOS `ip route <prefix> Null0` static is reported as dropRoute; Batfish
+    # models it as static.
+    assert AristaValidator.compute_protocol_cost("droproute", "static") == []
+    # dropRoute only matches static, not other protocols.
+    assert AristaValidator.compute_protocol_cost("droproute", "connected") == [
+        ("protocol", math.inf)
+    ]
+
     # disparate
     assert AristaValidator.compute_protocol_cost("ibgp", "ospf") == [
         ("protocol", math.inf)
     ]
+
+
+def test_diff_routes_cost_null0_static() -> None:
+    """EOS reports `ip route <prefix> Null0` as a dropRoute with no vias; the
+    parser sets next_hop_int=Null0. Batfish models it as a static route with a
+    discard next hop. The pair should match with zero cost, but a static route
+    with a real next hop must not match a dropRoute."""
+    arista_route = AristaIpRoute(
+        network="10.1.1.96/27",
+        protocol="dropRoute",
+        next_hop_ip=None,
+        next_hop_int="Null0",
+        preference=None,
+        metric=None,
+        vrf="default",
+        vni=None,
+        vtep_ip=None,
+    )
+    batfish_route = MainRibRoute(
+        network="10.1.1.96/27",
+        protocol="static",
+        next_hop=NextHopDiscard(),
+        admin=1,
+        metric=0,
+        tag=0,
+        vrf="default",
+    )
+
+    assert AristaValidator._diff_routes_cost(arista_route, batfish_route) == []
+
+    # Same protocol pairing, but Batfish resolves to a real next hop: the
+    # next-hop term must still flag the mismatch.
+    assert AristaValidator._diff_routes_cost(
+        arista_route,
+        attr.evolve(batfish_route, next_hop=NextHopIp(ip="10.0.0.1")),
+    ) == [("asymmetric null route", 10.0)]
 
 
 def test_compute_next_hop_cost() -> None:

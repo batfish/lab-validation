@@ -1,0 +1,37 @@
+# Arista cEOS lab reproducing batfish/batfish#10093:
+# `aggregate-address 0.0.0.0/0 summary-only advertise-only` in a VRF.
+#
+# Topology:
+#
+#   c1 (AS 65001)                c2 (AS 65166.10010, asdot)          c3 (AS 65002)
+#     redistribute static          vrf vxlan_public                    default vrf
+#     10.1.1.96/27 -> Null0        aggregate-address 0.0.0.0/0         peers c2 in asplain
+#     10.1.1.98/32 -> Null0          summary-only advertise-only       (4270728986)
+#     Et1 10.10.10.1/24 --- Et1 10.10.10.2/24  Et2 11.11.11.2/24 --- Et1 11.11.11.1/24
+#
+# c1 originates a /27 and a covered /32 host route and advertises both to
+# c2. c2's vrf aggregates them under 0.0.0.0/0 with summary-only, which
+# suppresses every contributor VRF-wide. c3 must receive ONLY 0.0.0.0/0
+# (the outage-reproducing behavior). The companion lab eos_bgp_agg_vrf
+# omits summary-only and c3 receives all contributors plus the aggregate.
+
+name: ceos-bgp-agg-vrf-summary-only
+
+topology:
+  nodes:
+    c1:
+      kind: arista_ceos
+      image: ceos:4.36.0.1F
+      startup-config: configs/c1.cfg
+    c2:
+      kind: arista_ceos
+      image: ceos:4.36.0.1F
+      startup-config: configs/c2.cfg
+    c3:
+      kind: arista_ceos
+      image: ceos:4.36.0.1F
+      startup-config: configs/c3.cfg
+
+  links:
+    - endpoints: ["c1:eth1", "c2:eth1"]
+    - endpoints: ["c2:eth2", "c3:eth1"]

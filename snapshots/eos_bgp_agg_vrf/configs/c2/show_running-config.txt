@@ -1,0 +1,56 @@
+! Command: show running-config
+! device: c2 (cEOSLab, EOS-4.36.0.1F-47401373.43601F (engineering build))
+!
+no aaa root
+!
+username admin privilege 15 role network-admin secret sha512 $6$Ut1v4bOpyKgT8tIA$FSKDxR/KVRfs.okT4qheF6Ec3tWztkoRaQC4Vy68ZwnUxmzIb4BNlV8r76hN.oNGqagOmgUD/w78o01YUZkIJ.
+!
+no service interface inactive port-id allocation disabled
+!
+service routing protocols model multi-agent
+!
+hostname c2
+!
+spanning-tree mode mstp
+!
+system l1
+   unsupported speed action error
+   unsupported error-correction action error
+!
+vrf instance vxlan_public
+!
+aaa authorization exec default local
+!
+interface Ethernet1
+   no switchport
+   vrf vxlan_public
+   ip address 10.10.10.2/24
+!
+interface Ethernet2
+   no switchport
+   vrf vxlan_public
+   ip address 11.11.11.2/24
+!
+interface Management0
+   ip address 172.20.20.4/24
+   ipv6 address 3fff:172:20:20::4/64
+!
+ip routing
+ip routing vrf vxlan_public
+!
+route-map ALLOW-ALL permit 10
+!
+router bgp 4270728986
+   router-id 2.2.2.2
+   !
+   vrf vxlan_public
+      router-id 2.2.2.2
+      neighbor 10.10.10.1 remote-as 65001
+      neighbor 10.10.10.1 route-map ALLOW-ALL in
+      neighbor 10.10.10.1 route-map ALLOW-ALL out
+      neighbor 11.11.11.1 remote-as 65002
+      neighbor 11.11.11.1 route-map ALLOW-ALL in
+      neighbor 11.11.11.1 route-map ALLOW-ALL out
+      aggregate-address 0.0.0.0/0 advertise-only
+!
+end

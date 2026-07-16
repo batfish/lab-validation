@@ -1,0 +1,55 @@
+# Preconditions for the summary-only aggregate lab. Verifies BGP sessions
+# are up and the expected routes are present. Route SUPPRESSION on c3
+# (only 0.0.0.0/0 present, contributors absent) cannot be asserted with a
+# positive route_exists check and is verified by hand during deploy — see
+# README.
+
+checks:
+  - type: bgp_peer_established
+    node: c1
+    neighbor: 10.10.10.2
+    description: "c1 -> c2 eBGP (asdot remote-as)"
+  - type: bgp_peer_established
+    node: c2
+    neighbor: 10.10.10.1
+    description: "c2 -> c1 eBGP in vrf vxlan_public"
+  - type: bgp_peer_established
+    node: c2
+    neighbor: 11.11.11.1
+    description: "c2 -> c3 eBGP in vrf vxlan_public"
+  - type: bgp_peer_established
+    node: c3
+    neighbor: 11.11.11.2
+    description: "c3 -> c2 eBGP (asplain remote-as)"
+
+  # c1 originates both contributors.
+  - type: route_exists
+    node: c1
+    table: default
+    prefix: 10.1.1.96/27
+    description: "10.1.1.96/27 static in c1 RIB"
+  - type: route_exists
+    node: c1
+    table: default
+    prefix: 10.1.1.98/32
+    description: "10.1.1.98/32 static in c1 RIB"
+
+  # c2's vrf learns both contributors and installs the activated aggregate.
+  - type: route_exists
+    node: c2
+    table: vxlan_public
+    prefix: 10.1.1.96/27
+    description: "10.1.1.96/27 learned in c2 vrf"
+  - type: route_exists
+    node: c2
+    table: vxlan_public
+    prefix: 10.1.1.98/32
+    description: "10.1.1.98/32 learned in c2 vrf"
+
+  # c3 receives the aggregate. summary-only suppresses the contributors,
+  # so 0.0.0.0/0 is the only route c3 should have from c2.
+  - type: route_exists
+    node: c3
+    table: default
+    prefix: 0.0.0.0/0
+    description: "default aggregate received on c3"
