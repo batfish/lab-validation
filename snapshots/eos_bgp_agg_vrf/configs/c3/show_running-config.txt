@@ -1,0 +1,40 @@
+! Command: show running-config
+! device: c3 (cEOSLab, EOS-4.36.0.1F-47401373.43601F (engineering build))
+!
+no aaa root
+!
+username admin privilege 15 role network-admin secret sha512 $6$WyxzALJtlYRuiljB$u4wjGjJWC9BcEC9xJaHV450RkPhSs2HrgcQ3/GmCInNRkWEa7oAgcNHYD4DwgQY4ClA8gYPjc0jXwpBiw9YhW1
+!
+no service interface inactive port-id allocation disabled
+!
+service routing protocols model multi-agent
+!
+hostname c3
+!
+spanning-tree mode mstp
+!
+system l1
+   unsupported speed action error
+   unsupported error-correction action error
+!
+aaa authorization exec default local
+!
+interface Ethernet1
+   no switchport
+   ip address 11.11.11.1/24
+!
+interface Management0
+   ip address 172.20.20.2/24
+   ipv6 address 3fff:172:20:20::2/64
+!
+ip routing
+!
+route-map ALLOW-ALL permit 10
+!
+router bgp 65002
+   router-id 3.3.3.3
+   neighbor 11.11.11.2 remote-as 4270728986
+   neighbor 11.11.11.2 route-map ALLOW-ALL in
+   neighbor 11.11.11.2 route-map ALLOW-ALL out
+!
+end

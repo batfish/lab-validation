@@ -196,7 +196,7 @@ class AristaValidator(VendorValidator):
         if arista_preference is None:
             if arista_protocol == "connected":
                 arista_preference = 0
-            if arista_protocol == "static":
+            if arista_protocol in ("static", "droproute"):
                 arista_preference = 1
             if arista_protocol == "bgpaggregate":
                 # local BGP route admin distance
@@ -224,6 +224,12 @@ class AristaValidator(VendorValidator):
             return []
 
         if arista_protocol == "bgpaggregate" and batfish_protocol == "aggregate":
+            return []
+
+        # EOS reports a `ip route <prefix> Null0` static as routeType
+        # "dropRoute" (no vias). Batfish models it as a static route with a
+        # discard next hop. Treat them as the same protocol.
+        if arista_protocol == "droproute" and batfish_protocol == "static":
             return []
 
         if "bgp" in arista_protocol and "bgp" in batfish_protocol:
