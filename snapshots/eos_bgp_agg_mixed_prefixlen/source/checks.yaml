@@ -1,0 +1,71 @@
+# Preconditions for the mixed-prefix-length aggregate lab. Verifies all eBGP
+# sessions are up, both origins' contributors reach the aggregator on their
+# distinct paths, and the /19 aggregate is generated and received downstream.
+
+checks:
+  - type: bgp_peer_established
+    node: c1
+    neighbor: 10.10.1.2
+    description: "c1 -> c0 eBGP"
+  - type: bgp_peer_established
+    node: c4
+    neighbor: 10.10.2.2
+    description: "c4 -> c0 eBGP"
+  - type: bgp_peer_established
+    node: c0
+    neighbor: 10.10.3.2
+    description: "c0 -> c2 eBGP"
+  - type: bgp_peer_established
+    node: c2
+    neighbor: 10.10.3.1
+    description: "c2 -> c0 eBGP"
+  - type: bgp_peer_established
+    node: c2
+    neighbor: 11.11.11.1
+    description: "c2 -> c3 eBGP"
+  - type: bgp_peer_established
+    node: c3
+    neighbor: 11.11.11.2
+    description: "c3 -> c2 eBGP"
+
+  # The large contributor and a sample of the small contributors originate.
+  - type: route_exists
+    node: c1
+    table: default
+    prefix: 10.1.0.0/20
+    description: "10.1.0.0/20 static in c1 RIB (large contributor)"
+  - type: route_exists
+    node: c4
+    table: default
+    prefix: 10.1.16.0/24
+    description: "10.1.16.0/24 static in c4 RIB (small contributor)"
+  - type: route_exists
+    node: c4
+    table: default
+    prefix: 10.1.17.1/32
+    description: "10.1.17.1/32 static in c4 RIB (small contributor)"
+
+  # Aggregator learns both a large and small contributor (on divergent paths)
+  # and generates the /19 aggregate.
+  - type: route_exists
+    node: c2
+    table: default
+    prefix: 10.1.0.0/20
+    description: "10.1.0.0/20 learned on c2 (via 65000 65001)"
+  - type: route_exists
+    node: c2
+    table: default
+    prefix: 10.1.17.1/32
+    description: "10.1.17.1/32 learned on c2 (via 65000 65003)"
+  - type: route_exists
+    node: c2
+    table: default
+    prefix: 10.1.0.0/19
+    description: "10.1.0.0/19 aggregate generated on c2"
+
+  # Downstream receives the aggregate.
+  - type: route_exists
+    node: c3
+    table: default
+    prefix: 10.1.0.0/19
+    description: "10.1.0.0/19 aggregate received on c3"

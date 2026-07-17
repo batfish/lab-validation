@@ -1,9 +1,10 @@
 entries:
   # c2 (aggregator): the locally-generated aggregate carries weight 32768 in
   # Batfish but 0 on the device (Arista uses 0 for locally-originated paths).
-  # The aggregate as_path now matches (batfish/batfish#10094 fixed): both show
-  # the contributors' common leading AS_SEQUENCE, and c1/c3 no longer diverge.
-  # This is the pre-existing local-weight difference only.
+  # The aggregate as_path now matches (batfish/batfish#10094 fixed): device
+  # and Batfish both show the common leading AS_SEQUENCE "65000" across the
+  # full mixed contributor set. This is the pre-existing local-weight
+  # difference only.
   # https://github.com/batfish/lab-validation/issues/152
   - hostname: c2
     test_name: test_bgp_rib_routes
