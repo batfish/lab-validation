@@ -1,0 +1,51 @@
+! Command: show running-config
+! device: c4 (cEOSLab, EOS-4.36.0.1F-47401373.43601F (engineering build))
+!
+no aaa root
+!
+username admin privilege 15 role network-admin secret sha512 $6$OXA0YOklpOihE4sD$nt3Bk1j5sT5748kRaHBAeeVppwYPiDxoHMTO0CDUoK/ZK8YEtAKrx7GXT.U.Po8o6T4bx5ymS571MCySIMNlC1
+!
+no service interface inactive port-id allocation disabled
+!
+service routing protocols model multi-agent
+!
+hostname c4
+!
+spanning-tree mode mstp
+!
+system l1
+   unsupported speed action error
+   unsupported error-correction action error
+!
+aaa authorization exec default local
+!
+interface Ethernet1
+   no switchport
+   ip address 10.10.2.1/24
+!
+interface Management0
+   ip address 172.20.20.4/24
+   ipv6 address 3fff:172:20:20::4/64
+!
+ip routing
+!
+ip route 10.1.16.0/24 Null0
+ip route 10.1.17.1/32 Null0
+ip route 10.1.17.2/32 Null0
+ip route 10.1.17.3/32 Null0
+ip route 10.1.17.4/32 Null0
+ip route 10.1.17.5/32 Null0
+ip route 10.1.17.6/32 Null0
+ip route 10.1.17.7/32 Null0
+ip route 10.1.17.8/32 Null0
+!
+route-map ALLOW-ALL permit 10
+!
+router bgp 65003
+   router-id 4.4.4.4
+   neighbor 10.10.2.2 remote-as 65000
+   neighbor 10.10.2.2 route-map ALLOW-ALL in
+   neighbor 10.10.2.2 route-map ALLOW-ALL out
+   redistribute static
+!
+end

@@ -1,20 +1,11 @@
 entries:
-  # Aggregate AS_PATH: EOS builds the locally-generated aggregate's AS_PATH
-  # from contributor ASes; Batfish leaves it empty. On c1 (the contributor
-  # AS) the device rejects the re-advertised aggregate as an AS-path loop
-  # while Batfish installs it; on c2/c3 the aggregate's as-path differs.
-  # https://github.com/batfish/batfish/issues/10094
-  # c2 also has the locally-originated weight divergence (32768 vs 0),
+  # c2 (aggregator): the locally-generated aggregate carries weight 32768 in
+  # Batfish but 0 on the device (Arista uses 0 for locally-originated paths).
+  # The aggregate as_path now matches (batfish/batfish#10094 fixed): both show
+  # the contributors' common leading AS_SEQUENCE, and c1/c3 no longer diverge.
+  # This is the pre-existing local-weight difference only.
   # https://github.com/batfish/lab-validation/issues/152
-  - hostname: c1|c2|c3
+  - hostname: c2
     test_name: test_bgp_rib_routes
     skip:
-      reason: aggregate AS_PATH divergence, https://github.com/batfish/batfish/issues/10094
-
-  # c1 main RIB: Batfish installs the aggregate (no AS-path loop with empty
-  # as-path) that the device rejects.
-  # https://github.com/batfish/batfish/issues/10094
-  - hostname: c1
-    test_name: test_main_rib_routes
-    skip:
-      reason: aggregate AS_PATH divergence, https://github.com/batfish/batfish/issues/10094
+      reason: aggregate local weight 32768 vs 0, https://github.com/batfish/lab-validation/issues/152
