@@ -1,0 +1,58 @@
+# Arista cEOS lab: AS_PATH of a locally-generated BGP aggregate whose
+# contributors arrive via DIFFERENT AS_PATHs. Reference: batfish/batfish#10094.
+#
+# Topology (all eBGP, default VRF, no summary-only/advertise-only):
+#
+#   c1 (AS 65001)                                            c3 (AS 65004)
+#     origin 10.1.1.0/24 -> Null0                              receives aggregate
+#       \                                                     /
+#        \  Et1                                          Et1 /
+#         c0 (AS 65000, transit) --- Et2 ... Et1 --- c2 (AS 65002, aggregator)
+#        /  Et2                                          Et2 \
+#       /                                                     \  (no downstream on c4 side)
+#     origin 10.1.2.0/24 -> Null0
+#   c4 (AS 65003)
+#
+# Both contributors traverse the transit AS 65000, then diverge:
+#   at c2:  10.1.1.0/24 has AS_PATH "65000 65001 ?"
+#           10.1.2.0/24 has AS_PATH "65000 65003 ?"
+# c2 aggregates them into 10.1.0.0/16. The aggregate's AS_PATH on c2 (and
+# as received on c3) reveals how EOS combines divergent contributor paths:
+#   - "65000 {65001,65003}"  -> RFC common-sequence + AS_SET
+#   - "{65000,65001,65003}"  -> flat AS_SET of all contributor ASes
+#   - "65000"                -> common leading sequence only
+#   - "65000 65001"/empty    -> best-path-wins / other
+#
+# No as-set keyword is configured (matches production; #10094 shows EOS
+# carries contributor ASes even without it).
+
+name: ceos-bgp-agg-as-path
+
+topology:
+  nodes:
+    c0:
+      kind: arista_ceos
+      image: ceos:4.36.0.1F
+      startup-config: configs/c0.cfg
+    c1:
+      kind: arista_ceos
+      image: ceos:4.36.0.1F
+      startup-config: configs/c1.cfg
+    c2:
+      kind: arista_ceos
+      image: ceos:4.36.0.1F
+      startup-config: configs/c2.cfg
+    c3:
+      kind: arista_ceos
+      image: ceos:4.36.0.1F
+      startup-config: configs/c3.cfg
+    c4:
+      kind: arista_ceos
+      image: ceos:4.36.0.1F
+      startup-config: configs/c4.cfg
+
+  links:
+    - endpoints: ["c1:eth1", "c0:eth1"]
+    - endpoints: ["c4:eth1", "c0:eth2"]
+    - endpoints: ["c0:eth3", "c2:eth1"]
+    - endpoints: ["c2:eth2", "c3:eth1"]

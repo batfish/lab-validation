@@ -1,0 +1,26 @@
+entries:
+  # Aggregate AS_PATH divergence (batfish/batfish#10094), exercised here with
+  # a MIXED contributor set: one large /20 and many small /24+/32 routes on
+  # divergent AS_PATHs. The device forms the /19 aggregate AS_PATH from the
+  # longest common leading AS_SEQUENCE across ALL contributors -- "65000
+  # 65001 ?" (the /20) and "65000 65003 ?" (the /24 and eight /32s) collapse
+  # to "65000 ?" with atomic-aggregate, independent of prefix length or
+  # count. Batfish models an empty AS_PATH. Consequences:
+  #   - c2 (aggregator): aggregate as_path (65000,) on device vs () in Batfish.
+  #   - c3 (downstream): received aggregate (65002, 65000) vs () in Batfish.
+  #   - c0 (transit AS): device rejects the re-advertised aggregate as an
+  #     AS-path loop (65000 in path); Batfish (empty path) installs it and
+  #     propagates it on to c1/c4, which the device never receives.
+  # https://github.com/batfish/batfish/issues/10094
+  - hostname: c0|c1|c2|c3|c4
+    test_name: test_bgp_rib_routes
+    skip:
+      reason: aggregate AS_PATH divergence, https://github.com/batfish/batfish/issues/10094
+
+  # Main RIB: Batfish installs the aggregate (no AS-path loop with an empty
+  # as-path) on the transit/contributor ASes that the device rejects.
+  # https://github.com/batfish/batfish/issues/10094
+  - hostname: c0|c1|c4
+    test_name: test_main_rib_routes
+    skip:
+      reason: aggregate AS_PATH divergence, https://github.com/batfish/batfish/issues/10094

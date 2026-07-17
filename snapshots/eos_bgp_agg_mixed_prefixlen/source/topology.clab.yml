@@ -1,0 +1,51 @@
+# Arista cEOS lab: aggregate AS_PATH with a MIXED contributor set -- one
+# large (/20) contributor plus many small (/32) contributors, on divergent
+# AS_PATHs, under a single /19 aggregate. Reference: batfish/batfish#10094.
+#
+# Question this answers: does EOS derive the aggregate AS_PATH from ALL
+# more-specific contributors (common leading AS_SEQUENCE across the whole
+# set), or does prefix length / contributor count change the result?
+#
+# Topology (all eBGP, default VRF, no as-set/summary-only/advertise-only):
+#
+#   c1 (AS 65001)  origin 10.1.0.0/20 ----\
+#                                          c0 (AS 65000) --- c2 (AS 65002) --- c3 (AS 65004)
+#   c4 (AS 65003)  origin 10.1.16.0/24 as /                aggregate 10.1.0.0/19
+#                  8x /32 (10.1.17.1..8)
+#
+# At c2:  10.1.0.0/20   has AS_PATH "65000 65001 ?"    (one large contributor)
+#         10.1.17.N/32  has AS_PATH "65000 65003 ?"    (many small contributors)
+# Both share leading 65000, then diverge (65001 vs 65003). If EOS considers
+# all contributors, the /19 aggregate AS_PATH should be "65000" regardless of
+# the /20 being larger or the /32s being more numerous.
+
+name: ceos-bgp-agg-mixed-prefixlen
+
+topology:
+  nodes:
+    c0:
+      kind: arista_ceos
+      image: ceos:4.36.0.1F
+      startup-config: configs/c0.cfg
+    c1:
+      kind: arista_ceos
+      image: ceos:4.36.0.1F
+      startup-config: configs/c1.cfg
+    c2:
+      kind: arista_ceos
+      image: ceos:4.36.0.1F
+      startup-config: configs/c2.cfg
+    c3:
+      kind: arista_ceos
+      image: ceos:4.36.0.1F
+      startup-config: configs/c3.cfg
+    c4:
+      kind: arista_ceos
+      image: ceos:4.36.0.1F
+      startup-config: configs/c4.cfg
+
+  links:
+    - endpoints: ["c1:eth1", "c0:eth1"]
+    - endpoints: ["c4:eth1", "c0:eth2"]
+    - endpoints: ["c0:eth3", "c2:eth1"]
+    - endpoints: ["c2:eth2", "c3:eth1"]
