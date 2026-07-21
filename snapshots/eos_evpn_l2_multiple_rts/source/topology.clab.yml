@@ -1,0 +1,37 @@
+# Arista cEOS lab: an L2 EVPN vlan-aware-bundle declaring MULTIPLE
+# `route-target import` and `route-target export` lines. Companion to
+# eos_evpn_multiple_rts (which covers the L3 VRF case). Reference:
+# batfish/batfish#10113.
+#
+# Topology:
+#
+#   leaf1 (AS 65101)                          leaf2 (AS 65102)
+#     vlan-aware-bundle BLUE, VNI 10110          vlan-aware-bundle BLUE, VNI 10110
+#     import 65000:100, 65000:199                import 65000:200, 65000:288
+#     export 65000:200, 65000:299                export 65000:100, 65000:177
+#       Et1 172.31.255.0/31 ------------------ Et1 172.31.255.1/31
+#     Loopback0 192.168.255.1 (overlay)          Loopback0 192.168.255.2 (overlay)
+#     Loopback1 192.168.254.1 (VTEP)             Loopback1 192.168.254.2 (VTEP)
+#
+# Unlike the L3 lab, the L2 route targets have no observable dataplane
+# effect in Batfish today (L2 VNI membership is matched by VNI number, not
+# route target). The lab's purpose is to prove that Batfish RETAINS all of
+# the declared L2 route targets rather than overwriting with the last one,
+# verifiable in the vendor-independent Layer2VniConfig (routeTargets /
+# importRouteTargets) of the collected snapshot.
+
+name: ceos-evpn-l2-multiple-rts
+
+topology:
+  nodes:
+    leaf1:
+      kind: arista_ceos
+      image: ceos:4.36.0.1F
+      startup-config: configs/leaf1.cfg
+    leaf2:
+      kind: arista_ceos
+      image: ceos:4.36.0.1F
+      startup-config: configs/leaf2.cfg
+
+  links:
+    - endpoints: ["leaf1:eth1", "leaf2:eth1"]

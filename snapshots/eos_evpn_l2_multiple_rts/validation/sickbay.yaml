@@ -1,0 +1,20 @@
+# Expected failures for the L2 multiple-route-target EVPN lab.
+#
+# This lab's purpose is to prove Batfish retains all L2 vlan-aware-bundle
+# route targets in the vendor-independent Layer2VniConfig (see
+# source/README.md and working/eos_evpn_l2_multiple_rts_vimodel.md). The
+# route targets themselves are not validated by the RIB comparisons below;
+# these failures are pre-existing divergences unrelated to route targets.
+entries:
+  - hostname: "leaf[12]"
+    test_name: test_bgp_rib_routes
+    skip:
+      reason: "Locally-originated BGP path attribute divergence (network-statement VTEP/overlay loopbacks). https://github.com/batfish/lab-validation/issues/152"
+  - hostname: "leaf[12]"
+    test_name: test_evpn_rib_routes
+    skip:
+      reason: "Locally-originated EVPN Type-5 path attribute divergence (self-originated route, local AS path, no next hop). https://github.com/batfish/lab-validation/issues/152"
+  - hostname: "leaf[12]"
+    test_name: test_interface_properties
+    skip:
+      reason: "Host-facing switchport Ethernet2 is modeled by Batfish but not reported comparably in the collected interface data. https://github.com/batfish/lab-validation/issues/13"

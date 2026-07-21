@@ -1,0 +1,88 @@
+! Command: show running-config
+! device: leaf2 (cEOSLab, EOS-4.36.0.1F-47401373.43601F (engineering build))
+!
+no aaa root
+!
+username admin privilege 15 role network-admin secret sha512 $6$CU00HaIPMP14SwJ9$JN47DQZsjVaNAhVZupt5KDOYEpXZE6ynV9hkSEqAvJGq11NEqo2/la2TdElKKiQNDkTB63msWpbL1WMI0mWJN0
+!
+no service interface inactive port-id allocation disabled
+!
+service routing protocols model multi-agent
+!
+hostname leaf2
+!
+spanning-tree mode mstp
+!
+system l1
+   unsupported speed action error
+   unsupported error-correction action error
+!
+vlan 110
+   name BLUE_L2
+!
+aaa authorization exec default local
+!
+interface Ethernet1
+   description P2P_UNDERLAY_TO_leaf1
+   no switchport
+   ip address 172.31.255.1/31
+!
+interface Ethernet2
+   description host_facing
+   switchport access vlan 110
+!
+interface Loopback0
+   description EVPN_Overlay_Peering
+   ip address 192.168.255.2/32
+!
+interface Loopback1
+   description VTEP_source
+   ip address 192.168.254.2/32
+!
+interface Management0
+   ip address 172.20.20.2/24
+   ipv6 address 3fff:172:20:20::2/64
+!
+interface Vxlan1
+   vxlan source-interface Loopback1
+   vxlan udp-port 4789
+   vxlan vlan 110 vni 10110
+!
+ip routing
+!
+ip prefix-list PL-LOOPBACKS
+   seq 10 permit 192.168.255.0/24 eq 32
+   seq 20 permit 192.168.254.0/24 eq 32
+!
+route-map RM-CONN-2-BGP permit 10
+   match ip address prefix-list PL-LOOPBACKS
+!
+router bgp 65102
+   router-id 192.168.255.2
+   no bgp default ipv4-unicast
+   maximum-paths 2 ecmp 2
+   neighbor 172.31.255.0 remote-as 65101
+   neighbor 192.168.255.1 remote-as 65101
+   neighbor 192.168.255.1 update-source Loopback0
+   neighbor 192.168.255.1 ebgp-multihop 3
+   neighbor 192.168.255.1 send-community extended
+   redistribute connected route-map RM-CONN-2-BGP
+   !
+   vlan-aware-bundle BLUE
+      rd 192.168.255.2:10110
+      route-target import 65000:200
+      route-target import 65000:288
+      route-target export 65000:100
+      route-target export 65000:177
+      redistribute learned
+      vlan 110
+   !
+   address-family evpn
+      neighbor 192.168.255.1 activate
+   !
+   address-family ipv4
+      neighbor 172.31.255.0 activate
+      network 192.168.254.2/32
+      network 192.168.255.2/32
+!
+end

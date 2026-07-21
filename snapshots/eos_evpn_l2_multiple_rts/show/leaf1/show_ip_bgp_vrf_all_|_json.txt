@@ -1,0 +1,223 @@
+{
+    "vrfs": {
+        "default": {
+            "vrf": "default",
+            "routerId": "192.168.255.1",
+            "asn": "65101",
+            "bgpRouteEntries": {
+                "192.168.254.1/32": {
+                    "address": "192.168.254.1",
+                    "maskLength": 32,
+                    "bgpRoutePaths": [
+                        {
+                            "nextHop": "",
+                            "reasonNotBestpath": "noReason",
+                            "weight": 0,
+                            "tag": 0,
+                            "routeType": {
+                                "stale": false,
+                                "valid": true,
+                                "suppressed": false,
+                                "active": true,
+                                "backup": false,
+                                "ecmpHead": true,
+                                "ecmp": true,
+                                "ecmpContributor": false,
+                                "atomicAggregator": false,
+                                "queued": false,
+                                "luRoute": false,
+                                "sixPeRoute": false,
+                                "ucmp": false,
+                                "origin": "Igp"
+                            },
+                            "peerEntry": {
+                                "peerAddr": "",
+                                "peerRouterId": "192.168.255.1"
+                            },
+                            "asPathEntry": {
+                                "asPathType": "Local",
+                                "asPath": "i"
+                            }
+                        },
+                        {
+                            "nextHop": "",
+                            "reasonNotBestpath": "noReason",
+                            "weight": 0,
+                            "tag": 0,
+                            "routeType": {
+                                "stale": false,
+                                "valid": true,
+                                "suppressed": false,
+                                "active": false,
+                                "backup": false,
+                                "ecmpHead": false,
+                                "ecmp": true,
+                                "ecmpContributor": false,
+                                "atomicAggregator": false,
+                                "queued": false,
+                                "luRoute": false,
+                                "sixPeRoute": false,
+                                "ucmp": false,
+                                "origin": "Igp"
+                            },
+                            "peerEntry": {
+                                "peerAddr": "",
+                                "peerRouterId": "192.168.255.1"
+                            },
+                            "asPathEntry": {
+                                "asPathType": "Local",
+                                "asPath": "i"
+                            }
+                        }
+                    ],
+                    "totalPaths": 2
+                },
+                "192.168.254.2/32": {
+                    "address": "192.168.254.2",
+                    "maskLength": 32,
+                    "bgpRoutePaths": [
+                        {
+                            "nextHop": "172.31.255.1",
+                            "reasonNotBestpath": "noReason",
+                            "localPreference": 100,
+                            "weight": 0,
+                            "tag": 0,
+                            "med": 0,
+                            "routeType": {
+                                "stale": false,
+                                "valid": true,
+                                "suppressed": false,
+                                "active": true,
+                                "backup": false,
+                                "ecmpHead": false,
+                                "ecmp": false,
+                                "ecmpContributor": false,
+                                "atomicAggregator": false,
+                                "queued": false,
+                                "luRoute": false,
+                                "sixPeRoute": false,
+                                "ucmp": false,
+                                "origin": "Igp"
+                            },
+                            "peerEntry": {
+                                "peerAddr": "172.31.255.1",
+                                "peerRouterId": "192.168.255.2"
+                            },
+                            "asPathEntry": {
+                                "asPathType": "External",
+                                "asPath": "65102 i"
+                            }
+                        }
+                    ],
+                    "totalPaths": 1
+                },
+                "192.168.255.1/32": {
+                    "address": "192.168.255.1",
+                    "maskLength": 32,
+                    "bgpRoutePaths": [
+                        {
+                            "nextHop": "",
+                            "reasonNotBestpath": "noReason",
+                            "weight": 0,
+                            "tag": 0,
+                            "routeType": {
+                                "stale": false,
+                                "valid": true,
+                                "suppressed": false,
+                                "active": true,
+                                "backup": false,
+                                "ecmpHead": true,
+                                "ecmp": true,
+                                "ecmpContributor": false,
+                                "atomicAggregator": false,
+                                "queued": false,
+                                "luRoute": false,
+                                "sixPeRoute": false,
+                                "ucmp": false,
+                                "origin": "Igp"
+                            },
+                            "peerEntry": {
+                                "peerAddr": "",
+                                "peerRouterId": "192.168.255.1"
+                            },
+                            "asPathEntry": {
+                                "asPathType": "Local",
+                                "asPath": "i"
+                            }
+                        },
+                        {
+                            "nextHop": "",
+                            "reasonNotBestpath": "noReason",
+                            "weight": 0,
+                            "tag": 0,
+                            "routeType": {
+                                "stale": false,
+                                "valid": true,
+                                "suppressed": false,
+                                "active": false,
+                                "backup": false,
+                                "ecmpHead": false,
+                                "ecmp": true,
+                                "ecmpContributor": false,
+                                "atomicAggregator": false,
+                                "queued": false,
+                                "luRoute": false,
+                                "sixPeRoute": false,
+                                "ucmp": false,
+                                "origin": "Igp"
+                            },
+                            "peerEntry": {
+                                "peerAddr": "",
+                                "peerRouterId": "192.168.255.1"
+                            },
+                            "asPathEntry": {
+                                "asPathType": "Local",
+                                "asPath": "i"
+                            }
+                        }
+                    ],
+                    "totalPaths": 2
+                },
+                "192.168.255.2/32": {
+                    "address": "192.168.255.2",
+                    "maskLength": 32,
+                    "bgpRoutePaths": [
+                        {
+                            "nextHop": "172.31.255.1",
+                            "reasonNotBestpath": "noReason",
+                            "localPreference": 100,
+                            "weight": 0,
+                            "tag": 0,
+                            "med": 0,
+                            "routeType": {
+                                "stale": false,
+                                "valid": true,
+                                "suppressed": false,
+                                "active": true,
+                                "backup": false,
+                                "ecmpHead": false,
+                                "ecmp": false,
+                                "ecmpContributor": false,
+                                "atomicAggregator": false,
+                                "queued": false,
+                                "luRoute": false,
+                                "sixPeRoute": false,
+                                "ucmp": false,
+                                "origin": "Igp"
+                            },
+                            "peerEntry": {
+                                "peerAddr": "172.31.255.1",
+                                "peerRouterId": "192.168.255.2"
+                            },
+                            "asPathEntry": {
+                                "asPathType": "External",
+                                "asPath": "65102 i"
+                            }
+                        }
+                    ],
+                    "totalPaths": 1
+                }
+            }
+        }
+    }
+}
