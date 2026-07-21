@@ -1,0 +1,22 @@
+# Expected failures for the multiple-route-target EVPN lab.
+#
+# Batfish's Arista model keeps only a single import and a single export
+# EVPN route-target per VRF (last line wins). This lab lists the matching
+# RT before an unused decoy in each direction, so Batfish retains only the
+# decoy and imports neither cross-VRF route. The real device imports both.
+# Tracked in https://github.com/batfish/batfish/issues/10113.
+#
+# Remove these entries once Batfish models multiple import/export RTs.
+entries:
+  - hostname: "leaf[12]"
+    test_name: test_main_rib_routes
+    skip:
+      reason: "Multiple EVPN route-targets collapse to the last one, so the cross-VRF imported route is missing from the VRF RIB. https://github.com/batfish/batfish/issues/10113"
+  - hostname: "leaf[12]"
+    test_name: test_bgp_rib_routes
+    skip:
+      reason: "Multiple EVPN route-targets collapse to the last one, so the cross-VRF imported route is missing from the BGP RIB. https://github.com/batfish/batfish/issues/10113"
+  - hostname: "leaf[12]"
+    test_name: test_evpn_rib_routes
+    skip:
+      reason: "Multiple EVPN route-targets collapse to the last one, so the imported EVPN Type-5 route is missing. https://github.com/batfish/batfish/issues/10113"
