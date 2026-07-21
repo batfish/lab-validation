@@ -1,0 +1,82 @@
+! Command: show running-config
+! device: leaf1 (cEOSLab, EOS-4.36.0.1F-47401373.43601F (engineering build))
+!
+no aaa root
+!
+username admin privilege 15 role network-admin secret sha512 $6$6plnc3I/pFHEjYSf$X8iO21u1beGAXIdd7ePlaEaSVRa/grCovrX.igEFSQ8qamhYQm.0VKQn3.y25AP1olBb0Hf4cnGcDye/7ioU1.
+!
+no service interface inactive port-id allocation disabled
+!
+service routing protocols model multi-agent
+!
+hostname leaf1
+!
+spanning-tree mode mstp
+!
+system l1
+   unsupported speed action error
+   unsupported error-correction action error
+!
+vrf instance RED
+!
+aaa authorization exec default local
+!
+interface Ethernet1
+   description P2P_UNDERLAY_TO_leaf2
+   no switchport
+   ip address 172.31.255.0/31
+!
+interface Loopback0
+   description EVPN_Overlay_Peering_and_VTEP_source
+   ip address 192.168.255.1/32
+!
+interface Loopback101
+   description RED_tenant_prefix
+   vrf RED
+   ip address 10.1.1.1/32
+!
+interface Management0
+   ip address 172.20.20.2/24
+   ipv6 address 3fff:172:20:20::2/64
+!
+interface Vxlan1
+   vxlan source-interface Loopback0
+   vxlan udp-port 4789
+   vxlan vrf RED vni 15001
+!
+ip routing
+ip routing vrf RED
+!
+ip prefix-list PL-LOOPBACKS
+   seq 10 permit 192.168.255.0/24 eq 32
+!
+route-map RM-CONN-2-BGP permit 10
+   match ip address prefix-list PL-LOOPBACKS
+!
+router bgp 65101
+   router-id 192.168.255.1
+   no bgp default ipv4-unicast
+   maximum-paths 2 ecmp 2
+   neighbor 172.31.255.1 remote-as 65102
+   neighbor 192.168.255.2 remote-as 65102
+   neighbor 192.168.255.2 update-source Loopback0
+   neighbor 192.168.255.2 ebgp-multihop 3
+   neighbor 192.168.255.2 send-community extended
+   redistribute connected route-map RM-CONN-2-BGP
+   !
+   address-family evpn
+      neighbor 192.168.255.2 activate
+   !
+   address-family ipv4
+      neighbor 172.31.255.1 activate
+      network 192.168.255.1/32
+   !
+   vrf RED
+      rd 192.168.255.1:15001
+      route-target import evpn 65000:100
+      route-target import evpn 65000:199
+      route-target export evpn 65000:200
+      route-target export evpn 65000:299
+      redistribute connected
+!
+end

@@ -1,0 +1,65 @@
+{
+    "vrfs": {
+        "default": {
+            "routeDistinguisher": "",
+            "protocols": {
+                "ipv4": {
+                    "supported": true,
+                    "protocolState": "up",
+                    "routingState": "up"
+                },
+                "ipv6": {
+                    "supported": true,
+                    "protocolState": "up",
+                    "routingState": "down"
+                }
+            },
+            "vrfState": "up",
+            "interfacesV4": [
+                "Vlan4094",
+                "Ethernet1",
+                "Management0",
+                "Loopback0"
+            ],
+            "interfacesV6": [
+                "Vlan4094",
+                "Management0"
+            ],
+            "interfaces": [
+                "Vlan4094",
+                "Ethernet1",
+                "Management0",
+                "Loopback0"
+            ],
+            "vrfId": 0
+        },
+        "BLUE": {
+            "routeDistinguisher": "192.168.255.2:15002",
+            "protocols": {
+                "ipv4": {
+                    "supported": true,
+                    "protocolState": "up",
+                    "routingState": "up"
+                },
+                "ipv6": {
+                    "supported": true,
+                    "protocolState": "up",
+                    "routingState": "down"
+                }
+            },
+            "vrfState": "up",
+            "interfacesV4": [
+                "Loopback101",
+                "Vlan4097"
+            ],
+            "interfacesV6": [
+                "Vlan4097"
+            ],
+            "interfaces": [
+                "Loopback101",
+                "Vlan4097"
+            ],
+            "vrfId": 1
+        }
+    }
+}

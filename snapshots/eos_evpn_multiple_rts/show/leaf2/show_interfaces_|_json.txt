@@ -1,0 +1,400 @@
+{
+    "interfaces": {
+        "Ethernet1": {
+            "name": "Ethernet1",
+            "forwardingModel": "routed",
+            "lineProtocolStatus": "up",
+            "interfaceStatus": "connected",
+            "hardware": "ethernet",
+            "interfaceAddress": [
+                {
+                    "primaryIp": {
+                        "address": "172.31.255.1",
+                        "maskLen": 31
+                    },
+                    "secondaryIps": {},
+                    "secondaryIpsOrderedList": [],
+                    "virtualIp": {
+                        "address": "0.0.0.0",
+                        "maskLen": 0
+                    },
+                    "virtualSecondaryIps": {},
+                    "virtualSecondaryIpsOrderedList": [],
+                    "broadcastAddress": "255.255.255.255",
+                    "dhcp": false
+                }
+            ],
+            "physicalAddress": "aa:c1:ab:ff:51:a2",
+            "burnedInAddress": "aa:c1:ab:ff:51:a2",
+            "description": "P2P_UNDERLAY_TO_leaf1",
+            "bandwidth": 1000000000,
+            "mtu": 1500,
+            "l3MtuConfigured": false,
+            "l2Mru": 0,
+            "lastStatusChangeTimestamp": 1784649397.5544806,
+            "interfaceStatistics": {
+                "updateInterval": 300.0,
+                "inBitsRate": 77.93782978182607,
+                "inPktsRate": 0.08628593457312268,
+                "outBitsRate": 0.0,
+                "outPktsRate": 0.0
+            },
+            "interfaceCounters": {
+                "inOctets": 4225,
+                "inUcastPkts": 28,
+                "inMulticastPkts": 6,
+                "inBroadcastPkts": 4,
+                "inDiscards": 0,
+                "inTotalPkts": 38,
+                "outOctets": 0,
+                "outUcastPkts": 0,
+                "outMulticastPkts": 0,
+                "outBroadcastPkts": 0,
+                "outDiscards": 0,
+                "outTotalPkts": 0,
+                "linkStatusChanges": 2,
+                "totalInErrors": 0,
+                "inputErrorsDetail": {
+                    "runtFrames": 0,
+                    "giantFrames": 0,
+                    "fcsErrors": 0,
+                    "alignmentErrors": 0,
+                    "symbolErrors": 0,
+                    "rxPause": 0
+                },
+                "totalOutErrors": 0,
+                "outputErrorsDetail": {
+                    "collisions": 0,
+                    "lateCollisions": 0,
+                    "deferredTransmissions": 0,
+                    "txPause": 0
+                },
+                "counterRefreshTime": 1784649554.3014965
+            },
+            "duplex": "duplexFull",
+            "autoNegotiate": "unknown",
+            "loopbackMode": "loopbackNone",
+            "lanes": 0
+        },
+        "Management0": {
+            "name": "Management0",
+            "forwardingModel": "routed",
+            "lineProtocolStatus": "up",
+            "interfaceStatus": "connected",
+            "hardware": "ethernet",
+            "interfaceAddress": [
+                {
+                    "primaryIp": {
+                        "address": "172.20.20.3",
+                        "maskLen": 24
+                    },
+                    "secondaryIps": {},
+                    "secondaryIpsOrderedList": [],
+                    "virtualIp": {
+                        "address": "0.0.0.0",
+                        "maskLen": 0
+                    },
+                    "virtualSecondaryIps": {},
+                    "virtualSecondaryIpsOrderedList": [],
+                    "broadcastAddress": "255.255.255.255",
+                    "dhcp": false
+                }
+            ],
+            "interfaceAddressIp6": {
+                "linkLocalIp6": {
+                    "address": "fe80::24bb:70ff:fee0:a7af",
+                    "subnet": "fe80::/64",
+                    "active": true,
+                    "leastpref": false,
+                    "dadfailed": false
+                },
+                "globalUnicastIp6s": [
+                    {
+                        "address": "3fff:172:20:20::3",
+                        "subnet": "3fff:172:20:20::/64",
+                        "active": true,
+                        "leastpref": false,
+                        "dadfailed": false
+                    }
+                ],
+                "globalAddressesAreVirtual": false,
+                "addrSource": "manual"
+            },
+            "physicalAddress": "26:bb:70:e0:a7:af",
+            "burnedInAddress": "26:bb:70:e0:a7:af",
+            "description": "",
+            "bandwidth": 1000000000,
+            "mtu": 1500,
+            "l3MtuConfigured": false,
+            "l2Mru": 0,
+            "lastStatusChangeTimestamp": 1784649396.024111,
+            "interfaceStatistics": {
+                "updateInterval": 300.0,
+                "inBitsRate": 1385.1121056147833,
+                "inPktsRate": 1.268510038657339,
+                "outBitsRate": 2032.2403010046085,
+                "outPktsRate": 1.4436167066402832
+            },
+            "interfaceCounters": {
+                "inOctets": 69760,
+                "inUcastPkts": 515,
+                "inMulticastPkts": 0,
+                "inBroadcastPkts": 0,
+                "inDiscards": 0,
+                "inTotalPkts": 515,
+                "outOctets": 100502,
+                "outUcastPkts": 580,
+                "outMulticastPkts": 0,
+                "outBroadcastPkts": 0,
+                "outDiscards": 0,
+                "outTotalPkts": 580,
+                "linkStatusChanges": 3,
+                "totalInErrors": 0,
+                "inputErrorsDetail": {
+                    "runtFrames": 0,
+                    "giantFrames": 0,
+                    "fcsErrors": 0,
+                    "alignmentErrors": 0,
+                    "symbolErrors": 0,
+                    "rxPause": 0
+                },
+                "totalOutErrors": 0,
+                "outputErrorsDetail": {
+                    "collisions": 0,
+                    "lateCollisions": 0,
+                    "deferredTransmissions": 0,
+                    "txPause": 0
+                },
+                "counterRefreshTime": 1784649554.360978
+            },
+            "duplex": "duplexFull",
+            "autoNegotiate": "success",
+            "loopbackMode": "loopbackNone",
+            "lanes": 0
+        },
+        "Vlan4097": {
+            "name": "Vlan4097",
+            "forwardingModel": "routed",
+            "lineProtocolStatus": "up",
+            "interfaceStatus": "connected",
+            "hardware": "vlan",
+            "interfaceAddress": [
+                {
+                    "primaryIp": {
+                        "address": "0.0.0.0",
+                        "maskLen": 0
+                    },
+                    "secondaryIps": {},
+                    "secondaryIpsOrderedList": [],
+                    "virtualIp": {
+                        "address": "0.0.0.0",
+                        "maskLen": 0
+                    },
+                    "virtualSecondaryIps": {},
+                    "virtualSecondaryIpsOrderedList": [],
+                    "broadcastAddress": "255.255.255.255",
+                    "dhcp": false
+                }
+            ],
+            "interfaceAddressIp6": {
+                "linkLocalIp6": {
+                    "address": "fe80::21c:73ff:fe48:71f2",
+                    "subnet": "fe80::/64",
+                    "active": true,
+                    "leastpref": false,
+                    "dadfailed": false
+                },
+                "globalUnicastIp6s": [],
+                "globalAddressesAreVirtual": false,
+                "addrSource": "manual"
+            },
+            "physicalAddress": "00:1c:73:48:71:f2",
+            "burnedInAddress": "00:1c:73:48:71:f2",
+            "description": "",
+            "bandwidth": 0,
+            "mtu": 9164,
+            "l3MtuConfigured": false,
+            "l2Mru": 0,
+            "lastStatusChangeTimestamp": 1784649401.5297651
+        },
+        "Vlan4094": {
+            "name": "Vlan4094",
+            "forwardingModel": "routed",
+            "lineProtocolStatus": "up",
+            "interfaceStatus": "connected",
+            "hardware": "vlan",
+            "interfaceAddress": [
+                {
+                    "primaryIp": {
+                        "address": "0.0.0.0",
+                        "maskLen": 0
+                    },
+                    "secondaryIps": {},
+                    "secondaryIpsOrderedList": [],
+                    "virtualIp": {
+                        "address": "0.0.0.0",
+                        "maskLen": 0
+                    },
+                    "virtualSecondaryIps": {},
+                    "virtualSecondaryIpsOrderedList": [],
+                    "broadcastAddress": "255.255.255.255",
+                    "dhcp": false
+                }
+            ],
+            "interfaceAddressIp6": {
+                "linkLocalIp6": {
+                    "address": "fe80::21c:73ff:fe48:71f2",
+                    "subnet": "fe80::/64",
+                    "active": true,
+                    "leastpref": false,
+                    "dadfailed": false
+                },
+                "globalUnicastIp6s": [],
+                "globalAddressesAreVirtual": false,
+                "addrSource": "manual"
+            },
+            "physicalAddress": "00:1c:73:48:71:f2",
+            "burnedInAddress": "00:1c:73:48:71:f2",
+            "description": "",
+            "bandwidth": 0,
+            "mtu": 9164,
+            "l3MtuConfigured": false,
+            "l2Mru": 0,
+            "lastStatusChangeTimestamp": 1784649404.0131629
+        },
+        "Loopback101": {
+            "name": "Loopback101",
+            "forwardingModel": "routed",
+            "lineProtocolStatus": "up",
+            "interfaceStatus": "connected",
+            "hardware": "loopback",
+            "interfaceAddress": [
+                {
+                    "primaryIp": {
+                        "address": "10.2.2.2",
+                        "maskLen": 32
+                    },
+                    "secondaryIps": {},
+                    "secondaryIpsOrderedList": [],
+                    "virtualIp": {
+                        "address": "0.0.0.0",
+                        "maskLen": 0
+                    },
+                    "virtualSecondaryIps": {},
+                    "virtualSecondaryIpsOrderedList": [],
+                    "broadcastAddress": "255.255.255.255",
+                    "dhcp": false
+                }
+            ],
+            "description": "BLUE_tenant_prefix",
+            "bandwidth": 0,
+            "mtu": 65535,
+            "l3MtuConfigured": false,
+            "l2Mru": 0,
+            "lastStatusChangeTimestamp": 1784649396.3364701
+        },
+        "Loopback0": {
+            "name": "Loopback0",
+            "forwardingModel": "routed",
+            "lineProtocolStatus": "up",
+            "interfaceStatus": "connected",
+            "hardware": "loopback",
+            "interfaceAddress": [
+                {
+                    "primaryIp": {
+                        "address": "192.168.255.2",
+                        "maskLen": 32
+                    },
+                    "secondaryIps": {},
+                    "secondaryIpsOrderedList": [],
+                    "virtualIp": {
+                        "address": "0.0.0.0",
+                        "maskLen": 0
+                    },
+                    "virtualSecondaryIps": {},
+                    "virtualSecondaryIpsOrderedList": [],
+                    "broadcastAddress": "255.255.255.255",
+                    "dhcp": false
+                }
+            ],
+            "description": "EVPN_Overlay_Peering_and_VTEP_source",
+            "bandwidth": 0,
+            "mtu": 65535,
+            "l3MtuConfigured": false,
+            "l2Mru": 0,
+            "lastStatusChangeTimestamp": 1784649396.336526
+        },
+        "Vxlan1": {
+            "name": "Vxlan1",
+            "forwardingModel": "bridged",
+            "lineProtocolStatus": "up",
+            "interfaceStatus": "connected",
+            "hardware": "vxlan",
+            "interfaceAddress": [],
+            "description": "",
+            "bandwidth": 0,
+            "mtu": 0,
+            "l3MtuConfigured": false,
+            "l2Mru": 0,
+            "vniInDottedNotation": false,
+            "srcIpIntf": "Loopback0",
+            "srcIpAddr": "192.168.255.2",
+            "udpPort": 4789,
+            "secUdpPort": 5500,
+            "mcastGrpDecap": "",
+            "vlanToVniMap": {
+                "4097": {
+                    "vni": 15002,
+                    "source": "evpn"
+                },
+                "4094": {
+                    "vni": 15001,
+                    "source": "evpn"
+                }
+            },
+            "vlanToVtepList": {},
+            "staticFloodlists": false,
+            "replicationMode": "headendNonVcs",
+            "vlanToLearnRestrict": {
+                "4094": {
+                    "learnFrom": "learnFromAny",
+                    "prefixList": []
+                }
+            },
+            "vrfToVniMap": {
+                "BLUE": 15002
+            },
+            "decapVniToVrfMap": {},
+            "dataPathLearningMode": false,
+            "controllerClientMode": false,
+            "controllerControlPlane": false,
+            "vccImportVlan": "",
+            "vccArpProxy": false,
+            "vccNdProxy": false,
+            "vxlanArpProxy": false,
+            "vxlanNdProxy": false,
+            "arpReplyRelayMode": false,
+            "arpLocalAddress": false,
+            "portDot1qVniMapping": false,
+            "mlagSharedRouterMacAddr": "00:00:00:00:00:00",
+            "vtepAddrMask": "255.255.255.255",
+            "use32BitVni": false,
+            "vtepToVtepBridging": false,
+            "vtepSetForSourcePruning": [],
+            "vtepSourcePruningAll": false,
+            "decapFilterMode": "filterEnabled",
+            "decapFilterIntf": [],
+            "decapRouteAll": false,
+            "mcastRouting": false,
+            "vxlanEncapsulation": "ipv4",
+            "vArpVtepSrcIpIntf": "",
+            "floodLearnedAll": false,
+            "vtepToSecProfileTotal": 0,
+            "bfdPrefixList": "",
+            "remoteVxlanDomain": false,
+            "tcpMssV4": 0,
+            "tcpMssV6": 0,
+            "vxlanMacDrop": false
+        }
+    }
+}
