@@ -1,0 +1,82 @@
+{
+    "vrf": "default",
+    "routerId": "192.168.255.2",
+    "asn": 65102,
+    "evpnRoutes": {
+        "RD: 192.168.255.1:10110 imet 10110 192.168.254.1": {
+            "totalPaths": 1,
+            "routeKeyDetail": {
+                "eti": 10110,
+                "ipGenAddr": "192.168.254.1",
+                "domain": "local",
+                "rd": "192.168.255.1:10110",
+                "nlriType": "imet"
+            },
+            "evpnRoutePaths": [
+                {
+                    "nextHop": "192.168.254.1",
+                    "asPathEntry": {
+                        "asPathType": "External",
+                        "asPath": "65101 i"
+                    },
+                    "reasonNotBestpath": "noReason",
+                    "routeType": {
+                        "active": true,
+                        "atomicAggregator": false,
+                        "backup": false,
+                        "ecmp": false,
+                        "ecmpContributor": false,
+                        "ecmpHead": false,
+                        "localAgg": false,
+                        "origin": "Igp",
+                        "queued": false,
+                        "stale": false,
+                        "suppressed": false,
+                        "valid": true,
+                        "waitForConvergence": false,
+                        "unknownMetric": false
+                    },
+                    "localPreference": 100,
+                    "weight": 0
+                }
+            ]
+        },
+        "RD: 192.168.255.2:10110 imet 10110 192.168.254.2": {
+            "totalPaths": 1,
+            "routeKeyDetail": {
+                "eti": 10110,
+                "ipGenAddr": "192.168.254.2",
+                "domain": "local",
+                "rd": "192.168.255.2:10110",
+                "nlriType": "imet"
+            },
+            "evpnRoutePaths": [
+                {
+                    "nextHop": "",
+                    "asPathEntry": {
+                        "asPathType": "Local",
+                        "asPath": "i"
+                    },
+                    "reasonNotBestpath": "noReason",
+                    "routeType": {
+                        "active": true,
+                        "atomicAggregator": false,
+                        "backup": false,
+                        "ecmp": false,
+                        "ecmpContributor": false,
+                        "ecmpHead": false,
+                        "localAgg": false,
+                        "origin": "Igp",
+                        "queued": false,
+                        "stale": false,
+                        "suppressed": false,
+                        "valid": true,
+                        "waitForConvergence": false,
+                        "unknownMetric": false
+                    },
+                    "weight": 0
+                }
+            ]
+        }
+    }
+}
