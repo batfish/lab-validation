@@ -60,9 +60,10 @@ Deployed on cEOS 4.36.0.1F via the `infra/` lab builder, collected, and
 validated against Batfish. All 6 `checks.yaml` preconditions pass on the
 real device: both cross-VRF routes import via their non-last RT.
 
-Against Batfish the bug reproduces exactly. `test_main_rib_routes`,
-`test_bgp_rib_routes`, and `test_evpn_rib_routes` fail on both leaves
-because the imported route is missing (RED lacks `10.2.2.2/32`, BLUE
-lacks `10.1.1.1/32`). These are sickbayed to xfail against
-batfish/batfish#10113; remove the entries once Batfish models multiple
-import/export RTs.
+The multiple-route-target modeling gap (batfish/batfish#10113) and the
+related `send-community extended` gap (batfish/batfish#10116) are fixed,
+so both cross-VRF routes now reach the main RIB and
+`test_main_rib_routes` passes. `test_bgp_rib_routes` and
+`test_evpn_rib_routes` still xfail on the pre-existing locally-originated
+path-attribute divergence (lab-validation#152), which is unrelated to
+route targets and appears in any Arista EVPN lab.
