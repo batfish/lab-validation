@@ -1,22 +1,20 @@
 # Expected failures for the multiple-route-target EVPN lab.
 #
-# Batfish's Arista model keeps only a single import and a single export
-# EVPN route-target per VRF (last line wins). This lab lists the matching
-# RT before an unused decoy in each direction, so Batfish retains only the
-# decoy and imports neither cross-VRF route. The real device imports both.
-# Tracked in https://github.com/batfish/batfish/issues/10113.
+# The multiple import/export route-target modeling gap (batfish#10113) and
+# the related send-community extended gap (batfish#10116) are fixed, so the
+# cross-VRF routes now reach the main RIB and test_main_rib_routes passes.
 #
-# Remove these entries once Batfish models multiple import/export RTs.
+# The remaining BGP/EVPN RIB failures are the known locally-originated
+# path-attribute divergence, not route-target related: the device carries
+# locally-originated paths (the `network` loopbacks, and each leaf's own
+# EVPN Type-5 route with an empty/local AS path and no next hop) that
+# Batfish models with different attributes.
 entries:
-  - hostname: "leaf[12]"
-    test_name: test_main_rib_routes
-    skip:
-      reason: "Multiple EVPN route-targets collapse to the last one, so the cross-VRF imported route is missing from the VRF RIB. https://github.com/batfish/batfish/issues/10113"
   - hostname: "leaf[12]"
     test_name: test_bgp_rib_routes
     skip:
-      reason: "Multiple EVPN route-targets collapse to the last one, so the cross-VRF imported route is missing from the BGP RIB. https://github.com/batfish/batfish/issues/10113"
+      reason: "Locally-originated BGP path attribute divergence (network-statement loopbacks). https://github.com/batfish/lab-validation/issues/152"
   - hostname: "leaf[12]"
     test_name: test_evpn_rib_routes
     skip:
-      reason: "Multiple EVPN route-targets collapse to the last one, so the imported EVPN Type-5 route is missing. https://github.com/batfish/batfish/issues/10113"
+      reason: "Locally-originated EVPN Type-5 path attribute divergence (self-originated route, local AS path, no next hop). https://github.com/batfish/lab-validation/issues/152"
