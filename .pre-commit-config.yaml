@@ -21,6 +21,10 @@ repos:
     rev: v4.0.0-alpha.8
     hooks:
       - id: prettier
+        # mirrors-prettier is archived and its rev does not pin the npm
+        # install, so a fresh hook env silently picks up whatever prettier
+        # npm calls latest. Pin it here to keep lint reproducible.
+        additional_dependencies: ["prettier@3.9.6"]
         types_or: [markdown, yaml]
         exclude: ^(?:snapshots/.*|infra/examples/.*/collected-snapshot)/show/
   # Block deprecated pyparsing camelCase API. Each name in pyparsing 3.x is
