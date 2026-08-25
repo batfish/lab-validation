@@ -1,0 +1,17 @@
+name: aoscx-vrnetlab
+
+topology:
+  kinds:
+    aruba_aoscx:
+      image: vrnetlab/vr-aoscx:10.17.1021
+
+  nodes:
+    cx1:
+      kind: aruba_aoscx
+      startup-config: configs/cx1.cfg
+    cx2:
+      kind: aruba_aoscx
+      startup-config: configs/cx2.cfg
+
+  links:
+    - endpoints: ["cx1:eth1", "cx2:eth1"]

@@ -378,6 +378,8 @@ def _sros_check_isis(node: NodeInfo) -> bool | None:
 
 
 def check_bgp_established(node: NodeInfo) -> bool | None:
+    if node.profile.name == "aoscx":
+        return None
     if node.profile.name == "arista":
         return _arista_check_bgp(node)
     if node.profile.name == "nx":
@@ -388,6 +390,8 @@ def check_bgp_established(node: NodeInfo) -> bool | None:
 
 
 def check_ospf_full(node: NodeInfo) -> bool | None:
+    if node.profile.name == "aoscx":
+        return None
     if node.profile.name == "arista":
         return _arista_check_ospf(node)
     if node.profile.name == "nx":
@@ -398,6 +402,8 @@ def check_ospf_full(node: NodeInfo) -> bool | None:
 
 
 def check_isis_up(node: NodeInfo) -> bool | None:
+    if node.profile.name == "aoscx":
+        return None
     if node.profile.name == "arista":
         return _arista_check_isis(node)
     if node.profile.name == "nx":
@@ -408,7 +414,7 @@ def check_isis_up(node: NodeInfo) -> bool | None:
 
 
 def check_platform_warnings(node: NodeInfo) -> list[str]:
-    if node.profile.name in ("arista", "nx", "sros"):
+    if node.profile.name in ("arista", "nx", "sros", "aoscx"):
         return []
     return _junos_check_platform_warnings(node)
 

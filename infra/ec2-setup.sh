@@ -49,9 +49,9 @@ echo "--- Updating system packages ---"
 apt-get update -y
 apt-get upgrade -y
 
-# KVM/QEMU tools
+# KVM/QEMU support for vrnetlab
 echo "--- Installing KVM/QEMU tools ---"
-apt-get install -y qemu-kvm libvirt-daemon-system virtinst cpu-checker
+apt-get install -y qemu-kvm cpu-checker
 
 # Verify KVM
 if [[ -e /dev/kvm ]]; then
@@ -122,6 +122,10 @@ classify_image() {
         *veos*|*arista*)
             image_tag="veos"
             image_grep="veos"
+            dest="" ;;
+        aoscx-*|aruba_arubaos-cx-*|vr-aoscx-*)
+            image_tag="aoscx"
+            image_grep="aoscx|aruba_arubaos-cx"
             dest="" ;;
         *)
             return 1 ;;

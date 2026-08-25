@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from lab_builder.config import NOKIA_SRSIM, command_to_filename
+from lab_builder.config import AOSCX, NOKIA_SRSIM, command_to_filename
 
 
 class TestCommandToFilename:
@@ -82,3 +82,10 @@ class TestNokiaSrsimProfile:
             assert not cmd.rstrip().endswith(" json"), (
                 f"json must precede the path: {cmd}"
             )
+
+
+def test_aoscx_profile_maps_first_data_link() -> None:
+    assert AOSCX.containerlab_kind == "aruba_aoscx"
+    assert AOSCX.interface_prefix == "1/1/"
+    assert AOSCX.interface_offset == 1
+    assert AOSCX.netmiko_device_type == "aruba_aoscx"

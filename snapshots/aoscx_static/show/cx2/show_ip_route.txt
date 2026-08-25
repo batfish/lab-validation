@@ -1,0 +1,21 @@
+
+Displaying ipv4 routes selected for forwarding
+
+Origin Codes: C - connected, S - static, L - local
+              R - RIP, B - BGP, O - OSPF, D - DHCP
+              U - Unnumbered
+Type Codes:   E - External BGP, I - Internal BGP, V - VPN, EV - EVPN
+              IA - OSPF internal area, E1 - OSPF external type 1
+              E2 - OSPF external type 2   
+
+VRF: default
+
+Prefix              Nexthop                                  Interface     VRF(egress)       Origin/   Distance/    Age
+                                                                                             Type      Metric
+--------------------------------------------------------------------------------------------------------
+1.1.1.1/32          10.0.0.0                                 1/1/1         -                 S         [1/0]        00h:00m:46s  
+2.2.2.2/32          -                                        loopback0     -                 L         [0/0]        -            
+10.0.0.0/31         -                                        1/1/1         -                 C         [0/0]        -            
+10.0.0.1/32         -                                        1/1/1         -                 L         [0/0]        -            
+
+Total Route Count : 4
