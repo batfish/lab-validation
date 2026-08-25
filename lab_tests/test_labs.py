@@ -22,6 +22,7 @@ from lab_tests.bf_getters import (
 from lab_tests.lab_getters import get_host_nos, snapshot_path
 from lab_validation.validators import (
     A10AcosValidator,
+    AoscxValidator,
     AristaValidator,
     CheckpointGaiaValidator,
     CumulusFrrValidator,
@@ -44,6 +45,7 @@ LAB_NAME_CONFIG_OPTION = "labname"
 
 vendor_validators: dict[Vendor, Callable[[Path], VendorValidator]] = {
     Vendor.A10_ACOS: A10AcosValidator,
+    Vendor.AOSCX: AoscxValidator,
     Vendor.ARISTA: AristaValidator,
     Vendor.CHECKPOINTGAIA: CheckpointGaiaValidator,
     Vendor.CISCO_IOS: IosValidator,
@@ -300,6 +302,7 @@ def test_configuration_format(
 ):
     vendor_to_cf = {
         Vendor.A10_ACOS: {"A10_ACOS"},
+        Vendor.AOSCX: {"CISCO_IOS"},
         Vendor.ARISTA: {"ARISTA"},
         Vendor.AWS: {"AWS"},
         Vendor.CHECKPOINTGAIA: {"CHECK_POINT_GATEWAY"},

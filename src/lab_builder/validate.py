@@ -450,6 +450,30 @@ def _nxos_check_route_exists(node: NodeInfo, table: str, prefix: str) -> CheckRe
     )
 
 
+def _aoscx_check_interface_up(node: NodeInfo, interface: str) -> CheckResult:
+    """Check AOS-CX administrative and link state for an interface."""
+    try:
+        output = run_command(node, f"show interface {interface}")
+    except Exception as e:
+        return CheckResult("interface_up", node.name, False, f"command failed: {e}")
+
+    if f"Interface {interface} is up" in output and "Admin state is up" in output:
+        return CheckResult("interface_up", node.name, True, f"{interface}: up")
+    return CheckResult("interface_up", node.name, False, f"{interface}: not up")
+
+
+def _aoscx_check_route_exists(node: NodeInfo, table: str, prefix: str) -> CheckResult:
+    """Check that an AOS-CX route is installed in the requested VRF."""
+    try:
+        output = run_command(node, "show ip route")
+    except Exception as e:
+        return CheckResult("route_exists", node.name, False, f"command failed: {e}")
+
+    if prefix in output and "VRF: " + table in output:
+        return CheckResult("route_exists", node.name, True, f"{prefix}: found")
+    return CheckResult("route_exists", node.name, False, f"{prefix}: not found")
+
+
 def _sros_check_bgp_peer(node: NodeInfo, neighbor: str) -> CheckResult:
     """Check that a specific BGP peer is Established via 'show router bgp summary'.
 
@@ -495,6 +519,8 @@ def _sros_check_bgp_peer(node: NodeInfo, neighbor: str) -> CheckResult:
 
 
 def check_interface_up(node: NodeInfo, interface: str) -> CheckResult:
+    if node.profile.name == "aoscx":
+        return _aoscx_check_interface_up(node, interface)
     if node.profile.name == "arista":
         return _arista_check_interface_up(node, interface)
     if node.profile.name == "sros":
@@ -503,6 +529,8 @@ def check_interface_up(node: NodeInfo, interface: str) -> CheckResult:
 
 
 def check_route_exists(node: NodeInfo, table: str, prefix: str) -> CheckResult:
+    if node.profile.name == "aoscx":
+        return _aoscx_check_route_exists(node, table, prefix)
     if node.profile.name == "arista":
         return _arista_check_route_exists(node, table, prefix)
     if node.profile.name == "nx":

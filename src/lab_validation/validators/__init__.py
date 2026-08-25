@@ -3,6 +3,7 @@
 import enum
 
 from .A10AcosValidator import A10AcosValidator
+from .AoscxValidator import AoscxValidator
 from .AristaValidator import AristaValidator
 from .CheckpointGaiaValidator import CheckpointGaiaValidator
 from .CumulusFrrValidator import CumulusFrrValidator
@@ -20,6 +21,7 @@ class Vendor(enum.Enum):
     """Our codes for device vendors/platforms/OSes."""
 
     A10_ACOS = "a10_acos"
+    AOSCX = "aoscx"
     ARISTA = "arista"
     AWS = "aws"
     CHECKPOINTGAIA = "checkpoint_gw"
@@ -41,6 +43,7 @@ class Vendor(enum.Enum):
 
 __all__ = [
     "A10AcosValidator",
+    "AoscxValidator",
     "AristaValidator",
     "CheckpointGaiaValidator",
     "CumulusFrrValidator",

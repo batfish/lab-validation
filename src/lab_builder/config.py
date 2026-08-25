@@ -256,6 +256,38 @@ CISCO_N9KV = VendorProfile(
     boot_timeout_seconds=900,
 )
 
+AOSCX = VendorProfile(
+    name="aoscx",
+    containerlab_kind="aruba_aoscx",
+    default_username="admin",
+    default_password="admin",
+    netmiko_device_type="aruba_aoscx",
+    interface_prefix="1/1/",
+    interface_offset=1,  # eth1 -> 1/1/1, eth2 -> 1/1/2, ...
+    show_commands=[
+        "show running-config",
+        "show startup-config json",
+        "show interface",
+        "show ip interface",
+        "show ip route",
+        "show ip route all-vrfs",
+        "show ip route static",
+        "show ip route summary",
+        "show ipv6 route all-vrfs",
+        "show vrf",
+        "show vlan",
+        "show version",
+        "show bgp summary",
+        "show bgp ipv4 unicast",
+        "show bgp ipv4 unicast neighbors",
+        "show bgp l2vpn evpn",
+        "show ip ospf neighbors",
+        "show ip ospf interface",
+    ],
+    config_command="show running-config",
+    boot_timeout_seconds=900,
+)
+
 VENDOR_PROFILES: dict[str, VendorProfile] = {
     "juniper_vjunosrouter": VJUNOS_ROUTER,
     "juniper_vjunosswitch": VJUNOS_SWITCH,
@@ -264,6 +296,7 @@ VENDOR_PROFILES: dict[str, VendorProfile] = {
     "arista_ceos": ARISTA_CEOS,
     "cisco_n9kv": CISCO_N9KV,
     "nokia_srsim": NOKIA_SRSIM,
+    "aruba_aoscx": AOSCX,
 }
 
 
