@@ -5,6 +5,10 @@ Tools for creating new lab-validation snapshots using
 include Juniper vJunos, Arista cEOS, Cisco NX-OS (N9Kv), and Nokia SR OS
 (SR-SIM) — see the Supported Vendor Profiles table below.
 
+Aruba AOS-CX uses the `aruba_aoscx` containerlab kind and the upstream
+vrnetlab wrapper. See `examples/aoscx-vrnetlab/` for the image build, S3
+cache, deployment, convergence, and collection workflow.
+
 ## Overview
 
 This directory contains everything needed to:
@@ -96,6 +100,8 @@ few starting points:
 
 - `infra/examples/two-router-ebgp/` — minimal 2-router Junos eBGP
   template (no matching snapshot; reference only)
+- `infra/examples/aoscx-vrnetlab/` — minimal two-node Aruba AOS-CX lab using
+  the containerlab `aruba_aoscx` kind
 - `snapshots/eos_ceos_ebgp/source/` — minimal 2-router Arista cEOS eBGP lab
 - `snapshots/junos_evpn_type5/source/` — 4-node EVPN Type 5 fabric (Junos)
 
@@ -377,14 +383,15 @@ redeploy+re-collect or revert the configs.
 
 ## Scripts Reference
 
-| Script            | Where it runs | Purpose                                                   |
-| ----------------- | ------------- | --------------------------------------------------------- |
-| `ec2-launch.sh`   | Local         | Launch EC2 with KVM, Docker, containerlab, images from S3 |
-| `ec2-status.sh`   | Local         | Show all lab-validation instances, warn about orphans     |
-| `ec2-teardown.sh` | Local         | Terminate instance and clean up                           |
-| `upload-image.sh` | Local         | Upload qcow2 images to S3 (idempotent)                    |
-| `build-image.sh`  | EC2           | Build vrnetlab Docker image from qcow2, upload to S3      |
-| `ec2-setup.sh`    | EC2 (auto)    | Bootstrap script, runs as user-data                       |
+| Script                 | Where it runs | Purpose                                                    |
+| ---------------------- | ------------- | ---------------------------------------------------------- |
+| `ec2-launch.sh`        | Local         | Launch EC2 with KVM, Docker, containerlab, images from S3  |
+| `ec2-status.sh`        | Local         | Show all lab-validation instances, warn about orphans      |
+| `ec2-teardown.sh`      | Local         | Terminate instance and clean up                            |
+| `upload-image.sh`      | Local         | Upload OVA, qcow2, and container images to S3 (idempotent) |
+| `build-aoscx-image.sh` | EC2           | Build and cache the Aruba vrnetlab Docker image            |
+| `build-image.sh`       | EC2           | Build vrnetlab Docker image from qcow2, upload to S3       |
+| `ec2-setup.sh`         | EC2 (auto)    | Bootstrap script, runs as user-data                        |
 
 ## lab_builder CLI Reference
 
@@ -585,6 +592,7 @@ the large Juniper VM images and reducing bootstrap time from ~5 min to
 | `arista_ceos`           | Arista EOS          | admin / admin     | ~1 min    | No           |
 | `cisco_n9kv`            | Cisco NX-OS (N9Kv)  | admin / admin     | 5-10 min  | Yes          |
 | `nokia_srsim`           | Nokia SR OS (SR-1)  | admin / admin     | ~2 min    | No\*         |
+| `aruba_aoscx`           | Aruba AOS-CX        | admin / admin     | ~2 min    | Yes          |
 
 \* SR-SIM is a native container, but the install guide specifies Intel x86
 and will not boot on ARM. Our default m8i instances satisfy this.

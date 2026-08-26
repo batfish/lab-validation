@@ -1,0 +1,15 @@
+checks:
+  - type: interface_up
+    node: cx1
+    interface: 1/1/1
+  - type: route_exists
+    node: cx1
+    table: default
+    prefix: 2.2.2.2/32
+  - type: interface_up
+    node: cx2
+    interface: 1/1/1
+  - type: route_exists
+    node: cx2
+    table: default
+    prefix: 1.1.1.1/32

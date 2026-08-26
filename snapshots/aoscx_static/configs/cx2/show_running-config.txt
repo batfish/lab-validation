@@ -1,0 +1,30 @@
+!
+!Version AOS-CX Virtual.10.17.1021
+!export-password: default
+hostname cx2
+user admin group administrators password ciphertext AQBapZDdgxHZGH8bHmStgKZifzrNQ3eTy95uge2jcBYQDkAPYgAAAMZLv9uD6nqE0dKlmoqS/qxadFLbH+jvEZsDvsoC7OtA5uWE1oZ1AQQ/pjFZ4+kXZrifYmU1/WMx/GYFdc7nB+rKutlt/fnvt2a2yGnHbUx7eC7E1M/qYxZdwloYmoSTlbuu
+ntp server pool.ntp.org minpoll 4 maxpoll 4 iburst
+ntp enable
+!
+!
+!
+!
+!
+!
+ssh server vrf mgmt
+vlan 1
+interface mgmt
+    no shutdown
+    ip dhcp
+interface 1/1/1
+    no shutdown
+    ip address 10.0.0.1/31
+interface loopback 0
+    ip address 2.2.2.2/32
+ip route 1.1.1.1/32 10.0.0.0  
+!
+!
+!
+!
+!
+https-server vrf mgmt

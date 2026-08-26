@@ -123,6 +123,10 @@ classify_image() {
             image_tag="veos"
             image_grep="veos"
             dest="" ;;
+        aoscx-*|aruba_arubaos-cx-*|vr-aoscx-*)
+            image_tag="aoscx"
+            image_grep="aoscx|aruba_arubaos-cx"
+            dest="" ;;
         *)
             return 1 ;;
     esac
