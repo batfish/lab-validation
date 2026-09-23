@@ -3,6 +3,7 @@ import json
 from lab_validation.parsers.frr.commands.routes import (
     _get_route,
     parse_show_ip_route_vrf_all_json,
+    parse_show_ip_route_vrf_all_json_by_vrf,
 )
 from lab_validation.parsers.frr.models.routes import FrrIpRoute
 
@@ -361,4 +362,85 @@ def test_parse_show_ip_route_vrf_all_json_discard() -> None:
             active=True,
             blackhole=True,
         )
+    ]
+
+
+def test_parse_show_ip_route_vrf_all_json_by_vrf() -> None:
+    # FRR 10.5 (SONiC 202605) output, trimmed to two routes.
+    text = """
+    {
+      "default":{
+        "1.1.1.1/32":[
+          {
+            "prefix":"1.1.1.1/32",
+            "protocol":"connected",
+            "vrfId":0,
+            "vrfName":"default",
+            "selected":true,
+            "distance":0,
+            "metric":0,
+            "nexthops":[
+              {
+                "fib":true,
+                "directlyConnected":true,
+                "interfaceName":"Loopback0",
+                "active":true
+              }
+            ]
+          }
+        ],
+        "2.2.2.2/32":[
+          {
+            "prefix":"2.2.2.2/32",
+            "protocol":"bgp",
+            "vrfId":0,
+            "vrfName":"default",
+            "selected":true,
+            "distance":20,
+            "metric":0,
+            "nexthops":[
+              {
+                "fib":true,
+                "ip":"192.168.12.1",
+                "afi":"ipv4",
+                "interfaceName":"Ethernet0",
+                "active":true
+              },
+              {
+                "fib":true,
+                "ip":"192.168.12.3",
+                "afi":"ipv4",
+                "interfaceName":"Ethernet4",
+                "active":true
+              }
+            ]
+          }
+        ]
+      },
+      "red":{}
+    }
+    """
+    bgp = {
+        "vrf": "default",
+        "network": "2.2.2.2/32",
+        "protocol": "bgp",
+        "admin_distance": 20,
+        "metric": 0,
+        "active": True,
+        "blackhole": False,
+    }
+    assert parse_show_ip_route_vrf_all_json_by_vrf(text) == [
+        FrrIpRoute(
+            vrf="default",
+            network="1.1.1.1/32",
+            next_hop_int="Loopback0",
+            next_hop_ip=None,
+            protocol="connected",
+            admin_distance=0,
+            metric=0,
+            active=True,
+            blackhole=False,
+        ),
+        FrrIpRoute(next_hop_int="Ethernet0", next_hop_ip="192.168.12.1", **bgp),
+        FrrIpRoute(next_hop_int="Ethernet4", next_hop_ip="192.168.12.3", **bgp),
     ]

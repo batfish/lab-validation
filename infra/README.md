@@ -9,6 +9,10 @@ Aruba AOS-CX uses the `aruba_aoscx` containerlab kind and the upstream
 vrnetlab wrapper. See `examples/aoscx-vrnetlab/` for the image build, S3
 cache, deployment, convergence, and collection workflow.
 
+SONiC uses the `sonic-vm` containerlab kind. `build-sonic-image.sh` builds
+the vrnetlab image from the public SONiC VS build; see
+`snapshots/sonic_ebgp/source/README.md`.
+
 ## Overview
 
 This directory contains everything needed to:
@@ -103,6 +107,7 @@ few starting points:
 - `infra/examples/aoscx-vrnetlab/` — minimal two-node Aruba AOS-CX lab using
   the containerlab `aruba_aoscx` kind
 - `snapshots/eos_ceos_ebgp/source/` — minimal 2-router Arista cEOS eBGP lab
+- `snapshots/sonic_ebgp/source/` — minimal 2-router SONiC eBGP lab
 - `snapshots/junos_evpn_type5/source/` — 4-node EVPN Type 5 fabric (Junos)
 
 **Interface mapping**: containerlab `ethN` maps to vendor interfaces:
@@ -390,6 +395,7 @@ redeploy+re-collect or revert the configs.
 | `ec2-teardown.sh`      | Local         | Terminate instance and clean up                            |
 | `upload-image.sh`      | Local         | Upload OVA, qcow2, and container images to S3 (idempotent) |
 | `build-aoscx-image.sh` | EC2           | Build and cache the Aruba vrnetlab Docker image            |
+| `build-sonic-image.sh` | EC2           | Build and cache the SONiC vrnetlab Docker image            |
 | `build-image.sh`       | EC2           | Build vrnetlab Docker image from qcow2, upload to S3       |
 | `ec2-setup.sh`         | EC2 (auto)    | Bootstrap script, runs as user-data                        |
 
@@ -472,6 +478,23 @@ Quick Reference, Table 4.) A few plain-text `show router …` are also captured 
 | `info json /state router "Base" ospf *`         | `show/<node>/`    | OSPF state (JSON)         |
 | `info json /state router "Base" isis *`         | `show/<node>/`    | ISIS state (JSON)         |
 | `show version` + `show router …`                | `show/<node>/`    | Plain-text cross-check    |
+
+### SONiC (sonic-vm)
+
+SSH lands in a bash shell; FRR commands go through the host `vtysh`
+wrapper. Batfish reads each device from `sonic_configs/<node>/`.
+
+| Command                                         | Goes to                               | Purpose                    |
+| ----------------------------------------------- | ------------------------------------- | -------------------------- |
+| `sonic-cfggen -d --print-data`                  | `sonic_configs/<node>/config_db.json` | Running config_db          |
+| `vtysh -c 'show running-config'`                | `sonic_configs/<node>/frr.conf`       | FRR config                 |
+| `show interfaces status`                        | `show/<node>/`                        | Front-panel port state     |
+| `show ip interfaces`, `show ipv6 interfaces`    | `show/<node>/`                        | L3 interface addresses     |
+| `vtysh -c 'show interface vrf all'`             | `show/<node>/`                        | FRR/kernel interface state |
+| `vtysh -c 'show ip route vrf all json'`         | `show/<node>/`                        | Main routing table         |
+| `vtysh -c 'show bgp vrf all ipv4 unicast json'` | `show/<node>/`                        | BGP routes                 |
+| `vtysh -c 'show bgp vrf all summary json'`      | `show/<node>/`                        | BGP peer status            |
+| `show version`, `show vlan brief`, `show vrf`   | `show/<node>/`                        | Software version, VLANs    |
 
 ## Snapshot Directory Structure
 
@@ -593,6 +616,7 @@ the large Juniper VM images and reducing bootstrap time from ~5 min to
 | `cisco_n9kv`            | Cisco NX-OS (N9Kv)  | admin / admin     | 5-10 min  | Yes          |
 | `nokia_srsim`           | Nokia SR OS (SR-1)  | admin / admin     | ~2 min    | No\*         |
 | `aruba_aoscx`           | Aruba AOS-CX        | admin / admin     | ~2 min    | Yes          |
+| `sonic-vm`              | SONiC (VS)          | admin / admin     | ~2 min    | Yes          |
 
 \* SR-SIM is a native container, but the install guide specifies Intel x86
 and will not boot on ARM. Our default m8i instances satisfy this.

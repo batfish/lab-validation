@@ -1,0 +1,33 @@
+checks:
+  - type: interface_up
+    node: s1
+    interface: Ethernet0
+  - type: interface_up
+    node: s1
+    interface: Ethernet4
+  - type: bgp_peer_established
+    node: s1
+    neighbor: 192.168.12.1
+  - type: bgp_peer_established
+    node: s1
+    neighbor: 192.168.12.3
+  - type: route_exists
+    node: s1
+    table: default
+    prefix: 2.2.2.2/32
+  - type: interface_up
+    node: s2
+    interface: Ethernet0
+  - type: interface_up
+    node: s2
+    interface: Ethernet4
+  - type: bgp_peer_established
+    node: s2
+    neighbor: 192.168.12.0
+  - type: bgp_peer_established
+    node: s2
+    neighbor: 192.168.12.2
+  - type: route_exists
+    node: s2
+    table: default
+    prefix: 1.1.1.1/32

@@ -127,6 +127,12 @@ classify_image() {
             image_tag="aoscx"
             image_grep="aoscx|aruba_arubaos-cx"
             dest="" ;;
+        sonic-*)
+            # Built by build-sonic-image.sh, which patches the vrnetlab
+            # wrapper; there is no raw-qcow2 build path.
+            image_tag="sonic"
+            image_grep="sonic"
+            dest="" ;;
         *)
             return 1 ;;
     esac

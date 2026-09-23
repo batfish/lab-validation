@@ -1,0 +1,28 @@
+# Two-node SONiC eBGP lab.
+#
+# Topology:
+#   s1 (AS 65001) ---[Ethernet0]---[Ethernet0]--- s2 (AS 65002)
+#                 ---[Ethernet4]---[Ethernet4]---
+#     Loopback0: 1.1.1.1/32                        Loopback0: 2.2.2.2/32
+#     links: 192.168.12.0/31, 192.168.12.2/31    192.168.12.1/31, 192.168.12.3/31
+#
+# Each router learns the other's loopback via eBGP over both links (ECMP).
+
+name: sonic-ebgp
+
+topology:
+  kinds:
+    sonic-vm:
+      image: vrnetlab/sonic_sonic-vs:202605
+
+  nodes:
+    s1:
+      kind: sonic-vm
+      startup-config: configs/s1.json
+    s2:
+      kind: sonic-vm
+      startup-config: configs/s2.json
+
+  links:
+    - endpoints: ["s1:eth1", "s2:eth1"]
+    - endpoints: ["s1:eth2", "s2:eth2"]

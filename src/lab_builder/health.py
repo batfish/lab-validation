@@ -373,6 +373,32 @@ def _sros_check_isis(node: NodeInfo) -> bool | None:
 
 
 # ---------------------------------------------------------------------------
+# SONiC health checks (FRR via the host vtysh wrapper)
+# ---------------------------------------------------------------------------
+
+SONIC_BGP_SUMMARY_COMMAND = "vtysh -c 'show bgp vrf all summary json'"
+
+
+def _sonic_check_bgp(node: NodeInfo) -> bool | None:
+    """Check if all BGP peers in all VRFs and address families are Established."""
+    try:
+        output = run_command(node, SONIC_BGP_SUMMARY_COMMAND, timeout=10)
+        data = json.loads(output)
+    except Exception:
+        return False
+
+    found_any = False
+    for vrf_info in data.values():
+        for af_info in vrf_info.values():
+            for peer_info in af_info["peers"].values():
+                found_any = True
+                if peer_info["state"] != "Established":
+                    return False
+
+    return True if found_any else None
+
+
+# ---------------------------------------------------------------------------
 # Dispatch by vendor
 # ---------------------------------------------------------------------------
 
@@ -380,6 +406,8 @@ def _sros_check_isis(node: NodeInfo) -> bool | None:
 def check_bgp_established(node: NodeInfo) -> bool | None:
     if node.profile.name == "aoscx":
         return None
+    if node.profile.name == "sonic":
+        return _sonic_check_bgp(node)
     if node.profile.name == "arista":
         return _arista_check_bgp(node)
     if node.profile.name == "nx":
@@ -390,7 +418,7 @@ def check_bgp_established(node: NodeInfo) -> bool | None:
 
 
 def check_ospf_full(node: NodeInfo) -> bool | None:
-    if node.profile.name == "aoscx":
+    if node.profile.name in ("aoscx", "sonic"):
         return None
     if node.profile.name == "arista":
         return _arista_check_ospf(node)
@@ -402,7 +430,7 @@ def check_ospf_full(node: NodeInfo) -> bool | None:
 
 
 def check_isis_up(node: NodeInfo) -> bool | None:
-    if node.profile.name == "aoscx":
+    if node.profile.name in ("aoscx", "sonic"):
         return None
     if node.profile.name == "arista":
         return _arista_check_isis(node)
@@ -414,7 +442,7 @@ def check_isis_up(node: NodeInfo) -> bool | None:
 
 
 def check_platform_warnings(node: NodeInfo) -> list[str]:
-    if node.profile.name in ("arista", "nx", "sros", "aoscx"):
+    if node.profile.name in ("arista", "nx", "sros", "aoscx", "sonic"):
         return []
     return _junos_check_platform_warnings(node)
 

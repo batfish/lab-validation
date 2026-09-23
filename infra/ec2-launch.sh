@@ -47,7 +47,7 @@ Options:
   --timeout-hours N      Auto-terminate after N hours (default: 4)
   --spot                 Request a spot instance (~70% cheaper, may be interrupted)
   --images FILTER        Comma-separated list of images to load (default: all)
-                         Available: aoscx, ceos, vjunos-router, vjunos-switch, vjunos-evolved, nxos, srsim, all
+                         Available: aoscx, ceos, vjunos-router, vjunos-switch, vjunos-evolved, nxos, sonic, srsim, all
   --help                 Show this help
 
 Environment:
