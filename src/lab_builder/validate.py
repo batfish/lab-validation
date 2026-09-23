@@ -14,6 +14,7 @@ from typing import Any
 import yaml
 
 from lab_builder.device import run_command
+from lab_builder.health import SONIC_BGP_SUMMARY_COMMAND
 from lab_builder.models import NodeInfo
 
 
@@ -252,6 +253,84 @@ def _arista_check_bgp_peer(node: NodeInfo, neighbor: str) -> CheckResult:
                 f"{neighbor}: {state}",
             )
 
+    return CheckResult(
+        "bgp_peer_established", node.name, False, f"{neighbor}: peer not found"
+    )
+
+
+# ---------------------------------------------------------------------------
+# SONiC checks
+# ---------------------------------------------------------------------------
+
+
+def _sonic_check_interface_up(node: NodeInfo, interface: str) -> CheckResult:
+    """Check a front-panel port's Oper and Admin columns in 'show interfaces status'."""
+    try:
+        output = run_command(node, f"show interfaces status {interface}")
+    except Exception as e:
+        return CheckResult("interface_up", node.name, False, f"command failed: {e}")
+
+    lines = output.splitlines()
+    header = lines[0].split()
+    oper_col = header.index("Oper")
+    admin_col = header.index("Admin")
+    for line in lines[2:]:
+        fields = line.split()
+        if fields and fields[0] == interface:
+            oper, admin = fields[oper_col], fields[admin_col]
+            if oper == "up" and admin == "up":
+                return CheckResult("interface_up", node.name, True, f"{interface}: up")
+            return CheckResult(
+                "interface_up",
+                node.name,
+                False,
+                f"{interface}: oper {oper}, admin {admin}",
+            )
+    return CheckResult("interface_up", node.name, False, f"{interface}: not found")
+
+
+def _sonic_check_route_exists(node: NodeInfo, table: str, prefix: str) -> CheckResult:
+    """Check that a prefix is in a VRF's FRR RIB. 'table' is the VRF name."""
+    family = "ipv6" if ":" in prefix else "ip"
+    try:
+        output = run_command(
+            node, f"vtysh -c 'show {family} route vrf {table} {prefix} json'"
+        )
+        data = json.loads(output)
+    except Exception as e:
+        return CheckResult("route_exists", node.name, False, f"command failed: {e}")
+
+    if prefix in data:
+        return CheckResult(
+            "route_exists", node.name, True, f"{prefix} in {table}: found"
+        )
+    return CheckResult(
+        "route_exists", node.name, False, f"{prefix} in {table}: not found"
+    )
+
+
+def _sonic_check_bgp_peer(node: NodeInfo, neighbor: str) -> CheckResult:
+    """Check that a specific BGP peer is Established in any VRF/address family."""
+    try:
+        output = run_command(node, SONIC_BGP_SUMMARY_COMMAND)
+        data = json.loads(output)
+    except Exception as e:
+        return CheckResult(
+            "bgp_peer_established", node.name, False, f"command failed: {e}"
+        )
+
+    for vrf_info in data.values():
+        for af_info in vrf_info.values():
+            peer = af_info["peers"].get(neighbor)
+            if peer is None:
+                continue
+            state = peer["state"]
+            return CheckResult(
+                "bgp_peer_established",
+                node.name,
+                state == "Established",
+                f"{neighbor}: {state}",
+            )
     return CheckResult(
         "bgp_peer_established", node.name, False, f"{neighbor}: peer not found"
     )
@@ -521,6 +600,8 @@ def _sros_check_bgp_peer(node: NodeInfo, neighbor: str) -> CheckResult:
 def check_interface_up(node: NodeInfo, interface: str) -> CheckResult:
     if node.profile.name == "aoscx":
         return _aoscx_check_interface_up(node, interface)
+    if node.profile.name == "sonic":
+        return _sonic_check_interface_up(node, interface)
     if node.profile.name == "arista":
         return _arista_check_interface_up(node, interface)
     if node.profile.name == "sros":
@@ -531,6 +612,8 @@ def check_interface_up(node: NodeInfo, interface: str) -> CheckResult:
 def check_route_exists(node: NodeInfo, table: str, prefix: str) -> CheckResult:
     if node.profile.name == "aoscx":
         return _aoscx_check_route_exists(node, table, prefix)
+    if node.profile.name == "sonic":
+        return _sonic_check_route_exists(node, table, prefix)
     if node.profile.name == "arista":
         return _arista_check_route_exists(node, table, prefix)
     if node.profile.name == "nx":
@@ -541,6 +624,8 @@ def check_route_exists(node: NodeInfo, table: str, prefix: str) -> CheckResult:
 
 
 def check_bgp_peer_established(node: NodeInfo, neighbor: str) -> CheckResult:
+    if node.profile.name == "sonic":
+        return _sonic_check_bgp_peer(node, neighbor)
     if node.profile.name == "arista":
         return _arista_check_bgp_peer(node, neighbor)
     if node.profile.name == "sros":

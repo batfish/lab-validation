@@ -7,9 +7,19 @@ from pathlib import Path
 
 import pytest
 
-from lab_builder.config import ARISTA_CEOS, NOKIA_SRSIM, VJUNOS_ROUTER
+from lab_builder.config import (
+    ARISTA_CEOS,
+    NOKIA_SRSIM,
+    SONIC_VM,
+    VJUNOS_ROUTER,
+    command_to_filename,
+)
 from lab_builder.models import NodeInfo
-from lab_builder.snapshot import _eth_to_vendor_interface, _generate_layer1_topology
+from lab_builder.snapshot import (
+    _eth_to_vendor_interface,
+    _generate_layer1_topology,
+    build_snapshot,
+)
 
 
 @pytest.fixture()
@@ -39,6 +49,13 @@ def sros_node() -> NodeInfo:
     )
 
 
+@pytest.fixture()
+def sonic_node() -> NodeInfo:
+    return NodeInfo(
+        name="s1", kind="sonic-vm", profile=SONIC_VM, management_ip="1.2.3.7"
+    )
+
+
 class TestEthToVendorInterface:
     def test_arista_eth1(self, arista_node: NodeInfo) -> None:
         assert _eth_to_vendor_interface("eth1", arista_node) == "Ethernet1"
@@ -62,6 +79,13 @@ class TestEthToVendorInterface:
 
     def test_sros_second_card(self, sros_node: NodeInfo) -> None:
         assert _eth_to_vendor_interface("e2-2-c3-4", sros_node) == "2/2/c3/4"
+
+    def test_sonic_eth1(self, sonic_node: NodeInfo) -> None:
+        assert _eth_to_vendor_interface("eth1", sonic_node) == "Ethernet0"
+
+    def test_sonic_eth3(self, sonic_node: NodeInfo) -> None:
+        # sonic-vm front-panel ports are numbered in lanes of 4.
+        assert _eth_to_vendor_interface("eth3", sonic_node) == "Ethernet8"
 
     def test_passthrough(self, arista_node: NodeInfo) -> None:
         assert _eth_to_vendor_interface("Loopback0", arista_node) == "Loopback0"
@@ -169,3 +193,36 @@ topology:
         snapshot_dir.mkdir()
         _generate_layer1_topology(topo, [arista_node], snapshot_dir)
         assert not (snapshot_dir / "batfish" / "layer1_topology.json").exists()
+
+
+class TestBuildSnapshot:
+    def test_sonic_configs_layout(
+        self, tmp_path: Path, sonic_node: NodeInfo, junos_node: NodeInfo
+    ) -> None:
+        collected = tmp_path / "collected"
+        sonic_dir = collected / "s1"
+        sonic_dir.mkdir(parents=True)
+        for command in SONIC_VM.config_files:
+            (sonic_dir / command_to_filename(command)).write_text(command)
+        (sonic_dir / "show_version.txt").write_text("version")
+        junos_dir = collected / "r2"
+        junos_dir.mkdir()
+        junos_config = command_to_filename(VJUNOS_ROUTER.config_command)
+        (junos_dir / junos_config).write_text("set system host-name r2")
+
+        snapshot = build_snapshot(
+            "lab", [sonic_node, junos_node], collected, tmp_path / "snapshots"
+        )
+
+        sonic_configs = snapshot / "sonic_configs" / "s1"
+        assert sorted(p.name for p in sonic_configs.iterdir()) == [
+            "config_db.json",
+            "frr.conf",
+        ]
+        assert not (snapshot / "configs" / "s1").exists()
+        assert [p.name for p in (snapshot / "show" / "s1").iterdir()] == [
+            "show_version.txt"
+        ]
+        assert (snapshot / "configs" / "r2" / junos_config).exists()
+        host_nos = json.loads((snapshot / "show" / "host_nos.txt").read_text())
+        assert host_nos == {"s1": "sonic", "r2": "junos"}

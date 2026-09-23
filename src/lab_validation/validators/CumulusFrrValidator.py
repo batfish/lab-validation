@@ -97,9 +97,7 @@ class CumulusFrrValidator(VendorValidator):
     ) -> list[FrrIpRoute]:
         show_routes_updated: list[FrrIpRoute] = []
         for r in show_routes:
-            """Adding vrf from `show_vrf_cmd` as FRR `show_route` data does not have vrf_name.
-            It only has vrf_id. So doing mapping of vrf_id --> vrf_name"""
-            vrf = self.vrf_mapping.get(str(r.vrf)) if r.vrf is not None else "default"
+            vrf = self._vrf_name(r)
 
             # Exclude kernel routes
             if r.protocol in ["kernel"]:
@@ -124,6 +122,13 @@ class CumulusFrrValidator(VendorValidator):
                 )
             )
         return show_routes_updated
+
+    def _vrf_name(self, route: FrrIpRoute) -> str | None:
+        """Adding vrf from `show_vrf_cmd` as FRR `show_route` data does not have vrf_name.
+        It only has vrf_id. So doing mapping of vrf_id --> vrf_name"""
+        if route.vrf is None:
+            return "default"
+        return self.vrf_mapping.get(str(route.vrf))
 
     def _show_interfaces(self) -> Sequence[FrrInterface]:
         show_interfaces_path = path.join(

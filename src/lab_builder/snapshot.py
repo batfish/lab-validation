@@ -25,6 +25,7 @@ def build_snapshot(
     Creates the standard directory structure:
         snapshots/<name>/
         ├── configs/<hostname>/show_configuration_|_display_set.txt
+        ├── sonic_configs/<hostname>/{config_db.json,frr.conf}  (SONiC)
         ├── show/host_nos.txt
         ├── show/<hostname>/<show_command>.txt
         ├── batfish/layer1_topology.json  (if topology_file provided)
@@ -46,20 +47,30 @@ def build_snapshot(
     print(f"Created host_nos.txt: {host_nos}")
 
     for node in nodes:
-        config_filename = command_to_filename(node.profile.config_command)
+        # Collected filename -> snapshot filename for this node's config files.
+        if node.profile.config_files:
+            config_files = {
+                command_to_filename(cmd): dest
+                for cmd, dest in node.profile.config_files.items()
+            }
+        else:
+            config_filename = command_to_filename(node.profile.config_command)
+            config_files = {config_filename: config_filename}
 
         src_node_dir = collected_dir / node.name
         if not src_node_dir.exists():
             print(f"Warning: no collected data for {node.name}")
             continue
 
-        # Copy config file to configs/<hostname>/
-        config_src = src_node_dir / config_filename
-        if config_src.exists():
-            config_dest_dir = configs_dir / node.name
-            config_dest_dir.mkdir(parents=True, exist_ok=True)
-            shutil.copy2(config_src, config_dest_dir / config_filename)
-            print(f"  {node.name}: config -> configs/{node.name}/")
+        # Copy config files to <config_dir>/<hostname>/
+        config_dir = node.profile.config_dir
+        for src_name, dest_name in config_files.items():
+            config_src = src_node_dir / src_name
+            if config_src.exists():
+                config_dest_dir = snapshot_dir / config_dir / node.name
+                config_dest_dir.mkdir(parents=True, exist_ok=True)
+                shutil.copy2(config_src, config_dest_dir / dest_name)
+                print(f"  {node.name}: {src_name} -> {config_dir}/{node.name}/")
 
         # Copy show command outputs to show/<hostname>/
         show_node_dir = show_dir / node.name
@@ -68,8 +79,8 @@ def build_snapshot(
         for filepath in sorted(src_node_dir.iterdir()):
             if not filepath.is_file():
                 continue
-            # Skip the config file in the show directory
-            if filepath.name == config_filename:
+            # Skip the config files in the show directory
+            if filepath.name in config_files:
                 continue
             shutil.copy2(filepath, show_node_dir / filepath.name)
 
@@ -108,7 +119,9 @@ def _eth_to_vendor_interface(eth_name: str, node: NodeInfo) -> str:
     if not match:
         return eth_name
     eth_num = int(match.group(1))
-    vendor_num = eth_num - 1 + node.profile.interface_offset
+    vendor_num = (eth_num - 1) * node.profile.interface_stride + (
+        node.profile.interface_offset
+    )
     prefix = node.profile.interface_prefix
     return f"{prefix}{vendor_num}"
 

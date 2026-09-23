@@ -49,12 +49,20 @@ class VendorProfile:
     # eth0 is always management; data interfaces start at eth1.
     interface_prefix: str
     interface_offset: int  # eth1 maps to <prefix>0/0/<offset>
+    # Device port-number step per containerlab ethN (SONiC numbers
+    # front-panel ports by lane: Ethernet0, Ethernet4, ...).
+    interface_stride: int = 1
     show_commands: list[str] = field(default_factory=list)
     # Device-driven command expansion run after show_commands (see
     # DynamicCommandGroup). Empty for vendors whose per-instance state is
     # reachable with a single wildcard/"vrf all" command.
     dynamic_command_groups: list[DynamicCommandGroup] = field(default_factory=list)
     config_command: str = ""
+    # Vendors whose Batfish input is several files per device (SONiC) map each
+    # collecting command to its snapshot filename under
+    # <config_dir>/<hostname>/. When set, config_command is unused.
+    config_files: dict[str, str] = field(default_factory=dict)
+    config_dir: str = "configs"
     boot_timeout_seconds: int = 600
 
 
@@ -288,6 +296,42 @@ AOSCX = VendorProfile(
     boot_timeout_seconds=900,
 )
 
+# SONiC (sonic-vm) SSH lands in a bash shell. FRR runs in the bgp container;
+# the host "vtysh" wrapper execs into it. Batfish reads the device as a
+# sonic_configs/<hostname>/ folder holding config_db.json and frr.conf.
+SONIC_VM = VendorProfile(
+    name="sonic",
+    containerlab_kind="sonic-vm",
+    default_username="admin",
+    default_password="admin",
+    netmiko_device_type="linux",
+    interface_prefix="Ethernet",
+    interface_offset=0,  # eth1 -> Ethernet0, eth2 -> Ethernet4, ...
+    interface_stride=4,
+    show_commands=[
+        "sonic-cfggen -d --print-data",
+        "vtysh -c 'show running-config'",
+        "show version",
+        "show interfaces status",
+        "show ip interfaces",
+        "show ipv6 interfaces",
+        "show vlan brief",
+        "vtysh -c 'show interface vrf all'",
+        "vtysh -c 'show vrf'",
+        "vtysh -c 'show ip route vrf all json'",
+        "vtysh -c 'show ipv6 route vrf all json'",
+        "vtysh -c 'show bgp vrf all ipv4 unicast json'",
+        "vtysh -c 'show bgp vrf all ipv6 unicast json'",
+        "vtysh -c 'show bgp vrf all summary json'",
+    ],
+    config_files={
+        "sonic-cfggen -d --print-data": "config_db.json",
+        "vtysh -c 'show running-config'": "frr.conf",
+    },
+    config_dir="sonic_configs",
+    boot_timeout_seconds=600,
+)
+
 VENDOR_PROFILES: dict[str, VendorProfile] = {
     "juniper_vjunosrouter": VJUNOS_ROUTER,
     "juniper_vjunosswitch": VJUNOS_SWITCH,
@@ -297,6 +341,7 @@ VENDOR_PROFILES: dict[str, VendorProfile] = {
     "cisco_n9kv": CISCO_N9KV,
     "nokia_srsim": NOKIA_SRSIM,
     "aruba_aoscx": AOSCX,
+    "sonic-vm": SONIC_VM,
 }
 
 

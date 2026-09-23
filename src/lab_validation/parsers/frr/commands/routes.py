@@ -1,5 +1,8 @@
+import json
 from collections.abc import Sequence
 from typing import Any
+
+import attr
 
 from ...common.utils import loads_multi_json
 from ..models.routes import FrrIpRoute
@@ -13,6 +16,19 @@ def parse_show_ip_route_vrf_all_json(text: str) -> Sequence[FrrIpRoute]:
         for route_key, route_json in json_obj.items():
             for route in route_json:
                 routes += _get_route(route)
+    return routes
+
+
+def parse_show_ip_route_vrf_all_json_by_vrf(text: str) -> Sequence[FrrIpRoute]:
+    """Parse FRR 8+ 'show ip route vrf all json', which nests prefixes by VRF name.
+
+    Returned routes carry the VRF name, not the VRF id.
+    """
+    routes: list[FrrIpRoute] = []
+    for vrf_name, vrf_routes in json.loads(text).items():
+        for route_json in vrf_routes.values():
+            for route in route_json:
+                routes += [attr.evolve(r, vrf=vrf_name) for r in _get_route(route)]
     return routes
 
 
