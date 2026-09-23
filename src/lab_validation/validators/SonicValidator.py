@@ -75,7 +75,7 @@ class SonicValidator(CumulusFrrValidator):
             mismatch = _compare_interface(show_iface, batfish_index[name])
             if mismatch:
                 diffs["batfish_mismatch"][name] = mismatch
-        return diffs
+        return {kind: found for kind, found in diffs.items() if found}
 
     def _show_interfaces_status(self) -> Sequence[SonicInterfaceStatus]:
         status_path = path.join(

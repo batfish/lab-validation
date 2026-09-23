@@ -58,11 +58,7 @@ def test_validate_interface_properties_match(tmp_path: Path) -> None:
         # Not a front-panel port, so absent from 'show interfaces status'.
         _batfish_iface("Loopback0", active=True),
     ]
-    assert _validator(tmp_path).validate_interface_properties(batfish, set()) == {
-        "batfish_extra": {},
-        "batfish_missing": {},
-        "batfish_mismatch": {},
-    }
+    assert _validator(tmp_path).validate_interface_properties(batfish, set()) == {}
 
 
 def test_validate_interface_properties_oper_down_mismatch(tmp_path: Path) -> None:
@@ -70,9 +66,8 @@ def test_validate_interface_properties_oper_down_mismatch(tmp_path: Path) -> Non
         _batfish_iface("Ethernet0", active=True),
         _batfish_iface("Ethernet8", active=True),
     ]
-    diffs = _validator(tmp_path).validate_interface_properties(batfish, set())
-    assert diffs["batfish_mismatch"] == {
-        "Ethernet8": {"active": "Batfish: True, show_data: False"}
+    assert _validator(tmp_path).validate_interface_properties(batfish, set()) == {
+        "batfish_mismatch": {"Ethernet8": {"active": "Batfish: True, show_data: False"}}
     }
 
 

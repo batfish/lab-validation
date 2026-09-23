@@ -41,7 +41,6 @@ Batfish's main RIB matches the device on both nodes. The device RIB also
 holds the management network (eth0) routes, which are outside config_db;
 the validator excludes them.
 
-Batfish does not set bandwidth on SONiC ports
-(batfish/lab-validation#232). BGP RIB validation is not implemented for
+Interface properties match. BGP RIB validation is not implemented for
 SONiC: FRR 10 BGP JSON uses a `path` string where the existing FRR
 parser expects the FRR 7 `aspath` object.
