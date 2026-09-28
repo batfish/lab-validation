@@ -361,7 +361,13 @@ def _junos_commit_check(
             stripped = line.strip()
             if not stripped or stripped.startswith("#"):
                 continue
-            conn.send_command_timing(stripped)
+            set_output: str = conn.send_command_timing(stripped)
+            # A CLI syntax error rejects the line before it is loaded, so
+            # the subsequent commit check would pass on an unchanged config.
+            if "error:" in set_output.lower():
+                conn.send_command_timing("rollback 0")
+                conn.exit_config_mode()
+                return False, f"{stripped}: {set_output.strip()}"
         output: str = conn.send_command(
             "commit check", expect_string=r"#", read_timeout=30
         )

@@ -545,6 +545,11 @@ def test_get_as_path() -> None:
     # `detail | display json` prefixes the AS path with "AS path: ".
     assert _get_as_path("AS path: 65001 I") == ((65001,), "I")
     assert _get_as_path("AS path: I") == ((), "I")
+    # Aggregate routes append the AGGREGATOR attribute on a second line.
+    assert _get_as_path("AS path: 65001 I\nAggregator: 65001 1.1.1.1") == (
+        (65001,),
+        "I",
+    )
 
 
 def test_convert_active() -> None:
