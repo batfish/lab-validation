@@ -108,14 +108,11 @@ detail | display json` carries a second line with the AGGREGATOR
 
 ## Batfish modeling notes
 
-Batfish's grammar follows the documentation: `rosr_community` accepts
-standard and large communities, while `roa_community` and
-`rog_community` accept standard communities only. The
-`aggregate ... community large:...` and `generate ... community large:...`
-lines are reported as unrecognized syntax, and because the whole line is
-discarded, Batfish never creates `10.21.0.0/16` or `10.31.0.0/16`. The
-`aggregate defaults` and `generate defaults` large-community lines are
-likewise unrecognized, so Batfish's `10.50.0.0/16` and `10.60.0.0/16`
-carry no community. `test_main_rib_routes` (both nodes) and
-`test_bgp_rib_routes` (`receiver`) are sickbayed against
-batfish/batfish#10367.
+Batfish previously followed the documentation and accepted large
+communities only on static routes, so it dropped `10.21.0.0/16` and
+`10.31.0.0/16` and ignored the `aggregate defaults` / `generate defaults`
+communities on `10.50.0.0/16` and `10.60.0.0/16`
+(batfish/batfish#10367). Batfish now models this: batfish/batfish#10360
+accepts large communities on aggregate and generated routes and
+inherits `defaults` communities when a route configures none, matching
+the device on every route in this lab.
