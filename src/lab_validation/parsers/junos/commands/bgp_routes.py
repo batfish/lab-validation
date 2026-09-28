@@ -145,6 +145,10 @@ def _get_as_path(as_path_str: str) -> tuple[Sequence[int], str]:
     # `show route protocol bgp detail | display json` prefixes the value with
     # "AS path: " (e.g., "AS path: 65001 I"); strip it so we only parse the
     # numeric path plus origin tag.
+    # Aggregate routes append the AGGREGATOR attribute on a second line
+    # (e.g., "AS path: 65001 I\nAggregator: 65001 1.1.1.1"); drop it.
+    as_path_str, *extra_lines = as_path_str.split("\n")
+    assert all(line.startswith("Aggregator:") for line in extra_lines)
     if as_path_str.startswith("AS path:"):
         as_path_str = as_path_str[len("AS path:") :].strip()
     split = as_path_str.split()

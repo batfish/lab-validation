@@ -1,0 +1,292 @@
+# Lab-state preconditions and commit checks for junos_route_communities.
+#
+# The commit checks record which community forms Junos accepts in
+# `routing-options {static|aggregate|generate}` at route and defaults
+# level. Extended communities are rejected by the CLI parser at `set`
+# time ("syntax error"), not at commit check.
+
+checks:
+  - type: bgp_peer_established
+    node: receiver
+    neighbor: 10.0.12.0
+    description: "eBGP session to sender"
+
+  - type: bgp_peer_established
+    node: receiver
+    neighbor: 10.0.13.0
+    description: "eBGP session to sender DEFAULTS virtual-router"
+
+  - type: route_exists
+    node: receiver
+    table: inet.0
+    prefix: 10.40.0.0/24
+    description: "static defaults, large community received via BGP"
+
+  - type: route_exists
+    node: receiver
+    table: inet.0
+    prefix: 10.40.1.0/24
+    description: "static defaults plus per-route community received via BGP"
+
+  - type: route_exists
+    node: receiver
+    table: inet.0
+    prefix: 10.50.0.0/16
+    description: "aggregate defaults, large community received via BGP"
+
+  - type: route_exists
+    node: receiver
+    table: inet.0
+    prefix: 10.60.0.0/16
+    description: "generate defaults, large community received via BGP"
+
+  - type: route_exists
+    node: receiver
+    table: inet.0
+    prefix: 10.10.0.0/24
+    description: "static, standard community received via BGP"
+
+  - type: route_exists
+    node: receiver
+    table: inet.0
+    prefix: 10.10.1.0/24
+    description: "static, large community received via BGP"
+
+  - type: route_exists
+    node: receiver
+    table: inet.0
+    prefix: 10.10.2.0/24
+    description: "static, standard + large community received via BGP"
+
+  - type: route_exists
+    node: receiver
+    table: inet.0
+    prefix: 10.20.0.0/16
+    description: "aggregate, standard community received via BGP"
+
+  - type: route_exists
+    node: receiver
+    table: inet.0
+    prefix: 10.21.0.0/16
+    description: "aggregate, large community received via BGP"
+
+  - type: route_exists
+    node: receiver
+    table: inet.0
+    prefix: 10.30.0.0/16
+    description: "generate, standard community received via BGP"
+
+  - type: route_exists
+    node: receiver
+    table: inet.0
+    prefix: 10.31.0.0/16
+    description: "generate, large community received via BGP"
+
+  # --- static route ---
+
+  - type: commit_check_accepts
+    node: sender
+    config_lines:
+      - "set routing-options static route 10.99.0.0/24 discard"
+      - "set routing-options static route 10.99.0.0/24 community 65001:1"
+    description: "static route with standard community"
+
+  - type: commit_check_accepts
+    node: sender
+    config_lines:
+      - "set routing-options static route 10.99.0.0/24 discard"
+      - "set routing-options static route 10.99.0.0/24 community no-export"
+    description: "static route with well-known community"
+
+  - type: commit_check_accepts
+    node: sender
+    config_lines:
+      - "set routing-options static route 10.99.0.0/24 discard"
+      - "set routing-options static route 10.99.0.0/24 community large:65001:1:1"
+    description: "static route with large community"
+
+  - type: commit_check_rejects
+    node: sender
+    config_lines:
+      - "set routing-options static route 10.99.0.0/24 discard"
+      - "set routing-options static route 10.99.0.0/24 community target:65001:1"
+    expected_error: "syntax error"
+    description: "static route with target community"
+
+  - type: commit_check_rejects
+    node: sender
+    config_lines:
+      - "set routing-options static route 10.99.0.0/24 discard"
+      - "set routing-options static route 10.99.0.0/24 community origin:65001:1"
+    expected_error: "syntax error"
+    description: "static route with origin community"
+
+  # --- static defaults ---
+
+  - type: commit_check_accepts
+    node: sender
+    config_lines:
+      - "set routing-options static defaults community 65001:1"
+    description: "static defaults with standard community"
+
+  - type: commit_check_accepts
+    node: sender
+    config_lines:
+      - "set routing-options static defaults community no-export"
+    description: "static defaults with well-known community"
+
+  - type: commit_check_accepts
+    node: sender
+    config_lines:
+      - "set routing-options static defaults community large:65001:1:1"
+    description: "static defaults with large community"
+
+  - type: commit_check_rejects
+    node: sender
+    config_lines:
+      - "set routing-options static defaults community target:65001:1"
+    expected_error: "syntax error"
+    description: "static defaults with target community"
+
+  - type: commit_check_rejects
+    node: sender
+    config_lines:
+      - "set routing-options static defaults community origin:65001:1"
+    expected_error: "syntax error"
+    description: "static defaults with origin community"
+
+  # --- aggregate route ---
+
+  - type: commit_check_accepts
+    node: sender
+    config_lines:
+      - "set routing-options aggregate route 10.98.0.0/16 community 65001:1"
+    description: "aggregate route with standard community"
+
+  - type: commit_check_accepts
+    node: sender
+    config_lines:
+      - "set routing-options aggregate route 10.98.0.0/16 community no-export"
+    description: "aggregate route with well-known community"
+
+  - type: commit_check_accepts
+    node: sender
+    config_lines:
+      - "set routing-options aggregate route 10.98.0.0/16 community large:65001:1:1"
+    description: "aggregate route with large community"
+
+  - type: commit_check_rejects
+    node: sender
+    config_lines:
+      - "set routing-options aggregate route 10.98.0.0/16 community target:65001:1"
+    expected_error: "syntax error"
+    description: "aggregate route with target community"
+
+  - type: commit_check_rejects
+    node: sender
+    config_lines:
+      - "set routing-options aggregate route 10.98.0.0/16 community origin:65001:1"
+    expected_error: "syntax error"
+    description: "aggregate route with origin community"
+
+  # --- aggregate defaults ---
+
+  - type: commit_check_accepts
+    node: sender
+    config_lines:
+      - "set routing-options aggregate defaults community 65001:1"
+    description: "aggregate defaults with standard community"
+
+  - type: commit_check_accepts
+    node: sender
+    config_lines:
+      - "set routing-options aggregate defaults community no-export"
+    description: "aggregate defaults with well-known community"
+
+  - type: commit_check_accepts
+    node: sender
+    config_lines:
+      - "set routing-options aggregate defaults community large:65001:1:1"
+    description: "aggregate defaults with large community"
+
+  - type: commit_check_rejects
+    node: sender
+    config_lines:
+      - "set routing-options aggregate defaults community target:65001:1"
+    expected_error: "syntax error"
+    description: "aggregate defaults with target community"
+
+  - type: commit_check_rejects
+    node: sender
+    config_lines:
+      - "set routing-options aggregate defaults community origin:65001:1"
+    expected_error: "syntax error"
+    description: "aggregate defaults with origin community"
+
+  # --- generate route ---
+
+  - type: commit_check_accepts
+    node: sender
+    config_lines:
+      - "set routing-options generate route 10.97.0.0/16 community 65001:1"
+    description: "generate route with standard community"
+
+  - type: commit_check_accepts
+    node: sender
+    config_lines:
+      - "set routing-options generate route 10.97.0.0/16 community no-export"
+    description: "generate route with well-known community"
+
+  - type: commit_check_accepts
+    node: sender
+    config_lines:
+      - "set routing-options generate route 10.97.0.0/16 community large:65001:1:1"
+    description: "generate route with large community"
+
+  - type: commit_check_rejects
+    node: sender
+    config_lines:
+      - "set routing-options generate route 10.97.0.0/16 community target:65001:1"
+    expected_error: "syntax error"
+    description: "generate route with target community"
+
+  - type: commit_check_rejects
+    node: sender
+    config_lines:
+      - "set routing-options generate route 10.97.0.0/16 community origin:65001:1"
+    expected_error: "syntax error"
+    description: "generate route with origin community"
+
+  # --- generate defaults ---
+
+  - type: commit_check_accepts
+    node: sender
+    config_lines:
+      - "set routing-options generate defaults community 65001:1"
+    description: "generate defaults with standard community"
+
+  - type: commit_check_accepts
+    node: sender
+    config_lines:
+      - "set routing-options generate defaults community no-export"
+    description: "generate defaults with well-known community"
+
+  - type: commit_check_accepts
+    node: sender
+    config_lines:
+      - "set routing-options generate defaults community large:65001:1:1"
+    description: "generate defaults with large community"
+
+  - type: commit_check_rejects
+    node: sender
+    config_lines:
+      - "set routing-options generate defaults community target:65001:1"
+    expected_error: "syntax error"
+    description: "generate defaults with target community"
+
+  - type: commit_check_rejects
+    node: sender
+    config_lines:
+      - "set routing-options generate defaults community origin:65001:1"
+    expected_error: "syntax error"
+    description: "generate defaults with origin community"

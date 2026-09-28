@@ -1,0 +1,39 @@
+# Junos route-level community lab.
+#
+# Tests which community forms Junos accepts on static, aggregate, and
+# generated routes (`routing-options {static|aggregate|generate} route X
+# community ...`, and the matching `defaults` blocks), and what the eBGP
+# peer receives for each.
+#
+# Topology:
+#   sender (AS 65001) --[ge-0/0/0]--[ge-0/0/0]-- receiver (AS 65002)
+#     lo0: 1.1.1.1/32                              lo0: 2.2.2.2/32
+#     link: 10.0.12.0/31                           link: 10.0.12.1/31
+#   sender DEFAULTS vr --[ge-0/0/1]--[ge-0/0/1]-- receiver
+#     link: 10.0.13.0/31                           link: 10.0.13.1/31
+#
+# The DEFAULTS virtual-router exercises `static|aggregate|generate
+# defaults community` without affecting the master-instance routes.
+#
+# sender exports every static/aggregate/generate route with no policy
+# community action, so any community the receiver sees came from the
+# route-level `community` statement.
+
+name: junos-route-communities
+
+topology:
+  nodes:
+    sender:
+      kind: juniper_vjunosrouter
+      image: vrnetlab/juniper_vjunos-router:25.4R1.12
+      startup-config: configs/sender.cfg
+    receiver:
+      kind: juniper_vjunosrouter
+      image: vrnetlab/juniper_vjunos-router:25.4R1.12
+      startup-config: configs/receiver.cfg
+
+  links:
+    # sender ge-0/0/0 (eth1) <-> receiver ge-0/0/0 (eth1)
+    - endpoints: ["sender:eth1", "receiver:eth1"]
+    # sender ge-0/0/1 (eth2, DEFAULTS virtual-router) <-> receiver ge-0/0/1 (eth2)
+    - endpoints: ["sender:eth2", "receiver:eth2"]
