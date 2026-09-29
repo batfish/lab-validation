@@ -1,0 +1,56 @@
+##### receiver eth1 (ge-0/0/0): tcpdump -nn -vvv -r refresh-eth1.pcap, UPDATE messages
+16:58:41.018066 IP6 (class 0xc0, flowlabel 0x9a76a, hlim 1, next-header TCP (6) payload length: 116) 2001:db8:12::1.50437 > 2001:db8:12::2.179: Flags [P.], cksum 0xe41f (correct), seq 1:85, ack 23, win 17136, options [nop,nop,TS val 2147469848 ecr 2147467076], length 84: BGP
+	Update Message (2), length: 84
+	  Origin (1), length: 1, Flags [T]: IGP
+	    0x0000:  00
+	  AS Path (2), length: 6, Flags [T]: 65001
+	    0x0000:  0201 0000 fde9
+	  Multi-Protocol Reach NLRI (14), length: 44, Flags [OE]:
+	    AFI: IPv6 (2), SAFI: Unicast (1)
+	    nexthop: 2001:db8:12::1, fe80::aac1:abff:fedf:b0e2, nh-length: 32, no SNPA
+	      2001:db8:100::/48
+	    0x0000:  0002 0120 2001 0db8 0012 0000 0000 0000
+	    0x0010:  0000 0001 fe80 0000 0000 0000 aac1 abff
+	    0x0020:  fedf b0e2 0030 2001 0db8 0100
+##### receiver eth2 (ge-0/0/1): tcpdump -nn -vvv -r refresh-eth2.pcap, UPDATE messages
+16:58:41.018171 IP6 (class 0xc0, flowlabel 0xc4c0e, hlim 1, next-header TCP (6) payload length: 100) 2001:db8:13::1.57803 > 2001:db8:13::2.179: Flags [P.], cksum 0xfa2d (correct), seq 1:69, ack 23, win 17136, options [nop,nop,TS val 2147469848 ecr 2147467076], length 68: BGP
+	Update Message (2), length: 68
+	  Origin (1), length: 1, Flags [T]: IGP
+	    0x0000:  00
+	  AS Path (2), length: 6, Flags [T]: 65001
+	    0x0000:  0201 0000 fde9
+	  Multi-Protocol Reach NLRI (14), length: 28, Flags [OE]:
+	    AFI: IPv6 (2), SAFI: Unicast (1)
+	    nexthop: 2001:db8:13::1, nh-length: 16, no SNPA
+	      2001:db8:200::/48
+	    0x0000:  0002 0110 2001 0db8 0013 0000 0000 0000
+	    0x0010:  0000 0001 0030 2001 0db8 0200
+16:58:41.124643 IP6 (class 0xc0, flowlabel 0xe2579, hlim 1, next-header TCP (6) payload length: 32) 2001:db8:13::2.179 > 2001:db8:13::1.57803: Flags [.], cksum 0x1d97 (correct), seq 23, ack 69, win 16384, options [nop,nop,TS val 2147467388 ecr 2147469848], length 0
+##### receiver eth3 (ge-0/0/2): tcpdump -nn -vvv -r refresh-eth3.pcap, UPDATE messages
+16:58:41.416723 IP6 (class 0xc0, flowlabel 0xb79bc, hlim 1, next-header TCP (6) payload length: 100) 2001:db8:14::1.179 > 2001:db8:14::2.55744: Flags [P.], cksum 0x3504 (correct), seq 1:69, ack 23, win 16384, options [nop,nop,TS val 2147470247 ecr 2147467476], length 68: BGP
+	Update Message (2), length: 68
+	  Origin (1), length: 1, Flags [T]: IGP
+	    0x0000:  00
+	  AS Path (2), length: 6, Flags [T]: 65001
+	    0x0000:  0201 0000 fde9
+	  Multi-Protocol Reach NLRI (14), length: 28, Flags [OE]:
+	    AFI: IPv6 (2), SAFI: Unicast (1)
+	    nexthop: 2001:db8:14::1, nh-length: 16, no SNPA
+	      2001:db8:300::/48
+	    0x0000:  0002 0110 2001 0db8 0014 0000 0000 0000
+	    0x0010:  0000 0001 0030 2001 0db8 0300
+16:58:41.525072 IP6 (class 0xc0, flowlabel 0x8957a, hlim 1, next-header TCP (6) payload length: 32) 2001:db8:14::2.55744 > 2001:db8:14::1.179: Flags [.], cksum 0x538a (correct), seq 23, ack 69, win 17136, options [nop,nop,TS val 2147467792 ecr 2147470247], length 0
+##### receiver eth4 (ge-0/0/3): tcpdump -nn -vvv -r refresh-eth4.pcap, UPDATE messages
+16:58:41.416754 IP6 (class 0xc0, flowlabel 0x893bd, hlim 1, next-header TCP (6) payload length: 100) 2001:db8:15::1.54929 > 2001:db8:15::2.179: Flags [P.], cksum 0x9b2e (correct), seq 1:69, ack 23, win 17136, options [nop,nop,TS val 2147470247 ecr 2147467478], length 68: BGP
+	Update Message (2), length: 68
+	  Origin (1), length: 1, Flags [T]: IGP
+	    0x0000:  00
+	  AS Path (2), length: 6, Flags [T]: 65001
+	    0x0000:  0201 0000 fde9
+	  Multi-Protocol Reach NLRI (14), length: 28, Flags [OE]:
+	    AFI: IPv6 (2), SAFI: Unicast (1)
+	    nexthop: 2001:db8:15::1, nh-length: 16, no SNPA
+	      2001:db8:400::/48
+	    0x0000:  0002 0110 2001 0db8 0015 0000 0000 0000
+	    0x0010:  0000 0001 0030 2001 0db8 0400
+16:58:41.523753 IP6 (class 0xc0, flowlabel 0xd6864, hlim 1, next-header TCP (6) payload length: 32) 2001:db8:15::2.179 > 2001:db8:15::1.54929: Flags [.], cksum 0xc099 (correct), seq 23, ack 69, win 16384, options [nop,nop,TS val 2147467790 ecr 2147470247], length 0

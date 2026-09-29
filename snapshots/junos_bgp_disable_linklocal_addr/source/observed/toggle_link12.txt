@@ -1,0 +1,44 @@
+===== receiver> clear log bgp-updates
+/var/log/bgp-updates cleared successfully
+
+===== receiver> show route 2001:db8:100::/48 extensive | match "Age|Next hop:"
+                Next hop: 2001:db8:12::1 via ge-0/0/0.0, selected
+                Age: 7:14
+
+===== sender# set protocols bgp group LINK12 disable-linklocal-addr
+
+===== sender# commit
+commit complete
+
+===== receiver> show bgp neighbor 2001:db8:12::1 | match "Flaps|Last Event"
+  Last State: OpenConfirm   Last Event: RecvKeepAlive
+  Number of flaps: 0
+
+===== receiver> show log bgp-updates | match "BGP RECV"
+
+===== receiver> show route 2001:db8:100::/48 extensive | match "Age|Next hop:"
+                Next hop: 2001:db8:12::1 via ge-0/0/0.0, selected
+                Age: 7:40
+
+===== receiver> clear bgp neighbor 2001:db8:12::1 soft-inbound
+
+===== receiver> show log bgp-updates | match "BGP RECV"
+Sep 29 17:00:02.335428 BGP RECV 2001:db8:12::1+50437 -> 2001:db8:12::2+179
+Sep 29 17:00:02.335461 BGP RECV message type 2 (Update) length 68
+Sep 29 17:00:02.336253 BGP RECV Update PDU length 68
+Sep 29 17:00:02.336262 BGP RECV flags 0x40 code Origin(1): IGP, length(1)
+Sep 29 17:00:02.336269 BGP RECV flags 0x40 code ASPath(2) (4-byte-cap) length 6: 65001
+Sep 29 17:00:02.336273 BGP RECV flags 0x90 code MP_reach(14): length(28) AFI/SAFI 2/1
+Sep 29 17:00:02.336282 BGP RECV 	nhop 2001:db8:12::1 len 16
+Sep 29 17:00:02.336292 BGP RECV 	2001:db8:100::/48
+
+===== receiver> show route 2001:db8:100::/48 extensive | match "Age|Next hop:"
+                Next hop: 2001:db8:12::1 via ge-0/0/0.0, selected
+                Age: 7:47
+
+===== sender# delete protocols bgp group LINK12 disable-linklocal-addr
+
+===== sender# commit
+commit complete
+
+===== sender# show | compare rollback 2

@@ -1,0 +1,66 @@
+===== sender> show interfaces terse ge-0/0/*
+Interface               Admin Link Proto    Local                 Remote
+ge-0/0/0                up    up
+ge-0/0/0.0              up    up   inet6    2001:db8:12::1/64
+                                            fe80::aac1:abff:fedf:b0e2/64
+                                   multiservice
+ge-0/0/1                up    up
+ge-0/0/1.0              up    up   inet6    2001:db8:13::1/64
+                                            fe80::aac1:abff:fe46:557/64
+                                   multiservice
+ge-0/0/2                up    up
+ge-0/0/2.0              up    up   inet6    2001:db8:14::1/64
+                                            fe80::aac1:abff:fe0c:204a/64
+                                   multiservice
+ge-0/0/3                up    up
+ge-0/0/3.0              up    up   inet6    2001:db8:15::1/64
+                                            fe80::aac1:abff:fe87:8e1/64
+                                   multiservice
+ge-0/0/4                up    down
+ge-0/0/4.16386          up    down
+ge-0/0/5                up    down
+ge-0/0/5.16386          up    down
+ge-0/0/6                up    down
+ge-0/0/6.16386          up    down
+ge-0/0/7                up    down
+ge-0/0/7.16386          up    down
+ge-0/0/8                up    down
+ge-0/0/8.16386          up    down
+ge-0/0/9                up    down
+ge-0/0/9.16386          up    down
+ge-0/0/10               up    down
+ge-0/0/10.16386         up    down
+ge-0/0/11               up    down
+ge-0/0/11.16386         up    down
+
+===== sender> show route advertising-protocol bgp 2001:db8:12::2 extensive
+
+inet6.0: 13 destinations, 13 routes (13 active, 0 holddown, 0 hidden)
+* 2001:db8:100::/48 (1 entry, 1 announced)
+ BGP group LINK12 type External
+     Nexthop: Self
+     AS path: [65001] I
+
+===== sender> show route advertising-protocol bgp 2001:db8:13::2 extensive
+
+inet6.0: 13 destinations, 13 routes (13 active, 0 holddown, 0 hidden)
+* 2001:db8:200::/48 (1 entry, 1 announced)
+ BGP group LINK13 type External
+     Nexthop: Self
+     AS path: [65001] I
+
+===== sender> show route advertising-protocol bgp 2001:db8:14::2 extensive
+
+inet6.0: 13 destinations, 13 routes (13 active, 0 holddown, 0 hidden)
+* 2001:db8:300::/48 (1 entry, 1 announced)
+ BGP group LINK14 type External
+     Nexthop: Self
+     AS path: [65001] I
+
+===== sender> show route advertising-protocol bgp 2001:db8:15::2 extensive
+
+PROTO.inet6.0: 5 destinations, 5 routes (5 active, 0 holddown, 0 hidden)
+* 2001:db8:400::/48 (1 entry, 1 announced)
+ BGP group LINK15 type External
+     Nexthop: Self
+     AS path: [65001] I

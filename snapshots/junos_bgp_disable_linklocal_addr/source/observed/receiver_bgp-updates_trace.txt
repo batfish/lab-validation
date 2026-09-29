@@ -1,0 +1,59 @@
+===== receiver> show log bgp-updates | no-more
+Sep 29 16:58:36 receiver clear-log[20393]: logfile cleared
+Sep 29 16:58:40.495435
+Sep 29 16:58:40.495435 BGP RECV 2001:db8:12::1+50437 -> 2001:db8:12::2+179
+Sep 29 16:58:40.495465 BGP RECV message type 2 (Update) length 84
+Sep 29 16:58:40.495470 BGP RECV Update PDU length 84
+Sep 29 16:58:40.495856 BGP RECV flags 0x40 code Origin(1): IGP, length(1)
+Sep 29 16:58:40.495865 BGP RECV flags 0x40 code ASPath(2) (4-byte-cap) length 6: 65001
+Sep 29 16:58:40.495870 BGP RECV flags 0x90 code MP_reach(14): length(44) AFI/SAFI 2/1
+Sep 29 16:58:40.495879 BGP RECV 	nhop 2001:db8:12::1 len 16
+Sep 29 16:58:40.495884 BGP RECV 	nhop fe80::aac1:abff:fedf:b0e2 len 16
+Sep 29 16:58:40.495893 BGP RECV 	2001:db8:100::/48
+Sep 29 16:58:40.495897 End-of-Attributes
+Sep 29 16:58:40.495953 bgp_rcv_nlri: Peer 2001:db8:12::1 (External AS 65001), uninstall 0, nouse 0, reject_reason 256
+Sep 29 16:58:40.495961 bgp_rcv_nlri: 2001:db8:100::/48
+Sep 29 16:58:40.495997 bgp_rcv_nlri: 2001:db8:100::/48 duplicate update
+Sep 29 16:58:40.496004 bgp_handle_update:5717: 2001:db8:12::1 (External AS 65001) received one update: 65 octets 1 route
+Sep 29 16:58:40.496016
+Sep 29 16:58:40.496016 BGP RECV 2001:db8:13::1+57803 -> 2001:db8:13::2+179
+Sep 29 16:58:40.496021 BGP RECV message type 2 (Update) length 68
+Sep 29 16:58:40.496023 BGP RECV Update PDU length 68
+Sep 29 16:58:40.496026 BGP RECV flags 0x40 code Origin(1): IGP, length(1)
+Sep 29 16:58:40.496030 BGP RECV flags 0x40 code ASPath(2) (4-byte-cap) length 6: 65001
+Sep 29 16:58:40.496033 BGP RECV flags 0x90 code MP_reach(14): length(28) AFI/SAFI 2/1
+Sep 29 16:58:40.496037 BGP RECV 	nhop 2001:db8:13::1 len 16
+Sep 29 16:58:40.496041 BGP RECV 	2001:db8:200::/48
+Sep 29 16:58:40.496043 End-of-Attributes
+Sep 29 16:58:40.496245 bgp_rcv_nlri: Peer 2001:db8:13::1 (External AS 65001), uninstall 0, nouse 0, reject_reason 256
+Sep 29 16:58:40.496251 bgp_rcv_nlri: 2001:db8:200::/48
+Sep 29 16:58:40.496261 bgp_rcv_nlri: 2001:db8:200::/48 duplicate update
+Sep 29 16:58:40.496265 bgp_handle_update:5717: 2001:db8:13::1 (External AS 65001) received one update: 49 octets 1 route
+Sep 29 16:58:40.894396
+Sep 29 16:58:40.894396 BGP RECV 2001:db8:14::1+179 -> 2001:db8:14::2+55744
+Sep 29 16:58:40.894420 BGP RECV message type 2 (Update) length 68
+Sep 29 16:58:40.894424 BGP RECV Update PDU length 68
+Sep 29 16:58:40.894431 BGP RECV flags 0x40 code Origin(1): IGP, length(1)
+Sep 29 16:58:40.894438 BGP RECV flags 0x40 code ASPath(2) (4-byte-cap) length 6: 65001
+Sep 29 16:58:40.894443 BGP RECV flags 0x90 code MP_reach(14): length(28) AFI/SAFI 2/1
+Sep 29 16:58:40.894454 BGP RECV 	nhop 2001:db8:14::1 len 16
+Sep 29 16:58:40.894465 BGP RECV 	2001:db8:300::/48
+Sep 29 16:58:40.894468 End-of-Attributes
+Sep 29 16:58:40.895450 bgp_rcv_nlri: Peer 2001:db8:14::1 (External AS 65001), uninstall 0, nouse 0, reject_reason 256
+Sep 29 16:58:40.895459 bgp_rcv_nlri: 2001:db8:300::/48
+Sep 29 16:58:40.895862 bgp_rcv_nlri: 2001:db8:300::/48 duplicate update
+Sep 29 16:58:40.895871 bgp_handle_update:5717: 2001:db8:14::1 (External AS 65001) received one update: 49 octets 1 route
+Sep 29 16:58:40.895884
+Sep 29 16:58:40.895884 BGP RECV 2001:db8:15::1+54929 -> 2001:db8:15::2+179
+Sep 29 16:58:40.895888 BGP RECV message type 2 (Update) length 68
+Sep 29 16:58:40.895891 BGP RECV Update PDU length 68
+Sep 29 16:58:40.895894 BGP RECV flags 0x40 code Origin(1): IGP, length(1)
+Sep 29 16:58:40.895898 BGP RECV flags 0x40 code ASPath(2) (4-byte-cap) length 6: 65001
+Sep 29 16:58:40.895902 BGP RECV flags 0x90 code MP_reach(14): length(28) AFI/SAFI 2/1
+Sep 29 16:58:40.895906 BGP RECV 	nhop 2001:db8:15::1 len 16
+Sep 29 16:58:40.895911 BGP RECV 	2001:db8:400::/48
+Sep 29 16:58:40.895913 End-of-Attributes
+Sep 29 16:58:40.895923 bgp_rcv_nlri: Peer 2001:db8:15::1 (External AS 65001), uninstall 0, nouse 0, reject_reason 256
+Sep 29 16:58:40.895927 bgp_rcv_nlri: 2001:db8:400::/48
+Sep 29 16:58:40.895934 bgp_rcv_nlri: 2001:db8:400::/48 duplicate update
+Sep 29 16:58:40.895938 bgp_handle_update:5717: 2001:db8:15::1 (External AS 65001) received one update: 49 octets 1 route
