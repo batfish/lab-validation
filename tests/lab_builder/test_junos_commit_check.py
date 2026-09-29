@@ -21,6 +21,16 @@ error: syntax error, expecting '[' or <data>: target:65001:1
 [edit]
 """
 
+# Response to "set routing-options disable-linklocal-addr", captured while
+# building junos_bgp_disable_linklocal_addr: an unknown keyword produces a
+# bare "syntax error." with no "error:" prefix.
+SET_BARE_SYNTAX_ERROR = """\
+                                  ^
+syntax error.
+
+[edit]
+"""
+
 COMMIT_CHECK_SUCCEEDS = "configuration check succeeds\n"
 
 
@@ -75,6 +85,19 @@ class TestJunosCommitCheck:
         )
         assert result.passed, result.detail
         assert "rollback 0" in conn.sent
+
+    def test_bare_set_syntax_error_is_rejection(
+        self, monkeypatch, junos_node: NodeInfo
+    ) -> None:
+        conn = FakeConnection(SET_BARE_SYNTAX_ERROR, COMMIT_CHECK_SUCCEEDS)
+        _patch_connect(monkeypatch, conn)
+        result = validate._check_commit_rejects(
+            junos_node,
+            ["set routing-options disable-linklocal-addr"],
+            "syntax error",
+        )
+        assert result.passed, result.detail
+        assert "commit check" not in conn.sent
 
     def test_set_syntax_error_fails_accepts(
         self, monkeypatch, junos_node: NodeInfo

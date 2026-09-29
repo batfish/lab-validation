@@ -7,6 +7,8 @@ is actually demonstrating the intended behavior before collection.
 from __future__ import annotations
 
 import json
+import re
+import time
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Any
@@ -163,6 +165,86 @@ def _junos_check_bgp_peer(node: NodeInfo, neighbor: str) -> CheckResult:
 
     return CheckResult(
         "bgp_peer_established", node.name, False, f"{neighbor}: peer not found"
+    )
+
+
+_TRACE_UPDATE_HEADER = re.compile(r"BGP RECV (\S+)\+\d+ -> ")
+_TRACE_NHOP = re.compile(r"BGP RECV\s+nhop (\S+) len \d+")
+_TRACE_PREFIX = re.compile(r"BGP RECV\s+(\S+/\d+)\s*$")
+
+
+def parse_junos_trace_update_next_hops(
+    trace: str, neighbor: str, prefix: str
+) -> list[str] | None:
+    """Return the next hops of the last traced UPDATE from neighbor for prefix.
+
+    Parses a BGP traceoptions file written with `flag update detail`. Each
+    received message starts with a `BGP RECV <peer>+<port> -> ...` line;
+    MP_REACH next hops follow as `nhop <addr> len <n>` lines, in the order
+    they appear in the attribute. Returns None if no such UPDATE is traced.
+    """
+    found: list[str] | None = None
+    peer: str | None = None
+    nhops: list[str] = []
+    for line in trace.splitlines():
+        header = _TRACE_UPDATE_HEADER.search(line)
+        if header:
+            peer = header.group(1)
+            nhops = []
+            continue
+        nhop = _TRACE_NHOP.search(line)
+        if nhop:
+            nhops.append(nhop.group(1))
+            continue
+        pfx = _TRACE_PREFIX.search(line)
+        if pfx and peer == neighbor and pfx.group(1) == prefix:
+            found = list(nhops)
+    return found
+
+
+def _junos_check_bgp_update_next_hops(
+    node: NodeInfo,
+    neighbor: str,
+    prefix: str,
+    trace_file: str,
+    expected: list[str],
+    link_local: bool,
+    timeout: int = 15,
+) -> CheckResult:
+    """Check the MP_REACH next hops a Junos node receives for a prefix.
+
+    Requires BGP traceoptions `file <trace_file>` with `flag update detail`.
+    Clears the trace file, requests a route refresh from the neighbor, and
+    parses the resulting UPDATE. `expected` lists the non-link-local next
+    hops; `link_local` says whether one fe80:: next hop must also be
+    present. Link-local addresses are derived from containerlab MACs, so
+    only their presence is checked.
+    """
+    check = "bgp_update_next_hops"
+    try:
+        run_command(node, f"clear log {trace_file}")
+        run_command(node, f"clear bgp neighbor {neighbor} soft-inbound")
+        nhops = None
+        deadline = time.monotonic() + timeout
+        while nhops is None and time.monotonic() < deadline:
+            time.sleep(1)
+            trace = run_command(node, f'show log {trace_file} | match "BGP RECV"')
+            nhops = parse_junos_trace_update_next_hops(trace, neighbor, prefix)
+    except Exception as e:
+        return CheckResult(check, node.name, False, f"command failed: {e}")
+
+    if nhops is None:
+        return CheckResult(
+            check,
+            node.name,
+            False,
+            f"{prefix} from {neighbor}: no UPDATE traced in {timeout}s",
+        )
+    globals_ = [n for n in nhops if not n.lower().startswith("fe80:")]
+    link_locals = [n for n in nhops if n.lower().startswith("fe80:")]
+    ok = globals_ == expected and len(link_locals) == (1 if link_local else 0)
+    return CheckResult(
+        check, node.name, ok, f"{prefix} from {neighbor}: next hops {nhops}"
     )
 
 
@@ -364,7 +446,10 @@ def _junos_commit_check(
             set_output: str = conn.send_command_timing(stripped)
             # A CLI syntax error rejects the line before it is loaded, so
             # the subsequent commit check would pass on an unchanged config.
-            if "error:" in set_output.lower():
+            # Junos reports it as "error: syntax error, ..." or, for an
+            # unknown keyword, a bare "syntax error." line.
+            lowered = set_output.lower()
+            if "error:" in lowered or "syntax error" in lowered:
                 conn.send_command_timing("rollback 0")
                 conn.exit_config_mode()
                 return False, f"{stripped}: {set_output.strip()}"
@@ -652,6 +737,14 @@ CHECK_FUNCTIONS = {
     ),
     "commit_check_accepts": lambda node, spec: _check_commit_accepts(
         node, spec["config_lines"]
+    ),
+    "bgp_update_next_hops": lambda node, spec: _junos_check_bgp_update_next_hops(
+        node,
+        spec["neighbor"],
+        spec["prefix"],
+        spec["trace_file"],
+        spec["next_hops"],
+        spec["link_local"],
     ),
 }
 

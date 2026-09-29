@@ -1,0 +1,172 @@
+# Lab-state preconditions and checks for junos_bgp_disable_linklocal_addr.
+#
+# Commit checks record where Junos accepts `disable-linklocal-addr`. The
+# statement is hidden (absent from `set protocols bgp ?`) but accepted
+# as a leaf at the protocol, group, and neighbor levels.
+#
+# bgp_update_next_hops checks read receiver's BGP update trace after a
+# route refresh and record the MP_REACH next hops sender sends on each
+# session: global plus link-local by default, global only when
+# disable-linklocal-addr applies at any level.
+
+checks:
+  - type: bgp_peer_established
+    node: receiver
+    neighbor: 2001:db8:12::1
+    description: "LINK12 session (no disable-linklocal-addr)"
+
+  - type: bgp_peer_established
+    node: receiver
+    neighbor: 2001:db8:13::1
+    description: "LINK13 session (group-level)"
+
+  - type: bgp_peer_established
+    node: receiver
+    neighbor: 2001:db8:14::1
+    description: "LINK14 session (neighbor-level)"
+
+  - type: bgp_peer_established
+    node: receiver
+    neighbor: 2001:db8:15::1
+    description: "LINK15 session (protocol-level, PROTO virtual-router)"
+
+  - type: route_exists
+    node: receiver
+    table: inet6.0
+    prefix: 2001:db8:100::/48
+    description: "LINK12 prefix installed"
+
+  - type: route_exists
+    node: receiver
+    table: inet6.0
+    prefix: 2001:db8:200::/48
+    description: "LINK13 prefix installed"
+
+  - type: route_exists
+    node: receiver
+    table: inet6.0
+    prefix: 2001:db8:300::/48
+    description: "LINK14 prefix installed"
+
+  - type: route_exists
+    node: receiver
+    table: inet6.0
+    prefix: 2001:db8:400::/48
+    description: "LINK15 prefix installed"
+
+  # --- UPDATE next hops ---
+
+  - type: bgp_update_next_hops
+    node: receiver
+    neighbor: 2001:db8:12::1
+    prefix: 2001:db8:100::/48
+    trace_file: bgp-updates
+    next_hops: ["2001:db8:12::1"]
+    link_local: true
+    description: "no knob: global and link-local next hops"
+
+  - type: bgp_update_next_hops
+    node: receiver
+    neighbor: 2001:db8:13::1
+    prefix: 2001:db8:200::/48
+    trace_file: bgp-updates
+    next_hops: ["2001:db8:13::1"]
+    link_local: false
+    description: "group-level knob: global next hop only"
+
+  - type: bgp_update_next_hops
+    node: receiver
+    neighbor: 2001:db8:14::1
+    prefix: 2001:db8:300::/48
+    trace_file: bgp-updates
+    next_hops: ["2001:db8:14::1"]
+    link_local: false
+    description: "neighbor-level knob: global next hop only"
+
+  - type: bgp_update_next_hops
+    node: receiver
+    neighbor: 2001:db8:15::1
+    prefix: 2001:db8:400::/48
+    trace_file: bgp-updates
+    next_hops: ["2001:db8:15::1"]
+    link_local: false
+    description: "protocol-level knob: global next hop only"
+
+  # --- Accepted hierarchies ---
+
+  - type: commit_check_accepts
+    node: sender
+    config_lines:
+      - "set protocols bgp disable-linklocal-addr"
+    description: "protocol level"
+
+  - type: commit_check_accepts
+    node: sender
+    config_lines:
+      - "set protocols bgp group LINK12 disable-linklocal-addr"
+    description: "group level (external group)"
+
+  - type: commit_check_accepts
+    node: sender
+    config_lines:
+      - "set protocols bgp group LINK12 neighbor 2001:db8:12::2 disable-linklocal-addr"
+    description: "neighbor level"
+
+  - type: commit_check_accepts
+    node: sender
+    config_lines:
+      - "set protocols bgp group IBGP type internal"
+      - "set protocols bgp group IBGP disable-linklocal-addr"
+      - "set protocols bgp group IBGP neighbor 2001:db8:99::3 disable-linklocal-addr"
+    description: "group and neighbor level in an internal group"
+
+  - type: commit_check_accepts
+    node: sender
+    config_lines:
+      - "set routing-instances PROTO protocols bgp group LINK15 disable-linklocal-addr"
+      - "set routing-instances PROTO protocols bgp group LINK15 neighbor 2001:db8:15::2 disable-linklocal-addr"
+    description: "group and neighbor level in a routing instance"
+
+  # --- Rejected forms ---
+
+  - type: commit_check_rejects
+    node: sender
+    config_lines:
+      - "set protocols bgp disable-linklocal-addr foo"
+    expected_error: "syntax error"
+    description: "takes no argument"
+
+  - type: commit_check_rejects
+    node: sender
+    config_lines:
+      - "set protocols bgp family inet6 unicast disable-linklocal-addr"
+    expected_error: "syntax error"
+    description: "not under protocol-level family inet6 unicast"
+
+  - type: commit_check_rejects
+    node: sender
+    config_lines:
+      - "set protocols bgp group LINK12 family inet6 disable-linklocal-addr"
+    expected_error: "syntax error"
+    description: "not under group-level family inet6"
+
+  - type: commit_check_rejects
+    node: sender
+    config_lines:
+      - "set protocols bgp group LINK12 family inet6 unicast disable-linklocal-addr"
+    expected_error: "syntax error"
+    description: "not under group-level family inet6 unicast"
+
+  - type: commit_check_rejects
+    node: sender
+    config_lines:
+      - "set routing-options disable-linklocal-addr"
+    expected_error: "syntax error"
+    description: "not under routing-options"
+
+  - type: commit_check_rejects
+    node: sender
+    config_lines:
+      - "set protocols bgp disable-link-local-addr"
+    expected_error: "syntax error"
+    description: "hyphenated link-local spelling does not exist"
