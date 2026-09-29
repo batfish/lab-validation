@@ -1,0 +1,33 @@
+# Junos `protocols bgp disable-linklocal-addr` lab.
+#
+# sender advertises one IPv6 prefix per eBGP session to receiver. The
+# sessions differ only in where `disable-linklocal-addr` is configured:
+#
+#   session  sender            receiver          knob          prefix
+#   LINK12   ge-0/0/0 2001:db8:12::1  ge-0/0/0 2001:db8:12::2  none          2001:db8:100::/48
+#   LINK13   ge-0/0/1 2001:db8:13::1  ge-0/0/1 2001:db8:13::2  group         2001:db8:200::/48
+#   LINK14   ge-0/0/2 2001:db8:14::1  ge-0/0/2 2001:db8:14::2  neighbor      2001:db8:300::/48
+#   LINK15   ge-0/0/3 2001:db8:15::1  ge-0/0/3 2001:db8:15::2  protocol      2001:db8:400::/48
+#                                                (PROTO virtual-router)
+#
+# All addresses are in 2001:db8::/32. sender is AS 65001, receiver AS 65002.
+
+name: junos-bgp-disable-linklocal-addr
+
+topology:
+  nodes:
+    sender:
+      kind: juniper_vjunosrouter
+      image: vrnetlab/juniper_vjunos-router:25.4R1.12
+      startup-config: configs/sender.cfg
+    receiver:
+      kind: juniper_vjunosrouter
+      image: vrnetlab/juniper_vjunos-router:25.4R1.12
+      startup-config: configs/receiver.cfg
+
+  links:
+    # sender ge-0/0/N (eth N+1) <-> receiver ge-0/0/N (eth N+1)
+    - endpoints: ["sender:eth1", "receiver:eth1"]
+    - endpoints: ["sender:eth2", "receiver:eth2"]
+    - endpoints: ["sender:eth3", "receiver:eth3"]
+    - endpoints: ["sender:eth4", "receiver:eth4"]
