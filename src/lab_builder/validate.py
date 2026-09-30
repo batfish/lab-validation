@@ -248,6 +248,94 @@ def _junos_check_bgp_update_next_hops(
     )
 
 
+@dataclass
+class JunosBgpPath:
+    """One BGP path from `show route ... detail | display json`."""
+
+    active: bool
+    originator_id: str | None
+    cluster_list: list[str]
+    inactive_reason: str | None
+
+
+def parse_junos_bgp_paths(data: dict[str, Any], table: str) -> list[JunosBgpPath]:
+    """Return the BGP paths in table from `show route <prefix> detail` JSON.
+
+    The output must be for a single prefix. The active path has
+    `active-tag` `*`; the others carry `inactive-reason`.
+    """
+    paths: list[JunosBgpPath] = []
+    for t in data["route-information"][0].get("route-table", []):
+        if t["table-name"][0]["data"] != table:
+            continue
+        for rt in t["rt"]:
+            for entry in rt["rt-entry"]:
+                if entry["protocol-name"][0]["data"] != "BGP":
+                    continue
+                attrs = entry["bgp-path-attributes"][0]
+                originator = attrs.get("attr-originator-id")
+                clusters = attrs.get("attr-cluster-list")
+                reason = entry.get("inactive-reason")
+                paths.append(
+                    JunosBgpPath(
+                        active=entry["active-tag"][0].get("data") == "*",
+                        originator_id=(
+                            originator[0]["attr-value"][0]["data"]
+                            if originator
+                            else None
+                        ),
+                        cluster_list=(
+                            clusters[0]["attr-value"][0]["data"].split()
+                            if clusters
+                            else []
+                        ),
+                        inactive_reason=reason[0]["data"] if reason else None,
+                    )
+                )
+    return paths
+
+
+def _junos_check_bgp_active_path(
+    node: NodeInfo,
+    table: str,
+    prefix: str,
+    originator_id: str,
+    inactive_reason: str | None,
+) -> CheckResult:
+    """Check which BGP path Junos selects for a prefix.
+
+    The active path must have ORIGINATOR_ID originator_id. If
+    inactive_reason is given, every other BGP path must report it.
+    """
+    check = "bgp_active_path"
+    try:
+        output = run_command(
+            node, f"show route table {table} {prefix} exact detail | display json"
+        )
+        paths = parse_junos_bgp_paths(json.loads(output), table)
+    except Exception as e:
+        return CheckResult(check, node.name, False, f"command failed: {e}")
+
+    active = [p for p in paths if p.active]
+    inactive = [p for p in paths if not p.active]
+    ok = (
+        len(active) == 1
+        and active[0].originator_id == originator_id
+        and bool(inactive)
+        and (
+            inactive_reason is None
+            or all(p.inactive_reason == inactive_reason for p in inactive)
+        )
+    )
+    summary = "; ".join(
+        f"{'*' if p.active else ' '}originator {p.originator_id} "
+        f"cluster list {p.cluster_list}"
+        + ("" if p.active else f" inactive: {p.inactive_reason}")
+        for p in paths
+    )
+    return CheckResult(check, node.name, ok, f"{prefix} in {table}: {summary}")
+
+
 # ---------------------------------------------------------------------------
 # Arista EOS checks
 # ---------------------------------------------------------------------------
@@ -745,6 +833,13 @@ CHECK_FUNCTIONS = {
         spec["trace_file"],
         spec["next_hops"],
         spec["link_local"],
+    ),
+    "bgp_active_path": lambda node, spec: _junos_check_bgp_active_path(
+        node,
+        spec["table"],
+        spec["prefix"],
+        spec["originator_id"],
+        spec.get("inactive_reason"),
     ),
 }
 

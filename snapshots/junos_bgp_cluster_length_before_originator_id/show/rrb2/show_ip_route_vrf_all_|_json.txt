@@ -1,0 +1,80 @@
+{
+    "vrfs": {
+        "default": {
+            "routingDisabled": false,
+            "allRoutesProgrammedHardware": true,
+            "allRoutesProgrammedKernel": true,
+            "defaultRouteState": "notSet",
+            "routes": {
+                "10.0.4.0/31": {
+                    "hardwareProgrammed": true,
+                    "routeType": "connected",
+                    "routeLeaked": false,
+                    "kernelProgrammed": true,
+                    "routeAction": "forward",
+                    "vias": [
+                        {
+                            "interface": "Ethernet1"
+                        }
+                    ],
+                    "directlyConnected": true
+                },
+                "10.0.5.0/31": {
+                    "hardwareProgrammed": true,
+                    "routeType": "connected",
+                    "routeLeaked": false,
+                    "kernelProgrammed": true,
+                    "routeAction": "forward",
+                    "vias": [
+                        {
+                            "interface": "Ethernet2"
+                        }
+                    ],
+                    "directlyConnected": true
+                },
+                "10.255.0.4/32": {
+                    "hardwareProgrammed": true,
+                    "routeType": "connected",
+                    "routeLeaked": false,
+                    "kernelProgrammed": true,
+                    "routeAction": "forward",
+                    "vias": [
+                        {
+                            "interface": "Loopback0"
+                        }
+                    ],
+                    "directlyConnected": true
+                },
+                "172.20.20.0/24": {
+                    "hardwareProgrammed": true,
+                    "routeType": "connected",
+                    "routeLeaked": false,
+                    "kernelProgrammed": true,
+                    "routeAction": "forward",
+                    "vias": [
+                        {
+                            "interface": "Management0"
+                        }
+                    ],
+                    "directlyConnected": true
+                },
+                "203.0.113.0/24": {
+                    "hardwareProgrammed": true,
+                    "routeType": "iBGP",
+                    "routeLeaked": false,
+                    "kernelProgrammed": true,
+                    "preference": 200,
+                    "metric": 0,
+                    "routeAction": "forward",
+                    "directlyConnected": false,
+                    "vias": [
+                        {
+                            "nexthopAddr": "10.0.5.1",
+                            "interface": "Ethernet2"
+                        }
+                    ]
+                }
+            }
+        }
+    }
+}

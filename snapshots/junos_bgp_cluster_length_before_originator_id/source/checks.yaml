@@ -1,0 +1,167 @@
+# Lab-state preconditions and checks for
+# junos_bgp_cluster_length_before_originator_id.
+#
+# bgp_active_path checks record which of the two reflected paths dut
+# selects for 203.0.113.0/24: path B (lower originator ID) in the master
+# instance without the statement, path A (shorter cluster list) in the
+# KNOB virtual-router with it. Commit checks record where Junos accepts
+# the statement. It is hidden (absent from `set protocols bgp
+# path-selection ?`) but accepted under path-selection at the protocol
+# level of the master instance, routing instances, and logical systems.
+
+checks:
+  - type: bgp_peer_established
+    node: rra
+    neighbor: 10.0.3.1
+    description: "rra: client origa"
+
+  - type: bgp_peer_established
+    node: rrb2
+    neighbor: 10.0.5.1
+    description: "rrb2: client origb"
+
+  - type: bgp_peer_established
+    node: rrb1
+    neighbor: 10.0.4.1
+    description: "rrb1: client rrb2"
+
+  - type: bgp_peer_established
+    node: dut
+    neighbor: 10.0.1.1
+    description: "master: rrb1 (path B)"
+
+  - type: bgp_peer_established
+    node: dut
+    neighbor: 10.0.2.1
+    description: "master: rra (path A)"
+
+  - type: bgp_peer_established
+    node: dut
+    neighbor: 10.0.11.1
+    description: "KNOB: rrb1 (path B)"
+
+  - type: bgp_peer_established
+    node: dut
+    neighbor: 10.0.12.1
+    description: "KNOB: rra (path A)"
+
+  # --- Path selection ---
+
+  - type: bgp_active_path
+    node: dut
+    table: inet.0
+    prefix: 203.0.113.0/24
+    originator_id: 10.255.0.1
+    inactive_reason: "Not Best in its group - Router ID"
+    description: "no statement: lower originator ID wins"
+
+  - type: bgp_active_path
+    node: dut
+    table: KNOB.inet.0
+    prefix: 203.0.113.0/24
+    originator_id: 10.255.0.9
+    inactive_reason: "Not Best in its group - Cluster list length"
+    description: "statement: shorter cluster list wins"
+
+  # --- Accepted hierarchies ---
+
+  - type: commit_check_accepts
+    node: dut
+    config_lines:
+      - "set protocols bgp path-selection compare-cluster-length-before-originator-id"
+    description: "protocol level, master instance"
+
+  - type: commit_check_accepts
+    node: dut
+    config_lines:
+      - "set routing-instances VR instance-type virtual-router"
+      - "set routing-instances VR protocols bgp path-selection compare-cluster-length-before-originator-id"
+    description: "virtual-router instance"
+
+  - type: commit_check_accepts
+    node: dut
+    config_lines:
+      - "set routing-instances V instance-type vrf"
+      - "set routing-instances V route-distinguisher 65000:1"
+      - "set routing-instances V vrf-target target:65000:1"
+      - "set routing-instances V protocols bgp path-selection compare-cluster-length-before-originator-id"
+    description: "vrf instance"
+
+  - type: commit_check_accepts
+    node: dut
+    config_lines:
+      - "set logical-systems LS protocols bgp path-selection compare-cluster-length-before-originator-id"
+    description: "logical system"
+
+  - type: commit_check_accepts
+    node: dut
+    config_lines:
+      - "set protocols bgp path-selection compare-cluster-length-before-originator-id"
+      - "set protocols bgp path-selection always-compare-med"
+      - "set protocols bgp path-selection external-router-id"
+    description: "with always-compare-med and external-router-id"
+
+  - type: commit_check_accepts
+    node: dut
+    config_lines:
+      - "set protocols bgp path-selection compare-cluster-length-before-originator-id"
+      - "set protocols bgp path-selection cisco-non-deterministic"
+    description: "with cisco-non-deterministic"
+
+  # --- Rejected forms ---
+
+  - type: commit_check_rejects
+    node: dut
+    config_lines:
+      - "set protocols bgp group RR path-selection compare-cluster-length-before-originator-id"
+    expected_error: "syntax error"
+    description: "no path-selection at group level"
+
+  - type: commit_check_rejects
+    node: dut
+    config_lines:
+      - "set protocols bgp group RR neighbor 10.0.1.1 path-selection compare-cluster-length-before-originator-id"
+    expected_error: "syntax error"
+    description: "no path-selection at neighbor level"
+
+  - type: commit_check_rejects
+    node: dut
+    config_lines:
+      - "set routing-instances KNOB protocols bgp group RR path-selection compare-cluster-length-before-originator-id"
+    expected_error: "syntax error"
+    description: "no path-selection at group level in a routing instance"
+
+  - type: commit_check_rejects
+    node: dut
+    config_lines:
+      - "set protocols bgp family inet unicast path-selection compare-cluster-length-before-originator-id"
+    expected_error: "syntax error"
+    description: "no path-selection under family"
+
+  - type: commit_check_rejects
+    node: dut
+    config_lines:
+      - "set protocols bgp compare-cluster-length-before-originator-id"
+    expected_error: "syntax error"
+    description: "not directly under protocols bgp"
+
+  - type: commit_check_rejects
+    node: dut
+    config_lines:
+      - "set protocols bgp group RR compare-cluster-length-before-originator-id"
+    expected_error: "syntax error"
+    description: "not directly under a group"
+
+  - type: commit_check_rejects
+    node: dut
+    config_lines:
+      - "set routing-options compare-cluster-length-before-originator-id"
+    expected_error: "syntax error"
+    description: "not under routing-options"
+
+  - type: commit_check_rejects
+    node: dut
+    config_lines:
+      - "set protocols bgp path-selection compare-cluster-length-before-originator-id foo"
+    expected_error: "syntax error"
+    description: "takes no argument"

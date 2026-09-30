@@ -1,0 +1,1335 @@
+{
+    "route-information" : [
+    {
+        "attributes" : {"xmlns" : "http://xml.juniper.net/junos/25.4R0/junos-routing"}, 
+        "route-table" : [
+        {
+            "comment" : "keepalive", 
+            "table-name" : [
+            {
+                "data" : "inet.0"
+            }
+            ], 
+            "destination-count" : [
+            {
+                "data" : "6"
+            }
+            ], 
+            "total-route-count" : [
+            {
+                "data" : "7"
+            }
+            ], 
+            "active-route-count" : [
+            {
+                "data" : "6"
+            }
+            ], 
+            "holddown-route-count" : [
+            {
+                "data" : "0"
+            }
+            ], 
+            "hidden-route-count" : [
+            {
+                "data" : "0"
+            }
+            ], 
+            "rt" : [
+            {
+                "attributes" : {"junos:style" : "brief"}, 
+                "rt-destination" : [
+                {
+                    "data" : "10.0.1.0/31"
+                }
+                ], 
+                "rt-entry" : [
+                {
+                    "active-tag" : [
+                    {
+                        "data" : "*"
+                    }
+                    ], 
+                    "current-active" : [
+                    {
+                        "data" : [null]
+                    }
+                    ], 
+                    "last-active" : [
+                    {
+                        "data" : [null]
+                    }
+                    ], 
+                    "protocol-name" : [
+                    {
+                        "data" : "Direct"
+                    }
+                    ], 
+                    "preference" : [
+                    {
+                        "data" : "0"
+                    }
+                    ], 
+                    "age" : [
+                    {
+                        "data" : "00:02:48", 
+                        "attributes" : {"junos:seconds" : "168"}
+                    }
+                    ], 
+                    "nh" : [
+                    {
+                        "selected-next-hop" : [
+                        {
+                            "data" : [null]
+                        }
+                        ], 
+                        "via" : [
+                        {
+                            "data" : "ge-0/0/0.0"
+                        }
+                        ]
+                    }
+                    ]
+                }
+                ]
+            }, 
+            {
+                "attributes" : {"junos:style" : "brief"}, 
+                "rt-destination" : [
+                {
+                    "data" : "10.0.1.0/32"
+                }
+                ], 
+                "rt-entry" : [
+                {
+                    "active-tag" : [
+                    {
+                        "data" : "*"
+                    }
+                    ], 
+                    "current-active" : [
+                    {
+                        "data" : [null]
+                    }
+                    ], 
+                    "last-active" : [
+                    {
+                        "data" : [null]
+                    }
+                    ], 
+                    "protocol-name" : [
+                    {
+                        "data" : "Local"
+                    }
+                    ], 
+                    "preference" : [
+                    {
+                        "data" : "0"
+                    }
+                    ], 
+                    "age" : [
+                    {
+                        "data" : "00:02:48", 
+                        "attributes" : {"junos:seconds" : "168"}
+                    }
+                    ], 
+                    "nh-type" : [
+                    {
+                        "data" : "Local"
+                    }
+                    ], 
+                    "nh" : [
+                    {
+                        "nh-local-interface" : [
+                        {
+                            "data" : "ge-0/0/0.0"
+                        }
+                        ]
+                    }
+                    ]
+                }
+                ]
+            }, 
+            {
+                "attributes" : {"junos:style" : "brief"}, 
+                "rt-destination" : [
+                {
+                    "data" : "10.0.2.0/31"
+                }
+                ], 
+                "rt-entry" : [
+                {
+                    "active-tag" : [
+                    {
+                        "data" : "*"
+                    }
+                    ], 
+                    "current-active" : [
+                    {
+                        "data" : [null]
+                    }
+                    ], 
+                    "last-active" : [
+                    {
+                        "data" : [null]
+                    }
+                    ], 
+                    "protocol-name" : [
+                    {
+                        "data" : "Direct"
+                    }
+                    ], 
+                    "preference" : [
+                    {
+                        "data" : "0"
+                    }
+                    ], 
+                    "age" : [
+                    {
+                        "data" : "00:02:48", 
+                        "attributes" : {"junos:seconds" : "168"}
+                    }
+                    ], 
+                    "nh" : [
+                    {
+                        "selected-next-hop" : [
+                        {
+                            "data" : [null]
+                        }
+                        ], 
+                        "via" : [
+                        {
+                            "data" : "ge-0/0/1.0"
+                        }
+                        ]
+                    }
+                    ]
+                }
+                ]
+            }, 
+            {
+                "attributes" : {"junos:style" : "brief"}, 
+                "rt-destination" : [
+                {
+                    "data" : "10.0.2.0/32"
+                }
+                ], 
+                "rt-entry" : [
+                {
+                    "active-tag" : [
+                    {
+                        "data" : "*"
+                    }
+                    ], 
+                    "current-active" : [
+                    {
+                        "data" : [null]
+                    }
+                    ], 
+                    "last-active" : [
+                    {
+                        "data" : [null]
+                    }
+                    ], 
+                    "protocol-name" : [
+                    {
+                        "data" : "Local"
+                    }
+                    ], 
+                    "preference" : [
+                    {
+                        "data" : "0"
+                    }
+                    ], 
+                    "age" : [
+                    {
+                        "data" : "00:02:48", 
+                        "attributes" : {"junos:seconds" : "168"}
+                    }
+                    ], 
+                    "nh-type" : [
+                    {
+                        "data" : "Local"
+                    }
+                    ], 
+                    "nh" : [
+                    {
+                        "nh-local-interface" : [
+                        {
+                            "data" : "ge-0/0/1.0"
+                        }
+                        ]
+                    }
+                    ]
+                }
+                ]
+            }, 
+            {
+                "attributes" : {"junos:style" : "brief"}, 
+                "rt-destination" : [
+                {
+                    "data" : "10.255.0.5/32"
+                }
+                ], 
+                "rt-entry" : [
+                {
+                    "active-tag" : [
+                    {
+                        "data" : "*"
+                    }
+                    ], 
+                    "current-active" : [
+                    {
+                        "data" : [null]
+                    }
+                    ], 
+                    "last-active" : [
+                    {
+                        "data" : [null]
+                    }
+                    ], 
+                    "protocol-name" : [
+                    {
+                        "data" : "Direct"
+                    }
+                    ], 
+                    "preference" : [
+                    {
+                        "data" : "0"
+                    }
+                    ], 
+                    "age" : [
+                    {
+                        "data" : "00:03:38", 
+                        "attributes" : {"junos:seconds" : "218"}
+                    }
+                    ], 
+                    "nh" : [
+                    {
+                        "selected-next-hop" : [
+                        {
+                            "data" : [null]
+                        }
+                        ], 
+                        "via" : [
+                        {
+                            "data" : "lo0.0"
+                        }
+                        ]
+                    }
+                    ]
+                }
+                ]
+            }, 
+            {
+                "attributes" : {"junos:style" : "brief"}, 
+                "rt-destination" : [
+                {
+                    "data" : "203.0.113.0/24"
+                }
+                ], 
+                "rt-entry" : [
+                {
+                    "active-tag" : [
+                    {
+                        "data" : "*"
+                    }
+                    ], 
+                    "current-active" : [
+                    {
+                        "data" : [null]
+                    }
+                    ], 
+                    "last-active" : [
+                    {
+                        "data" : [null]
+                    }
+                    ], 
+                    "protocol-name" : [
+                    {
+                        "data" : "BGP"
+                    }
+                    ], 
+                    "preference" : [
+                    {
+                        "data" : "170"
+                    }
+                    ], 
+                    "age" : [
+                    {
+                        "data" : "00:02:46", 
+                        "attributes" : {"junos:seconds" : "166"}
+                    }
+                    ], 
+                    "local-preference" : [
+                    {
+                        "data" : "100"
+                    }
+                    ], 
+                    "as-path" : [
+                    {
+                        "data" : "?"
+                    }
+                    ], 
+                    "validation-state" : [
+                    {
+                        "data" : "unverified"
+                    }
+                    ], 
+                    "nh" : [
+                    {
+                        "selected-next-hop" : [
+                        {
+                            "data" : [null]
+                        }
+                        ], 
+                        "to" : [
+                        {
+                            "data" : "10.0.1.1"
+                        }
+                        ], 
+                        "via" : [
+                        {
+                            "data" : "ge-0/0/0.0"
+                        }
+                        ]
+                    }
+                    ]
+                }, 
+                {
+                    "active-tag" : [
+                    {
+                    }
+                    ], 
+                    "protocol-name" : [
+                    {
+                        "data" : "BGP"
+                    }
+                    ], 
+                    "preference" : [
+                    {
+                        "data" : "170"
+                    }
+                    ], 
+                    "age" : [
+                    {
+                        "data" : "00:02:42", 
+                        "attributes" : {"junos:seconds" : "162"}
+                    }
+                    ], 
+                    "local-preference" : [
+                    {
+                        "data" : "100"
+                    }
+                    ], 
+                    "as-path" : [
+                    {
+                        "data" : "?"
+                    }
+                    ], 
+                    "validation-state" : [
+                    {
+                        "data" : "unverified"
+                    }
+                    ], 
+                    "nh" : [
+                    {
+                        "selected-next-hop" : [
+                        {
+                            "data" : [null]
+                        }
+                        ], 
+                        "to" : [
+                        {
+                            "data" : "10.0.2.1"
+                        }
+                        ], 
+                        "via" : [
+                        {
+                            "data" : "ge-0/0/1.0"
+                        }
+                        ]
+                    }
+                    ]
+                }
+                ]
+            }
+            ]
+        }, 
+        {
+            "table-name" : [
+            {
+                "data" : "mgmt_junos.inet.0"
+            }
+            ], 
+            "destination-count" : [
+            {
+                "data" : "3"
+            }
+            ], 
+            "total-route-count" : [
+            {
+                "data" : "3"
+            }
+            ], 
+            "active-route-count" : [
+            {
+                "data" : "3"
+            }
+            ], 
+            "holddown-route-count" : [
+            {
+                "data" : "0"
+            }
+            ], 
+            "hidden-route-count" : [
+            {
+                "data" : "0"
+            }
+            ], 
+            "rt" : [
+            {
+                "attributes" : {"junos:style" : "brief"}, 
+                "rt-destination" : [
+                {
+                    "data" : "0.0.0.0/0"
+                }
+                ], 
+                "rt-entry" : [
+                {
+                    "active-tag" : [
+                    {
+                        "data" : "*"
+                    }
+                    ], 
+                    "current-active" : [
+                    {
+                        "data" : [null]
+                    }
+                    ], 
+                    "last-active" : [
+                    {
+                        "data" : [null]
+                    }
+                    ], 
+                    "protocol-name" : [
+                    {
+                        "data" : "Static"
+                    }
+                    ], 
+                    "preference" : [
+                    {
+                        "data" : "5"
+                    }
+                    ], 
+                    "age" : [
+                    {
+                        "data" : "00:03:38", 
+                        "attributes" : {"junos:seconds" : "218"}
+                    }
+                    ], 
+                    "nh" : [
+                    {
+                        "selected-next-hop" : [
+                        {
+                            "data" : [null]
+                        }
+                        ], 
+                        "to" : [
+                        {
+                            "data" : "10.0.0.2"
+                        }
+                        ], 
+                        "via" : [
+                        {
+                            "data" : "fxp0.0"
+                        }
+                        ]
+                    }
+                    ]
+                }
+                ]
+            }, 
+            {
+                "attributes" : {"junos:style" : "brief"}, 
+                "rt-destination" : [
+                {
+                    "data" : "10.0.0.0/24"
+                }
+                ], 
+                "rt-entry" : [
+                {
+                    "active-tag" : [
+                    {
+                        "data" : "*"
+                    }
+                    ], 
+                    "current-active" : [
+                    {
+                        "data" : [null]
+                    }
+                    ], 
+                    "last-active" : [
+                    {
+                        "data" : [null]
+                    }
+                    ], 
+                    "protocol-name" : [
+                    {
+                        "data" : "Direct"
+                    }
+                    ], 
+                    "preference" : [
+                    {
+                        "data" : "0"
+                    }
+                    ], 
+                    "age" : [
+                    {
+                        "data" : "00:03:38", 
+                        "attributes" : {"junos:seconds" : "218"}
+                    }
+                    ], 
+                    "nh" : [
+                    {
+                        "selected-next-hop" : [
+                        {
+                            "data" : [null]
+                        }
+                        ], 
+                        "via" : [
+                        {
+                            "data" : "fxp0.0"
+                        }
+                        ]
+                    }
+                    ]
+                }
+                ]
+            }, 
+            {
+                "attributes" : {"junos:style" : "brief"}, 
+                "rt-destination" : [
+                {
+                    "data" : "10.0.0.15/32"
+                }
+                ], 
+                "rt-entry" : [
+                {
+                    "active-tag" : [
+                    {
+                        "data" : "*"
+                    }
+                    ], 
+                    "current-active" : [
+                    {
+                        "data" : [null]
+                    }
+                    ], 
+                    "last-active" : [
+                    {
+                        "data" : [null]
+                    }
+                    ], 
+                    "protocol-name" : [
+                    {
+                        "data" : "Local"
+                    }
+                    ], 
+                    "preference" : [
+                    {
+                        "data" : "0"
+                    }
+                    ], 
+                    "age" : [
+                    {
+                        "data" : "00:03:38", 
+                        "attributes" : {"junos:seconds" : "218"}
+                    }
+                    ], 
+                    "nh-type" : [
+                    {
+                        "data" : "Local"
+                    }
+                    ], 
+                    "nh" : [
+                    {
+                        "nh-local-interface" : [
+                        {
+                            "data" : "fxp0.0"
+                        }
+                        ]
+                    }
+                    ]
+                }
+                ]
+            }
+            ]
+        }, 
+        {
+            "table-name" : [
+            {
+                "data" : "KNOB.inet.0"
+            }
+            ], 
+            "destination-count" : [
+            {
+                "data" : "5"
+            }
+            ], 
+            "total-route-count" : [
+            {
+                "data" : "6"
+            }
+            ], 
+            "active-route-count" : [
+            {
+                "data" : "5"
+            }
+            ], 
+            "holddown-route-count" : [
+            {
+                "data" : "0"
+            }
+            ], 
+            "hidden-route-count" : [
+            {
+                "data" : "0"
+            }
+            ], 
+            "rt" : [
+            {
+                "attributes" : {"junos:style" : "brief"}, 
+                "rt-destination" : [
+                {
+                    "data" : "10.0.11.0/31"
+                }
+                ], 
+                "rt-entry" : [
+                {
+                    "active-tag" : [
+                    {
+                        "data" : "*"
+                    }
+                    ], 
+                    "current-active" : [
+                    {
+                        "data" : [null]
+                    }
+                    ], 
+                    "last-active" : [
+                    {
+                        "data" : [null]
+                    }
+                    ], 
+                    "protocol-name" : [
+                    {
+                        "data" : "Direct"
+                    }
+                    ], 
+                    "preference" : [
+                    {
+                        "data" : "0"
+                    }
+                    ], 
+                    "age" : [
+                    {
+                        "data" : "00:02:48", 
+                        "attributes" : {"junos:seconds" : "168"}
+                    }
+                    ], 
+                    "nh" : [
+                    {
+                        "selected-next-hop" : [
+                        {
+                            "data" : [null]
+                        }
+                        ], 
+                        "via" : [
+                        {
+                            "data" : "ge-0/0/2.0"
+                        }
+                        ]
+                    }
+                    ]
+                }
+                ]
+            }, 
+            {
+                "attributes" : {"junos:style" : "brief"}, 
+                "rt-destination" : [
+                {
+                    "data" : "10.0.11.0/32"
+                }
+                ], 
+                "rt-entry" : [
+                {
+                    "active-tag" : [
+                    {
+                        "data" : "*"
+                    }
+                    ], 
+                    "current-active" : [
+                    {
+                        "data" : [null]
+                    }
+                    ], 
+                    "last-active" : [
+                    {
+                        "data" : [null]
+                    }
+                    ], 
+                    "protocol-name" : [
+                    {
+                        "data" : "Local"
+                    }
+                    ], 
+                    "preference" : [
+                    {
+                        "data" : "0"
+                    }
+                    ], 
+                    "age" : [
+                    {
+                        "data" : "00:02:48", 
+                        "attributes" : {"junos:seconds" : "168"}
+                    }
+                    ], 
+                    "nh-type" : [
+                    {
+                        "data" : "Local"
+                    }
+                    ], 
+                    "nh" : [
+                    {
+                        "nh-local-interface" : [
+                        {
+                            "data" : "ge-0/0/2.0"
+                        }
+                        ]
+                    }
+                    ]
+                }
+                ]
+            }, 
+            {
+                "attributes" : {"junos:style" : "brief"}, 
+                "rt-destination" : [
+                {
+                    "data" : "10.0.12.0/31"
+                }
+                ], 
+                "rt-entry" : [
+                {
+                    "active-tag" : [
+                    {
+                        "data" : "*"
+                    }
+                    ], 
+                    "current-active" : [
+                    {
+                        "data" : [null]
+                    }
+                    ], 
+                    "last-active" : [
+                    {
+                        "data" : [null]
+                    }
+                    ], 
+                    "protocol-name" : [
+                    {
+                        "data" : "Direct"
+                    }
+                    ], 
+                    "preference" : [
+                    {
+                        "data" : "0"
+                    }
+                    ], 
+                    "age" : [
+                    {
+                        "data" : "00:02:48", 
+                        "attributes" : {"junos:seconds" : "168"}
+                    }
+                    ], 
+                    "nh" : [
+                    {
+                        "selected-next-hop" : [
+                        {
+                            "data" : [null]
+                        }
+                        ], 
+                        "via" : [
+                        {
+                            "data" : "ge-0/0/3.0"
+                        }
+                        ]
+                    }
+                    ]
+                }
+                ]
+            }, 
+            {
+                "attributes" : {"junos:style" : "brief"}, 
+                "rt-destination" : [
+                {
+                    "data" : "10.0.12.0/32"
+                }
+                ], 
+                "rt-entry" : [
+                {
+                    "active-tag" : [
+                    {
+                        "data" : "*"
+                    }
+                    ], 
+                    "current-active" : [
+                    {
+                        "data" : [null]
+                    }
+                    ], 
+                    "last-active" : [
+                    {
+                        "data" : [null]
+                    }
+                    ], 
+                    "protocol-name" : [
+                    {
+                        "data" : "Local"
+                    }
+                    ], 
+                    "preference" : [
+                    {
+                        "data" : "0"
+                    }
+                    ], 
+                    "age" : [
+                    {
+                        "data" : "00:02:48", 
+                        "attributes" : {"junos:seconds" : "168"}
+                    }
+                    ], 
+                    "nh-type" : [
+                    {
+                        "data" : "Local"
+                    }
+                    ], 
+                    "nh" : [
+                    {
+                        "nh-local-interface" : [
+                        {
+                            "data" : "ge-0/0/3.0"
+                        }
+                        ]
+                    }
+                    ]
+                }
+                ]
+            }, 
+            {
+                "attributes" : {"junos:style" : "brief"}, 
+                "rt-destination" : [
+                {
+                    "data" : "203.0.113.0/24"
+                }
+                ], 
+                "rt-entry" : [
+                {
+                    "active-tag" : [
+                    {
+                        "data" : "*"
+                    }
+                    ], 
+                    "current-active" : [
+                    {
+                        "data" : [null]
+                    }
+                    ], 
+                    "last-active" : [
+                    {
+                        "data" : [null]
+                    }
+                    ], 
+                    "protocol-name" : [
+                    {
+                        "data" : "BGP"
+                    }
+                    ], 
+                    "preference" : [
+                    {
+                        "data" : "170"
+                    }
+                    ], 
+                    "age" : [
+                    {
+                        "data" : "00:02:33", 
+                        "attributes" : {"junos:seconds" : "153"}
+                    }
+                    ], 
+                    "local-preference" : [
+                    {
+                        "data" : "100"
+                    }
+                    ], 
+                    "as-path" : [
+                    {
+                        "data" : "?"
+                    }
+                    ], 
+                    "validation-state" : [
+                    {
+                        "data" : "unverified"
+                    }
+                    ], 
+                    "nh" : [
+                    {
+                        "selected-next-hop" : [
+                        {
+                            "data" : [null]
+                        }
+                        ], 
+                        "to" : [
+                        {
+                            "data" : "10.0.12.1"
+                        }
+                        ], 
+                        "via" : [
+                        {
+                            "data" : "ge-0/0/3.0"
+                        }
+                        ]
+                    }
+                    ]
+                }, 
+                {
+                    "active-tag" : [
+                    {
+                    }
+                    ], 
+                    "protocol-name" : [
+                    {
+                        "data" : "BGP"
+                    }
+                    ], 
+                    "preference" : [
+                    {
+                        "data" : "170"
+                    }
+                    ], 
+                    "age" : [
+                    {
+                        "data" : "00:02:37", 
+                        "attributes" : {"junos:seconds" : "157"}
+                    }
+                    ], 
+                    "local-preference" : [
+                    {
+                        "data" : "100"
+                    }
+                    ], 
+                    "as-path" : [
+                    {
+                        "data" : "?"
+                    }
+                    ], 
+                    "validation-state" : [
+                    {
+                        "data" : "unverified"
+                    }
+                    ], 
+                    "nh" : [
+                    {
+                        "selected-next-hop" : [
+                        {
+                            "data" : [null]
+                        }
+                        ], 
+                        "to" : [
+                        {
+                            "data" : "10.0.11.1"
+                        }
+                        ], 
+                        "via" : [
+                        {
+                            "data" : "ge-0/0/2.0"
+                        }
+                        ]
+                    }
+                    ]
+                }
+                ]
+            }
+            ]
+        }, 
+        {
+            "table-name" : [
+            {
+                "data" : "mgmt_junos.inet6.0"
+            }
+            ], 
+            "destination-count" : [
+            {
+                "data" : "4"
+            }
+            ], 
+            "total-route-count" : [
+            {
+                "data" : "4"
+            }
+            ], 
+            "active-route-count" : [
+            {
+                "data" : "4"
+            }
+            ], 
+            "holddown-route-count" : [
+            {
+                "data" : "0"
+            }
+            ], 
+            "hidden-route-count" : [
+            {
+                "data" : "0"
+            }
+            ], 
+            "rt" : [
+            {
+                "attributes" : {"junos:style" : "brief"}, 
+                "rt-destination" : [
+                {
+                    "data" : "::/0"
+                }
+                ], 
+                "rt-entry" : [
+                {
+                    "active-tag" : [
+                    {
+                        "data" : "*"
+                    }
+                    ], 
+                    "current-active" : [
+                    {
+                        "data" : [null]
+                    }
+                    ], 
+                    "last-active" : [
+                    {
+                        "data" : [null]
+                    }
+                    ], 
+                    "protocol-name" : [
+                    {
+                        "data" : "Static"
+                    }
+                    ], 
+                    "preference" : [
+                    {
+                        "data" : "5"
+                    }
+                    ], 
+                    "age" : [
+                    {
+                        "data" : "00:03:38", 
+                        "attributes" : {"junos:seconds" : "218"}
+                    }
+                    ], 
+                    "nh" : [
+                    {
+                        "selected-next-hop" : [
+                        {
+                            "data" : [null]
+                        }
+                        ], 
+                        "to" : [
+                        {
+                            "data" : "2001:db8::1"
+                        }
+                        ], 
+                        "via" : [
+                        {
+                            "data" : "fxp0.0"
+                        }
+                        ]
+                    }
+                    ]
+                }
+                ]
+            }, 
+            {
+                "attributes" : {"junos:style" : "brief"}, 
+                "rt-destination" : [
+                {
+                    "data" : "2001:db8::/64"
+                }
+                ], 
+                "rt-entry" : [
+                {
+                    "active-tag" : [
+                    {
+                        "data" : "*"
+                    }
+                    ], 
+                    "current-active" : [
+                    {
+                        "data" : [null]
+                    }
+                    ], 
+                    "last-active" : [
+                    {
+                        "data" : [null]
+                    }
+                    ], 
+                    "protocol-name" : [
+                    {
+                        "data" : "Direct"
+                    }
+                    ], 
+                    "preference" : [
+                    {
+                        "data" : "0"
+                    }
+                    ], 
+                    "age" : [
+                    {
+                        "data" : "00:03:38", 
+                        "attributes" : {"junos:seconds" : "218"}
+                    }
+                    ], 
+                    "nh" : [
+                    {
+                        "selected-next-hop" : [
+                        {
+                            "data" : [null]
+                        }
+                        ], 
+                        "via" : [
+                        {
+                            "data" : "fxp0.0"
+                        }
+                        ]
+                    }
+                    ]
+                }
+                ]
+            }, 
+            {
+                "attributes" : {"junos:style" : "brief"}, 
+                "rt-destination" : [
+                {
+                    "data" : "2001:db8::2/128"
+                }
+                ], 
+                "rt-entry" : [
+                {
+                    "active-tag" : [
+                    {
+                        "data" : "*"
+                    }
+                    ], 
+                    "current-active" : [
+                    {
+                        "data" : [null]
+                    }
+                    ], 
+                    "last-active" : [
+                    {
+                        "data" : [null]
+                    }
+                    ], 
+                    "protocol-name" : [
+                    {
+                        "data" : "Local"
+                    }
+                    ], 
+                    "preference" : [
+                    {
+                        "data" : "0"
+                    }
+                    ], 
+                    "age" : [
+                    {
+                        "data" : "00:03:38", 
+                        "attributes" : {"junos:seconds" : "218"}
+                    }
+                    ], 
+                    "nh-type" : [
+                    {
+                        "data" : "Local"
+                    }
+                    ], 
+                    "nh" : [
+                    {
+                        "nh-local-interface" : [
+                        {
+                            "data" : "fxp0.0"
+                        }
+                        ]
+                    }
+                    ]
+                }
+                ]
+            }, 
+            {
+                "attributes" : {"junos:style" : "brief"}, 
+                "rt-destination" : [
+                {
+                    "data" : "fe80::e00:47ff:fe9e:7800/128", 
+                    "attributes" : {"junos:emit" : "emit"}
+                }
+                ], 
+                "rt-entry" : [
+                {
+                    "active-tag" : [
+                    {
+                        "data" : "*"
+                    }
+                    ], 
+                    "current-active" : [
+                    {
+                        "data" : [null]
+                    }
+                    ], 
+                    "last-active" : [
+                    {
+                        "data" : [null]
+                    }
+                    ], 
+                    "protocol-name" : [
+                    {
+                        "data" : "Local"
+                    }
+                    ], 
+                    "preference" : [
+                    {
+                        "data" : "0"
+                    }
+                    ], 
+                    "age" : [
+                    {
+                        "data" : "00:03:38", 
+                        "attributes" : {"junos:seconds" : "218"}
+                    }
+                    ], 
+                    "nh-type" : [
+                    {
+                        "data" : "Local"
+                    }
+                    ], 
+                    "nh" : [
+                    {
+                        "nh-local-interface" : [
+                        {
+                            "data" : "fxp0.0"
+                        }
+                        ]
+                    }
+                    ]
+                }
+                ]
+            }
+            ]
+        }
+        ]
+    }
+    ]
+}

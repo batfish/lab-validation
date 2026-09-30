@@ -1,0 +1,58 @@
+# Junos `protocols bgp path-selection
+# compare-cluster-length-before-originator-id` lab.
+#
+# origa and origb originate 203.0.113.0/24. dut receives two reflected
+# iBGP paths that tie through the IGP-metric step:
+#
+#   path  originator            reflectors      cluster list          dut peer
+#   A     origa 10.255.0.9      rra             10.255.1.2            10.0.2.1 / 10.0.12.1
+#   B     origb 10.255.0.1      rrb2, rrb1      10.255.1.3 10.255.1.4 10.0.1.1 / 10.0.11.1
+#
+# Path A has the shorter cluster list; path B has the lower originator ID
+# and the lower peer address. dut runs each pair of sessions twice: in
+# the master instance (no statement) and in the KNOB virtual-router
+# (statement configured). All nodes are in AS 65000.
+#
+# Only dut runs Junos. The reflectors and originators are cEOS, which
+# needs far less CPU than vJunos-router. Each reflector sets next-hop-self
+# toward the next hop's consumer, so every BGP next hop is directly
+# connected.
+
+name: junos-bgp-cluster-length
+
+topology:
+  nodes:
+    dut:
+      kind: juniper_vjunosrouter
+      image: vrnetlab/juniper_vjunos-router:25.4R1.12
+      startup-config: configs/dut.cfg
+    rra:
+      kind: arista_ceos
+      image: ceos:4.36.0.1F
+      startup-config: configs/rra.cfg
+    origa:
+      kind: arista_ceos
+      image: ceos:4.36.0.1F
+      startup-config: configs/origa.cfg
+    rrb1:
+      kind: arista_ceos
+      image: ceos:4.36.0.1F
+      startup-config: configs/rrb1.cfg
+    rrb2:
+      kind: arista_ceos
+      image: ceos:4.36.0.1F
+      startup-config: configs/rrb2.cfg
+    origb:
+      kind: arista_ceos
+      image: ceos:4.36.0.1F
+      startup-config: configs/origb.cfg
+
+  links:
+    # ethN is Junos ge-0/0/(N-1) and EOS EthernetN
+    - endpoints: ["dut:eth1", "rrb1:eth1"] # 10.0.1.0/31, master
+    - endpoints: ["dut:eth2", "rra:eth1"] # 10.0.2.0/31, master
+    - endpoints: ["dut:eth3", "rrb1:eth3"] # 10.0.11.0/31, KNOB
+    - endpoints: ["dut:eth4", "rra:eth3"] # 10.0.12.0/31, KNOB
+    - endpoints: ["rra:eth2", "origa:eth1"] # 10.0.3.0/31
+    - endpoints: ["rrb1:eth2", "rrb2:eth1"] # 10.0.4.0/31
+    - endpoints: ["rrb2:eth2", "origb:eth1"] # 10.0.5.0/31
