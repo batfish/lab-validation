@@ -94,21 +94,18 @@ commit resets a session, and no route refresh is needed.
 
 ### Batfish
 
-Batfish reports the statement as unrecognized syntax and selects path B
-in both instances, which matches the device only in the master instance.
-`test_bgp_rib_routes[dut]` is sickbayed to
-batfish/batfish#10370.
+Since batfish/batfish#10371, Batfish models the statement and matches
+the device in both instances: path B in `default`, path A in `KNOB`.
 
-Two lab-validation behaviors affect how this shows up:
+`test_bgp_rib_routes[dut]` is still sickbayed:
+`JunosValidator.validate_bgp_rib_routes` drops every Batfish iBGP route
+in a non-default VRF (intended for EVPN-leaked routes), so Batfish's
+`KNOB` route is removed before matching and the device's `KNOB` route
+has no match (batfish/lab-validation#239).
 
-- `JunosValidator.validate_bgp_rib_routes` drops every Batfish iBGP route
-  in a non-default VRF (intended for EVPN-leaked routes). Batfish's
-  `KNOB` route is removed before matching, so the test reports the
-  device's `KNOB` route as having no match instead of reporting a
-  next-hop mismatch (batfish/lab-validation#239).
-- The Junos main-RIB comparison ignores next-hop IPs on BGP routes, so
-  `test_main_rib_routes[dut]` passes even though the `KNOB` next hops
-  differ (device 10.0.12.1, Batfish 10.0.11.1).
+The Junos main-RIB comparison ignores next-hop IPs on BGP routes, so
+`test_main_rib_routes[dut]` does not check which `KNOB` path is
+installed.
 
 ## Limitations
 
