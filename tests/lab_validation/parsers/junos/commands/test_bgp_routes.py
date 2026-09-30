@@ -550,6 +550,13 @@ def test_get_as_path() -> None:
         (65001,),
         "I",
     )
+    # Reflected routes flag the path "(Originator)" and append the
+    # CLUSTER_LIST and ORIGINATOR_ID attributes.
+    assert _get_as_path(
+        "AS path: ?  (Originator)\n"
+        "Cluster list:  10.255.1.3 10.255.1.4\n"
+        "Originator ID: 10.255.0.1"
+    ) == ((), "?")
 
 
 def test_convert_active() -> None:

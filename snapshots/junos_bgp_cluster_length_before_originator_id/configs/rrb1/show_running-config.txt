@@ -1,0 +1,56 @@
+! Command: show running-config
+! device: rrb1 (cEOSLab, EOS-4.36.0.1F-47401373.43601F (engineering build))
+!
+no aaa root
+!
+username admin privilege 15 role network-admin secret sha512 $6$nzzRIlA6Mo61T1uu$0EccfVNdH7tcpV31FUuSTil4iwUP4VBNCZv6f/j5k2cvcmPVsYe8HnxSTxLAbhFV8d/KxNoAgJe3gFuGo7TyL1
+!
+no service interface inactive port-id allocation disabled
+!
+service routing protocols model multi-agent
+!
+hostname rrb1
+!
+spanning-tree mode mstp
+!
+system l1
+   unsupported speed action error
+   unsupported error-correction action error
+!
+aaa authorization exec default local
+!
+interface Ethernet1
+   no switchport
+   ip address 10.0.1.1/31
+!
+interface Ethernet2
+   no switchport
+   ip address 10.0.4.0/31
+!
+interface Ethernet3
+   no switchport
+   ip address 10.0.11.1/31
+!
+interface Loopback0
+   ip address 10.255.0.3/32
+!
+interface Management0
+   ip address 172.20.20.3/24
+   ipv6 address 3fff:172:20:20::3/64
+!
+ip routing
+!
+router bgp 65000
+   router-id 10.255.0.3
+   bgp cluster-id 10.255.1.3
+   neighbor 10.0.1.0 remote-as 65000
+   neighbor 10.0.1.0 next-hop-self
+   neighbor 10.0.1.0 description dut-master
+   neighbor 10.0.4.1 remote-as 65000
+   neighbor 10.0.4.1 description rrb2
+   neighbor 10.0.4.1 route-reflector-client
+   neighbor 10.0.11.0 remote-as 65000
+   neighbor 10.0.11.0 next-hop-self
+   neighbor 10.0.11.0 description dut-KNOB
+!
+end

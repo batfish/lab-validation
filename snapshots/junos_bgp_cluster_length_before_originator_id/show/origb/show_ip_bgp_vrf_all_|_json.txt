@@ -1,0 +1,48 @@
+{
+    "vrfs": {
+        "default": {
+            "vrf": "default",
+            "routerId": "10.255.0.1",
+            "asn": "65000",
+            "bgpRouteEntries": {
+                "203.0.113.0/24": {
+                    "address": "203.0.113.0",
+                    "maskLength": 24,
+                    "bgpRoutePaths": [
+                        {
+                            "nextHop": "",
+                            "reasonNotBestpath": "noReason",
+                            "weight": 0,
+                            "tag": 0,
+                            "routeType": {
+                                "stale": false,
+                                "valid": true,
+                                "suppressed": false,
+                                "active": true,
+                                "backup": false,
+                                "ecmpHead": false,
+                                "ecmp": false,
+                                "ecmpContributor": false,
+                                "atomicAggregator": false,
+                                "queued": false,
+                                "luRoute": false,
+                                "sixPeRoute": false,
+                                "ucmp": false,
+                                "origin": "Incomplete"
+                            },
+                            "peerEntry": {
+                                "peerAddr": "",
+                                "peerRouterId": "10.255.0.1"
+                            },
+                            "asPathEntry": {
+                                "asPathType": "Local",
+                                "asPath": "?"
+                            }
+                        }
+                    ],
+                    "totalPaths": 1
+                }
+            }
+        }
+    }
+}

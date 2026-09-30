@@ -147,10 +147,16 @@ def _get_as_path(as_path_str: str) -> tuple[Sequence[int], str]:
     # numeric path plus origin tag.
     # Aggregate routes append the AGGREGATOR attribute on a second line
     # (e.g., "AS path: 65001 I\nAggregator: 65001 1.1.1.1"); drop it.
+    # Reflected routes flag the path "(Originator)" and append "Cluster
+    # list:" and "Originator ID:" lines; drop those too.
     as_path_str, *extra_lines = as_path_str.split("\n")
-    assert all(line.startswith("Aggregator:") for line in extra_lines)
+    assert all(
+        line.startswith(("Aggregator:", "Cluster list:", "Originator ID:"))
+        for line in extra_lines
+    )
     if as_path_str.startswith("AS path:"):
         as_path_str = as_path_str[len("AS path:") :].strip()
+    as_path_str = as_path_str.removesuffix("(Originator)")
     split = as_path_str.split()
     as_path_list, origin_type = split[:-1], split[-1]
     assert origin_type in {"I", "E", "?"}
