@@ -1,0 +1,57 @@
+#!/usr/bin/env bash
+
+set -u
+
+readonly batfish_url="http://localhost:9996/v2/question_templates?verbose=false"
+readonly timeout_seconds=120
+
+pid=""
+container=""
+
+while [[ $# -gt 0 ]]; do
+  case "$1" in
+    --pid)
+      pid="$2"
+      shift 2
+      ;;
+    --container)
+      container="$2"
+      shift 2
+      ;;
+    *)
+      echo "Unknown argument: $1" >&2
+      exit 2
+      ;;
+  esac
+done
+
+if [[ -n "$pid" && -n "$container" ]]; then
+  echo "Specify either --pid or --container, not both" >&2
+  exit 2
+fi
+
+readonly deadline=$((SECONDS + timeout_seconds))
+while ((SECONDS < deadline)); do
+  if curl --fail --silent --max-time 2 --output /dev/null "$batfish_url"; then
+    echo "Batfish is ready"
+    exit 0
+  fi
+
+  if [[ -n "$pid" ]] && ! kill -0 "$pid" 2>/dev/null; then
+    echo "Batfish process $pid exited before becoming ready" >&2
+    exit 1
+  fi
+
+  if [[ -n "$container" ]]; then
+    running="$(docker inspect --format '{{.State.Running}}' "$container" 2>/dev/null)"
+    if [[ "$running" != "true" ]]; then
+      echo "Batfish container $container exited before becoming ready" >&2
+      exit 1
+    fi
+  fi
+
+  sleep 1
+done
+
+echo "Batfish did not become ready within $timeout_seconds seconds" >&2
+exit 1
