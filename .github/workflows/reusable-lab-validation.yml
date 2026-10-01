@@ -196,8 +196,8 @@ jobs:
             -p 9996:9996 \
             ${{ inputs.batfish_docker }}
 
-          # Wait for service to start
-          sleep 15
+          bash lab-validation/.github/scripts/wait-for-batfish \
+            --container batfish
 
       - name: Start Batfish service (JAR)
         if: inputs.batfish_docker == ''
@@ -216,8 +216,7 @@ jobs:
           )
           java -cp allinone.jar org.batfish.allinone.Main "${allinone_args[@]}" > batfish.log 2>&1 &
 
-          # Wait for service to start
-          sleep 10
+          bash lab-validation/.github/scripts/wait-for-batfish --pid "$!"
 
       - name: Run lab integration test - ${{ matrix.lab }}
         working-directory: lab-validation
