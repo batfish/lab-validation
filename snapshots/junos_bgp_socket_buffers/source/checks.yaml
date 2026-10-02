@@ -1,0 +1,289 @@
+# Lab-state preconditions and checks for junos_bgp_socket_buffers.
+#
+# Commit checks record where Junos accepts `receive-buffer` and
+# `send-buffer` and which values it takes. Both statements are hidden
+# (absent from `set protocols bgp ?`) and take one unsigned 32-bit byte
+# count, optionally suffixed k, m, or g (powers of 1024).
+#
+# bgp_peer_bufsize checks read the sizes `show bgp neighbor` reports:
+# the neighbor-level 256k (262144) in both instances.
+
+checks:
+  - type: bgp_peer_established
+    node: dut
+    neighbor: 192.0.2.1
+    description: "master instance session"
+
+  - type: bgp_peer_established
+    node: dut
+    neighbor: 198.51.100.1
+    description: "VR1 session"
+
+  - type: route_exists
+    node: dut
+    table: inet.0
+    prefix: 203.0.113.0/24
+    description: "master instance route from peer"
+
+  - type: route_exists
+    node: dut
+    table: VR1.inet.0
+    prefix: 203.0.113.0/24
+    description: "VR1 route from peer"
+
+  # --- Effective sizes ---
+
+  - type: bgp_peer_bufsize
+    node: dut
+    neighbor: 192.0.2.1
+    receive_buffer: 262144
+    send_buffer: 262144
+    description: "master: neighbor level overrides group and protocol"
+
+  - type: bgp_peer_bufsize
+    node: dut
+    neighbor: 198.51.100.1
+    receive_buffer: 262144
+    send_buffer: 262144
+    description: "VR1: neighbor level (configured as 0x40000)"
+
+  # --- Accepted hierarchies ---
+
+  - type: commit_check_accepts
+    node: dut
+    config_lines:
+      - "set protocols bgp receive-buffer 64k"
+      - "set protocols bgp send-buffer 64k"
+    description: "protocol level"
+
+  - type: commit_check_accepts
+    node: dut
+    config_lines:
+      - "set protocols bgp group TEST receive-buffer 128k"
+      - "set protocols bgp group TEST send-buffer 128k"
+    description: "group level"
+
+  - type: commit_check_accepts
+    node: dut
+    config_lines:
+      - "set protocols bgp group TEST neighbor 192.0.2.1 receive-buffer 256k"
+      - "set protocols bgp group TEST neighbor 192.0.2.1 send-buffer 256k"
+    description: "neighbor level"
+
+  - type: commit_check_accepts
+    node: dut
+    config_lines:
+      - "set protocols bgp group IBGP type internal"
+      - "set protocols bgp group IBGP receive-buffer 64k"
+      - "set protocols bgp group IBGP neighbor 192.0.2.5 send-buffer 64k"
+    description: "group and neighbor level in an internal group"
+
+  - type: commit_check_accepts
+    node: dut
+    config_lines:
+      - "set routing-instances VR1 protocols bgp receive-buffer 64k"
+      - "set routing-instances VR1 protocols bgp group TEST send-buffer 128k"
+      - "set routing-instances VR1 protocols bgp group TEST neighbor 198.51.100.1 receive-buffer 256k"
+    description: "protocol, group, and neighbor level in a virtual-router instance"
+
+  - type: commit_check_accepts
+    node: dut
+    config_lines:
+      - "set routing-instances VR2 instance-type vrf"
+      - "set routing-instances VR2 route-distinguisher 65001:2"
+      - "set routing-instances VR2 vrf-target target:65001:2"
+      - "set routing-instances VR2 protocols bgp receive-buffer 64k"
+      - "set routing-instances VR2 protocols bgp group TEST peer-as 65002"
+      - "set routing-instances VR2 protocols bgp group TEST send-buffer 128k"
+      - "set routing-instances VR2 protocols bgp group TEST neighbor 192.0.2.17 receive-buffer 256k"
+    description: "protocol, group, and neighbor level in a vrf instance"
+
+  - type: commit_check_accepts
+    node: dut
+    config_lines:
+      - "set logical-systems LS1 routing-options autonomous-system 65009"
+      - "set logical-systems LS1 protocols bgp send-buffer 64k"
+      - "set logical-systems LS1 protocols bgp group TEST send-buffer 128k"
+      - "set logical-systems LS1 protocols bgp group TEST neighbor 192.0.2.9 peer-as 65002"
+      - "set logical-systems LS1 protocols bgp group TEST neighbor 192.0.2.9 receive-buffer 256k"
+    description: "protocol, group, and neighbor level in a logical system"
+
+  # --- Accepted values ---
+
+  - type: commit_check_accepts
+    node: dut
+    config_lines:
+      - "set protocols bgp receive-buffer 65536"
+    description: "receive-buffer 65536: plain bytes"
+
+  - type: commit_check_accepts
+    node: dut
+    config_lines:
+      - "set protocols bgp receive-buffer 64K"
+    description: "receive-buffer 64K: uppercase suffix"
+
+  - type: commit_check_accepts
+    node: dut
+    config_lines:
+      - "set protocols bgp receive-buffer 1m"
+    description: "receive-buffer 1m: m suffix"
+
+  - type: commit_check_accepts
+    node: dut
+    config_lines:
+      - "set protocols bgp receive-buffer 3g"
+    description: "receive-buffer 3g: g suffix"
+
+  - type: commit_check_accepts
+    node: dut
+    config_lines:
+      - "set protocols bgp receive-buffer 0"
+    description: "receive-buffer 0: zero"
+
+  - type: commit_check_accepts
+    node: dut
+    config_lines:
+      - "set protocols bgp receive-buffer 4294967295"
+    description: "receive-buffer 4294967295: maximum"
+
+  - type: commit_check_accepts
+    node: dut
+    config_lines:
+      - "set protocols bgp receive-buffer 0x10000"
+    description: "receive-buffer 0x10000: hexadecimal"
+
+  - type: commit_check_accepts
+    node: dut
+    config_lines:
+      - "set protocols bgp receive-buffer 010"
+    description: "receive-buffer 010: leading zero (octal)"
+
+  - type: commit_check_accepts
+    node: dut
+    config_lines:
+      - "set protocols bgp send-buffer 4294967295"
+      - "set protocols bgp send-buffer 0"
+    description: "send-buffer takes the same range"
+
+  # --- Rejected values ---
+
+  - type: commit_check_rejects
+    node: dut
+    config_lines:
+      - "set protocols bgp receive-buffer 4294967296"
+    expected_error: "not within range (0..4294967295)"
+    description: "above 32 bits"
+
+  - type: commit_check_rejects
+    node: dut
+    config_lines:
+      - "set protocols bgp receive-buffer 4g"
+    expected_error: "not within range (0..4294967295)"
+    description: "4g is above 32 bits"
+
+  - type: commit_check_rejects
+    node: dut
+    config_lines:
+      - "set protocols bgp send-buffer 4294967296"
+    expected_error: "not within range (0..4294967295)"
+    description: "send-buffer above 32 bits"
+
+  - type: commit_check_rejects
+    node: dut
+    config_lines:
+      - "set protocols bgp receive-buffer 64kb"
+    expected_error: "Invalid trailing data"
+    description: "no kb unit"
+
+  - type: commit_check_rejects
+    node: dut
+    config_lines:
+      - "set protocols bgp receive-buffer 1t"
+    expected_error: "Invalid trailing data"
+    description: "no t suffix"
+
+  - type: commit_check_rejects
+    node: dut
+    config_lines:
+      - "set protocols bgp receive-buffer 64.5k"
+    expected_error: "Invalid trailing data"
+    description: "no fractions"
+
+  - type: commit_check_rejects
+    node: dut
+    config_lines:
+      - "set protocols bgp receive-buffer -1"
+    expected_error: "Invalid numeric value"
+    description: "no negative values"
+
+  - type: commit_check_rejects
+    node: dut
+    config_lines:
+      - "set protocols bgp receive-buffer abc"
+    expected_error: "Invalid numeric value"
+    description: "not a number"
+
+  - type: commit_check_rejects
+    node: dut
+    config_lines:
+      - "set protocols bgp receive-buffer 08"
+    expected_error: "for octal number"
+    description: "leading zero is octal"
+
+  - type: commit_check_rejects
+    node: dut
+    config_lines:
+      - "set protocols bgp receive-buffer"
+    expected_error: "syntax error"
+    description: "value is required"
+
+  - type: commit_check_rejects
+    node: dut
+    config_lines:
+      - "set protocols bgp receive-buffer 64k 128k"
+    expected_error: "syntax error"
+    description: "one value only"
+
+  # --- Rejected hierarchies ---
+
+  - type: commit_check_rejects
+    node: dut
+    config_lines:
+      - "set protocols bgp family inet unicast receive-buffer 64k"
+    expected_error: "syntax error"
+    description: "not under protocol-level family"
+
+  - type: commit_check_rejects
+    node: dut
+    config_lines:
+      - "set protocols bgp group TEST family inet unicast send-buffer 64k"
+    expected_error: "syntax error"
+    description: "not under group-level family"
+
+  - type: commit_check_rejects
+    node: dut
+    config_lines:
+      - "set protocols bgp group TEST neighbor 192.0.2.1 family inet unicast receive-buffer 64k"
+    expected_error: "syntax error"
+    description: "not under neighbor-level family"
+
+  - type: commit_check_rejects
+    node: dut
+    config_lines:
+      - "set protocols bgp group TEST neighbor 192.0.2.1 multihop receive-buffer 64k"
+    expected_error: "syntax error"
+    description: "not under multihop"
+
+  - type: commit_check_rejects
+    node: dut
+    config_lines:
+      - "set protocols bgp traceoptions receive-buffer 64k"
+    expected_error: "syntax error"
+    description: "not under traceoptions"
+
+  - type: commit_check_rejects
+    node: dut
+    config_lines:
+      - "set routing-options receive-buffer 64k"
+    expected_error: "syntax error"
+    description: "not under routing-options"
