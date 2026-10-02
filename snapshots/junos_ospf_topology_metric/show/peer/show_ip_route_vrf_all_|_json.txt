@@ -1,0 +1,134 @@
+{
+    "vrfs": {
+        "default": {
+            "routingDisabled": false,
+            "allRoutesProgrammedHardware": true,
+            "allRoutesProgrammedKernel": true,
+            "defaultRouteState": "notSet",
+            "routes": {
+                "10.0.1.0/31": {
+                    "hardwareProgrammed": true,
+                    "routeType": "connected",
+                    "routeLeaked": false,
+                    "kernelProgrammed": true,
+                    "routeAction": "forward",
+                    "vias": [
+                        {
+                            "interface": "Ethernet1"
+                        }
+                    ],
+                    "directlyConnected": true
+                },
+                "10.0.2.0/31": {
+                    "hardwareProgrammed": true,
+                    "routeType": "connected",
+                    "routeLeaked": false,
+                    "kernelProgrammed": true,
+                    "routeAction": "forward",
+                    "vias": [
+                        {
+                            "interface": "Ethernet2"
+                        }
+                    ],
+                    "directlyConnected": true
+                },
+                "10.255.0.1/32": {
+                    "hardwareProgrammed": true,
+                    "routeType": "OSPF",
+                    "routeLeaked": false,
+                    "kernelProgrammed": true,
+                    "preference": 110,
+                    "metric": 10,
+                    "routeAction": "forward",
+                    "vias": [
+                        {
+                            "nexthopAddr": "10.0.1.0",
+                            "interface": "Ethernet1"
+                        },
+                        {
+                            "nexthopAddr": "10.0.2.0",
+                            "interface": "Ethernet2"
+                        }
+                    ],
+                    "directlyConnected": false
+                },
+                "10.255.0.2/32": {
+                    "hardwareProgrammed": true,
+                    "routeType": "connected",
+                    "routeLeaked": false,
+                    "kernelProgrammed": true,
+                    "routeAction": "forward",
+                    "vias": [
+                        {
+                            "interface": "Loopback0"
+                        }
+                    ],
+                    "directlyConnected": true
+                },
+                "172.20.20.0/24": {
+                    "hardwareProgrammed": true,
+                    "routeType": "connected",
+                    "routeLeaked": false,
+                    "kernelProgrammed": true,
+                    "routeAction": "forward",
+                    "vias": [
+                        {
+                            "interface": "Management0"
+                        }
+                    ],
+                    "directlyConnected": true
+                }
+            }
+        },
+        "VR": {
+            "routingDisabled": false,
+            "allRoutesProgrammedHardware": true,
+            "allRoutesProgrammedKernel": true,
+            "defaultRouteState": "notSet",
+            "routes": {
+                "10.0.3.0/31": {
+                    "hardwareProgrammed": true,
+                    "routeType": "connected",
+                    "routeLeaked": false,
+                    "kernelProgrammed": true,
+                    "routeAction": "forward",
+                    "vias": [
+                        {
+                            "interface": "Ethernet3"
+                        }
+                    ],
+                    "directlyConnected": true
+                },
+                "10.255.1.1/32": {
+                    "hardwareProgrammed": true,
+                    "routeType": "OSPF",
+                    "routeLeaked": false,
+                    "kernelProgrammed": true,
+                    "preference": 110,
+                    "metric": 10,
+                    "routeAction": "forward",
+                    "directlyConnected": false,
+                    "vias": [
+                        {
+                            "nexthopAddr": "10.0.3.0",
+                            "interface": "Ethernet3"
+                        }
+                    ]
+                },
+                "10.255.1.2/32": {
+                    "hardwareProgrammed": true,
+                    "routeType": "connected",
+                    "routeLeaked": false,
+                    "kernelProgrammed": true,
+                    "routeAction": "forward",
+                    "vias": [
+                        {
+                            "interface": "Loopback1"
+                        }
+                    ],
+                    "directlyConnected": true
+                }
+            }
+        }
+    }
+}

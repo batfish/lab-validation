@@ -1,0 +1,68 @@
+{
+    "vrfs": {
+        "default": {
+            "routeDistinguisher": "",
+            "protocols": {
+                "ipv4": {
+                    "supported": true,
+                    "protocolState": "up",
+                    "routingState": "up"
+                },
+                "ipv6": {
+                    "supported": true,
+                    "protocolState": "up",
+                    "routingState": "up"
+                }
+            },
+            "vrfState": "up",
+            "interfacesV4": [
+                "Management0",
+                "Ethernet2",
+                "Ethernet1",
+                "Loopback0"
+            ],
+            "interfacesV6": [
+                "Management0",
+                "Ethernet2",
+                "Ethernet1",
+                "Loopback0"
+            ],
+            "interfaces": [
+                "Management0",
+                "Ethernet2",
+                "Ethernet1",
+                "Loopback0"
+            ],
+            "vrfId": 0
+        },
+        "VR": {
+            "routeDistinguisher": "",
+            "protocols": {
+                "ipv4": {
+                    "supported": true,
+                    "protocolState": "up",
+                    "routingState": "up"
+                },
+                "ipv6": {
+                    "supported": true,
+                    "protocolState": "up",
+                    "routingState": "up"
+                }
+            },
+            "vrfState": "up",
+            "interfacesV4": [
+                "Ethernet3",
+                "Loopback1"
+            ],
+            "interfacesV6": [
+                "Ethernet3",
+                "Loopback1"
+            ],
+            "interfaces": [
+                "Ethernet3",
+                "Loopback1"
+            ],
+            "vrfId": 1
+        }
+    }
+}

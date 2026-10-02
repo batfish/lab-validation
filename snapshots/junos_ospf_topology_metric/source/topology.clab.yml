@@ -1,0 +1,30 @@
+# Junos `protocols ospf|ospf3 topology default metric` lab.
+#
+# dut runs OSPF and OSPF3 with peer on three links:
+#
+#   link  dut       peer       IPv4          IPv6               instance
+#   1     ge-0/0/0  Ethernet1  10.0.1.0/31   2001:db8:1::/64    master
+#   2     ge-0/0/1  Ethernet2  10.0.2.0/31   2001:db8:2::/64    master
+#   3     ge-0/0/2  Ethernet3  10.0.3.0/31   2001:db8:3::/64    VR (virtual-router)
+#
+# dut has .0 and ::1 on each link; peer has .1 and ::2. Only dut runs
+# Junos; peer is cEOS.
+
+name: junos-ospf-topology-metric
+
+topology:
+  nodes:
+    dut:
+      kind: juniper_vjunosrouter
+      image: vrnetlab/juniper_vjunos-router:25.4R1.12
+      startup-config: configs/dut.cfg
+    peer:
+      kind: arista_ceos
+      image: ceos:4.36.0.1F
+      startup-config: configs/peer.cfg
+
+  links:
+    # ethN is Junos ge-0/0/(N-1) and EOS EthernetN
+    - endpoints: ["dut:eth1", "peer:eth1"]
+    - endpoints: ["dut:eth2", "peer:eth2"]
+    - endpoints: ["dut:eth3", "peer:eth3"]
