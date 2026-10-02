@@ -31,6 +31,24 @@ syntax error.
 [edit]
 """
 
+# Responses to "set protocols bgp receive-buffer 4294967296" and
+# "set protocols bgp receive-buffer 64kb", captured while building
+# junos_bgp_socket_buffers: invalid numeric values print only the caret
+# line and a message, with no "error" or "syntax error" text.
+SET_VALUE_OUT_OF_RANGE = """\
+^
+Value 4294967296 is not within range (0..4294967295) at '4294967296'
+
+[edit]
+"""
+
+SET_INVALID_TRAILING_DATA = """\
+^
+Invalid trailing data 'b' for numeric value: '64kb' at '64kb'
+
+[edit]
+"""
+
 COMMIT_CHECK_SUCCEEDS = "configuration check succeeds\n"
 
 
@@ -120,3 +138,21 @@ class TestJunosCommitCheck:
             ["set routing-options aggregate route 10.98.0.0/16 community large:1:2:3"],
         )
         assert result.passed, result.detail
+
+    @pytest.mark.parametrize(
+        "set_output, expected_error",
+        [
+            (SET_VALUE_OUT_OF_RANGE, "not within range"),
+            (SET_INVALID_TRAILING_DATA, "Invalid trailing data"),
+        ],
+    )
+    def test_set_value_error_is_rejection(
+        self, monkeypatch, junos_node: NodeInfo, set_output: str, expected_error: str
+    ) -> None:
+        conn = FakeConnection(set_output, COMMIT_CHECK_SUCCEEDS)
+        _patch_connect(monkeypatch, conn)
+        result = validate._check_commit_rejects(
+            junos_node, ["set protocols bgp receive-buffer 4294967296"], expected_error
+        )
+        assert result.passed, result.detail
+        assert "commit check" not in conn.sent

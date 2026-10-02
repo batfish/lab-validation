@@ -168,6 +168,45 @@ def _junos_check_bgp_peer(node: NodeInfo, neighbor: str) -> CheckResult:
     )
 
 
+def _junos_check_bgp_peer_bufsize(
+    node: NodeInfo,
+    neighbor: str,
+    receive_buffer: int | None,
+    send_buffer: int | None,
+) -> CheckResult:
+    """Check the socket buffer sizes Junos reports for a BGP peer.
+
+    Reads `receive-buffer-size` and `send-buffer-size` from the peer's
+    `bgp-option-information` in `show bgp neighbor <n> | display json`.
+    Junos omits a field when the buffer is unset or 0; None expects it
+    to be absent.
+    """
+    check = "bgp_peer_bufsize"
+    try:
+        output = run_command(node, f"show bgp neighbor {neighbor} | display json")
+        data = json.loads(output)
+    except Exception as e:
+        return CheckResult(check, node.name, False, f"command failed: {e}")
+
+    for peer in data["bgp-information"][0]["bgp-peer"]:
+        if peer["peer-address"][0]["data"].split("+")[0] != neighbor:
+            continue
+        options = peer["bgp-option-information"][0]
+        actual = {
+            field: int(options[field][0]["data"]) if field in options else None
+            for field in ("receive-buffer-size", "send-buffer-size")
+        }
+        expected = {
+            "receive-buffer-size": receive_buffer,
+            "send-buffer-size": send_buffer,
+        }
+        return CheckResult(
+            check, node.name, actual == expected, f"{neighbor}: {actual}"
+        )
+
+    return CheckResult(check, node.name, False, f"{neighbor}: peer not found")
+
+
 _TRACE_UPDATE_HEADER = re.compile(r"BGP RECV (\S+)\+\d+ -> ")
 _TRACE_NHOP = re.compile(r"BGP RECV\s+nhop (\S+) len \d+")
 _TRACE_PREFIX = re.compile(r"BGP RECV\s+(\S+/\d+)\s*$")
@@ -511,6 +550,9 @@ def _sonic_check_bgp_peer(node: NodeInfo, neighbor: str) -> CheckResult:
 # ---------------------------------------------------------------------------
 
 
+_JUNOS_ERROR_MARKER = re.compile(r"^\s*\^\s*$", re.MULTILINE)
+
+
 def _junos_commit_check(
     node: NodeInfo, config_lines: list[str]
 ) -> tuple[bool | None, str]:
@@ -535,9 +577,15 @@ def _junos_commit_check(
             # A CLI syntax error rejects the line before it is loaded, so
             # the subsequent commit check would pass on an unchanged config.
             # Junos reports it as "error: syntax error, ..." or, for an
-            # unknown keyword, a bare "syntax error." line.
+            # unknown keyword, a bare "syntax error." line. An invalid
+            # numeric value ("Value ... is not within range", "Invalid
+            # trailing data ...") has neither, only the "^" marker line.
             lowered = set_output.lower()
-            if "error:" in lowered or "syntax error" in lowered:
+            if (
+                "error:" in lowered
+                or "syntax error" in lowered
+                or _JUNOS_ERROR_MARKER.search(set_output)
+            ):
                 conn.send_command_timing("rollback 0")
                 conn.exit_config_mode()
                 return False, f"{stripped}: {set_output.strip()}"
@@ -833,6 +881,9 @@ CHECK_FUNCTIONS = {
         spec["trace_file"],
         spec["next_hops"],
         spec["link_local"],
+    ),
+    "bgp_peer_bufsize": lambda node, spec: _junos_check_bgp_peer_bufsize(
+        node, spec["neighbor"], spec["receive_buffer"], spec["send_buffer"]
     ),
     "bgp_active_path": lambda node, spec: _junos_check_bgp_active_path(
         node,

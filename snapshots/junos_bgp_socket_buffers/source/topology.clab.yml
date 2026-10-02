@@ -1,0 +1,28 @@
+# Junos `protocols bgp receive-buffer` / `send-buffer` lab.
+#
+# dut (AS 65001) peers with peer (AS 65002) over two links:
+#
+#   link  dut                          peer                      dut instance
+#   1     ge-0/0/0 192.0.2.0/31        Ethernet1 192.0.2.1       master
+#   2     ge-0/0/1 198.51.100.0/31     Ethernet2 198.51.100.1    VR1 virtual-router
+#
+# Each instance sets receive-buffer and send-buffer at the protocol,
+# group TEST, and neighbor levels. peer advertises 203.0.113.0/24.
+
+name: junos-bgp-socket-buffers
+
+topology:
+  nodes:
+    dut:
+      kind: juniper_vjunosrouter
+      image: vrnetlab/juniper_vjunos-router:25.4R1.12
+      startup-config: configs/dut.cfg
+    peer:
+      kind: arista_ceos
+      image: ceos:4.36.0.1F
+      startup-config: configs/peer.cfg
+
+  links:
+    # ethN is Junos ge-0/0/(N-1) and EOS EthernetN
+    - endpoints: ["dut:eth1", "peer:eth1"]
+    - endpoints: ["dut:eth2", "peer:eth2"]
