@@ -119,11 +119,9 @@ buffer the session re-established and dut installed 203.0.113.0/24.
 
 ### Batfish
 
-Batfish reports each buffer line as unrecognized syntax. dut's neighbor
-statements in `display set` form are only the buffer lines, so Batfish
-defines neither neighbor and has no sessions on dut.
-`test_main_rib_routes[dut]` and `test_bgp_rib_routes[dut]` are
-sickbayed to batfish/batfish#10375.
+Batfish parses both statements at all three levels
+(batfish/batfish#10376), so it defines both of dut's neighbors and the
+lab tests pass.
 
 ## Raw output
 
