@@ -1,0 +1,89 @@
+! Command: show running-config
+! device: peer (cEOSLab, EOS-4.36.0.1F-47401373.43601F (engineering build))
+!
+no aaa root
+!
+username admin privilege 15 role network-admin secret sha512 $6$EjdLEh9m3YD3p0RY$EQdynirAKR6.WVxOM/ediQQqx5v.begZXdSiZb8eGKnt68k.nFxMYocVKuk46PkOpjNc0eZtSCiiWTHgvvKHt.
+!
+no service interface inactive port-id allocation disabled
+!
+service routing protocols model multi-agent
+!
+hostname peer
+!
+spanning-tree mode mstp
+!
+system l1
+   unsupported speed action error
+   unsupported error-correction action error
+!
+vrf instance VR
+!
+aaa authorization exec default local
+!
+interface Ethernet1
+   no switchport
+   ip address 10.0.1.1/31
+   ipv6 address 2001:db8:1::2/64
+   ip ospf network point-to-point
+   ipv6 ospf network point-to-point
+   ipv6 ospf 1 area 0.0.0.0
+!
+interface Ethernet2
+   no switchport
+   ip address 10.0.2.1/31
+   ipv6 address 2001:db8:2::2/64
+   ip ospf network point-to-point
+   ipv6 ospf network point-to-point
+   ipv6 ospf 1 area 0.0.0.0
+!
+interface Ethernet3
+   no switchport
+   vrf VR
+   ip address 10.0.3.1/31
+   ipv6 address 2001:db8:3::2/64
+   ip ospf network point-to-point
+   ipv6 ospf network point-to-point
+   ipv6 ospf 2 area 0.0.0.0
+!
+interface Loopback0
+   ip address 10.255.0.2/32
+   ipv6 address 2001:db8:ff::2/128
+   ipv6 ospf 1 area 0.0.0.0
+!
+interface Loopback1
+   vrf VR
+   ip address 10.255.1.2/32
+   ipv6 address 2001:db8:ff:1::2/128
+   ipv6 ospf 2 area 0.0.0.0
+!
+interface Management0
+   ip address 172.20.20.3/24
+   ipv6 address 3fff:172:20:20::3/64
+!
+ip routing
+ip routing vrf VR
+!
+ipv6 unicast-routing
+ipv6 unicast-routing vrf VR
+!
+router ospf 1
+   router-id 10.255.0.2
+   network 10.0.1.0/31 area 0.0.0.0
+   network 10.0.2.0/31 area 0.0.0.0
+   network 10.255.0.2/32 area 0.0.0.0
+   max-lsa 12000
+!
+router ospf 2 vrf VR
+   router-id 10.255.1.2
+   network 10.0.3.0/31 area 0.0.0.0
+   network 10.255.1.2/32 area 0.0.0.0
+   max-lsa 12000
+!
+ipv6 router ospf 1
+   router-id 10.255.0.2
+!
+ipv6 router ospf 2 vrf VR
+   router-id 10.255.1.2
+!
+end

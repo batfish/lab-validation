@@ -1,0 +1,97 @@
+# Lab-state preconditions and checks for junos_ospf_topology_metric.
+#
+# Commit checks record that Junos rejects `topology default metric` at
+# the OSPF and OSPF3 process level, in the master instance and in a
+# virtual-router, and accepts the interface-level OSPF form with the same
+# value. OSPF3 has no `topology` statement at either level; its
+# interface-level control is plain `metric`.
+
+checks:
+  # --- adjacency preconditions (each route needs a Full adjacency) ---
+
+  - type: route_exists
+    node: dut
+    table: inet.0
+    prefix: 10.255.0.2/32
+    description: "master OSPF route to peer loopback"
+
+  - type: route_exists
+    node: dut
+    table: inet6.0
+    prefix: 2001:db8:ff::2/128
+    description: "master OSPF3 route to peer loopback"
+
+  - type: route_exists
+    node: dut
+    table: VR.inet.0
+    prefix: 10.255.1.2/32
+    description: "VR OSPF route to peer loopback"
+
+  - type: route_exists
+    node: dut
+    table: VR.inet6.0
+    prefix: 2001:db8:ff:1::2/128
+    description: "VR OSPF3 route to peer loopback"
+
+  # --- process level: rejected ---
+
+  - type: commit_check_rejects
+    node: dut
+    config_lines:
+      - "set protocols ospf topology default metric 65450"
+    expected_error: "syntax error"
+    description: "OSPF process-level topology default metric"
+
+  - type: commit_check_rejects
+    node: dut
+    config_lines:
+      - "set protocols ospf3 topology default metric 65450"
+    expected_error: "syntax error"
+    description: "OSPF3 process-level topology default metric"
+
+  - type: commit_check_rejects
+    node: dut
+    config_lines:
+      - "set routing-instances VR protocols ospf topology default metric 65450"
+    expected_error: "syntax error"
+    description: "OSPF process-level topology default metric in VR"
+
+  - type: commit_check_rejects
+    node: dut
+    config_lines:
+      - "set routing-instances VR protocols ospf3 topology default metric 65450"
+    expected_error: "syntax error"
+    description: "OSPF3 process-level topology default metric in VR"
+
+  - type: commit_check_rejects
+    node: dut
+    config_lines:
+      - "set protocols ospf3 area 0.0.0.0 interface ge-0/0/1.0 topology default metric 65450"
+    expected_error: "syntax error"
+    description: "OSPF3 interface-level topology (no topology statement in OSPF3)"
+
+  # --- accepted controls ---
+
+  - type: commit_check_accepts
+    node: dut
+    config_lines:
+      - "set protocols ospf area 0.0.0.0 interface ge-0/0/1.0 topology default metric 65450"
+    description: "OSPF interface-level topology default metric (documented)"
+
+  - type: commit_check_accepts
+    node: dut
+    config_lines:
+      - "set routing-instances VR protocols ospf area 0.0.0.0 interface ge-0/0/2.0 topology default metric 65450"
+    description: "OSPF interface-level topology default metric in VR"
+
+  - type: commit_check_accepts
+    node: dut
+    config_lines:
+      - "set protocols ospf3 area 0.0.0.0 interface ge-0/0/1.0 metric 65450"
+    description: "OSPF3 interface-level metric"
+
+  - type: commit_check_accepts
+    node: dut
+    config_lines:
+      - "set protocols ospf topology default"
+    description: "OSPF process-level topology default with no children"
