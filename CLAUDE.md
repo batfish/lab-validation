@@ -131,7 +131,7 @@ GitHub Actions runs matrix strategy testing all labs in parallel, with Batfish J
 
 ## Coding Conventions
 
-- **Python 3.10+** required (supports 3.10, 3.11, 3.12)
+- **Python 3.14+** required
 - **Pre-commit hooks** required for consistent code quality
 - **Parser error handling**: parsers should crash (assert, KeyError) on
   unexpected data shapes rather than silently degrading with `.get()`
