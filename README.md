@@ -24,7 +24,7 @@ This framework implements comprehensive multi-level benchmarking to validate Bat
 
 ### Requirements
 
-- Python 3.10+
+- Python 3.14+
 - Pybatfish
 - Batfish server running locally (see [development setup instructions](https://github.com/batfish/batfish/tree/master/docs/development))
 
