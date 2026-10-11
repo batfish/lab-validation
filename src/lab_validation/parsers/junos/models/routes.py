@@ -50,6 +50,6 @@ class JunosBgpRoute:
     preference: int = attr.ib(converter=int)
     metric: int | None = attr.ib(converter=optional_int_converter)
     local_preference: int = attr.ib(converter=int)
-    as_path: Sequence[int]
+    as_path: Sequence[int | tuple[int, ...]]
     origin_type: str
     communities: tuple[str, ...] = attr.ib(converter=tuple, default=())

@@ -1,0 +1,44 @@
+# Preconditions for the confederation local-as lab.
+# Run after health-check, before collection:
+#   lab_builder validate topology.clab.yml --checks checks.yaml
+
+checks:
+  - type: bgp_peer_established
+    node: r1
+    neighbor: 10.0.12.1
+    description: "r1 <-> r2: local-as 65100 private no-prepend-global-as to AS 7"
+  - type: bgp_peer_established
+    node: r1
+    neighbor: 10.0.13.1
+    description: "r1 <-> r3: confederation eBGP"
+  - type: bgp_peer_established
+    node: r1
+    neighbor: 10.0.14.1
+    description: "r1 <-> r4: plain local-as 65100 to AS 65200"
+
+  # Routes cross the confederation boundary in both directions.
+  - type: route_exists
+    node: r3
+    table: inet.0
+    prefix: 10.10.1.0/24
+    description: "r1's static reaches the other confederation member"
+  - type: route_exists
+    node: r3
+    table: inet.0
+    prefix: 10.40.1.0/24
+    description: "r4's static crosses r1 into the confederation"
+  - type: route_exists
+    node: r4
+    table: inet.0
+    prefix: 10.10.1.0/24
+    description: "r1's static reaches the plain local-as peer"
+  - type: route_exists
+    node: r4
+    table: inet.0
+    prefix: 10.30.1.0/24
+    description: "r3's static leaves the confederation via the plain local-as peer"
+  - type: route_exists
+    node: r2
+    table: inet.0
+    prefix: 10.10.1.0/24
+    description: "r1's static reaches AS 7 over the private no-prepend-global-as session"
