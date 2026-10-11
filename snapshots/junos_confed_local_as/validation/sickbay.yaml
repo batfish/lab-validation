@@ -1,0 +1,15 @@
+entries:
+  # Until batfish/batfish#10418 lands, both local-as sessions on r1 are
+  # NOT_COMPATIBLE (r1-r2 typed IBGP), so r2 and r4 learn nothing and r1 and
+  # r3 miss r4's routes. With #10418 the remaining differences are the three
+  # issues: #10420 (AS 7 loop not detected on r1, leaks to r3 and r4), #10421
+  # (confederation segments sent to r2 and r4), #10422 (local-as 65100 not
+  # prepended toward r3). After #10418, drop r2 from test_main_rib_routes.
+  - hostname: "r1|r2|r3|r4"
+    test_name: test_main_rib_routes
+    skip:
+      reason: https://github.com/batfish/batfish/pull/10418; https://github.com/batfish/batfish/issues/10420
+  - hostname: "r1|r2|r3|r4"
+    test_name: test_bgp_rib_routes
+    skip:
+      reason: https://github.com/batfish/batfish/pull/10418; https://github.com/batfish/batfish/issues/10420; https://github.com/batfish/batfish/issues/10421; https://github.com/batfish/batfish/issues/10422

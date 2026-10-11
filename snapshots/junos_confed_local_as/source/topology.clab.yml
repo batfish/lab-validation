@@ -1,0 +1,49 @@
+# Junos confederation local-as lab.
+#
+# r1 is a member of BGP confederation 7 (sub-AS 65001). It speaks
+# confederation eBGP to r3 (sub-AS 65002) and uses "local-as 65100" on
+# two external groups: toward r2, which sits in AS 7 (the confederation
+# AS itself) with "private no-prepend-global-as", and toward r4 (AS
+# 65200) with a plain local-as. The point is what Junos does with a
+# group whose local-as is outside the confederation: whether the
+# session is plain eBGP (confederation segments stripped, next hop and
+# local preference reset) and which ASes are prepended.
+#
+# Topology:
+#   r2 (AS 7)       --[ge-0/0/0]--[ge-0/0/0]-- r1 (AS 65001, confed 7)
+#     lo0 10.2.2.2/32   10.0.12.1    10.0.12.0    lo0 10.1.1.1/32
+#   r3 (AS 65002, confed 7) --[ge-0/0/0]--[ge-0/0/1]-- r1
+#     lo0 10.3.3.3/32   10.0.13.1    10.0.13.0
+#   r4 (AS 65200)   --[ge-0/0/0]--[ge-0/0/2]-- r1
+#     lo0 10.4.4.4/32   10.0.14.1    10.0.14.0
+#
+# Each router originates one static /24 (10.N0.1.0/24 for rN).
+
+name: junos-confed-local-as
+
+topology:
+  nodes:
+    r1:
+      kind: juniper_vjunosrouter
+      image: vrnetlab/juniper_vjunos-router:25.4R1.12
+      startup-config: configs/r1.cfg
+    r2:
+      kind: juniper_vjunosrouter
+      image: vrnetlab/juniper_vjunos-router:25.4R1.12
+      startup-config: configs/r2.cfg
+    r3:
+      kind: juniper_vjunosrouter
+      image: vrnetlab/juniper_vjunos-router:25.4R1.12
+      startup-config: configs/r3.cfg
+    r4:
+      kind: juniper_vjunosrouter
+      image: vrnetlab/juniper_vjunos-router:25.4R1.12
+      startup-config: configs/r4.cfg
+
+  links:
+    # r1 ge-0/0/0 (eth1) <-> r2 ge-0/0/0 (eth1)
+    - endpoints: ["r1:eth1", "r2:eth1"]
+    # r1 ge-0/0/1 (eth2) <-> r3 ge-0/0/0 (eth1)
+    - endpoints: ["r1:eth2", "r3:eth1"]
+    # r1 ge-0/0/2 (eth3) <-> r4 ge-0/0/0 (eth1)
+    - endpoints: ["r1:eth3", "r4:eth1"]

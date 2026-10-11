@@ -140,8 +140,13 @@ def _get_routes(vrf: str, route_json_obj: list[Any]) -> list[JunosBgpRoute]:
     return bgp_routes
 
 
-def _get_as_path(as_path_str: str) -> tuple[Sequence[int], str]:
-    """Extract the AS Path from a string containing both AS Path and origin type."""
+def _get_as_path(as_path_str: str) -> tuple[Sequence[int | tuple[int, ...]], str]:
+    """Extract the AS Path from a string containing both AS Path and origin type.
+
+    Confederation segments are printed in parentheses, "(65001 65002) 7 I". Each
+    AS inside the parentheses becomes its own one-element tuple, matching how
+    Batfish renders one confederation AS set per hop.
+    """
     # `show route protocol bgp detail | display json` prefixes the value with
     # "AS path: " (e.g., "AS path: 65001 I"); strip it so we only parse the
     # numeric path plus origin tag.
@@ -160,8 +165,23 @@ def _get_as_path(as_path_str: str) -> tuple[Sequence[int], str]:
     split = as_path_str.split()
     as_path_list, origin_type = split[:-1], split[-1]
     assert origin_type in {"I", "E", "?"}
-    as_path = tuple(map(int, as_path_list))
-    return (as_path, origin_type)
+    as_path: list[int | tuple[int, ...]] = []
+    in_confed = False
+    for part in as_path_list:
+        if part.startswith("("):
+            assert not in_confed, as_path_str
+            in_confed = True
+            part = part[1:]
+        closes = part.endswith(")")
+        if closes:
+            assert in_confed, as_path_str
+            part = part[:-1]
+        if part:
+            as_path.append((int(part),) if in_confed else int(part))
+        if closes:
+            in_confed = False
+    assert not in_confed, as_path_str
+    return (tuple(as_path), origin_type)
 
 
 def convert_active(active_tag: str | None) -> bool:

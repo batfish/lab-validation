@@ -557,6 +557,11 @@ def test_get_as_path() -> None:
         "Cluster list:  10.255.1.3 10.255.1.4\n"
         "Originator ID: 10.255.0.1"
     ) == ((), "?")
+    # Confederation segments: one tuple per confederation AS, as Batfish renders them.
+    assert _get_as_path("AS path: (65001) I") == (((65001,),), "I")
+    assert _get_as_path("(65001) 65100 65200 I") == (((65001,), 65100, 65200), "I")
+    assert _get_as_path("(65001 65002) 7 I") == (((65001,), (65002,), 7), "I")
+    assert _get_as_path("65100 (65002) I") == ((65100, (65002,)), "I")
 
 
 def test_convert_active() -> None:
