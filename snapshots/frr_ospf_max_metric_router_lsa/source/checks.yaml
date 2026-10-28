@@ -1,0 +1,36 @@
+checks:
+  - type: interface_up
+    node: r0
+    interface: eth1
+  - type: interface_up
+    node: r0
+    interface: eth2
+  - type: interface_up
+    node: r1
+    interface: eth1
+  - type: interface_up
+    node: r1
+    interface: eth2
+  # Inter-area routes avoid abr1: its summary LSAs carry metric 0xFF0000.
+  - type: route_next_hops
+    description: r0 reaches r1's loopback through abr2
+    node: r0
+    table: default
+    prefix: 10.255.1.1/32
+    next_hops: [10.0.2.1]
+    metric: 80000
+  - type: route_next_hops
+    description: r1 reaches r0's loopback through abr2
+    node: r1
+    table: default
+    prefix: 10.255.0.10/32
+    next_hops: [10.12.0.0]
+    metric: 80000
+  # abr1's ASBR summary LSA keeps its real cost, so the E1 route uses abr1.
+  - type: route_next_hops
+    description: r0 reaches r1's E1 route through abr1
+    node: r0
+    table: default
+    prefix: 192.0.2.0/24
+    next_hops: [10.0.1.1]
+    metric: 65565

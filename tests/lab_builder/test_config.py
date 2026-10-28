@@ -2,7 +2,13 @@
 
 from __future__ import annotations
 
-from lab_builder.config import AOSCX, NOKIA_SRSIM, command_to_filename
+from lab_builder.config import (
+    AOSCX,
+    FRR,
+    NOKIA_SRSIM,
+    command_to_filename,
+    get_profile,
+)
 
 
 class TestCommandToFilename:
@@ -89,3 +95,13 @@ def test_aoscx_profile_maps_first_data_link() -> None:
     assert AOSCX.interface_prefix == "1/1/"
     assert AOSCX.interface_offset == 1
     assert AOSCX.netmiko_device_type == "aruba_aoscx"
+
+
+def test_frr_profile() -> None:
+    assert get_profile("frr") is FRR
+    assert FRR.ssh_use_keys
+    # CumulusFrrValidator and FrrValidator read these filenames.
+    names = {command_to_filename(c) for c in FRR.show_commands}
+    assert "vtysh_-c_'show_ip_route_vrf_all_json'.txt" in names
+    assert "vtysh_-c_'show_interface_vrf_all'.txt" in names
+    assert FRR.config_command in FRR.show_commands

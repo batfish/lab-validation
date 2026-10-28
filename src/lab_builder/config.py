@@ -64,6 +64,8 @@ class VendorProfile:
     config_files: dict[str, str] = field(default_factory=dict)
     config_dir: str = "configs"
     boot_timeout_seconds: int = 600
+    # Authenticate with the host's SSH keys instead of a password.
+    ssh_use_keys: bool = False
 
 
 # Startup configs for vrnetlab Juniper nodes must be in curly-brace format,
@@ -332,6 +334,33 @@ SONIC_VM = VendorProfile(
     boot_timeout_seconds=600,
 )
 
+# FRRouting (containerlab `frr` kind). The containerlab-<version> image runs
+# an SSH server; root gets a shell and accepts only the host's public keys,
+# which containerlab installs. Batfish reads FRR as a Cumulus concatenated
+# file, which build_snapshot assembles from the running config.
+FRR = VendorProfile(
+    name="frr",
+    containerlab_kind="frr",
+    default_username="root",
+    default_password="",
+    netmiko_device_type="linux",
+    interface_prefix="eth",
+    interface_offset=1,  # FRR uses linux interface names directly
+    ssh_use_keys=True,
+    show_commands=[
+        "vtysh -c 'show running-config'",
+        "vtysh -c 'show version'",
+        "vtysh -c 'show interface vrf all'",
+        "vtysh -c 'show vrf'",
+        "vtysh -c 'show ip route vrf all json'",
+        "vtysh -c 'show ip ospf neighbor json'",
+        "vtysh -c 'show ip ospf database'",
+        "vtysh -c 'show bgp vrf all summary json'",
+    ],
+    config_command="vtysh -c 'show running-config'",
+    boot_timeout_seconds=120,
+)
+
 VENDOR_PROFILES: dict[str, VendorProfile] = {
     "juniper_vjunosrouter": VJUNOS_ROUTER,
     "juniper_vjunosswitch": VJUNOS_SWITCH,
@@ -342,6 +371,7 @@ VENDOR_PROFILES: dict[str, VendorProfile] = {
     "nokia_srsim": NOKIA_SRSIM,
     "aruba_aoscx": AOSCX,
     "sonic-vm": SONIC_VM,
+    "frr": FRR,
 }
 
 

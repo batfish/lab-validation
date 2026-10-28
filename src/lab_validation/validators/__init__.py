@@ -8,6 +8,7 @@ from .AristaValidator import AristaValidator
 from .CheckpointGaiaValidator import CheckpointGaiaValidator
 from .CumulusFrrValidator import CumulusFrrValidator
 from .FortiosValidator import FortiosValidator
+from .FrrValidator import FrrValidator
 from .IosValidator import IosValidator
 from .IosXrValidator import IosXrValidator
 from .JunosValidator import JunosValidator
@@ -31,6 +32,7 @@ class Vendor(enum.Enum):
     CISCO_XR = "iosxr"
     CUMULUS = "cumulus"
     FORTIGATE = "fortios"
+    FRR = "frr"
     JUNOS = "junos"
     NOKIA_SROS = "sros"
     PALOALTO = "panos"
@@ -48,6 +50,7 @@ __all__ = [
     "CheckpointGaiaValidator",
     "CumulusFrrValidator",
     "FortiosValidator",
+    "FrrValidator",
     "IosValidator",
     "IosXrValidator",
     "JunosValidator",
