@@ -16,7 +16,7 @@ from typing import Any
 import yaml
 
 from lab_builder.device import run_command
-from lab_builder.health import SONIC_BGP_SUMMARY_COMMAND
+from lab_builder.health import FRR_BGP_SUMMARY_COMMAND
 from lab_builder.models import NodeInfo
 
 
@@ -498,7 +498,7 @@ def _sonic_check_interface_up(node: NodeInfo, interface: str) -> CheckResult:
     return CheckResult("interface_up", node.name, False, f"{interface}: not found")
 
 
-def _sonic_check_route_exists(node: NodeInfo, table: str, prefix: str) -> CheckResult:
+def _frr_check_route_exists(node: NodeInfo, table: str, prefix: str) -> CheckResult:
     """Check that a prefix is in a VRF's FRR RIB. 'table' is the VRF name."""
     family = "ipv6" if ":" in prefix else "ip"
     try:
@@ -518,10 +518,61 @@ def _sonic_check_route_exists(node: NodeInfo, table: str, prefix: str) -> CheckR
     )
 
 
-def _sonic_check_bgp_peer(node: NodeInfo, neighbor: str) -> CheckResult:
+def _frr_check_route_next_hops(
+    node: NodeInfo,
+    table: str,
+    prefix: str,
+    next_hops: list[str],
+    metric: int | None,
+) -> CheckResult:
+    """Check the next-hop IPs (and optionally metric) of a prefix's selected route."""
+    family = "ipv6" if ":" in prefix else "ip"
+    try:
+        output = run_command(
+            node, f"vtysh -c 'show {family} route vrf {table} {prefix} json'"
+        )
+        data = json.loads(output)
+    except Exception as e:
+        return CheckResult("route_next_hops", node.name, False, f"command failed: {e}")
+
+    selected = [r for r in data.get(prefix, []) if r.get("selected")]
+    if not selected:
+        return CheckResult(
+            "route_next_hops", node.name, False, f"{prefix}: no selected route"
+        )
+    route = selected[0]
+    actual = sorted(nh["ip"] for nh in route["nexthops"] if nh.get("active"))
+    detail = f"{prefix}: via {actual}, metric {route.get('metric')}"
+    passed = actual == sorted(next_hops) and (
+        metric is None or route.get("metric") == metric
+    )
+    return CheckResult("route_next_hops", node.name, passed, detail)
+
+
+def _frr_check_interface_up(node: NodeInfo, interface: str) -> CheckResult:
+    """Check an interface's admin and oper status in vtysh 'show interface'."""
+    try:
+        output = run_command(node, f"vtysh -c 'show interface {interface} json'")
+        data = json.loads(output)
+    except Exception as e:
+        return CheckResult("interface_up", node.name, False, f"command failed: {e}")
+
+    info = data.get(interface)
+    if info is None:
+        return CheckResult("interface_up", node.name, False, f"{interface}: not found")
+    admin = info.get("administrativeStatus")
+    oper = info.get("operationalStatus")
+    if admin == "up" and oper == "up":
+        return CheckResult("interface_up", node.name, True, f"{interface}: up")
+    return CheckResult(
+        "interface_up", node.name, False, f"{interface}: oper {oper}, admin {admin}"
+    )
+
+
+def _frr_check_bgp_peer(node: NodeInfo, neighbor: str) -> CheckResult:
     """Check that a specific BGP peer is Established in any VRF/address family."""
     try:
-        output = run_command(node, SONIC_BGP_SUMMARY_COMMAND)
+        output = run_command(node, FRR_BGP_SUMMARY_COMMAND)
         data = json.loads(output)
     except Exception as e:
         return CheckResult(
@@ -829,6 +880,8 @@ def check_interface_up(node: NodeInfo, interface: str) -> CheckResult:
         return _aoscx_check_interface_up(node, interface)
     if node.profile.name == "sonic":
         return _sonic_check_interface_up(node, interface)
+    if node.profile.name == "frr":
+        return _frr_check_interface_up(node, interface)
     if node.profile.name == "arista":
         return _arista_check_interface_up(node, interface)
     if node.profile.name == "sros":
@@ -839,8 +892,8 @@ def check_interface_up(node: NodeInfo, interface: str) -> CheckResult:
 def check_route_exists(node: NodeInfo, table: str, prefix: str) -> CheckResult:
     if node.profile.name == "aoscx":
         return _aoscx_check_route_exists(node, table, prefix)
-    if node.profile.name == "sonic":
-        return _sonic_check_route_exists(node, table, prefix)
+    if node.profile.name in ("sonic", "frr"):
+        return _frr_check_route_exists(node, table, prefix)
     if node.profile.name == "arista":
         return _arista_check_route_exists(node, table, prefix)
     if node.profile.name == "nx":
@@ -851,13 +904,30 @@ def check_route_exists(node: NodeInfo, table: str, prefix: str) -> CheckResult:
 
 
 def check_bgp_peer_established(node: NodeInfo, neighbor: str) -> CheckResult:
-    if node.profile.name == "sonic":
-        return _sonic_check_bgp_peer(node, neighbor)
+    if node.profile.name in ("sonic", "frr"):
+        return _frr_check_bgp_peer(node, neighbor)
     if node.profile.name == "arista":
         return _arista_check_bgp_peer(node, neighbor)
     if node.profile.name == "sros":
         return _sros_check_bgp_peer(node, neighbor)
     return _junos_check_bgp_peer(node, neighbor)
+
+
+def check_route_next_hops(
+    node: NodeInfo,
+    table: str,
+    prefix: str,
+    next_hops: list[str],
+    metric: int | None,
+) -> CheckResult:
+    if node.profile.name in ("sonic", "frr"):
+        return _frr_check_route_next_hops(node, table, prefix, next_hops, metric)
+    return CheckResult(
+        "route_next_hops",
+        node.name,
+        False,
+        f"route_next_hops is not implemented for {node.profile.name}",
+    )
 
 
 CHECK_FUNCTIONS = {
@@ -867,6 +937,9 @@ CHECK_FUNCTIONS = {
     ),
     "bgp_peer_established": lambda node, spec: check_bgp_peer_established(
         node, spec["neighbor"]
+    ),
+    "route_next_hops": lambda node, spec: check_route_next_hops(
+        node, spec["table"], spec["prefix"], spec["next_hops"], spec.get("metric")
     ),
     "commit_check_rejects": lambda node, spec: _check_commit_rejects(
         node, spec["config_lines"], spec.get("expected_error")

@@ -288,6 +288,15 @@ fi
 echo "--- Docker images ---"
 docker images --format '  {{.Repository}}:{{.Tag}}  {{.Size}}' | grep -v '<none>' || echo "  (none)"
 
+# SSH key for key-only nodes (FRR's root). containerlab authorizes the
+# public keys it finds in ~/.ssh; it runs under sudo, so root gets a copy.
+if [ ! -f /home/ubuntu/.ssh/id_ed25519 ]; then
+    sudo -u ubuntu mkdir -p -m 700 /home/ubuntu/.ssh
+    sudo -u ubuntu ssh-keygen -q -t ed25519 -N '' -f /home/ubuntu/.ssh/id_ed25519
+fi
+install -d -m 700 /root/.ssh
+install -m 644 /home/ubuntu/.ssh/id_ed25519.pub /root/.ssh/lab-builder.pub
+
 # Create working directory
 sudo -u ubuntu mkdir -p /home/ubuntu/lab
 

@@ -13,6 +13,12 @@ SONiC uses the `sonic-vm` containerlab kind. `build-sonic-image.sh` builds
 the vrnetlab image from the public SONiC VS build; see
 `snapshots/sonic_ebgp/source/README.md`.
 
+FRRouting uses the `frr` containerlab kind with the
+`quay.io/frrouting/frr:containerlab-<version>` image (10.7.1 and later),
+which runs an SSH server. lab_builder logs in as root with
+`~/.ssh/id_ed25519`, which `ec2-setup.sh` creates. See
+`snapshots/frr_ospf_max_metric_router_lsa/source/README.md`.
+
 ## Overview
 
 This directory contains everything needed to:
@@ -617,6 +623,7 @@ the large Juniper VM images and reducing bootstrap time from ~5 min to
 | `nokia_srsim`           | Nokia SR OS (SR-1)  | admin / admin     | ~2 min    | No\*         |
 | `aruba_aoscx`           | Aruba AOS-CX        | admin / admin     | ~2 min    | Yes          |
 | `sonic-vm`              | SONiC (VS)          | admin / admin     | ~2 min    | Yes          |
+| `frr`                   | FRRouting           | root / SSH key    | ~10 s     | No           |
 
 \* SR-SIM is a native container, but the install guide specifies Intel x86
 and will not boot on ARM. Our default m8i instances satisfy this.
