@@ -4,11 +4,15 @@ from __future__ import annotations
 
 import logging
 import time
+from pathlib import Path
 
 from netmiko import ConnectHandler
 from netmiko.exceptions import NetmikoAuthenticationException
 
 from lab_builder.models import NodeInfo
+
+# Key for key-only nodes; ec2-setup.sh creates it.
+SSH_KEY_FILE = Path.home() / ".ssh" / "id_ed25519"
 
 
 def connect(node: NodeInfo, timeout: int = 30) -> ConnectHandler:
@@ -19,6 +23,8 @@ def connect(node: NodeInfo, timeout: int = 30) -> ConnectHandler:
         port=node.ssh_port,
         username=node.username,
         password=node.password,
+        use_keys=node.profile.ssh_use_keys,
+        key_file=str(SSH_KEY_FILE) if node.profile.ssh_use_keys else None,
         timeout=timeout,
         session_timeout=120,
         # Containerlab containers get new host keys on each deploy.
@@ -62,6 +68,10 @@ class SshPermanentError(Exception):
     """SSH error that will not resolve by retrying (e.g., auth failure)."""
 
 
+class SshConfigError(SshPermanentError):
+    """netmiko rejected the connection arguments before connecting."""
+
+
 def check_ssh_reachable(node: NodeInfo, timeout: int = 10) -> bool:
     """Check if SSH is reachable on a node.
 
@@ -73,6 +83,10 @@ def check_ssh_reachable(node: NodeInfo, timeout: int = 10) -> bool:
         return True
     except NetmikoAuthenticationException as e:
         raise SshPermanentError(f"authentication failed: {e}") from e
+    except ValueError as e:
+        # e.g. use_keys with a missing key_file. netmiko raises this before
+        # opening a socket, so retrying cannot help.
+        raise SshConfigError(str(e).strip()) from e
     except Exception:
         return False
 
@@ -88,7 +102,7 @@ def wait_for_ssh(
     Returns True if reachable within timeout, False otherwise.
     Raises SshPermanentError if authentication fails repeatedly (more than
     *max_auth_failures* consecutive times), indicating bad credentials
-    rather than a device still booting.
+    rather than a device still booting. Raises SshConfigError at once.
     """
     # Suppress paramiko's transport thread tracebacks during retries.
     # Without this, every failed SSH attempt prints a multi-line exception
@@ -108,6 +122,8 @@ def wait_for_ssh(
                     print(f"  {node.name}: SSH reachable (attempt {attempt})")
                     return True
                 consecutive_auth_failures = 0
+            except SshConfigError:
+                raise
             except SshPermanentError:
                 consecutive_auth_failures += 1
                 remaining = int(deadline - time.time())

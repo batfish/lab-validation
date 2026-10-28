@@ -6,7 +6,12 @@ import json
 import re
 import time
 
-from lab_builder.device import SshPermanentError, run_command, wait_for_ssh
+from lab_builder.device import (
+    SshConfigError,
+    SshPermanentError,
+    run_command,
+    wait_for_ssh,
+)
 from lab_builder.models import HealthStatus, NodeInfo
 
 # ---------------------------------------------------------------------------
@@ -373,16 +378,23 @@ def _sros_check_isis(node: NodeInfo) -> bool | None:
 
 
 # ---------------------------------------------------------------------------
-# SONiC health checks (FRR via the host vtysh wrapper)
+# FRR health checks via vtysh (SONiC's host wrapper, or FRR itself)
 # ---------------------------------------------------------------------------
 
-SONIC_BGP_SUMMARY_COMMAND = "vtysh -c 'show bgp vrf all summary json'"
+FRR_BGP_SUMMARY_COMMAND = "vtysh -c 'show bgp vrf all summary json'"
+FRR_OSPF_NEIGHBOR_COMMAND = "vtysh -c 'show ip ospf neighbor json'"
 
 
-def _sonic_check_bgp(node: NodeInfo) -> bool | None:
-    """Check if all BGP peers in all VRFs and address families are Established."""
+def _frr_check_bgp(node: NodeInfo) -> bool | None:
+    """Check if all BGP peers in all VRFs and address families are Established.
+
+    Returns None when bgpd is not running (a containerlab FRR node whose
+    daemons list omits it).
+    """
     try:
-        output = run_command(node, SONIC_BGP_SUMMARY_COMMAND, timeout=10)
+        output = run_command(node, FRR_BGP_SUMMARY_COMMAND, timeout=10)
+        if "bgpd is not running" in output:
+            return None
         data = json.loads(output)
     except Exception:
         return False
@@ -398,6 +410,28 @@ def _sonic_check_bgp(node: NodeInfo) -> bool | None:
     return True if found_any else None
 
 
+def _frr_check_ospf(node: NodeInfo) -> bool | None:
+    """Check if all OSPF neighbors are Full.
+
+    vtysh prints an empty object when there is no OSPF instance, and an empty
+    "neighbors" object when the instance has no adjacency yet.
+    """
+    try:
+        output = run_command(node, FRR_OSPF_NEIGHBOR_COMMAND, timeout=10)
+        if "ospfd is not running" in output:
+            return None
+        data = json.loads(output)
+    except Exception:
+        return False
+
+    if not data:
+        return None
+    neighbors = [n for entries in data["neighbors"].values() for n in entries]
+    if not neighbors:
+        return False
+    return all(n["nbrState"].startswith("Full") for n in neighbors)
+
+
 # ---------------------------------------------------------------------------
 # Dispatch by vendor
 # ---------------------------------------------------------------------------
@@ -406,8 +440,8 @@ def _sonic_check_bgp(node: NodeInfo) -> bool | None:
 def check_bgp_established(node: NodeInfo) -> bool | None:
     if node.profile.name == "aoscx":
         return None
-    if node.profile.name == "sonic":
-        return _sonic_check_bgp(node)
+    if node.profile.name in ("sonic", "frr"):
+        return _frr_check_bgp(node)
     if node.profile.name == "arista":
         return _arista_check_bgp(node)
     if node.profile.name == "nx":
@@ -420,6 +454,8 @@ def check_bgp_established(node: NodeInfo) -> bool | None:
 def check_ospf_full(node: NodeInfo) -> bool | None:
     if node.profile.name in ("aoscx", "sonic"):
         return None
+    if node.profile.name == "frr":
+        return _frr_check_ospf(node)
     if node.profile.name == "arista":
         return _arista_check_ospf(node)
     if node.profile.name == "nx":
@@ -430,7 +466,7 @@ def check_ospf_full(node: NodeInfo) -> bool | None:
 
 
 def check_isis_up(node: NodeInfo) -> bool | None:
-    if node.profile.name in ("aoscx", "sonic"):
+    if node.profile.name in ("aoscx", "sonic", "frr"):
         return None
     if node.profile.name == "arista":
         return _arista_check_isis(node)
@@ -442,7 +478,7 @@ def check_isis_up(node: NodeInfo) -> bool | None:
 
 
 def check_platform_warnings(node: NodeInfo) -> list[str]:
-    if node.profile.name in ("arista", "nx", "sros", "aoscx", "sonic"):
+    if node.profile.name in ("arista", "nx", "sros", "aoscx", "sonic", "frr"):
         return []
     return _junos_check_platform_warnings(node)
 
@@ -458,6 +494,10 @@ def check_node_health(node: NodeInfo) -> HealthStatus:
 
     try:
         status.ssh_reachable = wait_for_ssh(node, timeout=10, interval=5)
+    except SshConfigError as e:
+        status.ssh_reachable = False
+        status.details = f"SSH configuration error: {e}"
+        return status
     except SshPermanentError:
         status.ssh_reachable = False
         status.details = "SSH authentication failed"
@@ -500,6 +540,9 @@ def wait_for_convergence(
             if not wait_for_ssh(node, timeout=boot_timeout, interval=15):
                 print(f"  {node.name}: TIMEOUT waiting for SSH")
                 return [HealthStatus(node=n.name, details="SSH timeout") for n in nodes]
+        except SshConfigError as e:
+            print(f"  {node.name}: SSH configuration error: {e}")
+            return [HealthStatus(node=n.name, details=str(e)) for n in nodes]
         except SshPermanentError:
             print(f"  {node.name}: SSH authentication failed persistently")
             return [HealthStatus(node=n.name, details="SSH auth failed") for n in nodes]

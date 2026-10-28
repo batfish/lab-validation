@@ -1,0 +1,44 @@
+{
+    "edges": [
+        {
+            "node1": {
+                "hostname": "r0",
+                "interfaceName": "eth1"
+            },
+            "node2": {
+                "hostname": "abr1",
+                "interfaceName": "eth1"
+            }
+        },
+        {
+            "node1": {
+                "hostname": "r0",
+                "interfaceName": "eth2"
+            },
+            "node2": {
+                "hostname": "abr2",
+                "interfaceName": "eth1"
+            }
+        },
+        {
+            "node1": {
+                "hostname": "abr1",
+                "interfaceName": "eth2"
+            },
+            "node2": {
+                "hostname": "r1",
+                "interfaceName": "eth1"
+            }
+        },
+        {
+            "node1": {
+                "hostname": "abr2",
+                "interfaceName": "eth2"
+            },
+            "node2": {
+                "hostname": "r1",
+                "interfaceName": "eth2"
+            }
+        }
+    ]
+}

@@ -26,6 +26,7 @@ def build_snapshot(
         snapshots/<name>/
         ├── configs/<hostname>/show_configuration_|_display_set.txt
         ├── sonic_configs/<hostname>/{config_db.json,frr.conf}  (SONiC)
+        ├── configs/<hostname>/<hostname>.cfg  (FRR, see frr_concatenated_config)
         ├── show/host_nos.txt
         ├── show/<hostname>/<show_command>.txt
         ├── batfish/layer1_topology.json  (if topology_file provided)
@@ -69,7 +70,12 @@ def build_snapshot(
             if config_src.exists():
                 config_dest_dir = snapshot_dir / config_dir / node.name
                 config_dest_dir.mkdir(parents=True, exist_ok=True)
-                shutil.copy2(config_src, config_dest_dir / dest_name)
+                if node.profile.name == "frr":
+                    (config_dest_dir / f"{node.name}.cfg").write_text(
+                        frr_concatenated_config(node.name, config_src.read_text())
+                    )
+                else:
+                    shutil.copy2(config_src, config_dest_dir / dest_name)
                 print(f"  {node.name}: {src_name} -> {config_dir}/{node.name}/")
 
         # Copy show command outputs to show/<hostname>/
@@ -93,6 +99,36 @@ def build_snapshot(
 
     print(f"Snapshot created at: {snapshot_dir}")
     return snapshot_dir
+
+
+def frr_concatenated_config(hostname: str, running_config: str) -> str:
+    """Wrap an FRR running config in Batfish's Cumulus concatenated format.
+
+    Batfish has no format for a bare frr.conf. The concatenated format is the
+    hostname, an /etc/network/interfaces section, a ports.conf section, and
+    then frr.conf. The interfaces section declares lo and every interface the
+    running config names, except the eth0 management port; the ports section
+    is empty. vtysh's "Building configuration..." preamble is dropped, since
+    Batfish starts the FRR section at the "frr version" line.
+    """
+    start = running_config.find("frr version")
+    frr_conf = running_config[start:] if start >= 0 else running_config
+    interfaces = [
+        name
+        for name in dict.fromkeys(re.findall(r"(?m)^interface (\S+)", frr_conf))
+        if name not in ("lo", "eth0")
+    ]
+    lines = [
+        hostname,
+        "# This file describes the network interfaces",
+        "auto lo",
+        "iface lo inet loopback",
+        "",
+    ]
+    for name in interfaces:
+        lines += [f"auto {name}", f"iface {name}", ""]
+    lines += ["# ports.conf --", frr_conf.rstrip("\n")]
+    return "\n".join(lines) + "\n"
 
 
 def _sros_endpoint_to_port(endpoint: str) -> str:

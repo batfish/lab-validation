@@ -9,6 +9,7 @@ import pytest
 
 from lab_builder.config import (
     ARISTA_CEOS,
+    FRR,
     NOKIA_SRSIM,
     SONIC_VM,
     VJUNOS_ROUTER,
@@ -19,6 +20,7 @@ from lab_builder.snapshot import (
     _eth_to_vendor_interface,
     _generate_layer1_topology,
     build_snapshot,
+    frr_concatenated_config,
 )
 
 
@@ -226,3 +228,86 @@ class TestBuildSnapshot:
         assert (snapshot / "configs" / "r2" / junos_config).exists()
         host_nos = json.loads((snapshot / "show" / "host_nos.txt").read_text())
         assert host_nos == {"s1": "sonic", "r2": "junos"}
+
+
+# vtysh -c 'show running-config' on an FRR 10 containerlab node.
+FRR_RUNNING_CONFIG = """\
+Building configuration...
+
+Current configuration:
+!
+frr version 10.7.1
+frr defaults traditional
+hostname r0
+!
+interface eth1
+ ip address 10.0.1.0/31
+ ip ospf area 0
+exit
+!
+interface eth2
+ ip address 10.0.2.0/31
+ ip ospf area 0
+exit
+!
+interface lo
+ ip address 10.255.0.10/32
+ ip ospf area 0
+exit
+!
+router ospf
+ ospf router-id 10.255.0.10
+exit
+!
+end
+"""
+
+
+class TestFrrConcatenatedConfig:
+    def test_wraps_running_config(self) -> None:
+        assert frr_concatenated_config("r0", FRR_RUNNING_CONFIG) == (
+            "r0\n"
+            "# This file describes the network interfaces\n"
+            "auto lo\n"
+            "iface lo inet loopback\n"
+            "\n"
+            "auto eth1\n"
+            "iface eth1\n"
+            "\n"
+            "auto eth2\n"
+            "iface eth2\n"
+            "\n"
+            "# ports.conf --\n"
+            + FRR_RUNNING_CONFIG[FRR_RUNNING_CONFIG.index("frr version") :]
+        )
+
+    def test_skips_management_port(self) -> None:
+        config = "frr version 10.7.1\ninterface eth0\nexit\ninterface eth1\nexit\n"
+        wrapped = frr_concatenated_config("r0", config)
+        assert "auto eth1\n" in wrapped
+        assert "auto eth0" not in wrapped
+
+    def test_build_snapshot_writes_cfg(self, tmp_path: Path) -> None:
+        node = NodeInfo(name="r0", kind="frr", profile=FRR, management_ip="1.2.3.8")
+        collected = tmp_path / "collected"
+        node_dir = collected / "r0"
+        node_dir.mkdir(parents=True)
+        (node_dir / command_to_filename(FRR.config_command)).write_text(
+            FRR_RUNNING_CONFIG
+        )
+        (node_dir / "vtysh_-c_'show_version'.txt").write_text("FRRouting 10.7.1")
+
+        snapshot = build_snapshot("lab", [node], collected, tmp_path / "snapshots")
+
+        assert [p.name for p in (snapshot / "configs" / "r0").iterdir()] == ["r0.cfg"]
+        cfg = (snapshot / "configs" / "r0" / "r0.cfg").read_text()
+        assert cfg == frr_concatenated_config("r0", FRR_RUNNING_CONFIG)
+        assert [p.name for p in (snapshot / "show" / "r0").iterdir()] == [
+            "vtysh_-c_'show_version'.txt"
+        ]
+        host_nos = json.loads((snapshot / "show" / "host_nos.txt").read_text())
+        assert host_nos == {"r0": "frr"}
+
+    def test_eth_maps_to_itself(self) -> None:
+        node = NodeInfo(name="r0", kind="frr", profile=FRR, management_ip="1.2.3.8")
+        assert _eth_to_vendor_interface("eth2", node) == "eth2"

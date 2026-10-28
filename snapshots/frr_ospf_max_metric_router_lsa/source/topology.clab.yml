@@ -1,0 +1,51 @@
+# Four FRR routers: r0 in area 0, r1 in area 1, and two ABRs between them.
+#
+# Topology:
+#            eth1 [cost 10]    abr1    eth2 [cost 10]
+#   r0 (area 0) ---------------(ABR)--------------- r1 (area 1)
+#      \                                          /
+#       eth2 [cost 40000]   abr2   eth2 [cost 40000]
+#
+#   r0   lo 10.255.0.10/32  eth1 10.0.1.0/31   eth2 10.0.2.0/31
+#   abr1 lo 10.255.0.1/32   eth1 10.0.1.1/31   eth2 10.11.0.0/31
+#   abr2 lo 10.255.0.2/32   eth1 10.0.2.1/31   eth2 10.12.0.0/31
+#   r1   lo 10.255.1.1/32   eth1 10.11.0.1/31  eth2 10.12.0.1/31
+#
+# abr1 has "max-metric router-lsa administrative", so inter-area traffic
+# moves to abr2. r1 redistributes 192.0.2.0/24 as E1; r0 still reaches it
+# through abr1.
+#
+# Links use the Linux default MTU of 1500 rather than containerlab's 9500.
+
+name: frr-ospf-max-metric
+
+topology:
+  kinds:
+    frr:
+      image: quay.io/frrouting/frr:containerlab-10.7.1
+      daemons:
+        - ospfd
+
+  nodes:
+    r0:
+      kind: frr
+      startup-config: configs/r0.conf
+    abr1:
+      kind: frr
+      startup-config: configs/abr1.conf
+    abr2:
+      kind: frr
+      startup-config: configs/abr2.conf
+    r1:
+      kind: frr
+      startup-config: configs/r1.conf
+
+  links:
+    - endpoints: ["r0:eth1", "abr1:eth1"]
+      mtu: 1500
+    - endpoints: ["r0:eth2", "abr2:eth1"]
+      mtu: 1500
+    - endpoints: ["abr1:eth2", "r1:eth1"]
+      mtu: 1500
+    - endpoints: ["abr2:eth2", "r1:eth2"]
+      mtu: 1500

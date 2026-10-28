@@ -13,6 +13,12 @@ SONiC uses the `sonic-vm` containerlab kind. `build-sonic-image.sh` builds
 the vrnetlab image from the public SONiC VS build; see
 `snapshots/sonic_ebgp/source/README.md`.
 
+FRRouting uses the `frr` containerlab kind with the
+`quay.io/frrouting/frr:containerlab-<version>` image (10.7.1 and later),
+which runs an SSH server. lab_builder logs in as root with
+`~/.ssh/id_ed25519`, which `ec2-setup.sh` creates. See
+`snapshots/frr_ospf_max_metric_router_lsa/source/README.md`.
+
 ## Overview
 
 This directory contains everything needed to:
@@ -259,7 +265,9 @@ AWS_PROFILE=<profile> ./ec2-teardown.sh
 
 ### Step 9: Validate Against Batfish
 
-Locally (requires Batfish running):
+Locally (requires Batfish running). `tools/bazel_run.sh` in the batfish
+repo starts a server that never exits; it is ready when
+`curl -s localhost:9996/v2/version` responds.
 
 ```bash
 pytest lab_tests/test_labs.py --labname=junos_my_feature -v --tb=short
@@ -303,6 +311,10 @@ terminal` (< 5 seconds) rather than per-line `send_command_timing`
   (minutes). Use binary search to isolate failures in a batch.
 - **No absurd timeouts.** A 60-minute timeout on a command expected to
   finish in 10 seconds masks bugs. Set timeouts at 2× expected runtime.
+- **Keep progress visible.** health-check prints a line per node per
+  poll. Piping it through `| tail` hides those lines until it exits, so a
+  check that will never pass looks hung for the whole `--timeout`. While
+  iterating, pass a short `--timeout` and read the output as it streams.
 
 ## Iterating on a Lab
 
@@ -571,6 +583,9 @@ For spot pricing (~70% cheaper), add `--spot`.
 For example, `--images ceos` loads only the Arista cEOS image, skipping
 the large Juniper VM images and reducing bootstrap time from ~5 min to
 ~2 min.
+Labs whose image comes from a public registry need no S3 images: the
+`frr` kind pulls `quay.io/frrouting/frr` at deploy time, so pass
+`--images none`.
 
 ### Cost Safety
 
@@ -617,6 +632,7 @@ the large Juniper VM images and reducing bootstrap time from ~5 min to
 | `nokia_srsim`           | Nokia SR OS (SR-1)  | admin / admin     | ~2 min    | No\*         |
 | `aruba_aoscx`           | Aruba AOS-CX        | admin / admin     | ~2 min    | Yes          |
 | `sonic-vm`              | SONiC (VS)          | admin / admin     | ~2 min    | Yes          |
+| `frr`                   | FRRouting           | root / SSH key    | ~10 s     | No           |
 
 \* SR-SIM is a native container, but the install guide specifies Intel x86
 and will not boot on ARM. Our default m8i instances satisfy this.

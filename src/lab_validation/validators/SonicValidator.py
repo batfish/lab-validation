@@ -2,10 +2,6 @@ from collections.abc import Sequence
 from os import path
 from typing import AbstractSet, Any
 
-from lab_validation.parsers.frr.commands.routes import (
-    parse_show_ip_route_vrf_all_json_by_vrf,
-)
-from lab_validation.parsers.frr.models.routes import FrrIpRoute
 from lab_validation.parsers.sonic.commands.interfaces import (
     parse_show_interfaces_status,
 )
@@ -18,14 +14,10 @@ from lab_validation.validators.batfish_models.runtime_data import (
     NodeRuntimeData,
 )
 
-from .CumulusFrrValidator import CumulusFrrValidator
-
-# Linux interfaces outside SONiC's config_db: the management port and the
-# docker bridge. Batfish does not model them.
-HOST_ONLY_INTERFACES = frozenset({"eth0", "docker0"})
+from .FrrValidator import FrrValidator
 
 
-class SonicValidator(CumulusFrrValidator):
+class SonicValidator(FrrValidator):
     """SONiC routing runs in FRR, so routes come from the host vtysh.
 
     Front-panel port state comes from SONiC's own 'show interfaces status'
@@ -83,24 +75,6 @@ class SonicValidator(CumulusFrrValidator):
         )
         with open(status_path) as fp:
             return parse_show_interfaces_status(fp.read())
-
-    def _parse_routes(self) -> Sequence[FrrIpRoute]:
-        with open(
-            path.join(self.device_path, CumulusFrrValidator.SHOW_ROUTE_FILENAME_TXT)
-        ) as fp:
-            return parse_show_ip_route_vrf_all_json_by_vrf(fp.read())
-
-    def _vrf_name(self, route: FrrIpRoute) -> str | None:
-        return route.vrf
-
-    def _show_route_processed(
-        self, show_routes: Sequence[FrrIpRoute]
-    ) -> list[FrrIpRoute]:
-        return [
-            r
-            for r in super()._show_route_processed(show_routes)
-            if r.next_hop_int not in HOST_ONLY_INTERFACES
-        ]
 
 
 def _compare_interface(
