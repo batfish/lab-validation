@@ -39,11 +39,10 @@ abr1's loopback is a stub link, which FRR advertises at its interface
 cost rather than the max metric (`lsa_link_loopback_set` in
 `ospfd/ospf_lsa.c`). abr2 reaches 10.255.0.1/32 through r1 with metric 40010.
 
-Batfish master maxes abr1's transit links and its loopback, but not its
-type 3 summaries. r0 and r1 route to each other's loopback and the far
-transit link through abr1, and r0, r1, and abr2 get the wrong metric for
-abr1's loopback, so `test_main_rib_routes` is sickbayed on those three
-nodes.
+Batfish models the type 3 summaries since batfish/batfish#10452, but
+still maxes abr1's loopback, so r0, r1, and abr2 get the wrong metric
+for 10.255.0.1/32 and `test_main_rib_routes` is sickbayed on those three
+nodes (batfish/batfish#10458).
 
 Interface properties are sickbayed for the loopback bandwidth mismatch in
 batfish/lab-validation#43. FRR 10's `local` routes are excluded by
