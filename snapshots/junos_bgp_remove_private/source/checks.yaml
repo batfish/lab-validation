@@ -1,0 +1,56 @@
+# Preconditions for the bare remove-private lab.
+# Run after health-check, before collection:
+#   lab_builder validate topology.clab.yml --checks checks.yaml
+#
+# These check only what holds whatever remove-private does: sessions are
+# up and every receiver has the routes whose paths it cannot reject as a
+# loop. The AS paths themselves are the lab's result.
+
+checks:
+  - type: bgp_peer_established
+    node: dut
+    neighbor: 10.0.1.0
+    description: "dut <-> src: eBGP to AS 65010"
+  - type: bgp_peer_established
+    node: dut
+    neighbor: 10.0.2.1
+    description: "dut <-> rx300: eBGP, remove-private"
+  - type: bgp_peer_established
+    node: dut
+    neighbor: 10.0.3.1
+    description: "dut <-> rx65030: eBGP to a private AS, remove-private"
+  - type: bgp_peer_established
+    node: dut
+    neighbor: 10.0.4.1
+    description: "dut <-> ribgp: iBGP, remove-private"
+
+  - type: route_exists
+    node: dut
+    table: inet.0
+    prefix: 10.100.6.0/24
+    description: "dut learns src's routes"
+  - type: route_exists
+    node: rx300
+    table: inet.0
+    prefix: 10.100.1.0/24
+    description: "rx300 gets the all-private path"
+  - type: route_exists
+    node: rx300
+    table: inet.0
+    prefix: 10.100.7.0/24
+    description: "rx300 gets the route dut prepends 65099 to"
+  - type: route_exists
+    node: rx65030
+    table: inet.0
+    prefix: 10.100.1.0/24
+    description: "rx65030 gets the all-private path"
+  - type: route_exists
+    node: ribgp
+    table: inet.0
+    prefix: 10.100.1.0/24
+    description: "ribgp gets the all-private path over iBGP"
+  - type: route_exists
+    node: ribgp
+    table: inet.0
+    prefix: 10.100.8.0/24
+    description: "ribgp gets the route dut prepends 400 to"

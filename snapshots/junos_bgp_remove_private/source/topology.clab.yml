@@ -1,0 +1,52 @@
+# Junos bare BGP remove-private lab.
+#
+# src (AS 65010) originates eight /24s. dut (AS 200) learns them over eBGP,
+# shapes their AS paths with import as-path-prepends, and sends them to
+# three peers, each in a group with a bare `remove-private`:
+# rx300 (eBGP, public AS 300), rx65030 (eBGP, private AS 65030) and ribgp
+# (iBGP, AS 200). dut's export policy prepends 65099 (private) to
+# 10.100.7.0/24 and 400 (public) to 10.100.8.0/24. The receivers'
+# AS paths show which private ASes Junos removes, when it stops, what the
+# peer's AS in the path does, whether it runs before or after the export
+# policy, and whether it applies to iBGP.
+#
+# Topology:
+#   src   ge-0/0/0 10.0.1.0/31 -- dut ge-0/0/0 10.0.1.1/31
+#   rx300   ge-0/0/0 10.0.2.1/31 -- dut ge-0/0/1 10.0.2.0/31
+#   rx65030 ge-0/0/0 10.0.3.1/31 -- dut ge-0/0/2 10.0.3.0/31
+#   ribgp   ge-0/0/0 10.0.4.1/31 -- dut ge-0/0/3 10.0.4.0/31
+
+name: junos-bgp-remove-private
+
+topology:
+  nodes:
+    src:
+      kind: juniper_vjunosrouter
+      image: vrnetlab/juniper_vjunos-router:26.2R1.7
+      startup-config: configs/src.cfg
+    dut:
+      kind: juniper_vjunosrouter
+      image: vrnetlab/juniper_vjunos-router:26.2R1.7
+      startup-config: configs/dut.cfg
+    rx300:
+      kind: juniper_vjunosrouter
+      image: vrnetlab/juniper_vjunos-router:26.2R1.7
+      startup-config: configs/rx300.cfg
+    rx65030:
+      kind: juniper_vjunosrouter
+      image: vrnetlab/juniper_vjunos-router:26.2R1.7
+      startup-config: configs/rx65030.cfg
+    ribgp:
+      kind: juniper_vjunosrouter
+      image: vrnetlab/juniper_vjunos-router:26.2R1.7
+      startup-config: configs/ribgp.cfg
+
+  links:
+    # src ge-0/0/0 (eth1) <-> dut ge-0/0/0 (eth1)
+    - endpoints: ["src:eth1", "dut:eth1"]
+    # dut ge-0/0/1 (eth2) <-> rx300 ge-0/0/0 (eth1)
+    - endpoints: ["dut:eth2", "rx300:eth1"]
+    # dut ge-0/0/2 (eth3) <-> rx65030 ge-0/0/0 (eth1)
+    - endpoints: ["dut:eth3", "rx65030:eth1"]
+    # dut ge-0/0/3 (eth4) <-> ribgp ge-0/0/0 (eth1)
+    - endpoints: ["dut:eth4", "ribgp:eth1"]

@@ -1,0 +1,73 @@
+set version 26.2R1.7
+set system host-name dut
+set system root-authentication encrypted-password "$6$Q3X5b5YF$HclHtBl/KwepRNWIX9iMtsE91C1p0mvYwHFn/mMngQmOkPePPv23KRNJI7Oz7knSMVYPl/1ubBFlkf1UcaHxL/"
+set system login user admin uid 2000
+set system login user admin class super-user
+set system login user admin authentication encrypted-password "$6$Sdr.ooxF$nPx6SY/FFDPm5sMgHNSIEm7gwZh5rxnPXyoX8Jct9OyOqbL9bIsl2Dy/J41Q3kUHbYtI/on8tamKb./ZmkZyN0"
+set system services netconf ssh
+set system services ssh root-login allow
+set system management-instance
+set chassis fpc 0 pic 0 number-of-ports 12
+set interfaces ge-0/0/0 description "to src (AS 65010)"
+set interfaces ge-0/0/0 unit 0 family inet address 10.0.1.1/31
+set interfaces ge-0/0/1 description "to rx300 (AS 300)"
+set interfaces ge-0/0/1 unit 0 family inet address 10.0.2.0/31
+set interfaces ge-0/0/2 description "to rx65030 (AS 65030)"
+set interfaces ge-0/0/2 unit 0 family inet address 10.0.3.0/31
+set interfaces ge-0/0/3 description "to ribgp (AS 200, iBGP)"
+set interfaces ge-0/0/3 unit 0 family inet address 10.0.4.0/31
+set interfaces fxp0 unit 0 family inet address 10.0.0.15/24
+set interfaces fxp0 unit 0 family inet6 address 2001:db8::2/64
+set interfaces lo0 unit 0 family inet address 10.255.0.2/32
+set policy-options policy-statement EXPORT term p7-prepend-private from protocol bgp
+set policy-options policy-statement EXPORT term p7-prepend-private from route-filter 10.100.7.0/24 exact
+set policy-options policy-statement EXPORT term p7-prepend-private then as-path-prepend 65099
+set policy-options policy-statement EXPORT term p7-prepend-private then accept
+set policy-options policy-statement EXPORT term p8-prepend-public from protocol bgp
+set policy-options policy-statement EXPORT term p8-prepend-public from route-filter 10.100.8.0/24 exact
+set policy-options policy-statement EXPORT term p8-prepend-public then as-path-prepend 400
+set policy-options policy-statement EXPORT term p8-prepend-public then accept
+set policy-options policy-statement EXPORT term bgp from protocol bgp
+set policy-options policy-statement EXPORT term bgp then accept
+set policy-options policy-statement EXPORT term reject then reject
+set policy-options policy-statement NEXT-HOP-SELF term all then next-hop self
+set policy-options policy-statement SHAPE-PATHS term p2-private-public-private from route-filter 10.100.2.0/24 exact
+set policy-options policy-statement SHAPE-PATHS term p2-private-public-private then as-path-prepend "65011 100"
+set policy-options policy-statement SHAPE-PATHS term p2-private-public-private then accept
+set policy-options policy-statement SHAPE-PATHS term p3-public-first from route-filter 10.100.3.0/24 exact
+set policy-options policy-statement SHAPE-PATHS term p3-public-first then as-path-prepend "100 65011"
+set policy-options policy-statement SHAPE-PATHS term p3-public-first then accept
+set policy-options policy-statement SHAPE-PATHS term p4-public-peer-as-after-private from route-filter 10.100.4.0/24 exact
+set policy-options policy-statement SHAPE-PATHS term p4-public-peer-as-after-private then as-path-prepend "65011 300"
+set policy-options policy-statement SHAPE-PATHS term p4-public-peer-as-after-private then accept
+set policy-options policy-statement SHAPE-PATHS term p5-public-peer-as-after-public from route-filter 10.100.5.0/24 exact
+set policy-options policy-statement SHAPE-PATHS term p5-public-peer-as-after-public then as-path-prepend "65011 100 300"
+set policy-options policy-statement SHAPE-PATHS term p5-public-peer-as-after-public then accept
+set policy-options policy-statement SHAPE-PATHS term p6-private-peer-as-among-private from route-filter 10.100.6.0/24 exact
+set policy-options policy-statement SHAPE-PATHS term p6-private-peer-as-among-private then as-path-prepend "65011 65030 65012"
+set policy-options policy-statement SHAPE-PATHS term p6-private-peer-as-among-private then accept
+set policy-options policy-statement SHAPE-PATHS term other then accept
+set routing-instances mgmt_junos routing-options rib mgmt_junos.inet6.0 static route ::/0 next-hop 2001:db8::1
+set routing-instances mgmt_junos routing-options static route 0.0.0.0/0 next-hop 10.0.0.2
+set routing-options router-id 10.255.0.2
+set routing-options autonomous-system 200
+set protocols bgp group SRC type external
+set protocols bgp group SRC import SHAPE-PATHS
+set protocols bgp group SRC peer-as 65010
+set protocols bgp group SRC neighbor 10.0.1.0
+set protocols bgp group RX300 type external
+set protocols bgp group RX300 export EXPORT
+set protocols bgp group RX300 remove-private
+set protocols bgp group RX300 peer-as 300
+set protocols bgp group RX300 neighbor 10.0.2.1
+set protocols bgp group RX65030 type external
+set protocols bgp group RX65030 export EXPORT
+set protocols bgp group RX65030 remove-private
+set protocols bgp group RX65030 peer-as 65030
+set protocols bgp group RX65030 neighbor 10.0.3.1
+set protocols bgp group RIBGP type internal
+set protocols bgp group RIBGP local-address 10.0.4.0
+set protocols bgp group RIBGP export NEXT-HOP-SELF
+set protocols bgp group RIBGP export EXPORT
+set protocols bgp group RIBGP remove-private
+set protocols bgp group RIBGP neighbor 10.0.4.1
