@@ -462,11 +462,15 @@ def _bgp_routes_cost(
     cost: CostResult = []
     real_metric = 0 if real_route.metric is None else real_route.metric
 
-    # When Batfish shows ibgp and device shows BGP, the route was learned
-    # via overlay iBGP in Batfish but underlay eBGP on the device. AS path
-    # and origin_protocol will differ due to the dual-plane architecture.
+    # When Batfish shows ibgp and the device route is not known to be iBGP,
+    # the route may have been learned via overlay iBGP in Batfish but underlay
+    # eBGP on the device. AS path and origin_protocol will differ due to the
+    # dual-plane architecture. A device route that is known to be iBGP (detail
+    # form: peer AS == local AS) is compared like any other.
     protocol_mismatch = (
-        batfish_route.protocol == "ibgp" and real_route.origin_protocol == "BGP"
+        batfish_route.protocol == "ibgp"
+        and real_route.origin_protocol == "BGP"
+        and real_route.is_ibgp is not True
     )
 
     if batfish_route.metric != real_metric:
@@ -476,9 +480,13 @@ def _bgp_routes_cost(
     if not protocol_mismatch and batfish_route.as_path != real_route.as_path:
         cost.append(("as_path", 1.0))
     assert batfish_route.origin_protocol is not None
+    # Junos reports protocol BGP for both iBGP and eBGP routes.
+    batfish_origin_protocol = batfish_route.origin_protocol.lower()
+    if batfish_origin_protocol == "ibgp":
+        batfish_origin_protocol = "bgp"
     if (
         not protocol_mismatch
-        and batfish_route.origin_protocol.lower() != real_route.origin_protocol.lower()
+        and batfish_origin_protocol != real_route.origin_protocol.lower()
     ):
         cost.append(("origin_protocol", 1.0))
     valid_origin_pairs = {("I", "igp"), ("E", "egp"), ("?", "incomplete")}

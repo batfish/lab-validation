@@ -1778,3 +1778,57 @@ def test_validate_evpn_rib_routes_no_batfish_routes() -> None:
     """validate_evpn_rib_routes returns {} when batfish_routes is empty."""
     result = JunosValidator("").validate_evpn_rib_routes([])
     assert result == {}
+
+
+def _real_bgp_route(as_path: tuple[int, ...], is_ibgp: bool | None) -> JunosBgpRoute:
+    return JunosBgpRoute(
+        vrf="default",
+        network="10.100.2.0/24",
+        is_active=True,
+        next_hop_ip="10.0.4.0",
+        next_hop_int="ge-0/0/0.0",
+        preference=170,
+        metric=None,
+        origin_protocol="BGP",
+        local_preference=100,
+        as_path=as_path,
+        origin_type="I",
+        is_ibgp=is_ibgp,
+    )
+
+
+def _bf_ibgp_route(as_path: str) -> BgpRibRoute:
+    return BgpRibRoute(
+        weight=0,
+        vrf="default",
+        network="10.100.2.0/24",
+        next_hop=NextHopIp(ip="10.0.4.0"),
+        protocol="ibgp",
+        metric=0,
+        communities=(),
+        local_preference=100,
+        as_path=as_path,
+        origin_protocol="ibgp",
+        origin_type="igp",
+        tag=0,
+    )
+
+
+def test_bgp_routes_cost_compares_as_path_of_device_ibgp_route() -> None:
+    real = _real_bgp_route((100, 65010), is_ibgp=True)
+    assert _bgp_routes_cost(real, _bf_ibgp_route("100 65010")) == []
+    assert _bgp_routes_cost(real, _bf_ibgp_route("65011 100 65010")) == [
+        ("as_path", 1.0)
+    ]
+
+
+def test_bgp_routes_cost_skips_as_path_of_device_ebgp_route() -> None:
+    # Overlay iBGP in Batfish, underlay eBGP on the device.
+    real = _real_bgp_route((100, 65010), is_ibgp=False)
+    assert _bgp_routes_cost(real, _bf_ibgp_route("65011 100 65010")) == []
+
+
+def test_bgp_routes_cost_skips_as_path_when_session_type_unknown() -> None:
+    # Brief form: no peer-as/local-as, so keep the overlay assumption.
+    real = _real_bgp_route((100, 65010), is_ibgp=None)
+    assert _bgp_routes_cost(real, _bf_ibgp_route("65011 100 65010")) == []

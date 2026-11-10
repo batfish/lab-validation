@@ -1,3 +1,5 @@
+import json
+
 from lab_validation.parsers.junos.commands.bgp_routes import (
     _get_as_path,
     convert_active,
@@ -572,3 +574,48 @@ def test_convert_active() -> None:
     active_tag = None
     result = convert_active(active_tag)
     assert result is False
+
+
+def _detail_route_json(peer_as: str | None, local_as: str | None) -> str:
+    """A one-route `show route protocol bgp detail | display json` output."""
+    entry: dict = {
+        "active-tag": [{"data": "*"}],
+        "protocol-name": [{"data": "BGP"}],
+        "preference": [{"data": "170"}],
+        "local-preference": [{"data": "100"}],
+        "as-path": [{"data": "AS path: 65001 I"}],
+        "nh": [{"to": [{"data": "10.0.12.0"}], "via": [{"data": "ge-0/0/0.0"}]}],
+    }
+    if peer_as is not None:
+        entry["peer-as"] = [{"data": peer_as}]
+    if local_as is not None:
+        entry["local-as"] = [{"data": local_as}]
+    route = {
+        "attributes": {"junos:style": "detail"},
+        "rt-destination": [{"data": "10.50.61.0"}],
+        "rt-prefix-length": [{"data": "24"}],
+        "rt-entry": [entry],
+    }
+    table = {"table-name": [{"data": "inet.0"}], "rt": [route]}
+    return json.dumps({"route-information": [{"route-table": [table]}]})
+
+
+def test_parse_is_ibgp_same_peer_and_local_as() -> None:
+    (route,) = parse_show_route_protocol_bgp_display_json(
+        _detail_route_json("200", "200")
+    )
+    assert route.is_ibgp is True
+
+
+def test_parse_is_ibgp_different_peer_and_local_as() -> None:
+    (route,) = parse_show_route_protocol_bgp_display_json(
+        _detail_route_json("65001", "200")
+    )
+    assert route.is_ibgp is False
+
+
+def test_parse_is_ibgp_unknown_without_peer_and_local_as() -> None:
+    (route,) = parse_show_route_protocol_bgp_display_json(
+        _detail_route_json(None, None)
+    )
+    assert route.is_ibgp is None

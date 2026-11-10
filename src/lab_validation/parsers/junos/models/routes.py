@@ -53,3 +53,7 @@ class JunosBgpRoute:
     as_path: Sequence[int | tuple[int, ...]]
     origin_type: str
     communities: tuple[str, ...] = attr.ib(converter=tuple, default=())
+    # Whether the route was learned over iBGP (peer AS == local AS). Only the
+    # detail form of `show route protocol bgp` has peer-as and local-as; None
+    # when they are absent.
+    is_ibgp: bool | None = None

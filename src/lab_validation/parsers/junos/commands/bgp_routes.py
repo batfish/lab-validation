@@ -29,6 +29,8 @@ COMMUNITIES = "communities"
 COMMUNITY = "community"
 EXTENDED_COMMUNITY = "extended-community"
 RT_PREFIX_LENGTH = "rt-prefix-length"
+PEER_AS = "peer-as"
+LOCAL_AS = "local-as"
 
 
 def parse_show_route_protocol_bgp_display_json(text: str) -> Sequence[JunosBgpRoute]:
@@ -89,6 +91,11 @@ def _get_routes(vrf: str, route_json_obj: list[Any]) -> list[JunosBgpRoute]:
                 if c.get(DATA)
             )
 
+            # Only the detail form has peer-as and local-as.
+            is_ibgp: bool | None = None
+            if PEER_AS in entry and LOCAL_AS in entry:
+                is_ibgp = entry[PEER_AS][0][DATA] == entry[LOCAL_AS][0][DATA]
+
             if NH not in entry:
                 # Routes with next-hop reject/discard use "nhh" with
                 # nh-type Discard/Reject instead of "nh" with to/via.
@@ -110,6 +117,7 @@ def _get_routes(vrf: str, route_json_obj: list[Any]) -> list[JunosBgpRoute]:
                         as_path=as_path,
                         origin_type=origin_type,
                         communities=communities,
+                        is_ibgp=is_ibgp,
                     )
                 )
                 continue
@@ -135,6 +143,7 @@ def _get_routes(vrf: str, route_json_obj: list[Any]) -> list[JunosBgpRoute]:
                         as_path=as_path,
                         origin_type=origin_type,
                         communities=communities,
+                        is_ibgp=is_ibgp,
                     )
                 )
     return bgp_routes
