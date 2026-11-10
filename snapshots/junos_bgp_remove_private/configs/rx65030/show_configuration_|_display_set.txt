@@ -1,0 +1,23 @@
+set version 26.2R1.7
+set system host-name rx65030
+set system root-authentication encrypted-password "$6$R2uVOrh0$eFyVcx826M.F7yrlycKzKEuZDly/MDnCS.kZiTxbKIZXrK3IV2uVRd/Fn7pqBTWh0EFP9FfrUV1tuGwjuaARq1"
+set system login user admin uid 2000
+set system login user admin class super-user
+set system login user admin authentication encrypted-password "$6$7KR1y9dY$rnLl8X7jgHdseuABEiNhxSwlmhd1MmIT.VEcCDRhhUWXIjOQv0ye.nrTkcZUtbd6vS8IhRwEuEEL0GmatFNev1"
+set system services netconf ssh
+set system services ssh root-login allow
+set system management-instance
+set chassis fpc 0 pic 0 number-of-ports 12
+set interfaces ge-0/0/0 description "to dut (AS 200)"
+set interfaces ge-0/0/0 unit 0 family inet address 10.0.3.1/31
+set interfaces fxp0 unit 0 family inet address 10.0.0.15/24
+set interfaces fxp0 unit 0 family inet6 address 2001:db8::2/64
+set interfaces lo0 unit 0 family inet address 10.255.0.4/32
+set routing-instances mgmt_junos routing-options rib mgmt_junos.inet6.0 static route ::/0 next-hop 2001:db8::1
+set routing-instances mgmt_junos routing-options static route 0.0.0.0/0 next-hop 10.0.0.2
+set routing-options router-id 10.255.0.4
+set routing-options autonomous-system 65030
+set routing-options autonomous-system loops 2
+set protocols bgp group DUT type external
+set protocols bgp group DUT peer-as 200
+set protocols bgp group DUT neighbor 10.0.3.0

@@ -1,0 +1,22 @@
+set version 26.2R1.7
+set system host-name ribgp
+set system root-authentication encrypted-password "$6$D3Di7T13$L1oEj.L6NOiUSYlY/B55VZAg9HoQGveEgyIGmBJO8aMfs56jGpecKC11r8IB8br.9XzbmDJZw9FGg5r6SITRN1"
+set system login user admin uid 2000
+set system login user admin class super-user
+set system login user admin authentication encrypted-password "$6$obzAyTU0$LWMKISUzEz/6iaSKmLgPd/9.aW9ToURyZ/M8HdjDR6ER4COZTjr5PxcEa9lgZvHlIV/ojm1aitEMkvMl6i0rt."
+set system services netconf ssh
+set system services ssh root-login allow
+set system management-instance
+set chassis fpc 0 pic 0 number-of-ports 12
+set interfaces ge-0/0/0 description "to dut (AS 200)"
+set interfaces ge-0/0/0 unit 0 family inet address 10.0.4.1/31
+set interfaces fxp0 unit 0 family inet address 10.0.0.15/24
+set interfaces fxp0 unit 0 family inet6 address 2001:db8::2/64
+set interfaces lo0 unit 0 family inet address 10.255.0.5/32
+set routing-instances mgmt_junos routing-options rib mgmt_junos.inet6.0 static route ::/0 next-hop 2001:db8::1
+set routing-instances mgmt_junos routing-options static route 0.0.0.0/0 next-hop 10.0.0.2
+set routing-options router-id 10.255.0.5
+set routing-options autonomous-system 200
+set protocols bgp group DUT type internal
+set protocols bgp group DUT local-address 10.0.4.1
+set protocols bgp group DUT neighbor 10.0.4.0

@@ -1,0 +1,23 @@
+set version 26.2R1.7
+set system host-name rx300
+set system root-authentication encrypted-password "$6$NpoEZB6V$iturqG1/JZbN7J8LhCOE0lrtu/PaUU02.nR0XdTh92PJfGaxO3.E2kNtkv9mUcyR4PAUePMvgdlg1XDUUfduV."
+set system login user admin uid 2000
+set system login user admin class super-user
+set system login user admin authentication encrypted-password "$6$1lHc1pKt$GJqvvS6WmaF.Ld2og0QRF9y9B.I6XyeNjhHX5KcyRREExLJNesYMAmjbh621PxI/2YJvgVjjXWkniLe0p0f3u/"
+set system services netconf ssh
+set system services ssh root-login allow
+set system management-instance
+set chassis fpc 0 pic 0 number-of-ports 12
+set interfaces ge-0/0/0 description "to dut (AS 200)"
+set interfaces ge-0/0/0 unit 0 family inet address 10.0.2.1/31
+set interfaces fxp0 unit 0 family inet address 10.0.0.15/24
+set interfaces fxp0 unit 0 family inet6 address 2001:db8::2/64
+set interfaces lo0 unit 0 family inet address 10.255.0.3/32
+set routing-instances mgmt_junos routing-options rib mgmt_junos.inet6.0 static route ::/0 next-hop 2001:db8::1
+set routing-instances mgmt_junos routing-options static route 0.0.0.0/0 next-hop 10.0.0.2
+set routing-options router-id 10.255.0.3
+set routing-options autonomous-system 300
+set routing-options autonomous-system loops 2
+set protocols bgp group DUT type external
+set protocols bgp group DUT peer-as 200
+set protocols bgp group DUT neighbor 10.0.2.0

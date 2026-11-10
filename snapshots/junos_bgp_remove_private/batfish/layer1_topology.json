@@ -1,0 +1,44 @@
+{
+    "edges": [
+        {
+            "node1": {
+                "hostname": "src",
+                "interfaceName": "ge-0/0/0"
+            },
+            "node2": {
+                "hostname": "dut",
+                "interfaceName": "ge-0/0/0"
+            }
+        },
+        {
+            "node1": {
+                "hostname": "dut",
+                "interfaceName": "ge-0/0/1"
+            },
+            "node2": {
+                "hostname": "rx300",
+                "interfaceName": "ge-0/0/0"
+            }
+        },
+        {
+            "node1": {
+                "hostname": "dut",
+                "interfaceName": "ge-0/0/2"
+            },
+            "node2": {
+                "hostname": "rx65030",
+                "interfaceName": "ge-0/0/0"
+            }
+        },
+        {
+            "node1": {
+                "hostname": "dut",
+                "interfaceName": "ge-0/0/3"
+            },
+            "node2": {
+                "hostname": "ribgp",
+                "interfaceName": "ge-0/0/0"
+            }
+        }
+    ]
+}

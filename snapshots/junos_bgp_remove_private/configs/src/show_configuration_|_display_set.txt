@@ -1,0 +1,34 @@
+set version 26.2R1.7
+set system host-name src
+set system root-authentication encrypted-password "$6$XOmsN2X7$4TBpuit.phYRgk9jJYwfNMEkZpO31W8Jvrbdu7KRbPMsKWXMKfsY7IGqdtVk1Bws0lFkno269eaxV8LxbLWO3."
+set system login user admin uid 2000
+set system login user admin class super-user
+set system login user admin authentication encrypted-password "$6$VJQwToTD$98MMX9LtVNX4i.02eG2KU98ZVPSUnQwbDmFOhKhl/Q4IpXonPpmvpq1gYV6H28ksT5exn0xmko2jhgT4U6VAn/"
+set system services netconf ssh
+set system services ssh root-login allow
+set system management-instance
+set chassis fpc 0 pic 0 number-of-ports 12
+set interfaces ge-0/0/0 description "to dut (AS 200)"
+set interfaces ge-0/0/0 unit 0 family inet address 10.0.1.0/31
+set interfaces fxp0 unit 0 family inet address 10.0.0.15/24
+set interfaces fxp0 unit 0 family inet6 address 2001:db8::2/64
+set interfaces lo0 unit 0 family inet address 10.255.0.1/32
+set policy-options policy-statement STATICS term statics from protocol static
+set policy-options policy-statement STATICS term statics then accept
+set policy-options policy-statement STATICS term reject then reject
+set routing-instances mgmt_junos routing-options rib mgmt_junos.inet6.0 static route ::/0 next-hop 2001:db8::1
+set routing-instances mgmt_junos routing-options static route 0.0.0.0/0 next-hop 10.0.0.2
+set routing-options router-id 10.255.0.1
+set routing-options autonomous-system 65010
+set routing-options static route 10.100.1.0/24 discard
+set routing-options static route 10.100.2.0/24 discard
+set routing-options static route 10.100.3.0/24 discard
+set routing-options static route 10.100.4.0/24 discard
+set routing-options static route 10.100.5.0/24 discard
+set routing-options static route 10.100.6.0/24 discard
+set routing-options static route 10.100.7.0/24 discard
+set routing-options static route 10.100.8.0/24 discard
+set protocols bgp group DUT type external
+set protocols bgp group DUT export STATICS
+set protocols bgp group DUT peer-as 200
+set protocols bgp group DUT neighbor 10.0.1.1

@@ -1,0 +1,2036 @@
+{
+    "route-information" : [
+    {
+        "attributes" : {"xmlns" : "http://xml.juniper.net/junos/26.2R0/junos-routing"}, 
+        "route-table" : [
+        {
+            "comment" : "keepalive", 
+            "table-name" : [
+            {
+                "data" : "inet.0"
+            }
+            ], 
+            "destination-count" : [
+            {
+                "data" : "11"
+            }
+            ], 
+            "total-route-count" : [
+            {
+                "data" : "11"
+            }
+            ], 
+            "active-route-count" : [
+            {
+                "data" : "11"
+            }
+            ], 
+            "holddown-route-count" : [
+            {
+                "data" : "0"
+            }
+            ], 
+            "hidden-route-count" : [
+            {
+                "data" : "0"
+            }
+            ], 
+            "rt" : [
+            {
+                "attributes" : {"junos:style" : "detail"}, 
+                "rt-destination" : [
+                {
+                    "data" : "10.100.1.0"
+                }
+                ], 
+                "rt-prefix-length" : [
+                {
+                    "data" : "24"
+                }
+                ], 
+                "rt-entry-count" : [
+                {
+                    "data" : "1", 
+                    "attributes" : {"junos:format" : "1 entry"}
+                }
+                ], 
+                "rt-announced-count" : [
+                {
+                    "data" : "1"
+                }
+                ], 
+                "rt-state" : [
+                {
+                }
+                ], 
+                "rt-entry" : [
+                {
+                    "active-tag" : [
+                    {
+                        "data" : "*"
+                    }
+                    ], 
+                    "current-active" : [
+                    {
+                        "data" : [null]
+                    }
+                    ], 
+                    "last-active" : [
+                    {
+                        "data" : [null]
+                    }
+                    ], 
+                    "protocol-name" : [
+                    {
+                        "data" : "BGP"
+                    }
+                    ], 
+                    "preference" : [
+                    {
+                        "data" : "170"
+                    }
+                    ], 
+                    "preference2" : [
+                    {
+                        "data" : "-101"
+                    }
+                    ], 
+                    "nhh" : [
+                    {
+                        "attributes" : {"junos:indent" : "16"}, 
+                        "nh-type" : [
+                        {
+                            "data" : "Indirect"
+                        }
+                        ], 
+                        "nh-index" : [
+                        {
+                            "data" : "0"
+                        }
+                        ], 
+                        "nh-address" : [
+                        {
+                            "data" : "0x95c1690"
+                        }
+                        ], 
+                        "nh-reference-count" : [
+                        {
+                            "data" : "16"
+                        }
+                        ], 
+                        "nh-kernel-id" : [
+                        {
+                            "data" : "0"
+                        }
+                        ]
+                    }
+                    ], 
+                    "gateway" : [
+                    {
+                        "data" : "10.0.4.0"
+                    }
+                    ], 
+                    "nh-type" : [
+                    {
+                        "data" : "Router"
+                    }
+                    ], 
+                    "nh-index" : [
+                    {
+                        "data" : "587"
+                    }
+                    ], 
+                    "nh" : [
+                    {
+                        "attributes" : {"junos:indent" : "16"}, 
+                        "nh-string" : [
+                        {
+                            "data" : "Next hop"
+                        }
+                        ], 
+                        "to" : [
+                        {
+                            "data" : "10.0.4.0"
+                        }
+                        ], 
+                        "via" : [
+                        {
+                            "data" : "ge-0/0/0.0"
+                        }
+                        ], 
+                        "selected-next-hop" : [
+                        {
+                            "data" : [null]
+                        }
+                        ], 
+                        "session" : [
+                        {
+                            "data" : "320"
+                        }
+                        ]
+                    }
+                    ], 
+                    "protocol-nh" : [
+                    {
+                        "attributes" : {"junos:indent" : "16"}, 
+                        "to" : [
+                        {
+                            "data" : "10.0.4.0"
+                        }
+                        ], 
+                        "indirect-nh" : [
+                        {
+                            "data" : "0x90ddd50 1048574 INH Session ID: 321, INH non-key opaque: 0x0, INH key opaque: 0x0"
+                        }
+                        ]
+                    }
+                    ], 
+                    "rt-entry-state" : [
+                    {
+                        "data" : "Active Int Ext"
+                    }
+                    ], 
+                    "local-as" : [
+                    {
+                        "data" : "200"
+                    }
+                    ], 
+                    "peer-as" : [
+                    {
+                        "data" : "200"
+                    }
+                    ], 
+                    "age" : [
+                    {
+                        "data" : "7:29", 
+                        "attributes" : {"junos:seconds" : "449"}
+                    }
+                    ], 
+                    "metric2" : [
+                    {
+                        "data" : "0"
+                    }
+                    ], 
+                    "validation-state" : [
+                    {
+                        "data" : "unverified"
+                    }
+                    ], 
+                    "task-name" : [
+                    {
+                        "data" : "BGP_200.10.0.4.0"
+                    }
+                    ], 
+                    "announce-bits" : [
+                    {
+                        "data" : "2"
+                    }
+                    ], 
+                    "announce-tasks" : [
+                    {
+                        "data" : "0-KRT 2-Resolve tree 1 "
+                    }
+                    ], 
+                    "as-path" : [
+                    {
+                        "data" : "AS path: I"
+                    }
+                    ], 
+                    "bgp-path-attributes" : [
+                    {
+                        "attr-as-path-effective" : [
+                        {
+                            "aspath-effective-string" : [
+                            {
+                                "data" : "AS path: "
+                            }
+                            ], 
+                            "attr-value" : [
+                            {
+                                "data" : "I"
+                            }
+                            ]
+                        }
+                        ]
+                    }
+                    ], 
+                    "bgp-rt-flag" : [
+                    {
+                        "data" : "Accepted"
+                    }
+                    ], 
+                    "local-preference" : [
+                    {
+                        "data" : "100"
+                    }
+                    ], 
+                    "peer-id" : [
+                    {
+                        "data" : "10.255.0.2"
+                    }
+                    ], 
+                    "thread-name" : [
+                    {
+                        "data" : "junos-main"
+                    }
+                    ]
+                }
+                ]
+            }, 
+            {
+                "attributes" : {"junos:style" : "detail"}, 
+                "rt-destination" : [
+                {
+                    "data" : "10.100.2.0"
+                }
+                ], 
+                "rt-prefix-length" : [
+                {
+                    "data" : "24"
+                }
+                ], 
+                "rt-entry-count" : [
+                {
+                    "data" : "1", 
+                    "attributes" : {"junos:format" : "1 entry"}
+                }
+                ], 
+                "rt-announced-count" : [
+                {
+                    "data" : "1"
+                }
+                ], 
+                "rt-state" : [
+                {
+                }
+                ], 
+                "rt-entry" : [
+                {
+                    "active-tag" : [
+                    {
+                        "data" : "*"
+                    }
+                    ], 
+                    "current-active" : [
+                    {
+                        "data" : [null]
+                    }
+                    ], 
+                    "last-active" : [
+                    {
+                        "data" : [null]
+                    }
+                    ], 
+                    "protocol-name" : [
+                    {
+                        "data" : "BGP"
+                    }
+                    ], 
+                    "preference" : [
+                    {
+                        "data" : "170"
+                    }
+                    ], 
+                    "preference2" : [
+                    {
+                        "data" : "-101"
+                    }
+                    ], 
+                    "nhh" : [
+                    {
+                        "attributes" : {"junos:indent" : "16"}, 
+                        "nh-type" : [
+                        {
+                            "data" : "Indirect"
+                        }
+                        ], 
+                        "nh-index" : [
+                        {
+                            "data" : "0"
+                        }
+                        ], 
+                        "nh-address" : [
+                        {
+                            "data" : "0x95c1690"
+                        }
+                        ], 
+                        "nh-reference-count" : [
+                        {
+                            "data" : "16"
+                        }
+                        ], 
+                        "nh-kernel-id" : [
+                        {
+                            "data" : "0"
+                        }
+                        ]
+                    }
+                    ], 
+                    "gateway" : [
+                    {
+                        "data" : "10.0.4.0"
+                    }
+                    ], 
+                    "nh-type" : [
+                    {
+                        "data" : "Router"
+                    }
+                    ], 
+                    "nh-index" : [
+                    {
+                        "data" : "587"
+                    }
+                    ], 
+                    "nh" : [
+                    {
+                        "attributes" : {"junos:indent" : "16"}, 
+                        "nh-string" : [
+                        {
+                            "data" : "Next hop"
+                        }
+                        ], 
+                        "to" : [
+                        {
+                            "data" : "10.0.4.0"
+                        }
+                        ], 
+                        "via" : [
+                        {
+                            "data" : "ge-0/0/0.0"
+                        }
+                        ], 
+                        "selected-next-hop" : [
+                        {
+                            "data" : [null]
+                        }
+                        ], 
+                        "session" : [
+                        {
+                            "data" : "320"
+                        }
+                        ]
+                    }
+                    ], 
+                    "protocol-nh" : [
+                    {
+                        "attributes" : {"junos:indent" : "16"}, 
+                        "to" : [
+                        {
+                            "data" : "10.0.4.0"
+                        }
+                        ], 
+                        "indirect-nh" : [
+                        {
+                            "data" : "0x90ddd50 1048574 INH Session ID: 321, INH non-key opaque: 0x0, INH key opaque: 0x0"
+                        }
+                        ]
+                    }
+                    ], 
+                    "rt-entry-state" : [
+                    {
+                        "data" : "Active Int Ext"
+                    }
+                    ], 
+                    "local-as" : [
+                    {
+                        "data" : "200"
+                    }
+                    ], 
+                    "peer-as" : [
+                    {
+                        "data" : "200"
+                    }
+                    ], 
+                    "age" : [
+                    {
+                        "data" : "7:29", 
+                        "attributes" : {"junos:seconds" : "449"}
+                    }
+                    ], 
+                    "metric2" : [
+                    {
+                        "data" : "0"
+                    }
+                    ], 
+                    "validation-state" : [
+                    {
+                        "data" : "unverified"
+                    }
+                    ], 
+                    "task-name" : [
+                    {
+                        "data" : "BGP_200.10.0.4.0"
+                    }
+                    ], 
+                    "announce-bits" : [
+                    {
+                        "data" : "2"
+                    }
+                    ], 
+                    "announce-tasks" : [
+                    {
+                        "data" : "0-KRT 2-Resolve tree 1 "
+                    }
+                    ], 
+                    "as-path" : [
+                    {
+                        "data" : "AS path: 100 65010 I"
+                    }
+                    ], 
+                    "bgp-path-attributes" : [
+                    {
+                        "attr-as-path-effective" : [
+                        {
+                            "aspath-effective-string" : [
+                            {
+                                "data" : "AS path: "
+                            }
+                            ], 
+                            "attr-value" : [
+                            {
+                                "data" : "100 65010 I"
+                            }
+                            ]
+                        }
+                        ]
+                    }
+                    ], 
+                    "bgp-rt-flag" : [
+                    {
+                        "data" : "Accepted"
+                    }
+                    ], 
+                    "local-preference" : [
+                    {
+                        "data" : "100"
+                    }
+                    ], 
+                    "peer-id" : [
+                    {
+                        "data" : "10.255.0.2"
+                    }
+                    ], 
+                    "thread-name" : [
+                    {
+                        "data" : "junos-main"
+                    }
+                    ]
+                }
+                ]
+            }, 
+            {
+                "attributes" : {"junos:style" : "detail"}, 
+                "rt-destination" : [
+                {
+                    "data" : "10.100.3.0"
+                }
+                ], 
+                "rt-prefix-length" : [
+                {
+                    "data" : "24"
+                }
+                ], 
+                "rt-entry-count" : [
+                {
+                    "data" : "1", 
+                    "attributes" : {"junos:format" : "1 entry"}
+                }
+                ], 
+                "rt-announced-count" : [
+                {
+                    "data" : "1"
+                }
+                ], 
+                "rt-state" : [
+                {
+                }
+                ], 
+                "rt-entry" : [
+                {
+                    "active-tag" : [
+                    {
+                        "data" : "*"
+                    }
+                    ], 
+                    "current-active" : [
+                    {
+                        "data" : [null]
+                    }
+                    ], 
+                    "last-active" : [
+                    {
+                        "data" : [null]
+                    }
+                    ], 
+                    "protocol-name" : [
+                    {
+                        "data" : "BGP"
+                    }
+                    ], 
+                    "preference" : [
+                    {
+                        "data" : "170"
+                    }
+                    ], 
+                    "preference2" : [
+                    {
+                        "data" : "-101"
+                    }
+                    ], 
+                    "nhh" : [
+                    {
+                        "attributes" : {"junos:indent" : "16"}, 
+                        "nh-type" : [
+                        {
+                            "data" : "Indirect"
+                        }
+                        ], 
+                        "nh-index" : [
+                        {
+                            "data" : "0"
+                        }
+                        ], 
+                        "nh-address" : [
+                        {
+                            "data" : "0x95c1690"
+                        }
+                        ], 
+                        "nh-reference-count" : [
+                        {
+                            "data" : "16"
+                        }
+                        ], 
+                        "nh-kernel-id" : [
+                        {
+                            "data" : "0"
+                        }
+                        ]
+                    }
+                    ], 
+                    "gateway" : [
+                    {
+                        "data" : "10.0.4.0"
+                    }
+                    ], 
+                    "nh-type" : [
+                    {
+                        "data" : "Router"
+                    }
+                    ], 
+                    "nh-index" : [
+                    {
+                        "data" : "587"
+                    }
+                    ], 
+                    "nh" : [
+                    {
+                        "attributes" : {"junos:indent" : "16"}, 
+                        "nh-string" : [
+                        {
+                            "data" : "Next hop"
+                        }
+                        ], 
+                        "to" : [
+                        {
+                            "data" : "10.0.4.0"
+                        }
+                        ], 
+                        "via" : [
+                        {
+                            "data" : "ge-0/0/0.0"
+                        }
+                        ], 
+                        "selected-next-hop" : [
+                        {
+                            "data" : [null]
+                        }
+                        ], 
+                        "session" : [
+                        {
+                            "data" : "320"
+                        }
+                        ]
+                    }
+                    ], 
+                    "protocol-nh" : [
+                    {
+                        "attributes" : {"junos:indent" : "16"}, 
+                        "to" : [
+                        {
+                            "data" : "10.0.4.0"
+                        }
+                        ], 
+                        "indirect-nh" : [
+                        {
+                            "data" : "0x90ddd50 1048574 INH Session ID: 321, INH non-key opaque: 0x0, INH key opaque: 0x0"
+                        }
+                        ]
+                    }
+                    ], 
+                    "rt-entry-state" : [
+                    {
+                        "data" : "Active Int Ext"
+                    }
+                    ], 
+                    "local-as" : [
+                    {
+                        "data" : "200"
+                    }
+                    ], 
+                    "peer-as" : [
+                    {
+                        "data" : "200"
+                    }
+                    ], 
+                    "age" : [
+                    {
+                        "data" : "7:29", 
+                        "attributes" : {"junos:seconds" : "449"}
+                    }
+                    ], 
+                    "metric2" : [
+                    {
+                        "data" : "0"
+                    }
+                    ], 
+                    "validation-state" : [
+                    {
+                        "data" : "unverified"
+                    }
+                    ], 
+                    "task-name" : [
+                    {
+                        "data" : "BGP_200.10.0.4.0"
+                    }
+                    ], 
+                    "announce-bits" : [
+                    {
+                        "data" : "2"
+                    }
+                    ], 
+                    "announce-tasks" : [
+                    {
+                        "data" : "0-KRT 2-Resolve tree 1 "
+                    }
+                    ], 
+                    "as-path" : [
+                    {
+                        "data" : "AS path: 100 65011 65010 I"
+                    }
+                    ], 
+                    "bgp-path-attributes" : [
+                    {
+                        "attr-as-path-effective" : [
+                        {
+                            "aspath-effective-string" : [
+                            {
+                                "data" : "AS path: "
+                            }
+                            ], 
+                            "attr-value" : [
+                            {
+                                "data" : "100 65011 65010 I"
+                            }
+                            ]
+                        }
+                        ]
+                    }
+                    ], 
+                    "bgp-rt-flag" : [
+                    {
+                        "data" : "Accepted"
+                    }
+                    ], 
+                    "local-preference" : [
+                    {
+                        "data" : "100"
+                    }
+                    ], 
+                    "peer-id" : [
+                    {
+                        "data" : "10.255.0.2"
+                    }
+                    ], 
+                    "thread-name" : [
+                    {
+                        "data" : "junos-main"
+                    }
+                    ]
+                }
+                ]
+            }, 
+            {
+                "attributes" : {"junos:style" : "detail"}, 
+                "rt-destination" : [
+                {
+                    "data" : "10.100.4.0"
+                }
+                ], 
+                "rt-prefix-length" : [
+                {
+                    "data" : "24"
+                }
+                ], 
+                "rt-entry-count" : [
+                {
+                    "data" : "1", 
+                    "attributes" : {"junos:format" : "1 entry"}
+                }
+                ], 
+                "rt-announced-count" : [
+                {
+                    "data" : "1"
+                }
+                ], 
+                "rt-state" : [
+                {
+                }
+                ], 
+                "rt-entry" : [
+                {
+                    "active-tag" : [
+                    {
+                        "data" : "*"
+                    }
+                    ], 
+                    "current-active" : [
+                    {
+                        "data" : [null]
+                    }
+                    ], 
+                    "last-active" : [
+                    {
+                        "data" : [null]
+                    }
+                    ], 
+                    "protocol-name" : [
+                    {
+                        "data" : "BGP"
+                    }
+                    ], 
+                    "preference" : [
+                    {
+                        "data" : "170"
+                    }
+                    ], 
+                    "preference2" : [
+                    {
+                        "data" : "-101"
+                    }
+                    ], 
+                    "nhh" : [
+                    {
+                        "attributes" : {"junos:indent" : "16"}, 
+                        "nh-type" : [
+                        {
+                            "data" : "Indirect"
+                        }
+                        ], 
+                        "nh-index" : [
+                        {
+                            "data" : "0"
+                        }
+                        ], 
+                        "nh-address" : [
+                        {
+                            "data" : "0x95c1690"
+                        }
+                        ], 
+                        "nh-reference-count" : [
+                        {
+                            "data" : "16"
+                        }
+                        ], 
+                        "nh-kernel-id" : [
+                        {
+                            "data" : "0"
+                        }
+                        ]
+                    }
+                    ], 
+                    "gateway" : [
+                    {
+                        "data" : "10.0.4.0"
+                    }
+                    ], 
+                    "nh-type" : [
+                    {
+                        "data" : "Router"
+                    }
+                    ], 
+                    "nh-index" : [
+                    {
+                        "data" : "587"
+                    }
+                    ], 
+                    "nh" : [
+                    {
+                        "attributes" : {"junos:indent" : "16"}, 
+                        "nh-string" : [
+                        {
+                            "data" : "Next hop"
+                        }
+                        ], 
+                        "to" : [
+                        {
+                            "data" : "10.0.4.0"
+                        }
+                        ], 
+                        "via" : [
+                        {
+                            "data" : "ge-0/0/0.0"
+                        }
+                        ], 
+                        "selected-next-hop" : [
+                        {
+                            "data" : [null]
+                        }
+                        ], 
+                        "session" : [
+                        {
+                            "data" : "320"
+                        }
+                        ]
+                    }
+                    ], 
+                    "protocol-nh" : [
+                    {
+                        "attributes" : {"junos:indent" : "16"}, 
+                        "to" : [
+                        {
+                            "data" : "10.0.4.0"
+                        }
+                        ], 
+                        "indirect-nh" : [
+                        {
+                            "data" : "0x90ddd50 1048574 INH Session ID: 321, INH non-key opaque: 0x0, INH key opaque: 0x0"
+                        }
+                        ]
+                    }
+                    ], 
+                    "rt-entry-state" : [
+                    {
+                        "data" : "Active Int Ext"
+                    }
+                    ], 
+                    "local-as" : [
+                    {
+                        "data" : "200"
+                    }
+                    ], 
+                    "peer-as" : [
+                    {
+                        "data" : "200"
+                    }
+                    ], 
+                    "age" : [
+                    {
+                        "data" : "7:29", 
+                        "attributes" : {"junos:seconds" : "449"}
+                    }
+                    ], 
+                    "metric2" : [
+                    {
+                        "data" : "0"
+                    }
+                    ], 
+                    "validation-state" : [
+                    {
+                        "data" : "unverified"
+                    }
+                    ], 
+                    "task-name" : [
+                    {
+                        "data" : "BGP_200.10.0.4.0"
+                    }
+                    ], 
+                    "announce-bits" : [
+                    {
+                        "data" : "2"
+                    }
+                    ], 
+                    "announce-tasks" : [
+                    {
+                        "data" : "0-KRT 2-Resolve tree 1 "
+                    }
+                    ], 
+                    "as-path" : [
+                    {
+                        "data" : "AS path: 300 65010 I"
+                    }
+                    ], 
+                    "bgp-path-attributes" : [
+                    {
+                        "attr-as-path-effective" : [
+                        {
+                            "aspath-effective-string" : [
+                            {
+                                "data" : "AS path: "
+                            }
+                            ], 
+                            "attr-value" : [
+                            {
+                                "data" : "300 65010 I"
+                            }
+                            ]
+                        }
+                        ]
+                    }
+                    ], 
+                    "bgp-rt-flag" : [
+                    {
+                        "data" : "Accepted"
+                    }
+                    ], 
+                    "local-preference" : [
+                    {
+                        "data" : "100"
+                    }
+                    ], 
+                    "peer-id" : [
+                    {
+                        "data" : "10.255.0.2"
+                    }
+                    ], 
+                    "thread-name" : [
+                    {
+                        "data" : "junos-main"
+                    }
+                    ]
+                }
+                ]
+            }, 
+            {
+                "attributes" : {"junos:style" : "detail"}, 
+                "rt-destination" : [
+                {
+                    "data" : "10.100.5.0"
+                }
+                ], 
+                "rt-prefix-length" : [
+                {
+                    "data" : "24"
+                }
+                ], 
+                "rt-entry-count" : [
+                {
+                    "data" : "1", 
+                    "attributes" : {"junos:format" : "1 entry"}
+                }
+                ], 
+                "rt-announced-count" : [
+                {
+                    "data" : "1"
+                }
+                ], 
+                "rt-state" : [
+                {
+                }
+                ], 
+                "rt-entry" : [
+                {
+                    "active-tag" : [
+                    {
+                        "data" : "*"
+                    }
+                    ], 
+                    "current-active" : [
+                    {
+                        "data" : [null]
+                    }
+                    ], 
+                    "last-active" : [
+                    {
+                        "data" : [null]
+                    }
+                    ], 
+                    "protocol-name" : [
+                    {
+                        "data" : "BGP"
+                    }
+                    ], 
+                    "preference" : [
+                    {
+                        "data" : "170"
+                    }
+                    ], 
+                    "preference2" : [
+                    {
+                        "data" : "-101"
+                    }
+                    ], 
+                    "nhh" : [
+                    {
+                        "attributes" : {"junos:indent" : "16"}, 
+                        "nh-type" : [
+                        {
+                            "data" : "Indirect"
+                        }
+                        ], 
+                        "nh-index" : [
+                        {
+                            "data" : "0"
+                        }
+                        ], 
+                        "nh-address" : [
+                        {
+                            "data" : "0x95c1690"
+                        }
+                        ], 
+                        "nh-reference-count" : [
+                        {
+                            "data" : "16"
+                        }
+                        ], 
+                        "nh-kernel-id" : [
+                        {
+                            "data" : "0"
+                        }
+                        ]
+                    }
+                    ], 
+                    "gateway" : [
+                    {
+                        "data" : "10.0.4.0"
+                    }
+                    ], 
+                    "nh-type" : [
+                    {
+                        "data" : "Router"
+                    }
+                    ], 
+                    "nh-index" : [
+                    {
+                        "data" : "587"
+                    }
+                    ], 
+                    "nh" : [
+                    {
+                        "attributes" : {"junos:indent" : "16"}, 
+                        "nh-string" : [
+                        {
+                            "data" : "Next hop"
+                        }
+                        ], 
+                        "to" : [
+                        {
+                            "data" : "10.0.4.0"
+                        }
+                        ], 
+                        "via" : [
+                        {
+                            "data" : "ge-0/0/0.0"
+                        }
+                        ], 
+                        "selected-next-hop" : [
+                        {
+                            "data" : [null]
+                        }
+                        ], 
+                        "session" : [
+                        {
+                            "data" : "320"
+                        }
+                        ]
+                    }
+                    ], 
+                    "protocol-nh" : [
+                    {
+                        "attributes" : {"junos:indent" : "16"}, 
+                        "to" : [
+                        {
+                            "data" : "10.0.4.0"
+                        }
+                        ], 
+                        "indirect-nh" : [
+                        {
+                            "data" : "0x90ddd50 1048574 INH Session ID: 321, INH non-key opaque: 0x0, INH key opaque: 0x0"
+                        }
+                        ]
+                    }
+                    ], 
+                    "rt-entry-state" : [
+                    {
+                        "data" : "Active Int Ext"
+                    }
+                    ], 
+                    "local-as" : [
+                    {
+                        "data" : "200"
+                    }
+                    ], 
+                    "peer-as" : [
+                    {
+                        "data" : "200"
+                    }
+                    ], 
+                    "age" : [
+                    {
+                        "data" : "7:29", 
+                        "attributes" : {"junos:seconds" : "449"}
+                    }
+                    ], 
+                    "metric2" : [
+                    {
+                        "data" : "0"
+                    }
+                    ], 
+                    "validation-state" : [
+                    {
+                        "data" : "unverified"
+                    }
+                    ], 
+                    "task-name" : [
+                    {
+                        "data" : "BGP_200.10.0.4.0"
+                    }
+                    ], 
+                    "announce-bits" : [
+                    {
+                        "data" : "2"
+                    }
+                    ], 
+                    "announce-tasks" : [
+                    {
+                        "data" : "0-KRT 2-Resolve tree 1 "
+                    }
+                    ], 
+                    "as-path" : [
+                    {
+                        "data" : "AS path: 100 300 65010 I"
+                    }
+                    ], 
+                    "bgp-path-attributes" : [
+                    {
+                        "attr-as-path-effective" : [
+                        {
+                            "aspath-effective-string" : [
+                            {
+                                "data" : "AS path: "
+                            }
+                            ], 
+                            "attr-value" : [
+                            {
+                                "data" : "100 300 65010 I"
+                            }
+                            ]
+                        }
+                        ]
+                    }
+                    ], 
+                    "bgp-rt-flag" : [
+                    {
+                        "data" : "Accepted"
+                    }
+                    ], 
+                    "local-preference" : [
+                    {
+                        "data" : "100"
+                    }
+                    ], 
+                    "peer-id" : [
+                    {
+                        "data" : "10.255.0.2"
+                    }
+                    ], 
+                    "thread-name" : [
+                    {
+                        "data" : "junos-main"
+                    }
+                    ]
+                }
+                ]
+            }, 
+            {
+                "attributes" : {"junos:style" : "detail"}, 
+                "rt-destination" : [
+                {
+                    "data" : "10.100.6.0"
+                }
+                ], 
+                "rt-prefix-length" : [
+                {
+                    "data" : "24"
+                }
+                ], 
+                "rt-entry-count" : [
+                {
+                    "data" : "1", 
+                    "attributes" : {"junos:format" : "1 entry"}
+                }
+                ], 
+                "rt-announced-count" : [
+                {
+                    "data" : "1"
+                }
+                ], 
+                "rt-state" : [
+                {
+                }
+                ], 
+                "rt-entry" : [
+                {
+                    "active-tag" : [
+                    {
+                        "data" : "*"
+                    }
+                    ], 
+                    "current-active" : [
+                    {
+                        "data" : [null]
+                    }
+                    ], 
+                    "last-active" : [
+                    {
+                        "data" : [null]
+                    }
+                    ], 
+                    "protocol-name" : [
+                    {
+                        "data" : "BGP"
+                    }
+                    ], 
+                    "preference" : [
+                    {
+                        "data" : "170"
+                    }
+                    ], 
+                    "preference2" : [
+                    {
+                        "data" : "-101"
+                    }
+                    ], 
+                    "nhh" : [
+                    {
+                        "attributes" : {"junos:indent" : "16"}, 
+                        "nh-type" : [
+                        {
+                            "data" : "Indirect"
+                        }
+                        ], 
+                        "nh-index" : [
+                        {
+                            "data" : "0"
+                        }
+                        ], 
+                        "nh-address" : [
+                        {
+                            "data" : "0x95c1690"
+                        }
+                        ], 
+                        "nh-reference-count" : [
+                        {
+                            "data" : "16"
+                        }
+                        ], 
+                        "nh-kernel-id" : [
+                        {
+                            "data" : "0"
+                        }
+                        ]
+                    }
+                    ], 
+                    "gateway" : [
+                    {
+                        "data" : "10.0.4.0"
+                    }
+                    ], 
+                    "nh-type" : [
+                    {
+                        "data" : "Router"
+                    }
+                    ], 
+                    "nh-index" : [
+                    {
+                        "data" : "587"
+                    }
+                    ], 
+                    "nh" : [
+                    {
+                        "attributes" : {"junos:indent" : "16"}, 
+                        "nh-string" : [
+                        {
+                            "data" : "Next hop"
+                        }
+                        ], 
+                        "to" : [
+                        {
+                            "data" : "10.0.4.0"
+                        }
+                        ], 
+                        "via" : [
+                        {
+                            "data" : "ge-0/0/0.0"
+                        }
+                        ], 
+                        "selected-next-hop" : [
+                        {
+                            "data" : [null]
+                        }
+                        ], 
+                        "session" : [
+                        {
+                            "data" : "320"
+                        }
+                        ]
+                    }
+                    ], 
+                    "protocol-nh" : [
+                    {
+                        "attributes" : {"junos:indent" : "16"}, 
+                        "to" : [
+                        {
+                            "data" : "10.0.4.0"
+                        }
+                        ], 
+                        "indirect-nh" : [
+                        {
+                            "data" : "0x90ddd50 1048574 INH Session ID: 321, INH non-key opaque: 0x0, INH key opaque: 0x0"
+                        }
+                        ]
+                    }
+                    ], 
+                    "rt-entry-state" : [
+                    {
+                        "data" : "Active Int Ext"
+                    }
+                    ], 
+                    "local-as" : [
+                    {
+                        "data" : "200"
+                    }
+                    ], 
+                    "peer-as" : [
+                    {
+                        "data" : "200"
+                    }
+                    ], 
+                    "age" : [
+                    {
+                        "data" : "7:29", 
+                        "attributes" : {"junos:seconds" : "449"}
+                    }
+                    ], 
+                    "metric2" : [
+                    {
+                        "data" : "0"
+                    }
+                    ], 
+                    "validation-state" : [
+                    {
+                        "data" : "unverified"
+                    }
+                    ], 
+                    "task-name" : [
+                    {
+                        "data" : "BGP_200.10.0.4.0"
+                    }
+                    ], 
+                    "announce-bits" : [
+                    {
+                        "data" : "2"
+                    }
+                    ], 
+                    "announce-tasks" : [
+                    {
+                        "data" : "0-KRT 2-Resolve tree 1 "
+                    }
+                    ], 
+                    "as-path" : [
+                    {
+                        "data" : "AS path: I"
+                    }
+                    ], 
+                    "bgp-path-attributes" : [
+                    {
+                        "attr-as-path-effective" : [
+                        {
+                            "aspath-effective-string" : [
+                            {
+                                "data" : "AS path: "
+                            }
+                            ], 
+                            "attr-value" : [
+                            {
+                                "data" : "I"
+                            }
+                            ]
+                        }
+                        ]
+                    }
+                    ], 
+                    "bgp-rt-flag" : [
+                    {
+                        "data" : "Accepted"
+                    }
+                    ], 
+                    "local-preference" : [
+                    {
+                        "data" : "100"
+                    }
+                    ], 
+                    "peer-id" : [
+                    {
+                        "data" : "10.255.0.2"
+                    }
+                    ], 
+                    "thread-name" : [
+                    {
+                        "data" : "junos-main"
+                    }
+                    ]
+                }
+                ]
+            }, 
+            {
+                "attributes" : {"junos:style" : "detail"}, 
+                "rt-destination" : [
+                {
+                    "data" : "10.100.7.0"
+                }
+                ], 
+                "rt-prefix-length" : [
+                {
+                    "data" : "24"
+                }
+                ], 
+                "rt-entry-count" : [
+                {
+                    "data" : "1", 
+                    "attributes" : {"junos:format" : "1 entry"}
+                }
+                ], 
+                "rt-announced-count" : [
+                {
+                    "data" : "1"
+                }
+                ], 
+                "rt-state" : [
+                {
+                }
+                ], 
+                "rt-entry" : [
+                {
+                    "active-tag" : [
+                    {
+                        "data" : "*"
+                    }
+                    ], 
+                    "current-active" : [
+                    {
+                        "data" : [null]
+                    }
+                    ], 
+                    "last-active" : [
+                    {
+                        "data" : [null]
+                    }
+                    ], 
+                    "protocol-name" : [
+                    {
+                        "data" : "BGP"
+                    }
+                    ], 
+                    "preference" : [
+                    {
+                        "data" : "170"
+                    }
+                    ], 
+                    "preference2" : [
+                    {
+                        "data" : "-101"
+                    }
+                    ], 
+                    "nhh" : [
+                    {
+                        "attributes" : {"junos:indent" : "16"}, 
+                        "nh-type" : [
+                        {
+                            "data" : "Indirect"
+                        }
+                        ], 
+                        "nh-index" : [
+                        {
+                            "data" : "0"
+                        }
+                        ], 
+                        "nh-address" : [
+                        {
+                            "data" : "0x95c1690"
+                        }
+                        ], 
+                        "nh-reference-count" : [
+                        {
+                            "data" : "16"
+                        }
+                        ], 
+                        "nh-kernel-id" : [
+                        {
+                            "data" : "0"
+                        }
+                        ]
+                    }
+                    ], 
+                    "gateway" : [
+                    {
+                        "data" : "10.0.4.0"
+                    }
+                    ], 
+                    "nh-type" : [
+                    {
+                        "data" : "Router"
+                    }
+                    ], 
+                    "nh-index" : [
+                    {
+                        "data" : "587"
+                    }
+                    ], 
+                    "nh" : [
+                    {
+                        "attributes" : {"junos:indent" : "16"}, 
+                        "nh-string" : [
+                        {
+                            "data" : "Next hop"
+                        }
+                        ], 
+                        "to" : [
+                        {
+                            "data" : "10.0.4.0"
+                        }
+                        ], 
+                        "via" : [
+                        {
+                            "data" : "ge-0/0/0.0"
+                        }
+                        ], 
+                        "selected-next-hop" : [
+                        {
+                            "data" : [null]
+                        }
+                        ], 
+                        "session" : [
+                        {
+                            "data" : "320"
+                        }
+                        ]
+                    }
+                    ], 
+                    "protocol-nh" : [
+                    {
+                        "attributes" : {"junos:indent" : "16"}, 
+                        "to" : [
+                        {
+                            "data" : "10.0.4.0"
+                        }
+                        ], 
+                        "indirect-nh" : [
+                        {
+                            "data" : "0x90ddd50 1048574 INH Session ID: 321, INH non-key opaque: 0x0, INH key opaque: 0x0"
+                        }
+                        ]
+                    }
+                    ], 
+                    "rt-entry-state" : [
+                    {
+                        "data" : "Active Int Ext"
+                    }
+                    ], 
+                    "local-as" : [
+                    {
+                        "data" : "200"
+                    }
+                    ], 
+                    "peer-as" : [
+                    {
+                        "data" : "200"
+                    }
+                    ], 
+                    "age" : [
+                    {
+                        "data" : "7:29", 
+                        "attributes" : {"junos:seconds" : "449"}
+                    }
+                    ], 
+                    "metric2" : [
+                    {
+                        "data" : "0"
+                    }
+                    ], 
+                    "validation-state" : [
+                    {
+                        "data" : "unverified"
+                    }
+                    ], 
+                    "task-name" : [
+                    {
+                        "data" : "BGP_200.10.0.4.0"
+                    }
+                    ], 
+                    "announce-bits" : [
+                    {
+                        "data" : "2"
+                    }
+                    ], 
+                    "announce-tasks" : [
+                    {
+                        "data" : "0-KRT 2-Resolve tree 1 "
+                    }
+                    ], 
+                    "as-path" : [
+                    {
+                        "data" : "AS path: 65099 I"
+                    }
+                    ], 
+                    "bgp-path-attributes" : [
+                    {
+                        "attr-as-path-effective" : [
+                        {
+                            "aspath-effective-string" : [
+                            {
+                                "data" : "AS path: "
+                            }
+                            ], 
+                            "attr-value" : [
+                            {
+                                "data" : "65099 I"
+                            }
+                            ]
+                        }
+                        ]
+                    }
+                    ], 
+                    "bgp-rt-flag" : [
+                    {
+                        "data" : "Accepted"
+                    }
+                    ], 
+                    "local-preference" : [
+                    {
+                        "data" : "100"
+                    }
+                    ], 
+                    "peer-id" : [
+                    {
+                        "data" : "10.255.0.2"
+                    }
+                    ], 
+                    "thread-name" : [
+                    {
+                        "data" : "junos-main"
+                    }
+                    ]
+                }
+                ]
+            }, 
+            {
+                "attributes" : {"junos:style" : "detail"}, 
+                "rt-destination" : [
+                {
+                    "data" : "10.100.8.0"
+                }
+                ], 
+                "rt-prefix-length" : [
+                {
+                    "data" : "24"
+                }
+                ], 
+                "rt-entry-count" : [
+                {
+                    "data" : "1", 
+                    "attributes" : {"junos:format" : "1 entry"}
+                }
+                ], 
+                "rt-announced-count" : [
+                {
+                    "data" : "1"
+                }
+                ], 
+                "rt-state" : [
+                {
+                }
+                ], 
+                "rt-entry" : [
+                {
+                    "active-tag" : [
+                    {
+                        "data" : "*"
+                    }
+                    ], 
+                    "current-active" : [
+                    {
+                        "data" : [null]
+                    }
+                    ], 
+                    "last-active" : [
+                    {
+                        "data" : [null]
+                    }
+                    ], 
+                    "protocol-name" : [
+                    {
+                        "data" : "BGP"
+                    }
+                    ], 
+                    "preference" : [
+                    {
+                        "data" : "170"
+                    }
+                    ], 
+                    "preference2" : [
+                    {
+                        "data" : "-101"
+                    }
+                    ], 
+                    "nhh" : [
+                    {
+                        "attributes" : {"junos:indent" : "16"}, 
+                        "nh-type" : [
+                        {
+                            "data" : "Indirect"
+                        }
+                        ], 
+                        "nh-index" : [
+                        {
+                            "data" : "0"
+                        }
+                        ], 
+                        "nh-address" : [
+                        {
+                            "data" : "0x95c1690"
+                        }
+                        ], 
+                        "nh-reference-count" : [
+                        {
+                            "data" : "16"
+                        }
+                        ], 
+                        "nh-kernel-id" : [
+                        {
+                            "data" : "0"
+                        }
+                        ]
+                    }
+                    ], 
+                    "gateway" : [
+                    {
+                        "data" : "10.0.4.0"
+                    }
+                    ], 
+                    "nh-type" : [
+                    {
+                        "data" : "Router"
+                    }
+                    ], 
+                    "nh-index" : [
+                    {
+                        "data" : "587"
+                    }
+                    ], 
+                    "nh" : [
+                    {
+                        "attributes" : {"junos:indent" : "16"}, 
+                        "nh-string" : [
+                        {
+                            "data" : "Next hop"
+                        }
+                        ], 
+                        "to" : [
+                        {
+                            "data" : "10.0.4.0"
+                        }
+                        ], 
+                        "via" : [
+                        {
+                            "data" : "ge-0/0/0.0"
+                        }
+                        ], 
+                        "selected-next-hop" : [
+                        {
+                            "data" : [null]
+                        }
+                        ], 
+                        "session" : [
+                        {
+                            "data" : "320"
+                        }
+                        ]
+                    }
+                    ], 
+                    "protocol-nh" : [
+                    {
+                        "attributes" : {"junos:indent" : "16"}, 
+                        "to" : [
+                        {
+                            "data" : "10.0.4.0"
+                        }
+                        ], 
+                        "indirect-nh" : [
+                        {
+                            "data" : "0x90ddd50 1048574 INH Session ID: 321, INH non-key opaque: 0x0, INH key opaque: 0x0"
+                        }
+                        ]
+                    }
+                    ], 
+                    "rt-entry-state" : [
+                    {
+                        "data" : "Active Int Ext"
+                    }
+                    ], 
+                    "local-as" : [
+                    {
+                        "data" : "200"
+                    }
+                    ], 
+                    "peer-as" : [
+                    {
+                        "data" : "200"
+                    }
+                    ], 
+                    "age" : [
+                    {
+                        "data" : "7:29", 
+                        "attributes" : {"junos:seconds" : "449"}
+                    }
+                    ], 
+                    "metric2" : [
+                    {
+                        "data" : "0"
+                    }
+                    ], 
+                    "validation-state" : [
+                    {
+                        "data" : "unverified"
+                    }
+                    ], 
+                    "task-name" : [
+                    {
+                        "data" : "BGP_200.10.0.4.0"
+                    }
+                    ], 
+                    "announce-bits" : [
+                    {
+                        "data" : "2"
+                    }
+                    ], 
+                    "announce-tasks" : [
+                    {
+                        "data" : "0-KRT 2-Resolve tree 1 "
+                    }
+                    ], 
+                    "as-path" : [
+                    {
+                        "data" : "AS path: 400 I"
+                    }
+                    ], 
+                    "bgp-path-attributes" : [
+                    {
+                        "attr-as-path-effective" : [
+                        {
+                            "aspath-effective-string" : [
+                            {
+                                "data" : "AS path: "
+                            }
+                            ], 
+                            "attr-value" : [
+                            {
+                                "data" : "400 I"
+                            }
+                            ]
+                        }
+                        ]
+                    }
+                    ], 
+                    "bgp-rt-flag" : [
+                    {
+                        "data" : "Accepted"
+                    }
+                    ], 
+                    "local-preference" : [
+                    {
+                        "data" : "100"
+                    }
+                    ], 
+                    "peer-id" : [
+                    {
+                        "data" : "10.255.0.2"
+                    }
+                    ], 
+                    "thread-name" : [
+                    {
+                        "data" : "junos-main"
+                    }
+                    ]
+                }
+                ]
+            }
+            ]
+        }, 
+        {
+            "table-name" : [
+            {
+                "data" : "mgmt_junos.inet.0"
+            }
+            ], 
+            "destination-count" : [
+            {
+                "data" : "3"
+            }
+            ], 
+            "total-route-count" : [
+            {
+                "data" : "3"
+            }
+            ], 
+            "active-route-count" : [
+            {
+                "data" : "3"
+            }
+            ], 
+            "holddown-route-count" : [
+            {
+                "data" : "0"
+            }
+            ], 
+            "hidden-route-count" : [
+            {
+                "data" : "0"
+            }
+            ]
+        }, 
+        {
+            "table-name" : [
+            {
+                "data" : "mgmt_junos.inet6.0"
+            }
+            ], 
+            "destination-count" : [
+            {
+                "data" : "4"
+            }
+            ], 
+            "total-route-count" : [
+            {
+                "data" : "4"
+            }
+            ], 
+            "active-route-count" : [
+            {
+                "data" : "4"
+            }
+            ], 
+            "holddown-route-count" : [
+            {
+                "data" : "0"
+            }
+            ], 
+            "hidden-route-count" : [
+            {
+                "data" : "0"
+            }
+            ]
+        }
+        ]
+    }
+    ]
+}
