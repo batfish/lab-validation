@@ -1,0 +1,26 @@
+# Preconditions for the policy-statement tag2 lab.
+# Run after health-check, before collection:
+#   lab_builder validate topology.clab.yml --checks checks.yaml
+#
+# Which routes reach rx is the lab's result, so only the sessions and
+# dut's own routes are checked here.
+
+checks:
+  - type: bgp_peer_established
+    node: dut
+    neighbor: 10.0.1.0
+    description: "dut <-> src: eBGP, import sets tag2"
+  - type: bgp_peer_established
+    node: dut
+    neighbor: 10.0.2.1
+    description: "dut <-> rx: eBGP, export matches tag2"
+  - type: route_exists
+    node: dut
+    table: inet.0
+    prefix: 10.110.4.0/24
+    description: "dut learns src's routes"
+  - type: route_exists
+    node: dut
+    table: inet.0
+    prefix: 10.120.1.0/24
+    description: "dut has its static route with tag2 300"

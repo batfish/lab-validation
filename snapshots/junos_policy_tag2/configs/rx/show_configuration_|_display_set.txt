@@ -1,0 +1,26 @@
+set version 26.2R1.7
+set system host-name rx
+set system root-authentication encrypted-password "$6$3jDQX9yi$JYnuYne6zm2kibdeI0SDRy1S3dzgmzzbgTz9Ck/qJhS2BrYy2Uu8xklaMZIgcLZ7LIW3ER31/bCCjZOdzA2h80"
+set system login user admin uid 2000
+set system login user admin class super-user
+set system login user admin authentication encrypted-password "$6$yyRfFtBa$OoNh6Oh3aisBsvDjCY484U/jc.C7j2otpS7VYrS6js0U7PJgcjrNBcxbsH/4LxgLYokIhEVxI4dwttlh1x93r1"
+set system services netconf ssh
+set system services ssh root-login allow
+set system management-instance
+set chassis fpc 0 pic 0 number-of-ports 12
+set interfaces ge-0/0/0 description "to dut (AS 200)"
+set interfaces ge-0/0/0 unit 0 family inet address 10.0.2.1/31
+set interfaces fxp0 unit 0 family inet address 10.0.0.15/24
+set interfaces fxp0 unit 0 family inet6 address 2001:db8::2/64
+set interfaces lo0 unit 0 family inet address 10.255.0.3/32
+set policy-options policy-statement IMPORT term tag2-100 from tag2 100
+set policy-options policy-statement IMPORT term tag2-100 then reject
+set policy-options policy-statement IMPORT term all then accept
+set routing-instances mgmt_junos routing-options rib mgmt_junos.inet6.0 static route ::/0 next-hop 2001:db8::1
+set routing-instances mgmt_junos routing-options static route 0.0.0.0/0 next-hop 10.0.0.2
+set routing-options router-id 10.255.0.3
+set routing-options autonomous-system 300
+set protocols bgp group DUT type external
+set protocols bgp group DUT import IMPORT
+set protocols bgp group DUT peer-as 200
+set protocols bgp group DUT neighbor 10.0.2.0

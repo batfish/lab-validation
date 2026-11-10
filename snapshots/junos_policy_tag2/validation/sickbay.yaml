@@ -1,0 +1,12 @@
+entries:
+  # 10486: Batfish does not model tag2 (`from tag2` matches nothing,
+  # `then tag2` and a static route's tag2 are ignored), so dut sends rx
+  # nothing.
+  - hostname: rx
+    test_name: test_main_rib_routes
+    skip:
+      reason: "https://github.com/batfish/batfish/pull/10486"
+  - hostname: rx
+    test_name: test_bgp_rib_routes
+    skip:
+      reason: "https://github.com/batfish/batfish/pull/10486"
