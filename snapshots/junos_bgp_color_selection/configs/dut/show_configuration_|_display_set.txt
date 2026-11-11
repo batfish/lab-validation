@@ -1,0 +1,70 @@
+set version 26.2R1.7
+set system host-name dut
+set system root-authentication encrypted-password "$6$wugSUvDV$cVdrQYrKUH2pRBwnYox.gvq7qjErD.ErTR9fewPfyCZwsGUs8GJtTSyB9uVwvEa/rjED6vxGZmyMbraX3kA58/"
+set system login user admin uid 2000
+set system login user admin class super-user
+set system login user admin authentication encrypted-password "$6$PGqV6Qsp$/XXHST6f3WjIGoc3qbVQAE/ThmY6dcyS4rZp.5l6HZsSO64.SyuSPvt1qbAPQjSGL4sGPD3FFwBO7suAL6b1J/"
+set system services netconf ssh
+set system services ssh root-login allow
+set system management-instance
+set chassis fpc 0 pic 0 number-of-ports 12
+set interfaces ge-0/0/0 description "to a (AS 65001)"
+set interfaces ge-0/0/0 unit 0 family inet address 10.0.1.1/31
+set interfaces ge-0/0/1 description "to b (AS 65002)"
+set interfaces ge-0/0/1 unit 0 family inet address 10.0.2.1/31
+set interfaces fxp0 unit 0 family inet address 10.0.0.15/24
+set interfaces fxp0 unit 0 family inet6 address 2001:db8::2/64
+set interfaces lo0 unit 0 family inet address 10.255.0.3/32
+set policy-options policy-statement FROM-A term p2 from route-filter 10.150.2.0/24 exact
+set policy-options policy-statement FROM-A term p2 then color 200
+set policy-options policy-statement FROM-A term p2 then accept
+set policy-options policy-statement FROM-A term p3 from route-filter 10.150.3.0/24 exact
+set policy-options policy-statement FROM-A term p3 then color 200
+set policy-options policy-statement FROM-A term p3 then local-preference 200
+set policy-options policy-statement FROM-A term p3 then accept
+set policy-options policy-statement FROM-A term p4 from route-filter 10.150.4.0/24 exact
+set policy-options policy-statement FROM-A term p4 then color 100
+set policy-options policy-statement FROM-A term p4 then color2 200
+set policy-options policy-statement FROM-A term p4 then accept
+set policy-options policy-statement FROM-A term p5 from route-filter 10.150.5.0/24 exact
+set policy-options policy-statement FROM-A term p5 then color 100
+set policy-options policy-statement FROM-A term p5 then color2 100
+set policy-options policy-statement FROM-A term p5 then accept
+set policy-options policy-statement FROM-A term p6 from route-filter 10.150.6.0/24 exact
+set policy-options policy-statement FROM-A term p6 then preference 160
+set policy-options policy-statement FROM-A term p6 then color 200
+set policy-options policy-statement FROM-A term p6 then accept
+set policy-options policy-statement FROM-A term other then accept
+set policy-options policy-statement FROM-B term p2 from route-filter 10.150.2.0/24 exact
+set policy-options policy-statement FROM-B term p2 then color 100
+set policy-options policy-statement FROM-B term p2 then accept
+set policy-options policy-statement FROM-B term p3 from route-filter 10.150.3.0/24 exact
+set policy-options policy-statement FROM-B term p3 then color 100
+set policy-options policy-statement FROM-B term p3 then local-preference 100
+set policy-options policy-statement FROM-B term p3 then accept
+set policy-options policy-statement FROM-B term p4 from route-filter 10.150.4.0/24 exact
+set policy-options policy-statement FROM-B term p4 then color 100
+set policy-options policy-statement FROM-B term p4 then color2 100
+set policy-options policy-statement FROM-B term p4 then accept
+set policy-options policy-statement FROM-B term p5 from route-filter 10.150.5.0/24 exact
+set policy-options policy-statement FROM-B term p5 then color 200
+set policy-options policy-statement FROM-B term p5 then color2 50
+set policy-options policy-statement FROM-B term p5 then accept
+set policy-options policy-statement FROM-B term p6 from route-filter 10.150.6.0/24 exact
+set policy-options policy-statement FROM-B term p6 then preference 170
+set policy-options policy-statement FROM-B term p6 then color 100
+set policy-options policy-statement FROM-B term p6 then accept
+set policy-options policy-statement FROM-B term other then accept
+set routing-instances mgmt_junos routing-options rib mgmt_junos.inet6.0 static route ::/0 next-hop 2001:db8::1
+set routing-instances mgmt_junos routing-options static route 0.0.0.0/0 next-hop 10.0.0.2
+set routing-options router-id 10.255.0.3
+set routing-options autonomous-system 200
+set protocols bgp path-selection external-router-id
+set protocols bgp group A type external
+set protocols bgp group A import FROM-A
+set protocols bgp group A peer-as 65001
+set protocols bgp group A neighbor 10.0.1.0
+set protocols bgp group B type external
+set protocols bgp group B import FROM-B
+set protocols bgp group B peer-as 65002
+set protocols bgp group B neighbor 10.0.2.0

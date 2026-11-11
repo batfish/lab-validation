@@ -1,0 +1,46 @@
+# Preconditions for the BGP color selection lab.
+# Run after health-check, before collection:
+#   lab_builder validate topology.clab.yml --checks checks.yaml
+#
+# Which path is active is the lab's result, so only the sessions and the
+# presence of each prefix at dut are checked here.
+
+checks:
+  - type: bgp_peer_established
+    node: dut
+    neighbor: 10.0.1.0
+    description: "dut <-> a (AS 65001)"
+  - type: bgp_peer_established
+    node: dut
+    neighbor: 10.0.2.0
+    description: "dut <-> b (AS 65002)"
+  - type: route_exists
+    node: dut
+    table: inet.0
+    prefix: 10.150.1.0/24
+    description: "dut has 10.150.1.0/24"
+  - type: route_exists
+    node: dut
+    table: inet.0
+    prefix: 10.150.2.0/24
+    description: "dut has 10.150.2.0/24"
+  - type: route_exists
+    node: dut
+    table: inet.0
+    prefix: 10.150.3.0/24
+    description: "dut has 10.150.3.0/24"
+  - type: route_exists
+    node: dut
+    table: inet.0
+    prefix: 10.150.4.0/24
+    description: "dut has 10.150.4.0/24"
+  - type: route_exists
+    node: dut
+    table: inet.0
+    prefix: 10.150.5.0/24
+    description: "dut has 10.150.5.0/24"
+  - type: route_exists
+    node: dut
+    table: inet.0
+    prefix: 10.150.6.0/24
+    description: "dut has 10.150.6.0/24"

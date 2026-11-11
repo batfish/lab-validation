@@ -1,0 +1,36 @@
+# Junos BGP route selection with color and color2 lab.
+#
+# a (AS 65001) and b (AS 65002) both originate 10.150.1.0/24 through
+# 10.150.6.0/24 to dut (AS 200). dut's import policies set preference,
+# local-preference, color and color2 per prefix, so that each prefix's
+# active route at dut shows whether color and color2 take part in route
+# selection and where they rank. dut uses `path-selection
+# external-router-id`, so with every attribute equal, a (lower router ID)
+# wins.
+#
+# Topology:
+#   a ge-0/0/0 10.0.1.0/31 -- dut ge-0/0/0 10.0.1.1/31
+#   b ge-0/0/0 10.0.2.0/31 -- dut ge-0/0/1 10.0.2.1/31
+
+name: junos-bgp-color-selection
+
+topology:
+  nodes:
+    a:
+      kind: juniper_vjunosrouter
+      image: vrnetlab/juniper_vjunos-router:26.2R1.7
+      startup-config: configs/a.cfg
+    b:
+      kind: juniper_vjunosrouter
+      image: vrnetlab/juniper_vjunos-router:26.2R1.7
+      startup-config: configs/b.cfg
+    dut:
+      kind: juniper_vjunosrouter
+      image: vrnetlab/juniper_vjunos-router:26.2R1.7
+      startup-config: configs/dut.cfg
+
+  links:
+    # a ge-0/0/0 (eth1) <-> dut ge-0/0/0 (eth1)
+    - endpoints: ["a:eth1", "dut:eth1"]
+    # b ge-0/0/0 (eth1) <-> dut ge-0/0/1 (eth2)
+    - endpoints: ["b:eth1", "dut:eth2"]
