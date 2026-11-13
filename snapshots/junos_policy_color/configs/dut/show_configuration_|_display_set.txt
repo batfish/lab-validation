@@ -1,0 +1,52 @@
+set version 26.2R1.7
+set system host-name dut
+set system root-authentication encrypted-password "$6$61VpW5/Z$adbC8wj7xofA4GrCqI7x6eE07KeBLQ6nm3ywLK9VSFHU1B.p.UnPAMHEOnCvxDEpzzxI4HyhYDpNFQz2OK1Tu."
+set system login user admin uid 2000
+set system login user admin class super-user
+set system login user admin authentication encrypted-password "$6$2RFW/P.3$ZNkIi8tyNPWZpkSZVvoUvfjzsW0sBkXbKVlYJ8hRTwP.21EMTqFPHqs6GWteM46.oYupAQOUnLiWxAlGOuxZ8."
+set system services netconf ssh
+set system services ssh root-login allow
+set system management-instance
+set chassis fpc 0 pic 0 number-of-ports 12
+set interfaces ge-0/0/0 description "to src (AS 65010)"
+set interfaces ge-0/0/0 unit 0 family inet address 10.0.1.1/31
+set interfaces ge-0/0/1 description "to rx (AS 300)"
+set interfaces ge-0/0/1 unit 0 family inet address 10.0.2.0/31
+set interfaces fxp0 unit 0 family inet address 10.0.0.15/24
+set interfaces fxp0 unit 0 family inet6 address 2001:db8::2/64
+set interfaces lo0 unit 0 family inet address 10.255.0.2/32
+set policy-options policy-statement IMPORT-COLOR term color-100 from route-filter 10.130.1.0/24 exact
+set policy-options policy-statement IMPORT-COLOR term color-100 then color 100
+set policy-options policy-statement IMPORT-COLOR term color-100 then accept
+set policy-options policy-statement IMPORT-COLOR term color2-200 from route-filter 10.130.2.0/24 exact
+set policy-options policy-statement IMPORT-COLOR term color2-200 then color2 200
+set policy-options policy-statement IMPORT-COLOR term color2-200 then accept
+set policy-options policy-statement IMPORT-COLOR term uncolored then accept
+set policy-options policy-statement MATCH-COLOR term color-100 from color 100
+set policy-options policy-statement MATCH-COLOR term color-100 then accept
+set policy-options policy-statement MATCH-COLOR term color2-200 from color2 200
+set policy-options policy-statement MATCH-COLOR term color2-200 then accept
+set policy-options policy-statement MATCH-COLOR term color-400 from color 400
+set policy-options policy-statement MATCH-COLOR term color-400 then accept
+set policy-options policy-statement MATCH-COLOR term static-color-300 from protocol static
+set policy-options policy-statement MATCH-COLOR term static-color-300 from color 300
+set policy-options policy-statement MATCH-COLOR term static-color-300 then accept
+set policy-options policy-statement MATCH-COLOR term reject then reject
+set policy-options policy-statement SET-COLOR term color-400 from route-filter 10.130.3.0/24 exact
+set policy-options policy-statement SET-COLOR term color-400 then color 400
+set routing-instances mgmt_junos routing-options rib mgmt_junos.inet6.0 static route ::/0 next-hop 2001:db8::1
+set routing-instances mgmt_junos routing-options static route 0.0.0.0/0 next-hop 10.0.0.2
+set routing-options router-id 10.255.0.2
+set routing-options autonomous-system 200
+set routing-options static route 10.140.1.0/24 discard
+set routing-options static route 10.140.1.0/24 color 300
+set routing-options static route 10.140.2.0/24 discard
+set protocols bgp group SRC type external
+set protocols bgp group SRC import IMPORT-COLOR
+set protocols bgp group SRC peer-as 65010
+set protocols bgp group SRC neighbor 10.0.1.0
+set protocols bgp group RX type external
+set protocols bgp group RX export SET-COLOR
+set protocols bgp group RX export MATCH-COLOR
+set protocols bgp group RX peer-as 300
+set protocols bgp group RX neighbor 10.0.2.1
