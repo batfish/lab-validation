@@ -105,12 +105,11 @@ matches every path above except:
 
 - 10.100.7.0/24 and 10.100.8.0/24 at rx300 and rx65030: Batfish puts an
   eBGP export prepend to the right of the local AS (`200 65099`).
-  batfish/batfish#10481.
+  batfish/lab-validation#41.
 - 10.100.4.0/24 at rx300 and 10.100.6.0/24 at rx65030: Batfish checks
   the peer's AS against the path before `remove-private`, so it sends
   them. batfish/batfish#10482.
 
-At ribgp, Batfish with #10480 matches every row; without it, Batfish
-keeps the private ASes (sickbayed). The ribgp comparison relies on the
+At ribgp, Batfish with #10480 matches every row. The ribgp comparison relies on the
 Junos validator comparing AS paths of iBGP routes, which needs the
 detail form of `show route protocol bgp` (peer AS and local AS).

@@ -1,19 +1,13 @@
 entries:
-  # #10480: bare remove-private is not converted (every receiver keeps the
-  # private ASes). 10481: an eBGP export prepend goes to the left of the
-  # local AS (10.100.7, 10.100.8). 10482: Junos does not send a route
+  # lab-validation#41: an eBGP export prepend goes to the left of the local
+  # AS (10.100.7, 10.100.8). batfish#10482: Junos does not send a route
   # whose path starts with the peer's AS after remove-private (10.100.4 to
   # rx300, 10.100.6 to rx65030).
   - hostname: "rx300|rx65030"
     test_name: test_main_rib_routes
     skip:
-      reason: "https://github.com/batfish/batfish/pull/10480; https://github.com/batfish/batfish/issues/10481; https://github.com/batfish/batfish/issues/10482"
+      reason: "https://github.com/batfish/lab-validation/issues/41; https://github.com/batfish/batfish/issues/10482"
   - hostname: "rx300|rx65030"
     test_name: test_bgp_rib_routes
     skip:
-      reason: "https://github.com/batfish/batfish/pull/10480; https://github.com/batfish/batfish/issues/10481; https://github.com/batfish/batfish/issues/10482"
-  # #10480: without it, Batfish keeps the private ASes on the iBGP group.
-  - hostname: ribgp
-    test_name: test_bgp_rib_routes
-    skip:
-      reason: "https://github.com/batfish/batfish/pull/10480"
+      reason: "https://github.com/batfish/lab-validation/issues/41; https://github.com/batfish/batfish/issues/10482"
