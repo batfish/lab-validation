@@ -1,0 +1,34 @@
+# Junos policy-statement tag2 lab.
+#
+# src (AS 65010) originates four /24s to dut (AS 200). dut's import policy
+# sets tag2 on two of them; dut also has two static routes, one with
+# tag2. dut's export chain toward rx (AS 300) sets tag2 on one more route
+# and then accepts only routes by tag2. rx's import policy rejects tag2
+# 100, to show whether tag2 is carried to the peer.
+#
+# Topology:
+#   src ge-0/0/0 10.0.1.0/31 -- dut ge-0/0/0 10.0.1.1/31
+#   rx  ge-0/0/0 10.0.2.1/31 -- dut ge-0/0/1 10.0.2.0/31
+
+name: junos-policy-tag2
+
+topology:
+  nodes:
+    src:
+      kind: juniper_vjunosrouter
+      image: vrnetlab/juniper_vjunos-router:26.2R1.7
+      startup-config: configs/src.cfg
+    dut:
+      kind: juniper_vjunosrouter
+      image: vrnetlab/juniper_vjunos-router:26.2R1.7
+      startup-config: configs/dut.cfg
+    rx:
+      kind: juniper_vjunosrouter
+      image: vrnetlab/juniper_vjunos-router:26.2R1.7
+      startup-config: configs/rx.cfg
+
+  links:
+    # src ge-0/0/0 (eth1) <-> dut ge-0/0/0 (eth1)
+    - endpoints: ["src:eth1", "dut:eth1"]
+    # dut ge-0/0/1 (eth2) <-> rx ge-0/0/0 (eth1)
+    - endpoints: ["dut:eth2", "rx:eth1"]
