@@ -1,10 +1,10 @@
 # Junos policy-statement color and color2 lab.
 #
 # src (AS 65010) originates four /24s to dut (AS 200). dut's import policy
-# sets color on one and color2 on another; dut also has a static route
-# with color 300. dut's export chain toward rx (AS 300) sets color on one
-# more route and then accepts only routes by color and color2. rx's import
-# policy rejects color 100, to show whether color is carried to the peer.
+# sets color on one and color2 on another. dut's export chain toward rx
+# (AS 300) sets color on one more route and then accepts only routes by
+# color and color2. rx's import policy rejects color 100, to show whether
+# color is carried to the peer.
 #
 # Topology:
 #   src ge-0/0/0 10.0.1.0/31 -- dut ge-0/0/0 10.0.1.1/31
