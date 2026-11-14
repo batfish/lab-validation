@@ -1,0 +1,34 @@
+rollback 0
+load complete
+
+
+delete policy-options policy-statement RF-v4-host-bits-exact
+
+
+set policy-options policy-statement RF-v4-host-bits-exact term MATCH from route-filter 10.64.0.65/26 exact
+
+
+set policy-options policy-statement RF-v4-host-bits-exact term MATCH then accept
+
+
+set policy-options policy-statement RF-v4-host-bits-exact term REJECT then reject
+
+
+commit check
+configuration check succeeds
+
+
+commit
+commit complete
+
+
+run test policy RF-v4-host-bits-exact 0.0.0.0/0
+
+inet.0: 24 destinations, 24 routes (24 active, 0 holddown, 0 hidden)
++ = Active Route, - = Last Active, * = Both
+
+10.64.0.64/26      *[Static/5] 00:10:08
+                       Discard
+
+Policy RF-v4-host-bits-exact: 1 prefix accepted, 26 prefix rejected
+

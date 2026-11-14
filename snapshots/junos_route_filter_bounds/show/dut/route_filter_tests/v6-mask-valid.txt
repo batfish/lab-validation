@@ -1,0 +1,34 @@
+rollback 0
+load complete
+
+
+delete policy-options policy-statement RF-v6-mask-valid
+
+
+set policy-options policy-statement RF-v6-mask-valid term MATCH from route-filter 2001:db8:1::/64 address-mask ffff:ffff:ffff:ffff::
+
+
+set policy-options policy-statement RF-v6-mask-valid term MATCH then accept
+
+
+set policy-options policy-statement RF-v6-mask-valid term REJECT then reject
+
+
+commit check
+configuration check succeeds
+
+
+commit
+commit complete
+
+
+run test policy RF-v6-mask-valid ::/0
+
+inet6.0: 18 destinations, 18 routes (18 active, 0 holddown, 0 hidden)
++ = Active Route, - = Last Active, * = Both
+
+2001:db8:1::/64    *[Static/5] 00:11:41
+                       Discard
+
+Policy RF-v6-mask-valid: 1 prefix accepted, 21 prefix rejected
+

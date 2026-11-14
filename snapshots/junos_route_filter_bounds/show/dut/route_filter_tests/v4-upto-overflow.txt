@@ -1,0 +1,27 @@
+rollback 0
+load complete
+
+
+delete policy-options policy-statement RF-v4-upto-overflow
+warning: statement not found
+
+
+set policy-options policy-statement RF-v4-upto-overflow term MATCH from route-filter 10.64.0.64/26 upto /33
+
+
+set policy-options policy-statement RF-v4-upto-overflow term MATCH then accept
+
+
+set policy-options policy-statement RF-v4-upto-overflow term REJECT then reject
+
+
+commit check
+[edit policy-options policy-statement RF-v4-upto-overflow term MATCH from]
+  'route-filter 10.64.0.64/26 upto /33'
+    RPD Policy: invalid prefix length /33 for family inet
+error: configuration check-out failed
+
+
+rollback 0
+load complete
+

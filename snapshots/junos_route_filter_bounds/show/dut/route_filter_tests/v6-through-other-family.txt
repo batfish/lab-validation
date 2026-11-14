@@ -1,0 +1,27 @@
+rollback 0
+load complete
+
+
+delete policy-options policy-statement RF-v6-through-other-family
+warning: statement not found
+
+
+set policy-options policy-statement RF-v6-through-other-family term MATCH from route-filter 2001:db8:1::/64 through 10.64.0.0/16
+
+
+set policy-options policy-statement RF-v6-through-other-family term MATCH then accept
+
+
+set policy-options policy-statement RF-v6-through-other-family term REJECT then reject
+
+
+commit check
+[edit policy-options policy-statement RF-v6-through-other-family term MATCH from]
+  'route-filter 2001:db8:1::/64 through 10.64.0.0/16'
+    RPD Policy: invalid prefix 10.64.0.0/16 for family inet6
+error: configuration check-out failed
+
+
+rollback 0
+load complete
+

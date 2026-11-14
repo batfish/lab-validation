@@ -1,0 +1,38 @@
+rollback 0
+load complete
+
+
+delete policy-options policy-statement RF-v4-through-host-bits
+
+
+set policy-options policy-statement RF-v4-through-host-bits term MATCH from route-filter 10.64.0.65/26 through 10.64.0.65/28
+
+
+set policy-options policy-statement RF-v4-through-host-bits term MATCH then accept
+
+
+set policy-options policy-statement RF-v4-through-host-bits term REJECT then reject
+
+
+commit check
+configuration check succeeds
+
+
+commit
+commit complete
+
+
+run test policy RF-v4-through-host-bits 0.0.0.0/0
+
+inet.0: 24 destinations, 24 routes (24 active, 0 holddown, 0 hidden)
++ = Active Route, - = Last Active, * = Both
+
+10.64.0.64/26      *[Static/5] 00:12:19
+                       Discard
+10.64.0.64/27      *[Static/5] 00:12:19
+                       Discard
+10.64.0.64/28      *[Static/5] 00:12:19
+                       Discard
+
+Policy RF-v4-through-host-bits: 3 prefix accepted, 24 prefix rejected
+

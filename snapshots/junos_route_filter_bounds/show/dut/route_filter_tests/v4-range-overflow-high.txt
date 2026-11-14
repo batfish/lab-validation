@@ -1,0 +1,27 @@
+rollback 0
+load complete
+
+
+delete policy-options policy-statement RF-v4-range-overflow-high
+warning: statement not found
+
+
+set policy-options policy-statement RF-v4-range-overflow-high term MATCH from route-filter 10.64.0.64/26 prefix-length-range /26-/33
+
+
+set policy-options policy-statement RF-v4-range-overflow-high term MATCH then accept
+
+
+set policy-options policy-statement RF-v4-range-overflow-high term REJECT then reject
+
+
+commit check
+[edit policy-options policy-statement RF-v4-range-overflow-high term MATCH from]
+  'route-filter 10.64.0.64/26 prefix-length-range /26-/33'
+    RPD Policy: invalid maximum prefix length /33
+error: configuration check-out failed
+
+
+rollback 0
+load complete
+
