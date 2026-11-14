@@ -1,0 +1,44 @@
+rollback 0
+load complete
+
+
+delete policy-options policy-statement RF-v4-shadow-range
+warning: statement not found
+
+
+set policy-options policy-statement RF-v4-shadow-range term MATCH from route-filter 10.64.0.0/24 orlonger
+
+
+set policy-options policy-statement RF-v4-shadow-range term MATCH from route-filter 10.64.0.64/26 prefix-length-range /28-/26
+
+
+set policy-options policy-statement RF-v4-shadow-range term MATCH then accept
+
+
+set policy-options policy-statement RF-v4-shadow-range term REJECT then reject
+
+
+commit check
+configuration check succeeds
+
+
+commit
+commit complete
+
+
+run test policy RF-v4-shadow-range 0.0.0.0/0
+
+inet.0: 24 destinations, 24 routes (24 active, 0 holddown, 0 hidden)
++ = Active Route, - = Last Active, * = Both
+
+10.64.0.0/24       *[Static/5] 00:40:59
+                       Discard
+10.64.0.0/25       *[Static/5] 00:40:59
+                       Discard
+10.64.0.0/26       *[Static/5] 00:40:59
+                       Discard
+10.64.0.128/26     *[Static/5] 00:40:59
+                       Discard
+
+Policy RF-v4-shadow-range: 4 prefix accepted, 23 prefix rejected
+

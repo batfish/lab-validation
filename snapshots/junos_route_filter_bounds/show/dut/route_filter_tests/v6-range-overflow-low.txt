@@ -1,0 +1,27 @@
+rollback 0
+load complete
+
+
+delete policy-options policy-statement RF-v6-range-overflow-low
+warning: statement not found
+
+
+set policy-options policy-statement RF-v6-range-overflow-low term MATCH from route-filter 2001:db8:1::/64 prefix-length-range /129-/130
+
+
+set policy-options policy-statement RF-v6-range-overflow-low term MATCH then accept
+
+
+set policy-options policy-statement RF-v6-range-overflow-low term REJECT then reject
+
+
+commit check
+[edit policy-options policy-statement RF-v6-range-overflow-low term MATCH from]
+  'route-filter 2001:db8:1::/64 prefix-length-range /129-/130'
+    RPD Policy: invalid minimum prefix length /129
+error: configuration check-out failed
+
+
+rollback 0
+load complete
+

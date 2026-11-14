@@ -1,0 +1,27 @@
+rollback 0
+load complete
+
+
+delete policy-options policy-statement RF-v6-through-short
+warning: statement not found
+
+
+set policy-options policy-statement RF-v6-through-short term MATCH from route-filter 2001:db8:1::/64 through 2001:db8:1::/48
+
+
+set policy-options policy-statement RF-v6-through-short term MATCH then accept
+
+
+set policy-options policy-statement RF-v6-through-short term REJECT then reject
+
+
+commit check
+[edit policy-options policy-statement RF-v6-through-short term MATCH from]
+  'route-filter 2001:db8:1::/64 through 2001:db8:1::/48'
+    Max prefix length 48 less than min prefix length 64
+error: configuration check-out failed
+
+
+rollback 0
+load complete
+

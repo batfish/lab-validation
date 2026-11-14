@@ -1,0 +1,27 @@
+rollback 0
+load complete
+
+
+delete policy-options policy-statement RF-v6-range-straddle
+warning: statement not found
+
+
+set policy-options policy-statement RF-v6-range-straddle term MATCH from route-filter 2001:db8:1::/64 prefix-length-range /48-/66
+
+
+set policy-options policy-statement RF-v6-range-straddle term MATCH then accept
+
+
+set policy-options policy-statement RF-v6-range-straddle term REJECT then reject
+
+
+commit check
+[edit policy-options policy-statement RF-v6-range-straddle term MATCH from]
+  'route-filter 2001:db8:1::/64 prefix-length-range /48-/66'
+    RPD Policy: invalid minimum prefix length /48
+error: configuration check-out failed
+
+
+rollback 0
+load complete
+

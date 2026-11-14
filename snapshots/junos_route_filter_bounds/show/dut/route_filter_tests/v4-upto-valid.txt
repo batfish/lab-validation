@@ -1,0 +1,40 @@
+rollback 0
+load complete
+
+
+delete policy-options policy-statement RF-v4-upto-valid
+
+
+set policy-options policy-statement RF-v4-upto-valid term MATCH from route-filter 10.64.0.64/26 upto /28
+
+
+set policy-options policy-statement RF-v4-upto-valid term MATCH then accept
+
+
+set policy-options policy-statement RF-v4-upto-valid term REJECT then reject
+
+
+commit check
+configuration check succeeds
+
+
+commit
+commit complete
+
+
+run test policy RF-v4-upto-valid 0.0.0.0/0
+
+inet.0: 24 destinations, 24 routes (24 active, 0 holddown, 0 hidden)
++ = Active Route, - = Last Active, * = Both
+
+10.64.0.64/26      *[Static/5] 00:09:02
+                       Discard
+10.64.0.64/27      *[Static/5] 00:09:02
+                       Discard
+10.64.0.64/28      *[Static/5] 00:09:02
+                       Discard
+10.64.0.96/27      *[Static/5] 00:09:02
+                       Discard
+
+Policy RF-v4-upto-valid: 4 prefix accepted, 23 prefix rejected
+

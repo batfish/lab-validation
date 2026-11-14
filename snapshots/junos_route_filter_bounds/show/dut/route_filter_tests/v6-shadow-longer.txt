@@ -1,0 +1,52 @@
+rollback 0
+load complete
+
+
+delete policy-options policy-statement RF-v6-shadow-longer
+warning: statement not found
+
+
+set policy-options policy-statement RF-v6-shadow-longer term MATCH from route-filter 2001:db8:1::/48 orlonger
+
+
+set policy-options policy-statement RF-v6-shadow-longer term MATCH from route-filter 2001:db8:1::1/128 longer
+
+
+set policy-options policy-statement RF-v6-shadow-longer term MATCH then accept
+
+
+set policy-options policy-statement RF-v6-shadow-longer term REJECT then reject
+
+
+commit check
+configuration check succeeds
+
+
+commit
+commit complete
+
+
+run test policy RF-v6-shadow-longer ::/0
+
+inet6.0: 18 destinations, 18 routes (18 active, 0 holddown, 0 hidden)
++ = Active Route, - = Last Active, * = Both
+
+2001:db8:1::/48    *[Static/5] 00:41:09
+                       Discard
+2001:db8:1::/63    *[Static/5] 00:41:09
+                       Discard
+2001:db8:1::/64    *[Static/5] 00:41:09
+                       Discard
+2001:db8:1::/65    *[Static/5] 00:41:09
+                       Discard
+2001:db8:1::/66    *[Static/5] 00:41:09
+                       Discard
+2001:db8:1::/127   *[Static/5] 00:41:09
+                       Discard
+2001:db8:1::/128   *[Static/5] 00:41:09
+                       Discard
+2001:db8:1:1::/64  *[Static/5] 00:41:09
+                       Discard
+
+Policy RF-v6-shadow-longer: 8 prefix accepted, 14 prefix rejected
+

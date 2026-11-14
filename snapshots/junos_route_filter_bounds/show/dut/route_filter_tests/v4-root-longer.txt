@@ -1,0 +1,86 @@
+rollback 0
+load complete
+
+
+delete policy-options policy-statement RF-v4-root-longer
+
+
+set policy-options policy-statement RF-v4-root-longer term MATCH from route-filter 0.0.0.0/0 longer
+
+
+set policy-options policy-statement RF-v4-root-longer term MATCH then accept
+
+
+set policy-options policy-statement RF-v4-root-longer term REJECT then reject
+
+
+commit check
+configuration check succeeds
+
+
+commit
+commit complete
+
+
+run test policy RF-v4-root-longer 0.0.0.0/0
+
+inet.0: 24 destinations, 24 routes (24 active, 0 holddown, 0 hidden)
++ = Active Route, - = Last Active, * = Both
+
+10.0.0.0/8         *[Static/5] 00:12:23
+                       Discard
+10.64.0.0/16       *[Static/5] 00:12:23
+                       Discard
+10.64.0.0/23       *[Static/5] 00:12:23
+                       Discard
+10.64.0.0/24       *[Static/5] 00:12:23
+                       Discard
+10.64.0.0/25       *[Static/5] 00:12:23
+                       Discard
+10.64.0.0/26       *[Static/5] 00:12:23
+                       Discard
+10.64.0.64/26      *[Static/5] 00:12:23
+                       Discard
+10.64.0.64/27      *[Static/5] 00:12:23
+                       Discard
+10.64.0.64/28      *[Static/5] 00:12:23
+                       Discard
+10.64.0.64/31      *[Static/5] 00:12:23
+                       Discard
+10.64.0.64/32      *[Static/5] 00:12:23
+                       Discard
+10.64.0.65/32      *[Static/5] 00:12:23
+                       Discard
+10.64.0.96/27      *[Static/5] 00:12:23
+                       Discard
+10.64.0.128/26     *[Static/5] 00:12:23
+                       Discard
+10.64.1.0/24       *[Static/5] 00:12:23
+                       Discard
+10.65.0.0/24       *[Static/5] 00:12:23
+                       Discard
+10.65.0.0/26       *[Static/5] 00:05:59
+                       Discard
+10.65.0.0/27       *[Static/5] 00:05:59
+                       Discard
+10.65.0.0/28       *[Static/5] 00:05:59
+                       Discard
+192.0.2.0/24       *[Static/5] 00:12:23
+                       Discard
+192.0.2.1/32       *[Static/5] 00:12:23
+                       Discard
+192.0.2.254/32     *[Direct/0] 00:12:24
+                    >  via lo0.0
+198.51.100.0/24    *[Static/5] 00:12:23
+                       Discard
+
+mgmt_junos.inet.0: 3 destinations, 3 routes (3 active, 0 holddown, 0 hidden)
++ = Active Route, - = Last Active, * = Both
+
+10.0.0.0/24        *[Direct/0] 00:12:24
+                    >  via fxp0.0
+10.0.0.15/32       *[Local/0] 00:12:24
+                       Local via fxp0.0
+
+Policy RF-v4-root-longer: 25 prefix accepted, 2 prefix rejected
+

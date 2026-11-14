@@ -1,0 +1,34 @@
+rollback 0
+load complete
+
+
+delete policy-options policy-statement RF-v6-through-equal
+
+
+set policy-options policy-statement RF-v6-through-equal term MATCH from route-filter 2001:db8:1::/64 through 2001:db8:1::/64
+
+
+set policy-options policy-statement RF-v6-through-equal term MATCH then accept
+
+
+set policy-options policy-statement RF-v6-through-equal term REJECT then reject
+
+
+commit check
+configuration check succeeds
+
+
+commit
+commit complete
+
+
+run test policy RF-v6-through-equal ::/0
+
+inet6.0: 18 destinations, 18 routes (18 active, 0 holddown, 0 hidden)
++ = Active Route, - = Last Active, * = Both
+
+2001:db8:1::/64    *[Static/5] 00:11:29
+                       Discard
+
+Policy RF-v6-through-equal: 1 prefix accepted, 21 prefix rejected
+

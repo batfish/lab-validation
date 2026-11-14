@@ -1,0 +1,40 @@
+rollback 0
+load complete
+
+
+delete policy-options policy-statement RF-v4-mask-zero
+
+
+set policy-options policy-statement RF-v4-mask-zero term MATCH from route-filter 10.64.0.64/26 address-mask 0.0.0.0
+
+
+set policy-options policy-statement RF-v4-mask-zero term MATCH then accept
+
+
+set policy-options policy-statement RF-v4-mask-zero term REJECT then reject
+
+
+commit check
+configuration check succeeds
+
+
+commit
+commit complete
+
+
+run test policy RF-v4-mask-zero 0.0.0.0/0
+
+inet.0: 24 destinations, 24 routes (24 active, 0 holddown, 0 hidden)
++ = Active Route, - = Last Active, * = Both
+
+10.64.0.0/26       *[Static/5] 00:09:57
+                       Discard
+10.64.0.64/26      *[Static/5] 00:09:57
+                       Discard
+10.64.0.128/26     *[Static/5] 00:09:57
+                       Discard
+10.65.0.0/26       *[Static/5] 00:03:33
+                       Discard
+
+Policy RF-v4-mask-zero: 4 prefix accepted, 23 prefix rejected
+

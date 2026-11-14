@@ -1,0 +1,1007 @@
+[
+  {
+    "name": "v4-exact",
+    "filters": [
+      "10.64.0.64/26 exact"
+    ],
+    "cli_accepted": true,
+    "commit_check": true,
+    "committed": true,
+    "policy_output": "\ninet.0: 24 destinations, 24 routes (24 active, 0 holddown, 0 hidden)\n+ = Active Route, - = Last Active, * = Both\n\n10.64.0.64/26      *[Static/5] 00:08:30\n                       Discard\n\nPolicy RF-v4-exact: 1 prefix accepted, 26 prefix rejected\n",
+    "warnings": []
+  },
+  {
+    "name": "v4-host-exact",
+    "filters": [
+      "10.64.0.64/32 exact"
+    ],
+    "cli_accepted": true,
+    "commit_check": true,
+    "committed": true,
+    "policy_output": "\ninet.0: 24 destinations, 24 routes (24 active, 0 holddown, 0 hidden)\n+ = Active Route, - = Last Active, * = Both\n\n10.64.0.64/32      *[Static/5] 00:08:34\n                       Discard\n\nPolicy RF-v4-host-exact: 1 prefix accepted, 26 prefix rejected\n",
+    "warnings": []
+  },
+  {
+    "name": "v4-longer",
+    "filters": [
+      "10.64.0.64/26 longer"
+    ],
+    "cli_accepted": true,
+    "commit_check": true,
+    "committed": true,
+    "policy_output": "\ninet.0: 24 destinations, 24 routes (24 active, 0 holddown, 0 hidden)\n+ = Active Route, - = Last Active, * = Both\n\n10.64.0.64/27      *[Static/5] 00:08:38\n                       Discard\n10.64.0.64/28      *[Static/5] 00:08:38\n                       Discard\n10.64.0.64/31      *[Static/5] 00:08:38\n                       Discard\n10.64.0.64/32      *[Static/5] 00:08:38\n                       Discard\n10.64.0.65/32      *[Static/5] 00:08:38\n                       Discard\n10.64.0.96/27      *[Static/5] 00:08:38\n                       Discard\n\nPolicy RF-v4-longer: 6 prefix accepted, 21 prefix rejected\n",
+    "warnings": []
+  },
+  {
+    "name": "v4-host-longer",
+    "filters": [
+      "10.64.0.64/32 longer"
+    ],
+    "cli_accepted": true,
+    "commit_check": true,
+    "committed": true,
+    "policy_output": "\nPolicy RF-v4-host-longer: 0 prefix accepted, 27 prefix rejected\n",
+    "warnings": []
+  },
+  {
+    "name": "v4-orlonger",
+    "filters": [
+      "10.64.0.64/26 orlonger"
+    ],
+    "cli_accepted": true,
+    "commit_check": true,
+    "committed": true,
+    "policy_output": "\ninet.0: 24 destinations, 24 routes (24 active, 0 holddown, 0 hidden)\n+ = Active Route, - = Last Active, * = Both\n\n10.64.0.64/26      *[Static/5] 00:08:46\n                       Discard\n10.64.0.64/27      *[Static/5] 00:08:46\n                       Discard\n10.64.0.64/28      *[Static/5] 00:08:46\n                       Discard\n10.64.0.64/31      *[Static/5] 00:08:46\n                       Discard\n10.64.0.64/32      *[Static/5] 00:08:46\n                       Discard\n10.64.0.65/32      *[Static/5] 00:08:46\n                       Discard\n10.64.0.96/27      *[Static/5] 00:08:46\n                       Discard\n\nPolicy RF-v4-orlonger: 7 prefix accepted, 20 prefix rejected\n",
+    "warnings": []
+  },
+  {
+    "name": "v4-host-orlonger",
+    "filters": [
+      "10.64.0.64/32 orlonger"
+    ],
+    "cli_accepted": true,
+    "commit_check": true,
+    "committed": true,
+    "policy_output": "\ninet.0: 24 destinations, 24 routes (24 active, 0 holddown, 0 hidden)\n+ = Active Route, - = Last Active, * = Both\n\n10.64.0.64/32      *[Static/5] 00:08:50\n                       Discard\n\nPolicy RF-v4-host-orlonger: 1 prefix accepted, 26 prefix rejected\n",
+    "warnings": []
+  },
+  {
+    "name": "v4-upto-short",
+    "filters": [
+      "10.64.0.64/26 upto /24"
+    ],
+    "cli_accepted": true,
+    "commit_check": true,
+    "committed": true,
+    "policy_output": "\nPolicy RF-v4-upto-short: 0 prefix accepted, 27 prefix rejected\n",
+    "warnings": []
+  },
+  {
+    "name": "v4-upto-equal",
+    "filters": [
+      "10.64.0.64/26 upto /26"
+    ],
+    "cli_accepted": true,
+    "commit_check": true,
+    "committed": true,
+    "policy_output": "\ninet.0: 24 destinations, 24 routes (24 active, 0 holddown, 0 hidden)\n+ = Active Route, - = Last Active, * = Both\n\n10.64.0.64/26      *[Static/5] 00:08:58\n                       Discard\n\nPolicy RF-v4-upto-equal: 1 prefix accepted, 26 prefix rejected\n",
+    "warnings": []
+  },
+  {
+    "name": "v4-upto-valid",
+    "filters": [
+      "10.64.0.64/26 upto /28"
+    ],
+    "cli_accepted": true,
+    "commit_check": true,
+    "committed": true,
+    "policy_output": "\ninet.0: 24 destinations, 24 routes (24 active, 0 holddown, 0 hidden)\n+ = Active Route, - = Last Active, * = Both\n\n10.64.0.64/26      *[Static/5] 00:09:02\n                       Discard\n10.64.0.64/27      *[Static/5] 00:09:02\n                       Discard\n10.64.0.64/28      *[Static/5] 00:09:02\n                       Discard\n10.64.0.96/27      *[Static/5] 00:09:02\n                       Discard\n\nPolicy RF-v4-upto-valid: 4 prefix accepted, 23 prefix rejected\n",
+    "warnings": []
+  },
+  {
+    "name": "v4-upto-max",
+    "filters": [
+      "10.64.0.64/26 upto /32"
+    ],
+    "cli_accepted": true,
+    "commit_check": true,
+    "committed": true,
+    "policy_output": "\ninet.0: 24 destinations, 24 routes (24 active, 0 holddown, 0 hidden)\n+ = Active Route, - = Last Active, * = Both\n\n10.64.0.64/26      *[Static/5] 00:09:06\n                       Discard\n10.64.0.64/27      *[Static/5] 00:09:06\n                       Discard\n10.64.0.64/28      *[Static/5] 00:09:06\n                       Discard\n10.64.0.64/31      *[Static/5] 00:09:06\n                       Discard\n10.64.0.64/32      *[Static/5] 00:09:06\n                       Discard\n10.64.0.65/32      *[Static/5] 00:09:06\n                       Discard\n10.64.0.96/27      *[Static/5] 00:09:06\n                       Discard\n\nPolicy RF-v4-upto-max: 7 prefix accepted, 20 prefix rejected\n",
+    "warnings": []
+  },
+  {
+    "name": "v4-upto-zero",
+    "filters": [
+      "10.64.0.64/26 upto /0"
+    ],
+    "cli_accepted": true,
+    "commit_check": true,
+    "committed": true,
+    "policy_output": "\nPolicy RF-v4-upto-zero: 0 prefix accepted, 27 prefix rejected\n",
+    "warnings": []
+  },
+  {
+    "name": "v4-upto-overflow",
+    "filters": [
+      "10.64.0.64/26 upto /33"
+    ],
+    "cli_accepted": true,
+    "commit_check": false,
+    "committed": false,
+    "warnings": []
+  },
+  {
+    "name": "v4-range-valid",
+    "filters": [
+      "10.64.0.64/26 prefix-length-range /26-/28"
+    ],
+    "cli_accepted": true,
+    "commit_check": true,
+    "committed": true,
+    "policy_output": "\ninet.0: 24 destinations, 24 routes (24 active, 0 holddown, 0 hidden)\n+ = Active Route, - = Last Active, * = Both\n\n10.64.0.64/26      *[Static/5] 00:09:16\n                       Discard\n10.64.0.64/27      *[Static/5] 00:09:16\n                       Discard\n10.64.0.64/28      *[Static/5] 00:09:16\n                       Discard\n10.64.0.96/27      *[Static/5] 00:09:16\n                       Discard\n\nPolicy RF-v4-range-valid: 4 prefix accepted, 23 prefix rejected\n",
+    "warnings": []
+  },
+  {
+    "name": "v4-range-equal",
+    "filters": [
+      "10.64.0.64/26 prefix-length-range /26-/26"
+    ],
+    "cli_accepted": true,
+    "commit_check": true,
+    "committed": true,
+    "policy_output": "\ninet.0: 24 destinations, 24 routes (24 active, 0 holddown, 0 hidden)\n+ = Active Route, - = Last Active, * = Both\n\n10.64.0.64/26      *[Static/5] 00:09:19\n                       Discard\n\nPolicy RF-v4-range-equal: 1 prefix accepted, 26 prefix rejected\n",
+    "warnings": []
+  },
+  {
+    "name": "v4-range-straddle",
+    "filters": [
+      "10.64.0.64/26 prefix-length-range /24-/28"
+    ],
+    "cli_accepted": true,
+    "commit_check": false,
+    "committed": false,
+    "warnings": []
+  },
+  {
+    "name": "v4-range-below",
+    "filters": [
+      "10.64.0.64/26 prefix-length-range /24-/25"
+    ],
+    "cli_accepted": true,
+    "commit_check": false,
+    "committed": false,
+    "warnings": []
+  },
+  {
+    "name": "v4-range-reversed",
+    "filters": [
+      "10.64.0.64/26 prefix-length-range /28-/26"
+    ],
+    "cli_accepted": true,
+    "commit_check": true,
+    "committed": true,
+    "policy_output": "\nPolicy RF-v4-range-reversed: 0 prefix accepted, 27 prefix rejected\n",
+    "warnings": []
+  },
+  {
+    "name": "v4-range-reversed-below",
+    "filters": [
+      "10.64.0.64/26 prefix-length-range /25-/24"
+    ],
+    "cli_accepted": true,
+    "commit_check": false,
+    "committed": false,
+    "warnings": []
+  },
+  {
+    "name": "v4-range-zero",
+    "filters": [
+      "10.64.0.64/26 prefix-length-range /0-/32"
+    ],
+    "cli_accepted": true,
+    "commit_check": false,
+    "committed": false,
+    "warnings": []
+  },
+  {
+    "name": "v4-range-overflow-high",
+    "filters": [
+      "10.64.0.64/26 prefix-length-range /26-/33"
+    ],
+    "cli_accepted": true,
+    "commit_check": false,
+    "committed": false,
+    "warnings": []
+  },
+  {
+    "name": "v4-range-overflow-low",
+    "filters": [
+      "10.64.0.64/26 prefix-length-range /33-/34"
+    ],
+    "cli_accepted": true,
+    "commit_check": false,
+    "committed": false,
+    "warnings": []
+  },
+  {
+    "name": "v4-through-valid",
+    "filters": [
+      "10.64.0.64/26 through 10.64.0.64/28"
+    ],
+    "cli_accepted": true,
+    "commit_check": true,
+    "committed": true,
+    "policy_output": "\ninet.0: 24 destinations, 24 routes (24 active, 0 holddown, 0 hidden)\n+ = Active Route, - = Last Active, * = Both\n\n10.64.0.64/26      *[Static/5] 00:09:38\n                       Discard\n10.64.0.64/27      *[Static/5] 00:09:38\n                       Discard\n10.64.0.64/28      *[Static/5] 00:09:38\n                       Discard\n\nPolicy RF-v4-through-valid: 3 prefix accepted, 24 prefix rejected\n",
+    "warnings": []
+  },
+  {
+    "name": "v4-through-equal",
+    "filters": [
+      "10.64.0.64/26 through 10.64.0.64/26"
+    ],
+    "cli_accepted": true,
+    "commit_check": true,
+    "committed": true,
+    "policy_output": "\ninet.0: 24 destinations, 24 routes (24 active, 0 holddown, 0 hidden)\n+ = Active Route, - = Last Active, * = Both\n\n10.64.0.64/26      *[Static/5] 00:09:42\n                       Discard\n\nPolicy RF-v4-through-equal: 1 prefix accepted, 26 prefix rejected\n",
+    "warnings": []
+  },
+  {
+    "name": "v4-through-short",
+    "filters": [
+      "10.64.0.64/26 through 10.64.0.0/24"
+    ],
+    "cli_accepted": true,
+    "commit_check": false,
+    "committed": false,
+    "warnings": []
+  },
+  {
+    "name": "v4-through-outside",
+    "filters": [
+      "10.64.0.64/26 through 10.65.0.0/28"
+    ],
+    "cli_accepted": true,
+    "commit_check": true,
+    "committed": true,
+    "policy_output": "\nPolicy RF-v4-through-outside: 0 prefix accepted, 27 prefix rejected\n",
+    "warnings": []
+  },
+  {
+    "name": "v4-through-other-family",
+    "filters": [
+      "10.64.0.64/26 through 2001:db8::/32"
+    ],
+    "cli_accepted": true,
+    "commit_check": false,
+    "committed": false,
+    "warnings": []
+  },
+  {
+    "name": "v4-mask-valid",
+    "filters": [
+      "10.64.0.64/26 address-mask 255.255.255.192"
+    ],
+    "cli_accepted": true,
+    "commit_check": true,
+    "committed": true,
+    "policy_output": "\ninet.0: 24 destinations, 24 routes (24 active, 0 holddown, 0 hidden)\n+ = Active Route, - = Last Active, * = Both\n\n10.64.0.64/26      *[Static/5] 00:09:53\n                       Discard\n\nPolicy RF-v4-mask-valid: 1 prefix accepted, 26 prefix rejected\n",
+    "warnings": []
+  },
+  {
+    "name": "v4-mask-zero",
+    "filters": [
+      "10.64.0.64/26 address-mask 0.0.0.0"
+    ],
+    "cli_accepted": true,
+    "commit_check": true,
+    "committed": true,
+    "policy_output": "\ninet.0: 24 destinations, 24 routes (24 active, 0 holddown, 0 hidden)\n+ = Active Route, - = Last Active, * = Both\n\n10.64.0.0/26       *[Static/5] 00:09:57\n                       Discard\n10.64.0.64/26      *[Static/5] 00:09:57\n                       Discard\n10.64.0.128/26     *[Static/5] 00:09:57\n                       Discard\n10.65.0.0/26       *[Static/5] 00:03:33\n                       Discard\n\nPolicy RF-v4-mask-zero: 4 prefix accepted, 23 prefix rejected\n",
+    "warnings": []
+  },
+  {
+    "name": "v4-mask-ones",
+    "filters": [
+      "10.64.0.64/26 address-mask 255.255.255.255"
+    ],
+    "cli_accepted": true,
+    "commit_check": false,
+    "committed": false,
+    "warnings": []
+  },
+  {
+    "name": "v4-mask-noncontiguous",
+    "filters": [
+      "10.64.0.64/26 address-mask 255.255.0.255"
+    ],
+    "cli_accepted": true,
+    "commit_check": true,
+    "committed": true,
+    "policy_output": "\ninet.0: 24 destinations, 24 routes (24 active, 0 holddown, 0 hidden)\n+ = Active Route, - = Last Active, * = Both\n\n10.64.0.64/26      *[Static/5] 00:10:03\n                       Discard\n\nPolicy RF-v4-mask-noncontiguous: 1 prefix accepted, 26 prefix rejected\n",
+    "warnings": []
+  },
+  {
+    "name": "v4-mask-other-family",
+    "filters": [
+      "10.64.0.64/26 address-mask ffff:ffff::"
+    ],
+    "cli_accepted": true,
+    "commit_check": false,
+    "committed": false,
+    "warnings": []
+  },
+  {
+    "name": "v4-host-bits-exact",
+    "filters": [
+      "10.64.0.65/26 exact"
+    ],
+    "cli_accepted": true,
+    "commit_check": true,
+    "committed": true,
+    "policy_output": "\ninet.0: 24 destinations, 24 routes (24 active, 0 holddown, 0 hidden)\n+ = Active Route, - = Last Active, * = Both\n\n10.64.0.64/26      *[Static/5] 00:10:08\n                       Discard\n\nPolicy RF-v4-host-bits-exact: 1 prefix accepted, 26 prefix rejected\n",
+    "warnings": []
+  },
+  {
+    "name": "v4-host-bits-mask",
+    "filters": [
+      "10.64.0.65/26 address-mask 255.255.255.255"
+    ],
+    "cli_accepted": true,
+    "commit_check": false,
+    "committed": false,
+    "warnings": []
+  },
+  {
+    "name": "v4-shadow-empty",
+    "filters": [
+      "10.64.0.0/24 orlonger",
+      "10.64.0.64/26 upto /24"
+    ],
+    "cli_accepted": true,
+    "commit_check": true,
+    "committed": true,
+    "policy_output": "\ninet.0: 24 destinations, 24 routes (24 active, 0 holddown, 0 hidden)\n+ = Active Route, - = Last Active, * = Both\n\n10.64.0.0/24       *[Static/5] 00:10:14\n                       Discard\n10.64.0.0/25       *[Static/5] 00:10:14\n                       Discard\n10.64.0.0/26       *[Static/5] 00:10:14\n                       Discard\n10.64.0.128/26     *[Static/5] 00:10:14\n                       Discard\n\nPolicy RF-v4-shadow-empty: 4 prefix accepted, 23 prefix rejected\n",
+    "warnings": []
+  },
+  {
+    "name": "v6-exact",
+    "filters": [
+      "2001:db8:1::/64 exact"
+    ],
+    "cli_accepted": true,
+    "commit_check": true,
+    "committed": true,
+    "policy_output": "\ninet6.0: 18 destinations, 18 routes (18 active, 0 holddown, 0 hidden)\n+ = Active Route, - = Last Active, * = Both\n\n2001:db8:1::/64    *[Static/5] 00:10:18\n                       Discard\n\nPolicy RF-v6-exact: 1 prefix accepted, 21 prefix rejected\n",
+    "warnings": []
+  },
+  {
+    "name": "v6-host-exact",
+    "filters": [
+      "2001:db8:1::1/128 exact"
+    ],
+    "cli_accepted": true,
+    "commit_check": true,
+    "committed": true,
+    "policy_output": "\ninet6.0: 18 destinations, 18 routes (18 active, 0 holddown, 0 hidden)\n+ = Active Route, - = Last Active, * = Both\n\n2001:db8:1::1/128  *[Static/5] 00:10:22\n                       Discard\n\nPolicy RF-v6-host-exact: 1 prefix accepted, 21 prefix rejected\n",
+    "warnings": []
+  },
+  {
+    "name": "v6-longer",
+    "filters": [
+      "2001:db8:1::/64 longer"
+    ],
+    "cli_accepted": true,
+    "commit_check": true,
+    "committed": true,
+    "policy_output": "\ninet6.0: 18 destinations, 18 routes (18 active, 0 holddown, 0 hidden)\n+ = Active Route, - = Last Active, * = Both\n\n2001:db8:1::/65    *[Static/5] 00:10:26\n                       Discard\n2001:db8:1::/66    *[Static/5] 00:10:26\n                       Discard\n2001:db8:1::/127   *[Static/5] 00:10:26\n                       Discard\n2001:db8:1::/128   *[Static/5] 00:10:26\n                       Discard\n2001:db8:1::1/128  *[Static/5] 00:10:26\n                       Discard\n\nPolicy RF-v6-longer: 5 prefix accepted, 17 prefix rejected\n",
+    "warnings": []
+  },
+  {
+    "name": "v6-host-longer",
+    "filters": [
+      "2001:db8:1::1/128 longer"
+    ],
+    "cli_accepted": true,
+    "commit_check": true,
+    "committed": true,
+    "policy_output": "\nPolicy RF-v6-host-longer: 0 prefix accepted, 22 prefix rejected\n",
+    "warnings": []
+  },
+  {
+    "name": "v6-orlonger",
+    "filters": [
+      "2001:db8:1::/64 orlonger"
+    ],
+    "cli_accepted": true,
+    "commit_check": true,
+    "committed": true,
+    "policy_output": "\ninet6.0: 18 destinations, 18 routes (18 active, 0 holddown, 0 hidden)\n+ = Active Route, - = Last Active, * = Both\n\n2001:db8:1::/64    *[Static/5] 00:10:34\n                       Discard\n2001:db8:1::/65    *[Static/5] 00:10:34\n                       Discard\n2001:db8:1::/66    *[Static/5] 00:10:34\n                       Discard\n2001:db8:1::/127   *[Static/5] 00:10:34\n                       Discard\n2001:db8:1::/128   *[Static/5] 00:10:34\n                       Discard\n2001:db8:1::1/128  *[Static/5] 00:10:34\n                       Discard\n\nPolicy RF-v6-orlonger: 6 prefix accepted, 16 prefix rejected\n",
+    "warnings": []
+  },
+  {
+    "name": "v6-host-orlonger",
+    "filters": [
+      "2001:db8:1::1/128 orlonger"
+    ],
+    "cli_accepted": true,
+    "commit_check": true,
+    "committed": true,
+    "policy_output": "\ninet6.0: 18 destinations, 18 routes (18 active, 0 holddown, 0 hidden)\n+ = Active Route, - = Last Active, * = Both\n\n2001:db8:1::1/128  *[Static/5] 00:10:38\n                       Discard\n\nPolicy RF-v6-host-orlonger: 1 prefix accepted, 21 prefix rejected\n",
+    "warnings": []
+  },
+  {
+    "name": "v6-upto-short",
+    "filters": [
+      "2001:db8:1::/64 upto /48"
+    ],
+    "cli_accepted": true,
+    "commit_check": true,
+    "committed": true,
+    "policy_output": "\nPolicy RF-v6-upto-short: 0 prefix accepted, 22 prefix rejected\n",
+    "warnings": []
+  },
+  {
+    "name": "v6-upto-equal",
+    "filters": [
+      "2001:db8:1::/64 upto /64"
+    ],
+    "cli_accepted": true,
+    "commit_check": true,
+    "committed": true,
+    "policy_output": "\ninet6.0: 18 destinations, 18 routes (18 active, 0 holddown, 0 hidden)\n+ = Active Route, - = Last Active, * = Both\n\n2001:db8:1::/64    *[Static/5] 00:10:45\n                       Discard\n\nPolicy RF-v6-upto-equal: 1 prefix accepted, 21 prefix rejected\n",
+    "warnings": []
+  },
+  {
+    "name": "v6-upto-valid",
+    "filters": [
+      "2001:db8:1::/64 upto /66"
+    ],
+    "cli_accepted": true,
+    "commit_check": true,
+    "committed": true,
+    "policy_output": "\ninet6.0: 18 destinations, 18 routes (18 active, 0 holddown, 0 hidden)\n+ = Active Route, - = Last Active, * = Both\n\n2001:db8:1::/64    *[Static/5] 00:10:50\n                       Discard\n2001:db8:1::/65    *[Static/5] 00:10:50\n                       Discard\n2001:db8:1::/66    *[Static/5] 00:10:50\n                       Discard\n\nPolicy RF-v6-upto-valid: 3 prefix accepted, 19 prefix rejected\n",
+    "warnings": []
+  },
+  {
+    "name": "v6-upto-max",
+    "filters": [
+      "2001:db8:1::/64 upto /128"
+    ],
+    "cli_accepted": true,
+    "commit_check": true,
+    "committed": true,
+    "policy_output": "\ninet6.0: 18 destinations, 18 routes (18 active, 0 holddown, 0 hidden)\n+ = Active Route, - = Last Active, * = Both\n\n2001:db8:1::/64    *[Static/5] 00:10:53\n                       Discard\n2001:db8:1::/65    *[Static/5] 00:10:53\n                       Discard\n2001:db8:1::/66    *[Static/5] 00:10:53\n                       Discard\n2001:db8:1::/127   *[Static/5] 00:10:53\n                       Discard\n2001:db8:1::/128   *[Static/5] 00:10:53\n                       Discard\n2001:db8:1::1/128  *[Static/5] 00:10:53\n                       Discard\n\nPolicy RF-v6-upto-max: 6 prefix accepted, 16 prefix rejected\n",
+    "warnings": []
+  },
+  {
+    "name": "v6-upto-zero",
+    "filters": [
+      "2001:db8:1::/64 upto /0"
+    ],
+    "cli_accepted": true,
+    "commit_check": true,
+    "committed": true,
+    "policy_output": "\nPolicy RF-v6-upto-zero: 0 prefix accepted, 22 prefix rejected\n",
+    "warnings": []
+  },
+  {
+    "name": "v6-upto-overflow",
+    "filters": [
+      "2001:db8:1::/64 upto /129"
+    ],
+    "cli_accepted": true,
+    "commit_check": false,
+    "committed": false,
+    "warnings": []
+  },
+  {
+    "name": "v6-range-valid",
+    "filters": [
+      "2001:db8:1::/64 prefix-length-range /64-/66"
+    ],
+    "cli_accepted": true,
+    "commit_check": true,
+    "committed": true,
+    "policy_output": "\ninet6.0: 18 destinations, 18 routes (18 active, 0 holddown, 0 hidden)\n+ = Active Route, - = Last Active, * = Both\n\n2001:db8:1::/64    *[Static/5] 00:11:03\n                       Discard\n2001:db8:1::/65    *[Static/5] 00:11:03\n                       Discard\n2001:db8:1::/66    *[Static/5] 00:11:03\n                       Discard\n\nPolicy RF-v6-range-valid: 3 prefix accepted, 19 prefix rejected\n",
+    "warnings": []
+  },
+  {
+    "name": "v6-range-equal",
+    "filters": [
+      "2001:db8:1::/64 prefix-length-range /64-/64"
+    ],
+    "cli_accepted": true,
+    "commit_check": true,
+    "committed": true,
+    "policy_output": "\ninet6.0: 18 destinations, 18 routes (18 active, 0 holddown, 0 hidden)\n+ = Active Route, - = Last Active, * = Both\n\n2001:db8:1::/64    *[Static/5] 00:11:07\n                       Discard\n\nPolicy RF-v6-range-equal: 1 prefix accepted, 21 prefix rejected\n",
+    "warnings": []
+  },
+  {
+    "name": "v6-range-straddle",
+    "filters": [
+      "2001:db8:1::/64 prefix-length-range /48-/66"
+    ],
+    "cli_accepted": true,
+    "commit_check": false,
+    "committed": false,
+    "warnings": []
+  },
+  {
+    "name": "v6-range-below",
+    "filters": [
+      "2001:db8:1::/64 prefix-length-range /48-/49"
+    ],
+    "cli_accepted": true,
+    "commit_check": false,
+    "committed": false,
+    "warnings": []
+  },
+  {
+    "name": "v6-range-reversed",
+    "filters": [
+      "2001:db8:1::/64 prefix-length-range /66-/64"
+    ],
+    "cli_accepted": true,
+    "commit_check": true,
+    "committed": true,
+    "policy_output": "\nPolicy RF-v6-range-reversed: 0 prefix accepted, 22 prefix rejected\n",
+    "warnings": []
+  },
+  {
+    "name": "v6-range-reversed-below",
+    "filters": [
+      "2001:db8:1::/64 prefix-length-range /49-/48"
+    ],
+    "cli_accepted": true,
+    "commit_check": false,
+    "committed": false,
+    "warnings": []
+  },
+  {
+    "name": "v6-range-zero",
+    "filters": [
+      "2001:db8:1::/64 prefix-length-range /0-/128"
+    ],
+    "cli_accepted": true,
+    "commit_check": false,
+    "committed": false,
+    "warnings": []
+  },
+  {
+    "name": "v6-range-overflow-high",
+    "filters": [
+      "2001:db8:1::/64 prefix-length-range /64-/129"
+    ],
+    "cli_accepted": true,
+    "commit_check": false,
+    "committed": false,
+    "warnings": []
+  },
+  {
+    "name": "v6-range-overflow-low",
+    "filters": [
+      "2001:db8:1::/64 prefix-length-range /129-/130"
+    ],
+    "cli_accepted": true,
+    "commit_check": false,
+    "committed": false,
+    "warnings": []
+  },
+  {
+    "name": "v6-through-valid",
+    "filters": [
+      "2001:db8:1::/64 through 2001:db8:1::/66"
+    ],
+    "cli_accepted": true,
+    "commit_check": true,
+    "committed": true,
+    "policy_output": "\ninet6.0: 18 destinations, 18 routes (18 active, 0 holddown, 0 hidden)\n+ = Active Route, - = Last Active, * = Both\n\n2001:db8:1::/64    *[Static/5] 00:11:25\n                       Discard\n2001:db8:1::/65    *[Static/5] 00:11:25\n                       Discard\n2001:db8:1::/66    *[Static/5] 00:11:25\n                       Discard\n\nPolicy RF-v6-through-valid: 3 prefix accepted, 19 prefix rejected\n",
+    "warnings": []
+  },
+  {
+    "name": "v6-through-equal",
+    "filters": [
+      "2001:db8:1::/64 through 2001:db8:1::/64"
+    ],
+    "cli_accepted": true,
+    "commit_check": true,
+    "committed": true,
+    "policy_output": "\ninet6.0: 18 destinations, 18 routes (18 active, 0 holddown, 0 hidden)\n+ = Active Route, - = Last Active, * = Both\n\n2001:db8:1::/64    *[Static/5] 00:11:29\n                       Discard\n\nPolicy RF-v6-through-equal: 1 prefix accepted, 21 prefix rejected\n",
+    "warnings": []
+  },
+  {
+    "name": "v6-through-short",
+    "filters": [
+      "2001:db8:1::/64 through 2001:db8:1::/48"
+    ],
+    "cli_accepted": true,
+    "commit_check": false,
+    "committed": false,
+    "warnings": []
+  },
+  {
+    "name": "v6-through-outside",
+    "filters": [
+      "2001:db8:1::/64 through 2001:db8:2::/66"
+    ],
+    "cli_accepted": true,
+    "commit_check": true,
+    "committed": true,
+    "policy_output": "\nPolicy RF-v6-through-outside: 0 prefix accepted, 22 prefix rejected\n",
+    "warnings": []
+  },
+  {
+    "name": "v6-through-other-family",
+    "filters": [
+      "2001:db8:1::/64 through 10.64.0.0/16"
+    ],
+    "cli_accepted": true,
+    "commit_check": false,
+    "committed": false,
+    "warnings": []
+  },
+  {
+    "name": "v6-mask-valid",
+    "filters": [
+      "2001:db8:1::/64 address-mask ffff:ffff:ffff:ffff::"
+    ],
+    "cli_accepted": true,
+    "commit_check": true,
+    "committed": true,
+    "policy_output": "\ninet6.0: 18 destinations, 18 routes (18 active, 0 holddown, 0 hidden)\n+ = Active Route, - = Last Active, * = Both\n\n2001:db8:1::/64    *[Static/5] 00:11:41\n                       Discard\n\nPolicy RF-v6-mask-valid: 1 prefix accepted, 21 prefix rejected\n",
+    "warnings": []
+  },
+  {
+    "name": "v6-mask-zero",
+    "filters": [
+      "2001:db8:1::/64 address-mask ::"
+    ],
+    "cli_accepted": true,
+    "commit_check": true,
+    "committed": true,
+    "policy_output": "\ninet6.0: 18 destinations, 18 routes (18 active, 0 holddown, 0 hidden)\n+ = Active Route, - = Last Active, * = Both\n\n2001:db8:1::/64    *[Static/5] 00:11:44\n                       Discard\n2001:db8:1:1::/64  *[Static/5] 00:11:44\n                       Discard\n2001:db8:2::/64    *[Static/5] 00:11:44\n                       Discard\n\nmgmt_junos.inet6.0: 4 destinations, 4 routes (4 active, 0 holddown, 0 hidden)\n+ = Active Route, - = Last Active, * = Both\n\n2001:db8::/64      *[Direct/0] 00:11:45\n                    >  via fxp0.0\n\nPolicy RF-v6-mask-zero: 4 prefix accepted, 18 prefix rejected\n",
+    "warnings": []
+  },
+  {
+    "name": "v6-mask-ones",
+    "filters": [
+      "2001:db8:1::/64 address-mask ffff:ffff:ffff:ffff:ffff:ffff:ffff:ffff"
+    ],
+    "cli_accepted": true,
+    "commit_check": false,
+    "committed": false,
+    "warnings": []
+  },
+  {
+    "name": "v6-mask-noncontiguous",
+    "filters": [
+      "2001:db8:1::/64 address-mask ffff:ffff:0:ffff::"
+    ],
+    "cli_accepted": true,
+    "commit_check": true,
+    "committed": true,
+    "policy_output": "\ninet6.0: 18 destinations, 18 routes (18 active, 0 holddown, 0 hidden)\n+ = Active Route, - = Last Active, * = Both\n\n2001:db8:1::/64    *[Static/5] 00:11:50\n                       Discard\n2001:db8:2::/64    *[Static/5] 00:11:50\n                       Discard\n\nmgmt_junos.inet6.0: 4 destinations, 4 routes (4 active, 0 holddown, 0 hidden)\n+ = Active Route, - = Last Active, * = Both\n\n2001:db8::/64      *[Direct/0] 00:11:51\n                    >  via fxp0.0\n\nPolicy RF-v6-mask-noncontiguous: 3 prefix accepted, 19 prefix rejected\n",
+    "warnings": []
+  },
+  {
+    "name": "v6-mask-other-family",
+    "filters": [
+      "2001:db8:1::/64 address-mask 255.255.0.0"
+    ],
+    "cli_accepted": true,
+    "commit_check": false,
+    "committed": false,
+    "warnings": []
+  },
+  {
+    "name": "v6-host-bits-exact",
+    "filters": [
+      "2001:db8:1::1/64 exact"
+    ],
+    "cli_accepted": true,
+    "commit_check": true,
+    "committed": true,
+    "policy_output": "\ninet6.0: 18 destinations, 18 routes (18 active, 0 holddown, 0 hidden)\n+ = Active Route, - = Last Active, * = Both\n\n2001:db8:1::/64    *[Static/5] 00:11:56\n                       Discard\n\nPolicy RF-v6-host-bits-exact: 1 prefix accepted, 21 prefix rejected\n",
+    "warnings": []
+  },
+  {
+    "name": "v6-host-bits-mask",
+    "filters": [
+      "2001:db8:1::1/64 address-mask ffff:ffff:ffff:ffff:ffff:ffff:ffff:ffff"
+    ],
+    "cli_accepted": true,
+    "commit_check": false,
+    "committed": false,
+    "warnings": []
+  },
+  {
+    "name": "v6-shadow-empty",
+    "filters": [
+      "2001:db8:1::/48 orlonger",
+      "2001:db8:1::/64 upto /48"
+    ],
+    "cli_accepted": true,
+    "commit_check": true,
+    "committed": true,
+    "policy_output": "\ninet6.0: 18 destinations, 18 routes (18 active, 0 holddown, 0 hidden)\n+ = Active Route, - = Last Active, * = Both\n\n2001:db8:1::/48    *[Static/5] 00:12:01\n                       Discard\n2001:db8:1::/63    *[Static/5] 00:12:01\n                       Discard\n2001:db8:1:1::/64  *[Static/5] 00:12:01\n                       Discard\n\nPolicy RF-v6-shadow-empty: 3 prefix accepted, 19 prefix rejected\n",
+    "warnings": []
+  },
+  {
+    "name": "v4-through-outside-short",
+    "filters": [
+      "10.64.0.64/26 through 10.65.0.0/24"
+    ],
+    "cli_accepted": true,
+    "commit_check": false,
+    "committed": false,
+    "warnings": []
+  },
+  {
+    "name": "v4-mask-shorter",
+    "filters": [
+      "10.64.0.64/26 address-mask 255.255.0.0"
+    ],
+    "cli_accepted": true,
+    "commit_check": true,
+    "committed": true,
+    "policy_output": "\ninet.0: 24 destinations, 24 routes (24 active, 0 holddown, 0 hidden)\n+ = Active Route, - = Last Active, * = Both\n\n10.64.0.0/26       *[Static/5] 00:12:07\n                       Discard\n10.64.0.64/26      *[Static/5] 00:12:07\n                       Discard\n10.64.0.128/26     *[Static/5] 00:12:07\n                       Discard\n\nPolicy RF-v4-mask-shorter: 3 prefix accepted, 24 prefix rejected\n",
+    "warnings": []
+  },
+  {
+    "name": "v4-range-host",
+    "filters": [
+      "10.64.0.64/32 prefix-length-range /24-/32"
+    ],
+    "cli_accepted": true,
+    "commit_check": false,
+    "committed": false,
+    "warnings": []
+  },
+  {
+    "name": "v4-zero-base-upto-short",
+    "filters": [
+      "10.64.0.0/26 upto /24"
+    ],
+    "cli_accepted": true,
+    "commit_check": true,
+    "committed": true,
+    "policy_output": "\nPolicy RF-v4-zero-base-upto-short: 0 prefix accepted, 27 prefix rejected\n",
+    "warnings": []
+  },
+  {
+    "name": "v4-zero-base-range-below",
+    "filters": [
+      "10.64.0.0/26 prefix-length-range /23-/24"
+    ],
+    "cli_accepted": true,
+    "commit_check": false,
+    "committed": false,
+    "warnings": []
+  },
+  {
+    "name": "v4-zero-base-range-straddle",
+    "filters": [
+      "10.64.0.0/26 prefix-length-range /24-/28"
+    ],
+    "cli_accepted": true,
+    "commit_check": false,
+    "committed": false,
+    "warnings": []
+  },
+  {
+    "name": "v4-through-host-bits",
+    "filters": [
+      "10.64.0.65/26 through 10.64.0.65/28"
+    ],
+    "cli_accepted": true,
+    "commit_check": true,
+    "committed": true,
+    "policy_output": "\ninet.0: 24 destinations, 24 routes (24 active, 0 holddown, 0 hidden)\n+ = Active Route, - = Last Active, * = Both\n\n10.64.0.64/26      *[Static/5] 00:12:19\n                       Discard\n10.64.0.64/27      *[Static/5] 00:12:19\n                       Discard\n10.64.0.64/28      *[Static/5] 00:12:19\n                       Discard\n\nPolicy RF-v4-through-host-bits: 3 prefix accepted, 24 prefix rejected\n",
+    "warnings": []
+  },
+  {
+    "name": "v4-root-longer",
+    "filters": [
+      "0.0.0.0/0 longer"
+    ],
+    "cli_accepted": true,
+    "commit_check": true,
+    "committed": true,
+    "policy_output": "\ninet.0: 24 destinations, 24 routes (24 active, 0 holddown, 0 hidden)\n+ = Active Route, - = Last Active, * = Both\n\n10.0.0.0/8         *[Static/5] 00:12:23\n                       Discard\n10.64.0.0/16       *[Static/5] 00:12:23\n                       Discard\n10.64.0.0/23       *[Static/5] 00:12:23\n                       Discard\n10.64.0.0/24       *[Static/5] 00:12:23\n                       Discard\n10.64.0.0/25       *[Static/5] 00:12:23\n                       Discard\n10.64.0.0/26       *[Static/5] 00:12:23\n                       Discard\n10.64.0.64/26      *[Static/5] 00:12:23\n                       Discard\n10.64.0.64/27      *[Static/5] 00:12:23\n                       Discard\n10.64.0.64/28      *[Static/5] 00:12:23\n                       Discard\n10.64.0.64/31      *[Static/5] 00:12:23\n                       Discard\n10.64.0.64/32      *[Static/5] 00:12:23\n                       Discard\n10.64.0.65/32      *[Static/5] 00:12:23\n                       Discard\n10.64.0.96/27      *[Static/5] 00:12:23\n                       Discard\n10.64.0.128/26     *[Static/5] 00:12:23\n                       Discard\n10.64.1.0/24       *[Static/5] 00:12:23\n                       Discard\n10.65.0.0/24       *[Static/5] 00:12:23\n                       Discard\n10.65.0.0/26       *[Static/5] 00:05:59\n                       Discard\n10.65.0.0/27       *[Static/5] 00:05:59\n                       Discard\n10.65.0.0/28       *[Static/5] 00:05:59\n                       Discard\n192.0.2.0/24       *[Static/5] 00:12:23\n                       Discard\n192.0.2.1/32       *[Static/5] 00:12:23\n                       Discard\n192.0.2.254/32     *[Direct/0] 00:12:24\n                    >  via lo0.0\n198.51.100.0/24    *[Static/5] 00:12:23\n                       Discard\n\nmgmt_junos.inet.0: 3 destinations, 3 routes (3 active, 0 holddown, 0 hidden)\n+ = Active Route, - = Last Active, * = Both\n\n10.0.0.0/24        *[Direct/0] 00:12:24\n                    >  via fxp0.0\n10.0.0.15/32       *[Local/0] 00:12:24\n                       Local via fxp0.0\n\nPolicy RF-v4-root-longer: 25 prefix accepted, 2 prefix rejected\n",
+    "warnings": []
+  },
+  {
+    "name": "v6-root-longer",
+    "filters": [
+      "::/0 longer"
+    ],
+    "cli_accepted": true,
+    "commit_check": true,
+    "committed": true,
+    "policy_output": "\ninet6.0: 18 destinations, 18 routes (18 active, 0 holddown, 0 hidden)\n+ = Active Route, - = Last Active, * = Both\n\n2001:db8::/32      *[Static/5] 00:12:27\n                       Discard\n2001:db8:1::/48    *[Static/5] 00:12:27\n                       Discard\n2001:db8:1::/63    *[Static/5] 00:12:27\n                       Discard\n2001:db8:1::/64    *[Static/5] 00:12:27\n                       Discard\n2001:db8:1::/65    *[Static/5] 00:12:27\n                       Discard\n2001:db8:1::/66    *[Static/5] 00:12:27\n                       Discard\n2001:db8:1::/127   *[Static/5] 00:12:27\n                       Discard\n2001:db8:1::/128   *[Static/5] 00:12:27\n                       Discard\n2001:db8:1::1/128  *[Static/5] 00:12:27\n                       Discard\n2001:db8:1:1::/64  *[Static/5] 00:12:27\n                       Discard\n2001:db8:2::/64    *[Static/5] 00:12:27\n                       Discard\n2001:db8:2::/65    *[Static/5] 00:06:03\n                       Discard\n2001:db8:2::/66    *[Static/5] 00:06:03\n                       Discard\n2001:db8:2::1/128  *[Static/5] 00:12:27\n                       Discard\n2001:db8:ffff::1/128\n                   *[Direct/0] 00:12:28\n                    >  via lo0.0\nfe80::e00:c40f:fc60:a00/128\n                   *[Direct/0] 00:12:28\n                    >  via lo0.0\nff02::2/128        *[INET6/0] 00:12:28\n                       MultiRecv\n\nmgmt_junos.inet6.0: 4 destinations, 4 routes (4 active, 0 holddown, 0 hidden)\n+ = Active Route, - = Last Active, * = Both\n\n2001:db8::/64      *[Direct/0] 00:12:28\n                    >  via fxp0.0\n2001:db8::2/128    *[Local/0] 00:12:28\n                       Local via fxp0.0\nfe80::e00:c4ff:fe60:a00/128\n                   *[Local/0] 00:12:28\n                       Local via fxp0.0\n\nPolicy RF-v6-root-longer: 20 prefix accepted, 2 prefix rejected\n",
+    "warnings": []
+  },
+  {
+    "name": "v4-range-high-below",
+    "filters": [
+      "10.64.0.64/26 prefix-length-range /28-/24"
+    ],
+    "cli_accepted": true,
+    "commit_check": true,
+    "committed": true,
+    "policy_output": "\nPolicy RF-v4-range-high-below: 0 prefix accepted, 27 prefix rejected\n",
+    "warnings": []
+  },
+  {
+    "name": "v6-range-high-below",
+    "filters": [
+      "2001:db8:1::/64 prefix-length-range /66-/48"
+    ],
+    "cli_accepted": true,
+    "commit_check": true,
+    "committed": true,
+    "policy_output": "\nPolicy RF-v6-range-high-below: 0 prefix accepted, 22 prefix rejected\n",
+    "warnings": []
+  },
+  {
+    "name": "v4-mask-many-bits",
+    "filters": [
+      "10.64.0.64/26 address-mask 255.127.255.255"
+    ],
+    "cli_accepted": true,
+    "commit_check": true,
+    "committed": true,
+    "policy_output": "\ninet.0: 24 destinations, 24 routes (24 active, 0 holddown, 0 hidden)\n+ = Active Route, - = Last Active, * = Both\n\n10.64.0.64/26      *[Static/5] 00:12:39\n                       Discard\n\nPolicy RF-v4-mask-many-bits: 1 prefix accepted, 26 prefix rejected\n",
+    "warnings": []
+  },
+  {
+    "name": "v4-mask-last-bit",
+    "filters": [
+      "10.64.0.64/26 address-mask 0.0.0.1"
+    ],
+    "cli_accepted": true,
+    "commit_check": true,
+    "committed": true,
+    "policy_output": "\ninet.0: 24 destinations, 24 routes (24 active, 0 holddown, 0 hidden)\n+ = Active Route, - = Last Active, * = Both\n\n10.64.0.0/26       *[Static/5] 00:12:43\n                       Discard\n10.64.0.64/26      *[Static/5] 00:12:43\n                       Discard\n10.64.0.128/26     *[Static/5] 00:12:43\n                       Discard\n10.65.0.0/26       *[Static/5] 00:06:19\n                       Discard\n\nPolicy RF-v4-mask-last-bit: 4 prefix accepted, 23 prefix rejected\n",
+    "warnings": []
+  },
+  {
+    "name": "v4-through-different-equal",
+    "filters": [
+      "10.64.0.64/26 through 10.65.0.0/26"
+    ],
+    "cli_accepted": true,
+    "commit_check": true,
+    "committed": true,
+    "policy_output": "\nPolicy RF-v4-through-different-equal: 0 prefix accepted, 27 prefix rejected\n",
+    "warnings": []
+  },
+  {
+    "name": "v4-upto-inline-action",
+    "filters": [
+      "10.64.0.64/26 upto /24 accept"
+    ],
+    "cli_accepted": true,
+    "commit_check": true,
+    "committed": true,
+    "policy_output": "\nPolicy RF-v4-upto-inline-action: 0 prefix accepted, 27 prefix rejected\n",
+    "warnings": []
+  },
+  {
+    "name": "v4-shadow-mask",
+    "filters": [
+      "10.64.0.0/26 address-mask 0.0.0.0",
+      "10.64.0.64/26 upto /24"
+    ],
+    "cli_accepted": true,
+    "commit_check": true,
+    "committed": true,
+    "policy_output": "\ninet.0: 24 destinations, 24 routes (24 active, 0 holddown, 0 hidden)\n+ = Active Route, - = Last Active, * = Both\n\n10.64.0.0/26       *[Static/5] 00:22:14\n                       Discard\n10.64.0.128/26     *[Static/5] 00:22:14\n                       Discard\n10.65.0.0/26       *[Static/5] 00:15:50\n                       Discard\n\nPolicy RF-v4-shadow-mask: 3 prefix accepted, 24 prefix rejected\n",
+    "warnings": []
+  },
+  {
+    "name": "v6-shadow-mask",
+    "filters": [
+      "2001:db8:1:1::/64 address-mask ::",
+      "2001:db8:1::/64 upto /48"
+    ],
+    "cli_accepted": true,
+    "commit_check": true,
+    "committed": true,
+    "policy_output": "\ninet6.0: 18 destinations, 18 routes (18 active, 0 holddown, 0 hidden)\n+ = Active Route, - = Last Active, * = Both\n\n2001:db8:1:1::/64  *[Static/5] 00:22:18\n                       Discard\n2001:db8:2::/64    *[Static/5] 00:22:18\n                       Discard\n\nmgmt_junos.inet6.0: 4 destinations, 4 routes (4 active, 0 holddown, 0 hidden)\n+ = Active Route, - = Last Active, * = Both\n\n2001:db8::/64      *[Direct/0] 00:22:19\n                    >  via fxp0.0\n\nPolicy RF-v6-shadow-mask: 3 prefix accepted, 19 prefix rejected\n",
+    "warnings": []
+  },
+  {
+    "name": "v4-host-bits-mask-last-bit",
+    "filters": [
+      "10.64.0.65/26 address-mask 0.0.0.1"
+    ],
+    "cli_accepted": true,
+    "commit_check": true,
+    "committed": true,
+    "policy_output": "\ninet.0: 24 destinations, 24 routes (24 active, 0 holddown, 0 hidden)\n+ = Active Route, - = Last Active, * = Both\n\n10.64.0.0/26       *[Static/5] 00:33:41\n                       Discard\n10.64.0.64/26      *[Static/5] 00:33:41\n                       Discard\n10.64.0.128/26     *[Static/5] 00:33:41\n                       Discard\n10.65.0.0/26       *[Static/5] 00:27:17\n                       Discard\n\nPolicy RF-v4-host-bits-mask-last-bit: 4 prefix accepted, 23 prefix rejected\n",
+    "warnings": []
+  },
+  {
+    "name": "v6-host-bits-mask-last-bit",
+    "filters": [
+      "2001:db8:1::1/64 address-mask ::1"
+    ],
+    "cli_accepted": true,
+    "commit_check": true,
+    "committed": true,
+    "policy_output": "\ninet6.0: 18 destinations, 18 routes (18 active, 0 holddown, 0 hidden)\n+ = Active Route, - = Last Active, * = Both\n\n2001:db8:1::/64    *[Static/5] 00:33:45\n                       Discard\n2001:db8:1:1::/64  *[Static/5] 00:33:45\n                       Discard\n2001:db8:2::/64    *[Static/5] 00:33:45\n                       Discard\n\nmgmt_junos.inet6.0: 4 destinations, 4 routes (4 active, 0 holddown, 0 hidden)\n+ = Active Route, - = Last Active, * = Both\n\n2001:db8::/64      *[Direct/0] 00:33:46\n                    >  via fxp0.0\n\nPolicy RF-v6-host-bits-mask-last-bit: 4 prefix accepted, 18 prefix rejected\n",
+    "warnings": []
+  },
+  {
+    "name": "v4-shadow-longer",
+    "filters": [
+      "10.64.0.0/24 orlonger",
+      "10.64.0.64/32 longer"
+    ],
+    "cli_accepted": true,
+    "commit_check": true,
+    "committed": true,
+    "policy_output": "\ninet.0: 24 destinations, 24 routes (24 active, 0 holddown, 0 hidden)\n+ = Active Route, - = Last Active, * = Both\n\n10.64.0.0/24       *[Static/5] 00:40:55\n                       Discard\n10.64.0.0/25       *[Static/5] 00:40:55\n                       Discard\n10.64.0.0/26       *[Static/5] 00:40:55\n                       Discard\n10.64.0.64/26      *[Static/5] 00:40:55\n                       Discard\n10.64.0.64/27      *[Static/5] 00:40:55\n                       Discard\n10.64.0.64/28      *[Static/5] 00:40:55\n                       Discard\n10.64.0.64/31      *[Static/5] 00:40:55\n                       Discard\n10.64.0.65/32      *[Static/5] 00:40:55\n                       Discard\n10.64.0.96/27      *[Static/5] 00:40:55\n                       Discard\n10.64.0.128/26     *[Static/5] 00:40:55\n                       Discard\n\nPolicy RF-v4-shadow-longer: 10 prefix accepted, 17 prefix rejected\n",
+    "warnings": []
+  },
+  {
+    "name": "v4-shadow-range",
+    "filters": [
+      "10.64.0.0/24 orlonger",
+      "10.64.0.64/26 prefix-length-range /28-/26"
+    ],
+    "cli_accepted": true,
+    "commit_check": true,
+    "committed": true,
+    "policy_output": "\ninet.0: 24 destinations, 24 routes (24 active, 0 holddown, 0 hidden)\n+ = Active Route, - = Last Active, * = Both\n\n10.64.0.0/24       *[Static/5] 00:40:59\n                       Discard\n10.64.0.0/25       *[Static/5] 00:40:59\n                       Discard\n10.64.0.0/26       *[Static/5] 00:40:59\n                       Discard\n10.64.0.128/26     *[Static/5] 00:40:59\n                       Discard\n\nPolicy RF-v4-shadow-range: 4 prefix accepted, 23 prefix rejected\n",
+    "warnings": []
+  },
+  {
+    "name": "v4-shadow-through",
+    "filters": [
+      "10.64.0.0/24 orlonger",
+      "10.64.0.64/26 through 10.65.0.0/28"
+    ],
+    "cli_accepted": true,
+    "commit_check": true,
+    "committed": true,
+    "policy_output": "\ninet.0: 24 destinations, 24 routes (24 active, 0 holddown, 0 hidden)\n+ = Active Route, - = Last Active, * = Both\n\n10.64.0.0/24       *[Static/5] 00:41:04\n                       Discard\n10.64.0.0/25       *[Static/5] 00:41:04\n                       Discard\n10.64.0.0/26       *[Static/5] 00:41:04\n                       Discard\n10.64.0.128/26     *[Static/5] 00:41:04\n                       Discard\n\nPolicy RF-v4-shadow-through: 4 prefix accepted, 23 prefix rejected\n",
+    "warnings": []
+  },
+  {
+    "name": "v6-shadow-longer",
+    "filters": [
+      "2001:db8:1::/48 orlonger",
+      "2001:db8:1::1/128 longer"
+    ],
+    "cli_accepted": true,
+    "commit_check": true,
+    "committed": true,
+    "policy_output": "\ninet6.0: 18 destinations, 18 routes (18 active, 0 holddown, 0 hidden)\n+ = Active Route, - = Last Active, * = Both\n\n2001:db8:1::/48    *[Static/5] 00:41:09\n                       Discard\n2001:db8:1::/63    *[Static/5] 00:41:09\n                       Discard\n2001:db8:1::/64    *[Static/5] 00:41:09\n                       Discard\n2001:db8:1::/65    *[Static/5] 00:41:09\n                       Discard\n2001:db8:1::/66    *[Static/5] 00:41:09\n                       Discard\n2001:db8:1::/127   *[Static/5] 00:41:09\n                       Discard\n2001:db8:1::/128   *[Static/5] 00:41:09\n                       Discard\n2001:db8:1:1::/64  *[Static/5] 00:41:09\n                       Discard\n\nPolicy RF-v6-shadow-longer: 8 prefix accepted, 14 prefix rejected\n",
+    "warnings": []
+  },
+  {
+    "name": "v6-shadow-range",
+    "filters": [
+      "2001:db8:1::/48 orlonger",
+      "2001:db8:1::/64 prefix-length-range /66-/64"
+    ],
+    "cli_accepted": true,
+    "commit_check": true,
+    "committed": true,
+    "policy_output": "\ninet6.0: 18 destinations, 18 routes (18 active, 0 holddown, 0 hidden)\n+ = Active Route, - = Last Active, * = Both\n\n2001:db8:1::/48    *[Static/5] 00:41:14\n                       Discard\n2001:db8:1::/63    *[Static/5] 00:41:14\n                       Discard\n2001:db8:1:1::/64  *[Static/5] 00:41:14\n                       Discard\n\nPolicy RF-v6-shadow-range: 3 prefix accepted, 19 prefix rejected\n",
+    "warnings": []
+  },
+  {
+    "name": "v6-shadow-through",
+    "filters": [
+      "2001:db8:1::/48 orlonger",
+      "2001:db8:1::/64 through 2001:db8:2::/66"
+    ],
+    "cli_accepted": true,
+    "commit_check": true,
+    "committed": true,
+    "policy_output": "\ninet6.0: 18 destinations, 18 routes (18 active, 0 holddown, 0 hidden)\n+ = Active Route, - = Last Active, * = Both\n\n2001:db8:1::/48    *[Static/5] 00:41:18\n                       Discard\n2001:db8:1::/63    *[Static/5] 00:41:18\n                       Discard\n2001:db8:1:1::/64  *[Static/5] 00:41:18\n                       Discard\n\nPolicy RF-v6-shadow-through: 3 prefix accepted, 19 prefix rejected\n",
+    "warnings": []
+  }
+]
