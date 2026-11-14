@@ -1,0 +1,663 @@
+[
+  {
+    "name": "v4-exact",
+    "family": 4,
+    "filters": [
+      "10.64.0.64/26 exact"
+    ]
+  },
+  {
+    "name": "v4-host-exact",
+    "family": 4,
+    "filters": [
+      "10.64.0.64/32 exact"
+    ]
+  },
+  {
+    "name": "v4-longer",
+    "family": 4,
+    "filters": [
+      "10.64.0.64/26 longer"
+    ]
+  },
+  {
+    "name": "v4-host-longer",
+    "family": 4,
+    "filters": [
+      "10.64.0.64/32 longer"
+    ]
+  },
+  {
+    "name": "v4-orlonger",
+    "family": 4,
+    "filters": [
+      "10.64.0.64/26 orlonger"
+    ]
+  },
+  {
+    "name": "v4-host-orlonger",
+    "family": 4,
+    "filters": [
+      "10.64.0.64/32 orlonger"
+    ]
+  },
+  {
+    "name": "v4-upto-short",
+    "family": 4,
+    "filters": [
+      "10.64.0.64/26 upto /24"
+    ]
+  },
+  {
+    "name": "v4-upto-equal",
+    "family": 4,
+    "filters": [
+      "10.64.0.64/26 upto /26"
+    ]
+  },
+  {
+    "name": "v4-upto-valid",
+    "family": 4,
+    "filters": [
+      "10.64.0.64/26 upto /28"
+    ]
+  },
+  {
+    "name": "v4-upto-max",
+    "family": 4,
+    "filters": [
+      "10.64.0.64/26 upto /32"
+    ]
+  },
+  {
+    "name": "v4-upto-zero",
+    "family": 4,
+    "filters": [
+      "10.64.0.64/26 upto /0"
+    ]
+  },
+  {
+    "name": "v4-upto-overflow",
+    "family": 4,
+    "filters": [
+      "10.64.0.64/26 upto /33"
+    ]
+  },
+  {
+    "name": "v4-range-valid",
+    "family": 4,
+    "filters": [
+      "10.64.0.64/26 prefix-length-range /26-/28"
+    ]
+  },
+  {
+    "name": "v4-range-equal",
+    "family": 4,
+    "filters": [
+      "10.64.0.64/26 prefix-length-range /26-/26"
+    ]
+  },
+  {
+    "name": "v4-range-straddle",
+    "family": 4,
+    "filters": [
+      "10.64.0.64/26 prefix-length-range /24-/28"
+    ]
+  },
+  {
+    "name": "v4-range-below",
+    "family": 4,
+    "filters": [
+      "10.64.0.64/26 prefix-length-range /24-/25"
+    ]
+  },
+  {
+    "name": "v4-range-reversed",
+    "family": 4,
+    "filters": [
+      "10.64.0.64/26 prefix-length-range /28-/26"
+    ]
+  },
+  {
+    "name": "v4-range-reversed-below",
+    "family": 4,
+    "filters": [
+      "10.64.0.64/26 prefix-length-range /25-/24"
+    ]
+  },
+  {
+    "name": "v4-range-zero",
+    "family": 4,
+    "filters": [
+      "10.64.0.64/26 prefix-length-range /0-/32"
+    ]
+  },
+  {
+    "name": "v4-range-overflow-high",
+    "family": 4,
+    "filters": [
+      "10.64.0.64/26 prefix-length-range /26-/33"
+    ]
+  },
+  {
+    "name": "v4-range-overflow-low",
+    "family": 4,
+    "filters": [
+      "10.64.0.64/26 prefix-length-range /33-/34"
+    ]
+  },
+  {
+    "name": "v4-through-valid",
+    "family": 4,
+    "filters": [
+      "10.64.0.64/26 through 10.64.0.64/28"
+    ]
+  },
+  {
+    "name": "v4-through-equal",
+    "family": 4,
+    "filters": [
+      "10.64.0.64/26 through 10.64.0.64/26"
+    ]
+  },
+  {
+    "name": "v4-through-short",
+    "family": 4,
+    "filters": [
+      "10.64.0.64/26 through 10.64.0.0/24"
+    ]
+  },
+  {
+    "name": "v4-through-outside",
+    "family": 4,
+    "filters": [
+      "10.64.0.64/26 through 10.65.0.0/28"
+    ]
+  },
+  {
+    "name": "v4-through-other-family",
+    "family": 4,
+    "filters": [
+      "10.64.0.64/26 through 2001:db8::/32"
+    ]
+  },
+  {
+    "name": "v4-mask-valid",
+    "family": 4,
+    "filters": [
+      "10.64.0.64/26 address-mask 255.255.255.192"
+    ]
+  },
+  {
+    "name": "v4-mask-zero",
+    "family": 4,
+    "filters": [
+      "10.64.0.64/26 address-mask 0.0.0.0"
+    ]
+  },
+  {
+    "name": "v4-mask-ones",
+    "family": 4,
+    "filters": [
+      "10.64.0.64/26 address-mask 255.255.255.255"
+    ]
+  },
+  {
+    "name": "v4-mask-noncontiguous",
+    "family": 4,
+    "filters": [
+      "10.64.0.64/26 address-mask 255.255.0.255"
+    ]
+  },
+  {
+    "name": "v4-mask-other-family",
+    "family": 4,
+    "filters": [
+      "10.64.0.64/26 address-mask ffff:ffff::"
+    ]
+  },
+  {
+    "name": "v4-host-bits-exact",
+    "family": 4,
+    "filters": [
+      "10.64.0.65/26 exact"
+    ]
+  },
+  {
+    "name": "v4-host-bits-mask",
+    "family": 4,
+    "filters": [
+      "10.64.0.65/26 address-mask 255.255.255.255"
+    ]
+  },
+  {
+    "name": "v4-shadow-empty",
+    "family": 4,
+    "filters": [
+      "10.64.0.0/24 orlonger",
+      "10.64.0.64/26 upto /24"
+    ]
+  },
+  {
+    "name": "v6-exact",
+    "family": 6,
+    "filters": [
+      "2001:db8:1::/64 exact"
+    ]
+  },
+  {
+    "name": "v6-host-exact",
+    "family": 6,
+    "filters": [
+      "2001:db8:1::1/128 exact"
+    ]
+  },
+  {
+    "name": "v6-longer",
+    "family": 6,
+    "filters": [
+      "2001:db8:1::/64 longer"
+    ]
+  },
+  {
+    "name": "v6-host-longer",
+    "family": 6,
+    "filters": [
+      "2001:db8:1::1/128 longer"
+    ]
+  },
+  {
+    "name": "v6-orlonger",
+    "family": 6,
+    "filters": [
+      "2001:db8:1::/64 orlonger"
+    ]
+  },
+  {
+    "name": "v6-host-orlonger",
+    "family": 6,
+    "filters": [
+      "2001:db8:1::1/128 orlonger"
+    ]
+  },
+  {
+    "name": "v6-upto-short",
+    "family": 6,
+    "filters": [
+      "2001:db8:1::/64 upto /48"
+    ]
+  },
+  {
+    "name": "v6-upto-equal",
+    "family": 6,
+    "filters": [
+      "2001:db8:1::/64 upto /64"
+    ]
+  },
+  {
+    "name": "v6-upto-valid",
+    "family": 6,
+    "filters": [
+      "2001:db8:1::/64 upto /66"
+    ]
+  },
+  {
+    "name": "v6-upto-max",
+    "family": 6,
+    "filters": [
+      "2001:db8:1::/64 upto /128"
+    ]
+  },
+  {
+    "name": "v6-upto-zero",
+    "family": 6,
+    "filters": [
+      "2001:db8:1::/64 upto /0"
+    ]
+  },
+  {
+    "name": "v6-upto-overflow",
+    "family": 6,
+    "filters": [
+      "2001:db8:1::/64 upto /129"
+    ]
+  },
+  {
+    "name": "v6-range-valid",
+    "family": 6,
+    "filters": [
+      "2001:db8:1::/64 prefix-length-range /64-/66"
+    ]
+  },
+  {
+    "name": "v6-range-equal",
+    "family": 6,
+    "filters": [
+      "2001:db8:1::/64 prefix-length-range /64-/64"
+    ]
+  },
+  {
+    "name": "v6-range-straddle",
+    "family": 6,
+    "filters": [
+      "2001:db8:1::/64 prefix-length-range /48-/66"
+    ]
+  },
+  {
+    "name": "v6-range-below",
+    "family": 6,
+    "filters": [
+      "2001:db8:1::/64 prefix-length-range /48-/49"
+    ]
+  },
+  {
+    "name": "v6-range-reversed",
+    "family": 6,
+    "filters": [
+      "2001:db8:1::/64 prefix-length-range /66-/64"
+    ]
+  },
+  {
+    "name": "v6-range-reversed-below",
+    "family": 6,
+    "filters": [
+      "2001:db8:1::/64 prefix-length-range /49-/48"
+    ]
+  },
+  {
+    "name": "v6-range-zero",
+    "family": 6,
+    "filters": [
+      "2001:db8:1::/64 prefix-length-range /0-/128"
+    ]
+  },
+  {
+    "name": "v6-range-overflow-high",
+    "family": 6,
+    "filters": [
+      "2001:db8:1::/64 prefix-length-range /64-/129"
+    ]
+  },
+  {
+    "name": "v6-range-overflow-low",
+    "family": 6,
+    "filters": [
+      "2001:db8:1::/64 prefix-length-range /129-/130"
+    ]
+  },
+  {
+    "name": "v6-through-valid",
+    "family": 6,
+    "filters": [
+      "2001:db8:1::/64 through 2001:db8:1::/66"
+    ]
+  },
+  {
+    "name": "v6-through-equal",
+    "family": 6,
+    "filters": [
+      "2001:db8:1::/64 through 2001:db8:1::/64"
+    ]
+  },
+  {
+    "name": "v6-through-short",
+    "family": 6,
+    "filters": [
+      "2001:db8:1::/64 through 2001:db8:1::/48"
+    ]
+  },
+  {
+    "name": "v6-through-outside",
+    "family": 6,
+    "filters": [
+      "2001:db8:1::/64 through 2001:db8:2::/66"
+    ]
+  },
+  {
+    "name": "v6-through-other-family",
+    "family": 6,
+    "filters": [
+      "2001:db8:1::/64 through 10.64.0.0/16"
+    ]
+  },
+  {
+    "name": "v6-mask-valid",
+    "family": 6,
+    "filters": [
+      "2001:db8:1::/64 address-mask ffff:ffff:ffff:ffff::"
+    ]
+  },
+  {
+    "name": "v6-mask-zero",
+    "family": 6,
+    "filters": [
+      "2001:db8:1::/64 address-mask ::"
+    ]
+  },
+  {
+    "name": "v6-mask-ones",
+    "family": 6,
+    "filters": [
+      "2001:db8:1::/64 address-mask ffff:ffff:ffff:ffff:ffff:ffff:ffff:ffff"
+    ]
+  },
+  {
+    "name": "v6-mask-noncontiguous",
+    "family": 6,
+    "filters": [
+      "2001:db8:1::/64 address-mask ffff:ffff:0:ffff::"
+    ]
+  },
+  {
+    "name": "v6-mask-other-family",
+    "family": 6,
+    "filters": [
+      "2001:db8:1::/64 address-mask 255.255.0.0"
+    ]
+  },
+  {
+    "name": "v6-host-bits-exact",
+    "family": 6,
+    "filters": [
+      "2001:db8:1::1/64 exact"
+    ]
+  },
+  {
+    "name": "v6-host-bits-mask",
+    "family": 6,
+    "filters": [
+      "2001:db8:1::1/64 address-mask ffff:ffff:ffff:ffff:ffff:ffff:ffff:ffff"
+    ]
+  },
+  {
+    "name": "v6-shadow-empty",
+    "family": 6,
+    "filters": [
+      "2001:db8:1::/48 orlonger",
+      "2001:db8:1::/64 upto /48"
+    ]
+  },
+  {
+    "name": "v4-through-outside-short",
+    "family": 4,
+    "filters": [
+      "10.64.0.64/26 through 10.65.0.0/24"
+    ]
+  },
+  {
+    "name": "v4-mask-shorter",
+    "family": 4,
+    "filters": [
+      "10.64.0.64/26 address-mask 255.255.0.0"
+    ]
+  },
+  {
+    "name": "v4-range-host",
+    "family": 4,
+    "filters": [
+      "10.64.0.64/32 prefix-length-range /24-/32"
+    ]
+  },
+  {
+    "name": "v4-zero-base-upto-short",
+    "family": 4,
+    "filters": [
+      "10.64.0.0/26 upto /24"
+    ]
+  },
+  {
+    "name": "v4-zero-base-range-below",
+    "family": 4,
+    "filters": [
+      "10.64.0.0/26 prefix-length-range /23-/24"
+    ]
+  },
+  {
+    "name": "v4-zero-base-range-straddle",
+    "family": 4,
+    "filters": [
+      "10.64.0.0/26 prefix-length-range /24-/28"
+    ]
+  },
+  {
+    "name": "v4-through-host-bits",
+    "family": 4,
+    "filters": [
+      "10.64.0.65/26 through 10.64.0.65/28"
+    ]
+  },
+  {
+    "name": "v4-root-longer",
+    "family": 4,
+    "filters": [
+      "0.0.0.0/0 longer"
+    ]
+  },
+  {
+    "name": "v6-root-longer",
+    "family": 6,
+    "filters": [
+      "::/0 longer"
+    ]
+  },
+  {
+    "name": "v4-range-high-below",
+    "family": 4,
+    "filters": [
+      "10.64.0.64/26 prefix-length-range /28-/24"
+    ]
+  },
+  {
+    "name": "v6-range-high-below",
+    "family": 6,
+    "filters": [
+      "2001:db8:1::/64 prefix-length-range /66-/48"
+    ]
+  },
+  {
+    "name": "v4-mask-many-bits",
+    "family": 4,
+    "filters": [
+      "10.64.0.64/26 address-mask 255.127.255.255"
+    ]
+  },
+  {
+    "name": "v4-mask-last-bit",
+    "family": 4,
+    "filters": [
+      "10.64.0.64/26 address-mask 0.0.0.1"
+    ]
+  },
+  {
+    "name": "v4-through-different-equal",
+    "family": 4,
+    "filters": [
+      "10.64.0.64/26 through 10.65.0.0/26"
+    ]
+  },
+  {
+    "name": "v4-upto-inline-action",
+    "family": 4,
+    "filters": [
+      "10.64.0.64/26 upto /24 accept"
+    ]
+  },
+  {
+    "name": "v4-shadow-mask",
+    "family": 4,
+    "filters": [
+      "10.64.0.0/26 address-mask 0.0.0.0",
+      "10.64.0.64/26 upto /24"
+    ]
+  },
+  {
+    "name": "v6-shadow-mask",
+    "family": 6,
+    "filters": [
+      "2001:db8:1:1::/64 address-mask ::",
+      "2001:db8:1::/64 upto /48"
+    ]
+  },
+  {
+    "name": "v4-host-bits-mask-last-bit",
+    "family": 4,
+    "filters": [
+      "10.64.0.65/26 address-mask 0.0.0.1"
+    ]
+  },
+  {
+    "name": "v6-host-bits-mask-last-bit",
+    "family": 6,
+    "filters": [
+      "2001:db8:1::1/64 address-mask ::1"
+    ]
+  },
+  {
+    "name": "v4-shadow-longer",
+    "family": 4,
+    "filters": [
+      "10.64.0.0/24 orlonger",
+      "10.64.0.64/32 longer"
+    ]
+  },
+  {
+    "name": "v4-shadow-range",
+    "family": 4,
+    "filters": [
+      "10.64.0.0/24 orlonger",
+      "10.64.0.64/26 prefix-length-range /28-/26"
+    ]
+  },
+  {
+    "name": "v4-shadow-through",
+    "family": 4,
+    "filters": [
+      "10.64.0.0/24 orlonger",
+      "10.64.0.64/26 through 10.65.0.0/28"
+    ]
+  },
+  {
+    "name": "v6-shadow-longer",
+    "family": 6,
+    "filters": [
+      "2001:db8:1::/48 orlonger",
+      "2001:db8:1::1/128 longer"
+    ]
+  },
+  {
+    "name": "v6-shadow-range",
+    "family": 6,
+    "filters": [
+      "2001:db8:1::/48 orlonger",
+      "2001:db8:1::/64 prefix-length-range /66-/64"
+    ]
+  },
+  {
+    "name": "v6-shadow-through",
+    "family": 6,
+    "filters": [
+      "2001:db8:1::/48 orlonger",
+      "2001:db8:1::/64 through 2001:db8:2::/66"
+    ]
+  }
+]

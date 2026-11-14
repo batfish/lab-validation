@@ -1,0 +1,46 @@
+rollback 0
+load complete
+
+
+delete policy-options policy-statement RF-v6-shadow-mask
+warning: statement not found
+
+
+set policy-options policy-statement RF-v6-shadow-mask term MATCH from route-filter 2001:db8:1:1::/64 address-mask ::
+
+
+set policy-options policy-statement RF-v6-shadow-mask term MATCH from route-filter 2001:db8:1::/64 upto /48
+
+
+set policy-options policy-statement RF-v6-shadow-mask term MATCH then accept
+
+
+set policy-options policy-statement RF-v6-shadow-mask term REJECT then reject
+
+
+commit check
+configuration check succeeds
+
+
+commit
+commit complete
+
+
+run test policy RF-v6-shadow-mask ::/0
+
+inet6.0: 18 destinations, 18 routes (18 active, 0 holddown, 0 hidden)
++ = Active Route, - = Last Active, * = Both
+
+2001:db8:1:1::/64  *[Static/5] 00:22:18
+                       Discard
+2001:db8:2::/64    *[Static/5] 00:22:18
+                       Discard
+
+mgmt_junos.inet6.0: 4 destinations, 4 routes (4 active, 0 holddown, 0 hidden)
++ = Active Route, - = Last Active, * = Both
+
+2001:db8::/64      *[Direct/0] 00:22:19
+                    >  via fxp0.0
+
+Policy RF-v6-shadow-mask: 3 prefix accepted, 19 prefix rejected
+

@@ -1,0 +1,42 @@
+rollback 0
+load complete
+
+
+delete policy-options policy-statement RF-v6-shadow-through
+warning: statement not found
+
+
+set policy-options policy-statement RF-v6-shadow-through term MATCH from route-filter 2001:db8:1::/48 orlonger
+
+
+set policy-options policy-statement RF-v6-shadow-through term MATCH from route-filter 2001:db8:1::/64 through 2001:db8:2::/66
+
+
+set policy-options policy-statement RF-v6-shadow-through term MATCH then accept
+
+
+set policy-options policy-statement RF-v6-shadow-through term REJECT then reject
+
+
+commit check
+configuration check succeeds
+
+
+commit
+commit complete
+
+
+run test policy RF-v6-shadow-through ::/0
+
+inet6.0: 18 destinations, 18 routes (18 active, 0 holddown, 0 hidden)
++ = Active Route, - = Last Active, * = Both
+
+2001:db8:1::/48    *[Static/5] 00:41:18
+                       Discard
+2001:db8:1::/63    *[Static/5] 00:41:18
+                       Discard
+2001:db8:1:1::/64  *[Static/5] 00:41:18
+                       Discard
+
+Policy RF-v6-shadow-through: 3 prefix accepted, 19 prefix rejected
+

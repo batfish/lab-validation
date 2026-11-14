@@ -1,0 +1,56 @@
+rollback 0
+load complete
+
+
+delete policy-options policy-statement RF-v4-shadow-longer
+warning: statement not found
+
+
+set policy-options policy-statement RF-v4-shadow-longer term MATCH from route-filter 10.64.0.0/24 orlonger
+
+
+set policy-options policy-statement RF-v4-shadow-longer term MATCH from route-filter 10.64.0.64/32 longer
+
+
+set policy-options policy-statement RF-v4-shadow-longer term MATCH then accept
+
+
+set policy-options policy-statement RF-v4-shadow-longer term REJECT then reject
+
+
+commit check
+configuration check succeeds
+
+
+commit
+commit complete
+
+
+run test policy RF-v4-shadow-longer 0.0.0.0/0
+
+inet.0: 24 destinations, 24 routes (24 active, 0 holddown, 0 hidden)
++ = Active Route, - = Last Active, * = Both
+
+10.64.0.0/24       *[Static/5] 00:40:55
+                       Discard
+10.64.0.0/25       *[Static/5] 00:40:55
+                       Discard
+10.64.0.0/26       *[Static/5] 00:40:55
+                       Discard
+10.64.0.64/26      *[Static/5] 00:40:55
+                       Discard
+10.64.0.64/27      *[Static/5] 00:40:55
+                       Discard
+10.64.0.64/28      *[Static/5] 00:40:55
+                       Discard
+10.64.0.64/31      *[Static/5] 00:40:55
+                       Discard
+10.64.0.65/32      *[Static/5] 00:40:55
+                       Discard
+10.64.0.96/27      *[Static/5] 00:40:55
+                       Discard
+10.64.0.128/26     *[Static/5] 00:40:55
+                       Discard
+
+Policy RF-v4-shadow-longer: 10 prefix accepted, 17 prefix rejected
+

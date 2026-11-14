@@ -1,0 +1,45 @@
+rollback 0
+load complete
+
+
+delete policy-options policy-statement RF-v6-host-bits-mask-last-bit
+warning: statement not found
+
+
+set policy-options policy-statement RF-v6-host-bits-mask-last-bit term MATCH from route-filter 2001:db8:1::1/64 address-mask ::1
+
+
+set policy-options policy-statement RF-v6-host-bits-mask-last-bit term MATCH then accept
+
+
+set policy-options policy-statement RF-v6-host-bits-mask-last-bit term REJECT then reject
+
+
+commit check
+configuration check succeeds
+
+
+commit
+commit complete
+
+
+run test policy RF-v6-host-bits-mask-last-bit ::/0
+
+inet6.0: 18 destinations, 18 routes (18 active, 0 holddown, 0 hidden)
++ = Active Route, - = Last Active, * = Both
+
+2001:db8:1::/64    *[Static/5] 00:33:45
+                       Discard
+2001:db8:1:1::/64  *[Static/5] 00:33:45
+                       Discard
+2001:db8:2::/64    *[Static/5] 00:33:45
+                       Discard
+
+mgmt_junos.inet6.0: 4 destinations, 4 routes (4 active, 0 holddown, 0 hidden)
++ = Active Route, - = Last Active, * = Both
+
+2001:db8::/64      *[Direct/0] 00:33:46
+                    >  via fxp0.0
+
+Policy RF-v6-host-bits-mask-last-bit: 4 prefix accepted, 18 prefix rejected
+

@@ -1,0 +1,159 @@
+strict: true
+expects_fatal_warning:
+  - host: case-v4-upto-overflow
+    contains: policy-statement RF-v4-upto-overflow term MATCH
+  - host: case-v4-range-straddle
+    contains: policy-statement RF-v4-range-straddle term MATCH
+  - host: case-v4-range-below
+    contains: policy-statement RF-v4-range-below term MATCH
+  - host: case-v4-range-reversed-below
+    contains: policy-statement RF-v4-range-reversed-below term MATCH
+  - host: case-v4-range-zero
+    contains: policy-statement RF-v4-range-zero term MATCH
+  - host: case-v4-range-overflow-high
+    contains: policy-statement RF-v4-range-overflow-high term MATCH
+  - host: case-v4-range-overflow-low
+    contains: policy-statement RF-v4-range-overflow-low term MATCH
+  - host: case-v4-through-short
+    contains: policy-statement RF-v4-through-short term MATCH
+  - host: case-v4-through-other-family
+    contains: policy-statement RF-v4-through-other-family term MATCH
+  - host: case-v4-mask-ones
+    contains: policy-statement RF-v4-mask-ones term MATCH
+  - host: case-v4-mask-other-family
+    contains: policy-statement RF-v4-mask-other-family term MATCH
+  - host: case-v4-host-bits-mask
+    contains: policy-statement RF-v4-host-bits-mask term MATCH
+  - host: case-v6-upto-overflow
+    contains: policy-statement RF-v6-upto-overflow term MATCH
+  - host: case-v6-range-straddle
+    contains: policy-statement RF-v6-range-straddle term MATCH
+  - host: case-v6-range-below
+    contains: policy-statement RF-v6-range-below term MATCH
+  - host: case-v6-range-reversed-below
+    contains: policy-statement RF-v6-range-reversed-below term MATCH
+  - host: case-v6-range-zero
+    contains: policy-statement RF-v6-range-zero term MATCH
+  - host: case-v6-range-overflow-high
+    contains: policy-statement RF-v6-range-overflow-high term MATCH
+  - host: case-v6-range-overflow-low
+    contains: policy-statement RF-v6-range-overflow-low term MATCH
+  - host: case-v6-through-short
+    contains: policy-statement RF-v6-through-short term MATCH
+  - host: case-v6-through-other-family
+    contains: policy-statement RF-v6-through-other-family term MATCH
+  - host: case-v6-mask-ones
+    contains: policy-statement RF-v6-mask-ones term MATCH
+  - host: case-v6-mask-other-family
+    contains: policy-statement RF-v6-mask-other-family term MATCH
+  - host: case-v6-host-bits-mask
+    contains: policy-statement RF-v6-host-bits-mask term MATCH
+  - host: case-v4-through-outside-short
+    contains: policy-statement RF-v4-through-outside-short term MATCH
+  - host: case-v4-range-host
+    contains: policy-statement RF-v4-range-host term MATCH
+  - host: case-v4-zero-base-range-below
+    contains: policy-statement RF-v4-zero-base-range-below term MATCH
+  - host: case-v4-zero-base-range-straddle
+    contains: policy-statement RF-v4-zero-base-range-straddle term MATCH
+expects_risky_warning:
+  - host: case-v4-host-longer
+    contains: policy-statement RF-v4-host-longer term MATCH
+  - host: dut
+    contains: policy-statement RF-v4-host-longer term MATCH
+  - host: case-v4-upto-short
+    contains: policy-statement RF-v4-upto-short term MATCH
+  - host: dut
+    contains: policy-statement RF-v4-upto-short term MATCH
+  - host: case-v4-upto-zero
+    contains: policy-statement RF-v4-upto-zero term MATCH
+  - host: dut
+    contains: policy-statement RF-v4-upto-zero term MATCH
+  - host: case-v4-range-reversed
+    contains: policy-statement RF-v4-range-reversed term MATCH
+  - host: dut
+    contains: policy-statement RF-v4-range-reversed term MATCH
+  - host: case-v4-through-outside
+    contains: policy-statement RF-v4-through-outside term MATCH
+  - host: dut
+    contains: policy-statement RF-v4-through-outside term MATCH
+  - host: case-v4-shadow-empty
+    contains: policy-statement RF-v4-shadow-empty term MATCH
+  - host: dut
+    contains: policy-statement RF-v4-shadow-empty term MATCH
+  - host: case-v6-host-longer
+    contains: policy-statement RF-v6-host-longer term MATCH
+  - host: dut
+    contains: policy-statement RF-v6-host-longer term MATCH
+  - host: case-v6-upto-short
+    contains: policy-statement RF-v6-upto-short term MATCH
+  - host: dut
+    contains: policy-statement RF-v6-upto-short term MATCH
+  - host: case-v6-upto-zero
+    contains: policy-statement RF-v6-upto-zero term MATCH
+  - host: dut
+    contains: policy-statement RF-v6-upto-zero term MATCH
+  - host: case-v6-range-reversed
+    contains: policy-statement RF-v6-range-reversed term MATCH
+  - host: dut
+    contains: policy-statement RF-v6-range-reversed term MATCH
+  - host: case-v6-through-outside
+    contains: policy-statement RF-v6-through-outside term MATCH
+  - host: dut
+    contains: policy-statement RF-v6-through-outside term MATCH
+  - host: case-v6-shadow-empty
+    contains: policy-statement RF-v6-shadow-empty term MATCH
+  - host: dut
+    contains: policy-statement RF-v6-shadow-empty term MATCH
+  - host: case-v4-zero-base-upto-short
+    contains: policy-statement RF-v4-zero-base-upto-short term MATCH
+  - host: dut
+    contains: policy-statement RF-v4-zero-base-upto-short term MATCH
+  - host: case-v4-range-high-below
+    contains: policy-statement RF-v4-range-high-below term MATCH
+  - host: dut
+    contains: policy-statement RF-v4-range-high-below term MATCH
+  - host: case-v6-range-high-below
+    contains: policy-statement RF-v6-range-high-below term MATCH
+  - host: dut
+    contains: policy-statement RF-v6-range-high-below term MATCH
+  - host: case-v4-through-different-equal
+    contains: policy-statement RF-v4-through-different-equal term MATCH
+  - host: dut
+    contains: policy-statement RF-v4-through-different-equal term MATCH
+  - host: case-v4-upto-inline-action
+    contains: policy-statement RF-v4-upto-inline-action term MATCH
+  - host: dut
+    contains: policy-statement RF-v4-upto-inline-action term MATCH
+  - host: case-v4-shadow-mask
+    contains: policy-statement RF-v4-shadow-mask term MATCH
+  - host: dut
+    contains: policy-statement RF-v4-shadow-mask term MATCH
+  - host: case-v6-shadow-mask
+    contains: policy-statement RF-v6-shadow-mask term MATCH
+  - host: dut
+    contains: policy-statement RF-v6-shadow-mask term MATCH
+  - host: case-v4-shadow-longer
+    contains: policy-statement RF-v4-shadow-longer term MATCH
+  - host: dut
+    contains: policy-statement RF-v4-shadow-longer term MATCH
+  - host: case-v4-shadow-range
+    contains: policy-statement RF-v4-shadow-range term MATCH
+  - host: dut
+    contains: policy-statement RF-v4-shadow-range term MATCH
+  - host: case-v4-shadow-through
+    contains: policy-statement RF-v4-shadow-through term MATCH
+  - host: dut
+    contains: policy-statement RF-v4-shadow-through term MATCH
+  - host: case-v6-shadow-longer
+    contains: policy-statement RF-v6-shadow-longer term MATCH
+  - host: dut
+    contains: policy-statement RF-v6-shadow-longer term MATCH
+  - host: case-v6-shadow-range
+    contains: policy-statement RF-v6-shadow-range term MATCH
+  - host: dut
+    contains: policy-statement RF-v6-shadow-range term MATCH
+  - host: case-v6-shadow-through
+    contains: policy-statement RF-v6-shadow-through term MATCH
+  - host: dut
+    contains: policy-statement RF-v6-shadow-through term MATCH

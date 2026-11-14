@@ -1,0 +1,27 @@
+rollback 0
+load complete
+
+
+delete policy-options policy-statement RF-v6-mask-ones
+warning: statement not found
+
+
+set policy-options policy-statement RF-v6-mask-ones term MATCH from route-filter 2001:db8:1::/64 address-mask ffff:ffff:ffff:ffff:ffff:ffff:ffff:ffff
+
+
+set policy-options policy-statement RF-v6-mask-ones term MATCH then accept
+
+
+set policy-options policy-statement RF-v6-mask-ones term REJECT then reject
+
+
+commit check
+[edit policy-options policy-statement RF-v6-mask-ones term MATCH from]
+  'route-filter 2001:db8:1::/64 address-mask ffff:ffff:ffff:ffff:ffff:ffff:ffff:ffff'
+    RPD Policy: address-mask ffff:ffff:ffff:ffff:ffff:ffff:ffff:ffff is longer than configured prefix /64
+error: configuration check-out failed
+
+
+rollback 0
+load complete
+

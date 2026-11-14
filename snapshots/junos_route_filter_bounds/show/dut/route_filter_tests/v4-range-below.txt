@@ -1,0 +1,27 @@
+rollback 0
+load complete
+
+
+delete policy-options policy-statement RF-v4-range-below
+warning: statement not found
+
+
+set policy-options policy-statement RF-v4-range-below term MATCH from route-filter 10.64.0.64/26 prefix-length-range /24-/25
+
+
+set policy-options policy-statement RF-v4-range-below term MATCH then accept
+
+
+set policy-options policy-statement RF-v4-range-below term REJECT then reject
+
+
+commit check
+[edit policy-options policy-statement RF-v4-range-below term MATCH from]
+  'route-filter 10.64.0.64/26 prefix-length-range /24-/25'
+    RPD Policy: invalid minimum prefix length /24
+error: configuration check-out failed
+
+
+rollback 0
+load complete
+

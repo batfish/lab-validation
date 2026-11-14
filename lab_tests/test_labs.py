@@ -11,6 +11,8 @@ import pytest
 from _pytest.config import Config
 from pybatfish.client.session import Session
 from pybatfish.datamodel.answer import TableAnswer
+from pybatfish.datamodel.route import BgpRoute
+from pybatfish.util import escape_name
 
 from lab_tests.bf_getters import (
     get_batfish_bgp_routes,
@@ -20,6 +22,7 @@ from lab_tests.bf_getters import (
     get_vni_backed_ifaces,
 )
 from lab_tests.lab_getters import get_host_nos, snapshot_path
+from lab_tests.parse_warnings import validate_parse_warnings
 from lab_validation.validators import (
     A10AcosValidator,
     AoscxValidator,
@@ -455,6 +458,47 @@ def test_vi_model(bf: Session, snapshot: str) -> None:
     bf.q.viModel().answer()
 
 
+def test_routing_policy_matches(
+    bf: Session, snapshot: str, pytestconfig: Config
+) -> None:
+    path = (
+        snapshot_path(pytestconfig.getoption(LAB_NAME_CONFIG_OPTION))
+        / "validation"
+        / "routing_policy_matches.json"
+    )
+    if not path.exists():
+        pytest.skip("No routing policy cases")
+    spec = json.loads(path.read_text())
+    routes = [
+        BgpRoute(
+            network=prefix,
+            originatorIp="192.0.2.1",
+            originType="igp",
+            protocol="bgp",
+        )
+        for prefix in spec["routes"]
+    ]
+    rows = (
+        bf.q.testRoutePolicies(
+            nodes=escape_name(spec["node"]),
+            policies=",".join(escape_name(name) for name in spec["policies"]),
+            inputRoutes=routes,
+            direction="in",
+        )
+        .answer(snapshot=snapshot)
+        .frame()
+    )
+    assert len(rows) == len(routes) * len(spec["policies"])
+    for row in rows.itertuples():
+        prefix = row.Input_Route.network
+        accepted = prefix in spec["policies"][row.Policy_Name]
+        assert row.Action == ("PERMIT" if accepted else "DENY"), (
+            row.Policy_Name,
+            prefix,
+            row.Action,
+        )
+
+
 @pytest.fixture(scope="module")
 def parse_warning_spec(pytestconfig: Config) -> dict | None:
     """Load parse_warnings.yaml if present."""
@@ -469,20 +513,16 @@ def parse_warning_spec(pytestconfig: Config) -> dict | None:
 
 
 @pytest.fixture(scope="module")
-def host_fatal_details(bf: Session, snapshot: str) -> dict[str, list[str]]:
-    """Map hostname -> list of fatal red flag warning detail strings."""
+def host_redflag_details(bf: Session, snapshot: str) -> dict[str, list[str]]:
+    """Map hostname to its red flag warning details."""
     bf.set_snapshot(snapshot)
     issues = bf.q.initIssues().answer().frame()
 
     parse_warnings = issues[issues["Type"] == "Parse warning (redflag)"]
     if parse_warnings.empty:
         return {}
-    fatal_rows = parse_warnings[
-        parse_warnings["Details"].astype(str).str.startswith("FATAL:")
-    ]
-
     result: dict[str, list[str]] = {}
-    for _, row in fatal_rows.iterrows():
+    for _, row in parse_warnings.iterrows():
         nodes = row.get("Nodes")
         source_lines = row.get("Source_Lines")
         if nodes:
@@ -505,35 +545,22 @@ def test_parse_warnings(
     hostname: str,
     vendor: Vendor,
     parse_warning_spec: dict | None,
-    host_fatal_details: dict[str, list[str]],
+    host_redflag_details: dict[str, list[str]],
 ) -> None:
-    """Tests that Batfish produces (or does not produce) fatal red flag warnings.
+    """Assert the fatal and risky warnings declared in parse_warnings.yaml.
 
     By default every host is asserted to produce zero FATAL parse warnings.
     Snapshots that intentionally exhibit FATAL warnings (e.g., snapshots that
     exist to verify parser rejection) opt in via validation/parse_warnings.yaml
-    using ``expects_fatal_warning`` entries. Snapshots with known-failing hosts
-    suppress them via validation/sickbay.yaml.
+    using ``expects_fatal_warning`` entries. ``expects_risky_warning`` asserts
+    RISK warnings. ``strict: true`` also rejects extra red flag warnings.
+    Snapshots with known-failing hosts suppress them via validation/sickbay.yaml.
     """
-    spec = parse_warning_spec or {}
-    expects_fatal = {
-        e["host"]: e["contains"] for e in spec.get("expects_fatal_warning", [])
-    }
-
-    if hostname in expects_fatal:
-        contains = expects_fatal[hostname]
-        details = host_fatal_details.get(hostname, [])
-        if not any(contains in d for d in details):
-            raise ValidationError(
-                f"expected fatal warning containing '{contains}' for '{hostname}' "
-                f"but got: {details}"
-            )
-        return
-
-    if hostname in host_fatal_details:
-        raise ValidationError(
-            f"unexpected fatal warning for '{hostname}': {host_fatal_details[hostname]}"
-        )
+    validate_parse_warnings(
+        hostname,
+        parse_warning_spec or {},
+        host_redflag_details.get(hostname, []),
+    )
 
 
 # TODO: Re-enable when reachability verification logic is ported from Batfish

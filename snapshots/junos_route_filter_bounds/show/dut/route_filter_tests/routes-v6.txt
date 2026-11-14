@@ -1,0 +1,26 @@
+
+inet6.0: 18 destinations, 18 routes (18 active, 0 holddown, 0 hidden)
++ = Active Route, - = Last Active, * = Both
+
+A V Destination        P Prf   Metric 1   Metric 2  Next hop        AS path
+* ? ::/0               S   5                        Discard
+* ? 2001:db8::/32      S   5                        Discard
+* ? 2001:db8:1::/48    S   5                        Discard
+* ? 2001:db8:1::/63    S   5                        Discard
+* ? 2001:db8:1::/64    S   5                        Discard
+* ? 2001:db8:1::/65    S   5                        Discard
+* ? 2001:db8:1::/66    S   5                        Discard
+* ? 2001:db8:1::/127   S   5                        Discard
+* ? 2001:db8:1::/128   S   5                        Discard
+* ? 2001:db8:1::1/128  S   5                        Discard
+* ? 2001:db8:1:1::/64  S   5                        Discard
+* ? 2001:db8:2::/64    S   5                        Discard
+* ? 2001:db8:2::/65    S   5                        Discard
+* ? 2001:db8:2::/66    S   5                        Discard
+* ? 2001:db8:2::1/128  S   5                        Discard
+    2001:db8:ffff::1/128
+* ?                    D   0                       >lo0.0       
+    fe80::e00:c40f:fc60:a00/128
+* ?                    D   0                       >lo0.0       
+* ? ff02::2/128        I   0                        MultiRecv
+

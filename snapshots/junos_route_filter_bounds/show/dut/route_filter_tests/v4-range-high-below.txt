@@ -1,0 +1,28 @@
+rollback 0
+load complete
+
+
+delete policy-options policy-statement RF-v4-range-high-below
+
+
+set policy-options policy-statement RF-v4-range-high-below term MATCH from route-filter 10.64.0.64/26 prefix-length-range /28-/24
+
+
+set policy-options policy-statement RF-v4-range-high-below term MATCH then accept
+
+
+set policy-options policy-statement RF-v4-range-high-below term REJECT then reject
+
+
+commit check
+configuration check succeeds
+
+
+commit
+commit complete
+
+
+run test policy RF-v4-range-high-below 0.0.0.0/0
+
+Policy RF-v4-range-high-below: 0 prefix accepted, 27 prefix rejected
+

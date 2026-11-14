@@ -547,7 +547,13 @@ assert that a host _should_ produce a FATAL warning — e.g., a snapshot
 that exists to verify parser rejection like
 `snapshots/junos_commit_check/` — add an `expects_fatal_warning` entry
 naming the host and a `contains` substring that must appear in the
-warning details. To suppress a known FATAL warning on a host, sickbay
+warning details. `expects_risky_warning` uses the same fields to assert
+RISK warnings. Multiple entries may name the same host. With
+`strict: true`, every red flag must match an expectation, and the warning
+count must equal the number of expectations. A host with no expectations
+must then produce no red flags.
+
+To suppress a known FATAL warning on a host, sickbay
 the `test_parse_warnings` test for that host in
 `validation/sickbay.yaml`.
 
