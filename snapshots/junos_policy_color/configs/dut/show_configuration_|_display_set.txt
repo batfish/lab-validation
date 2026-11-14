@@ -1,9 +1,9 @@
 set version 26.2R1.7
 set system host-name dut
-set system root-authentication encrypted-password "$6$61VpW5/Z$adbC8wj7xofA4GrCqI7x6eE07KeBLQ6nm3ywLK9VSFHU1B.p.UnPAMHEOnCvxDEpzzxI4HyhYDpNFQz2OK1Tu."
+set system root-authentication encrypted-password "$6$0C3gYJ2O$p88Ljij.nkAa22BF7s09.aAaZoOxe4DJ2O8hG0q3/9w6LFh7HM3mgNpMp6V1l4OkjMbBnqMLMQVWtUAEgpO9R1"
 set system login user admin uid 2000
 set system login user admin class super-user
-set system login user admin authentication encrypted-password "$6$2RFW/P.3$ZNkIi8tyNPWZpkSZVvoUvfjzsW0sBkXbKVlYJ8hRTwP.21EMTqFPHqs6GWteM46.oYupAQOUnLiWxAlGOuxZ8."
+set system login user admin authentication encrypted-password "$6$uqGeKcv9$HfenTa/PHvP4JlxXXD0DWmbHdf6aWXAobySdzgJ8BppeBx7xImbqmEMs2EuKD792lzev9UKTVi5WNp0vkGhw5/"
 set system services netconf ssh
 set system services ssh root-login allow
 set system management-instance
@@ -28,9 +28,6 @@ set policy-options policy-statement MATCH-COLOR term color2-200 from color2 200
 set policy-options policy-statement MATCH-COLOR term color2-200 then accept
 set policy-options policy-statement MATCH-COLOR term color-400 from color 400
 set policy-options policy-statement MATCH-COLOR term color-400 then accept
-set policy-options policy-statement MATCH-COLOR term static-color-300 from protocol static
-set policy-options policy-statement MATCH-COLOR term static-color-300 from color 300
-set policy-options policy-statement MATCH-COLOR term static-color-300 then accept
 set policy-options policy-statement MATCH-COLOR term reject then reject
 set policy-options policy-statement SET-COLOR term color-400 from route-filter 10.130.3.0/24 exact
 set policy-options policy-statement SET-COLOR term color-400 then color 400
@@ -38,9 +35,6 @@ set routing-instances mgmt_junos routing-options rib mgmt_junos.inet6.0 static r
 set routing-instances mgmt_junos routing-options static route 0.0.0.0/0 next-hop 10.0.0.2
 set routing-options router-id 10.255.0.2
 set routing-options autonomous-system 200
-set routing-options static route 10.140.1.0/24 discard
-set routing-options static route 10.140.1.0/24 color 300
-set routing-options static route 10.140.2.0/24 discard
 set protocols bgp group SRC type external
 set protocols bgp group SRC import IMPORT-COLOR
 set protocols bgp group SRC peer-as 65010
