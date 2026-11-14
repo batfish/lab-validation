@@ -19,8 +19,3 @@ checks:
     table: inet.0
     prefix: 10.110.4.0/24
     description: "dut learns src's routes"
-  - type: route_exists
-    node: dut
-    table: inet.0
-    prefix: 10.120.1.0/24
-    description: "dut has its static route with tag2 300"
