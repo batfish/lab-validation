@@ -41,9 +41,9 @@ rx's import policy rejects routes with tag2 100 and accepts the rest, so
 
 ## Batfish
 
-Batfish on master does not model tag2: `from tag2` makes its term match
-nothing and `then tag2` is ignored, so rx gets no routes from dut. With
-batfish/batfish#10486, Batfish matches every row.
+Before batfish/batfish#10485 and #10486, Batfish did not model tag2: `from
+tag2` made its term match nothing and `then tag2` was ignored, so rx got
+no routes from dut. With them, Batfish matches every row.
 
 ## Findings (vJunos-router 26.2R1.7)
 
