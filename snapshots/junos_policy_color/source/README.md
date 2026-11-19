@@ -50,9 +50,8 @@ dut advertises 3 routes. So color and color2 behave like tag2:
 
 ## Batfish
 
-On master (batfish/batfish#10488), `from color` converts to `MatchColor`,
-whose evaluation throws ("No implementation for MatchColor.evaluate()"),
-so the data plane computation fails. `from color2` is not parsed, and
-`then color` and `then color2` are ignored.
-The data plane tests are sickbayed with `dont_run`, since the failure is
-in the data plane fixture.
+On master before batfish/batfish#10490 (batfish/batfish#10488), `from
+color` made the data plane computation fail, `from color2` was not
+parsed, and `then color` and `then color2` were ignored. With
+batfish/batfish#10490 (stacked on #10489, which adds color and color2 to
+BGP routes), Batfish matches every route.
