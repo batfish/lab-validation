@@ -1,0 +1,88 @@
+checks:
+  - type: bgp_peer_established
+    node: r1
+    neighbor: 10.0.12.1
+  - type: bgp_peer_established
+    node: r3
+    neighbor: 10.0.23.0
+  - type: bgp_peer_established
+    node: r3
+    neighbor: 10.0.23.2
+  - type: bgp_peer_established
+    node: r3
+    neighbor: 10.0.23.4
+  - type: bgp_peer_established
+    node: r3
+    neighbor: 10.0.23.6
+  - type: bgp_peer_established
+    node: r3
+    neighbor: 10.0.23.8
+  - type: bgp_peer_established
+    node: r4
+    neighbor: 10.0.24.0
+  - type: bgp_peer_established
+    node: r4
+    neighbor: 10.0.24.2
+  # r2 sends each prefix over one session only.
+  - type: route_next_hops
+    description: r3 learns 192.0.2.0/26 over the "all replace-AS" session
+    node: r3
+    table: default
+    prefix: 192.0.2.0/26
+    next_hops: [10.0.23.0]
+  - type: route_next_hops
+    description: r3 learns 203.0.113.0/26 over the "all replace-AS" session
+    node: r3
+    table: default
+    prefix: 203.0.113.0/26
+    next_hops: [10.0.23.0]
+  - type: route_next_hops
+    description: r3 learns 192.0.2.64/26 over the "replace-AS" session
+    node: r3
+    table: default
+    prefix: 192.0.2.64/26
+    next_hops: [10.0.23.2]
+  - type: route_next_hops
+    description: r3 learns 203.0.113.64/26 over the "replace-AS" session
+    node: r3
+    table: default
+    prefix: 203.0.113.64/26
+    next_hops: [10.0.23.2]
+  - type: route_next_hops
+    description: r3 learns 192.0.2.128/26 over the "remove-private-AS" session
+    node: r3
+    table: default
+    prefix: 192.0.2.128/26
+    next_hops: [10.0.23.4]
+  - type: route_next_hops
+    description: r3 learns 203.0.113.128/26 over the "remove-private-AS" session
+    node: r3
+    table: default
+    prefix: 203.0.113.128/26
+    next_hops: [10.0.23.4]
+  - type: route_next_hops
+    description: r3 learns 192.0.2.192/26 over the "all" session
+    node: r3
+    table: default
+    prefix: 192.0.2.192/26
+    next_hops: [10.0.23.6]
+  - type: route_next_hops
+    description: r3 learns 203.0.113.192/26 over the "all" session
+    node: r3
+    table: default
+    prefix: 203.0.113.192/26
+    next_hops: [10.0.23.6]
+  - type: route_next_hops
+    description: r3 learns 198.51.100.0/26 over the "local-as" session
+    node: r3
+    table: default
+    prefix: 198.51.100.0/26
+    next_hops: [10.0.23.8]
+  # 198.51.100.64/26 and 198.51.100.128/26 reach r4 with its own AS in
+  # the path, which it rejects; 198.51.100.192/26 does not.
+  - type: route_next_hops
+    description: r4 accepts 198.51.100.192/26 over the "all" session
+    node: r4
+    table: default
+    prefix: 198.51.100.192/26
+    next_hops: [10.0.24.2]

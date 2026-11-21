@@ -1,0 +1,68 @@
+{
+"default":{
+"ipv4Unicast":{
+  "routerId":"10.255.0.4",
+  "as":64602,
+  "vrfId":0,
+  "vrfName":"default",
+  "tableVersion":1,
+  "ribCount":1,
+  "ribMemory":160,
+  "peerCount":2,
+  "peerMemory":47056,
+  "peers":{
+    "10.0.24.0":{
+      "hostname":"r2",
+      "softwareVersion":"n/a",
+      "remoteAs":64500,
+      "localAs":64602,
+      "version":4,
+      "msgRcvd":9,
+      "msgSent":9,
+      "tableVersion":1,
+      "outq":0,
+      "inq":0,
+      "peerUptime":"00:00:48",
+      "peerUptimeMsec":48000,
+      "peerUptimeEstablishedEpoch":1795303607,
+      "pfxRcd":0,
+      "pfxSnt":1,
+      "state":"Established",
+      "peerState":"OK",
+      "connectionsEstablished":1,
+      "connectionsDropped":0,
+      "idType":"ipv4"
+    },
+    "10.0.24.2":{
+      "hostname":"r2",
+      "softwareVersion":"n/a",
+      "remoteAs":64500,
+      "localAs":64602,
+      "version":4,
+      "msgRcvd":12,
+      "msgSent":9,
+      "tableVersion":1,
+      "outq":0,
+      "inq":0,
+      "peerUptime":"00:00:48",
+      "peerUptimeMsec":48000,
+      "peerUptimeEstablishedEpoch":1795303607,
+      "pfxRcd":1,
+      "pfxSnt":1,
+      "state":"Established",
+      "peerState":"OK",
+      "connectionsEstablished":1,
+      "connectionsDropped":0,
+      "idType":"ipv4"
+    }
+  },
+  "failedPeers":0,
+  "displayedPeers":2,
+  "totalPeers":2,
+  "dynamicPeers":0,
+  "bestPath":{
+    "multiPathRelax":"false"
+  }
+}
+}
+}
