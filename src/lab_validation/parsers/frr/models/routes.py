@@ -45,5 +45,7 @@ class FrrBgpRoute:
     peer_id: str
     next_hops: Sequence[FrrBgpRouteNextHop]
     med: int | None = attr.ib(converter=optional_int_converter)
+    # Present only when the path carries LOCAL_PREF, i.e. from iBGP.
+    local_pref: int | None = attr.ib(converter=optional_int_converter, default=None)
     as_path: Sequence[int]
     weight: int
