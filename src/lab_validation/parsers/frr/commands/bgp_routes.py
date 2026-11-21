@@ -5,10 +5,15 @@ from typing import Any
 from ..models.routes import FrrBgpRoute, FrrBgpRouteNextHop
 
 AFI = "afi"
+# Cumulus' FRR writes the AS path as "aspath" and the MED as "med"; FRR 10
+# writes them as "path" and "metric".
 ASPATH = "aspath"
+ASPATH_FRR10 = "path"
 BESTPATH = "bestpath"
 IP = "ip"
+LOCAL_PREF = "locPrf"
 MED = "med"
+MED_FRR10 = "metric"
 MULTIPATH = "multipath"
 NEXTHOPS = "nexthops"
 ORIGIN = "origin"
@@ -36,7 +41,7 @@ def _get_bgp_routes(vrf: str, json_obj: dict[Any, Any]) -> Sequence[FrrBgpRoute]
         routes_obj = json_obj[network]
 
         for path in routes_obj:
-            assert ASPATH in path
+            assert (ASPATH in path) != (ASPATH_FRR10 in path)
             assert NEXTHOPS in path
             assert ORIGIN in path
             assert PATH_FROM in path
@@ -54,8 +59,9 @@ def _get_bgp_routes(vrf: str, json_obj: dict[Any, Any]) -> Sequence[FrrBgpRoute]
                     origin=path[ORIGIN],
                     path_from=path[PATH_FROM],
                     peer_id=path[PEER_ID],
-                    as_path=_get_as_path(path[ASPATH]),
-                    med=path.get(MED, None),
+                    as_path=_get_as_path(path.get(ASPATH, path.get(ASPATH_FRR10))),
+                    med=path.get(MED, path.get(MED_FRR10)),
+                    local_pref=path.get(LOCAL_PREF),
                     weight=path[WEIGHT],
                     next_hops=_get_next_hops(path[NEXTHOPS]),
                 )

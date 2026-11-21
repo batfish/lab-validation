@@ -355,6 +355,7 @@ FRR = VendorProfile(
         "vtysh -c 'show ip route vrf all json'",
         "vtysh -c 'show ip ospf neighbor json'",
         "vtysh -c 'show ip ospf database'",
+        "vtysh -c 'show bgp vrf all ipv4 unicast json'",
         "vtysh -c 'show bgp vrf all summary json'",
     ],
     config_command="vtysh -c 'show running-config'",
