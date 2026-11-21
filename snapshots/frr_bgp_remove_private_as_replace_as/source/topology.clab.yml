@@ -1,0 +1,56 @@
+# Four FRR routers in eBGP. r1 (private AS 64601) originates two prefixes
+# and sends them to r3 (AS 64496) along two paths: through r2 (AS 64500)
+# and through r4 (AS 64499).
+#
+# Topology:
+#            eth1        r2 eth2 ------------ eth1
+#   r1 ----------------- r2 eth3 ------------ eth2  r3
+#    \ eth2                                   eth3 /
+#     \----------------- r4 eth2 ----------------/
+#                   eth1
+#
+#   r1 eth1 10.0.12.0/31  eth2 10.0.14.0/31
+#   r2 eth1 10.0.12.1/31  eth2 10.0.23.0/31  eth3 10.0.23.2/31
+#   r3 eth1 10.0.23.1/31  eth2 10.0.23.3/31  eth3 10.0.34.1/31
+#   r4 eth1 10.0.14.1/31  eth2 10.0.34.0/31
+#
+# r2 sends 192.0.2.0/24 to r3 over eth2 with "remove-private-AS all
+# replace-AS", and 198.51.100.0/24 over eth3 with "remove-private-AS
+# replace-AS", both with origin incomplete.
+#
+# Links use the Linux default MTU of 1500 rather than containerlab's 9500.
+
+name: frr-bgp-remove-private-as-replace-as
+
+topology:
+  kinds:
+    frr:
+      image: quay.io/frrouting/frr:containerlab-10.7.1
+      daemons:
+        - bgpd
+
+  nodes:
+    r1:
+      kind: frr
+      startup-config: configs/r1.conf
+    r2:
+      kind: frr
+      startup-config: configs/r2.conf
+    r3:
+      kind: frr
+      startup-config: configs/r3.conf
+    r4:
+      kind: frr
+      startup-config: configs/r4.conf
+
+  links:
+    - endpoints: ["r1:eth1", "r2:eth1"]
+      mtu: 1500
+    - endpoints: ["r1:eth2", "r4:eth1"]
+      mtu: 1500
+    - endpoints: ["r2:eth2", "r3:eth1"]
+      mtu: 1500
+    - endpoints: ["r2:eth3", "r3:eth2"]
+      mtu: 1500
+    - endpoints: ["r4:eth2", "r3:eth3"]
+      mtu: 1500

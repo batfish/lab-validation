@@ -1,0 +1,31 @@
+checks:
+  - type: bgp_peer_established
+    node: r3
+    neighbor: 10.0.23.0
+  - type: bgp_peer_established
+    node: r3
+    neighbor: 10.0.23.2
+  - type: bgp_peer_established
+    node: r3
+    neighbor: 10.0.34.0
+  - type: bgp_peer_established
+    node: r1
+    neighbor: 10.0.12.1
+  - type: bgp_peer_established
+    node: r1
+    neighbor: 10.0.14.1
+  # r2 replaces r1's private AS with its own, so the paths through r2 stay
+  # two ASes long. They tie with the paths through r4 on length and lose on
+  # origin (incomplete against IGP).
+  - type: route_next_hops
+    description: r3 reaches 192.0.2.0/24 through r4 (r2 uses remove-private-AS all replace-AS)
+    node: r3
+    table: default
+    prefix: 192.0.2.0/24
+    next_hops: [10.0.34.0]
+  - type: route_next_hops
+    description: r3 reaches 198.51.100.0/24 through r4 (r2 uses remove-private-AS replace-AS)
+    node: r3
+    table: default
+    prefix: 198.51.100.0/24
+    next_hops: [10.0.34.0]
