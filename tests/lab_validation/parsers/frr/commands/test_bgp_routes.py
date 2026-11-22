@@ -170,3 +170,67 @@ def test_parse_show_ip_bgp_vrf_all_json() -> None:
             weight=0,
         ),
     ]
+
+
+def test_parse_show_bgp_vrf_all_ipv4_unicast_json_frr10() -> None:
+    # FRR 10 writes the AS path as "path", the MED as "metric" and, for iBGP
+    # paths, the local preference as "locPrf".
+    text = """
+    {
+    "default":{
+     "vrfId": 0,
+     "vrfName": "default",
+     "routerId": "1.1.1.1",
+     "localAS": 65001,
+     "routes": { "1.1.1.1/32": [{"valid":true,"bestpath":true,
+       "selectionReason":"First path received","pathFrom":"external",
+       "prefix":"1.1.1.1","prefixLen":32,"network":"1.1.1.1/32","version":1,
+       "metric":0,"weight":32768,"peerId":"(unspec)","path":"","origin":"IGP",
+       "nexthops":[{"ip":"0.0.0.0","hostname":"s1","afi":"ipv4","used":true}]}],
+     "2.2.2.2/32": [{"valid":true,"pathFrom":"internal","prefix":"2.2.2.2",
+       "prefixLen":32,"network":"2.2.2.2/32","version":4,"locPrf":200,
+       "weight":0,"peerId":"192.168.12.3","path":"65002 65003",
+       "origin":"incomplete",
+       "nexthops":[{"ip":"192.168.12.3","hostname":"s2","afi":"ipv4",
+         "used":true}]}]
+     } , "totalRoutes": 2, "totalPaths": 2 }
+    }
+    """
+    assert parse_show_ip_bgp_vrf_all_json(text) == [
+        FrrBgpRoute(
+            vrf="default",
+            network="1.1.1.1/32",
+            is_valid=True,
+            is_multipath=False,
+            is_bestpath=True,
+            origin="IGP",
+            path_from="external",
+            peer_id="(unspec)",
+            next_hops=[
+                FrrBgpRouteNextHop(ip="0.0.0.0", afi="ipv4", scope=None, is_used=True)
+            ],
+            med=0,
+            local_pref=None,
+            as_path=(),
+            weight=32768,
+        ),
+        FrrBgpRoute(
+            vrf="default",
+            network="2.2.2.2/32",
+            is_valid=True,
+            is_multipath=False,
+            is_bestpath=False,
+            origin="incomplete",
+            path_from="internal",
+            peer_id="192.168.12.3",
+            next_hops=[
+                FrrBgpRouteNextHop(
+                    ip="192.168.12.3", afi="ipv4", scope=None, is_used=True
+                )
+            ],
+            med=None,
+            local_pref=200,
+            as_path=(65002, 65003),
+            weight=0,
+        ),
+    ]
