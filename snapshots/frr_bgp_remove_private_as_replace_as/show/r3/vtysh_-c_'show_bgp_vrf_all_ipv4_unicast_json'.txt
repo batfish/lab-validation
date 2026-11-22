@@ -1,0 +1,20 @@
+{
+"default":{
+ "vrfId": 0,
+ "vrfName": "default",
+ "tableVersion": 9,
+ "routerId": "10.255.0.3",
+ "defaultLocPrf": 100,
+ "localAS": 64496,
+ "routes": { "192.0.2.0/26": [{"valid":true,"bestpath":true,"selectionReason":"First path received","pathFrom":"external","prefix":"192.0.2.0","prefixLen":26,"network":"192.0.2.0/26","version":8,"weight":0,"peerId":"10.0.23.0","path":"64500 64500","origin":"IGP","nexthops":[{"ip":"10.0.23.0","hostname":"r2","afi":"ipv4","used":true}]}]
+,"192.0.2.64/26": [{"valid":true,"bestpath":true,"selectionReason":"First path received","pathFrom":"external","prefix":"192.0.2.64","prefixLen":26,"network":"192.0.2.64/26","version":1,"weight":0,"peerId":"10.0.23.2","path":"64500 64500","origin":"IGP","nexthops":[{"ip":"10.0.23.2","hostname":"r2","afi":"ipv4","used":true}]}]
+,"192.0.2.128/26": [{"valid":true,"bestpath":true,"selectionReason":"First path received","pathFrom":"external","prefix":"192.0.2.128","prefixLen":26,"network":"192.0.2.128/26","version":3,"weight":0,"peerId":"10.0.23.4","path":"64500","origin":"IGP","nexthops":[{"ip":"10.0.23.4","hostname":"r2","afi":"ipv4","used":true}]}]
+,"192.0.2.192/26": [{"valid":true,"bestpath":true,"selectionReason":"First path received","pathFrom":"external","prefix":"192.0.2.192","prefixLen":26,"network":"192.0.2.192/26","version":5,"weight":0,"peerId":"10.0.23.6","path":"64500","origin":"IGP","nexthops":[{"ip":"10.0.23.6","hostname":"r2","afi":"ipv4","used":true}]}]
+,"198.51.100.0/26": [{"valid":true,"bestpath":true,"selectionReason":"First path received","pathFrom":"external","prefix":"198.51.100.0","prefixLen":26,"network":"198.51.100.0/26","version":7,"weight":0,"peerId":"10.0.23.8","path":"64511 64511","origin":"IGP","nexthops":[{"ip":"10.0.23.8","hostname":"r2","afi":"ipv4","used":true}]}]
+,"203.0.113.0/26": [{"valid":true,"bestpath":true,"selectionReason":"First path received","pathFrom":"external","prefix":"203.0.113.0","prefixLen":26,"network":"203.0.113.0/26","version":9,"weight":0,"peerId":"10.0.23.0","path":"64500 64500 64497","origin":"IGP","nexthops":[{"ip":"10.0.23.0","hostname":"r2","afi":"ipv4","used":true}]}]
+,"203.0.113.64/26": [{"valid":true,"bestpath":true,"selectionReason":"First path received","pathFrom":"external","prefix":"203.0.113.64","prefixLen":26,"network":"203.0.113.64/26","version":2,"weight":0,"peerId":"10.0.23.2","path":"64500 64601 64497","origin":"IGP","nexthops":[{"ip":"10.0.23.2","hostname":"r2","afi":"ipv4","used":true}]}]
+,"203.0.113.128/26": [{"valid":true,"bestpath":true,"selectionReason":"First path received","pathFrom":"external","prefix":"203.0.113.128","prefixLen":26,"network":"203.0.113.128/26","version":4,"weight":0,"peerId":"10.0.23.4","path":"64500 64601 64497","origin":"IGP","nexthops":[{"ip":"10.0.23.4","hostname":"r2","afi":"ipv4","used":true}]}]
+,"203.0.113.192/26": [{"valid":true,"bestpath":true,"selectionReason":"First path received","pathFrom":"external","prefix":"203.0.113.192","prefixLen":26,"network":"203.0.113.192/26","version":6,"weight":0,"peerId":"10.0.23.6","path":"64500 64497","origin":"IGP","nexthops":[{"ip":"10.0.23.6","hostname":"r2","afi":"ipv4","used":true}]}]
+ } , "totalRoutes": 9, "totalPaths": 9,"numRoutes":9
+ } 
+}
