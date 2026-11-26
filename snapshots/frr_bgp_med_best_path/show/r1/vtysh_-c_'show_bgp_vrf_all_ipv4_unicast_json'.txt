@@ -1,0 +1,15 @@
+{
+"default":{
+ "vrfId": 0,
+ "vrfName": "default",
+ "tableVersion": 6,
+ "routerId": "10.255.0.1",
+ "defaultLocPrf": 100,
+ "localAS": 64500,
+ "routes": { "192.0.2.0/26": [{"valid":true,"bestpath":true,"selectionReason":"Router ID","pathFrom":"internal","prefix":"192.0.2.0","prefixLen":26,"network":"192.0.2.0/26","version":1,"metric":100,"locPrf":100,"weight":0,"peerId":"10.0.12.1","path":"64497","origin":"IGP","nexthops":[{"ip":"10.0.12.1","hostname":"r2","afi":"ipv4","used":true}]},{"valid":true,"pathFrom":"internal","prefix":"192.0.2.0","prefixLen":26,"network":"192.0.2.0/26","version":1,"metric":10,"locPrf":100,"weight":0,"peerId":"10.0.13.1","path":"64498","origin":"IGP","nexthops":[{"ip":"10.0.13.1","hostname":"r3","afi":"ipv4","used":true}]}]
+,"192.0.2.64/26": [{"valid":true,"bestpath":true,"selectionReason":"MED","pathFrom":"internal","prefix":"192.0.2.64","prefixLen":26,"network":"192.0.2.64/26","version":3,"metric":10,"locPrf":100,"weight":0,"peerId":"10.0.12.1","path":"64496","origin":"IGP","nexthops":[{"ip":"10.0.12.1","hostname":"r2","afi":"ipv4","used":true}]},{"valid":true,"pathFrom":"external","prefix":"192.0.2.64","prefixLen":26,"network":"192.0.2.64/26","version":3,"metric":100,"weight":0,"peerId":"10.0.14.1","path":"64496","origin":"IGP","nexthops":[{"ip":"10.0.14.1","hostname":"r4","afi":"ipv4","used":true}]}]
+,"192.0.2.128/26": [{"valid":true,"bestpath":true,"selectionReason":"MED","pathFrom":"internal","prefix":"192.0.2.128","prefixLen":26,"network":"192.0.2.128/26","version":5,"metric":10,"locPrf":100,"weight":0,"peerId":"10.0.13.1","path":"64497","origin":"IGP","nexthops":[{"ip":"10.0.13.1","hostname":"r3","afi":"ipv4","used":true}]},{"valid":true,"pathFrom":"internal","prefix":"192.0.2.128","prefixLen":26,"network":"192.0.2.128/26","version":5,"metric":100,"locPrf":100,"weight":0,"peerId":"10.0.12.1","path":"64497","origin":"IGP","nexthops":[{"ip":"10.0.12.1","hostname":"r2","afi":"ipv4","used":true}]}]
+,"192.0.2.192/26": [{"valid":true,"bestpath":true,"selectionReason":"MED","pathFrom":"external","prefix":"192.0.2.192","prefixLen":26,"network":"192.0.2.192/26","version":6,"metric":10,"weight":0,"peerId":"10.0.14.1","path":"64496","origin":"IGP","nexthops":[{"ip":"10.0.14.1","hostname":"r4","afi":"ipv4","used":true}]},{"valid":true,"pathFrom":"internal","prefix":"192.0.2.192","prefixLen":26,"network":"192.0.2.192/26","version":6,"metric":100,"locPrf":100,"weight":0,"peerId":"10.0.12.1","path":"64496","origin":"IGP","nexthops":[{"ip":"10.0.12.1","hostname":"r2","afi":"ipv4","used":true}]}]
+ } , "totalRoutes": 4, "totalPaths": 8,"numRoutes":4
+ } 
+}

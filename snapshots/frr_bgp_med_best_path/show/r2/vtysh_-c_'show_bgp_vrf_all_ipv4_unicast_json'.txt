@@ -1,0 +1,15 @@
+{
+"default":{
+ "vrfId": 0,
+ "vrfName": "default",
+ "tableVersion": 4,
+ "routerId": "10.255.0.2",
+ "defaultLocPrf": 100,
+ "localAS": 64500,
+ "routes": { "192.0.2.0/26": [{"valid":true,"bestpath":true,"selectionReason":"First path received","pathFrom":"external","prefix":"192.0.2.0","prefixLen":26,"network":"192.0.2.0/26","version":1,"metric":0,"weight":32768,"peerId":"(unspec)","path":"","origin":"IGP","nexthops":[{"ip":"0.0.0.0","hostname":"r2","afi":"ipv4","used":true}]}]
+,"192.0.2.64/26": [{"valid":true,"bestpath":true,"selectionReason":"First path received","pathFrom":"external","prefix":"192.0.2.64","prefixLen":26,"network":"192.0.2.64/26","version":2,"metric":0,"weight":32768,"peerId":"(unspec)","path":"","origin":"IGP","nexthops":[{"ip":"0.0.0.0","hostname":"r2","afi":"ipv4","used":true}]}]
+,"192.0.2.128/26": [{"valid":true,"bestpath":true,"selectionReason":"First path received","pathFrom":"external","prefix":"192.0.2.128","prefixLen":26,"network":"192.0.2.128/26","version":3,"metric":0,"weight":32768,"peerId":"(unspec)","path":"","origin":"IGP","nexthops":[{"ip":"0.0.0.0","hostname":"r2","afi":"ipv4","used":true}]}]
+,"192.0.2.192/26": [{"valid":true,"bestpath":true,"selectionReason":"First path received","pathFrom":"external","prefix":"192.0.2.192","prefixLen":26,"network":"192.0.2.192/26","version":4,"metric":0,"weight":32768,"peerId":"(unspec)","path":"","origin":"IGP","nexthops":[{"ip":"0.0.0.0","hostname":"r2","afi":"ipv4","used":true}]}]
+ } , "totalRoutes": 4, "totalPaths": 4,"numRoutes":4
+ } 
+}

@@ -1,0 +1,35 @@
+checks:
+  - type: bgp_peer_established
+    node: r1
+    neighbor: 10.0.12.1
+  - type: bgp_peer_established
+    node: r1
+    neighbor: 10.0.13.1
+  - type: bgp_peer_established
+    node: r1
+    neighbor: 10.0.14.1
+  # The path r1 selects for each prefix.
+  - type: route_next_hops
+    description: MED is not compared between neighbor ASes 64497 and 64498; r2 wins on router ID
+    node: r1
+    table: default
+    prefix: 192.0.2.0/26
+    next_hops: [10.0.12.1]
+  - type: route_next_hops
+    description: MED is compared before eBGP over iBGP; the iBGP path from r2 has the lower MED
+    node: r1
+    table: default
+    prefix: 192.0.2.64/26
+    next_hops: [10.0.12.1]
+  - type: route_next_hops
+    description: control, both paths from neighbor AS 64497; r3 has the lower MED
+    node: r1
+    table: default
+    prefix: 192.0.2.128/26
+    next_hops: [10.0.13.1]
+  - type: route_next_hops
+    description: control, the eBGP path from r4 has the lower MED
+    node: r1
+    table: default
+    prefix: 192.0.2.192/26
+    next_hops: [10.0.14.1]
