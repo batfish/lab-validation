@@ -8,14 +8,14 @@ eBGP-over-iBGP step (RFC 4271, section 9.1.2.2, c and d).
 
 Four containerlab `frr` nodes (FRR 10.7.1).
 
-| Node | AS    | Links                                 |
-| ---- | ----- | ------------------------------------- |
-| r1   | 64500 | eth1 10.0.12.0/31 to r2 eth1 (iBGP)   |
-|      |       | eth2 10.0.13.0/31 to r3 eth1 (iBGP)   |
-|      |       | eth3 10.0.14.0/31 to r4 eth1 (eBGP)   |
-| r2   | 64500 |                                       |
-| r3   | 64500 |                                       |
-| r4   | 64496 |                                       |
+| Node | AS    | Links                               |
+| ---- | ----- | ----------------------------------- |
+| r1   | 64500 | eth1 10.0.12.0/31 to r2 eth1 (iBGP) |
+|      |       | eth2 10.0.13.0/31 to r3 eth1 (iBGP) |
+|      |       | eth3 10.0.14.0/31 to r4 eth1 (eBGP) |
+| r2   | 64500 |                                     |
+| r3   | 64500 |                                     |
+| r4   | 64496 |                                     |
 
 r1 is the router under test. It has no policy that changes a route, and it
 advertises nothing (`route-map NONE out`), so the other three tables hold
@@ -25,12 +25,12 @@ AS the neighbor AS of the path at r1; every peer sets the MED there too.
 Each prefix reaches r1 on two paths with the same local preference, AS-path
 length and origin:
 
-| Prefix           | Path 1 (peer, AS path, MED) | Path 2 (peer, AS path, MED) |
-| ---------------- | --------------------------- | --------------------------- |
-| 192.0.2.0/26     | r2 iBGP, `64497`, 100       | r3 iBGP, `64498`, 10        |
-| 192.0.2.64/26    | r2 iBGP, `64496`, 10        | r4 eBGP, `64496`, 100       |
-| 192.0.2.128/26   | r2 iBGP, `64497`, 100       | r3 iBGP, `64497`, 10        |
-| 192.0.2.192/26   | r2 iBGP, `64496`, 100       | r4 eBGP, `64496`, 10        |
+| Prefix         | Path 1 (peer, AS path, MED) | Path 2 (peer, AS path, MED) |
+| -------------- | --------------------------- | --------------------------- |
+| 192.0.2.0/26   | r2 iBGP, `64497`, 100       | r3 iBGP, `64498`, 10        |
+| 192.0.2.64/26  | r2 iBGP, `64496`, 10        | r4 eBGP, `64496`, 100       |
+| 192.0.2.128/26 | r2 iBGP, `64497`, 100       | r3 iBGP, `64497`, 10        |
+| 192.0.2.192/26 | r2 iBGP, `64496`, 100       | r4 eBGP, `64496`, 10        |
 
 `configs/<node>.conf` are the startup `frr.conf` files. The snapshot's
 `configs/<node>/<node>.cfg` wrap the collected running config in the
@@ -41,12 +41,12 @@ Cumulus concatenated format.
 FRR's selection on r1 (`show bgp ipv4 unicast <prefix> json`, field
 `selectionReason`):
 
-| Prefix           | r1 selects                | Reason                                                   |
-| ---------------- | ------------------------- | -------------------------------------------------------- |
-| 192.0.2.0/26     | r2, MED 100               | Router ID: the MEDs are not compared, the neighbor ASes differ |
-| 192.0.2.64/26    | r2 (iBGP), MED 10         | MED: compared before eBGP over iBGP                      |
-| 192.0.2.128/26   | r3, MED 10                | MED (control: one neighbor AS)                           |
-| 192.0.2.192/26   | r4 (eBGP), MED 10         | MED (control: the eBGP path also has the lower MED)      |
+| Prefix         | r1 selects        | Reason                                                         |
+| -------------- | ----------------- | -------------------------------------------------------------- |
+| 192.0.2.0/26   | r2, MED 100       | Router ID: the MEDs are not compared, the neighbor ASes differ |
+| 192.0.2.64/26  | r2 (iBGP), MED 10 | MED: compared before eBGP over iBGP                            |
+| 192.0.2.128/26 | r3, MED 10        | MED (control: one neighbor AS)                                 |
+| 192.0.2.192/26 | r4 (eBGP), MED 10 | MED (control: the eBGP path also has the lower MED)            |
 
 Batfish 2026.08.27.3685 selects r3 for 192.0.2.0/26 (it compares the MEDs
 of paths from different neighbor ASes) and r4 for 192.0.2.64/26 (it prefers
