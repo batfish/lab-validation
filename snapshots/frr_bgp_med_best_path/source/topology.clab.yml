@@ -1,0 +1,43 @@
+# Four FRR routers. r1 (AS 64500) is the router under test. r2 and r3 are its
+# iBGP peers, r4 (AS 64496) is its eBGP peer. Each peer originates prefixes
+# and sets an AS path and a MED on them, so that r1 has two paths per prefix
+# that differ in MED. r1 advertises nothing.
+#
+#   r1 eth1 -- r2 eth1   10.0.12.0/31   iBGP
+#   r1 eth2 -- r3 eth1   10.0.13.0/31   iBGP
+#   r1 eth3 -- r4 eth1   10.0.14.0/31   eBGP
+#
+# The README lists the prefixes and the path r1 selects for each.
+#
+# Links use the Linux default MTU of 1500 rather than containerlab's 9500.
+
+name: frr-bgp-med-best-path
+
+topology:
+  kinds:
+    frr:
+      image: quay.io/frrouting/frr:containerlab-10.7.1
+      daemons:
+        - bgpd
+
+  nodes:
+    r1:
+      kind: frr
+      startup-config: configs/r1.conf
+    r2:
+      kind: frr
+      startup-config: configs/r2.conf
+    r3:
+      kind: frr
+      startup-config: configs/r3.conf
+    r4:
+      kind: frr
+      startup-config: configs/r4.conf
+
+  links:
+    - endpoints: ["r1:eth1", "r2:eth1"]
+      mtu: 1500
+    - endpoints: ["r1:eth2", "r3:eth1"]
+      mtu: 1500
+    - endpoints: ["r1:eth3", "r4:eth1"]
+      mtu: 1500
